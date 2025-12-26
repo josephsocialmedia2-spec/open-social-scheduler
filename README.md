@@ -1,3 +1,5 @@
+Status: Planning → MVP (Meta publishing first)
+
 open-social-scheduler/
 │
 ├── backend/
