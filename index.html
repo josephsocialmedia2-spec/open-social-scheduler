@@ -12,12 +12,8 @@
     <aside class="sidebar" id="sidebar">
       <div class="brand">
         <div class="brand-mark">OS</div>
-        <div>
-          <strong>Open Social Scheduler</strong>
-          <span>20 clienti · CSV · calendario</span>
-        </div>
+        <div><strong>Open Social Scheduler</strong><span>20 clienti · CSV · calendario</span></div>
       </div>
-
       <nav class="nav" aria-label="Navigazione principale">
         <button class="nav-btn active" data-view="dashboard" type="button">Dashboard</button>
         <button class="nav-btn" data-view="calendar" type="button">Calendario</button>
@@ -25,13 +21,9 @@
         <button class="nav-btn" data-view="clients" type="button">Clienti</button>
         <button class="nav-btn" data-view="import" type="button">Importa CSV</button>
       </nav>
-
       <div class="sidebar-footer">
         <button id="backupJsonBtn" class="btn secondary full" type="button">Backup JSON</button>
-        <label class="btn secondary full file-label">
-          Ripristina JSON
-          <input id="restoreJsonInput" type="file" accept="application/json" hidden>
-        </label>
+        <label class="btn secondary full file-label">Ripristina JSON<input id="restoreJsonInput" type="file" accept="application/json" hidden></label>
         <span id="storageStatus" class="storage-status">Dati salvati nel browser</span>
       </div>
     </aside>
@@ -39,10 +31,7 @@
     <main class="main">
       <header class="topbar">
         <button id="menuBtn" class="icon-btn menu-btn" type="button" aria-label="Apri menu">☰</button>
-        <div>
-          <h1 id="pageTitle">Dashboard</h1>
-          <p id="pageSubtitle">Controllo operativo delle pubblicazioni</p>
-        </div>
+        <div><h1 id="pageTitle">Dashboard</h1><p id="pageSubtitle">Controllo operativo delle pubblicazioni</p></div>
         <div class="topbar-actions">
           <button id="downloadTemplateTopBtn" class="btn secondary" type="button">Template CSV</button>
           <button id="newPostBtn" class="btn primary" type="button">Nuova pubblicazione</button>
@@ -50,22 +39,10 @@
       </header>
 
       <section id="globalFilters" class="filter-bar">
-        <label>
-          Cliente
-          <select id="filterClient"></select>
-        </label>
-        <label>
-          Piattaforma
-          <select id="filterPlatform"></select>
-        </label>
-        <label>
-          Stato
-          <select id="filterStatus"></select>
-        </label>
-        <label class="search-field">
-          Cerca
-          <input id="filterSearch" type="search" placeholder="Titolo, rubrica, copy, responsabile">
-        </label>
+        <label>Cliente<select id="filterClient"></select></label>
+        <label>Piattaforma<select id="filterPlatform"></select></label>
+        <label>Stato<select id="filterStatus"></select></label>
+        <label class="search-field">Cerca<input id="filterSearch" type="search" placeholder="Titolo, rubrica, copy, responsabile"></label>
         <button id="clearFiltersBtn" class="btn ghost" type="button">Azzera filtri</button>
       </section>
 
@@ -77,16 +54,11 @@
           <article class="metric-card"><span>Programmati</span><strong id="metricScheduled">0</strong></article>
           <article class="metric-card"><span>Pubblicati</span><strong id="metricPublished">0</strong></article>
         </div>
-
         <div class="dashboard-grid">
           <article class="panel">
-            <div class="panel-header">
-              <div><h2>Prossime pubblicazioni</h2><p>I primi contenuti in ordine cronologico</p></div>
-              <button class="text-btn" data-go="posts" type="button">Vedi tutte</button>
-            </div>
+            <div class="panel-header"><div><h2>Prossime pubblicazioni</h2><p>I primi contenuti in ordine cronologico</p></div><button class="text-btn" data-go="posts" type="button">Vedi tutte</button></div>
             <div id="upcomingList" class="stack-list empty-state">Nessuna pubblicazione programmata.</div>
           </article>
-
           <article class="panel">
             <div class="panel-header"><div><h2>Carico per cliente</h2><p>Pubblicazioni nel mese visualizzato</p></div></div>
             <div id="clientLoadList" class="progress-list empty-state">Nessun dato disponibile.</div>
@@ -110,9 +82,7 @@
               <span><i class="status-dot published"></i>Pubblicato</span>
             </div>
           </div>
-          <div class="weekday-grid" aria-hidden="true">
-            <span>Lun</span><span>Mar</span><span>Mer</span><span>Gio</span><span>Ven</span><span>Sab</span><span>Dom</span>
-          </div>
+          <div class="weekday-grid" aria-hidden="true"><span>Lun</span><span>Mar</span><span>Mer</span><span>Gio</span><span>Ven</span><span>Sab</span><span>Dom</span></div>
           <div id="calendarGrid" class="calendar-grid"></div>
         </article>
       </section>
@@ -127,10 +97,7 @@
             </div>
           </div>
           <div class="table-wrap">
-            <table>
-              <thead><tr><th>Data</th><th>Cliente</th><th>Piattaforma</th><th>Contenuto</th><th>Stato</th><th>Responsabile</th><th>Azioni</th></tr></thead>
-              <tbody id="postsTableBody"></tbody>
-            </table>
+            <table><thead><tr><th>Data</th><th>Cliente</th><th>Piattaforma</th><th>Contenuto</th><th>Stato</th><th>Responsabile</th><th>Azioni</th></tr></thead><tbody id="postsTableBody"></tbody></table>
           </div>
           <div id="postsEmpty" class="empty-state">Nessuna pubblicazione corrisponde ai filtri.</div>
         </article>
@@ -138,41 +105,24 @@
 
       <section id="view-clients" class="view">
         <article class="panel">
-          <div class="panel-header wrap-actions">
-            <div><h2>20 slot cliente</h2><p>Gli ID C01–C20 sono fissi e vengono utilizzati nel CSV.</p></div>
-            <button id="saveClientsBtn" class="btn primary" type="button">Salva clienti</button>
-          </div>
-          <div class="table-wrap">
-            <table class="clients-table">
-              <thead><tr><th>ID fisso</th><th>Cliente</th><th>Settore</th><th>Attivo</th><th>Pubblicazioni</th></tr></thead>
-              <tbody id="clientsTableBody"></tbody>
-            </table>
-          </div>
+          <div class="panel-header wrap-actions"><div><h2>20 slot cliente</h2><p>Gli ID C01–C20 sono fissi e vengono utilizzati nel CSV.</p></div><button id="saveClientsBtn" class="btn primary" type="button">Salva clienti</button></div>
+          <div class="table-wrap"><table class="clients-table"><thead><tr><th>ID fisso</th><th>Cliente</th><th>Settore</th><th>Attivo</th><th>Pubblicazioni</th></tr></thead><tbody id="clientsTableBody"></tbody></table></div>
         </article>
       </section>
 
       <section id="view-import" class="view">
         <div class="import-grid">
           <article class="panel">
-            <div class="panel-header"><div><h2>Importazione CSV</h2><p>Il file viene accettato solo con intestazioni e valori conformi.</p></div></div>
+            <div class="panel-header"><div><h2>Importazione CSV</h2><p>Il sistema corregge automaticamente separatori Excel, nomi cliente, date italiane, piattaforme multiple e stati comuni.</p></div></div>
             <div class="import-controls">
-              <label>Modalità importazione
-                <select id="importMode"><option value="append">Aggiungi ai dati esistenti</option><option value="replace">Sostituisci tutte le pubblicazioni</option></select>
-              </label>
-              <label class="drop-zone" id="csvDropZone">
-                <strong>Seleziona o trascina il CSV</strong><span>Codifica consigliata: UTF-8</span>
-                <input id="csvFileInput" type="file" accept=".csv,text/csv" hidden>
-              </label>
-              <div class="button-row">
-                <button id="downloadTemplateBtn" class="btn secondary" type="button">Scarica template</button>
-                <button id="importCsvBtn" class="btn primary" type="button" disabled>Importa file validato</button>
-              </div>
+              <label>Modalità importazione<select id="importMode"><option value="append">Aggiungi ai dati esistenti</option><option value="replace">Sostituisci tutte le pubblicazioni</option></select></label>
+              <label class="drop-zone" id="csvDropZone"><strong>Seleziona o trascina il CSV</strong><span>Accettati CSV con virgola, punto e virgola o tabulazione</span><input id="csvFileInput" type="file" accept=".csv,text/csv" hidden></label>
+              <div class="button-row"><button id="downloadTemplateBtn" class="btn secondary" type="button">Scarica template</button><button id="importCsvBtn" class="btn primary" type="button" disabled>Importa file validato</button></div>
             </div>
             <div id="csvValidationResult" class="validation-box neutral" aria-live="polite">Nessun file selezionato.</div>
           </article>
-
           <article class="panel">
-            <div class="panel-header"><div><h2>Parametri fissi</h2><p>Non modificare i nomi delle colonne.</p></div></div>
+            <div class="panel-header"><div><h2>Parametri fissi</h2><p>Le colonne vengono riconosciute anche con nomi equivalenti.</p></div></div>
             <div class="schema-block">
               <h3>Colonne obbligatorie</h3><code id="requiredHeadersCode"></code>
               <h3>Piattaforme ammesse</h3><div id="platformBadges" class="badge-wrap"></div>
@@ -180,10 +130,10 @@
               <h3>Stati ammessi</h3><div id="statusBadges" class="badge-wrap"></div>
               <h3>Regole</h3>
               <ul class="rules-list">
-                <li><strong>cliente_id:</strong> da C01 a C20.</li>
-                <li><strong>data:</strong> formato AAAA-MM-GG.</li>
-                <li><strong>ora:</strong> formato HH:MM, 24 ore.</li>
-                <li>Le righe non conformi bloccano l’intero import.</li>
+                <li><strong>F1 Immobiliare</strong> viene associata automaticamente a C01.</li>
+                <li><strong>Real Media Pro</strong> viene associata automaticamente a C02.</li>
+                <li>Le date italiane vengono convertite in AAAA-MM-GG.</li>
+                <li>Facebook + Instagram genera due righe distinte.</li>
               </ul>
             </div>
           </article>
@@ -194,10 +144,7 @@
 
   <dialog id="postDialog" class="modal">
     <form id="postForm" method="dialog">
-      <div class="modal-header">
-        <div><h2 id="postDialogTitle">Nuova pubblicazione</h2><p>Compila i parametri del contenuto.</p></div>
-        <button id="closePostDialogBtn" class="icon-btn" type="button" aria-label="Chiudi">×</button>
-      </div>
+      <div class="modal-header"><div><h2 id="postDialogTitle">Nuova pubblicazione</h2><p>Compila i parametri del contenuto.</p></div><button id="closePostDialogBtn" class="icon-btn" type="button" aria-label="Chiudi">×</button></div>
       <input id="postId" type="hidden">
       <div class="form-grid">
         <label>Cliente<select id="postClient" required></select></label>
@@ -214,15 +161,12 @@
         <label>Link media<input id="postMedia" type="url" placeholder="https://..."></label>
         <label class="span-2">Note<textarea id="postNotes" rows="3" placeholder="Indicazioni interne"></textarea></label>
       </div>
-      <div class="modal-actions">
-        <button id="deletePostBtn" class="btn danger hidden" type="button">Elimina</button><span class="spacer"></span>
-        <button id="cancelPostBtn" class="btn secondary" type="button">Annulla</button>
-        <button class="btn primary" type="submit">Salva pubblicazione</button>
-      </div>
+      <div class="modal-actions"><button id="deletePostBtn" class="btn danger hidden" type="button">Elimina</button><span class="spacer"></span><button id="cancelPostBtn" class="btn secondary" type="button">Annulla</button><button class="btn primary" type="submit">Salva pubblicazione</button></div>
     </form>
   </dialog>
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
-  <script src="app.js" defer></script>
+  <script src="csv-compat.js?v=20260728-1" defer></script>
+  <script src="app.js?v=20260728-1" defer></script>
 </body>
 </html>
