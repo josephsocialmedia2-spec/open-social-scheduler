@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Open Social Scheduler Pro: agenda operativa personalizzata per social media manager e piccole agenzie. Clienti, contenuti, scadenze e strumenti in un unico sistema.">
+  <title>Open Social Scheduler Pro | Agenda operativa per social media manager</title>
+  <style>
+    :root {
+      --bg: #070907;
+      --surface: #0e120f;
+      --surface-2: #151a16;
+      --green: #39f28a;
+      --green-2: #20ce70;
+      --white: #ffffff;
+      --muted: #aeb8b1;
+      --line: rgba(255,255,255,.10);
+      --shadow: 0 18px 60px rgba(0,0,0,.32);
+      --radius: 24px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--white);
+      background:
+        radial-gradient(circle at 10% 5%, rgba(57,242,138,.12), transparent 32%),
+        radial-gradient(circle at 90% 15%, rgba(32,206,112,.08), transparent 28%),
+        var(--bg);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.55;
+    }
+    a { color: inherit; text-decoration: none; }
+    .container { width: min(1180px, calc(100% - 40px)); margin: 0 auto; }
+    .topbar {
+      position: sticky; top: 0; z-index: 20;
+      border-bottom: 1px solid var(--line);
+      background: rgba(7,9,7,.86);
+      backdrop-filter: blur(14px);
+    }
+    .topbar-inner { min-height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+    .brand { display: flex; align-items: center; gap: 12px; font-weight: 800; letter-spacing: -.02em; }
+    .brand-mark {
+      width: 42px; height: 42px; border-radius: 14px; display: grid; place-items: center;
+      color: #061109; background: linear-gradient(135deg, var(--green), var(--green-2));
+      box-shadow: 0 10px 30px rgba(57,242,138,.22);
+    }
+    .nav { display: flex; gap: 24px; color: var(--muted); font-size: 14px; }
+    .nav a:hover { color: var(--white); }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      min-height: 48px; padding: 0 20px; border-radius: 14px; font-weight: 800;
+      border: 1px solid transparent; transition: .2s ease; cursor: pointer;
+    }
+    .btn-primary { color: #061109; background: linear-gradient(135deg, var(--green), var(--green-2)); }
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 12px 30px rgba(57,242,138,.20); }
+    .btn-secondary { border-color: var(--line); background: rgba(255,255,255,.04); }
+    .btn-secondary:hover { background: rgba(255,255,255,.08); }
+    .hero { padding: 90px 0 70px; }
+    .hero-grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: 54px; align-items: center; }
+    .eyebrow { color: var(--green); font-size: 13px; font-weight: 900; letter-spacing: .14em; text-transform: uppercase; }
+    h1 { margin: 14px 0 22px; font-size: clamp(42px, 6vw, 76px); line-height: .98; letter-spacing: -.055em; }
+    .hero-copy { max-width: 680px; color: var(--muted); font-size: clamp(18px, 2vw, 22px); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+    .hero-note { margin-top: 18px; color: #839087; font-size: 13px; }
+    .app-preview {
+      position: relative; overflow: hidden; border: 1px solid var(--line); border-radius: 28px;
+      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.025));
+      box-shadow: var(--shadow); padding: 18px;
+    }
+    .preview-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+    .dots { display: flex; gap: 7px; }
+    .dots i { width: 9px; height: 9px; border-radius: 50%; background: rgba(255,255,255,.18); }
+    .preview-grid { display: grid; grid-template-columns: 96px repeat(5, 1fr); gap: 8px; }
+    .preview-cell { min-height: 58px; border: 1px solid var(--line); border-radius: 11px; background: rgba(255,255,255,.025); }
+    .preview-cell.head { min-height: 36px; display: grid; place-items: center; color: var(--muted); font-size: 11px; }
+    .preview-cell.time { display: grid; place-items: center; color: #7f8d83; font-size: 11px; }
+    .preview-event { margin: 5px; padding: 8px; border-radius: 8px; color: #071109; font-size: 10px; font-weight: 800; background: var(--green); }
+    .preview-event.blue { background: #8ab4f8; }
+    .preview-event.orange { background: #f6bf26; }
+    .section { padding: 84px 0; }
+    .section-head { max-width: 760px; margin-bottom: 38px; }
+    .section h2 { margin: 8px 0 14px; font-size: clamp(32px, 4vw, 52px); letter-spacing: -.04em; line-height: 1.05; }
+    .section-head p { color: var(--muted); font-size: 18px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .card { border: 1px solid var(--line); border-radius: var(--radius); background: rgba(255,255,255,.035); padding: 26px; }
+    .card h3 { margin: 12px 0 8px; font-size: 22px; }
+    .card p { margin: 0; color: var(--muted); }
+    .icon { width: 44px; height: 44px; display: grid; place-items: center; border-radius: 14px; color: #061109; background: var(--green); font-weight: 900; }
+    .workflow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; counter-reset: step; }
+    .step { position: relative; border: 1px solid var(--line); border-radius: 20px; padding: 24px; background: var(--surface); }
+    .step::before { counter-increment: step; content: counter(step); display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; color: #061109; background: var(--green); font-weight: 900; margin-bottom: 18px; }
+    .step strong { display: block; margin-bottom: 6px; }
+    .step span { color: var(--muted); font-size: 14px; }
+    .pricing { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; align-items: stretch; }
+    .price-card { position: relative; border: 1px solid var(--line); border-radius: 26px; background: var(--surface); padding: 30px; display: flex; flex-direction: column; }
+    .price-card.featured { border-color: rgba(57,242,138,.56); box-shadow: 0 18px 70px rgba(57,242,138,.10); transform: translateY(-8px); }
+    .badge { position: absolute; top: 18px; right: 18px; padding: 6px 10px; border-radius: 999px; color: #061109; background: var(--green); font-size: 11px; font-weight: 900; }
+    .price-name { color: var(--green); font-weight: 900; text-transform: uppercase; letter-spacing: .08em; font-size: 12px; }
+    .price { margin: 14px 0 4px; font-size: 42px; font-weight: 900; letter-spacing: -.04em; }
+    .monthly { color: var(--muted); font-size: 14px; }
+    .features { list-style: none; padding: 0; margin: 24px 0 30px; display: grid; gap: 11px; color: #dce4de; }
+    .features li::before { content: "✓"; color: var(--green); font-weight: 900; margin-right: 9px; }
+    .price-card .btn { margin-top: auto; }
+    .cta-box { border: 1px solid rgba(57,242,138,.25); border-radius: 30px; padding: 50px; text-align: center; background: linear-gradient(135deg, rgba(57,242,138,.11), rgba(255,255,255,.025)); }
+    .cta-box p { color: var(--muted); max-width: 680px; margin: 0 auto 24px; font-size: 18px; }
+    footer { padding: 36px 0 48px; border-top: 1px solid var(--line); color: #7e8a81; font-size: 13px; }
+    .footer-inner { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+    @media (max-width: 900px) {
+      .nav { display: none; }
+      .hero-grid, .grid-3, .pricing, .workflow { grid-template-columns: 1fr; }
+      .hero { padding-top: 60px; }
+      .price-card.featured { transform: none; }
+      .app-preview { margin-top: 8px; }
+    }
+    @media (max-width: 560px) {
+      .container { width: min(100% - 24px, 1180px); }
+      .topbar .btn-secondary { display: none; }
+      .hero-actions .btn { width: 100%; }
+      .cta-box { padding: 32px 20px; }
+      .preview-grid { grid-template-columns: 70px repeat(5, minmax(70px, 1fr)); overflow-x: auto; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="#inizio"><span class="brand-mark">OS</span><span>Open Social Scheduler Pro</span></a>
+      <nav class="nav" aria-label="Navigazione">
+        <a href="#funzioni">Funzioni</a>
+        <a href="#metodo">Come funziona</a>
+        <a href="#prezzi">Prezzi</a>
+      </nav>
+      <a class="btn btn-secondary" href="https://josephsocialmedia2-spec.github.io/open-social-scheduler/" target="_blank" rel="noopener">Apri la demo</a>
+    </div>
+  </header>
+
+  <main id="inizio">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow">Sistema operativo personalizzato</div>
+          <h1>Tutti i tuoi clienti. Una sola agenda.</h1>
+          <p class="hero-copy">Organizza contenuti, scadenze, attività, Canva, Drive, Meta Business Suite e Google Calendar in un unico centro operativo costruito sul tuo metodo di lavoro.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="https://wa.me/393713708294?text=Buongiorno%20Joseph%2C%20vorrei%20prenotare%20una%20demo%20di%20Open%20Social%20Scheduler%20Pro." target="_blank" rel="noopener">Prenota una demo gratuita</a>
+            <a class="btn btn-secondary" href="#prezzi">Scopri i piani</a>
+          </div>
+          <p class="hero-note">Demo operativa di 20 minuti. Nessun acquisto obbligatorio.</p>
+        </div>
+
+        <div class="app-preview" aria-label="Anteprima agenda operativa">
+          <div class="preview-bar"><strong>Agenda settimanale</strong><span class="dots"><i></i><i></i><i></i></span></div>
+          <div class="preview-grid">
+            <div class="preview-cell head"></div><div class="preview-cell head">Lun</div><div class="preview-cell head">Mar</div><div class="preview-cell head">Mer</div><div class="preview-cell head">Gio</div><div class="preview-cell head">Ven</div>
+            <div class="preview-cell time">08:00</div><div class="preview-cell"><div class="preview-event">Contenuti</div></div><div class="preview-cell"><div class="preview-event orange">Acquisizione</div></div><div class="preview-cell"><div class="preview-event orange">Acquisizione</div></div><div class="preview-cell"><div class="preview-event orange">Acquisizione</div></div><div class="preview-cell"><div class="preview-event orange">Acquisizione</div></div>
+            <div class="preview-cell time">14:00</div><div class="preview-cell"><div class="preview-event blue">Cliente A</div></div><div class="preview-cell"><div class="preview-event blue">Cliente B</div></div><div class="preview-cell"><div class="preview-event blue">Revisioni</div></div><div class="preview-cell"><div class="preview-event blue">Pubblicazioni</div></div><div class="preview-cell"><div class="preview-event blue">Report</div></div>
+            <div class="preview-cell time">15:30</div><div class="preview-cell"><div class="preview-event">Follow-up</div></div><div class="preview-cell"><div class="preview-event">Attività</div></div><div class="preview-cell"><div class="preview-event">Appuntamenti</div></div><div class="preview-cell"><div class="preview-event">CRM</div></div><div class="preview-cell"><div class="preview-event">Chiusura</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="funzioni">
+      <div class="container">
+        <div class="section-head"><div class="eyebrow">Meno dispersione</div><h2>Non è un altro calendario editoriale.</h2><p>È il punto di accesso unico al lavoro quotidiano: ogni cliente, contenuto, strumento e scadenza rimane collegato.</p></div>
+        <div class="grid-3">
+          <article class="card"><div class="icon">01</div><h3>Agenda vincolante</h3><p>Blocchi operativi personalizzati, attività giornaliere e sincronizzazione con Google Calendar.</p></article>
+          <article class="card"><div class="icon">02</div><h3>Schede cliente rapide</h3><p>Meta Business Suite, social, Canva, Drive, sito, documenti, note e CRM accessibili con un clic.</p></article>
+          <article class="card"><div class="icon">03</div><h3>Programma contenuti</h3><p>Calendario editoriale multi-cliente, stati di lavorazione, copy, media, responsabili e scadenze.</p></article>
+          <article class="card"><div class="icon">04</div><h3>Google Sheets</h3><p>Database operativo del cliente, controllabile e modificabile senza dipendere da software chiusi.</p></article>
+          <article class="card"><div class="icon">05</div><h3>Personalizzazione</h3><p>Colori, logo, attività, clienti e flussi vengono adattati al metodo reale di lavoro.</p></article>
+          <article class="card"><div class="icon">06</div><h3>Installazione guidata</h3><p>Configurazione, collegamenti e formazione iniziale vengono gestiti passo per passo.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="metodo">
+      <div class="container">
+        <div class="section-head"><div class="eyebrow">Attivazione</div><h2>Dal caos operativo a un sistema utilizzabile.</h2></div>
+        <div class="workflow">
+          <div class="step"><strong>Analisi</strong><span>Mappiamo clienti, strumenti, attività e blocchi di lavoro.</span></div>
+          <div class="step"><strong>Configurazione</strong><span>Personalizziamo agenda, schede e collegamenti.</span></div>
+          <div class="step"><strong>Installazione</strong><span>Colleghiamo Google Sheets, Calendar e programma contenuti.</span></div>
+          <div class="step"><strong>Formazione</strong><span>Ti mostriamo il flusso quotidiano e le procedure essenziali.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="prezzi">
+      <div class="container">
+        <div class="section-head"><div class="eyebrow">Piani di lancio</div><h2>Scegli il livello di personalizzazione.</h2><p>I costi iniziali comprendono configurazione e installazione. Il canone copre assistenza e aggiornamenti.</p></div>
+        <div class="pricing">
+          <article class="price-card">
+            <div class="price-name">Founder</div><div class="price">€297</div><div class="monthly">una tantum + €19/mese</div>
+            <ul class="features"><li>Fino a 5 clienti</li><li>Agenda personalizzata</li><li>Google Sheets e Calendar</li><li>Schede rapide</li><li>Supporto base</li></ul>
+            <a class="btn btn-secondary" href="https://wa.me/393713708294?text=Vorrei%20informazioni%20sul%20piano%20Founder%20di%20Open%20Social%20Scheduler%20Pro." target="_blank" rel="noopener">Richiedi informazioni</a>
+          </article>
+          <article class="price-card featured">
+            <span class="badge">Più completo</span><div class="price-name">Professional</div><div class="price">€597</div><div class="monthly">una tantum + €39/mese</div>
+            <ul class="features"><li>Fino a 20 clienti</li><li>Grafica personalizzata</li><li>Sincronizzazione contenuti</li><li>CRM e strumenti operativi</li><li>Formazione e supporto prioritario</li></ul>
+            <a class="btn btn-primary" href="https://wa.me/393713708294?text=Vorrei%20prenotare%20una%20demo%20del%20piano%20Professional%20di%20Open%20Social%20Scheduler%20Pro." target="_blank" rel="noopener">Prenota la demo</a>
+          </article>
+          <article class="price-card">
+            <div class="price-name">White Label</div><div class="price">da €990</div><div class="monthly">una tantum + €69/mese</div>
+            <ul class="features"><li>Nome, logo e colori propri</li><li>Configurazione su misura</li><li>Installazione collaboratori</li><li>Onboarding dedicato</li><li>Documentazione personalizzata</li></ul>
+            <a class="btn btn-secondary" href="https://wa.me/393713708294?text=Vorrei%20informazioni%20sulla%20versione%20White%20Label%20di%20Open%20Social%20Scheduler%20Pro." target="_blank" rel="noopener">Parliamone</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="cta-box"><div class="eyebrow">Demo gratuita</div><h2>Quanti strumenti apri per gestire un solo cliente?</h2><p>In 20 minuti puoi vedere come trasformare attività, contenuti, scadenze e collegamenti in un unico sistema operativo.</p><a class="btn btn-primary" href="https://wa.me/393713708294?text=Buongiorno%20Joseph%2C%20vorrei%20prenotare%20la%20demo%20gratuita%20di%20Open%20Social%20Scheduler%20Pro." target="_blank" rel="noopener">Scrivi a Joseph su WhatsApp</a></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner"><span>© 2026 Open Social Scheduler Pro</span><span>Prodotto e configurato da Joseph — Digital Strategist</span></div>
+  </footer>
+</body>
+</html>
