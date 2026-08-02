@@ -13,7 +13,29 @@ Web app operativa per gestire il calendario editoriale di **20 clienti** con imp
 - Esportazione CSV dei risultati filtrati.
 - Backup e ripristino JSON.
 - Salvataggio locale nel browser tramite `localStorage`.
+- Media Lab locale per estrazione audio, trascrizione Whisper e sottotitoli.
 - Pubblicazione automatica della web app tramite GitHub Pages.
+
+## Media Lab locale
+
+Il menu principale include la voce **Media Lab locale**. La pagina online apre il motore installato sul computer all’indirizzo:
+
+`http://127.0.0.1:8765`
+
+Il motore è disponibile nella cartella `local-media-lab` e utilizza:
+
+- FFmpeg locale per estrarre audio in MP3, WAV o M4A;
+- Whisper locale per trascrivere in italiano;
+- output TXT, DOCX e SRT;
+- cartella risultati configurabile;
+- nessun caricamento di video, audio o trascrizioni su servizi esterni.
+
+Per Windows:
+
+1. scaricare ed estrarre il repository;
+2. aprire `local-media-lab`;
+3. eseguire `INSTALLA_MEDIA_LAB.bat` una sola volta;
+4. eseguire `AVVIA_MEDIA_LAB.bat` quando si deve lavorare.
 
 ## Avvio
 
@@ -79,11 +101,19 @@ Il file `template-pubblicazioni.csv` contiene una riga di esempio pronta da dupl
 ```text
 open-social-scheduler/
 ├── index.html
+├── media-lab.html
 ├── styles.css
 ├── app.js
 ├── template-pubblicazioni.csv
 ├── .nojekyll
 ├── .github/workflows/pages.yml
+├── local-media-lab/
+│   ├── server.py
+│   ├── requirements.txt
+│   ├── INSTALLA_MEDIA_LAB.bat
+│   ├── AVVIA_MEDIA_LAB.bat
+│   ├── ARRESTA_MEDIA_LAB.bat
+│   └── static/
 ├── backend/
 │   ├── app/main.py
 │   └── requirements.txt
