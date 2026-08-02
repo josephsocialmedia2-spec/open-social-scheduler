@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Avvio e installazione del Media Lab locale di Open Social Scheduler.">
+  <title>Media Lab Locale · Open Social Scheduler</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .launcher-shell{min-height:100vh;padding:28px;display:grid;place-items:center;background:radial-gradient(circle at 70% 10%,rgba(57,242,138,.09),transparent 32%),var(--bg)}
+    .launcher{width:min(1050px,100%);display:grid;gap:18px}
+    .launcher-head{padding:24px;display:flex;align-items:center;justify-content:space-between;gap:18px;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+    .launcher-brand{display:flex;align-items:center;gap:14px}.launcher-brand h1{margin:0;font-size:25px}.launcher-brand p{margin:5px 0 0;color:var(--muted);font-size:13px}
+    .local-badge{display:inline-flex;align-items:center;gap:8px;padding:9px 12px;border:1px solid rgba(57,242,138,.35);border-radius:999px;color:var(--green);font-size:11px;font-weight:850}.local-badge i{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 12px var(--green)}
+    .launcher-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:18px}.launcher-panel{padding:24px;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+    .launcher-panel h2{margin:0 0 8px;font-size:20px}.launcher-panel>p{margin:0;color:var(--muted);line-height:1.55}
+    .launcher-actions{display:grid;gap:11px;margin-top:22px}.launcher-actions .btn{text-decoration:none;text-align:center;min-height:48px;display:grid;place-items:center}
+    .steps{margin:20px 0 0;padding:0;list-style:none;display:grid;gap:12px}.steps li{display:grid;grid-template-columns:34px 1fr;gap:11px;align-items:start;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--panel-2)}.steps b{width:30px;height:30px;display:grid;place-items:center;border-radius:9px;background:var(--green);color:#071109}.steps strong{display:block;font-size:13px}.steps span{display:block;margin-top:4px;color:var(--muted);font-size:12px;line-height:1.45}
+    .feature-grid{margin-top:18px;display:grid;grid-template-columns:1fr 1fr;gap:10px}.feature{padding:13px;border:1px solid var(--line);border-radius:11px;background:#0a0e0b}.feature strong{display:block;color:var(--green);font-size:12px}.feature span{display:block;margin-top:5px;color:var(--muted);font-size:11px;line-height:1.4}
+    .launcher-footer{display:flex;justify-content:space-between;gap:12px;align-items:center;color:var(--muted);font-size:11px}.launcher-footer a{color:var(--green)}
+    @media(max-width:800px){.launcher-shell{padding:14px}.launcher-grid{grid-template-columns:1fr}.launcher-head{align-items:flex-start;flex-direction:column}.feature-grid{grid-template-columns:1fr}.launcher-footer{align-items:flex-start;flex-direction:column}}
+  </style>
+</head>
+<body>
+  <main class="launcher-shell">
+    <div class="launcher">
+      <header class="launcher-head">
+        <div class="launcher-brand">
+          <div class="brand-mark">OS</div>
+          <div>
+            <h1>Media Lab Locale</h1>
+            <p>Modulo integrato di Open Social Scheduler per estrarre audio e trascrivere video sul PC.</p>
+          </div>
+        </div>
+        <span class="local-badge"><i></i> NESSUN FILE INVIATO ONLINE</span>
+      </header>
+
+      <div class="launcher-grid">
+        <section class="launcher-panel">
+          <h2>Apri il motore locale</h2>
+          <p>Prima avvia <strong>AVVIA_MEDIA_LAB.bat</strong> sul computer. Poi usa il pulsante seguente.</p>
+          <div class="launcher-actions">
+            <a class="btn primary" href="http://127.0.0.1:8765" target="_blank" rel="noopener">Apri Media Lab locale</a>
+            <a class="btn secondary" href="https://github.com/josephsocialmedia2-spec/open-social-scheduler/archive/refs/heads/main.zip">Scarica pacchetto Windows</a>
+            <a class="btn ghost" href="index.html">Torna a Open Social Scheduler</a>
+          </div>
+
+          <div class="feature-grid">
+            <div class="feature"><strong>FFmpeg locale</strong><span>Estrazione in MP3, WAV o M4A.</span></div>
+            <div class="feature"><strong>Whisper locale</strong><span>Trascrizione italiana senza API.</span></div>
+            <div class="feature"><strong>Output completo</strong><span>Audio, TXT, DOCX e sottotitoli SRT.</span></div>
+            <div class="feature"><strong>Archivio sul PC</strong><span>Cartella risultati configurabile.</span></div>
+          </div>
+        </section>
+
+        <section class="launcher-panel">
+          <h2>Prima installazione</h2>
+          <p>La configurazione viene eseguita una sola volta sul computer Windows.</p>
+          <ol class="steps">
+            <li><b>1</b><div><strong>Scarica ed estrai il repository</strong><span>Apri quindi la cartella local-media-lab.</span></div></li>
+            <li><b>2</b><div><strong>Esegui INSTALLA_MEDIA_LAB.bat</strong><span>Installa ambiente Python, FFmpeg e Whisper.</span></div></li>
+            <li><b>3</b><div><strong>Esegui AVVIA_MEDIA_LAB.bat</strong><span>Il motore si apre su 127.0.0.1:8765.</span></div></li>
+            <li><b>4</b><div><strong>Carica il video</strong><span>Seleziona estrazione audio o audio più trascrizione.</span></div></li>
+          </ol>
+        </section>
+      </div>
+
+      <footer class="launcher-footer">
+        <span>Open Social Scheduler Pro · Real Media Pro · Elaborazione locale Windows</span>
+        <a href="index.html">Dashboard principale</a>
+      </footer>
+    </div>
+  </main>
+</body>
+</html>
