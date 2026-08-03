@@ -236,9 +236,12 @@ async function pollCloud() {
 function applyCloudState(cloudState) {
   const current = toBusinessState(readLocalState());
   const next = toBusinessState(cloudState);
-  if (stableStringify(current) === stableStringify(next)) return;
+  const currentData = { clients: current.clients, posts: current.posts };
+  const nextData = { clients: next.clients, posts: next.posts };
+  const businessChanged = stableStringify(currentData) !== stableStringify(nextData);
+
   writeLocalState(cloudState);
-  if (appLoaded) queueReload();
+  if (businessChanged && appLoaded) queueReload();
 }
 
 function writeLocalState(cloudState) {
