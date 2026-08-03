@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Open Social Scheduler con database cloud condiviso tra più computer.">
+  <title>Open Social Scheduler · Cloud Sync</title>
+  <style>
+    :root{font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color-scheme:dark;--bg:#07111f;--panel:#0d1b2d;--line:#203a57;--text:#f5f8fc;--muted:#a8c3df;--ok:#2fd07f;--warn:#f4bf4f;--err:#ef5c68;--primary:#2d7ff9}*{box-sizing:border-box}html,body{width:100%;height:100%;margin:0;overflow:hidden;background:var(--bg);color:var(--text)}.shell{width:100%;height:100%;display:grid;grid-template-rows:48px 1fr}.syncbar{display:flex;align-items:center;gap:10px;padding:0 14px;background:#081421;border-bottom:1px solid var(--line);z-index:10}.brand{font-weight:850;white-space:nowrap}.status{display:flex;align-items:center;gap:7px;min-width:0;font-size:13px;color:var(--muted)}.status-dot{width:9px;height:9px;border-radius:50%;background:var(--warn);flex:0 0 auto;box-shadow:0 0 0 4px rgba(244,191,79,.12)}.status-dot.ok{background:var(--ok);box-shadow:0 0 0 4px rgba(47,208,127,.12)}.status-dot.error{background:var(--err);box-shadow:0 0 0 4px rgba(239,92,104,.12)}.status-text{overflow:hidden;white-space:nowrap;text-overflow:ellipsis}.spacer{flex:1}button{border:1px solid var(--line);border-radius:8px;padding:8px 12px;font:inherit;font-size:12px;font-weight:800;cursor:pointer;background:#11243a;color:var(--text)}button:hover{filter:brightness(1.08)}button.primary{background:var(--primary);border-color:var(--primary)}button:disabled{opacity:.55;cursor:wait}.scheduler{width:100%;height:100%;border:0;background:#fff}dialog{width:min(620px,calc(100vw - 28px));border:1px solid var(--line);border-radius:16px;padding:0;color:var(--text);background:var(--panel);box-shadow:0 28px 80px rgba(0,0,0,.55)}dialog::backdrop{background:rgba(0,0,0,.68);backdrop-filter:blur(4px)}.modal-head{display:flex;align-items:start;justify-content:space-between;gap:18px;padding:20px 22px 14px;border-bottom:1px solid var(--line)}.modal-head h2{margin:0 0 5px;font-size:21px}.modal-head p{margin:0;color:var(--muted);font-size:13px;line-height:1.45}.modal-body{padding:20px 22px;display:grid;gap:16px}label{display:grid;gap:7px;font-size:13px;font-weight:800}input{width:100%;border:1px solid var(--line);border-radius:9px;padding:11px 12px;background:#071421;color:var(--text);font:inherit}input:focus{outline:2px solid rgba(45,127,249,.35);border-color:var(--primary)}.hint{margin:0;color:var(--muted);font-size:12px;line-height:1.5}.modal-actions{display:flex;justify-content:flex-end;gap:10px;padding:14px 22px 20px}.danger-zone{border-top:1px solid var(--line);padding-top:14px}@media(max-width:760px){.brand{display:none}.syncbar{padding:0 8px}button{padding:7px 9px}#syncNowBtn{display:none}}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="syncbar">
+      <div class="brand">Open Social Scheduler</div>
+      <div class="status" title="Stato sincronizzazione"><span id="syncDot" class="status-dot"></span><span id="syncStatus" class="status-text">Configurazione cloud richiesta</span></div>
+      <div class="spacer"></div>
+      <button id="syncNowBtn" type="button">Sincronizza ora</button>
+      <button id="settingsBtn" class="primary" type="button">Configura cloud</button>
+    </div>
+    <iframe id="schedulerFrame" class="scheduler" src="./index.html" title="Open Social Scheduler"></iframe>
+  </div>
+
+  <dialog id="settingsDialog">
+    <form id="settingsForm" method="dialog">
+      <div class="modal-head">
+        <div><h2>Collegamento al database centrale</h2><p>La configurazione resta salvata soltanto in questo browser. Non viene pubblicata su GitHub.</p></div>
+        <button id="closeSettingsBtn" type="button" aria-label="Chiudi">×</button>
+      </div>
+      <div class="modal-body">
+        <label>URL Web App<input id="endpointInput" type="url" required placeholder="https://script.google.com/macros/s/.../exec" autocomplete="off"></label>
+        <label>API key<input id="apiKeyInput" type="password" required placeholder="Incolla la nuova API key" autocomplete="off"></label>
+        <p class="hint">Prima dell’unione viene scaricato automaticamente un backup JSON. Ripeti la stessa configurazione sul secondo computer.</p>
+        <div class="danger-zone"><button id="removeConfigBtn" type="button">Rimuovi configurazione da questo PC</button></div>
+      </div>
+      <div class="modal-actions"><button id="cancelSettingsBtn" type="button">Annulla</button><button class="primary" type="submit">Salva e collega</button></div>
+    </form>
+  </dialog>
+
+  <script src="https://cdn.jsdelivr.net/gh/josephsocialmedia2-spec/open-social-scheduler@aa35035a6c19b010b2d214130cb9559fe16cb3f9/cloud-sync.js"></script>
+</body>
+</html>
