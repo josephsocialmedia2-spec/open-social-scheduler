@@ -1,0 +1,14 @@
+{
+  "client": "F1 Immobiliare",
+  "api_url": "https://api.postiz.com/public/v1",
+  "expected": {
+    "facebook": "https://www.facebook.com/F1ImmobiliareValdiSusa",
+    "instagram": "https://www.instagram.com/joseph_malafronte/",
+    "youtube": "https://www.youtube.com/@F1Immobiliare",
+    "pinterest": "https://it.pinterest.com/josephmalafronte/",
+    "linkedin": "https://www.linkedin.com/in/josephmalafronte/"
+  },
+  "matches": {},
+  "integrations": [],
+  "error": "POSTIZ_API_KEY missing"
+}
