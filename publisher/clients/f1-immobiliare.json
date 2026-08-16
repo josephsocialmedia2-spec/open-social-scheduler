@@ -5,16 +5,47 @@
   "timezone": "Europe/Rome",
   "postiz_customer_name": "F1 Immobiliare",
   "brand": {
-    "status": "provisional-test-layout",
-    "logo": "",
+    "status": "premium-valle-susa-v1",
     "background": "#070907",
-    "background_alt": "#0E120F",
-    "primary": "#F5F4EF",
-    "accent": "#39F28A",
-    "accent_alt": "#20CE70",
-    "muted": "#AEB7B0",
-    "font_title": "DejaVu Sans Bold",
+    "background_alt": "#0D1711",
+    "primary": "#F7F7F4",
+    "accent": "#92C205",
+    "accent_alt": "#75A700",
+    "gold": "#C8A15A",
+    "muted": "#C7CDC8",
+    "font_title": "DejaVu Serif",
     "font_body": "DejaVu Sans",
+    "renderer": "premium_photo",
+    "logo_vectors": {
+      "viewbox": [0, 0, 500, 500],
+      "green": [
+        [[449,186],[394,186],[304,247],[361,247],[377,236],[382,235],[340,359],[396,359]],
+        [[335,175],[223,104],[157,147],[154,128],[131,129],[131,163],[52,218],[85,221],[105,301],[107,295],[91,212],[78,210],[223,114],[319,175]]
+      ],
+      "white": [
+        [[362,191],[350,186],[191,186],[173,192],[158,205],[91,358],[140,356],[172,293],[285,293],[343,256],[183,256],[190,237],[200,226],[311,225]]
+      ]
+    },
+    "photo_sources": [
+      {
+        "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/View_of_Sacra_di_San_Michele_%282%29.jpg?width=2400",
+        "credit": "Foto: Tournasol7 / Wikimedia Commons · CC BY 4.0"
+      },
+      {
+        "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Val_di_Susa_from_Sacra_di_San_Michele.jpg?width=2400",
+        "credit": "Foto: Marie-Lan Taÿ Pamart / Wikimedia Commons · CC BY 4.0"
+      },
+      {
+        "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Lago_Grande_di_Avigliana_%281%29.jpg?width=2400",
+        "credit": "Foto: Tournasol7 / Wikimedia Commons · CC BY 4.0"
+      }
+    ],
+    "voice": {
+      "enabled": true,
+      "engine": "piper",
+      "model": "it_IT-paola-medium",
+      "length_scale": 1.04
+    },
     "reel": {
       "width": 1080,
       "height": 1920,
@@ -22,10 +53,14 @@
       "safe_bottom": 260,
       "slides": 7,
       "seconds_per_slide": 2.8
+    },
+    "carousel": {
+      "width": 1080,
+      "height": 1350
     }
   },
   "campaign": {
-    "name": "Valutazioni immobiliari gratuite",
+    "name": "F1 Mental Availability · Valle di Susa",
     "cta": "Scrivi VALORE in privato",
     "keyword": "VALORE",
     "territories": [
@@ -41,10 +76,28 @@
       "Villar Focchiardo"
     ]
   },
+  "approval": {
+    "required": true,
+    "mode": "iso_week",
+    "file": "publisher/approvals/f1-immobiliare.json"
+  },
+  "planning": {
+    "horizon_days": 7
+  },
   "publishing": {
     "require_media": true,
     "slots": ["09:00", "12:30", "17:30", "20:30"],
-    "platforms": ["facebook", "instagram", "tiktok", "linkedin-page", "youtube", "pinterest"]
+    "formats": {
+      "attract": "reel",
+      "nurture": "carousel",
+      "hyperlocal": "reel",
+      "convert": "carousel"
+    },
+    "platforms": ["facebook", "instagram", "tiktok", "linkedin-page", "youtube", "pinterest"],
+    "platforms_by_format": {
+      "reel": ["facebook", "instagram", "tiktok", "linkedin-page", "youtube"],
+      "carousel": ["facebook", "instagram", "linkedin-page", "pinterest"]
+    }
   },
   "integrations": {
     "facebook": {"id": "", "required": true},
