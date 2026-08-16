@@ -1,4 +1,4 @@
-name: Open Social Engine Daily
+name: Open Social Engine Daily - Prepare Only
 
 on:
   workflow_dispatch:
@@ -14,7 +14,6 @@ on:
       - '.github/workflows/social-engine-daily.yml'
       - 'publisher/build_daily_queue.py'
       - 'publisher/render_reels.py'
-      - 'publisher/postiz_publish.py'
       - 'publisher/requirements.txt'
       - 'publisher/clients/**'
       - 'publisher/content_bank/**'
@@ -22,18 +21,17 @@ on:
 
 permissions:
   contents: write
+  issues: write
 
 concurrency:
   group: open-social-engine-daily
   cancel-in-progress: false
 
 jobs:
-  build-render-publish:
+  build-render-prepare:
     runs-on: ubuntu-latest
     timeout-minutes: 35
     env:
-      POSTIZ_API_KEY: ${{ secrets.POSTIZ_API_KEY }}
-      POSTIZ_API_URL: ${{ vars.POSTIZ_API_URL || 'https://api.postiz.com/public/v1' }}
       SOCIAL_DATE: ${{ inputs.date }}
       SOCIAL_START_OFFSET_DAYS: ${{ github.event_name == 'schedule' && '0' || '1' }}
       PIPER_DATA_DIR: ${{ github.workspace }}/.cache/piper
@@ -88,7 +86,7 @@ jobs:
       - name: Render premium reels and carousels
         run: python publisher/render_reels.py
 
-      - name: Reconcile approval, media and integrations
+      - name: Reconcile approval and media state
         shell: bash
         run: |
           if [ -n "${SOCIAL_DATE:-}" ]; then
@@ -106,21 +104,64 @@ jobs:
           if-no-files-found: ignore
           retention-days: 7
 
-      - name: Publish or schedule approved jobs through Postiz
-        run: python publisher/postiz_publish.py
-
-      - name: Persist queue state
+      - name: Persist prepared queue
         if: always()
         shell: bash
         run: |
           if git diff --quiet -- publisher/queue.json; then
             echo 'Queue unchanged.'
-            exit 0
+          else
+            git config user.name 'open-social-engine'
+            git config user.email 'open-social-engine@users.noreply.github.com'
+            git add publisher/queue.json
+            git commit -m 'Prepare approval-gated social queue'
+            git fetch origin main
+            git rebase origin/main
+            git push origin HEAD:main
           fi
-          git config user.name 'open-social-engine'
-          git config user.email 'open-social-engine@users.noreply.github.com'
-          git add publisher/queue.json
-          git commit -m 'Update approval-gated social queue'
-          git fetch origin main
-          git rebase origin/main
-          git push origin HEAD:main
+
+      - name: Resolve Rome week
+        id: week
+        shell: bash
+        run: |
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          from datetime import datetime
+          from zoneinfo import ZoneInfo
+          now = datetime.now(ZoneInfo('Europe/Rome'))
+          iso = now.date().isocalendar()
+          print(f"key={iso.year}-W{iso.week:02d}")
+          print(f"monday={'true' if now.weekday() == 0 else 'false'}")
+          print(f"date={now.date().isoformat()}")
+          PY
+
+      - name: Request one weekly confirmation
+        if: steps.week.outputs.monday == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const key = '${{ steps.week.outputs.key }}';
+            const title = `[SOCIAL-WEEK] ${key} - conferma richiesta`;
+            const existing = await github.paginate(github.rest.issues.listForRepo, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'all',
+              per_page: 100
+            });
+            if (existing.some(i => i.title === title)) {
+              core.info(`Approval issue already exists: ${title}`);
+              return;
+            }
+            const repoUrl = `https://github.com/${context.repo.owner}/${context.repo.repo}`;
+            const body = [
+              `GitHub ha preparato il pacchetto social per **${key}**.`,
+              '',
+              '**Nessun contenuto viene pubblicato prima della tua conferma.**',
+              '',
+              `1. Controlla i contenuti: ${repoUrl}/actions/workflows/social-engine-daily.yml`,
+              `2. Se va bene, rispondi a questa issue scrivendo esattamente: **CONFERMO**`,
+              '',
+              'Dopo CONFERMO, gli slot approvati vengono pubblicati automaticamente alle loro scadenze tramite le API ufficiali configurate.',
+              '',
+              'Per bloccare i contenuti non ancora pubblicati della settimana puoi scrivere **REVOCA**.'
+            ].join('\n');
+            await github.rest.issues.create({owner: context.repo.owner, repo: context.repo.repo, title, body});
