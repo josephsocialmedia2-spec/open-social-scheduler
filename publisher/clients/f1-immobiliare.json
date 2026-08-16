@@ -12,8 +12,32 @@
     "linkedin": "https://www.linkedin.com/in/josephmalafronte/",
     "pinterest": "https://it.pinterest.com/josephmalafronte/"
   },
+  "editorial": {
+    "source_chat_url": "https://chatgpt.com/c/6a814ec3-80cc-83eb-b9b6-a56f02c348e8",
+    "positioning": "F1 IMMOBILIARE = NON A SENSAZIONE. CON I DATI.",
+    "master_line": "Prima i dati. Poi la strategia. Poi la vendita.",
+    "mental_associations": [
+      "Devo vendere casa → F1",
+      "Quanto vale casa mia? → F1",
+      "Non voglio sbagliare prezzo → F1",
+      "Casa non si vende → F1",
+      "Voglio capire il mercato → F1"
+    ],
+    "fixed_phrases": [
+      "Non a sensazione. Con i dati.",
+      "Prima i dati. Poi la strategia. Poi la vendita.",
+      "Il prezzo non si indovina. Si verifica.",
+      "Vendere bene comincia prima dell'annuncio.",
+      "Non devi credere alla nostra valutazione. Devi poterla capire."
+    ],
+    "reel_sequence": ["interruzione", "problema", "spiegazione", "prova", "regola_f1", "cta"],
+    "primary_offer": "Analisi strategica del valore del tuo immobile",
+    "offer_detail": "Comparabili. Microzona. Concorrenza. Domanda. Strategia di prezzo.",
+    "offer_note": "Gratuita e senza impegno.",
+    "final_signature": ["F1 IMMOBILIARE", "NON A SENSAZIONE.", "CON I DATI.", "371 370 8294"]
+  },
   "brand": {
-    "status": "premium-valle-susa-v1",
+    "status": "premium-valle-susa-v2",
     "background": "#070907",
     "background_alt": "#0D1711",
     "primary": "#F7F7F4",
@@ -68,9 +92,10 @@
     }
   },
   "campaign": {
-    "name": "F1 Mental Availability · Valle di Susa",
-    "cta": "Scrivi VALORE in privato",
-    "keyword": "VALORE",
+    "name": "F1 · Non a sensazione. Con i dati.",
+    "cta": "Scrivi VALUTAZIONE in privato",
+    "keyword": "VALUTAZIONE",
+    "phone": "371 370 8294",
     "territories": [
       "Condove",
       "Avigliana",
@@ -96,18 +121,28 @@
     "backend": "direct_api",
     "secret_prefix": "F1",
     "require_media": true,
-    "slots": ["09:00", "12:30", "17:30", "20:30"],
+    "slots": ["08:00", "12:30", "17:30", "20:30"],
+    "categories": ["data", "error", "proof", "decision"],
     "formats": {
-      "attract": "reel",
-      "nurture": "carousel",
-      "hyperlocal": "reel",
-      "convert": "carousel"
+      "data": "reel",
+      "error": "reel",
+      "proof": "carousel",
+      "decision": "carousel"
     },
     "platforms": ["facebook", "instagram", "tiktok", "linkedin", "youtube", "pinterest"],
     "platforms_by_format": {
       "reel": ["facebook", "instagram", "tiktok", "linkedin", "youtube"],
       "carousel": ["facebook", "instagram", "linkedin", "pinterest"]
     }
+  },
+  "group_safety": {
+    "priority": "account_protection",
+    "mass_posting": false,
+    "mass_friend_requests": false,
+    "duplicate_blasts": false,
+    "rotate_groups": true,
+    "respect_group_rules": true,
+    "pause_on_rejection_or_moderation": true
   },
   "integrations": {
     "facebook": {"id": "direct-api", "required": true},
