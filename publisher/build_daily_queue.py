@@ -2,7 +2,7 @@
 """Build/reconcile a multi-client publishing queue with explicit approval gates.
 
 The engine may prepare and render content before approval, but a job cannot become
-ready for Postiz until its approval key has been explicitly approved.
+ready for publishing until its approval key has been explicitly approved.
 """
 
 from __future__ import annotations
@@ -19,7 +19,7 @@ ROOT = Path(__file__).resolve().parents[1]
 CLIENT_DIR = ROOT / "publisher" / "clients"
 BANK_DIR = ROOT / "publisher" / "content_bank"
 QUEUE_PATH = ROOT / "publisher" / "queue.json"
-CATEGORIES = ["attract", "nurture", "hyperlocal", "convert"]
+DEFAULT_CATEGORIES = ["attract", "nurture", "hyperlocal", "convert"]
 _APPROVAL_CACHE: dict[str, dict[str, Any]] = {}
 
 
@@ -149,15 +149,19 @@ def build_for_client(client: dict[str, Any], target: date) -> list[dict[str, Any
         return []
     bank = load_json(bank_path)
     tz = ZoneInfo(client.get("timezone", "UTC"))
-    slots = client.get("publishing", {}).get("slots", [])
-    formats = client.get("publishing", {}).get("formats", {})
+    publishing = client.get("publishing", {})
+    slots = publishing.get("slots", [])
+    categories = publishing.get("categories", DEFAULT_CATEGORIES)
+    if not isinstance(categories, list) or not categories:
+        categories = DEFAULT_CATEGORIES
+    formats = publishing.get("formats", {})
     territories = client.get("campaign", {}).get("territories", []) or [""]
     ordinal = target.toordinal()
     territory = territories[ordinal % len(territories)]
     approval_key = approval_key_for_date(client, target)
 
     jobs: list[dict[str, Any]] = []
-    for idx, category in enumerate(CATEGORIES):
+    for idx, category in enumerate(categories):
         if idx >= len(slots):
             break
         items = bank.get(category, [])
@@ -168,6 +172,7 @@ def build_for_client(client: dict[str, Any], target: date) -> list[dict[str, Any
             "territory": territory,
             "cta": client.get("campaign", {}).get("cta", ""),
             "client": client.get("name", client_id),
+            "phone": str(client.get("campaign", {}).get("phone") or ""),
         }
         item = replace_tokens(item, tokens)
         hh, mm = [int(x) for x in slots[idx].split(":", 1)]
@@ -190,6 +195,7 @@ def build_for_client(client: dict[str, Any], target: date) -> list[dict[str, Any
             "client_id": client_id,
             "client_name": client.get("name", client_id),
             "category": category,
+            "editorial_role": category,
             "format": content_format,
             "title": item.get("title", ""),
             "caption": item.get("caption", ""),
