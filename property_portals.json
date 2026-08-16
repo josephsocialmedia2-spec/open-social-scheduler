@@ -1,0 +1,118 @@
+{
+  "version": 1,
+  "policy": {
+    "mode": "manual_only",
+    "rule": "Nessun immobile e considerato completamente distribuito finche ogni canale previsto non ha uno stato verificato.",
+    "allowed_statuses": [
+      "DA_PUBBLICARE",
+      "PUBBLICATO",
+      "IN_REVISIONE",
+      "DA_CORREGGERE",
+      "NON_COMPATIBILE",
+      "INDICIZZATO",
+      "NON_INDICIZZATO",
+      "RIMOSSO",
+      "VENDUTO"
+    ]
+  },
+  "preflight": [
+    "Titolo definitivo approvato",
+    "Descrizione definitiva approvata",
+    "Prezzo identico su tutti i portali",
+    "Comune, indirizzo e microzona coerenti",
+    "Metratura e locali coerenti",
+    "Piano, ascensore, bagni e riscaldamento coerenti",
+    "Classe energetica e dati disponibili verificati",
+    "Foto definitive ordinate",
+    "Planimetria pronta se prevista",
+    "Video/virtual tour pronto se previsto",
+    "Contatti F1 corretti",
+    "Privacy indirizzo impostata come deciso"
+  ],
+  "portals": [
+    {
+      "id": "immobiliare-it",
+      "name": "Immobiliare.it",
+      "mode": "DIRECT_MANUAL",
+      "url": "https://www.immobiliare.it/pubblica-annuncio/",
+      "required_action": "Pubblicare manualmente e registrare URL annuncio + data pubblicazione."
+    },
+    {
+      "id": "idealista",
+      "name": "Idealista",
+      "mode": "DIRECT_MANUAL",
+      "url": "https://www.idealista.it/info/pubblica-annuncio",
+      "required_action": "Pubblicare manualmente e registrare URL annuncio + data pubblicazione."
+    },
+    {
+      "id": "casa-it",
+      "name": "Casa.it",
+      "mode": "DIRECT_MANUAL",
+      "url": "https://www.casa.it/pubblica-annunci",
+      "required_action": "Accedere con il profilo corretto, pubblicare manualmente e registrare URL + data."
+    },
+    {
+      "id": "subito",
+      "name": "Subito.it - Immobili",
+      "mode": "DIRECT_MANUAL",
+      "url": "https://www.subito.it/",
+      "required_action": "Pubblicare manualmente nella categoria Immobili e registrare URL + data."
+    },
+    {
+      "id": "trovacasa",
+      "name": "TrovaCasa",
+      "mode": "DIRECT_OR_ACCOUNT_CHECK",
+      "url": "https://www.trovacasa.it/da-privati",
+      "required_action": "Verificare il tipo di account ammesso per F1; se compatibile pubblicare e registrare URL, altrimenti segnare NON_COMPATIBILE con nota."
+    },
+    {
+      "id": "casadaprivato",
+      "name": "CasaDaPrivato.it",
+      "mode": "ACCOUNT_RULE_CHECK",
+      "url": "https://www.casadaprivato.it/pubblica-annuncio",
+      "required_action": "Non pubblicare come agenzia/professionista se le regole non lo consentono. Verificare prima il tipo account e documentare l'esito."
+    },
+    {
+      "id": "clickcase",
+      "name": "ClickCase.it",
+      "mode": "ACCOUNT_RULE_CHECK",
+      "url": "https://www.clickcase.it/annuncio",
+      "required_action": "Verificare prima se l'uso professionale e consentito; in caso contrario segnare NON_COMPATIBILE."
+    },
+    {
+      "id": "caasa",
+      "name": "Caasa.it",
+      "mode": "INDEX_CHECK",
+      "url": "https://www.caasa.it/",
+      "required_action": "Caasa indicizza annunci da altre fonti: verificare che l'immobile compaia dopo la pubblicazione sui portali sorgente e registrare il link trovato."
+    },
+    {
+      "id": "habitania",
+      "name": "Habitania",
+      "mode": "DISTRIBUTION_CHECK",
+      "url": "https://www.habitania.com/it/",
+      "required_action": "Verificare presenza/distribuzione dell'annuncio. Se non esiste un percorso di inserimento compatibile, non simulare una pubblicazione: registrare l'esito."
+    },
+    {
+      "id": "mitula",
+      "name": "Mitula Immobiliare",
+      "mode": "INDEX_CHECK",
+      "url": "https://immobiliare.mitula.it/casa",
+      "required_action": "Verificare che l'annuncio sia indicizzato da una fonte gia pubblicata e registrare il link trovato."
+    },
+    {
+      "id": "wikicasa",
+      "name": "Wikicasa",
+      "mode": "DIRECT_MANUAL",
+      "url": "https://www.wikicasa.it/pubblica-privato",
+      "required_action": "Usare il percorso/account corretto per F1, pubblicare manualmente e registrare URL + data."
+    },
+    {
+      "id": "trovit",
+      "name": "Trovit Case",
+      "mode": "INDEX_CHECK",
+      "url": "https://case.trovit.it/",
+      "required_action": "Trovit aggrega annunci da altri siti: verificare indicizzazione e registrare il link trovato."
+    }
+  ]
+}
