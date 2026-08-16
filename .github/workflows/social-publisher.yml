@@ -36,7 +36,7 @@ jobs:
       GH_TOKEN: ${{ github.token }}
       GITHUB_TOKEN: ${{ github.token }}
       META_GRAPH_VERSION: ${{ vars.META_GRAPH_VERSION || 'v23.0' }}
-      LINKEDIN_VERSION: ${{ vars.LINKEDIN_VERSION || '202601' }}
+      LINKEDIN_VERSION: ${{ vars.LINKEDIN_VERSION || '202604' }}
       TIKTOK_PRIVACY_LEVEL: ${{ vars.TIKTOK_PRIVACY_LEVEL || 'SELF_ONLY' }}
       YOUTUBE_PRIVACY_STATUS: ${{ vars.YOUTUBE_PRIVACY_STATUS || 'private' }}
       YOUTUBE_CATEGORY_ID: ${{ vars.YOUTUBE_CATEGORY_ID || '22' }}
@@ -107,7 +107,7 @@ jobs:
           ARGS=(--platforms "${{ inputs.platforms || 'all' }}" --strict)
           if [ -n "${{ inputs.job_id }}" ]; then ARGS+=(--job-id "${{ inputs.job_id }}"); fi
           if [ "${{ inputs.dry_run }}" = "true" ]; then ARGS+=(--dry-run); fi
-          python publisher/direct_api_publish.py "${ARGS[@]}"
+          python publisher/direct_api_entry.py "${ARGS[@]}"
 
       - name: Persist publication state
         if: always()
