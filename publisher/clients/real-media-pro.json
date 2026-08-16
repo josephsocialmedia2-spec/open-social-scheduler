@@ -1,7 +1,7 @@
 {
   "id": "real-media-pro",
   "name": "Real Media Pro",
-  "active": false,
+  "active": true,
   "timezone": "Europe/Rome",
   "brand": {
     "status": "performance-agency-v2",
@@ -24,20 +24,7 @@
     "cta": "Richiedi un'analisi strategica gratuita",
     "keyword": "ANALISI",
     "territories": ["Torino", "Rivoli", "Avigliana", "Valle di Susa"],
-    "content_pillars": [
-      "audit_digitale",
-      "shopify_ecommerce",
-      "conversion_rate_optimization",
-      "meta_ads",
-      "google_ads",
-      "seo_aeo",
-      "landing_page",
-      "crm_automazioni",
-      "creative_testing",
-      "case_study",
-      "prima_dopo",
-      "dietro_le_quinte"
-    ],
+    "content_pillars": ["audit_digitale","shopify_ecommerce","conversion_rate_optimization","meta_ads","google_ads","seo_aeo","landing_page","crm_automazioni","creative_testing","case_study","prima_dopo","dietro_le_quinte"],
     "shopify_public_sources": [
       "https://f1immobiliare.com/pages/partner-pubblicitario-e-tecnologico",
       "https://f1immobiliare.com/pages/strategia-digitale",
@@ -59,11 +46,7 @@
       "avoid_fake_roas_or_revenue": true
     }
   },
-  "approval": {
-    "required": true,
-    "mode": "iso_week",
-    "file": "publisher/approvals/real-media-pro.json"
-  },
+  "approval": {"required": true,"mode": "iso_week","file": "publisher/approvals/real-media-pro.json"},
   "planning": {"horizon_days": 7},
   "publishing": {
     "backend": "direct_api",
@@ -72,10 +55,7 @@
     "slots": ["09:15", "12:45", "17:45", "20:45"],
     "formats": {"attract": "reel", "nurture": "carousel", "hyperlocal": "reel", "convert": "carousel"},
     "platforms": ["facebook", "instagram", "tiktok", "linkedin", "youtube", "pinterest"],
-    "platforms_by_format": {
-      "reel": ["facebook", "instagram", "tiktok", "linkedin", "youtube"],
-      "carousel": ["facebook", "instagram", "linkedin", "pinterest"]
-    }
+    "platforms_by_format": {"reel": ["facebook", "instagram", "tiktok", "linkedin", "youtube"],"carousel": ["facebook", "instagram", "linkedin", "pinterest"]}
   },
   "integrations": {
     "facebook": {"id": "direct-api", "required": true},
