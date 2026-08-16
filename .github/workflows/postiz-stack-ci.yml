@@ -1,0 +1,41 @@
+name: Validate Postiz Stack
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/postiz-stack-ci.yml'
+      - 'postiz-stack/**'
+
+permissions:
+  contents: read
+
+jobs:
+  clone-and-validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout Open Social Scheduler
+        uses: actions/checkout@v4
+
+      - name: Clone pinned Postiz upstream
+        env:
+          POSTIZ_VERSION: v2.22.1
+        run: bash postiz-stack/bootstrap_postiz.sh
+
+      - name: Verify upstream license and release
+        run: |
+          grep -q 'GNU AFFERO GENERAL PUBLIC LICENSE' postiz-stack/vendor/postiz-app/LICENSE
+          test "$(git -C postiz-stack/vendor/postiz-app describe --tags --exact-match)" = 'v2.22.1'
+
+      - name: Validate composed Docker configuration
+        run: |
+          cp postiz-stack/postiz.env.example postiz-stack/postiz.env
+          sed -i 's#https://social.example.com#https://social.test.example#g' postiz-stack/postiz.env
+          sed -i 's#CHANGE_ME_WITH_A_LONG_RANDOM_SECRET#ci-only-long-random-secret-not-for-production#g' postiz-stack/postiz.env
+          docker compose \
+            --env-file postiz-stack/postiz.env \
+            -f postiz-stack/vendor/postiz-docker-compose/docker-compose.yaml \
+            -f postiz-stack/docker-compose.override.yml \
+            config >/dev/null
+          echo 'Postiz clone and Docker Compose overlay validated.'
