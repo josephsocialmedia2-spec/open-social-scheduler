@@ -1,40 +1,69 @@
-name: Open Social Publisher - Manual Approval
+name: Publish Social - CONFIRM REQUIRED
 
 on:
   workflow_dispatch:
+    inputs:
+      job_id:
+        description: 'Exact queue job ID to publish'
+        required: true
+        type: string
+      platforms:
+        description: 'all or comma-separated: facebook,instagram,tiktok,linkedin,youtube,pinterest'
+        required: true
+        default: 'all'
+        type: string
+      confirm:
+        description: 'I confirm publication of this job'
+        required: true
+        default: false
+        type: boolean
+      dry_run:
+        description: 'Check credentials only; do not publish'
+        required: true
+        default: true
+        type: boolean
 
 permissions:
   contents: write
 
 concurrency:
-  group: open-social-publisher
+  group: direct-social-publisher
   cancel-in-progress: false
 
 jobs:
   publish:
+    if: ${{ inputs.confirm == true }}
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 30
     env:
-      POSTIZ_API_KEY: ${{ secrets.POSTIZ_API_KEY }}
-      POSTIZ_API_URL: ${{ vars.POSTIZ_API_URL || 'https://api.postiz.com/public/v1' }}
+      FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.FACEBOOK_PAGE_ACCESS_TOKEN }}
+      INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
+      INSTAGRAM_USER_ID: ${{ secrets.INSTAGRAM_USER_ID }}
+      TIKTOK_ACCESS_TOKEN: ${{ secrets.TIKTOK_ACCESS_TOKEN }}
+      TIKTOK_PRIVACY_LEVEL: ${{ vars.TIKTOK_PRIVACY_LEVEL || 'PUBLIC_TO_EVERYONE' }}
+      LINKEDIN_ACCESS_TOKEN: ${{ secrets.LINKEDIN_ACCESS_TOKEN }}
+      LINKEDIN_AUTHOR_URN: ${{ secrets.LINKEDIN_AUTHOR_URN }}
+      LINKEDIN_VERSION: ${{ vars.LINKEDIN_VERSION || '202601' }}
+      YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
+      YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
+      YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
+      YOUTUBE_PRIVACY_STATUS: ${{ vars.YOUTUBE_PRIVACY_STATUS || 'private' }}
+      PINTEREST_ACCESS_TOKEN: ${{ secrets.PINTEREST_ACCESS_TOKEN }}
+      PINTEREST_BOARD_ID: ${{ secrets.PINTEREST_BOARD_ID }}
+      PINTEREST_LINK: ${{ vars.PINTEREST_LINK }}
+      META_GRAPH_VERSION: ${{ vars.META_GRAPH_VERSION || 'v23.0' }}
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Check publisher configuration
-        id: config
+      - name: Require explicit confirmation
         shell: bash
         run: |
-          if [ -z "$POSTIZ_API_KEY" ]; then
-            echo "configured=false" >> "$GITHUB_OUTPUT"
-            echo "POSTIZ_API_KEY is not configured yet. Publisher remains safely disabled."
-          else
-            echo "configured=true" >> "$GITHUB_OUTPUT"
-          fi
+          test "${{ inputs.confirm }}" = "true"
+          echo "Confirmed job: ${{ inputs.job_id }}"
 
-      - name: Set up Python
-        if: steps.config.outputs.configured == 'true'
+      - name: Python 3.12
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -42,25 +71,99 @@ jobs:
           cache-dependency-path: publisher/requirements.txt
 
       - name: Install dependencies
-        if: steps.config.outputs.configured == 'true'
-        run: pip install -r publisher/requirements.txt
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg fonts-dejavu-core
+          pip install -r publisher/requirements.txt
 
-      - name: Submit ready jobs to Postiz
-        if: steps.config.outputs.configured == 'true'
-        run: python publisher/postiz_publish.py
-
-      - name: Persist queue state
-        if: steps.config.outputs.configured == 'true' && always()
+      - name: Validate requested job
         shell: bash
         run: |
-          if git diff --quiet -- publisher/queue.json; then
-            echo 'Queue unchanged.'
-            exit 0
-          fi
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          job_id = "${{ inputs.job_id }}"
+          q = json.loads(Path('publisher/queue.json').read_text())
+          job = next((j for j in q.get('jobs', []) if j.get('id') == job_id), None)
+          if not job:
+              raise SystemExit(f'Unknown job_id: {job_id}')
+          if job.get('status') in {'published', 'disabled'}:
+              raise SystemExit(f"Job is {job.get('status')}; refusing duplicate publication")
+          print(json.dumps(job, ensure_ascii=False, indent=2))
+          PY
+
+      - name: Render approved media only if missing
+        run: python publisher/render_reels.py
+
+      - name: Locate approved media
+        id: media
+        shell: bash
+        run: |
+          MEDIA_PATH=$(python - <<'PY'
+          import json
+          from pathlib import Path
+          job_id = "${{ inputs.job_id }}"
+          q = json.loads(Path('publisher/queue.json').read_text())
+          job = next(j for j in q['jobs'] if j['id'] == job_id)
+          print(job['media'])
+          PY
+          )
+          test -f "$MEDIA_PATH"
+          SAFE_NAME=$(printf '%s' "${{ inputs.job_id }}" | tr -cs 'A-Za-z0-9._-' '-')
+          PUBLIC_NAME="${SAFE_NAME}.mp4"
+          cp "$MEDIA_PATH" "/tmp/$PUBLIC_NAME"
+          echo "path=$MEDIA_PATH" >> "$GITHUB_OUTPUT"
+          echo "public_name=$PUBLIC_NAME" >> "$GITHUB_OUTPUT"
+
+      - name: Publish temporary public media asset for Instagram
+        if: ${{ inputs.dry_run == false && (inputs.platforms == 'all' || contains(inputs.platforms, 'instagram')) }}
+        id: public_media
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          TAG="social-media-cache"
+          NAME="${{ steps.media.outputs.public_name }}"
+          gh release view "$TAG" >/dev/null 2>&1 || gh release create "$TAG" --title "Social media temporary cache" --notes "Temporary assets used by approved social publishing workflows."
+          gh release delete-asset "$TAG" "$NAME" -y >/dev/null 2>&1 || true
+          gh release upload "$TAG" "/tmp/$NAME#$NAME" --clobber
+          URL="https://github.com/${GITHUB_REPOSITORY}/releases/download/${TAG}/${NAME}"
+          for i in $(seq 1 12); do
+            if curl -fsSI --max-time 15 "$URL" >/dev/null; then break; fi
+            sleep 5
+          done
+          curl -fsSI --max-time 20 "$URL" >/dev/null
+          echo "url=$URL" >> "$GITHUB_OUTPUT"
+
+      - name: Direct API dry run
+        if: ${{ inputs.dry_run == true }}
+        env:
+          APPROVED_MEDIA_PUBLIC_URL: https://example.invalid/dry-run.mp4
+        run: python publisher/direct_api_publish.py --job-id "${{ inputs.job_id }}" --platforms "${{ inputs.platforms }}" --dry-run
+
+      - name: DIRECT PUBLISH after confirmation
+        if: ${{ inputs.dry_run == false }}
+        env:
+          APPROVED_MEDIA_PUBLIC_URL: ${{ steps.public_media.outputs.url }}
+        run: python publisher/direct_api_publish.py --job-id "${{ inputs.job_id }}" --platforms "${{ inputs.platforms }}"
+
+      - name: Remove temporary Instagram asset
+        if: ${{ always() && inputs.dry_run == false && (inputs.platforms == 'all' || contains(inputs.platforms, 'instagram')) }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          gh release delete-asset social-media-cache "${{ steps.media.outputs.public_name }}" -y >/dev/null 2>&1 || true
+
+      - name: Persist queue publication state
+        if: ${{ always() }}
+        shell: bash
+        run: |
+          if git diff --quiet -- publisher/queue.json; then exit 0; fi
           git config user.name 'open-social-engine'
           git config user.email 'open-social-engine@users.noreply.github.com'
           git add publisher/queue.json
-          git commit -m 'Update social publishing queue state'
-          git fetch origin main
-          git rebase origin/main
-          git push origin HEAD:main
+          git commit -m "Record direct social publication state"
+          git fetch origin "${GITHUB_REF_NAME}"
+          git rebase "origin/${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
