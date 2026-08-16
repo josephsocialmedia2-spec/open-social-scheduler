@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
-"""Build/reconcile a daily multi-client publishing queue.
+"""Build/reconcile a multi-client publishing queue with explicit approval gates.
 
-The script is deterministic: no external AI call is required to keep the schedule
-alive. Each client can provide a rotating content bank. Rendering and publishing
-are separate stages, so missing media or OAuth connections never cause accidental
-text-only publication.
+The engine may prepare and render content before approval, but a job cannot become
+ready for Postiz until its approval key has been explicitly approved.
 """
 
 from __future__ import annotations
@@ -12,7 +10,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 from pathlib import Path
 from typing import Any
 from zoneinfo import ZoneInfo
@@ -22,6 +20,7 @@ CLIENT_DIR = ROOT / "publisher" / "clients"
 BANK_DIR = ROOT / "publisher" / "content_bank"
 QUEUE_PATH = ROOT / "publisher" / "queue.json"
 CATEGORIES = ["attract", "nurture", "hyperlocal", "convert"]
+_APPROVAL_CACHE: dict[str, dict[str, Any]] = {}
 
 
 def load_json(path: Path) -> dict[str, Any]:
@@ -67,11 +66,19 @@ def parse_target_date(raw: str | None, tz: ZoneInfo) -> date:
     return datetime.now(tz).date()
 
 
-def integration_specs(client: dict[str, Any]) -> tuple[list[dict[str, Any]], list[str]]:
+def format_platforms(client: dict[str, Any], content_format: str | None = None) -> list[str]:
+    publishing = client.get("publishing", {})
+    by_format = publishing.get("platforms_by_format", {})
+    if content_format and isinstance(by_format.get(content_format), list):
+        return list(by_format[content_format])
+    return list(publishing.get("platforms", []))
+
+
+def integration_specs(client: dict[str, Any], content_format: str | None = None) -> tuple[list[dict[str, Any]], list[str]]:
     configured: list[dict[str, Any]] = []
     missing_required: list[str] = []
     integrations = client.get("integrations", {})
-    for platform in client.get("publishing", {}).get("platforms", []):
+    for platform in format_platforms(client, content_format):
         cfg = integrations.get(platform, {})
         integration_id = str(cfg.get("id") or "").strip()
         if integration_id:
@@ -84,13 +91,50 @@ def integration_specs(client: dict[str, Any]) -> tuple[list[dict[str, Any]], lis
     return configured, missing_required
 
 
-def desired_status(client: dict[str, Any], job: dict[str, Any]) -> tuple[str, str | None]:
-    media = str(job.get("media") or "").strip()
-    if client.get("publishing", {}).get("require_media", True):
-        if not media or not (ROOT / media).exists():
-            return "awaiting_media", "rendered media is missing"
+def approval_key_for_date(client: dict[str, Any], target: date) -> str:
+    approval = client.get("approval", {})
+    if not approval.get("required", False):
+        return ""
+    mode = str(approval.get("mode") or "iso_week")
+    if mode == "iso_week":
+        iso = target.isocalendar()
+        return f"{iso.year}-W{iso.week:02d}"
+    return target.isoformat()
 
-    specs, missing_required = integration_specs(client)
+
+def approval_state(client: dict[str, Any], key: str) -> bool:
+    approval = client.get("approval", {})
+    if not approval.get("required", False):
+        return True
+    rel = str(approval.get("file") or "").strip()
+    if not rel:
+        return False
+    if rel not in _APPROVAL_CACHE:
+        path = ROOT / rel
+        _APPROVAL_CACHE[rel] = load_json(path) if path.exists() else {"approved": [], "revoked": []}
+    data = _APPROVAL_CACHE[rel]
+    approved = {str(x) for x in data.get("approved", [])}
+    revoked = {str(x) for x in data.get("revoked", [])}
+    return bool(key and key in approved and key not in revoked)
+
+
+def media_exists(media_value: Any) -> bool:
+    values = media_value if isinstance(media_value, list) else [media_value]
+    values = [str(v).strip() for v in values if str(v or "").strip()]
+    if not values:
+        return False
+    return all((ROOT / value).exists() for value in values)
+
+
+def desired_status(client: dict[str, Any], job: dict[str, Any]) -> tuple[str, str | None]:
+    approval_key = str(job.get("approval_key") or "")
+    if client.get("approval", {}).get("required", False) and not approval_state(client, approval_key):
+        return "awaiting_approval", f"approval required for {approval_key}"
+
+    if client.get("publishing", {}).get("require_media", True) and not media_exists(job.get("media")):
+        return "awaiting_media", "rendered media is missing"
+
+    specs, missing_required = integration_specs(client, str(job.get("format") or "reel"))
     if missing_required:
         return "awaiting_integrations", "missing required integration IDs: " + ", ".join(missing_required)
     if not specs:
@@ -106,10 +150,11 @@ def build_for_client(client: dict[str, Any], target: date) -> list[dict[str, Any
     bank = load_json(bank_path)
     tz = ZoneInfo(client.get("timezone", "UTC"))
     slots = client.get("publishing", {}).get("slots", [])
+    formats = client.get("publishing", {}).get("formats", {})
     territories = client.get("campaign", {}).get("territories", []) or [""]
     ordinal = target.toordinal()
     territory = territories[ordinal % len(territories)]
-    specs, _ = integration_specs(client)
+    approval_key = approval_key_for_date(client, target)
 
     jobs: list[dict[str, Any]] = []
     for idx, category in enumerate(CATEGORIES):
@@ -128,22 +173,37 @@ def build_for_client(client: dict[str, Any], target: date) -> list[dict[str, Any
         hh, mm = [int(x) for x in slots[idx].split(":", 1)]
         scheduled = datetime(target.year, target.month, target.day, hh, mm, tzinfo=tz)
         slug = str(item.get("slug") or f"slot-{idx + 1}")
-        media = f"publisher/media/generated/{client_id}/{target.isoformat()}/{idx + 1:02d}-{slug}.mp4"
+        content_format = str(formats.get(category) or item.get("format") or "reel").lower()
+        slides = list(item.get("slides") or [])
+        if content_format == "carousel":
+            media: Any = [
+                f"publisher/media/generated/{client_id}/{target.isoformat()}/{idx + 1:02d}-{slug}/slide-{n:02d}.jpg"
+                for n in range(1, len(slides) + 1)
+            ]
+        else:
+            media = f"publisher/media/generated/{client_id}/{target.isoformat()}/{idx + 1:02d}-{slug}.mp4"
+
+        specs, _ = integration_specs(client, content_format)
+        voiceover = str(item.get("voiceover") or item.get("caption") or item.get("title") or "")
         job = {
             "id": f"{client_id}-{target.isoformat()}-{idx + 1:02d}-{slug}",
             "client_id": client_id,
             "client_name": client.get("name", client_id),
             "category": category,
+            "format": content_format,
             "title": item.get("title", ""),
             "caption": item.get("caption", ""),
-            "slides": item.get("slides", []),
+            "voiceover": voiceover,
+            "slides": slides,
             "media": media,
             "scheduled_at": scheduled.isoformat(),
+            "approval_key": approval_key,
             "platforms": specs,
             "enabled": True,
             "status": "draft",
             "published_platforms": [],
             "postiz_results": [],
+            "video_made_with_ai": content_format == "reel",
             "created_by": "open-social-scheduler",
         }
         status, reason = desired_status(client, job)
@@ -155,6 +215,7 @@ def build_for_client(client: dict[str, Any], target: date) -> list[dict[str, Any
 
 
 def reconcile(queue: dict[str, Any], client_map: dict[str, dict[str, Any]]) -> None:
+    _APPROVAL_CACHE.clear()
     for job in queue.get("jobs", []):
         if job.get("status") in {"scheduled", "published", "disabled"}:
             continue
@@ -164,7 +225,7 @@ def reconcile(queue: dict[str, Any], client_map: dict[str, dict[str, Any]]) -> N
                 job["status"] = "blocked"
                 job["blocked_reason"] = "unknown client_id"
             continue
-        specs, _ = integration_specs(client)
+        specs, _ = integration_specs(client, str(job.get("format") or "reel"))
         job["platforms"] = specs
         status, reason = desired_status(client, job)
         job["status"] = status
@@ -176,28 +237,33 @@ def reconcile(queue: dict[str, Any], client_map: dict[str, dict[str, Any]]) -> N
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--date", help="Local calendar date YYYY-MM-DD; defaults to today per client timezone")
+    parser.add_argument("--date", help="Local calendar date YYYY-MM-DD; explicit dates build one day only")
     args = parser.parse_args()
 
-    queue = load_json(QUEUE_PATH) if QUEUE_PATH.exists() else {"version": 2, "jobs": []}
-    queue["version"] = max(int(queue.get("version", 1)), 2)
+    queue = load_json(QUEUE_PATH) if QUEUE_PATH.exists() else {"version": 3, "jobs": []}
+    queue["version"] = max(int(queue.get("version", 1)), 3)
     queue.setdefault("jobs", [])
 
     all_clients = clients()
     client_map = {c["id"]: c for c in all_clients}
     existing = {str(j.get("id")) for j in queue["jobs"]}
     added = 0
+    explicit_date = bool(args.date or os.getenv("SOCIAL_DATE", "").strip())
+    offset_days = int(os.getenv("SOCIAL_START_OFFSET_DAYS", "0") or 0)
 
     for client in all_clients:
         if not client.get("active", False):
             continue
         tz = ZoneInfo(client.get("timezone", "UTC"))
-        target = parse_target_date(args.date, tz)
-        for job in build_for_client(client, target):
-            if job["id"] not in existing:
-                queue["jobs"].append(job)
-                existing.add(job["id"])
-                added += 1
+        start = parse_target_date(args.date, tz) + timedelta(days=offset_days)
+        horizon = 1 if explicit_date else max(1, int(client.get("planning", {}).get("horizon_days", 1)))
+        for day_offset in range(horizon):
+            target = start + timedelta(days=day_offset)
+            for job in build_for_client(client, target):
+                if job["id"] not in existing:
+                    queue["jobs"].append(job)
+                    existing.add(job["id"])
+                    added += 1
 
     reconcile(queue, client_map)
     queue["updated_at"] = datetime.utcnow().isoformat(timespec="seconds") + "Z"
