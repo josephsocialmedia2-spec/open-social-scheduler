@@ -1,0 +1,22 @@
+{
+  "attract": [
+    {"slug":"invisibile-online","title":"La tua attività è online, ma viene vista?","slides":["SEI ONLINE|MA TI VEDONO?","AVERE SOCIAL|NON SIGNIFICA|ESSERE VISIBILI","SERVE UN|MESSAGGIO CHIARO","SERVE|DISTRIBUZIONE","SERVE MISURARE|COSA FUNZIONA","PARTIAMO DA|UN'ANALISI","SCRIVI|ANALISI"],"caption":"Essere presenti online non basta. Analizziamo dove perdi visibilità, attenzione e opportunità. {cta}."},
+    {"slug":"profilo-non-vende","title":"Perché il tuo profilo non porta clienti","slides":["POSTI OGNI GIORNO?|MA NON ARRIVANO|CLIENTI?","FORSE NON È|UN PROBLEMA|DI FREQUENZA","TARGET","OFFERTA","CTA E|PERCORSO","CONTROLLIAMO|IL SISTEMA","SCRIVI|ANALISI"],"caption":"Più post non correggono una strategia debole. Target, offerta, contenuto e conversione devono lavorare insieme. {cta}."},
+    {"slug":"sito-perde-lead","title":"Il tuo sito potrebbe perdere contatti","slides":["IL TUO SITO|PORTA CONTATTI?","O FA SOLO|BELLA FIGURA?","MESSAGGIO|CHIARO","PROVA SOCIALE","CTA|VISIBILE","PERCORSO|SEMPLICE","SCRIVI|ANALISI"],"caption":"Un sito efficace deve accompagnare l'utente verso un'azione concreta. Verifichiamo dove il percorso si interrompe. {cta}."}
+  ],
+  "nurture": [
+    {"slug":"audit-digitale","title":"Cosa controlliamo in un audit digitale","slides":["AUDIT DIGITALE|COSA GUARDIAMO?","POSIZIONAMENTO","SITO E|LANDING","SOCIAL E|CONTENUTI","LEAD E|FOLLOW-UP","DATI E|CONVERSIONI","SCRIVI|ANALISI"],"caption":"Un audit serio collega presenza digitale, acquisizione e conversione. Non guardiamo solo like e follower. {cta}."},
+    {"slug":"follower-non-kpi","title":"Follower e fatturato non sono la stessa cosa","slides":["PIÙ FOLLOWER|PIÙ CLIENTI?","NON SEMPRE","CONTA CHI|RAGGIUNGI","CONTA COSA|GLI DICI","CONTA COSA|SUCCEDE DOPO","MISURA|LE CONVERSIONI","SCRIVI|ANALISI"],"caption":"La crescita utile è quella che aumenta opportunità commerciali, non soltanto numeri sul profilo. {cta}."},
+    {"slug":"risposta-lead","title":"Quanto vale la velocità di risposta a un lead","slides":["ARRIVA UN LEAD","QUANTO ASPETTA?","MINUTI O|ORE?","L'INTERESSE|SCENDE","SERVE UN|FOLLOW-UP","CRM E|PROCESSO","SCRIVI|ANALISI"],"caption":"Generare lead senza un processo di risposta e follow-up significa sprecare parte dell'investimento. {cta}."}
+  ],
+  "hyperlocal": [
+    {"slug":"attivita-territorio","title":"Quanto è visibile la tua attività a {territory}?","slides":["HAI UN'ATTIVITÀ|A {territory}?","QUANDO TI|CERCANO","TI TROVANO?","GOOGLE","SOCIAL","RECENSIONI E|CONTENUTI","SCRIVI|ANALISI"],"caption":"Se lavori a {territory}, la visibilità locale deve essere verificata su Google, social, contenuti e percorso di contatto. {cta}."},
+    {"slug":"concorrenza-territorio","title":"Chi prende l'attenzione dei tuoi clienti a {territory}?","slides":["A {territory}|CHI PRENDE|L'ATTENZIONE?","GUARDA I|CONCORRENTI","MESSAGGIO","RECENSIONI","CONTENUTI","OFFERTA","SCRIVI|ANALISI"],"caption":"Il posizionamento si capisce anche confrontando come comunicano le alternative che il cliente vede a {territory}. {cta}."},
+    {"slug":"google-territorio","title":"Ti trovano su Google a {territory}?","slides":["CERCA IL TUO|SERVIZIO A|{territory}","COMPARI?","MAPPE","SITO","RECENSIONI","PAGINE LOCALI","SCRIVI|ANALISI"],"caption":"La presenza locale parte da una domanda semplice: quando una persona cerca il tuo servizio a {territory}, quanto sei visibile? {cta}."}
+  ],
+  "convert": [
+    {"slug":"analisi-gratuita","title":"Analisi strategica digitale gratuita","slides":["VUOI PIÙ|VISIBILITÀ?","NON PARTIAMO|DAI POST","PARTIAMO|DAI DATI","CAPIAMO DOVE|PERDI UTENTI","E DOVE PUOI|CRESCERE","PRIMA ANALISI|GRATUITA","SCRIVI|ANALISI"],"caption":"Ti mostriamo cosa sta funzionando e cosa sta limitando la tua presenza digitale. Prima analisi strategica gratuita. {cta}."},
+    {"slug":"tre-dati","title":"Tre dati per iniziare l'analisi","slides":["PER INIZIARE|BASTANO 3 DATI","ATTIVITÀ","ZONA","OBIETTIVO","POI ANALIZZIAMO|I CANALI","E IL PERCORSO|CLIENTE","SCRIVI|ANALISI"],"caption":"Per una prima lettura ci bastano attività, area geografica e obiettivo commerciale. Da lì analizziamo presenza e percorso cliente. {cta}."},
+    {"slug":"prima-strategia","title":"Prima della pubblicità viene la strategia","slides":["VUOI FARE|PUBBLICITÀ?","PRIMA CHIEDITI","A CHI?","CON QUALE|OFFERTA?","VERSO QUALE|PAGINA?","COME MISURI|IL RISULTATO?","SCRIVI|ANALISI"],"caption":"La pubblicità amplifica ciò che esiste già. Prima di investire, controlliamo target, offerta, pagina e misurazione. {cta}."}
+  ]
+}
