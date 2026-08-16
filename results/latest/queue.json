@@ -3,213 +3,64 @@
   "updated_by": "F1 Social Engine",
   "jobs": [
     {
-      "id": "f1-immobiliare-2026-08-16-01-quanto-vale-casa",
+      "id": "f1-immobiliare-2026-08-17-01-g2-tre-prezzi",
       "client_id": "f1-immobiliare",
       "client_name": "F1 Immobiliare",
-      "category": "attract",
-      "title": "Sai davvero quanto vale casa tua?",
-      "caption": "Sai davvero quanto vale oggi casa tua? Una valutazione corretta parte dai dati, non dalle aspettative. Scrivi VALORE in privato.",
-      "slides": [
-        "SAI DAVVERO|QUANTO VALE|CASA TUA?",
-        "IL PREZZO CHE|IMMAGINI|NON È IL MERCATO",
-        "GLI ANNUNCI ONLINE|MOSTRANO PREZZI|RICHIESTI",
-        "IL VALORE CAMBIA|PER ZONA, STATO|E CARATTERISTICHE",
-        "SERVONO DATI|NON IPOTESI",
-        "PRIMA ANALISI|GRATUITA",
-        "SCRIVI|VALORE"
-      ],
-      "media": "publisher/media/generated/f1-immobiliare/2026-08-16/01-quanto-vale-casa.mp4",
-      "scheduled_at": "2026-08-16T09:00:00+02:00",
-      "platforms": [
-        {
-          "platform": "facebook",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "instagram",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "tiktok",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "linkedin",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "youtube",
-          "integration_id": "direct-api"
-        }
-      ],
-      "enabled": true,
-      "status": "awaiting_approval",
-      "published_platforms": [],
-      "postiz_results": [],
-      "created_by": "open-social-scheduler",
-      "blocked_reason": "approval required for "
-    },
-    {
-      "id": "f1-immobiliare-2026-08-16-02-valore-emotivo",
-      "client_id": "f1-immobiliare",
-      "client_name": "F1 Immobiliare",
-      "category": "nurture",
-      "title": "Valore affettivo e valore di mercato",
-      "caption": "Il valore affettivo è importante, ma il mercato confronta alternative, condizioni e prezzi. Una valutazione serve a separare patrimonio emotivo e strategia. Scrivi VALORE in privato.",
-      "slides": [
-        "LA TUA CASA|HA UNA STORIA",
-        "PER TE|QUEL VALORE|È REALE",
-        "MA IL MERCATO|USA ALTRI|PARAMETRI",
-        "CONFRONTA|ALTERNATIVE",
-        "MISURA|DOMANDA E|PREZZO",
-        "SEPARIAMO|EMOZIONE E|STRATEGIA",
-        "SCRIVI|VALORE"
-      ],
-      "media": "publisher/media/generated/f1-immobiliare/2026-08-16/02-valore-emotivo.mp4",
-      "scheduled_at": "2026-08-16T12:30:00+02:00",
-      "platforms": [
-        {
-          "platform": "facebook",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "instagram",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "tiktok",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "linkedin",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "youtube",
-          "integration_id": "direct-api"
-        }
-      ],
-      "enabled": true,
-      "status": "awaiting_approval",
-      "published_platforms": [],
-      "postiz_results": [],
-      "created_by": "open-social-scheduler",
-      "blocked_reason": "approval required for "
-    },
-    {
-      "id": "f1-immobiliare-2026-08-16-03-garage-territorio",
-      "client_id": "f1-immobiliare",
-      "client_name": "F1 Immobiliare",
-      "category": "hyperlocal",
-      "title": "Quanto incide un garage a Caprie?",
-      "caption": "Garage, posto auto, cantina e altre pertinenze non incidono allo stesso modo in ogni zona. Vediamo il caso specifico a Caprie. Scrivi VALORE in privato.",
-      "slides": [
-        "GARAGE A|Caprie",
-        "QUANTO INCIDE|SUL VALORE?",
-        "DIPENDE DALLA|SCARSITÀ IN ZONA",
-        "DALLA|COMODITÀ",
-        "E DALLA|DOMANDA REALE",
-        "VALUTIAMO|ANCHE LE|PERTINENZE",
-        "SCRIVI|VALORE"
-      ],
-      "media": "publisher/media/generated/f1-immobiliare/2026-08-16/03-garage-territorio.mp4",
-      "scheduled_at": "2026-08-16T17:30:00+02:00",
-      "platforms": [
-        {
-          "platform": "facebook",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "instagram",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "tiktok",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "linkedin",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "youtube",
-          "integration_id": "direct-api"
-        }
-      ],
-      "enabled": true,
-      "status": "awaiting_approval",
-      "published_platforms": [],
-      "postiz_results": [],
-      "created_by": "open-social-scheduler",
-      "blocked_reason": "approval required for "
-    },
-    {
-      "id": "f1-immobiliare-2026-08-16-04-prima-del-prezzo",
-      "client_id": "f1-immobiliare",
-      "client_name": "F1 Immobiliare",
-      "category": "convert",
-      "title": "Prima del prezzo viene l'analisi",
-      "caption": "Il prezzo è la conclusione dell'analisi, non il punto di partenza. Scrivi VALORE in privato.",
-      "slides": [
-        "NON PARTIAMO|DAL PREZZO",
-        "PARTIAMO|DALL'IMMOBILE",
-        "DAL MERCATO",
-        "DALLA|CONCORRENZA",
-        "E DAL|COMPRATORE",
-        "POI COSTRUIAMO|IL PRICING",
-        "SCRIVI|VALORE"
-      ],
-      "media": "publisher/media/generated/f1-immobiliare/2026-08-16/04-prima-del-prezzo.mp4",
-      "scheduled_at": "2026-08-16T20:30:00+02:00",
-      "platforms": [
-        {
-          "platform": "facebook",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "instagram",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "tiktok",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "linkedin",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "youtube",
-          "integration_id": "direct-api"
-        }
-      ],
-      "enabled": true,
-      "status": "awaiting_approval",
-      "published_platforms": [],
-      "postiz_results": [],
-      "created_by": "open-social-scheduler",
-      "blocked_reason": "approval required for "
-    },
-    {
-      "id": "f1-immobiliare-2026-08-17-01-errore-portali",
-      "client_id": "f1-immobiliare",
-      "client_name": "F1 Immobiliare",
-      "category": "attract",
+      "category": "data",
+      "editorial_role": "data",
       "format": "reel",
-      "title": "L'errore più comune nel decidere il prezzo",
-      "caption": "Il prezzo di un annuncio non coincide automaticamente con il valore di mercato. Prima di pubblicare, confrontiamo dati e immobili realmente comparabili. Scrivi VALORE in privato.",
-      "voiceover": "Il prezzo di un annuncio non coincide automaticamente con il valore di mercato. Prima di pubblicare, confrontiamo dati e immobili realmente comparabili. Scrivi VALORE in privato.",
-      "slides": [
-        "NON DECIDERE|IL PREZZO|COSÌ",
-        "APRI UN PORTALE|E TROVI UNA CASA|SIMILE",
-        "VEDI 180.000 €|E PENSI:|ANCHE LA MIA",
-        "MA È UN PREZZO|RICHIESTO",
-        "NON È DETTO|CHE SIA IL PREZZO|DI VENDITA",
-        "VALUTA PRIMA|DI PUBBLICARE",
-        "SCRIVI|VALORE"
+      "title": "Prezzo desiderato, pubblicato e di mercato",
+      "caption": "Il prezzo non si indovina. Si verifica. Scrivi VALUTAZIONE in privato.\n\n#F1Immobiliare #AltaValleDiSusa #Oulx #Bardonecchia #SauzeDOulx #InvestimentoImmobiliare",
+      "hashtags": [
+        "#F1Immobiliare",
+        "#AltaValleDiSusa",
+        "#Oulx",
+        "#Bardonecchia",
+        "#SauzeDOulx",
+        "#InvestimentoImmobiliare"
       ],
-      "media": "publisher/media/generated/f1-immobiliare/2026-08-17/01-errore-portali.mp4",
+      "voiceover": "Prezzo desiderato, prezzo pubblicato e prezzo di mercato non sono la stessa cosa. Il primo nasce dalle aspettative, il secondo dalla strategia, il terzo dalla risposta reale degli acquirenti. Il lavoro corretto è farli dialogare prima di pubblicare.",
+      "slides": [
+        "TRE PREZZI|NON SONO|LA STESSA COSA",
+        "PREZZO|DESIDERATO",
+        "PREZZO|PUBBLICATO",
+        "PREZZO|SOSTENUTO DAL MERCATO",
+        "CONFONDERLI|COSTA TEMPO",
+        "IL PRICING|NASCE DAI DATI",
+        "F1 IMMOBILIARE|IL PREZZO SI VERIFICA|371 370 8294"
+      ],
+      "media": "publisher/media/generated/f1-immobiliare/2026-08-17/01-g2-tre-prezzi.mp4",
       "scheduled_at": "2026-08-17T09:00:00+02:00",
+      "territory": "Bussoleno",
+      "property_focus": {
+        "transaction": "vendita",
+        "min_price_eur": 100000,
+        "exclude": [
+          "affitto",
+          "locazione",
+          "garage",
+          "box",
+          "posto auto",
+          "rustico",
+          "rudere",
+          "terreno"
+        ],
+        "preferred": [
+          "appartamento",
+          "casa",
+          "villa",
+          "villetta",
+          "attico",
+          "bifamiliare",
+          "trifamiliare"
+        ],
+        "cash_subito": {
+          "enabled": true,
+          "label": "F1 CASH SUBITO",
+          "meaning": "acquisto diretto per opportunità immobiliari fortemente scontate e coerenti con i criteri F1",
+          "rule": "non presentarlo come garanzia di acquisto; prima verifica economica, tecnica e documentale"
+        }
+      },
       "approval_key": "2026-W34",
       "platforms": [
         {
@@ -242,33 +93,162 @@
       "blocked_reason": "approval required for 2026-W34"
     },
     {
-      "id": "f1-immobiliare-2026-08-17-02-microzona",
+      "id": "f1-immobiliare-2026-08-17-02-g3-cinquecento-metri",
       "client_id": "f1-immobiliare",
       "client_name": "F1 Immobiliare",
-      "category": "nurture",
-      "format": "carousel",
-      "title": "Bastano poche centinaia di metri",
-      "caption": "La media comunale può nascondere differenze importanti. Per valutare bene bisogna scendere alla microzona e al singolo immobile. Scrivi VALORE in privato.",
-      "voiceover": "La media comunale può nascondere differenze importanti. Per valutare bene bisogna scendere alla microzona e al singolo immobile. Scrivi VALORE in privato.",
+      "category": "error",
+      "editorial_role": "error",
+      "format": "reel",
+      "title": "Due case a 500 metri possono valere diversamente",
+      "caption": "Stesso comune non significa stesso valore. Scrivi VALUTAZIONE in privato.\n\n#F1Immobiliare #ValleDiSusa #Condove #Bussoleno #VillarDora #VendereBene",
+      "hashtags": [
+        "#F1Immobiliare",
+        "#ValleDiSusa",
+        "#Condove",
+        "#Bussoleno",
+        "#VillarDora",
+        "#VendereBene"
+      ],
+      "voiceover": "Due immobili a cinquecento metri di distanza possono avere una risposta di mercato diversa. Servizi, esposizione, rumore, accessibilità e domanda cambiano il posizionamento. La microzona conta.",
       "slides": [
-        "STESSO COMUNE|STESSO VALORE?|NO",
-        "CAMBIA LA|MICROZONA",
-        "CAMBIANO|SERVIZI E|ACCESSIBILITÀ",
-        "CAMBIA LA|DOMANDA",
-        "CAMBIA LA|CONCORRENZA",
-        "IL PREZZO|VA LOCALIZZATO",
-        "SCRIVI|VALORE"
+        "500 METRI|POSSONO|CAMBIARE TUTTO",
+        "SERVIZI",
+        "RUMORE|ESPOSIZIONE",
+        "ACCESSIBILITÀ",
+        "DOMANDA",
+        "NON USARE|MEDIE CIECHE",
+        "F1 IMMOBILIARE|MICROZONA|371 370 8294"
+      ],
+      "media": "publisher/media/generated/f1-immobiliare/2026-08-17/02-g3-cinquecento-metri.mp4",
+      "scheduled_at": "2026-08-17T12:30:00+02:00",
+      "territory": "Bussoleno",
+      "property_focus": {
+        "transaction": "vendita",
+        "min_price_eur": 100000,
+        "exclude": [
+          "affitto",
+          "locazione",
+          "garage",
+          "box",
+          "posto auto",
+          "rustico",
+          "rudere",
+          "terreno"
+        ],
+        "preferred": [
+          "appartamento",
+          "casa",
+          "villa",
+          "villetta",
+          "attico",
+          "bifamiliare",
+          "trifamiliare"
+        ],
+        "cash_subito": {
+          "enabled": true,
+          "label": "F1 CASH SUBITO",
+          "meaning": "acquisto diretto per opportunità immobiliari fortemente scontate e coerenti con i criteri F1",
+          "rule": "non presentarlo come garanzia di acquisto; prima verifica economica, tecnica e documentale"
+        }
+      },
+      "approval_key": "2026-W34",
+      "platforms": [
+        {
+          "platform": "facebook",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "tiktok",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "linkedin",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "youtube",
+          "integration_id": "direct-api"
+        }
+      ],
+      "enabled": true,
+      "status": "awaiting_approval",
+      "published_platforms": [],
+      "postiz_results": [],
+      "video_made_with_ai": true,
+      "created_by": "open-social-scheduler",
+      "blocked_reason": "approval required for 2026-W34"
+    },
+    {
+      "id": "f1-immobiliare-2026-08-17-03-g4-quattro-controlli-fermo",
+      "client_id": "f1-immobiliare",
+      "client_name": "F1 Immobiliare",
+      "category": "proof",
+      "editorial_role": "proof",
+      "format": "carousel",
+      "title": "Quattro controlli quando una casa non riceve richieste",
+      "caption": "Se un immobile non riceve richieste, controlliamo pricing, presentazione, distribuzione e target prima di intervenire. Scrivi VALUTAZIONE in privato.\n\n#F1Immobiliare #NonASensazione #ConIDati #StrategiaImmobiliare #PrezzoCasa #ProprietariCasa",
+      "hashtags": [
+        "#F1Immobiliare",
+        "#NonASensazione",
+        "#ConIDati",
+        "#StrategiaImmobiliare",
+        "#PrezzoCasa",
+        "#ProprietariCasa"
+      ],
+      "voiceover": "Se un immobile non riceve richieste, controlliamo pricing, presentazione, distribuzione e target prima di intervenire. Scrivi VALUTAZIONE in privato.",
+      "slides": [
+        "CASA FERMA?|4 CONTROLLI",
+        "1. PRICING",
+        "2. PRESENTAZIONE",
+        "3. DISTRIBUZIONE",
+        "4. TARGET",
+        "POI|DECIDIAMO",
+        "F1 IMMOBILIARE|DIAGNOSI PRIMA|371 370 8294"
       ],
       "media": [
-        "publisher/media/generated/f1-immobiliare/2026-08-17/02-microzona/slide-01.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-17/02-microzona/slide-02.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-17/02-microzona/slide-03.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-17/02-microzona/slide-04.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-17/02-microzona/slide-05.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-17/02-microzona/slide-06.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-17/02-microzona/slide-07.jpg"
+        "publisher/media/generated/f1-immobiliare/2026-08-17/03-g4-quattro-controlli-fermo/slide-01.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-17/03-g4-quattro-controlli-fermo/slide-02.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-17/03-g4-quattro-controlli-fermo/slide-03.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-17/03-g4-quattro-controlli-fermo/slide-04.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-17/03-g4-quattro-controlli-fermo/slide-05.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-17/03-g4-quattro-controlli-fermo/slide-06.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-17/03-g4-quattro-controlli-fermo/slide-07.jpg"
       ],
-      "scheduled_at": "2026-08-17T12:30:00+02:00",
+      "scheduled_at": "2026-08-17T17:30:00+02:00",
+      "territory": "Bussoleno",
+      "property_focus": {
+        "transaction": "vendita",
+        "min_price_eur": 100000,
+        "exclude": [
+          "affitto",
+          "locazione",
+          "garage",
+          "box",
+          "posto auto",
+          "rustico",
+          "rudere",
+          "terreno"
+        ],
+        "preferred": [
+          "appartamento",
+          "casa",
+          "villa",
+          "villetta",
+          "attico",
+          "bifamiliare",
+          "trifamiliare"
+        ],
+        "cash_subito": {
+          "enabled": true,
+          "label": "F1 CASH SUBITO",
+          "meaning": "acquisto diretto per opportunità immobiliari fortemente scontate e coerenti con i criteri F1",
+          "rule": "non presentarlo come garanzia di acquisto; prima verifica economica, tecnica e documentale"
+        }
+      },
       "approval_key": "2026-W34",
       "platforms": [
         {
@@ -297,84 +277,72 @@
       "blocked_reason": "approval required for 2026-W34"
     },
     {
-      "id": "f1-immobiliare-2026-08-17-03-concorrenza-territorio",
+      "id": "f1-immobiliare-2026-08-17-04-g5-strategia-prima-firma",
       "client_id": "f1-immobiliare",
       "client_name": "F1 Immobiliare",
-      "category": "hyperlocal",
-      "format": "reel",
-      "title": "Con quante case compete la tua a Chiusa di San Michele?",
-      "caption": "Il valore commerciale dipende anche dalle alternative che il compratore trova oggi a Chiusa di San Michele. Analizzare la concorrenza è parte del pricing. Scrivi VALORE in privato.",
-      "voiceover": "Il valore commerciale dipende anche dalle alternative che il compratore trova oggi a Chiusa di San Michele. Analizzare la concorrenza è parte del pricing. Scrivi VALORE in privato.",
-      "slides": [
-        "LA TUA CASA|A Chiusa di San Michele",
-        "NON È SOLA|SUL MERCATO",
-        "IL COMPRATORE|VEDE ANCHE|LE ALTERNATIVE",
-        "CONFRONTA|PREZZO E|QUALITÀ",
-        "LA CONCORRENZA|CAMBIA IL|POSIZIONAMENTO",
-        "ANALIZZIAMOLA|PRIMA",
-        "SCRIVI|VALORE"
-      ],
-      "media": "publisher/media/generated/f1-immobiliare/2026-08-17/03-concorrenza-territorio.mp4",
-      "scheduled_at": "2026-08-17T17:30:00+02:00",
-      "approval_key": "2026-W34",
-      "platforms": [
-        {
-          "platform": "facebook",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "instagram",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "tiktok",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "linkedin",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "youtube",
-          "integration_id": "direct-api"
-        }
-      ],
-      "enabled": true,
-      "status": "awaiting_approval",
-      "published_platforms": [],
-      "postiz_results": [],
-      "video_made_with_ai": true,
-      "created_by": "open-social-scheduler",
-      "blocked_reason": "approval required for 2026-W34"
-    },
-    {
-      "id": "f1-immobiliare-2026-08-17-04-analisi-gratuita",
-      "client_id": "f1-immobiliare",
-      "client_name": "F1 Immobiliare",
-      "category": "convert",
+      "category": "decision",
+      "editorial_role": "decision",
       "format": "carousel",
-      "title": "Prima analisi gratuita",
-      "caption": "Vuoi una prima analisi del tuo immobile? Inviaci comune, tipologia e metratura. Scrivi VALORE in privato.",
-      "voiceover": "Vuoi una prima analisi del tuo immobile? Inviaci comune, tipologia e metratura. Scrivi VALORE in privato.",
+      "title": "Una strategia deve essere spiegata prima di firmare",
+      "caption": "Una strategia seria può essere spiegata prima dell'incarico. Scrivi VALUTAZIONE in privato.\n\n#F1Immobiliare #ValleDiSusa #VendereCasa #ValutazioneImmobiliare #Avigliana #CasaInVendita",
+      "hashtags": [
+        "#F1Immobiliare",
+        "#ValleDiSusa",
+        "#VendereCasa",
+        "#ValutazioneImmobiliare",
+        "#Avigliana",
+        "#CasaInVendita"
+      ],
+      "voiceover": "Una strategia seria può essere spiegata prima dell'incarico. Scrivi VALUTAZIONE in privato.",
       "slides": [
-        "VUOI SAPERE|QUANTO VALE|CASA TUA?",
-        "PARTIAMO|DAI DATI",
-        "ZONA|METRATURA|STATO",
-        "PERTINENZE|E CONCORRENZA",
-        "NESSUN PREZZO|INVENTATO",
-        "PRIMA ANALISI|GRATUITA",
-        "SCRIVI|VALORE"
+        "PRIMA|DI FIRMARE",
+        "DEVI SAPERE|COSA SUCCEDERÀ",
+        "COME|POSIZIONIAMO",
+        "DOVE|COMUNICHIAMO",
+        "COSA|MISURIAMO",
+        "COME|CORREGGIAMO",
+        "F1 IMMOBILIARE|DEVI POTER CAPIRE|371 370 8294"
       ],
       "media": [
-        "publisher/media/generated/f1-immobiliare/2026-08-17/04-analisi-gratuita/slide-01.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-17/04-analisi-gratuita/slide-02.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-17/04-analisi-gratuita/slide-03.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-17/04-analisi-gratuita/slide-04.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-17/04-analisi-gratuita/slide-05.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-17/04-analisi-gratuita/slide-06.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-17/04-analisi-gratuita/slide-07.jpg"
+        "publisher/media/generated/f1-immobiliare/2026-08-17/04-g5-strategia-prima-firma/slide-01.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-17/04-g5-strategia-prima-firma/slide-02.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-17/04-g5-strategia-prima-firma/slide-03.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-17/04-g5-strategia-prima-firma/slide-04.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-17/04-g5-strategia-prima-firma/slide-05.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-17/04-g5-strategia-prima-firma/slide-06.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-17/04-g5-strategia-prima-firma/slide-07.jpg"
       ],
       "scheduled_at": "2026-08-17T20:30:00+02:00",
+      "territory": "Bussoleno",
+      "property_focus": {
+        "transaction": "vendita",
+        "min_price_eur": 100000,
+        "exclude": [
+          "affitto",
+          "locazione",
+          "garage",
+          "box",
+          "posto auto",
+          "rustico",
+          "rudere",
+          "terreno"
+        ],
+        "preferred": [
+          "appartamento",
+          "casa",
+          "villa",
+          "villetta",
+          "attico",
+          "bifamiliare",
+          "trifamiliare"
+        ],
+        "cash_subito": {
+          "enabled": true,
+          "label": "F1 CASH SUBITO",
+          "meaning": "acquisto diretto per opportunità immobiliari fortemente scontate e coerenti con i criteri F1",
+          "rule": "non presentarlo come garanzia di acquisto; prima verifica economica, tecnica e documentale"
+        }
+      },
       "approval_key": "2026-W34",
       "platforms": [
         {
@@ -403,131 +371,64 @@
       "blocked_reason": "approval required for 2026-W34"
     },
     {
-      "id": "f1-immobiliare-2026-08-18-01-prezzo-alto",
+      "id": "f1-immobiliare-2026-08-18-01-g3-media-torino",
       "client_id": "f1-immobiliare",
       "client_name": "F1 Immobiliare",
-      "category": "attract",
+      "category": "data",
+      "editorial_role": "data",
       "format": "reel",
-      "title": "Partire troppo alti può costare caro",
-      "caption": "Un prezzo iniziale fuori mercato può ridurre interesse e forza negoziale. La strategia di prezzo si prepara prima della pubblicazione. Scrivi VALORE in privato.",
-      "voiceover": "Un prezzo iniziale fuori mercato può ridurre interesse e forza negoziale. La strategia di prezzo si prepara prima della pubblicazione. Scrivi VALORE in privato.",
+      "title": "La media di Torino non valuta casa tua",
+      "caption": "La media generale orienta. La microzona decide. Scrivi VALUTAZIONE in privato.\n\n#F1Immobiliare #ValleDiSusa #Condove #Bussoleno #VillarDora #VendereBene",
+      "hashtags": [
+        "#F1Immobiliare",
+        "#ValleDiSusa",
+        "#Condove",
+        "#Bussoleno",
+        "#VillarDora",
+        "#VendereBene"
+      ],
+      "voiceover": "La media di Torino, o perfino quella del tuo comune, non basta per valutare casa tua. Due immobili vicini possono ricevere risposte molto diverse. Bisogna scendere alla microzona, alla via e alle caratteristiche reali dell'immobile.",
       "slides": [
-        "PREZZO ALTO?|SEMBRA PRUDENTE",
-        "MA IL MERCATO|TI CONFRONTA|SUBITO",
-        "POCHE RICHIESTE|SONO UN SEGNALE",
-        "POI ARRIVANO|I RIBASSI",
-        "E L'IMMOBILE|SEMBRA FERMO",
-        "IL PRICING|SI DECIDE PRIMA",
-        "SCRIVI|VALORE"
-      ],
-      "media": "publisher/media/generated/f1-immobiliare/2026-08-18/01-prezzo-alto.mp4",
-      "scheduled_at": "2026-08-18T09:00:00+02:00",
-      "approval_key": "2026-W34",
-      "platforms": [
-        {
-          "platform": "facebook",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "instagram",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "tiktok",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "linkedin",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "youtube",
-          "integration_id": "direct-api"
-        }
-      ],
-      "enabled": true,
-      "status": "awaiting_approval",
-      "published_platforms": [],
-      "postiz_results": [],
-      "video_made_with_ai": true,
-      "created_by": "open-social-scheduler",
-      "blocked_reason": "approval required for 2026-W34"
-    },
-    {
-      "id": "f1-immobiliare-2026-08-18-02-valutazione-non-vendita",
-      "client_id": "f1-immobiliare",
-      "client_name": "F1 Immobiliare",
-      "category": "nurture",
-      "format": "carousel",
-      "title": "Valutare non significa vendere",
-      "caption": "Richiedere una valutazione non significa mettere subito casa in vendita. Può essere semplicemente uno strumento per conoscere meglio il proprio patrimonio. Scrivi VALORE in privato.",
-      "voiceover": "Richiedere una valutazione non significa mettere subito casa in vendita. Può essere semplicemente uno strumento per conoscere meglio il proprio patrimonio. Scrivi VALORE in privato.",
-      "slides": [
-        "NON DEVI|VENDERE OGGI",
-        "PUOI SOLO|VOLER SAPERE|QUANTO VALE",
-        "PER IL TUO|PATRIMONIO",
-        "PER UNA|SCELTA FUTURA",
-        "PER CAPIRE|IL MERCATO",
-        "PRIMA CONOSCI|POI DECIDI",
-        "SCRIVI|VALORE"
-      ],
-      "media": [
-        "publisher/media/generated/f1-immobiliare/2026-08-18/02-valutazione-non-vendita/slide-01.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-18/02-valutazione-non-vendita/slide-02.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-18/02-valutazione-non-vendita/slide-03.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-18/02-valutazione-non-vendita/slide-04.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-18/02-valutazione-non-vendita/slide-05.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-18/02-valutazione-non-vendita/slide-06.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-18/02-valutazione-non-vendita/slide-07.jpg"
-      ],
-      "scheduled_at": "2026-08-18T12:30:00+02:00",
-      "approval_key": "2026-W34",
-      "platforms": [
-        {
-          "platform": "facebook",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "instagram",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "linkedin",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "pinterest",
-          "integration_id": "direct-api"
-        }
-      ],
-      "enabled": true,
-      "status": "awaiting_approval",
-      "published_platforms": [],
-      "postiz_results": [],
-      "video_made_with_ai": false,
-      "created_by": "open-social-scheduler",
-      "blocked_reason": "approval required for 2026-W34"
-    },
-    {
-      "id": "f1-immobiliare-2026-08-18-03-valore-territorio",
-      "client_id": "f1-immobiliare",
-      "client_name": "F1 Immobiliare",
-      "category": "hyperlocal",
-      "format": "reel",
-      "title": "Quanto vale oggi una casa a Vaie?",
-      "caption": "Hai un immobile a Vaie? Il valore non si determina con una media generica: bisogna leggere microzona, caratteristiche e domanda locale. Scrivi VALORE in privato.",
-      "voiceover": "Hai un immobile a Vaie? Il valore non si determina con una media generica: bisogna leggere microzona, caratteristiche e domanda locale. Scrivi VALORE in privato.",
-      "slides": [
-        "QUANTO VALE|OGGI UNA CASA|A Vaie?",
-        "NON ESISTE|UN PREZZO UNICO|AL MQ",
-        "CONTANO|VIA E|MICROZONA",
-        "CONTANO|STATO E|PERTINENZE",
+        "LA MEDIA|DI TORINO|NON VALUTA CASA TUA",
+        "IL COMUNE|NON BASTA",
+        "CONTA LA|MICROZONA",
+        "CONTANO VIA|PIANO|ESPOSIZIONE",
         "CONTA LA|DOMANDA LOCALE",
-        "HAI CASA|A Vaie?",
-        "SCRIVI|VALORE"
+        "IL VALORE|VA LOCALIZZATO",
+        "F1 IMMOBILIARE|CON I DATI|371 370 8294"
       ],
-      "media": "publisher/media/generated/f1-immobiliare/2026-08-18/03-valore-territorio.mp4",
-      "scheduled_at": "2026-08-18T17:30:00+02:00",
+      "media": "publisher/media/generated/f1-immobiliare/2026-08-18/01-g3-media-torino.mp4",
+      "scheduled_at": "2026-08-18T09:00:00+02:00",
+      "territory": "Borgone Susa",
+      "property_focus": {
+        "transaction": "vendita",
+        "min_price_eur": 100000,
+        "exclude": [
+          "affitto",
+          "locazione",
+          "garage",
+          "box",
+          "posto auto",
+          "rustico",
+          "rudere",
+          "terreno"
+        ],
+        "preferred": [
+          "appartamento",
+          "casa",
+          "villa",
+          "villetta",
+          "attico",
+          "bifamiliare",
+          "trifamiliare"
+        ],
+        "cash_subito": {
+          "enabled": true,
+          "label": "F1 CASH SUBITO",
+          "meaning": "acquisto diretto per opportunità immobiliari fortemente scontate e coerenti con i criteri F1",
+          "rule": "non presentarlo come garanzia di acquisto; prima verifica economica, tecnica e documentale"
+        }
+      },
       "approval_key": "2026-W34",
       "platforms": [
         {
@@ -560,33 +461,256 @@
       "blocked_reason": "approval required for 2026-W34"
     },
     {
-      "id": "f1-immobiliare-2026-08-18-04-cinque-domande",
+      "id": "f1-immobiliare-2026-08-18-02-g4-ribasso-senza-diagnosi",
       "client_id": "f1-immobiliare",
       "client_name": "F1 Immobiliare",
-      "category": "convert",
-      "format": "carousel",
-      "title": "Cinque domande per iniziare",
-      "caption": "Per iniziare una prima analisi bastano poche informazioni essenziali. Scrivici comune, mq, tipologia, piano, stato e pertinenze. Scrivi VALORE in privato.",
-      "voiceover": "Per iniziare una prima analisi bastano poche informazioni essenziali. Scrivici comune, mq, tipologia, piano, stato e pertinenze. Scrivi VALORE in privato.",
+      "category": "error",
+      "editorial_role": "error",
+      "format": "reel",
+      "title": "Abbassare senza diagnosi non è una strategia",
+      "caption": "Prima di abbassare, capisci perché il mercato non sta rispondendo. Scrivi VALUTAZIONE in privato.\n\n#F1Immobiliare #NonASensazione #ConIDati #StrategiaImmobiliare #PrezzoCasa #ProprietariCasa",
+      "hashtags": [
+        "#F1Immobiliare",
+        "#NonASensazione",
+        "#ConIDati",
+        "#StrategiaImmobiliare",
+        "#PrezzoCasa",
+        "#ProprietariCasa"
+      ],
+      "voiceover": "Abbassare il prezzo senza capire il problema non è una strategia. Potrebbe essere pricing, ma anche presentazione, target, visibilità o concorrenza. Prima della riduzione serve una diagnosi.",
       "slides": [
-        "5 DOMANDE|PER INIZIARE",
-        "1. COMUNE?",
-        "2. MQ E|TIPOLOGIA?",
-        "3. PIANO E|ASCENSORE?",
-        "4. STATO|DELL'IMMOBILE?",
-        "5. GARAGE O|PERTINENZE?",
-        "SCRIVI|VALORE"
+        "NON SI VENDE?|ABBASSIAMO?",
+        "ASPETTA",
+        "IL PROBLEMA|POTREBBE NON ESSERE|SOLO IL PREZZO",
+        "FOTO?|TARGET?",
+        "VISIBILITÀ?|CONCORRENZA?",
+        "DIAGNOSI|PRIMA DEL RIBASSO",
+        "F1 IMMOBILIARE|PRIMA I DATI|371 370 8294"
+      ],
+      "media": "publisher/media/generated/f1-immobiliare/2026-08-18/02-g4-ribasso-senza-diagnosi.mp4",
+      "scheduled_at": "2026-08-18T12:30:00+02:00",
+      "territory": "Borgone Susa",
+      "property_focus": {
+        "transaction": "vendita",
+        "min_price_eur": 100000,
+        "exclude": [
+          "affitto",
+          "locazione",
+          "garage",
+          "box",
+          "posto auto",
+          "rustico",
+          "rudere",
+          "terreno"
+        ],
+        "preferred": [
+          "appartamento",
+          "casa",
+          "villa",
+          "villetta",
+          "attico",
+          "bifamiliare",
+          "trifamiliare"
+        ],
+        "cash_subito": {
+          "enabled": true,
+          "label": "F1 CASH SUBITO",
+          "meaning": "acquisto diretto per opportunità immobiliari fortemente scontate e coerenti con i criteri F1",
+          "rule": "non presentarlo come garanzia di acquisto; prima verifica economica, tecnica e documentale"
+        }
+      },
+      "approval_key": "2026-W34",
+      "platforms": [
+        {
+          "platform": "facebook",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "tiktok",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "linkedin",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "youtube",
+          "integration_id": "direct-api"
+        }
+      ],
+      "enabled": true,
+      "status": "awaiting_approval",
+      "published_platforms": [],
+      "postiz_results": [],
+      "video_made_with_ai": true,
+      "created_by": "open-social-scheduler",
+      "blocked_reason": "approval required for 2026-W34"
+    },
+    {
+      "id": "f1-immobiliare-2026-08-18-03-g5-dopo-pubblicazione",
+      "client_id": "f1-immobiliare",
+      "client_name": "F1 Immobiliare",
+      "category": "proof",
+      "editorial_role": "proof",
+      "format": "carousel",
+      "title": "Cosa succede dopo la pubblicazione",
+      "caption": "Pubblicare è l'inizio, non la fine. La risposta del mercato deve essere letta e gestita. Scrivi VALUTAZIONE in privato.\n\n#F1Immobiliare #ValleDiSusa #VendereCasa #ValutazioneImmobiliare #Avigliana #CasaInVendita",
+      "hashtags": [
+        "#F1Immobiliare",
+        "#ValleDiSusa",
+        "#VendereCasa",
+        "#ValutazioneImmobiliare",
+        "#Avigliana",
+        "#CasaInVendita"
+      ],
+      "voiceover": "Pubblicare è l'inizio, non la fine. La risposta del mercato deve essere letta e gestita. Scrivi VALUTAZIONE in privato.",
+      "slides": [
+        "DOPO|L'ANNUNCIO",
+        "MISURIAMO|VISIBILITÀ",
+        "LEGGIAMO|LE RICHIESTE",
+        "CONFRONTIAMO|LE REAZIONI",
+        "CORREGGIAMO|SE SERVE",
+        "LA STRATEGIA|CONTINUA",
+        "F1 IMMOBILIARE|NON SOLO PORTALI|371 370 8294"
       ],
       "media": [
-        "publisher/media/generated/f1-immobiliare/2026-08-18/04-cinque-domande/slide-01.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-18/04-cinque-domande/slide-02.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-18/04-cinque-domande/slide-03.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-18/04-cinque-domande/slide-04.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-18/04-cinque-domande/slide-05.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-18/04-cinque-domande/slide-06.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-18/04-cinque-domande/slide-07.jpg"
+        "publisher/media/generated/f1-immobiliare/2026-08-18/03-g5-dopo-pubblicazione/slide-01.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-18/03-g5-dopo-pubblicazione/slide-02.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-18/03-g5-dopo-pubblicazione/slide-03.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-18/03-g5-dopo-pubblicazione/slide-04.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-18/03-g5-dopo-pubblicazione/slide-05.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-18/03-g5-dopo-pubblicazione/slide-06.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-18/03-g5-dopo-pubblicazione/slide-07.jpg"
+      ],
+      "scheduled_at": "2026-08-18T17:30:00+02:00",
+      "territory": "Borgone Susa",
+      "property_focus": {
+        "transaction": "vendita",
+        "min_price_eur": 100000,
+        "exclude": [
+          "affitto",
+          "locazione",
+          "garage",
+          "box",
+          "posto auto",
+          "rustico",
+          "rudere",
+          "terreno"
+        ],
+        "preferred": [
+          "appartamento",
+          "casa",
+          "villa",
+          "villetta",
+          "attico",
+          "bifamiliare",
+          "trifamiliare"
+        ],
+        "cash_subito": {
+          "enabled": true,
+          "label": "F1 CASH SUBITO",
+          "meaning": "acquisto diretto per opportunità immobiliari fortemente scontate e coerenti con i criteri F1",
+          "rule": "non presentarlo come garanzia di acquisto; prima verifica economica, tecnica e documentale"
+        }
+      },
+      "approval_key": "2026-W34",
+      "platforms": [
+        {
+          "platform": "facebook",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "linkedin",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "pinterest",
+          "integration_id": "direct-api"
+        }
+      ],
+      "enabled": true,
+      "status": "awaiting_approval",
+      "published_platforms": [],
+      "postiz_results": [],
+      "video_made_with_ai": false,
+      "created_by": "open-social-scheduler",
+      "blocked_reason": "approval required for 2026-W34"
+    },
+    {
+      "id": "f1-immobiliare-2026-08-18-04-g6-secondo-parere",
+      "client_id": "f1-immobiliare",
+      "client_name": "F1 Immobiliare",
+      "category": "decision",
+      "editorial_role": "decision",
+      "format": "carousel",
+      "title": "Vuoi un secondo parere sul prezzo?",
+      "caption": "Se vuoi vendere privatamente ma desideri un secondo parere sul prezzo, F1 può analizzarlo con te. Scrivi VALUTAZIONE in privato.\n\n#F1Immobiliare #ValDiSusa #MercatoImmobiliare #VenditaImmobiliare #Susa #PrimaIDati",
+      "hashtags": [
+        "#F1Immobiliare",
+        "#ValDiSusa",
+        "#MercatoImmobiliare",
+        "#VenditaImmobiliare",
+        "#Susa",
+        "#PrimaIDati"
+      ],
+      "voiceover": "Se vuoi vendere privatamente ma desideri un secondo parere sul prezzo, F1 può analizzarlo con te. Scrivi VALUTAZIONE in privato.",
+      "slides": [
+        "VUOI VENDERE|DA SOLO?",
+        "VA BENE",
+        "MA IL PREZZO|MERITA UN CONTROLLO",
+        "DATI",
+        "COMPARABILI",
+        "MICROZONA",
+        "SCRIVI VALUTAZIONE|F1 IMMOBILIARE|371 370 8294"
+      ],
+      "media": [
+        "publisher/media/generated/f1-immobiliare/2026-08-18/04-g6-secondo-parere/slide-01.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-18/04-g6-secondo-parere/slide-02.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-18/04-g6-secondo-parere/slide-03.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-18/04-g6-secondo-parere/slide-04.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-18/04-g6-secondo-parere/slide-05.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-18/04-g6-secondo-parere/slide-06.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-18/04-g6-secondo-parere/slide-07.jpg"
       ],
       "scheduled_at": "2026-08-18T20:30:00+02:00",
+      "territory": "Borgone Susa",
+      "property_focus": {
+        "transaction": "vendita",
+        "min_price_eur": 100000,
+        "exclude": [
+          "affitto",
+          "locazione",
+          "garage",
+          "box",
+          "posto auto",
+          "rustico",
+          "rudere",
+          "terreno"
+        ],
+        "preferred": [
+          "appartamento",
+          "casa",
+          "villa",
+          "villetta",
+          "attico",
+          "bifamiliare",
+          "trifamiliare"
+        ],
+        "cash_subito": {
+          "enabled": true,
+          "label": "F1 CASH SUBITO",
+          "meaning": "acquisto diretto per opportunità immobiliari fortemente scontate e coerenti con i criteri F1",
+          "rule": "non presentarlo come garanzia di acquisto; prima verifica economica, tecnica e documentale"
+        }
+      },
       "approval_key": "2026-W34",
       "platforms": [
         {
@@ -615,25 +739,64 @@
       "blocked_reason": "approval required for 2026-W34"
     },
     {
-      "id": "f1-immobiliare-2026-08-19-01-stessa-metratura",
+      "id": "f1-immobiliare-2026-08-19-01-g4-novanta-giorni",
       "client_id": "f1-immobiliare",
       "client_name": "F1 Immobiliare",
-      "category": "attract",
+      "category": "data",
+      "editorial_role": "data",
       "format": "reel",
-      "title": "Stessi metri quadri, valori diversi",
-      "caption": "Due immobili della stessa metratura possono avere valori molto diversi. Il prezzo al metro quadro è solo un punto di partenza. Scrivi VALORE in privato.",
-      "voiceover": "Due immobili della stessa metratura possono avere valori molto diversi. Il prezzo al metro quadro è solo un punto di partenza. Scrivi VALORE in privato.",
-      "slides": [
-        "100 MQ|NON SIGNIFICA|STESSO VALORE",
-        "PIANO E|ASCENSORE|CONTANO",
-        "ESPOSIZIONE|E LUMINOSITÀ|CONTANO",
-        "STATO INTERNO|E PERTINENZE|CONTANO",
-        "ANCHE LA|MICROZONA|CONTA",
-        "VALUTIAMO|L'IMMOBILE REALE",
-        "SCRIVI|VALORE"
+      "title": "Casa online da 90 giorni: cosa dice il mercato?",
+      "caption": "Un immobile fermo va diagnosticato prima di essere ribassato. Scrivi VALUTAZIONE in privato.\n\n#F1Immobiliare #NonASensazione #ConIDati #StrategiaImmobiliare #PrezzoCasa #ProprietariCasa",
+      "hashtags": [
+        "#F1Immobiliare",
+        "#NonASensazione",
+        "#ConIDati",
+        "#StrategiaImmobiliare",
+        "#PrezzoCasa",
+        "#ProprietariCasa"
       ],
-      "media": "publisher/media/generated/f1-immobiliare/2026-08-19/01-stessa-metratura.mp4",
+      "voiceover": "Se una casa è online da novanta giorni senza risultati, il mercato ci sta dando un'informazione. Non significa automaticamente che dobbiamo abbassare il prezzo. Prima bisogna capire se il problema è pricing, presentazione, target o concorrenza.",
+      "slides": [
+        "90 GIORNI|ONLINE",
+        "NON È SOLO|TEMPO PASSATO",
+        "È UN|SEGNALE",
+        "PREZZO?|PRESENTAZIONE?",
+        "TARGET?|CONCORRENZA?",
+        "PRIMA DI RIDURRE|SERVE DIAGNOSI",
+        "F1 IMMOBILIARE|PRIMA I DATI|371 370 8294"
+      ],
+      "media": "publisher/media/generated/f1-immobiliare/2026-08-19/01-g4-novanta-giorni.mp4",
       "scheduled_at": "2026-08-19T09:00:00+02:00",
+      "territory": "Chiusa di San Michele",
+      "property_focus": {
+        "transaction": "vendita",
+        "min_price_eur": 100000,
+        "exclude": [
+          "affitto",
+          "locazione",
+          "garage",
+          "box",
+          "posto auto",
+          "rustico",
+          "rudere",
+          "terreno"
+        ],
+        "preferred": [
+          "appartamento",
+          "casa",
+          "villa",
+          "villetta",
+          "attico",
+          "bifamiliare",
+          "trifamiliare"
+        ],
+        "cash_subito": {
+          "enabled": true,
+          "label": "F1 CASH SUBITO",
+          "meaning": "acquisto diretto per opportunità immobiliari fortemente scontate e coerenti con i criteri F1",
+          "rule": "non presentarlo come garanzia di acquisto; prima verifica economica, tecnica e documentale"
+        }
+      },
       "approval_key": "2026-W34",
       "platforms": [
         {
@@ -666,33 +829,162 @@
       "blocked_reason": "approval required for 2026-W34"
     },
     {
-      "id": "f1-immobiliare-2026-08-19-02-come-valutiamo",
+      "id": "f1-immobiliare-2026-08-19-02-g5-non-solo-quanto-vale",
       "client_id": "f1-immobiliare",
       "client_name": "F1 Immobiliare",
-      "category": "nurture",
-      "format": "carousel",
-      "title": "Come si costruisce una valutazione",
-      "caption": "Una valutazione seria non nasce da un numero automatico: microzona, comparabili, caratteristiche, domanda e concorrenza devono essere letti insieme. Scrivi VALORE in privato.",
-      "voiceover": "Una valutazione seria non nasce da un numero automatico: microzona, comparabili, caratteristiche, domanda e concorrenza devono essere letti insieme. Scrivi VALORE in privato.",
+      "category": "error",
+      "editorial_role": "error",
+      "format": "reel",
+      "title": "Quanto vale non è l'unica domanda",
+      "caption": "Una vendita non è soltanto un prezzo. Scrivi VALUTAZIONE in privato.\n\n#F1Immobiliare #ValleDiSusa #VendereCasa #ValutazioneImmobiliare #Avigliana #CasaInVendita",
+      "hashtags": [
+        "#F1Immobiliare",
+        "#ValleDiSusa",
+        "#VendereCasa",
+        "#ValutazioneImmobiliare",
+        "#Avigliana",
+        "#CasaInVendita"
+      ],
+      "voiceover": "Quanto vale non è l'unica domanda importante. Dobbiamo sapere chi potrebbe comprarla, contro quali immobili compete, come presentarla e cosa succederà dopo la pubblicazione.",
       "slides": [
-        "COME SI VALUTA|DAVVERO|UN IMMOBILE?",
-        "PARTIAMO|DALLA MICROZONA",
-        "CERCHIAMO|COMPARABILI|COERENTI",
-        "LEGGIAMO|CARATTERISTICHE|E STATO",
-        "VALUTIAMO|DOMANDA E|CONCORRENZA",
-        "DEFINIAMO|UNA FASCIA|DI VALORE",
-        "SCRIVI|VALORE"
+        "QUANTO VALE?|NON BASTA",
+        "CHI LA|COMPREREBBE?",
+        "CONTRO COSA|COMPETE?",
+        "COME LA|PRESENTIAMO?",
+        "COSA FACCIAMO|DOPO L'ANNUNCIO?",
+        "QUESTA È|STRATEGIA",
+        "F1 IMMOBILIARE|METODO|371 370 8294"
+      ],
+      "media": "publisher/media/generated/f1-immobiliare/2026-08-19/02-g5-non-solo-quanto-vale.mp4",
+      "scheduled_at": "2026-08-19T12:30:00+02:00",
+      "territory": "Chiusa di San Michele",
+      "property_focus": {
+        "transaction": "vendita",
+        "min_price_eur": 100000,
+        "exclude": [
+          "affitto",
+          "locazione",
+          "garage",
+          "box",
+          "posto auto",
+          "rustico",
+          "rudere",
+          "terreno"
+        ],
+        "preferred": [
+          "appartamento",
+          "casa",
+          "villa",
+          "villetta",
+          "attico",
+          "bifamiliare",
+          "trifamiliare"
+        ],
+        "cash_subito": {
+          "enabled": true,
+          "label": "F1 CASH SUBITO",
+          "meaning": "acquisto diretto per opportunità immobiliari fortemente scontate e coerenti con i criteri F1",
+          "rule": "non presentarlo come garanzia di acquisto; prima verifica economica, tecnica e documentale"
+        }
+      },
+      "approval_key": "2026-W34",
+      "platforms": [
+        {
+          "platform": "facebook",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "tiktok",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "linkedin",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "youtube",
+          "integration_id": "direct-api"
+        }
+      ],
+      "enabled": true,
+      "status": "awaiting_approval",
+      "published_platforms": [],
+      "postiz_results": [],
+      "video_made_with_ai": true,
+      "created_by": "open-social-scheduler",
+      "blocked_reason": "approval required for 2026-W34"
+    },
+    {
+      "id": "f1-immobiliare-2026-08-19-03-g6-controllare-concorrenza",
+      "client_id": "f1-immobiliare",
+      "client_name": "F1 Immobiliare",
+      "category": "proof",
+      "editorial_role": "proof",
+      "format": "carousel",
+      "title": "Come controllare gli immobili concorrenti",
+      "caption": "La concorrenza utile è quella che un compratore confronterebbe davvero con casa tua. Scrivi VALUTAZIONE in privato.\n\n#F1Immobiliare #ValDiSusa #MercatoImmobiliare #VenditaImmobiliare #Susa #PrimaIDati",
+      "hashtags": [
+        "#F1Immobiliare",
+        "#ValDiSusa",
+        "#MercatoImmobiliare",
+        "#VenditaImmobiliare",
+        "#Susa",
+        "#PrimaIDati"
+      ],
+      "voiceover": "La concorrenza utile è quella che un compratore confronterebbe davvero con casa tua. Scrivi VALUTAZIONE in privato.",
+      "slides": [
+        "CONCORRENZA|NON SIGNIFICA|CASE QUALSIASI",
+        "STESSA|MICROZONA",
+        "TIPOLOGIA|COERENTE",
+        "FASCIA|SIMILE",
+        "CARATTERISTICHE|CONFRONTABILI",
+        "POI LEGGI|IL POSIZIONAMENTO",
+        "F1 IMMOBILIARE|METODO|371 370 8294"
       ],
       "media": [
-        "publisher/media/generated/f1-immobiliare/2026-08-19/02-come-valutiamo/slide-01.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-19/02-come-valutiamo/slide-02.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-19/02-come-valutiamo/slide-03.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-19/02-come-valutiamo/slide-04.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-19/02-come-valutiamo/slide-05.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-19/02-come-valutiamo/slide-06.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-19/02-come-valutiamo/slide-07.jpg"
+        "publisher/media/generated/f1-immobiliare/2026-08-19/03-g6-controllare-concorrenza/slide-01.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-19/03-g6-controllare-concorrenza/slide-02.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-19/03-g6-controllare-concorrenza/slide-03.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-19/03-g6-controllare-concorrenza/slide-04.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-19/03-g6-controllare-concorrenza/slide-05.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-19/03-g6-controllare-concorrenza/slide-06.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-19/03-g6-controllare-concorrenza/slide-07.jpg"
       ],
-      "scheduled_at": "2026-08-19T12:30:00+02:00",
+      "scheduled_at": "2026-08-19T17:30:00+02:00",
+      "territory": "Chiusa di San Michele",
+      "property_focus": {
+        "transaction": "vendita",
+        "min_price_eur": 100000,
+        "exclude": [
+          "affitto",
+          "locazione",
+          "garage",
+          "box",
+          "posto auto",
+          "rustico",
+          "rudere",
+          "terreno"
+        ],
+        "preferred": [
+          "appartamento",
+          "casa",
+          "villa",
+          "villetta",
+          "attico",
+          "bifamiliare",
+          "trifamiliare"
+        ],
+        "cash_subito": {
+          "enabled": true,
+          "label": "F1 CASH SUBITO",
+          "meaning": "acquisto diretto per opportunità immobiliari fortemente scontate e coerenti con i criteri F1",
+          "rule": "non presentarlo come garanzia di acquisto; prima verifica economica, tecnica e documentale"
+        }
+      },
       "approval_key": "2026-W34",
       "platforms": [
         {
@@ -721,84 +1013,72 @@
       "blocked_reason": "approval required for 2026-W34"
     },
     {
-      "id": "f1-immobiliare-2026-08-19-03-vendere-territorio",
+      "id": "f1-immobiliare-2026-08-19-04-g7-annuncio-vs-strategia",
       "client_id": "f1-immobiliare",
       "client_name": "F1 Immobiliare",
-      "category": "hyperlocal",
-      "format": "reel",
-      "title": "Prima di vendere a Sant'Antonino di Susa",
-      "caption": "Prima di pubblicare un immobile a Sant'Antonino di Susa, definiamo concorrenza, target e fascia di prezzo. Scrivi VALORE in privato.",
-      "voiceover": "Prima di pubblicare un immobile a Sant'Antonino di Susa, definiamo concorrenza, target e fascia di prezzo. Scrivi VALORE in privato.",
-      "slides": [
-        "VUOI VENDERE|A Sant'Antonino di Susa?",
-        "NON PARTIRE|DALL'ANNUNCIO",
-        "PARTI DAL|POSIZIONAMENTO",
-        "CHI È IL|COMPRATORE|PIÙ PROBABILE?",
-        "QUALI CASE|COMPETONO|CON LA TUA?",
-        "POI DECIDI|IL PREZZO",
-        "SCRIVI|VALORE"
-      ],
-      "media": "publisher/media/generated/f1-immobiliare/2026-08-19/03-vendere-territorio.mp4",
-      "scheduled_at": "2026-08-19T17:30:00+02:00",
-      "approval_key": "2026-W34",
-      "platforms": [
-        {
-          "platform": "facebook",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "instagram",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "tiktok",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "linkedin",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "youtube",
-          "integration_id": "direct-api"
-        }
-      ],
-      "enabled": true,
-      "status": "awaiting_approval",
-      "published_platforms": [],
-      "postiz_results": [],
-      "video_made_with_ai": true,
-      "created_by": "open-social-scheduler",
-      "blocked_reason": "approval required for 2026-W34"
-    },
-    {
-      "id": "f1-immobiliare-2026-08-19-04-senza-impegno",
-      "client_id": "f1-immobiliare",
-      "client_name": "F1 Immobiliare",
-      "category": "convert",
+      "category": "decision",
+      "editorial_role": "decision",
       "format": "carousel",
-      "title": "Conoscere il valore prima di decidere",
-      "caption": "Conoscere il valore viene prima della decisione di vendere. Richiedi una prima valutazione gratuita e poi scegli con più informazioni. Scrivi VALORE in privato.",
-      "voiceover": "Conoscere il valore viene prima della decisione di vendere. Richiedi una prima valutazione gratuita e poi scegli con più informazioni. Scrivi VALORE in privato.",
+      "title": "Pubblicare un annuncio non significa costruire una strategia",
+      "caption": "Questa è la differenza tra mettere online una casa e costruire una strategia di vendita. Scrivi VALUTAZIONE in privato.\n\n#F1Immobiliare #ValleDiSusa #CasaTorino #ImmobiliareTorino #Almese #SantAmbrogioDiTorino",
+      "hashtags": [
+        "#F1Immobiliare",
+        "#ValleDiSusa",
+        "#CasaTorino",
+        "#ImmobiliareTorino",
+        "#Almese",
+        "#SantAmbrogioDiTorino"
+      ],
+      "voiceover": "Questa è la differenza tra mettere online una casa e costruire una strategia di vendita. Scrivi VALUTAZIONE in privato.",
       "slides": [
-        "PRIMA|CONOSCI",
-        "POI|DECIDI",
-        "NON SERVE|METTERE CASA|IN VENDITA",
-        "PUOI FARE|UNA PRIMA|VERIFICA",
-        "E CAPIRE|DOVE SEI|NEL MERCATO",
-        "VALUTAZIONE|GRATUITA",
-        "SCRIVI|VALORE"
+        "PUBBLICARE|UN ANNUNCIO",
+        "NON È|UNA STRATEGIA",
+        "SERVONO|DATI",
+        "POSIZIONAMENTO",
+        "DISTRIBUZIONE",
+        "MISURAZIONE",
+        "F1 IMMOBILIARE|PRIMA I DATI.|POI LA STRATEGIA.|371 370 8294"
       ],
       "media": [
-        "publisher/media/generated/f1-immobiliare/2026-08-19/04-senza-impegno/slide-01.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-19/04-senza-impegno/slide-02.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-19/04-senza-impegno/slide-03.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-19/04-senza-impegno/slide-04.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-19/04-senza-impegno/slide-05.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-19/04-senza-impegno/slide-06.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-19/04-senza-impegno/slide-07.jpg"
+        "publisher/media/generated/f1-immobiliare/2026-08-19/04-g7-annuncio-vs-strategia/slide-01.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-19/04-g7-annuncio-vs-strategia/slide-02.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-19/04-g7-annuncio-vs-strategia/slide-03.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-19/04-g7-annuncio-vs-strategia/slide-04.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-19/04-g7-annuncio-vs-strategia/slide-05.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-19/04-g7-annuncio-vs-strategia/slide-06.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-19/04-g7-annuncio-vs-strategia/slide-07.jpg"
       ],
       "scheduled_at": "2026-08-19T20:30:00+02:00",
+      "territory": "Chiusa di San Michele",
+      "property_focus": {
+        "transaction": "vendita",
+        "min_price_eur": 100000,
+        "exclude": [
+          "affitto",
+          "locazione",
+          "garage",
+          "box",
+          "posto auto",
+          "rustico",
+          "rudere",
+          "terreno"
+        ],
+        "preferred": [
+          "appartamento",
+          "casa",
+          "villa",
+          "villetta",
+          "attico",
+          "bifamiliare",
+          "trifamiliare"
+        ],
+        "cash_subito": {
+          "enabled": true,
+          "label": "F1 CASH SUBITO",
+          "meaning": "acquisto diretto per opportunità immobiliari fortemente scontate e coerenti con i criteri F1",
+          "rule": "non presentarlo come garanzia di acquisto; prima verifica economica, tecnica e documentale"
+        }
+      },
       "approval_key": "2026-W34",
       "platforms": [
         {
@@ -827,25 +1107,64 @@
       "blocked_reason": "approval required for 2026-W34"
     },
     {
-      "id": "f1-immobiliare-2026-08-20-01-quanto-vale-casa",
+      "id": "f1-immobiliare-2026-08-20-01-g5-domanda-agente",
       "client_id": "f1-immobiliare",
       "client_name": "F1 Immobiliare",
-      "category": "attract",
+      "category": "data",
+      "editorial_role": "data",
       "format": "reel",
-      "title": "Sai davvero quanto vale casa tua?",
-      "caption": "Sai davvero quanto vale oggi casa tua? Una valutazione corretta parte dai dati, non dalle aspettative. Scrivi VALORE in privato.",
-      "voiceover": "Sai davvero quanto vale oggi casa tua? Una valutazione corretta parte dai dati, non dalle aspettative. Scrivi VALORE in privato.",
-      "slides": [
-        "SAI DAVVERO|QUANTO VALE|CASA TUA?",
-        "IL PREZZO CHE|IMMAGINI|NON È IL MERCATO",
-        "GLI ANNUNCI ONLINE|MOSTRANO PREZZI|RICHIESTI",
-        "IL VALORE CAMBIA|PER ZONA, STATO|E CARATTERISTICHE",
-        "SERVONO DATI|NON IPOTESI",
-        "PRIMA ANALISI|GRATUITA",
-        "SCRIVI|VALORE"
+      "title": "Prima dell'incarico fai questa domanda",
+      "caption": "Non devi credere alla valutazione. Devi poterla capire. Scrivi VALUTAZIONE in privato.\n\n#F1Immobiliare #ValleDiSusa #VendereCasa #ValutazioneImmobiliare #Avigliana #CasaInVendita",
+      "hashtags": [
+        "#F1Immobiliare",
+        "#ValleDiSusa",
+        "#VendereCasa",
+        "#ValutazioneImmobiliare",
+        "#Avigliana",
+        "#CasaInVendita"
       ],
-      "media": "publisher/media/generated/f1-immobiliare/2026-08-20/01-quanto-vale-casa.mp4",
+      "voiceover": "Prima di affidare la vendita, non chiedere soltanto quanto vale la casa. Chiedi su quali dati è stato costruito quel prezzo, quali comparabili sono stati usati e quale strategia verrà applicata dopo la pubblicazione.",
+      "slides": [
+        "PRIMA|DELL'INCARICO",
+        "CHIEDI:|SU QUALI DATI?",
+        "NON SOLO|QUANTO VALE",
+        "MA PERCHÉ|QUEL PREZZO",
+        "QUALI|COMPARABILI?",
+        "QUALE|STRATEGIA?",
+        "F1 IMMOBILIARE|DEVI POTER CAPIRE|371 370 8294"
+      ],
+      "media": "publisher/media/generated/f1-immobiliare/2026-08-20/01-g5-domanda-agente.mp4",
       "scheduled_at": "2026-08-20T09:00:00+02:00",
+      "territory": "Avigliana",
+      "property_focus": {
+        "transaction": "vendita",
+        "min_price_eur": 100000,
+        "exclude": [
+          "affitto",
+          "locazione",
+          "garage",
+          "box",
+          "posto auto",
+          "rustico",
+          "rudere",
+          "terreno"
+        ],
+        "preferred": [
+          "appartamento",
+          "casa",
+          "villa",
+          "villetta",
+          "attico",
+          "bifamiliare",
+          "trifamiliare"
+        ],
+        "cash_subito": {
+          "enabled": true,
+          "label": "F1 CASH SUBITO",
+          "meaning": "acquisto diretto per opportunità immobiliari fortemente scontate e coerenti con i criteri F1",
+          "rule": "non presentarlo come garanzia di acquisto; prima verifica economica, tecnica e documentale"
+        }
+      },
       "approval_key": "2026-W34",
       "platforms": [
         {
@@ -878,33 +1197,162 @@
       "blocked_reason": "approval required for 2026-W34"
     },
     {
-      "id": "f1-immobiliare-2026-08-20-02-valore-emotivo",
+      "id": "f1-immobiliare-2026-08-20-02-g6-prezzo-da-soli",
       "client_id": "f1-immobiliare",
       "client_name": "F1 Immobiliare",
-      "category": "nurture",
-      "format": "carousel",
-      "title": "Valore affettivo e valore di mercato",
-      "caption": "Il valore affettivo è importante, ma il mercato confronta alternative, condizioni e prezzi. Una valutazione serve a separare patrimonio emotivo e strategia. Scrivi VALORE in privato.",
-      "voiceover": "Il valore affettivo è importante, ma il mercato confronta alternative, condizioni e prezzi. Una valutazione serve a separare patrimonio emotivo e strategia. Scrivi VALORE in privato.",
+      "category": "error",
+      "editorial_role": "error",
+      "format": "reel",
+      "title": "L'errore più frequente quando decidi il prezzo da solo",
+      "caption": "Se vuoi decidere da solo, fallo con dati verificabili. Scrivi VALUTAZIONE in privato.\n\n#F1Immobiliare #ValDiSusa #MercatoImmobiliare #VenditaImmobiliare #Susa #PrimaIDati",
+      "hashtags": [
+        "#F1Immobiliare",
+        "#ValDiSusa",
+        "#MercatoImmobiliare",
+        "#VenditaImmobiliare",
+        "#Susa",
+        "#PrimaIDati"
+      ],
+      "voiceover": "Decidere il prezzo da soli non è il problema. Il problema è farlo usando dati sbagliati. Un annuncio non è una vendita e una casa simile non è automaticamente un comparabile.",
       "slides": [
-        "LA TUA CASA|HA UNA STORIA",
-        "PER TE|QUEL VALORE|È REALE",
-        "MA IL MERCATO|USA ALTRI|PARAMETRI",
-        "CONFRONTA|ALTERNATIVE",
-        "MISURA|DOMANDA E|PREZZO",
-        "SEPARIAMO|EMOZIONE E|STRATEGIA",
-        "SCRIVI|VALORE"
+        "DECIDERE|IL PREZZO|DA SOLI",
+        "NON È|IL PROBLEMA",
+        "IL PROBLEMA È|USARE DATI SBAGLIATI",
+        "ANNUNCI ≠|VENDITE",
+        "SIMILE ≠|COMPARABILE",
+        "VERIFICA|LE FONTI",
+        "F1 IMMOBILIARE|SECONDO PARERE|371 370 8294"
+      ],
+      "media": "publisher/media/generated/f1-immobiliare/2026-08-20/02-g6-prezzo-da-soli.mp4",
+      "scheduled_at": "2026-08-20T12:30:00+02:00",
+      "territory": "Avigliana",
+      "property_focus": {
+        "transaction": "vendita",
+        "min_price_eur": 100000,
+        "exclude": [
+          "affitto",
+          "locazione",
+          "garage",
+          "box",
+          "posto auto",
+          "rustico",
+          "rudere",
+          "terreno"
+        ],
+        "preferred": [
+          "appartamento",
+          "casa",
+          "villa",
+          "villetta",
+          "attico",
+          "bifamiliare",
+          "trifamiliare"
+        ],
+        "cash_subito": {
+          "enabled": true,
+          "label": "F1 CASH SUBITO",
+          "meaning": "acquisto diretto per opportunità immobiliari fortemente scontate e coerenti con i criteri F1",
+          "rule": "non presentarlo come garanzia di acquisto; prima verifica economica, tecnica e documentale"
+        }
+      },
+      "approval_key": "2026-W34",
+      "platforms": [
+        {
+          "platform": "facebook",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "tiktok",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "linkedin",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "youtube",
+          "integration_id": "direct-api"
+        }
+      ],
+      "enabled": true,
+      "status": "awaiting_approval",
+      "published_platforms": [],
+      "postiz_results": [],
+      "video_made_with_ai": true,
+      "created_by": "open-social-scheduler",
+      "blocked_reason": "approval required for 2026-W34"
+    },
+    {
+      "id": "f1-immobiliare-2026-08-20-03-g7-cosa-vede-compratore",
+      "client_id": "f1-immobiliare",
+      "client_name": "F1 Immobiliare",
+      "category": "proof",
+      "editorial_role": "proof",
+      "format": "carousel",
+      "title": "Cosa vede un compratore nella tua zona",
+      "caption": "Per vendere bene dobbiamo guardare il mercato anche con gli occhi del compratore. Scrivi VALUTAZIONE in privato.\n\n#F1Immobiliare #ValleDiSusa #CasaTorino #ImmobiliareTorino #Almese #SantAmbrogioDiTorino",
+      "hashtags": [
+        "#F1Immobiliare",
+        "#ValleDiSusa",
+        "#CasaTorino",
+        "#ImmobiliareTorino",
+        "#Almese",
+        "#SantAmbrogioDiTorino"
+      ],
+      "voiceover": "Per vendere bene dobbiamo guardare il mercato anche con gli occhi del compratore. Scrivi VALUTAZIONE in privato.",
+      "slides": [
+        "APRiamo|LA RICERCA",
+        "QUESTE SONO|LE ALTERNATIVE",
+        "QUESTI SONO|I PREZZI",
+        "QUESTA È|LA QUALITÀ OFFERTA",
+        "IL COMPRATORE|CONFRONTA",
+        "NOI DOBBIAMO|POSIZIONARE",
+        "F1 IMMOBILIARE|PROVA PRIMA|371 370 8294"
       ],
       "media": [
-        "publisher/media/generated/f1-immobiliare/2026-08-20/02-valore-emotivo/slide-01.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-20/02-valore-emotivo/slide-02.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-20/02-valore-emotivo/slide-03.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-20/02-valore-emotivo/slide-04.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-20/02-valore-emotivo/slide-05.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-20/02-valore-emotivo/slide-06.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-20/02-valore-emotivo/slide-07.jpg"
+        "publisher/media/generated/f1-immobiliare/2026-08-20/03-g7-cosa-vede-compratore/slide-01.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-20/03-g7-cosa-vede-compratore/slide-02.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-20/03-g7-cosa-vede-compratore/slide-03.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-20/03-g7-cosa-vede-compratore/slide-04.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-20/03-g7-cosa-vede-compratore/slide-05.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-20/03-g7-cosa-vede-compratore/slide-06.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-20/03-g7-cosa-vede-compratore/slide-07.jpg"
       ],
-      "scheduled_at": "2026-08-20T12:30:00+02:00",
+      "scheduled_at": "2026-08-20T17:30:00+02:00",
+      "territory": "Avigliana",
+      "property_focus": {
+        "transaction": "vendita",
+        "min_price_eur": 100000,
+        "exclude": [
+          "affitto",
+          "locazione",
+          "garage",
+          "box",
+          "posto auto",
+          "rustico",
+          "rudere",
+          "terreno"
+        ],
+        "preferred": [
+          "appartamento",
+          "casa",
+          "villa",
+          "villetta",
+          "attico",
+          "bifamiliare",
+          "trifamiliare"
+        ],
+        "cash_subito": {
+          "enabled": true,
+          "label": "F1 CASH SUBITO",
+          "meaning": "acquisto diretto per opportunità immobiliari fortemente scontate e coerenti con i criteri F1",
+          "rule": "non presentarlo come garanzia di acquisto; prima verifica economica, tecnica e documentale"
+        }
+      },
       "approval_key": "2026-W34",
       "platforms": [
         {
@@ -933,84 +1381,72 @@
       "blocked_reason": "approval required for 2026-W34"
     },
     {
-      "id": "f1-immobiliare-2026-08-20-03-garage-territorio",
+      "id": "f1-immobiliare-2026-08-20-04-g1-prima-fermati",
       "client_id": "f1-immobiliare",
       "client_name": "F1 Immobiliare",
-      "category": "hyperlocal",
-      "format": "reel",
-      "title": "Quanto incide un garage a Borgone Susa?",
-      "caption": "Garage, posto auto, cantina e altre pertinenze non incidono allo stesso modo in ogni zona. Vediamo il caso specifico a Borgone Susa. Scrivi VALORE in privato.",
-      "voiceover": "Garage, posto auto, cantina e altre pertinenze non incidono allo stesso modo in ogni zona. Vediamo il caso specifico a Borgone Susa. Scrivi VALORE in privato.",
-      "slides": [
-        "GARAGE A|Borgone Susa",
-        "QUANTO INCIDE|SUL VALORE?",
-        "DIPENDE DALLA|SCARSITÀ IN ZONA",
-        "DALLA|COMODITÀ",
-        "E DALLA|DOMANDA REALE",
-        "VALUTIAMO|ANCHE LE|PERTINENZE",
-        "SCRIVI|VALORE"
-      ],
-      "media": "publisher/media/generated/f1-immobiliare/2026-08-20/03-garage-territorio.mp4",
-      "scheduled_at": "2026-08-20T17:30:00+02:00",
-      "approval_key": "2026-W34",
-      "platforms": [
-        {
-          "platform": "facebook",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "instagram",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "tiktok",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "linkedin",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "youtube",
-          "integration_id": "direct-api"
-        }
-      ],
-      "enabled": true,
-      "status": "awaiting_approval",
-      "published_platforms": [],
-      "postiz_results": [],
-      "video_made_with_ai": true,
-      "created_by": "open-social-scheduler",
-      "blocked_reason": "approval required for 2026-W34"
-    },
-    {
-      "id": "f1-immobiliare-2026-08-20-04-prima-del-prezzo",
-      "client_id": "f1-immobiliare",
-      "client_name": "F1 Immobiliare",
-      "category": "convert",
+      "category": "decision",
+      "editorial_role": "decision",
       "format": "carousel",
-      "title": "Prima del prezzo viene l'analisi",
-      "caption": "Il prezzo è la conclusione dell'analisi, non il punto di partenza. Scrivi VALORE in privato.",
-      "voiceover": "Il prezzo è la conclusione dell'analisi, non il punto di partenza. Scrivi VALORE in privato.",
+      "title": "Prima di mettere casa in vendita, fermati",
+      "caption": "Vendere bene comincia prima dell'annuncio. Scrivi VALUTAZIONE in privato.\n\n#F1Immobiliare #AltaValleDiSusa #Oulx #Bardonecchia #SauzeDOulx #InvestimentoImmobiliare",
+      "hashtags": [
+        "#F1Immobiliare",
+        "#AltaValleDiSusa",
+        "#Oulx",
+        "#Bardonecchia",
+        "#SauzeDOulx",
+        "#InvestimentoImmobiliare"
+      ],
+      "voiceover": "Vendere bene comincia prima dell'annuncio. Scrivi VALUTAZIONE in privato.",
       "slides": [
-        "NON PARTIAMO|DAL PREZZO",
-        "PARTIAMO|DALL'IMMOBILE",
-        "DAL MERCATO",
-        "DALLA|CONCORRENZA",
-        "E DAL|COMPRATORE",
-        "POI COSTRUIAMO|IL PRICING",
-        "SCRIVI|VALORE"
+        "PRIMA DI|METTERE CASA|IN VENDITA",
+        "FERMATI",
+        "COSA SOSTIENE|IL MERCATO?",
+        "CONTRO QUALI|IMMOBILI COMPETI?",
+        "CHI DOBBIAMO|RAGGIUNGERE?",
+        "POI|PUBBLICHIAMO",
+        "SCRIVI VALUTAZIONE|F1 IMMOBILIARE|371 370 8294"
       ],
       "media": [
-        "publisher/media/generated/f1-immobiliare/2026-08-20/04-prima-del-prezzo/slide-01.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-20/04-prima-del-prezzo/slide-02.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-20/04-prima-del-prezzo/slide-03.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-20/04-prima-del-prezzo/slide-04.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-20/04-prima-del-prezzo/slide-05.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-20/04-prima-del-prezzo/slide-06.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-20/04-prima-del-prezzo/slide-07.jpg"
+        "publisher/media/generated/f1-immobiliare/2026-08-20/04-g1-prima-fermati/slide-01.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-20/04-g1-prima-fermati/slide-02.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-20/04-g1-prima-fermati/slide-03.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-20/04-g1-prima-fermati/slide-04.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-20/04-g1-prima-fermati/slide-05.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-20/04-g1-prima-fermati/slide-06.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-20/04-g1-prima-fermati/slide-07.jpg"
       ],
       "scheduled_at": "2026-08-20T20:30:00+02:00",
+      "territory": "Avigliana",
+      "property_focus": {
+        "transaction": "vendita",
+        "min_price_eur": 100000,
+        "exclude": [
+          "affitto",
+          "locazione",
+          "garage",
+          "box",
+          "posto auto",
+          "rustico",
+          "rudere",
+          "terreno"
+        ],
+        "preferred": [
+          "appartamento",
+          "casa",
+          "villa",
+          "villetta",
+          "attico",
+          "bifamiliare",
+          "trifamiliare"
+        ],
+        "cash_subito": {
+          "enabled": true,
+          "label": "F1 CASH SUBITO",
+          "meaning": "acquisto diretto per opportunità immobiliari fortemente scontate e coerenti con i criteri F1",
+          "rule": "non presentarlo come garanzia di acquisto; prima verifica economica, tecnica e documentale"
+        }
+      },
       "approval_key": "2026-W34",
       "platforms": [
         {
@@ -1039,25 +1475,64 @@
       "blocked_reason": "approval required for 2026-W34"
     },
     {
-      "id": "f1-immobiliare-2026-08-21-01-errore-portali",
+      "id": "f1-immobiliare-2026-08-21-01-g6-vendita-privata-verifiche",
       "client_id": "f1-immobiliare",
       "client_name": "F1 Immobiliare",
-      "category": "attract",
+      "category": "data",
+      "editorial_role": "data",
       "format": "reel",
-      "title": "L'errore più comune nel decidere il prezzo",
-      "caption": "Il prezzo di un annuncio non coincide automaticamente con il valore di mercato. Prima di pubblicare, confrontiamo dati e immobili realmente comparabili. Scrivi VALORE in privato.",
-      "voiceover": "Il prezzo di un annuncio non coincide automaticamente con il valore di mercato. Prima di pubblicare, confrontiamo dati e immobili realmente comparabili. Scrivi VALORE in privato.",
-      "slides": [
-        "NON DECIDERE|IL PREZZO|COSÌ",
-        "APRI UN PORTALE|E TROVI UNA CASA|SIMILE",
-        "VEDI 180.000 €|E PENSI:|ANCHE LA MIA",
-        "MA È UN PREZZO|RICHIESTO",
-        "NON È DETTO|CHE SIA IL PREZZO|DI VENDITA",
-        "VALUTA PRIMA|DI PUBBLICARE",
-        "SCRIVI|VALORE"
+      "title": "Vuoi vendere senza agenzia? Parti da cinque verifiche",
+      "caption": "Anche se vuoi vendere da solo, puoi partire dai dati. F1 può offrirti un secondo parere. Scrivi VALUTAZIONE in privato.\n\n#F1Immobiliare #ValDiSusa #MercatoImmobiliare #VenditaImmobiliare #Susa #PrimaIDati",
+      "hashtags": [
+        "#F1Immobiliare",
+        "#ValDiSusa",
+        "#MercatoImmobiliare",
+        "#VenditaImmobiliare",
+        "#Susa",
+        "#PrimaIDati"
       ],
-      "media": "publisher/media/generated/f1-immobiliare/2026-08-21/01-errore-portali.mp4",
+      "voiceover": "Se vuoi vendere senza agenzia, nessun problema. Ma prima verifica documenti, comparabili, concorrenza, prezzo e acquirente probabile. Vendere bene comincia prima dell'annuncio.",
+      "slides": [
+        "VUOI VENDERE|DA PRIVATO?",
+        "1. DOCUMENTI",
+        "2. COMPARABILI",
+        "3. CONCORRENZA",
+        "4. PREZZO|5. TARGET",
+        "PRIMA CAPISCI|POI PUBBLICHI",
+        "F1 IMMOBILIARE|SECONDO PARERE|371 370 8294"
+      ],
+      "media": "publisher/media/generated/f1-immobiliare/2026-08-21/01-g6-vendita-privata-verifiche.mp4",
       "scheduled_at": "2026-08-21T09:00:00+02:00",
+      "territory": "Almese",
+      "property_focus": {
+        "transaction": "vendita",
+        "min_price_eur": 100000,
+        "exclude": [
+          "affitto",
+          "locazione",
+          "garage",
+          "box",
+          "posto auto",
+          "rustico",
+          "rudere",
+          "terreno"
+        ],
+        "preferred": [
+          "appartamento",
+          "casa",
+          "villa",
+          "villetta",
+          "attico",
+          "bifamiliare",
+          "trifamiliare"
+        ],
+        "cash_subito": {
+          "enabled": true,
+          "label": "F1 CASH SUBITO",
+          "meaning": "acquisto diretto per opportunità immobiliari fortemente scontate e coerenti con i criteri F1",
+          "rule": "non presentarlo come garanzia di acquisto; prima verifica economica, tecnica e documentale"
+        }
+      },
       "approval_key": "2026-W34",
       "platforms": [
         {
@@ -1090,33 +1565,162 @@
       "blocked_reason": "approval required for 2026-W34"
     },
     {
-      "id": "f1-immobiliare-2026-08-21-02-microzona",
+      "id": "f1-immobiliare-2026-08-21-02-g7-comparabile-escluso",
       "client_id": "f1-immobiliare",
       "client_name": "F1 Immobiliare",
-      "category": "nurture",
-      "format": "carousel",
-      "title": "Bastano poche centinaia di metri",
-      "caption": "La media comunale può nascondere differenze importanti. Per valutare bene bisogna scendere alla microzona e al singolo immobile. Scrivi VALORE in privato.",
-      "voiceover": "La media comunale può nascondere differenze importanti. Per valutare bene bisogna scendere alla microzona e al singolo immobile. Scrivi VALORE in privato.",
+      "category": "error",
+      "editorial_role": "error",
+      "format": "reel",
+      "title": "Perché escludiamo un comparabile",
+      "caption": "La qualità dei comparabili conta più della quantità. Scrivi VALUTAZIONE in privato.\n\n#F1Immobiliare #ValleDiSusa #CasaTorino #ImmobiliareTorino #Almese #SantAmbrogioDiTorino",
+      "hashtags": [
+        "#F1Immobiliare",
+        "#ValleDiSusa",
+        "#CasaTorino",
+        "#ImmobiliareTorino",
+        "#Almese",
+        "#SantAmbrogioDiTorino"
+      ],
+      "voiceover": "Un immobile può sembrare simile ma non essere un buon comparabile. Piano, stato, pertinenze, microzona e condizioni di vendita possono renderlo fuorviante. Anche escludere un dato sbagliato è parte della valutazione.",
       "slides": [
-        "STESSO COMUNE|STESSO VALORE?|NO",
-        "CAMBIA LA|MICROZONA",
-        "CAMBIANO|SERVIZI E|ACCESSIBILITÀ",
-        "CAMBIA LA|DOMANDA",
-        "CAMBIA LA|CONCORRENZA",
-        "IL PREZZO|VA LOCALIZZATO",
-        "SCRIVI|VALORE"
+        "SEMBRA|UGUALE",
+        "MA NON È|COMPARABILE",
+        "PIANO DIVERSO?",
+        "STATO DIVERSO?",
+        "MICROZONA DIVERSA?",
+        "ESCLUDERE BENE|È PARTE DEL METODO",
+        "F1 IMMOBILIARE|PROVA|371 370 8294"
+      ],
+      "media": "publisher/media/generated/f1-immobiliare/2026-08-21/02-g7-comparabile-escluso.mp4",
+      "scheduled_at": "2026-08-21T12:30:00+02:00",
+      "territory": "Almese",
+      "property_focus": {
+        "transaction": "vendita",
+        "min_price_eur": 100000,
+        "exclude": [
+          "affitto",
+          "locazione",
+          "garage",
+          "box",
+          "posto auto",
+          "rustico",
+          "rudere",
+          "terreno"
+        ],
+        "preferred": [
+          "appartamento",
+          "casa",
+          "villa",
+          "villetta",
+          "attico",
+          "bifamiliare",
+          "trifamiliare"
+        ],
+        "cash_subito": {
+          "enabled": true,
+          "label": "F1 CASH SUBITO",
+          "meaning": "acquisto diretto per opportunità immobiliari fortemente scontate e coerenti con i criteri F1",
+          "rule": "non presentarlo come garanzia di acquisto; prima verifica economica, tecnica e documentale"
+        }
+      },
+      "approval_key": "2026-W34",
+      "platforms": [
+        {
+          "platform": "facebook",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "tiktok",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "linkedin",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "youtube",
+          "integration_id": "direct-api"
+        }
+      ],
+      "enabled": true,
+      "status": "awaiting_approval",
+      "published_platforms": [],
+      "postiz_results": [],
+      "video_made_with_ai": true,
+      "created_by": "open-social-scheduler",
+      "blocked_reason": "approval required for 2026-W34"
+    },
+    {
+      "id": "f1-immobiliare-2026-08-21-03-g1-tre-agenzie",
+      "client_id": "f1-immobiliare",
+      "client_name": "F1 Immobiliare",
+      "category": "proof",
+      "editorial_role": "proof",
+      "format": "carousel",
+      "title": "Tre agenzie. Tre valutazioni diverse.",
+      "caption": "La valutazione migliore non è quella che piace di più. È quella che può essere spiegata meglio. Scrivi VALUTAZIONE in privato.\n\n#F1Immobiliare #AltaValleDiSusa #Oulx #Bardonecchia #SauzeDOulx #InvestimentoImmobiliare",
+      "hashtags": [
+        "#F1Immobiliare",
+        "#AltaValleDiSusa",
+        "#Oulx",
+        "#Bardonecchia",
+        "#SauzeDOulx",
+        "#InvestimentoImmobiliare"
+      ],
+      "voiceover": "La valutazione migliore non è quella che piace di più. È quella che può essere spiegata meglio. Scrivi VALUTAZIONE in privato.",
+      "slides": [
+        "190.000|210.000|235.000 €",
+        "TRE AGENZIE|TRE VALUTAZIONI",
+        "QUAL È|QUELLA CORRETTA?",
+        "NON PER FORZA|LA PIÙ ALTA",
+        "CHIEDI:|SU QUALI DATI?",
+        "LA MIGLIORE|SI PUÒ SPIEGARE",
+        "F1 IMMOBILIARE|PRIMA I DATI|371 370 8294"
       ],
       "media": [
-        "publisher/media/generated/f1-immobiliare/2026-08-21/02-microzona/slide-01.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-21/02-microzona/slide-02.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-21/02-microzona/slide-03.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-21/02-microzona/slide-04.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-21/02-microzona/slide-05.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-21/02-microzona/slide-06.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-21/02-microzona/slide-07.jpg"
+        "publisher/media/generated/f1-immobiliare/2026-08-21/03-g1-tre-agenzie/slide-01.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-21/03-g1-tre-agenzie/slide-02.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-21/03-g1-tre-agenzie/slide-03.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-21/03-g1-tre-agenzie/slide-04.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-21/03-g1-tre-agenzie/slide-05.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-21/03-g1-tre-agenzie/slide-06.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-21/03-g1-tre-agenzie/slide-07.jpg"
       ],
-      "scheduled_at": "2026-08-21T12:30:00+02:00",
+      "scheduled_at": "2026-08-21T17:30:00+02:00",
+      "territory": "Almese",
+      "property_focus": {
+        "transaction": "vendita",
+        "min_price_eur": 100000,
+        "exclude": [
+          "affitto",
+          "locazione",
+          "garage",
+          "box",
+          "posto auto",
+          "rustico",
+          "rudere",
+          "terreno"
+        ],
+        "preferred": [
+          "appartamento",
+          "casa",
+          "villa",
+          "villetta",
+          "attico",
+          "bifamiliare",
+          "trifamiliare"
+        ],
+        "cash_subito": {
+          "enabled": true,
+          "label": "F1 CASH SUBITO",
+          "meaning": "acquisto diretto per opportunità immobiliari fortemente scontate e coerenti con i criteri F1",
+          "rule": "non presentarlo come garanzia di acquisto; prima verifica economica, tecnica e documentale"
+        }
+      },
       "approval_key": "2026-W34",
       "platforms": [
         {
@@ -1145,84 +1749,72 @@
       "blocked_reason": "approval required for 2026-W34"
     },
     {
-      "id": "f1-immobiliare-2026-08-21-03-concorrenza-territorio",
+      "id": "f1-immobiliare-2026-08-21-04-g2-analisi-microzona",
       "client_id": "f1-immobiliare",
       "client_name": "F1 Immobiliare",
-      "category": "hyperlocal",
-      "format": "reel",
-      "title": "Con quante case compete la tua a Villar Focchiardo?",
-      "caption": "Il valore commerciale dipende anche dalle alternative che il compratore trova oggi a Villar Focchiardo. Analizzare la concorrenza è parte del pricing. Scrivi VALORE in privato.",
-      "voiceover": "Il valore commerciale dipende anche dalle alternative che il compratore trova oggi a Villar Focchiardo. Analizzare la concorrenza è parte del pricing. Scrivi VALORE in privato.",
-      "slides": [
-        "LA TUA CASA|A Villar Focchiardo",
-        "NON È SOLA|SUL MERCATO",
-        "IL COMPRATORE|VEDE ANCHE|LE ALTERNATIVE",
-        "CONFRONTA|PREZZO E|QUALITÀ",
-        "LA CONCORRENZA|CAMBIA IL|POSIZIONAMENTO",
-        "ANALIZZIAMOLA|PRIMA",
-        "SCRIVI|VALORE"
-      ],
-      "media": "publisher/media/generated/f1-immobiliare/2026-08-21/03-concorrenza-territorio.mp4",
-      "scheduled_at": "2026-08-21T17:30:00+02:00",
-      "approval_key": "2026-W34",
-      "platforms": [
-        {
-          "platform": "facebook",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "instagram",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "tiktok",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "linkedin",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "youtube",
-          "integration_id": "direct-api"
-        }
-      ],
-      "enabled": true,
-      "status": "awaiting_approval",
-      "published_platforms": [],
-      "postiz_results": [],
-      "video_made_with_ai": true,
-      "created_by": "open-social-scheduler",
-      "blocked_reason": "approval required for 2026-W34"
-    },
-    {
-      "id": "f1-immobiliare-2026-08-21-04-analisi-gratuita",
-      "client_id": "f1-immobiliare",
-      "client_name": "F1 Immobiliare",
-      "category": "convert",
+      "category": "decision",
+      "editorial_role": "decision",
       "format": "carousel",
-      "title": "Prima analisi gratuita",
-      "caption": "Vuoi una prima analisi del tuo immobile? Inviaci comune, tipologia e metratura. Scrivi VALORE in privato.",
-      "voiceover": "Vuoi una prima analisi del tuo immobile? Inviaci comune, tipologia e metratura. Scrivi VALORE in privato.",
+      "title": "Prima del prezzo richiedi l'analisi della microzona",
+      "caption": "Analisi strategica del valore del tuo immobile: comparabili, microzona, concorrenza, domanda e pricing. Gratuita e senza impegno. Scrivi VALUTAZIONE in privato.\n\n#F1Immobiliare #ValleDiSusa #Condove #Bussoleno #VillarDora #VendereBene",
+      "hashtags": [
+        "#F1Immobiliare",
+        "#ValleDiSusa",
+        "#Condove",
+        "#Bussoleno",
+        "#VillarDora",
+        "#VendereBene"
+      ],
+      "voiceover": "Analisi strategica del valore del tuo immobile: comparabili, microzona, concorrenza, domanda e pricing. Gratuita e senza impegno. Scrivi VALUTAZIONE in privato.",
       "slides": [
-        "VUOI SAPERE|QUANTO VALE|CASA TUA?",
-        "PARTIAMO|DAI DATI",
-        "ZONA|METRATURA|STATO",
-        "PERTINENZE|E CONCORRENZA",
-        "NESSUN PREZZO|INVENTATO",
-        "PRIMA ANALISI|GRATUITA",
-        "SCRIVI|VALORE"
+        "PRIMA|DEL PREZZO",
+        "GUARDA|LA MICROZONA",
+        "COMPARABILI",
+        "CONCORRENZA",
+        "DOMANDA",
+        "STRATEGIA|DI PREZZO",
+        "SCRIVI VALUTAZIONE|F1 IMMOBILIARE|371 370 8294"
       ],
       "media": [
-        "publisher/media/generated/f1-immobiliare/2026-08-21/04-analisi-gratuita/slide-01.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-21/04-analisi-gratuita/slide-02.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-21/04-analisi-gratuita/slide-03.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-21/04-analisi-gratuita/slide-04.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-21/04-analisi-gratuita/slide-05.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-21/04-analisi-gratuita/slide-06.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-21/04-analisi-gratuita/slide-07.jpg"
+        "publisher/media/generated/f1-immobiliare/2026-08-21/04-g2-analisi-microzona/slide-01.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-21/04-g2-analisi-microzona/slide-02.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-21/04-g2-analisi-microzona/slide-03.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-21/04-g2-analisi-microzona/slide-04.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-21/04-g2-analisi-microzona/slide-05.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-21/04-g2-analisi-microzona/slide-06.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-21/04-g2-analisi-microzona/slide-07.jpg"
       ],
       "scheduled_at": "2026-08-21T20:30:00+02:00",
+      "territory": "Almese",
+      "property_focus": {
+        "transaction": "vendita",
+        "min_price_eur": 100000,
+        "exclude": [
+          "affitto",
+          "locazione",
+          "garage",
+          "box",
+          "posto auto",
+          "rustico",
+          "rudere",
+          "terreno"
+        ],
+        "preferred": [
+          "appartamento",
+          "casa",
+          "villa",
+          "villetta",
+          "attico",
+          "bifamiliare",
+          "trifamiliare"
+        ],
+        "cash_subito": {
+          "enabled": true,
+          "label": "F1 CASH SUBITO",
+          "meaning": "acquisto diretto per opportunità immobiliari fortemente scontate e coerenti con i criteri F1",
+          "rule": "non presentarlo come garanzia di acquisto; prima verifica economica, tecnica e documentale"
+        }
+      },
       "approval_key": "2026-W34",
       "platforms": [
         {
@@ -1251,25 +1843,64 @@
       "blocked_reason": "approval required for 2026-W34"
     },
     {
-      "id": "f1-immobiliare-2026-08-22-01-prezzo-alto",
+      "id": "f1-immobiliare-2026-08-22-01-g7-cosa-guardiamo",
       "client_id": "f1-immobiliare",
       "client_name": "F1 Immobiliare",
-      "category": "attract",
+      "category": "data",
+      "editorial_role": "data",
       "format": "reel",
-      "title": "Partire troppo alti può costare caro",
-      "caption": "Un prezzo iniziale fuori mercato può ridurre interesse e forza negoziale. La strategia di prezzo si prepara prima della pubblicazione. Scrivi VALORE in privato.",
-      "voiceover": "Un prezzo iniziale fuori mercato può ridurre interesse e forza negoziale. La strategia di prezzo si prepara prima della pubblicazione. Scrivi VALORE in privato.",
-      "slides": [
-        "PREZZO ALTO?|SEMBRA PRUDENTE",
-        "MA IL MERCATO|TI CONFRONTA|SUBITO",
-        "POCHE RICHIESTE|SONO UN SEGNALE",
-        "POI ARRIVANO|I RIBASSI",
-        "E L'IMMOBILE|SEMBRA FERMO",
-        "IL PRICING|SI DECIDE PRIMA",
-        "SCRIVI|VALORE"
+      "title": "Cosa guardiamo prima di valutare un immobile",
+      "caption": "Prima i dati. Poi la strategia. Poi la vendita. Scrivi VALUTAZIONE in privato.\n\n#F1Immobiliare #ValleDiSusa #CasaTorino #ImmobiliareTorino #Almese #SantAmbrogioDiTorino",
+      "hashtags": [
+        "#F1Immobiliare",
+        "#ValleDiSusa",
+        "#CasaTorino",
+        "#ImmobiliareTorino",
+        "#Almese",
+        "#SantAmbrogioDiTorino"
       ],
-      "media": "publisher/media/generated/f1-immobiliare/2026-08-22/01-prezzo-alto.mp4",
+      "voiceover": "Prima di valutare un immobile guardiamo microzona, comparabili, concorrenza e domanda. Solo dopo costruiamo una fascia di prezzo. È questa la differenza tra una sensazione e un metodo.",
+      "slides": [
+        "PRIMA DI|VALUTARE",
+        "GUARDIAMO|LA MICROZONA",
+        "SELEZIONIAMO|COMPARABILI",
+        "LEGGIAMO|CONCORRENZA",
+        "STUDIAMO|DOMANDA",
+        "POI COSTRUIAMO|IL PREZZO",
+        "F1 IMMOBILIARE|NON A SENSAZIONE|371 370 8294"
+      ],
+      "media": "publisher/media/generated/f1-immobiliare/2026-08-22/01-g7-cosa-guardiamo.mp4",
       "scheduled_at": "2026-08-22T09:00:00+02:00",
+      "territory": "Sant'Ambrogio di Torino",
+      "property_focus": {
+        "transaction": "vendita",
+        "min_price_eur": 100000,
+        "exclude": [
+          "affitto",
+          "locazione",
+          "garage",
+          "box",
+          "posto auto",
+          "rustico",
+          "rudere",
+          "terreno"
+        ],
+        "preferred": [
+          "appartamento",
+          "casa",
+          "villa",
+          "villetta",
+          "attico",
+          "bifamiliare",
+          "trifamiliare"
+        ],
+        "cash_subito": {
+          "enabled": true,
+          "label": "F1 CASH SUBITO",
+          "meaning": "acquisto diretto per opportunità immobiliari fortemente scontate e coerenti con i criteri F1",
+          "rule": "non presentarlo come garanzia di acquisto; prima verifica economica, tecnica e documentale"
+        }
+      },
       "approval_key": "2026-W34",
       "platforms": [
         {
@@ -1302,33 +1933,162 @@
       "blocked_reason": "approval required for 2026-W34"
     },
     {
-      "id": "f1-immobiliare-2026-08-22-02-valutazione-non-vendita",
+      "id": "f1-immobiliare-2026-08-22-02-g1-il-vicino",
       "client_id": "f1-immobiliare",
       "client_name": "F1 Immobiliare",
-      "category": "nurture",
-      "format": "carousel",
-      "title": "Valutare non significa vendere",
-      "caption": "Richiedere una valutazione non significa mettere subito casa in vendita. Può essere semplicemente uno strumento per conoscere meglio il proprio patrimonio. Scrivi VALORE in privato.",
-      "voiceover": "Richiedere una valutazione non significa mettere subito casa in vendita. Può essere semplicemente uno strumento per conoscere meglio il proprio patrimonio. Scrivi VALORE in privato.",
+      "category": "error",
+      "editorial_role": "error",
+      "format": "reel",
+      "title": "Il mio vicino chiede 220.000 euro",
+      "caption": "Il prezzo del vicino non è una valutazione. Scrivi VALUTAZIONE in privato.\n\n#F1Immobiliare #AltaValleDiSusa #Oulx #Bardonecchia #SauzeDOulx #InvestimentoImmobiliare",
+      "hashtags": [
+        "#F1Immobiliare",
+        "#AltaValleDiSusa",
+        "#Oulx",
+        "#Bardonecchia",
+        "#SauzeDOulx",
+        "#InvestimentoImmobiliare"
+      ],
+      "voiceover": "Il tuo vicino può chiedere duecentoventimila euro. Ma a quanto è stato venduto un immobile realmente comparabile? Prezzo richiesto e prezzo riconosciuto dal mercato sono due informazioni completamente diverse. Il prezzo non si copia. Si verifica.",
       "slides": [
-        "NON DEVI|VENDERE OGGI",
-        "PUOI SOLO|VOLER SAPERE|QUANTO VALE",
-        "PER IL TUO|PATRIMONIO",
-        "PER UNA|SCELTA FUTURA",
-        "PER CAPIRE|IL MERCATO",
-        "PRIMA CONOSCI|POI DECIDI",
-        "SCRIVI|VALORE"
+        "IL MIO VICINO|CHIEDE|220.000 €",
+        "LA DOMANDA|È UN'ALTRA",
+        "A QUANTO|È STATO VENDUTO?",
+        "PREZZO RICHIESTO|E VENDUTO|SONO DIVERSI",
+        "NON COPIARE|IL PREZZO",
+        "VERIFICALO",
+        "F1 IMMOBILIARE|IL PREZZO SI VERIFICA|371 370 8294"
+      ],
+      "media": "publisher/media/generated/f1-immobiliare/2026-08-22/02-g1-il-vicino.mp4",
+      "scheduled_at": "2026-08-22T12:30:00+02:00",
+      "territory": "Sant'Ambrogio di Torino",
+      "property_focus": {
+        "transaction": "vendita",
+        "min_price_eur": 100000,
+        "exclude": [
+          "affitto",
+          "locazione",
+          "garage",
+          "box",
+          "posto auto",
+          "rustico",
+          "rudere",
+          "terreno"
+        ],
+        "preferred": [
+          "appartamento",
+          "casa",
+          "villa",
+          "villetta",
+          "attico",
+          "bifamiliare",
+          "trifamiliare"
+        ],
+        "cash_subito": {
+          "enabled": true,
+          "label": "F1 CASH SUBITO",
+          "meaning": "acquisto diretto per opportunità immobiliari fortemente scontate e coerenti con i criteri F1",
+          "rule": "non presentarlo come garanzia di acquisto; prima verifica economica, tecnica e documentale"
+        }
+      },
+      "approval_key": "2026-W34",
+      "platforms": [
+        {
+          "platform": "facebook",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "tiktok",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "linkedin",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "youtube",
+          "integration_id": "direct-api"
+        }
+      ],
+      "enabled": true,
+      "status": "awaiting_approval",
+      "published_platforms": [],
+      "postiz_results": [],
+      "video_made_with_ai": true,
+      "created_by": "open-social-scheduler",
+      "blocked_reason": "approval required for 2026-W34"
+    },
+    {
+      "id": "f1-immobiliare-2026-08-22-03-g2-come-costruiamo-prezzo",
+      "client_id": "f1-immobiliare",
+      "client_name": "F1 Immobiliare",
+      "category": "proof",
+      "editorial_role": "proof",
+      "format": "carousel",
+      "title": "Come F1 costruisce un prezzo di partenza",
+      "caption": "Il prezzo è la conclusione di un processo: microzona, comparabili, concorrenza, domanda e posizionamento. Scrivi VALUTAZIONE in privato.\n\n#F1Immobiliare #ValleDiSusa #Condove #Bussoleno #VillarDora #VendereBene",
+      "hashtags": [
+        "#F1Immobiliare",
+        "#ValleDiSusa",
+        "#Condove",
+        "#Bussoleno",
+        "#VillarDora",
+        "#VendereBene"
+      ],
+      "voiceover": "Il prezzo è la conclusione di un processo: microzona, comparabili, concorrenza, domanda e posizionamento. Scrivi VALUTAZIONE in privato.",
+      "slides": [
+        "IL PREZZO|DI PARTENZA",
+        "1. MICROZONA",
+        "2. COMPARABILI",
+        "3. CONCORRENZA",
+        "4. DOMANDA",
+        "5. POSIZIONAMENTO",
+        "F1 IMMOBILIARE|IL PREZZO SI VERIFICA|371 370 8294"
       ],
       "media": [
-        "publisher/media/generated/f1-immobiliare/2026-08-22/02-valutazione-non-vendita/slide-01.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-22/02-valutazione-non-vendita/slide-02.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-22/02-valutazione-non-vendita/slide-03.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-22/02-valutazione-non-vendita/slide-04.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-22/02-valutazione-non-vendita/slide-05.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-22/02-valutazione-non-vendita/slide-06.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-22/02-valutazione-non-vendita/slide-07.jpg"
+        "publisher/media/generated/f1-immobiliare/2026-08-22/03-g2-come-costruiamo-prezzo/slide-01.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-22/03-g2-come-costruiamo-prezzo/slide-02.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-22/03-g2-come-costruiamo-prezzo/slide-03.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-22/03-g2-come-costruiamo-prezzo/slide-04.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-22/03-g2-come-costruiamo-prezzo/slide-05.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-22/03-g2-come-costruiamo-prezzo/slide-06.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-22/03-g2-come-costruiamo-prezzo/slide-07.jpg"
       ],
-      "scheduled_at": "2026-08-22T12:30:00+02:00",
+      "scheduled_at": "2026-08-22T17:30:00+02:00",
+      "territory": "Sant'Ambrogio di Torino",
+      "property_focus": {
+        "transaction": "vendita",
+        "min_price_eur": 100000,
+        "exclude": [
+          "affitto",
+          "locazione",
+          "garage",
+          "box",
+          "posto auto",
+          "rustico",
+          "rudere",
+          "terreno"
+        ],
+        "preferred": [
+          "appartamento",
+          "casa",
+          "villa",
+          "villetta",
+          "attico",
+          "bifamiliare",
+          "trifamiliare"
+        ],
+        "cash_subito": {
+          "enabled": true,
+          "label": "F1 CASH SUBITO",
+          "meaning": "acquisto diretto per opportunità immobiliari fortemente scontate e coerenti con i criteri F1",
+          "rule": "non presentarlo come garanzia di acquisto; prima verifica economica, tecnica e documentale"
+        }
+      },
       "approval_key": "2026-W34",
       "platforms": [
         {
@@ -1357,84 +2117,72 @@
       "blocked_reason": "approval required for 2026-W34"
     },
     {
-      "id": "f1-immobiliare-2026-08-22-03-valore-territorio",
+      "id": "f1-immobiliare-2026-08-22-04-g3-contro-chi-competi",
       "client_id": "f1-immobiliare",
       "client_name": "F1 Immobiliare",
-      "category": "hyperlocal",
-      "format": "reel",
-      "title": "Quanto vale oggi una casa a Condove?",
-      "caption": "Hai un immobile a Condove? Il valore non si determina con una media generica: bisogna leggere microzona, caratteristiche e domanda locale. Scrivi VALORE in privato.",
-      "voiceover": "Hai un immobile a Condove? Il valore non si determina con una media generica: bisogna leggere microzona, caratteristiche e domanda locale. Scrivi VALORE in privato.",
-      "slides": [
-        "QUANTO VALE|OGGI UNA CASA|A Condove?",
-        "NON ESISTE|UN PREZZO UNICO|AL MQ",
-        "CONTANO|VIA E|MICROZONA",
-        "CONTANO|STATO E|PERTINENZE",
-        "CONTA LA|DOMANDA LOCALE",
-        "HAI CASA|A Condove?",
-        "SCRIVI|VALORE"
-      ],
-      "media": "publisher/media/generated/f1-immobiliare/2026-08-22/03-valore-territorio.mp4",
-      "scheduled_at": "2026-08-22T17:30:00+02:00",
-      "approval_key": "2026-W34",
-      "platforms": [
-        {
-          "platform": "facebook",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "instagram",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "tiktok",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "linkedin",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "youtube",
-          "integration_id": "direct-api"
-        }
-      ],
-      "enabled": true,
-      "status": "awaiting_approval",
-      "published_platforms": [],
-      "postiz_results": [],
-      "video_made_with_ai": true,
-      "created_by": "open-social-scheduler",
-      "blocked_reason": "approval required for 2026-W34"
-    },
-    {
-      "id": "f1-immobiliare-2026-08-22-04-cinque-domande",
-      "client_id": "f1-immobiliare",
-      "client_name": "F1 Immobiliare",
-      "category": "convert",
+      "category": "decision",
+      "editorial_role": "decision",
       "format": "carousel",
-      "title": "Cinque domande per iniziare",
-      "caption": "Per iniziare una prima analisi bastano poche informazioni essenziali. Scrivici comune, mq, tipologia, piano, stato e pertinenze. Scrivi VALORE in privato.",
-      "voiceover": "Per iniziare una prima analisi bastano poche informazioni essenziali. Scrivici comune, mq, tipologia, piano, stato e pertinenze. Scrivi VALORE in privato.",
+      "title": "Vuoi sapere contro quali immobili competerebbe casa tua?",
+      "caption": "Prima di pubblicare, scopri contro quali immobili competeresti oggi. Scrivi VALUTAZIONE in privato.\n\n#F1Immobiliare #NonASensazione #ConIDati #StrategiaImmobiliare #PrezzoCasa #ProprietariCasa",
+      "hashtags": [
+        "#F1Immobiliare",
+        "#NonASensazione",
+        "#ConIDati",
+        "#StrategiaImmobiliare",
+        "#PrezzoCasa",
+        "#ProprietariCasa"
+      ],
+      "voiceover": "Prima di pubblicare, scopri contro quali immobili competeresti oggi. Scrivi VALUTAZIONE in privato.",
       "slides": [
-        "5 DOMANDE|PER INIZIARE",
-        "1. COMUNE?",
-        "2. MQ E|TIPOLOGIA?",
-        "3. PIANO E|ASCENSORE?",
-        "4. STATO|DELL'IMMOBILE?",
-        "5. GARAGE O|PERTINENZE?",
-        "SCRIVI|VALORE"
+        "CASA TUA|NON È SOLA",
+        "IL COMPRATORE|VEDE ALTERNATIVE",
+        "QUALI SONO?",
+        "A CHE PREZZO?",
+        "CON QUALE|QUALITÀ?",
+        "SCOPRILO|PRIMA DI PUBBLICARE",
+        "SCRIVI VALUTAZIONE|F1 IMMOBILIARE|371 370 8294"
       ],
       "media": [
-        "publisher/media/generated/f1-immobiliare/2026-08-22/04-cinque-domande/slide-01.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-22/04-cinque-domande/slide-02.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-22/04-cinque-domande/slide-03.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-22/04-cinque-domande/slide-04.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-22/04-cinque-domande/slide-05.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-22/04-cinque-domande/slide-06.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-22/04-cinque-domande/slide-07.jpg"
+        "publisher/media/generated/f1-immobiliare/2026-08-22/04-g3-contro-chi-competi/slide-01.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-22/04-g3-contro-chi-competi/slide-02.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-22/04-g3-contro-chi-competi/slide-03.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-22/04-g3-contro-chi-competi/slide-04.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-22/04-g3-contro-chi-competi/slide-05.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-22/04-g3-contro-chi-competi/slide-06.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-22/04-g3-contro-chi-competi/slide-07.jpg"
       ],
       "scheduled_at": "2026-08-22T20:30:00+02:00",
+      "territory": "Sant'Ambrogio di Torino",
+      "property_focus": {
+        "transaction": "vendita",
+        "min_price_eur": 100000,
+        "exclude": [
+          "affitto",
+          "locazione",
+          "garage",
+          "box",
+          "posto auto",
+          "rustico",
+          "rudere",
+          "terreno"
+        ],
+        "preferred": [
+          "appartamento",
+          "casa",
+          "villa",
+          "villetta",
+          "attico",
+          "bifamiliare",
+          "trifamiliare"
+        ],
+        "cash_subito": {
+          "enabled": true,
+          "label": "F1 CASH SUBITO",
+          "meaning": "acquisto diretto per opportunità immobiliari fortemente scontate e coerenti con i criteri F1",
+          "rule": "non presentarlo come garanzia di acquisto; prima verifica economica, tecnica e documentale"
+        }
+      },
       "approval_key": "2026-W34",
       "platforms": [
         {
@@ -1463,25 +2211,64 @@
       "blocked_reason": "approval required for 2026-W34"
     },
     {
-      "id": "f1-immobiliare-2026-08-23-01-stessa-metratura",
+      "id": "f1-immobiliare-2026-08-23-01-g1-quanto-vale-davvero",
       "client_id": "f1-immobiliare",
       "client_name": "F1 Immobiliare",
-      "category": "attract",
+      "category": "data",
+      "editorial_role": "data",
       "format": "reel",
-      "title": "Stessi metri quadri, valori diversi",
-      "caption": "Due immobili della stessa metratura possono avere valori molto diversi. Il prezzo al metro quadro è solo un punto di partenza. Scrivi VALORE in privato.",
-      "voiceover": "Due immobili della stessa metratura possono avere valori molto diversi. Il prezzo al metro quadro è solo un punto di partenza. Scrivi VALORE in privato.",
-      "slides": [
-        "100 MQ|NON SIGNIFICA|STESSO VALORE",
-        "PIANO E|ASCENSORE|CONTANO",
-        "ESPOSIZIONE|E LUMINOSITÀ|CONTANO",
-        "STATO INTERNO|E PERTINENZE|CONTANO",
-        "ANCHE LA|MICROZONA|CONTA",
-        "VALUTIAMO|L'IMMOBILE REALE",
-        "SCRIVI|VALORE"
+      "title": "Quanto vale davvero casa tua?",
+      "caption": "Quanto vale davvero casa tua? Comparabili, microzona, concorrenza, domanda e strategia di prezzo. Scrivi VALUTAZIONE in privato.\n\n#F1Immobiliare #AltaValleDiSusa #Oulx #Bardonecchia #SauzeDOulx #InvestimentoImmobiliare",
+      "hashtags": [
+        "#F1Immobiliare",
+        "#AltaValleDiSusa",
+        "#Oulx",
+        "#Bardonecchia",
+        "#SauzeDOulx",
+        "#InvestimentoImmobiliare"
       ],
-      "media": "publisher/media/generated/f1-immobiliare/2026-08-23/01-stessa-metratura.mp4",
+      "voiceover": "Quando un proprietario ci chiede quanto vale la sua casa, non iniziamo inventando un numero. Guardiamo immobili comparabili, concorrenza nella microzona, caratteristiche dell'immobile e risposta del mercato. Perché una valutazione non dovrebbe essere una sensazione. Dovrebbe essere una conclusione.",
+      "slides": [
+        "QUANTO VALE|DAVVERO|CASA TUA?",
+        "NON PARTIAMO|DA UN NUMERO|INVENTATO",
+        "COMPARABILI|MICROZONA|CONCORRENZA",
+        "CARATTERISTICHE|DELL'IMMOBILE",
+        "RISPOSTA|DEL MERCATO",
+        "UNA VALUTAZIONE|È UNA CONCLUSIONE",
+        "F1 IMMOBILIARE|NON A SENSAZIONE.|CON I DATI.|371 370 8294"
+      ],
+      "media": "publisher/media/generated/f1-immobiliare/2026-08-23/01-g1-quanto-vale-davvero.mp4",
       "scheduled_at": "2026-08-23T09:00:00+02:00",
+      "territory": "Susa",
+      "property_focus": {
+        "transaction": "vendita",
+        "min_price_eur": 100000,
+        "exclude": [
+          "affitto",
+          "locazione",
+          "garage",
+          "box",
+          "posto auto",
+          "rustico",
+          "rudere",
+          "terreno"
+        ],
+        "preferred": [
+          "appartamento",
+          "casa",
+          "villa",
+          "villetta",
+          "attico",
+          "bifamiliare",
+          "trifamiliare"
+        ],
+        "cash_subito": {
+          "enabled": true,
+          "label": "F1 CASH SUBITO",
+          "meaning": "acquisto diretto per opportunità immobiliari fortemente scontate e coerenti con i criteri F1",
+          "rule": "non presentarlo come garanzia di acquisto; prima verifica economica, tecnica e documentale"
+        }
+      },
       "approval_key": "2026-W34",
       "platforms": [
         {
@@ -1514,33 +2301,162 @@
       "blocked_reason": "approval required for 2026-W34"
     },
     {
-      "id": "f1-immobiliare-2026-08-23-02-come-valutiamo",
+      "id": "f1-immobiliare-2026-08-23-02-g2-proviamo-alto",
       "client_id": "f1-immobiliare",
       "client_name": "F1 Immobiliare",
-      "category": "nurture",
-      "format": "carousel",
-      "title": "Come si costruisce una valutazione",
-      "caption": "Una valutazione seria non nasce da un numero automatico: microzona, comparabili, caratteristiche, domanda e concorrenza devono essere letti insieme. Scrivi VALORE in privato.",
-      "voiceover": "Una valutazione seria non nasce da un numero automatico: microzona, comparabili, caratteristiche, domanda e concorrenza devono essere letti insieme. Scrivi VALORE in privato.",
+      "category": "error",
+      "editorial_role": "error",
+      "format": "reel",
+      "title": "Proviamo alto e poi scendiamo",
+      "caption": "Il primo prezzo crea il primo posizionamento. Scrivi VALUTAZIONE in privato.\n\n#F1Immobiliare #ValleDiSusa #Condove #Bussoleno #VillarDora #VendereBene",
+      "hashtags": [
+        "#F1Immobiliare",
+        "#ValleDiSusa",
+        "#Condove",
+        "#Bussoleno",
+        "#VillarDora",
+        "#VendereBene"
+      ],
+      "voiceover": "Proviamo alto e poi scendiamo non è sempre una strategia prudente. Il mercato confronta subito il tuo immobile con le alternative. Se il prezzo iniziale è fuori posizione, le poche richieste e i ribassi successivi diventano segnali.",
       "slides": [
-        "COME SI VALUTA|DAVVERO|UN IMMOBILE?",
-        "PARTIAMO|DALLA MICROZONA",
-        "CERCHIAMO|COMPARABILI|COERENTI",
-        "LEGGIAMO|CARATTERISTICHE|E STATO",
-        "VALUTIAMO|DOMANDA E|CONCORRENZA",
-        "DEFINIAMO|UNA FASCIA|DI VALORE",
-        "SCRIVI|VALORE"
+        "PROVIAMO ALTO|E POI SCENDIAMO",
+        "SEMBRA|PRUDENTE",
+        "MA IL MERCATO|TI CONFRONTA SUBITO",
+        "POCHE RICHIESTE|SONO UN SEGNALE",
+        "I RIBASSI|RESTANO VISIBILI",
+        "PARTIRE BENE|CONTA",
+        "F1 IMMOBILIARE|CON I DATI|371 370 8294"
+      ],
+      "media": "publisher/media/generated/f1-immobiliare/2026-08-23/02-g2-proviamo-alto.mp4",
+      "scheduled_at": "2026-08-23T12:30:00+02:00",
+      "territory": "Susa",
+      "property_focus": {
+        "transaction": "vendita",
+        "min_price_eur": 100000,
+        "exclude": [
+          "affitto",
+          "locazione",
+          "garage",
+          "box",
+          "posto auto",
+          "rustico",
+          "rudere",
+          "terreno"
+        ],
+        "preferred": [
+          "appartamento",
+          "casa",
+          "villa",
+          "villetta",
+          "attico",
+          "bifamiliare",
+          "trifamiliare"
+        ],
+        "cash_subito": {
+          "enabled": true,
+          "label": "F1 CASH SUBITO",
+          "meaning": "acquisto diretto per opportunità immobiliari fortemente scontate e coerenti con i criteri F1",
+          "rule": "non presentarlo come garanzia di acquisto; prima verifica economica, tecnica e documentale"
+        }
+      },
+      "approval_key": "2026-W34",
+      "platforms": [
+        {
+          "platform": "facebook",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "tiktok",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "linkedin",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "youtube",
+          "integration_id": "direct-api"
+        }
+      ],
+      "enabled": true,
+      "status": "awaiting_approval",
+      "published_platforms": [],
+      "postiz_results": [],
+      "video_made_with_ai": true,
+      "created_by": "open-social-scheduler",
+      "blocked_reason": "approval required for 2026-W34"
+    },
+    {
+      "id": "f1-immobiliare-2026-08-23-03-g3-check-microzona",
+      "client_id": "f1-immobiliare",
+      "client_name": "F1 Immobiliare",
+      "category": "proof",
+      "editorial_role": "proof",
+      "format": "carousel",
+      "title": "Cosa controlliamo nella microzona",
+      "caption": "La microzona non è una parola: è un insieme di verifiche concrete. Scrivi VALUTAZIONE in privato.\n\n#F1Immobiliare #NonASensazione #ConIDati #StrategiaImmobiliare #PrezzoCasa #ProprietariCasa",
+      "hashtags": [
+        "#F1Immobiliare",
+        "#NonASensazione",
+        "#ConIDati",
+        "#StrategiaImmobiliare",
+        "#PrezzoCasa",
+        "#ProprietariCasa"
+      ],
+      "voiceover": "La microzona non è una parola: è un insieme di verifiche concrete. Scrivi VALUTAZIONE in privato.",
+      "slides": [
+        "MICROZONA|COSA GUARDIAMO?",
+        "ANNUNCI|CONCORRENTI",
+        "SERVIZI|E ACCESSI",
+        "CARATTERISTICHE|DELLA VIA",
+        "DOMANDA|OSSERVABILE",
+        "DIFFERENZE|TRA IMMOBILI",
+        "F1 IMMOBILIARE|CON I DATI|371 370 8294"
       ],
       "media": [
-        "publisher/media/generated/f1-immobiliare/2026-08-23/02-come-valutiamo/slide-01.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-23/02-come-valutiamo/slide-02.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-23/02-come-valutiamo/slide-03.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-23/02-come-valutiamo/slide-04.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-23/02-come-valutiamo/slide-05.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-23/02-come-valutiamo/slide-06.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-23/02-come-valutiamo/slide-07.jpg"
+        "publisher/media/generated/f1-immobiliare/2026-08-23/03-g3-check-microzona/slide-01.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-23/03-g3-check-microzona/slide-02.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-23/03-g3-check-microzona/slide-03.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-23/03-g3-check-microzona/slide-04.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-23/03-g3-check-microzona/slide-05.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-23/03-g3-check-microzona/slide-06.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-23/03-g3-check-microzona/slide-07.jpg"
       ],
-      "scheduled_at": "2026-08-23T12:30:00+02:00",
+      "scheduled_at": "2026-08-23T17:30:00+02:00",
+      "territory": "Susa",
+      "property_focus": {
+        "transaction": "vendita",
+        "min_price_eur": 100000,
+        "exclude": [
+          "affitto",
+          "locazione",
+          "garage",
+          "box",
+          "posto auto",
+          "rustico",
+          "rudere",
+          "terreno"
+        ],
+        "preferred": [
+          "appartamento",
+          "casa",
+          "villa",
+          "villetta",
+          "attico",
+          "bifamiliare",
+          "trifamiliare"
+        ],
+        "cash_subito": {
+          "enabled": true,
+          "label": "F1 CASH SUBITO",
+          "meaning": "acquisto diretto per opportunità immobiliari fortemente scontate e coerenti con i criteri F1",
+          "rule": "non presentarlo come garanzia di acquisto; prima verifica economica, tecnica e documentale"
+        }
+      },
       "approval_key": "2026-W34",
       "platforms": [
         {
@@ -1569,84 +2485,72 @@
       "blocked_reason": "approval required for 2026-W34"
     },
     {
-      "id": "f1-immobiliare-2026-08-23-03-vendere-territorio",
+      "id": "f1-immobiliare-2026-08-23-04-g4-seconda-analisi",
       "client_id": "f1-immobiliare",
       "client_name": "F1 Immobiliare",
-      "category": "hyperlocal",
-      "format": "reel",
-      "title": "Prima di vendere a Avigliana",
-      "caption": "Prima di pubblicare un immobile a Avigliana, definiamo concorrenza, target e fascia di prezzo. Scrivi VALORE in privato.",
-      "voiceover": "Prima di pubblicare un immobile a Avigliana, definiamo concorrenza, target e fascia di prezzo. Scrivi VALORE in privato.",
-      "slides": [
-        "VUOI VENDERE|A Avigliana?",
-        "NON PARTIRE|DALL'ANNUNCIO",
-        "PARTI DAL|POSIZIONAMENTO",
-        "CHI È IL|COMPRATORE|PIÙ PROBABILE?",
-        "QUALI CASE|COMPETONO|CON LA TUA?",
-        "POI DECIDI|IL PREZZO",
-        "SCRIVI|VALORE"
-      ],
-      "media": "publisher/media/generated/f1-immobiliare/2026-08-23/03-vendere-territorio.mp4",
-      "scheduled_at": "2026-08-23T17:30:00+02:00",
-      "approval_key": "2026-W34",
-      "platforms": [
-        {
-          "platform": "facebook",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "instagram",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "tiktok",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "linkedin",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "youtube",
-          "integration_id": "direct-api"
-        }
-      ],
-      "enabled": true,
-      "status": "awaiting_approval",
-      "published_platforms": [],
-      "postiz_results": [],
-      "video_made_with_ai": true,
-      "created_by": "open-social-scheduler",
-      "blocked_reason": "approval required for 2026-W34"
-    },
-    {
-      "id": "f1-immobiliare-2026-08-23-04-senza-impegno",
-      "client_id": "f1-immobiliare",
-      "client_name": "F1 Immobiliare",
-      "category": "convert",
+      "category": "decision",
+      "editorial_role": "decision",
       "format": "carousel",
-      "title": "Conoscere il valore prima di decidere",
-      "caption": "Conoscere il valore viene prima della decisione di vendere. Richiedi una prima valutazione gratuita e poi scegli con più informazioni. Scrivi VALORE in privato.",
-      "voiceover": "Conoscere il valore viene prima della decisione di vendere. Richiedi una prima valutazione gratuita e poi scegli con più informazioni. Scrivi VALORE in privato.",
+      "title": "Prima di abbassare il prezzo, chiedi una seconda analisi",
+      "caption": "Prima del ribasso, una seconda analisi può evitare una correzione sbagliata. Scrivi VALUTAZIONE in privato.\n\n#F1Immobiliare #ValleDiSusa #VendereCasa #ValutazioneImmobiliare #Avigliana #CasaInVendita",
+      "hashtags": [
+        "#F1Immobiliare",
+        "#ValleDiSusa",
+        "#VendereCasa",
+        "#ValutazioneImmobiliare",
+        "#Avigliana",
+        "#CasaInVendita"
+      ],
+      "voiceover": "Prima del ribasso, una seconda analisi può evitare una correzione sbagliata. Scrivi VALUTAZIONE in privato.",
       "slides": [
-        "PRIMA|CONOSCI",
-        "POI|DECIDI",
-        "NON SERVE|METTERE CASA|IN VENDITA",
-        "PUOI FARE|UNA PRIMA|VERIFICA",
-        "E CAPIRE|DOVE SEI|NEL MERCATO",
-        "VALUTAZIONE|GRATUITA",
-        "SCRIVI|VALORE"
+        "STAI PENSANDO|A UN RIBASSO?",
+        "PRIMA|FERMATI",
+        "CAPIAMO|IL PROBLEMA",
+        "PREZZO?|PRESENTAZIONE?",
+        "TARGET?|CONCORRENZA?",
+        "POI DECIDI",
+        "SCRIVI VALUTAZIONE|F1 IMMOBILIARE|371 370 8294"
       ],
       "media": [
-        "publisher/media/generated/f1-immobiliare/2026-08-23/04-senza-impegno/slide-01.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-23/04-senza-impegno/slide-02.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-23/04-senza-impegno/slide-03.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-23/04-senza-impegno/slide-04.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-23/04-senza-impegno/slide-05.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-23/04-senza-impegno/slide-06.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-23/04-senza-impegno/slide-07.jpg"
+        "publisher/media/generated/f1-immobiliare/2026-08-23/04-g4-seconda-analisi/slide-01.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-23/04-g4-seconda-analisi/slide-02.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-23/04-g4-seconda-analisi/slide-03.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-23/04-g4-seconda-analisi/slide-04.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-23/04-g4-seconda-analisi/slide-05.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-23/04-g4-seconda-analisi/slide-06.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-23/04-g4-seconda-analisi/slide-07.jpg"
       ],
       "scheduled_at": "2026-08-23T20:30:00+02:00",
+      "territory": "Susa",
+      "property_focus": {
+        "transaction": "vendita",
+        "min_price_eur": 100000,
+        "exclude": [
+          "affitto",
+          "locazione",
+          "garage",
+          "box",
+          "posto auto",
+          "rustico",
+          "rudere",
+          "terreno"
+        ],
+        "preferred": [
+          "appartamento",
+          "casa",
+          "villa",
+          "villetta",
+          "attico",
+          "bifamiliare",
+          "trifamiliare"
+        ],
+        "cash_subito": {
+          "enabled": true,
+          "label": "F1 CASH SUBITO",
+          "meaning": "acquisto diretto per opportunità immobiliari fortemente scontate e coerenti con i criteri F1",
+          "rule": "non presentarlo come garanzia di acquisto; prima verifica economica, tecnica e documentale"
+        }
+      },
       "approval_key": "2026-W34",
       "platforms": [
         {
@@ -1675,5 +2579,5 @@
       "blocked_reason": "approval required for 2026-W34"
     }
   ],
-  "updated_at": "2026-08-16T09:29:17+00:00"
+  "updated_at": "2026-08-16T10:58:21Z"
 }
