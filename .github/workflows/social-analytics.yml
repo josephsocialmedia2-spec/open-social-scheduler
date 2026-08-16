@@ -1,0 +1,44 @@
+name: Social Analytics Snapshot
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '40 4 * * *'
+  push:
+    paths:
+      - '.github/workflows/social-analytics.yml'
+      - 'publisher/sync_analytics.py'
+
+permissions:
+  contents: write
+
+jobs:
+  analytics:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      POSTIZ_API_KEY: ${{ secrets.POSTIZ_API_KEY }}
+      POSTIZ_API_URL: ${{ vars.POSTIZ_API_URL || 'https://api.postiz.com/public/v1' }}
+      ANALYTICS_DAYS: '30'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: publisher/requirements.txt
+      - run: pip install -r publisher/requirements.txt
+      - name: Snapshot configured client channels
+        run: python publisher/sync_analytics.py
+      - name: Persist analytics
+        shell: bash
+        run: |
+          if [ ! -d publisher/analytics ] || git diff --quiet -- publisher/analytics; then
+            echo 'Analytics unchanged or unavailable.'
+            exit 0
+          fi
+          git config user.name 'open-social-engine'
+          git config user.email 'open-social-engine@users.noreply.github.com'
+          git add publisher/analytics
+          git commit -m 'Update social analytics snapshots'
+          git push
