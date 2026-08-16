@@ -1,14 +1,7 @@
-name: Open Social Publisher
+name: Open Social Publisher - Manual Approval
 
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - 'publisher/queue.json'
-      - 'publisher/postiz_publish.py'
-      - 'publisher/clients/**'
-  schedule:
-    - cron: '17 * * * *'
 
 permissions:
   contents: write
