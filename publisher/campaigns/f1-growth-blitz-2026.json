@@ -1,0 +1,137 @@
+{
+  "campaign_id": "f1-growth-blitz-2026",
+  "name": "F1 IMMOBILIARE · VALLE DI SUSA GROWTH BLITZ",
+  "duration_weeks": 8,
+  "territory": ["Avigliana", "Almese", "Sant'Ambrogio di Torino", "Condove", "Villar Dora", "Bussoleno", "Susa", "Oulx", "Sauze d'Oulx", "Bardonecchia"],
+  "positioning": "Metodo immobiliare ipertecnologico: dati, territorio, contenuti, radar acquisizione, open house, distribuzione e follow-up.",
+  "legal_guardrail": "Non promettere provvigioni o compensi a segnalatori non abilitati. Le segnalazioni pubbliche devono restare informative e senza attività di mediazione. Per collaborazioni continuative o remunerate nel ramo immobiliare serve verifica preventiva dei requisiti L.39/1989/SCIA e della formula contrattuale.",
+  "pillars": [
+    {
+      "id": "segnalazioni",
+      "name": "F1 RADAR TERRITORIO · SEGNALA UN IMMOBILE",
+      "goal": "Creare una rete di persone che segnala opportunità immobiliari senza svolgere mediazione.",
+      "cta": "Conosci un proprietario che sta pensando di vendere? Inviaci una segnalazione informativa.",
+      "concepts": [
+        "Hai visto un cartello VENDESI nella tua zona? Segnalacelo.",
+        "Un vicino sta pensando di vendere? F1 vuole saperlo prima dell'annuncio.",
+        "La casa è vuota da mesi? Potrebbe essere un'opportunità da approfondire.",
+        "Hai sentito parlare di un'eredità immobiliare? Segnalazione informativa, poi verifica F1.",
+        "Conosci un proprietario stanco di gestire un immobile? Segnalalo a F1.",
+        "Immobili invenduti da tempo: manda il link, F1 analizza.",
+        "Ribassi ripetuti online: segnala il caso al Radar F1.",
+        "Valle di Susa: diventa un occhio sul territorio, non un mediatore."
+      ]
+    },
+    {
+      "id": "recruiting",
+      "name": "F1 AGENTE DEL FUTURO · AUTOIMPRENDITORIALITÀ",
+      "goal": "Attrarre aspiranti agenti e professionisti commerciali con un percorso chiaro, tecnologico e meritocratico.",
+      "cta": "Candidati al percorso F1 Agente del Futuro.",
+      "concepts": [
+        "Non cerchiamo qualcuno che apra porte. Cerchiamo qualcuno che costruisca mercato.",
+        "Da aspirante agente a professionista: formazione, affiancamento, tecnologia e metodo.",
+        "Il nuovo agente immobiliare lavora con CRM, dati, contenuti, radar e follow-up.",
+        "Vuoi costruire la tua attività professionale senza partire da zero? Entra nel sistema F1.",
+        "Carriera immobiliare: prima competenze, poi responsabilità, poi autonomia.",
+        "Perché il porta-a-porta da solo non basta più: il metodo F1 integra digitale e territorio.",
+        "Agente del futuro: prospecting, valutazione, marketing, open house, negoziazione, analytics.",
+        "Aspirante agente? Ti accompagniamo verso formazione ed esame abilitante, senza scorciatoie."
+      ]
+    },
+    {
+      "id": "ipertech",
+      "name": "METODO F1 IPERTECNOLOGICO",
+      "goal": "Rendere memorabile il metodo di acquisizione e vendita F1.",
+      "cta": "Chiedi come funziona il metodo F1 sul tuo immobile.",
+      "concepts": [
+        "Radar annunci: nuovi privati, ribassi, invenduti e segnali di vendita.",
+        "Microzona: il prezzo cambia anche a poche centinaia di metri.",
+        "Comparabili: non tutti gli annunci sono dati utili.",
+        "Prima di chiamare un proprietario, F1 legge il contesto.",
+        "CRM: ogni contatto ha uno stato, una prossima azione e un follow-up.",
+        "Contenuti: ogni immobile diventa una campagna, non una semplice scheda.",
+        "Distribuzione: portali, social, volantini, evento, open house, retargeting.",
+        "Dashboard: il proprietario vede cosa stiamo facendo e cosa risponde il mercato."
+      ]
+    },
+    {
+      "id": "legal",
+      "name": "LEGGI E DOCUMENTI · CAROSELLI SALVABILI",
+      "goal": "Generare salvataggi e condivisioni con educazione immobiliare utile.",
+      "cta": "Salva il carosello e chiedi a F1 quali verifiche servono nel tuo caso.",
+      "concepts": [
+        "Conformità catastale: cosa significa davvero prima del rogito.",
+        "Planimetria catastale e stato reale: perché devono corrispondere.",
+        "Agente immobiliare abilitato: come verificare chi può esercitare.",
+        "Preliminare, proposta e rogito: tre momenti diversi.",
+        "Caparra confirmatoria: a cosa serve e quando entra in gioco.",
+        "APE: quando serve nella vendita e perché non va lasciato all'ultimo.",
+        "Successione e vendita: cosa controllare prima di mettere online l'immobile.",
+        "Condominio: quali documenti chiedere prima della vendita.",
+        "Accesso agli atti: perché può evitare problemi dopo.",
+        "Urbanistica e catasto non sono la stessa cosa.",
+        "Provvigione: quando matura secondo il rapporto di mediazione.",
+        "Venditore da solo: quali controlli documentali non puoi improvvisare."
+      ],
+      "disclaimer": "Contenuti informativi generali, non consulenza legale, notarile, fiscale o tecnica. Verificare sempre il caso concreto con professionista competente."
+    },
+    {
+      "id": "home_staging",
+      "name": "HOME STAGING · PRIMA SI VENDE CON GLI OCCHI",
+      "goal": "Educare il proprietario sul valore della preparazione dell'immobile.",
+      "cta": "Vuoi capire come preparare casa prima delle foto? Scrivi STAGING.",
+      "concepts": [
+        "La prima visita comincia sullo smartphone, non sulla porta di casa.",
+        "Decluttering: cosa togliere prima del servizio fotografico.",
+        "Casa vuota: perché può sembrare più piccola invece che più grande.",
+        "Luce naturale: il primo intervento di home staging costa zero.",
+        "Colori neutri: aiutano l'acquirente a immaginarsi dentro casa.",
+        "Ingresso, soggiorno, cucina: i primi ambienti che devono convincere.",
+        "Prima/dopo: come cambia la percezione senza ristrutturare.",
+        "Home staging virtuale: quando usarlo e quando dichiararlo chiaramente."
+      ]
+    },
+    {
+      "id": "vendere_solo",
+      "name": "VENDERE CASA DA SOLO · FORMAT F1",
+      "goal": "Conquistare proprietari autonomi offrendo metodo prima ancora del mandato.",
+      "cta": "Vuoi vendere da solo? F1 può darti una seconda analisi prima di pubblicare.",
+      "concepts": [
+        "Vendere da solo? Parti da documenti, prezzo, foto, target e distribuzione.",
+        "Il prezzo del vicino non è il prezzo della tua casa.",
+        "Annuncio online non significa domanda reale.",
+        "Hai ricevuto 2.000 visualizzazioni ma zero visite? Leggi il segnale.",
+        "Quando abbassare il prezzo e quando cambiare presentazione.",
+        "Come scegliere le foto che fanno fermare lo scroll.",
+        "Come scrivere un annuncio che filtra i curiosi e attira compratori.",
+        "Quali domande fare prima di fissare una visita.",
+        "Come organizzare un open house anche se stai vendendo da privato.",
+        "Quando la trattativa si blocca: prezzo, fiducia, documenti o finanziamento?",
+        "Se vendi da solo, misura: richieste, visite, secondi appuntamenti, offerte.",
+        "Dopo 30 giorni senza segnali, non aspettare: diagnostica."
+      ]
+    }
+  ],
+  "distribution": {
+    "daily_slots": ["09:00", "12:30", "17:30", "20:30"],
+    "formats": ["reel_60s", "carousel_7_slides", "story", "short"],
+    "weekly_mix": {
+      "recruiting": 5,
+      "segnalazioni": 5,
+      "legal": 5,
+      "home_staging": 4,
+      "vendere_solo": 5,
+      "ipertech": 4
+    },
+    "cta_rotation": ["WHATSAPP", "MODULO_CONTATTI", "DM_KEYWORD", "OPEN_HOUSE", "CANDIDATURA"]
+  },
+  "creative_system": {
+    "reel_seconds": 60,
+    "hook_seconds": 3,
+    "presenters": ["female_ai_agent", "male_ai_agent", "territory_broll", "property_broll"],
+    "subtitle_color": "#92C205",
+    "subtitle_position": "lower_safe_area_under_f1_logo",
+    "visual_rotation": ["Valle di Susa", "ville", "appartamenti", "centri storici", "Sacra di San Michele", "Avigliana", "Susa", "Oulx", "Bardonecchia", "open house", "volantini", "portali immobiliari", "dashboard F1"],
+    "rule": "Ogni contenuto deve avere un solo messaggio, una prova o spiegazione e una CTA chiara."
+  }
+}
