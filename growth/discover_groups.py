@@ -4,6 +4,7 @@ import argparse
 import hashlib
 import json
 import re
+import unicodedata
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -13,6 +14,14 @@ GROUPS_PATH = ROOT / "growth" / "groups.json"
 NEW_BATCH_PATH = ROOT / "growth" / "new_batch.json"
 
 GROUP_RE = re.compile(r"facebook\.com/groups/([^/?#]+)", re.I)
+GENERIC_TITLES = {"popular groups facebook", "facebook", "groups facebook", "gruppi facebook"}
+SPECIAL_ALIASES = {
+    "valle di susa": ["valle di susa", "val di susa", "valsusa"],
+    "sant antonino di susa": ["sant antonino di susa", "sant antonino"],
+    "borgone susa": ["borgone susa", "borgone"],
+    "chiusa di san michele": ["chiusa di san michele", "chiusa san michele"],
+    "torino ovest": ["torino ovest", "torino"],
+}
 
 
 def now_iso() -> str:
@@ -27,6 +36,32 @@ def load_json(path: Path, default):
 
 def save_json(path: Path, data) -> None:
     path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+
+def normalize(value: str) -> str:
+    value = unicodedata.normalize("NFKD", value or "")
+    value = "".join(ch for ch in value if not unicodedata.combining(ch)).lower()
+    value = re.sub(r"[^a-z0-9]+", " ", value)
+    return re.sub(r"\s+", " ", value).strip()
+
+
+def territory_aliases(territory: str) -> list[str]:
+    key = normalize(territory)
+    return SPECIAL_ALIASES.get(key, [key])
+
+
+def territory_matches(item: dict, territory: str) -> bool:
+    """Accept only results whose visible group title or URL really names the territory.
+
+    Search-engine snippets often echo query words from unrelated page fragments, so
+    snippets alone are deliberately not enough to classify a group into a territory.
+    """
+    title = normalize(item.get("title", ""))
+    url = normalize(item.get("url", ""))
+    if title in GENERIC_TITLES:
+        return False
+    haystack = f"{title} {url}"
+    return any(alias and alias in haystack for alias in territory_aliases(territory))
 
 
 def canonical_group_url(url: str) -> str | None:
@@ -99,6 +134,8 @@ def main() -> int:
         for item in found:
             url = canonical_group_url(item["url"])
             if not url or url in existing:
+                continue
+            if not territory_matches(item, territory):
                 continue
             record = {
                 "id": group_id(url),
