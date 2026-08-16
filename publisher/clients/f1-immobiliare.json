@@ -50,16 +50,18 @@
     ]
   },
   "publishing": {
+    "backend": "direct_api",
+    "secret_prefix": "F1",
     "require_media": true,
     "slots": ["09:00", "12:30", "17:30", "20:30"],
     "platforms": ["facebook", "instagram", "tiktok", "linkedin", "youtube", "pinterest"]
   },
   "integrations": {
-    "facebook": {"id": "", "required": true},
-    "instagram": {"id": "", "required": true},
-    "tiktok": {"id": "", "required": false},
-    "linkedin": {"id": "", "required": false},
-    "youtube": {"id": "", "required": false},
-    "pinterest": {"id": "", "required": false, "board": ""}
+    "facebook": {"id": "direct-api", "required": true},
+    "instagram": {"id": "direct-api", "required": true},
+    "tiktok": {"id": "direct-api", "required": false},
+    "linkedin": {"id": "direct-api", "required": false},
+    "youtube": {"id": "direct-api", "required": false},
+    "pinterest": {"id": "direct-api", "required": false, "board": ""}
   }
 }
