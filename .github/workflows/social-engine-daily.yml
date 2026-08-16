@@ -37,6 +37,7 @@ jobs:
       SOCIAL_DATE: ${{ inputs.date }}
       SOCIAL_START_OFFSET_DAYS: ${{ github.event_name == 'schedule' && '0' || '1' }}
       PIPER_DATA_DIR: ${{ github.workspace }}/.cache/piper
+      SOCIAL_PHOTO_CACHE: ${{ github.workspace }}/.cache/f1-photos
 
     steps:
       - name: Checkout
@@ -55,15 +56,17 @@ jobs:
           sudo apt-get install -y ffmpeg fonts-dejavu-core
           pip install -r publisher/requirements.txt
 
-      - name: Cache Italian voice
+      - name: Cache Italian voice and F1 photos
         uses: actions/cache@v4
         with:
-          path: .cache/piper
-          key: piper-it-IT-paola-medium-v1
+          path: |
+            .cache/piper
+            .cache/f1-photos
+          key: f1-social-assets-v2
 
       - name: Prepare Italian voice
         run: |
-          mkdir -p "$PIPER_DATA_DIR"
+          mkdir -p "$PIPER_DATA_DIR" "$SOCIAL_PHOTO_CACHE"
           if [ ! -f "$PIPER_DATA_DIR/it_IT-paola-medium.onnx" ]; then
             python -m piper.download_voices it_IT-paola-medium --data-dir "$PIPER_DATA_DIR"
           fi
