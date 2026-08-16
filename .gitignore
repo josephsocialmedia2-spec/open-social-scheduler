@@ -1,0 +1,17 @@
+# Secrets
+.env
+*.env
+!*.env.example
+postiz-stack/postiz.env
+
+# Cloned upstream sources (kept separate from OSS code)
+postiz-stack/vendor/
+
+# Generated social media
+publisher/media/generated/
+publisher/reports/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
