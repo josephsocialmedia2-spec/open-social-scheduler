@@ -5,9 +5,7 @@ on:
   push:
     paths:
       - '.github/workflows/postiz-stack-ci.yml'
-      - '.github/workflows/provision-postiz-hetzner.yml'
       - 'postiz-stack/**'
-      - 'infra/hetzner/**'
 
 permissions:
   contents: read
@@ -20,26 +18,22 @@ jobs:
       - name: Checkout Open Social Scheduler
         uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-
-      - name: Validate Hetzner provisioning code
+      - name: Validate Windows PowerShell installer syntax
+        shell: pwsh
         run: |
-          pip install 'hcloud==2.23.0' 'requests==2.32.5'
-          python -m py_compile infra/hetzner/provision.py
-          python - <<'PY'
-          import os
-          os.environ['POSTIZ_DOMAIN']='social.test.example'
-          import infra.hetzner.provision as p
-          data=p.cloud_init()
-          assert '#cloud-config' in data
-          assert 'social.test.example' in data
-          assert 'open-social-update.timer' in data
-          assert len(data.encode()) < 32768
-          print('Hetzner cloud-init validated.')
-          PY
+          $files = @(
+            'postiz-stack/windows/INSTALLA_POSTIZ_WINDOWS.ps1'
+          )
+          foreach ($file in $files) {
+            $tokens = $null
+            $errors = $null
+            [System.Management.Automation.Language.Parser]::ParseFile((Resolve-Path $file), [ref]$tokens, [ref]$errors) | Out-Null
+            if ($errors.Count -gt 0) {
+              $errors | ForEach-Object { Write-Error $_.Message }
+              exit 1
+            }
+          }
+          Write-Host 'Windows installer syntax validated.'
 
       - name: Clone pinned Postiz upstream
         env:
@@ -58,7 +52,7 @@ jobs:
           bash -n postiz-stack/install_production_ubuntu.sh
           bash -n postiz-stack/check_ready.sh
 
-      - name: Validate production Docker configuration
+      - name: Validate Docker configuration
         shell: bash
         run: |
           cp postiz-stack/postiz.env.example postiz-stack/postiz.env
@@ -69,6 +63,5 @@ jobs:
             --env-file postiz-stack/postiz.env \
             -f postiz-stack/vendor/postiz-docker-compose/docker-compose.yaml \
             -f postiz-stack/docker-compose.override.yml \
-            -f postiz-stack/docker-compose.production.yml \
             config >/dev/null
-          echo 'Postiz clone, production overlay, Caddy HTTPS and Hetzner provisioning validated.'
+          echo 'Postiz Docker configuration validated for local Windows/Docker Desktop use.'
