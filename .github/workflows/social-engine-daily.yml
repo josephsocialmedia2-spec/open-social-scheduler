@@ -8,14 +8,7 @@ on:
         required: false
         type: string
   schedule:
-    - cron: '10 4 * * *'
-  push:
-    paths:
-      - '.github/workflows/social-engine-daily.yml'
-      - 'publisher/build_daily_queue.py'
-      - 'publisher/render_reels.py'
-      - 'publisher/clients/**'
-      - 'publisher/content_bank/**'
+    - cron: '30 5 * * *'
 
 permissions:
   contents: write
@@ -85,24 +78,44 @@ jobs:
             git config user.email 'open-social-engine@users.noreply.github.com'
             git add publisher/queue.json
             git commit -m 'Prepare multi-client social queue'
-            git fetch origin main
-            git rebase origin/main
-            git push origin HEAD:main
+            git fetch origin "${GITHUB_REF_NAME}"
+            git rebase "origin/${GITHUB_REF_NAME}"
+            git push origin "HEAD:${GITHUB_REF_NAME}"
           fi
 
-      - name: Ask for publishing confirmation
+      - name: Create approval issue
         uses: actions/github-script@v7
+        env:
+          TARGET_DAY: ${{ inputs.date }}
         with:
           script: |
-            const day = process.env.SOCIAL_DATE || new Date().toISOString().slice(0,10);
-            const workflowUrl = `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/workflows/social-publisher.yml`;
-            const body = [
-              `La coda social del **${day}** è stata preparata da GitHub Actions.`,
+            const fs = require('fs');
+            const q = JSON.parse(fs.readFileSync('publisher/queue.json', 'utf8'));
+            const day = process.env.TARGET_DAY || new Intl.DateTimeFormat('en-CA', {timeZone: 'Europe/Rome'}).format(new Date());
+            const jobs = (q.jobs || []).filter(j => String(j.scheduled_at || '').slice(0,10) === day && !['published','disabled'].includes(j.status));
+            const lines = [
+              `Contenuti preparati automaticamente per **${day}**.`,
               '',
-              '**Nessuna pubblicazione è stata inviata automaticamente.**',
+              '**Nessun contenuto viene pubblicato senza un tuo comando.**',
               '',
-              `Per confermare: apri [Open Social Publisher](${workflowUrl}) e premi **Run workflow**.`,
-              '',
-              'La pressione di **Run workflow** è la conferma operativa alla pubblicazione della coda pronta.'
-            ].join('\n');
-            await github.rest.issues.create({owner: context.repo.owner, repo: context.repo.repo, title: `[SOCIAL-PUBLISH] ${day} - conferma richiesta`, body});
+              'Per controllare le credenziali senza pubblicare, copia il comando `/check ...`.',
+              'Per confermare la pubblicazione, copia il comando `/publish ...`.',
+              ''
+            ];
+            for (const j of jobs) {
+              const time = String(j.scheduled_at || '').slice(11,16);
+              lines.push(`### ${j.client_name} · ${time} · ${j.category}`);
+              lines.push(`**${j.title || ''}**`);
+              lines.push('');
+              lines.push(`Stato: \`${j.status}\``);
+              lines.push(`- Verifica: \`/check ${j.id}\``);
+              lines.push(`- CONFERMA: \`/publish ${j.id}\``);
+              lines.push('');
+            }
+            if (!jobs.length) lines.push('_Nessun job da approvare per questa data._');
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `[SOCIAL-PUBLISH] ${day} - conferma richiesta`,
+              body: lines.join('\n')
+            });
