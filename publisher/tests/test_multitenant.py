@@ -44,6 +44,13 @@ class MultiTenantTests(unittest.TestCase):
             with self.assertRaises(RuntimeError):
                 postiz_publish.legacy_select(integrations, "facebook", "F1")
 
+    def test_instagram_video_defaults_to_reel(self) -> None:
+        integration = {"id": "ig-f1", "identifier": "instagram", "name": "F1 Immobiliare"}
+        settings = postiz_publish.default_settings("instagram", {"title": "Test Reel"}, integration)
+        self.assertEqual("instagram", settings["__type"])
+        self.assertEqual("reel", settings["post_type"])
+        self.assertFalse(settings["is_trial_reel"])
+
 
 if __name__ == "__main__":
     unittest.main()
