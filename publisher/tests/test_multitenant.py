@@ -20,11 +20,15 @@ class MultiTenantTests(unittest.TestCase):
         jobs = build_daily_queue.build_for_client(self.f1, date(2026, 8, 17))
         self.assertEqual(4, len(jobs))
         self.assertEqual(["data", "error", "proof", "decision"], [j["category"] for j in jobs])
-        self.assertEqual(["08:00", "12:30", "17:30", "20:30"], [j["scheduled_at"][11:16] for j in jobs])
+        self.assertEqual(["09:00", "12:30", "17:30", "20:30"], [j["scheduled_at"][11:16] for j in jobs])
         self.assertEqual(["reel", "reel", "carousel", "carousel"], [j["format"] for j in jobs])
         self.assertTrue(all(j["client_id"] == "f1-immobiliare" for j in jobs))
         self.assertTrue(all(j["approval_key"] == "2026-W34" for j in jobs))
         self.assertTrue(all(j["editorial_role"] in {"data", "error", "proof", "decision"} for j in jobs))
+        self.assertTrue(all(j.get("caption") for j in jobs))
+        self.assertTrue(all(j.get("hashtags") for j in jobs))
+        self.assertTrue(all("#F1Immobiliare" in j["caption"] for j in jobs))
+        self.assertTrue(all(j.get("voiceover") for j in jobs if j["format"] == "reel"))
 
     def test_f1_positioning_is_fixed(self) -> None:
         editorial = self.f1["editorial"]
