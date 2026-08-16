@@ -1,0 +1,95 @@
+name: Open Social Engine Daily
+
+on:
+  workflow_dispatch:
+    inputs:
+      date:
+        description: 'Optional local date YYYY-MM-DD for controlled test/backfill'
+        required: false
+        type: string
+  schedule:
+    - cron: '10 4 * * *'
+  push:
+    paths:
+      - '.github/workflows/social-engine-daily.yml'
+      - 'publisher/build_daily_queue.py'
+      - 'publisher/render_reels.py'
+      - 'publisher/postiz_publish.py'
+      - 'publisher/clients/**'
+      - 'publisher/content_bank/**'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: open-social-engine-daily
+  cancel-in-progress: false
+
+jobs:
+  build-render-publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      POSTIZ_API_KEY: ${{ secrets.POSTIZ_API_KEY }}
+      POSTIZ_API_URL: ${{ vars.POSTIZ_API_URL || 'https://api.postiz.com/public/v1' }}
+      SOCIAL_DATE: ${{ inputs.date }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: publisher/requirements.txt
+
+      - name: Install renderer dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg fonts-dejavu-core
+          pip install -r publisher/requirements.txt
+
+      - name: Validate Python and tenant isolation
+        run: |
+          python -m py_compile publisher/*.py
+          python -m unittest discover -s publisher/tests -v
+
+      - name: Build daily queue
+        shell: bash
+        run: |
+          if [ -n "${SOCIAL_DATE:-}" ]; then
+            python publisher/build_daily_queue.py --date "$SOCIAL_DATE"
+          else
+            python publisher/build_daily_queue.py
+          fi
+
+      - name: Render 9x16 reels
+        run: python publisher/render_reels.py
+
+      - name: Reconcile queue after rendering
+        shell: bash
+        run: |
+          if [ -n "${SOCIAL_DATE:-}" ]; then
+            python publisher/build_daily_queue.py --date "$SOCIAL_DATE"
+          else
+            python publisher/build_daily_queue.py
+          fi
+
+      - name: Publish/schedule through Postiz
+        run: python publisher/postiz_publish.py
+
+      - name: Persist queue state
+        if: always()
+        shell: bash
+        run: |
+          if git diff --quiet -- publisher/queue.json; then
+            echo 'Queue unchanged.'
+            exit 0
+          fi
+          git config user.name 'open-social-engine'
+          git config user.email 'open-social-engine@users.noreply.github.com'
+          git add publisher/queue.json
+          git commit -m 'Update multi-client social queue'
+          git push
