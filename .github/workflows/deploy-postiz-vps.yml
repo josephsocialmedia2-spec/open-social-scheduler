@@ -1,0 +1,83 @@
+name: Deploy Postiz VPS
+
+on:
+  workflow_dispatch:
+    inputs:
+      domain:
+        description: 'Public Postiz hostname'
+        required: true
+        default: 'social.realmediapro.it'
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-postiz-vps
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      SSH_HOST: ${{ secrets.POSTIZ_SSH_HOST }}
+      SSH_USER: ${{ secrets.POSTIZ_SSH_USER }}
+      SSH_KEY: ${{ secrets.POSTIZ_SSH_KEY }}
+      POSTIZ_DOMAIN: ${{ inputs.domain }}
+
+    steps:
+      - name: Require VPS SSH secrets
+        shell: bash
+        run: |
+          for name in SSH_HOST SSH_USER SSH_KEY; do
+            if [ -z "${!name:-}" ]; then
+              echo "Missing GitHub secret backing $name" >&2
+              exit 2
+            fi
+          done
+
+      - name: Configure SSH
+        shell: bash
+        run: |
+          install -d -m 700 ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/postiz_vps
+          chmod 600 ~/.ssh/postiz_vps
+          ssh-keyscan -H "$SSH_HOST" >> ~/.ssh/known_hosts
+
+      - name: Install or update production stack
+        shell: bash
+        run: |
+          ssh -i ~/.ssh/postiz_vps "$SSH_USER@$SSH_HOST" \
+            "POSTIZ_DOMAIN='$POSTIZ_DOMAIN' bash -s" <<'REMOTE'
+          set -euo pipefail
+          REPO_DIR="$HOME/open-social-scheduler"
+          if [ ! -d "$REPO_DIR/.git" ]; then
+            git clone https://github.com/josephsocialmedia2-spec/open-social-scheduler.git "$REPO_DIR"
+          else
+            git -C "$REPO_DIR" fetch origin main
+            git -C "$REPO_DIR" reset --hard origin/main
+          fi
+          cd "$REPO_DIR"
+          if [ "$(id -u)" -eq 0 ]; then
+            POSTIZ_DOMAIN="$POSTIZ_DOMAIN" bash postiz-stack/install_production_ubuntu.sh
+          elif sudo -n true 2>/dev/null; then
+            sudo -n env POSTIZ_DOMAIN="$POSTIZ_DOMAIN" bash postiz-stack/install_production_ubuntu.sh
+          else
+            echo 'Remote user must be root or have passwordless sudo for first deployment.' >&2
+            exit 2
+          fi
+          REMOTE
+
+      - name: Verify public HTTPS endpoint
+        shell: bash
+        run: |
+          for attempt in 1 2 3 4 5 6; do
+            if curl -fsSIL --max-time 20 "https://$POSTIZ_DOMAIN" >/dev/null; then
+              echo "Postiz reachable at https://$POSTIZ_DOMAIN"
+              exit 0
+            fi
+            sleep 10
+          done
+          echo "Deployment command completed but HTTPS is not reachable yet. Check DNS A record, firewall ports 80/443 and Caddy logs." >&2
+          exit 2
