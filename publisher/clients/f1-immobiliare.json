@@ -21,7 +21,8 @@
       "Quanto vale casa mia? → F1",
       "Non voglio sbagliare prezzo → F1",
       "Casa non si vende → F1",
-      "Voglio capire il mercato → F1"
+      "Voglio capire il mercato → F1",
+      "Voglio vendere rapidamente un immobile interessante → F1 Cash Subito"
     ],
     "fixed_phrases": [
       "Non a sensazione. Con i dati.",
@@ -37,7 +38,7 @@
     "final_signature": ["F1 IMMOBILIARE", "NON A SENSAZIONE.", "CON I DATI.", "371 370 8294"]
   },
   "brand": {
-    "status": "premium-valle-susa-v2",
+    "status": "premium-valle-susa-v3",
     "background": "#070907",
     "background_alt": "#0D1711",
     "primary": "#F7F7F4",
@@ -48,6 +49,14 @@
     "font_title": "DejaVu Serif",
     "font_body": "DejaVu Sans",
     "renderer": "premium_photo",
+    "presenter_direction": {
+      "enabled": true,
+      "mode": "ai_real_estate_presenter",
+      "rotation": ["female_agent", "male_agent"],
+      "look": "attractive, elegant, credible, premium real-estate professional",
+      "subtitles": true,
+      "rule": "Presenter must support the message, never replace property data or create deceptive testimonials."
+    },
     "logo_vectors": {
       "viewbox": [0, 0, 500, 500],
       "green": [
@@ -76,7 +85,8 @@
       "enabled": true,
       "engine": "piper",
       "model": "it_IT-paola-medium",
-      "length_scale": 1.04
+      "length_scale": 1.04,
+      "required_for_reels": true
     },
     "reel": {
       "width": 1080,
@@ -84,7 +94,8 @@
       "safe_top": 180,
       "safe_bottom": 260,
       "slides": 7,
-      "seconds_per_slide": 2.8
+      "seconds_per_slide": 2.8,
+      "subtitles": true
     },
     "carousel": {
       "width": 1080,
@@ -96,17 +107,53 @@
     "cta": "Scrivi VALUTAZIONE in privato",
     "keyword": "VALUTAZIONE",
     "phone": "371 370 8294",
+    "property_focus": {
+      "transaction": "vendita",
+      "min_price_eur": 100000,
+      "exclude": ["affitto", "locazione", "garage", "box", "posto auto", "rustico", "rudere", "terreno"],
+      "preferred": ["appartamento", "casa", "villa", "villetta", "attico", "bifamiliare", "trifamiliare"],
+      "cash_subito": {
+        "enabled": true,
+        "label": "F1 CASH SUBITO",
+        "meaning": "acquisto diretto per opportunità immobiliari fortemente scontate e coerenti con i criteri F1",
+        "rule": "non presentarlo come garanzia di acquisto; prima verifica economica, tecnica e documentale"
+      }
+    },
+    "advertising_priority": [
+      {"town": "Avigliana", "weight": 10, "tier": "A"},
+      {"town": "Almese", "weight": 9, "tier": "A"},
+      {"town": "Sant'Ambrogio di Torino", "weight": 9, "tier": "A"},
+      {"town": "Susa", "weight": 10, "tier": "A"},
+      {"town": "Oulx", "weight": 10, "tier": "A"},
+      {"town": "Sauze d'Oulx", "weight": 10, "tier": "A"},
+      {"town": "Bardonecchia", "weight": 10, "tier": "A"},
+      {"town": "Condove", "weight": 7, "tier": "B"},
+      {"town": "Villar Dora", "weight": 7, "tier": "B"},
+      {"town": "Bussoleno", "weight": 7, "tier": "B"},
+      {"town": "Borgone Susa", "weight": 6, "tier": "B"},
+      {"town": "Chiusa di San Michele", "weight": 6, "tier": "B"}
+    ],
     "territories": [
-      "Condove",
       "Avigliana",
       "Almese",
+      "Sant'Ambrogio di Torino",
+      "Susa",
+      "Oulx",
+      "Sauze d'Oulx",
+      "Bardonecchia",
+      "Condove",
       "Villar Dora",
-      "Caprie",
-      "Chiusa di San Michele",
-      "Vaie",
-      "Sant'Antonino di Susa",
+      "Bussoleno",
       "Borgone Susa",
-      "Villar Focchiardo"
+      "Chiusa di San Michele"
+    ],
+    "hashtag_sets": [
+      ["#F1Immobiliare", "#ValleDiSusa", "#VendereCasa", "#ValutazioneImmobiliare", "#Avigliana", "#CasaInVendita"],
+      ["#F1Immobiliare", "#ValDiSusa", "#MercatoImmobiliare", "#VenditaImmobiliare", "#Susa", "#PrimaIDati"],
+      ["#F1Immobiliare", "#ValleDiSusa", "#CasaTorino", "#ImmobiliareTorino", "#Almese", "#SantAmbrogioDiTorino"],
+      ["#F1Immobiliare", "#AltaValleDiSusa", "#Oulx", "#Bardonecchia", "#SauzeDOulx", "#InvestimentoImmobiliare"],
+      ["#F1Immobiliare", "#ValleDiSusa", "#Condove", "#Bussoleno", "#VillarDora", "#VendereBene"],
+      ["#F1Immobiliare", "#NonASensazione", "#ConIDati", "#StrategiaImmobiliare", "#PrezzoCasa", "#ProprietariCasa"]
     ]
   },
   "approval": {
@@ -115,13 +162,14 @@
     "file": "publisher/approvals/f1-immobiliare.json"
   },
   "planning": {
-    "horizon_days": 7
+    "horizon_days": 7,
+    "week_view": "monday_sunday"
   },
   "publishing": {
     "backend": "direct_api",
     "secret_prefix": "F1",
     "require_media": true,
-    "slots": ["08:00", "12:30", "17:30", "20:30"],
+    "slots": ["09:00", "12:30", "17:30", "20:30"],
     "categories": ["data", "error", "proof", "decision"],
     "formats": {
       "data": "reel",
