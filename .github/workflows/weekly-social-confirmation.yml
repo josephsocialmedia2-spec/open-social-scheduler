@@ -1,0 +1,71 @@
+name: Weekly Social Confirmation
+
+on:
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: write
+  issues: write
+  actions: write
+
+concurrency:
+  group: weekly-social-confirmation
+  cancel-in-progress: false
+
+jobs:
+  confirm:
+    if: >-
+      github.event.issue.pull_request == null &&
+      startsWith(github.event.issue.title, '[SOCIAL-WEEK]') &&
+      github.actor == github.repository_owner &&
+      (github.event.comment.body == 'CONFERMO' || github.event.comment.body == 'APPROVO' || github.event.comment.body == 'REVOCA')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Resolve approval key and action
+        id: approval
+        shell: bash
+        run: |
+          KEY=$(printf '%s' "${{ github.event.issue.title }}" | sed -nE 's/^\[SOCIAL-WEEK\] ([0-9]{4}-W[0-9]{2}).*/\1/p')
+          test -n "$KEY"
+          ACTION=approve
+          if [ "${{ github.event.comment.body }}" = "REVOCA" ]; then ACTION=revoke; fi
+          echo "key=$KEY" >> "$GITHUB_OUTPUT"
+          echo "action=$ACTION" >> "$GITHUB_OUTPUT"
+      - name: Apply weekly confirmation
+        run: python publisher/apply_week_approval.py --key "${{ steps.approval.outputs.key }}" --action "${{ steps.approval.outputs.action }}"
+      - name: Reconcile queue approval state
+        shell: bash
+        run: |
+          TODAY=$(TZ=Europe/Rome date +%F)
+          python publisher/build_daily_queue.py --date "$TODAY"
+      - name: Commit approval state
+        shell: bash
+        run: |
+          if git diff --quiet -- publisher/approvals publisher/queue.json; then exit 0; fi
+          git config user.name 'open-social-engine'
+          git config user.email 'open-social-engine@users.noreply.github.com'
+          git add publisher/approvals publisher/queue.json
+          git commit -m "${{ steps.approval.outputs.action }} social week ${{ steps.approval.outputs.key }}"
+          git fetch origin main
+          git rebase origin/main
+          git push origin HEAD:main
+      - name: Confirm result in issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const action = '${{ steps.approval.outputs.action }}';
+            const key = '${{ steps.approval.outputs.key }}';
+            const body = action === 'approve'
+              ? `✅ **${key} approvata.** GitHub pubblicherà automaticamente i job della settimana quando raggiungono il loro orario.`
+              : `⛔ **${key} revocata.** I job non ancora pubblicati tornano bloccati.`;
+            await github.rest.issues.createComment({owner: context.repo.owner, repo: context.repo.repo, issue_number: context.issue.number, body});
+            if (action === 'approve') {
+              await github.rest.issues.update({owner: context.repo.owner, repo: context.repo.repo, issue_number: context.issue.number, state: 'closed'});
+            }
