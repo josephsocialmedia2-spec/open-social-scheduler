@@ -10,7 +10,7 @@ permissions:
   actions: write
 
 concurrency:
-  group: weekly-social-confirmation
+  group: open-social-state
   cancel-in-progress: false
 
 jobs:
@@ -38,13 +38,8 @@ jobs:
           if [ "${{ github.event.comment.body }}" = "REVOCA" ]; then ACTION=revoke; fi
           echo "key=$KEY" >> "$GITHUB_OUTPUT"
           echo "action=$ACTION" >> "$GITHUB_OUTPUT"
-      - name: Apply weekly confirmation
+      - name: Apply weekly confirmation and queue gate
         run: python publisher/apply_week_approval.py --key "${{ steps.approval.outputs.key }}" --action "${{ steps.approval.outputs.action }}"
-      - name: Reconcile queue approval state
-        shell: bash
-        run: |
-          TODAY=$(TZ=Europe/Rome date +%F)
-          python publisher/build_daily_queue.py --date "$TODAY"
       - name: Commit approval state
         shell: bash
         run: |
@@ -63,7 +58,7 @@ jobs:
             const action = '${{ steps.approval.outputs.action }}';
             const key = '${{ steps.approval.outputs.key }}';
             const body = action === 'approve'
-              ? `✅ **${key} approvata.** GitHub pubblicherà automaticamente i job della settimana quando raggiungono il loro orario.`
+              ? `✅ **${key} approvata.** I job renderizzati della settimana sono sbloccati e verranno pubblicati automaticamente quando raggiungono il loro orario.`
               : `⛔ **${key} revocata.** I job non ancora pubblicati tornano bloccati.`;
             await github.rest.issues.createComment({owner: context.repo.owner, repo: context.repo.repo, issue_number: context.issue.number, body});
             if (action === 'approve') {
