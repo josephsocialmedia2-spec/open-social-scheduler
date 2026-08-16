@@ -1,0 +1,120 @@
+name: Publish Final Social Results
+
+on:
+  workflow_run:
+    workflows: ["Open Social Engine Daily - Prepare Only"]
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      run_id:
+        description: "Optional Open Social Engine run ID; latest successful main run when empty"
+        required: false
+        type: string
+  push:
+    paths:
+      - '.github/workflows/publish-final-results.yml'
+
+permissions:
+  contents: write
+  actions: read
+
+concurrency:
+  group: publish-final-social-results
+  cancel-in-progress: true
+
+jobs:
+  publish-results:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+
+      - name: Resolve source run
+        id: source
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          INPUT_RUN_ID: ${{ inputs.run_id }}
+          EVENT_RUN_ID: ${{ github.event.workflow_run.id }}
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_run" ]; then
+            RUN_ID="$EVENT_RUN_ID"
+          elif [ -n "${INPUT_RUN_ID:-}" ]; then
+            RUN_ID="$INPUT_RUN_ID"
+          else
+            RUN_ID="$(gh run list --repo "$GITHUB_REPOSITORY" --workflow social-engine-daily.yml --branch main --status success --limit 1 --json databaseId --jq '.[0].databaseId')"
+          fi
+          if [ -z "$RUN_ID" ] || [ "$RUN_ID" = "null" ]; then
+            echo "No successful social-engine run found." >&2
+            exit 1
+          fi
+          echo "run_id=$RUN_ID" >> "$GITHUB_OUTPUT"
+          echo "Using social-engine run $RUN_ID"
+
+      - name: Download final generated media
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_ID: ${{ steps.source.outputs.run_id }}
+        run: |
+          rm -rf /tmp/social-preview
+          mkdir -p /tmp/social-preview
+          gh run download "$RUN_ID" \
+            --repo "$GITHUB_REPOSITORY" \
+            --name "social-preview-$RUN_ID" \
+            --dir /tmp/social-preview
+          test -n "$(find /tmp/social-preview -type f -print -quit)"
+          echo "Downloaded $(find /tmp/social-preview -type f | wc -l) final media files."
+
+      - name: Publish results to GitHub Pages
+        shell: bash
+        env:
+          RUN_ID: ${{ steps.source.outputs.run_id }}
+        run: |
+          git fetch origin gh-pages
+          rm -rf /tmp/f1-pages
+          git worktree add /tmp/f1-pages origin/gh-pages
+
+          rm -rf /tmp/f1-pages/results/latest
+          mkdir -p /tmp/f1-pages/results/latest/media
+          cp -R /tmp/social-preview/. /tmp/f1-pages/results/latest/media/
+          cp publisher/queue.json /tmp/f1-pages/results/latest/queue.json
+
+          python - <<'PY'
+          import json, os
+          from datetime import datetime
+          from pathlib import Path
+          from zoneinfo import ZoneInfo
+
+          root = Path('/tmp/f1-pages/results/latest')
+          queue = json.loads((root / 'queue.json').read_text(encoding='utf-8'))
+          jobs = [j for j in queue.get('jobs', []) if j.get('client_id') == 'f1-immobiliare' and j.get('enabled', True)]
+          reels = sum(1 for j in jobs if j.get('format') == 'reel')
+          carousels = sum(1 for j in jobs if j.get('format') == 'carousel')
+          media_files = sum(1 for p in (root / 'media').rglob('*') if p.is_file())
+          meta = {
+              'generated_at': datetime.now(ZoneInfo('Europe/Rome')).isoformat(),
+              'source_run_id': os.environ['RUN_ID'],
+              'contents': len(jobs),
+              'reels': reels,
+              'carousels': carousels,
+              'media_files': media_files,
+          }
+          (root / 'meta.json').write_text(json.dumps(meta, ensure_ascii=False, indent=2), encoding='utf-8')
+          PY
+
+          cd /tmp/f1-pages
+          git config user.name 'f1-results-publisher'
+          git config user.email 'f1-results-publisher@users.noreply.github.com'
+          git add results/latest
+          if git diff --cached --quiet; then
+            echo 'Final results unchanged.'
+            exit 0
+          fi
+          git commit -m "Publish final F1 social results from run $RUN_ID"
+          git push origin HEAD:gh-pages
