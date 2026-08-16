@@ -2,6 +2,13 @@ name: F1 Social Connectivity Test
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - agent/facebook-groups-approval-engine
+    paths:
+      - 'publisher/clients/f1-immobiliare.json'
+      - 'publisher/check_integrations.py'
+      - '.github/workflows/f1-connectivity-test.yml'
 
 permissions:
   contents: write
