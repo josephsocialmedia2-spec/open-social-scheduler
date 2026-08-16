@@ -3,6 +3,8 @@
 
 The engine may prepare and render content before approval, but a job cannot become
 ready for publishing until its approval key has been explicitly approved.
+Future unpublished jobs are replaced when the editorial plan changes, preventing
+duplicate blasts after a content-bank or schedule update.
 """
 
 from __future__ import annotations
@@ -130,10 +132,8 @@ def desired_status(client: dict[str, Any], job: dict[str, Any]) -> tuple[str, st
     approval_key = str(job.get("approval_key") or "")
     if client.get("approval", {}).get("required", False) and not approval_state(client, approval_key):
         return "awaiting_approval", f"approval required for {approval_key}"
-
     if client.get("publishing", {}).get("require_media", True) and not media_exists(job.get("media")):
         return "awaiting_media", "rendered media is missing"
-
     specs, missing_required = integration_specs(client, str(job.get("format") or "reel"))
     if missing_required:
         return "awaiting_integrations", "missing required integration IDs: " + ", ".join(missing_required)
@@ -181,10 +181,7 @@ def build_for_client(client: dict[str, Any], target: date) -> list[dict[str, Any
         content_format = str(formats.get(category) or item.get("format") or "reel").lower()
         slides = list(item.get("slides") or [])
         if content_format == "carousel":
-            media: Any = [
-                f"publisher/media/generated/{client_id}/{target.isoformat()}/{idx + 1:02d}-{slug}/slide-{n:02d}.jpg"
-                for n in range(1, len(slides) + 1)
-            ]
+            media: Any = [f"publisher/media/generated/{client_id}/{target.isoformat()}/{idx + 1:02d}-{slug}/slide-{n:02d}.jpg" for n in range(1, len(slides) + 1)]
         else:
             media = f"publisher/media/generated/{client_id}/{target.isoformat()}/{idx + 1:02d}-{slug}.mp4"
 
@@ -252,19 +249,38 @@ def main() -> int:
 
     all_clients = clients()
     client_map = {c["id"]: c for c in all_clients}
-    existing = {str(j.get("id")) for j in queue["jobs"]}
-    added = 0
     explicit_date = bool(args.date or os.getenv("SOCIAL_DATE", "").strip())
     offset_days = int(os.getenv("SOCIAL_START_OFFSET_DAYS", "0") or 0)
 
+    targets_by_client: dict[str, list[date]] = {}
     for client in all_clients:
         if not client.get("active", False):
             continue
         tz = ZoneInfo(client.get("timezone", "UTC"))
         start = parse_target_date(args.date, tz) + timedelta(days=offset_days)
         horizon = 1 if explicit_date else max(1, int(client.get("planning", {}).get("horizon_days", 1)))
-        for day_offset in range(horizon):
-            target = start + timedelta(days=day_offset)
+        targets_by_client[client["id"]] = [start + timedelta(days=i) for i in range(horizon)]
+
+    target_keys = {client_id: {d.isoformat() for d in days} for client_id, days in targets_by_client.items()}
+    preserved: list[dict[str, Any]] = []
+    replaced = 0
+    for job in queue["jobs"]:
+        client_id = str(job.get("client_id") or "")
+        job_date = str(job.get("scheduled_at") or "")[:10]
+        is_target = job_date in target_keys.get(client_id, set())
+        is_final = job.get("status") in {"published", "scheduled"}
+        if is_target and not is_final:
+            replaced += 1
+            continue
+        preserved.append(job)
+    queue["jobs"] = preserved
+
+    existing = {str(j.get("id")) for j in queue["jobs"]}
+    added = 0
+    for client in all_clients:
+        if not client.get("active", False):
+            continue
+        for target in targets_by_client.get(client["id"], []):
             for job in build_for_client(client, target):
                 if job["id"] not in existing:
                     queue["jobs"].append(job)
@@ -274,7 +290,7 @@ def main() -> int:
     reconcile(queue, client_map)
     queue["updated_at"] = datetime.utcnow().isoformat(timespec="seconds") + "Z"
     save_json(QUEUE_PATH, queue)
-    print(f"Queue reconciled: {added} new job(s), {len(queue['jobs'])} total.")
+    print(f"Queue reconciled: {replaced} stale future job(s) replaced, {added} new job(s), {len(queue['jobs'])} total.")
     return 0
 
 
