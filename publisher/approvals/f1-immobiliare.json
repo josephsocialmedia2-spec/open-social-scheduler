@@ -8,5 +8,5 @@
     "publish_only_after_approval": true,
     "auto_schedule_after_approval": true
   },
-  "notes": "Open Social Scheduler may generate previews before approval. No post is submitted to Postiz until the ISO week key is present in approved."
+  "notes": "GitHub may generate previews before approval. No social publication is attempted until the ISO week key is present in approved."
 }
