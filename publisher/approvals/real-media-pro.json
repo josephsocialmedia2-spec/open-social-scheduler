@@ -1,5 +1,5 @@
 {
-  "client_id": "f1-immobiliare",
+  "client_id": "real-media-pro",
   "mode": "iso_week",
   "approved": [],
   "revoked": [],
@@ -8,5 +8,5 @@
     "publish_only_after_approval": true,
     "auto_schedule_after_approval": true
   },
-  "notes": "GitHub may generate previews before approval. No social publication is attempted until the ISO week key is present in approved."
+  "notes": "Real Media Pro remains inactive until its social account URLs and OAuth credentials are configured."
 }

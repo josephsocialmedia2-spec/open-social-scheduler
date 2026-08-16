@@ -1,73 +1,123 @@
-name: Open Social Publisher
+name: Direct Social Publisher
 
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - 'publisher/queue.json'
-      - 'publisher/postiz_publish.py'
-      - 'publisher/clients/**'
+    inputs:
+      job_id:
+        description: 'Optional exact queue job ID; blank = all approved jobs due now'
+        required: false
+        type: string
+      platforms:
+        description: 'all or comma-separated platform names'
+        required: true
+        default: 'all'
+        type: string
+      dry_run:
+        description: 'Check media and OAuth secrets only; do not publish'
+        required: true
+        default: false
+        type: boolean
   schedule:
-    - cron: '17 * * * *'
+    - cron: '*/15 * * * *'
 
 permissions:
   contents: write
+  actions: read
 
 concurrency:
-  group: open-social-publisher
+  group: open-social-state
   cancel-in-progress: false
 
 jobs:
-  publish:
+  publish-due:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 25
     env:
-      POSTIZ_API_KEY: ${{ secrets.POSTIZ_API_KEY }}
-      POSTIZ_API_URL: ${{ vars.POSTIZ_API_URL || 'https://api.postiz.com/public/v1' }}
+      GH_TOKEN: ${{ github.token }}
+      GITHUB_TOKEN: ${{ github.token }}
+      META_GRAPH_VERSION: ${{ vars.META_GRAPH_VERSION || 'v23.0' }}
+      LINKEDIN_VERSION: ${{ vars.LINKEDIN_VERSION || '202604' }}
+      TIKTOK_PRIVACY_LEVEL: ${{ vars.TIKTOK_PRIVACY_LEVEL || 'SELF_ONLY' }}
+      YOUTUBE_PRIVACY_STATUS: ${{ vars.YOUTUBE_PRIVACY_STATUS || 'private' }}
+      YOUTUBE_CATEGORY_ID: ${{ vars.YOUTUBE_CATEGORY_ID || '22' }}
+      F1_FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.F1_FACEBOOK_PAGE_ACCESS_TOKEN }}
+      F1_INSTAGRAM_ACCESS_TOKEN: ${{ secrets.F1_INSTAGRAM_ACCESS_TOKEN }}
+      F1_INSTAGRAM_USER_ID: ${{ secrets.F1_INSTAGRAM_USER_ID }}
+      F1_TIKTOK_ACCESS_TOKEN: ${{ secrets.F1_TIKTOK_ACCESS_TOKEN }}
+      F1_LINKEDIN_ACCESS_TOKEN: ${{ secrets.F1_LINKEDIN_ACCESS_TOKEN }}
+      F1_LINKEDIN_AUTHOR_URN: ${{ secrets.F1_LINKEDIN_AUTHOR_URN }}
+      F1_YOUTUBE_CLIENT_ID: ${{ secrets.F1_YOUTUBE_CLIENT_ID }}
+      F1_YOUTUBE_CLIENT_SECRET: ${{ secrets.F1_YOUTUBE_CLIENT_SECRET }}
+      F1_YOUTUBE_REFRESH_TOKEN: ${{ secrets.F1_YOUTUBE_REFRESH_TOKEN }}
+      F1_PINTEREST_ACCESS_TOKEN: ${{ secrets.F1_PINTEREST_ACCESS_TOKEN }}
+      F1_PINTEREST_BOARD_ID: ${{ secrets.F1_PINTEREST_BOARD_ID }}
+      F1_PINTEREST_LINK: ${{ vars.F1_PINTEREST_LINK || 'https://f1immobiliare.com/' }}
+      RMP_FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.RMP_FACEBOOK_PAGE_ACCESS_TOKEN }}
+      RMP_INSTAGRAM_ACCESS_TOKEN: ${{ secrets.RMP_INSTAGRAM_ACCESS_TOKEN }}
+      RMP_INSTAGRAM_USER_ID: ${{ secrets.RMP_INSTAGRAM_USER_ID }}
+      RMP_TIKTOK_ACCESS_TOKEN: ${{ secrets.RMP_TIKTOK_ACCESS_TOKEN }}
+      RMP_LINKEDIN_ACCESS_TOKEN: ${{ secrets.RMP_LINKEDIN_ACCESS_TOKEN }}
+      RMP_LINKEDIN_AUTHOR_URN: ${{ secrets.RMP_LINKEDIN_AUTHOR_URN }}
+      RMP_YOUTUBE_CLIENT_ID: ${{ secrets.RMP_YOUTUBE_CLIENT_ID }}
+      RMP_YOUTUBE_CLIENT_SECRET: ${{ secrets.RMP_YOUTUBE_CLIENT_SECRET }}
+      RMP_YOUTUBE_REFRESH_TOKEN: ${{ secrets.RMP_YOUTUBE_REFRESH_TOKEN }}
+      RMP_PINTEREST_ACCESS_TOKEN: ${{ secrets.RMP_PINTEREST_ACCESS_TOKEN }}
+      RMP_PINTEREST_BOARD_ID: ${{ secrets.RMP_PINTEREST_BOARD_ID }}
+      RMP_PINTEREST_LINK: ${{ vars.RMP_PINTEREST_LINK }}
 
     steps:
-      - name: Checkout
+      - name: Checkout main state
         uses: actions/checkout@v4
+        with:
+          ref: main
 
-      - name: Check publisher configuration
-        id: config
-        shell: bash
-        run: |
-          if [ -z "$POSTIZ_API_KEY" ]; then
-            echo "configured=false" >> "$GITHUB_OUTPUT"
-            echo "POSTIZ_API_KEY is not configured yet. Publisher remains safely disabled."
-          else
-            echo "configured=true" >> "$GITHUB_OUTPUT"
-          fi
-
-      - name: Set up Python
-        if: steps.config.outputs.configured == 'true'
+      - name: Python 3.12
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
           cache: pip
           cache-dependency-path: publisher/requirements.txt
 
-      - name: Install dependencies
-        if: steps.config.outputs.configured == 'true'
+      - name: Install publisher dependencies
         run: pip install -r publisher/requirements.txt
 
-      - name: Submit ready jobs to Postiz
-        if: steps.config.outputs.configured == 'true'
-        run: python publisher/postiz_publish.py
-
-      - name: Persist queue state
-        if: steps.config.outputs.configured == 'true' && always()
+      - name: Download latest rendered preview artifact
+        id: media
         shell: bash
         run: |
-          if git diff --quiet -- publisher/queue.json; then
-            echo 'Queue unchanged.'
+          RUN_ID=$(gh api "repos/${GITHUB_REPOSITORY}/actions/workflows/social-engine-daily.yml/runs?branch=main&status=success&per_page=20" --jq '.workflow_runs[0].id // empty')
+          if [ -z "$RUN_ID" ]; then
+            echo "No successful social-engine-daily run is available yet."
+            echo "available=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
+          mkdir -p publisher/media/generated
+          if gh run download "$RUN_ID" -n "social-preview-$RUN_ID" -D publisher/media/generated; then
+            echo "Downloaded preview media from run $RUN_ID"
+            echo "available=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "Preview artifact unavailable for run $RUN_ID."
+            echo "available=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Publish approved due jobs
+        if: steps.media.outputs.available == 'true'
+        shell: bash
+        run: |
+          ARGS=(--platforms "${{ inputs.platforms || 'all' }}" --strict)
+          if [ -n "${{ inputs.job_id }}" ]; then ARGS+=(--job-id "${{ inputs.job_id }}"); fi
+          if [ "${{ inputs.dry_run }}" = "true" ]; then ARGS+=(--dry-run); fi
+          python publisher/direct_api_entry.py "${ARGS[@]}"
+
+      - name: Persist publication state
+        if: always()
+        shell: bash
+        run: |
+          if git diff --quiet -- publisher/queue.json; then exit 0; fi
           git config user.name 'open-social-engine'
           git config user.email 'open-social-engine@users.noreply.github.com'
           git add publisher/queue.json
-          git commit -m 'Update social publishing queue state'
+          git commit -m 'Update direct social publication state'
           git fetch origin main
           git rebase origin/main
           git push origin HEAD:main

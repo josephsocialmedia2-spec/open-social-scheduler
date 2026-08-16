@@ -37,11 +37,12 @@ class MultiTenantTests(unittest.TestCase):
         self.assertEqual(len(carousel["slides"]), len(carousel["media"]))
         self.assertTrue(all(str(x).endswith(".jpg") for x in carousel["media"]))
 
-    def test_unconfigured_required_accounts_block_when_format_is_checked(self) -> None:
+    def test_direct_api_integrations_are_exposed_for_reels(self) -> None:
         specs, missing = build_daily_queue.integration_specs(self.f1, "reel")
-        self.assertEqual([], specs)
-        self.assertIn("facebook", missing)
-        self.assertIn("instagram", missing)
+        self.assertEqual([], missing)
+        expected_platforms = ["facebook", "instagram", "tiktok", "linkedin", "youtube"]
+        self.assertEqual(expected_platforms, [spec["platform"] for spec in specs])
+        self.assertTrue(all(spec["integration_id"] == "direct-api" for spec in specs))
 
     def test_exact_integration_id_is_verified(self) -> None:
         integrations = [
