@@ -9,6 +9,12 @@ on:
         default: '40'
   schedule:
     - cron: '15 5 * * *'
+  push:
+    paths:
+      - '.github/workflows/facebook-group-radar.yml'
+      - 'growth/config.json'
+      - 'growth/discover_groups.py'
+      - 'growth/requirements.txt'
 
 permissions:
   contents: write
