@@ -28,14 +28,24 @@ jobs:
           grep -q 'GNU AFFERO GENERAL PUBLIC LICENSE' postiz-stack/vendor/postiz-app/LICENSE
           test "$(git -C postiz-stack/vendor/postiz-app describe --tags --exact-match)" = 'v2.22.1'
 
-      - name: Validate composed Docker configuration
+      - name: Validate shell scripts
+        run: |
+          bash -n postiz-stack/bootstrap_postiz.sh
+          bash -n postiz-stack/start_postiz.sh
+          bash -n postiz-stack/install_production_ubuntu.sh
+          bash -n postiz-stack/check_ready.sh
+
+      - name: Validate production Docker configuration
+        shell: bash
         run: |
           cp postiz-stack/postiz.env.example postiz-stack/postiz.env
-          sed -i 's#https://social.example.com#https://social.test.example#g' postiz-stack/postiz.env
+          sed -i 's#social.realmediapro.it#social.test.example#g' postiz-stack/postiz.env
           sed -i 's#CHANGE_ME_WITH_A_LONG_RANDOM_SECRET#ci-only-long-random-secret-not-for-production#g' postiz-stack/postiz.env
+          export POSTIZ_STACK_DIR="$PWD/postiz-stack"
           docker compose \
             --env-file postiz-stack/postiz.env \
             -f postiz-stack/vendor/postiz-docker-compose/docker-compose.yaml \
             -f postiz-stack/docker-compose.override.yml \
+            -f postiz-stack/docker-compose.production.yml \
             config >/dev/null
-          echo 'Postiz clone and Docker Compose overlay validated.'
+          echo 'Postiz clone, production overlay and Caddy HTTPS configuration validated.'
