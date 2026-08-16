@@ -14,16 +14,31 @@ ROOT = Path(__file__).resolve().parents[2]
 class MultiTenantTests(unittest.TestCase):
     def setUp(self) -> None:
         self.f1 = json.loads((ROOT / "publisher/clients/f1-immobiliare.json").read_text(encoding="utf-8"))
+        build_daily_queue._APPROVAL_CACHE.clear()
 
     def test_f1_generates_four_daily_slots(self) -> None:
-        jobs = build_daily_queue.build_for_client(self.f1, date(2026, 8, 16))
+        jobs = build_daily_queue.build_for_client(self.f1, date(2026, 8, 17))
         self.assertEqual(4, len(jobs))
         self.assertEqual(["attract", "nurture", "hyperlocal", "convert"], [j["category"] for j in jobs])
         self.assertEqual(["09:00", "12:30", "17:30", "20:30"], [j["scheduled_at"][11:16] for j in jobs])
+        self.assertEqual(["reel", "carousel", "reel", "carousel"], [j["format"] for j in jobs])
         self.assertTrue(all(j["client_id"] == "f1-immobiliare" for j in jobs))
+        self.assertTrue(all(j["approval_key"] == "2026-W34" for j in jobs))
 
-    def test_unconfigured_required_accounts_block_publish(self) -> None:
-        specs, missing = build_daily_queue.integration_specs(self.f1)
+    def test_unapproved_week_blocks_publish_before_integrations(self) -> None:
+        jobs = build_daily_queue.build_for_client(self.f1, date(2026, 8, 17))
+        self.assertTrue(all(j["status"] == "awaiting_approval" for j in jobs))
+        self.assertTrue(all("2026-W34" in j["blocked_reason"] for j in jobs))
+
+    def test_carousel_has_one_media_file_per_slide(self) -> None:
+        jobs = build_daily_queue.build_for_client(self.f1, date(2026, 8, 17))
+        carousel = jobs[1]
+        self.assertIsInstance(carousel["media"], list)
+        self.assertEqual(len(carousel["slides"]), len(carousel["media"]))
+        self.assertTrue(all(str(x).endswith(".jpg") for x in carousel["media"]))
+
+    def test_unconfigured_required_accounts_block_when_format_is_checked(self) -> None:
+        specs, missing = build_daily_queue.integration_specs(self.f1, "reel")
         self.assertEqual([], specs)
         self.assertIn("facebook", missing)
         self.assertIn("instagram", missing)
@@ -44,12 +59,14 @@ class MultiTenantTests(unittest.TestCase):
             with self.assertRaises(RuntimeError):
                 postiz_publish.legacy_select(integrations, "facebook", "F1")
 
-    def test_instagram_video_defaults_to_reel(self) -> None:
+    def test_instagram_defaults_depend_on_content_format(self) -> None:
         integration = {"id": "ig-f1", "identifier": "instagram", "name": "F1 Immobiliare"}
-        settings = postiz_publish.default_settings("instagram", {"title": "Test Reel"}, integration)
-        self.assertEqual("instagram", settings["__type"])
-        self.assertEqual("reel", settings["post_type"])
-        self.assertFalse(settings["is_trial_reel"])
+        reel = postiz_publish.default_settings("instagram", {"title": "Test Reel", "format": "reel"}, integration)
+        carousel = postiz_publish.default_settings("instagram", {"title": "Test Carousel", "format": "carousel"}, integration)
+        self.assertEqual("instagram", reel["__type"])
+        self.assertEqual("reel", reel["post_type"])
+        self.assertEqual("post", carousel["post_type"])
+        self.assertFalse(reel["is_trial_reel"])
 
 
 if __name__ == "__main__":
