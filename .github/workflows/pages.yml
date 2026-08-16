@@ -1,37 +1,61 @@
-name: Deploy Open Social Scheduler
+name: Sync Open Social Scheduler Pages
 
 on:
   push:
     branches: ["main"]
+    paths:
+      - 'index.html'
+      - 'monday-control.html'
+      - 'meta-setup.html'
+      - 'groups.html'
+      - 'growth/groups.json'
+      - '.github/workflows/pages.yml'
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 concurrency:
-  group: "pages"
+  group: "pages-sync"
   cancel-in-progress: true
 
 jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  sync:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v6
-
-      - name: Configure Pages
-        uses: actions/configure-pages@v5
-
-      - name: Upload static site
-        uses: actions/upload-pages-artifact@v4
+      - name: Checkout main
+        uses: actions/checkout@v4
         with:
-          path: "."
+          ref: main
+          fetch-depth: 0
 
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Stage public files
+        shell: bash
+        run: |
+          rm -rf /tmp/open-social-pages
+          mkdir -p /tmp/open-social-pages/growth
+          for file in index.html monday-control.html meta-setup.html groups.html; do
+            if [ -f "$file" ]; then cp "$file" /tmp/open-social-pages/; fi
+          done
+          if [ -f growth/groups.json ]; then cp growth/groups.json /tmp/open-social-pages/growth/groups.json; fi
+
+      - name: Sync to gh-pages
+        shell: bash
+        run: |
+          git fetch origin gh-pages:refs/remotes/origin/gh-pages
+          git switch -C gh-pages origin/gh-pages
+          for file in index.html monday-control.html meta-setup.html groups.html; do
+            if [ -f "/tmp/open-social-pages/$file" ]; then cp "/tmp/open-social-pages/$file" "$file"; fi
+          done
+          mkdir -p growth
+          if [ -f /tmp/open-social-pages/growth/groups.json ]; then cp /tmp/open-social-pages/growth/groups.json growth/groups.json; fi
+          touch .nojekyll
+          git config user.name 'open-social-pages'
+          git config user.email 'open-social-pages@users.noreply.github.com'
+          git add index.html monday-control.html meta-setup.html groups.html growth/groups.json .nojekyll
+          if git diff --cached --quiet; then
+            echo 'Public pages already synchronized.'
+            exit 0
+          fi
+          git commit -m 'Sync public Open Social Scheduler controls'
+          git push origin HEAD:gh-pages
