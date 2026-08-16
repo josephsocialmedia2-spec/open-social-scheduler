@@ -48,7 +48,7 @@ def load_json(path: Path) -> dict[str, Any]:
 
 def load_queue() -> dict[str, Any]:
     if not QUEUE_PATH.exists():
-        return {"version": 2, "jobs": []}
+        return {"version": 3, "jobs": []}
     data = load_json(QUEUE_PATH)
     if not isinstance(data.get("jobs"), list):
         raise ValueError("queue.json must contain a jobs array")
@@ -177,15 +177,31 @@ def upload_media(path_value: str) -> dict[str, Any]:
     return payload
 
 
+def media_paths(job: dict[str, Any]) -> list[str]:
+    value = job.get("media")
+    values = value if isinstance(value, list) else [value]
+    return [str(v) for v in values if str(v or "").strip()]
+
+
+def upload_media_set(job: dict[str, Any]) -> list[dict[str, Any]]:
+    return [upload_media(path) for path in media_paths(job)]
+
+
 def default_settings(platform: str, job: dict[str, Any], integration: dict[str, Any]) -> dict[str, Any]:
     title = str(job.get("title") or job.get("caption") or job.get("client_name") or "Social post")[:100]
+    content_format = str(job.get("format") or "reel").lower()
     if platform == "facebook":
         return {"__type": "facebook"}
     if platform == "instagram":
         provider = integration_kind(integration)
-        return {"__type": provider, "post_type": "reel", "is_trial_reel": False, "collaborators": []}
+        return {
+            "__type": provider,
+            "post_type": "reel" if content_format == "reel" else "post",
+            "is_trial_reel": False,
+            "collaborators": [],
+        }
     if platform in {"linkedin", "linkedin-page"}:
-        return {"__type": platform, "post_as_images_carousel": False}
+        return {"__type": platform, "post_as_images_carousel": content_format == "carousel"}
     if platform == "tiktok":
         return {
             "__type": "tiktok",
@@ -225,7 +241,7 @@ def scheduled_type(job: dict[str, Any]) -> tuple[str, str]:
     return "schedule", dt.astimezone(timezone.utc).isoformat().replace("+00:00", "Z")
 
 
-def publish_platform(job: dict[str, Any], platform_spec: Any, integrations: list[dict[str, Any]], media: dict[str, Any] | None) -> dict[str, Any]:
+def publish_platform(job: dict[str, Any], platform_spec: Any, integrations: list[dict[str, Any]], media: list[dict[str, Any]]) -> dict[str, Any]:
     platform, integration, overrides = resolve_integration(job, platform_spec, integrations)
     post_type, publish_date = scheduled_type(job)
     settings = default_settings(platform, job, integration)
@@ -233,10 +249,7 @@ def publish_platform(job: dict[str, Any], platform_spec: Any, integrations: list
     if platform == "pinterest" and not settings.get("board"):
         raise RuntimeError("Pinterest requires a board ID in the tenant configuration")
 
-    media_array = []
-    if media:
-        media_array = [{"id": media.get("id"), "path": media["path"]}]
-
+    media_array = [{"id": item.get("id"), "path": item["path"]} for item in media]
     payload = {
         "type": post_type,
         "date": publish_date,
@@ -277,7 +290,9 @@ def main() -> int:
             client_id = str(job.get("client_id") or "")
             if not client_id and not ALLOW_LEGACY_HINTS:
                 raise RuntimeError("Job has no client_id; legacy jobs are disabled")
-            media = upload_media(job["media"]) if job.get("media") else None
+            media = upload_media_set(job)
+            if not media:
+                raise RuntimeError("Job has no rendered media")
             requested = job.get("platforms") or []
             if not requested:
                 raise RuntimeError("Job has no configured platforms")
