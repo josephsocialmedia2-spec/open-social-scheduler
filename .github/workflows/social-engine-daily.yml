@@ -1,4 +1,4 @@
-name: Open Social Engine Daily
+name: Open Social Engine Daily - Prepare Only
 
 on:
   workflow_dispatch:
@@ -14,24 +14,22 @@ on:
       - '.github/workflows/social-engine-daily.yml'
       - 'publisher/build_daily_queue.py'
       - 'publisher/render_reels.py'
-      - 'publisher/postiz_publish.py'
       - 'publisher/clients/**'
       - 'publisher/content_bank/**'
 
 permissions:
   contents: write
+  issues: write
 
 concurrency:
   group: open-social-engine-daily
   cancel-in-progress: false
 
 jobs:
-  build-render-publish:
+  build-render-prepare:
     runs-on: ubuntu-latest
     timeout-minutes: 25
     env:
-      POSTIZ_API_KEY: ${{ secrets.POSTIZ_API_KEY }}
-      POSTIZ_API_URL: ${{ vars.POSTIZ_API_URL || 'https://api.postiz.com/public/v1' }}
       SOCIAL_DATE: ${{ inputs.date }}
 
     steps:
@@ -77,21 +75,34 @@ jobs:
             python publisher/build_daily_queue.py
           fi
 
-      - name: Publish/schedule through Postiz
-        run: python publisher/postiz_publish.py
-
-      - name: Persist queue state
-        if: always()
+      - name: Persist prepared queue
         shell: bash
         run: |
           if git diff --quiet -- publisher/queue.json; then
             echo 'Queue unchanged.'
-            exit 0
+          else
+            git config user.name 'open-social-engine'
+            git config user.email 'open-social-engine@users.noreply.github.com'
+            git add publisher/queue.json
+            git commit -m 'Prepare multi-client social queue'
+            git fetch origin main
+            git rebase origin/main
+            git push origin HEAD:main
           fi
-          git config user.name 'open-social-engine'
-          git config user.email 'open-social-engine@users.noreply.github.com'
-          git add publisher/queue.json
-          git commit -m 'Update multi-client social queue'
-          git fetch origin main
-          git rebase origin/main
-          git push origin HEAD:main
+
+      - name: Ask for publishing confirmation
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const day = process.env.SOCIAL_DATE || new Date().toISOString().slice(0,10);
+            const workflowUrl = `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/workflows/social-publisher.yml`;
+            const body = [
+              `La coda social del **${day}** è stata preparata da GitHub Actions.`,
+              '',
+              '**Nessuna pubblicazione è stata inviata automaticamente.**',
+              '',
+              `Per confermare: apri [Open Social Publisher](${workflowUrl}) e premi **Run workflow**.`,
+              '',
+              'La pressione di **Run workflow** è la conferma operativa alla pubblicazione della coda pronta.'
+            ].join('\n');
+            await github.rest.issues.create({owner: context.repo.owner, repo: context.repo.repo, title: `[SOCIAL-PUBLISH] ${day} - conferma richiesta`, body});
