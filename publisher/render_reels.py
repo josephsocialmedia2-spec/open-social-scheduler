@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import json
+import os
 import shutil
 import subprocess
 import sys
@@ -121,7 +122,7 @@ def draw_premium_slide(raw: str, cfg: dict[str, Any], source: dict[str, Any], wi
     bg = darken_photo(download_background(source), width, height)
     draw = ImageDraw.Draw(bg)
 
-    logo_w = int(width * (0.47 if height > width else 0.40))
+    logo_w = int(width * 0.47)
     if content_format == "carousel":
         logo_w = int(width * 0.37)
     draw_logo(bg, cfg, top=int(height * 0.025), width_px=logo_w)
@@ -133,7 +134,7 @@ def draw_premium_slide(raw: str, cfg: dict[str, Any], source: dict[str, Any], wi
     draw.rounded_rectangle(
         (panel_margin, panel_top, width - panel_margin, panel_bottom),
         radius=46,
-        fill="#07130EEF",
+        fill="#07130E",
         outline=gold,
         width=2,
     )
@@ -238,8 +239,9 @@ def render_reel(job: dict[str, Any], cfg: dict[str, Any]) -> Path:
         duration = audio_duration(voice)
         seconds = max(2.25, (duration + 1.2) / len(slides)) if duration > 0 else default_seconds
         frames: list[Path] = []
+        day_seed = int(str(job.get("scheduled_at") or "0000-00-00")[8:10] or 0)
         for idx, raw in enumerate(slides, 1):
-            source = sources[(idx - 1 + int(job.get("scheduled_at", "0000-00-00")[8:10] or 0)) % len(sources)]
+            source = sources[(idx - 1 + day_seed) % len(sources)]
             image = draw_premium_slide(raw, cfg, source, width, height, idx, len(slides), "reel")
             frame = tmp / f"slide_{idx:02d}.jpg"
             image.save(frame, "JPEG", quality=91, optimize=True)
@@ -276,11 +278,12 @@ def render_carousel(job: dict[str, Any], cfg: dict[str, Any]) -> list[Path]:
     height = int(carousel_cfg.get("height", 1350))
     sources = background_sources(cfg)
     outputs: list[Path] = []
+    day_seed = int(str(job.get("scheduled_at") or "0000-00-00")[8:10] or 0)
     for idx, (raw, rel) in enumerate(zip(slides, media), 1):
         output = ROOT / str(rel)
         output.parent.mkdir(parents=True, exist_ok=True)
         if not (output.exists() and output.stat().st_size > 10_000):
-            source = sources[(idx - 1 + int(job.get("scheduled_at", "0000-00-00")[8:10] or 0)) % len(sources)]
+            source = sources[(idx - 1 + day_seed) % len(sources)]
             image = draw_premium_slide(raw, cfg, source, width, height, idx, len(slides), "carousel")
             image.save(output, "JPEG", quality=91, optimize=True)
         outputs.append(output)
