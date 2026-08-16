@@ -1,0 +1,12 @@
+{
+  "client_id": "real-media-pro",
+  "mode": "iso_week",
+  "approved": [],
+  "revoked": [],
+  "policy": {
+    "one_confirmation_per_week": true,
+    "publish_only_after_approval": true,
+    "auto_schedule_after_approval": true
+  },
+  "notes": "Real Media Pro remains inactive until its social account URLs and OAuth credentials are configured."
+}
