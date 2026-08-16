@@ -7,19 +7,23 @@ $ComposeRepo = Join-Path $Vendor 'postiz-docker-compose'
 $ComposeFile = Join-Path $ComposeRepo 'docker-compose.yaml'
 $OverrideFile = Join-Path $StackRoot 'docker-compose.override.yml'
 $EnvFile = Join-Path $PSScriptRoot 'postiz.env'
-$Domain = 'social.realmediapro.it'
+$BaseUrl = 'http://localhost:4007'
 
 Write-Host '=== OPEN SOCIAL SCHEDULER / POSTIZ - WINDOWS ==='
 
 foreach ($cmd in @('git','docker')) {
     if (-not (Get-Command $cmd -ErrorAction SilentlyContinue)) {
-        throw "$cmd non trovato. Installa prima Git e Docker Desktop e rilancia."
+        throw "$cmd non trovato. Usa OPEN_SOCIAL_SCHEDULER_AUTO_INSTALL.bat oppure installa il requisito e rilancia."
     }
 }
 
 if (-not (docker info 2>$null)) {
-    $DockerDesktop = Join-Path $Env:ProgramFiles 'Docker\Docker\Docker Desktop.exe'
-    if (Test-Path $DockerDesktop) {
+    $DockerCandidates = @(
+        (Join-Path $Env:LOCALAPPDATA 'Programs\DockerDesktop\Docker Desktop.exe'),
+        (Join-Path $Env:ProgramFiles 'Docker\Docker\Docker Desktop.exe')
+    )
+    $DockerDesktop = $DockerCandidates | Where-Object { Test-Path $_ } | Select-Object -First 1
+    if ($DockerDesktop) {
         Write-Host 'Apro Docker Desktop. Quando compare Engine running, rilancia INSTALLA_POSTIZ_WINDOWS.bat.'
         Start-Process $DockerDesktop
     }
@@ -40,13 +44,15 @@ if (-not (Test-Path $ComposeFile)) {
 }
 
 if (-not (Test-Path $EnvFile)) {
-    $Jwt = -join ((48..111) | Get-Random -Count 64 | ForEach-Object {[char]$_})
+    $JwtBytes = New-Object byte[] 48
+    [Security.Cryptography.RandomNumberGenerator]::Create().GetBytes($JwtBytes)
+    $Jwt = [Convert]::ToHexString($JwtBytes).ToLowerInvariant()
     @"
-POSTIZ_DOMAIN=$Domain
+POSTIZ_DOMAIN=localhost
 POSTIZ_IMAGE=ghcr.io/gitroomhq/postiz-app:v2.22.1
-MAIN_URL=https://$Domain
-FRONTEND_URL=https://$Domain
-NEXT_PUBLIC_BACKEND_URL=https://$Domain/api
+MAIN_URL=$BaseUrl
+FRONTEND_URL=$BaseUrl
+NEXT_PUBLIC_BACKEND_URL=$BaseUrl/api
 JWT_SECRET=$Jwt
 DISABLE_REGISTRATION=false
 API_LIMIT=100
@@ -77,4 +83,4 @@ docker compose --env-file $EnvFile -f $ComposeFile -f $OverrideFile up -d
 docker compose --env-file $EnvFile -f $ComposeFile -f $OverrideFile ps
 Write-Host ''
 Write-Host 'POSTIZ LOCALE: http://localhost:4007'
-Write-Host 'Poi configureremo Cloudflare Tunnel: social.realmediapro.it -> http://localhost:4007'
+Write-Host 'Il dominio pubblico verra configurato in seguito con Cloudflare Tunnel.'
