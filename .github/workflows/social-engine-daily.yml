@@ -88,7 +88,6 @@ jobs:
       - name: Reconcile approval, media and integrations
         shell: bash
         run: |
-          export SOCIAL_START_OFFSET_DAYS=0
           if [ -n "${SOCIAL_DATE:-}" ]; then
             python publisher/build_daily_queue.py --date "$SOCIAL_DATE"
           else
