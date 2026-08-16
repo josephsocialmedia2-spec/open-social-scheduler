@@ -3,26 +3,27 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 import os
 import shutil
 import subprocess
 import sys
 import tempfile
+import time
 from io import BytesIO
 from pathlib import Path
 from typing import Any
 
 import requests
-from PIL import Image, ImageDraw, ImageEnhance, ImageFont, ImageOps
+from PIL import Image, ImageDraw, ImageEnhance, ImageFilter, ImageFont, ImageOps
 
 ROOT = Path(__file__).resolve().parents[1]
 QUEUE_PATH = ROOT / "publisher" / "queue.json"
 CLIENT_DIR = ROOT / "publisher" / "clients"
+PHOTO_CACHE = Path(os.getenv("SOCIAL_PHOTO_CACHE", str(ROOT / ".cache" / "f1-photos")))
 SERIF_FONT = Path("/usr/share/fonts/truetype/dejavu/DejaVuSerif.ttf")
-SERIF_BOLD = Path("/usr/share/fonts/truetype/dejavu/DejaVuSerif-Bold.ttf")
 SANS_FONT = Path("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf")
-SANS_BOLD = Path("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf")
 _BG_CACHE: dict[str, Image.Image] = {}
 
 
@@ -38,8 +39,6 @@ def client(client_id: str) -> dict[str, Any]:
 
 
 def font(path: Path, size: int) -> ImageFont.FreeTypeFont:
-    if not path.exists():
-        raise RuntimeError(f"Font not found: {path}")
     return ImageFont.truetype(str(path), size)
 
 
@@ -53,35 +52,87 @@ def fit_font(draw: ImageDraw.ImageDraw, lines: list[str], max_width: int, start:
     return font(SERIF_FONT, minimum)
 
 
+def fallback_photo() -> Image.Image:
+    """Deterministic fallback so an upstream image host can never stop publishing."""
+    w, h = 1600, 1100
+    image = Image.new("RGB", (w, h), "#0C1714")
+    draw = ImageDraw.Draw(image)
+    for y in range(h):
+        t = y / h
+        r = int(28 - 18 * t)
+        g = int(63 - 38 * t)
+        b = int(60 - 35 * t)
+        draw.line((0, y, w, y), fill=(r, g, b))
+    draw.polygon([(0, 760), (300, 390), (520, 610), (760, 270), (1030, 625), (1270, 360), (1600, 730), (1600, 1100), (0, 1100)], fill="#182B25")
+    draw.polygon([(0, 855), (350, 590), (650, 805), (945, 520), (1240, 790), (1600, 570), (1600, 1100), (0, 1100)], fill="#0E201A")
+    return image
+
+
 def download_background(source: dict[str, Any]) -> Image.Image:
     url = str(source.get("url") or "")
     if not url:
-        raise RuntimeError("Premium renderer requires a background URL")
-    if url not in _BG_CACHE:
-        response = requests.get(
-            url,
-            timeout=90,
-            headers={"User-Agent": "OpenSocialScheduler/1.0 (F1 Immobiliare social renderer)"},
-        )
-        response.raise_for_status()
-        image = Image.open(BytesIO(response.content)).convert("RGB")
+        return fallback_photo()
+    if url in _BG_CACHE:
+        return _BG_CACHE[url].copy()
+
+    PHOTO_CACHE.mkdir(parents=True, exist_ok=True)
+    cache_path = PHOTO_CACHE / (hashlib.sha256(url.encode("utf-8")).hexdigest() + ".jpg")
+    if cache_path.exists() and cache_path.stat().st_size > 20_000:
+        image = Image.open(cache_path).convert("RGB")
         _BG_CACHE[url] = image
-    return _BG_CACHE[url].copy()
+        return image.copy()
+
+    headers = {
+        "User-Agent": "F1-Immobiliare-Open-Social-Scheduler/1.0 (https://f1immobiliare.com/)",
+        "Accept": "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+    }
+    last_error = ""
+    for attempt in range(4):
+        try:
+            response = requests.get(url, timeout=90, headers=headers)
+            if response.status_code == 429:
+                retry_after = response.headers.get("Retry-After")
+                wait = int(retry_after) if retry_after and retry_after.isdigit() else 4 * (attempt + 1)
+                time.sleep(min(wait, 20))
+                last_error = "HTTP 429"
+                continue
+            response.raise_for_status()
+            image = Image.open(BytesIO(response.content)).convert("RGB")
+            image.save(cache_path, "JPEG", quality=88, optimize=True)
+            _BG_CACHE[url] = image
+            return image.copy()
+        except Exception as exc:
+            last_error = str(exc)
+            time.sleep(2 * (attempt + 1))
+
+    print(f"WARN photo unavailable after retries: {url} ({last_error}); using branded fallback.", file=sys.stderr)
+    image = fallback_photo()
+    _BG_CACHE[url] = image
+    return image.copy()
 
 
-def darken_photo(image: Image.Image, width: int, height: int) -> Image.Image:
-    image = ImageOps.fit(image, (width, height), method=Image.Resampling.LANCZOS, centering=(0.5, 0.5))
-    image = ImageEnhance.Contrast(image).enhance(1.05)
-    image = ImageEnhance.Color(image).enhance(0.92)
-    rgba = image.convert("RGBA")
+def compose_photo(image: Image.Image, width: int, height: int) -> Image.Image:
+    """Keep the real landscape photo visible while filling a vertical social canvas."""
+    blurred = ImageOps.fit(image, (width, height), method=Image.Resampling.LANCZOS).filter(ImageFilter.GaussianBlur(radius=18))
+    blurred = ImageEnhance.Brightness(blurred).enhance(0.55)
+    canvas = blurred.convert("RGBA")
+
+    featured_h = int(height * 0.53)
+    featured = ImageOps.contain(image, (width, featured_h), method=Image.Resampling.LANCZOS)
+    x = (width - featured.width) // 2
+    y = int(height * 0.12)
+    canvas.alpha_composite(featured.convert("RGBA"), (x, y))
+
     shade = Image.new("RGBA", (width, height), (0, 0, 0, 0))
     sd = ImageDraw.Draw(shade)
-    sd.rectangle((0, 0, width, height), fill=(0, 8, 4, 38))
-    for y in range(height):
-        alpha = int(15 + 105 * (y / max(height - 1, 1)))
-        sd.line((0, y, width, y), fill=(0, 10, 5, alpha))
-    rgba.alpha_composite(shade)
-    return rgba.convert("RGB")
+    for py in range(height):
+        if py < int(height * 0.30):
+            alpha = 18
+        else:
+            alpha = min(150, int(18 + 155 * ((py / height - 0.30) / 0.70)))
+        sd.line((0, py, width, py), fill=(0, 10, 5, max(0, alpha)))
+    canvas.alpha_composite(shade)
+    return canvas.convert("RGB")
 
 
 def draw_logo(image: Image.Image, cfg: dict[str, Any], top: int, width_px: int) -> None:
@@ -100,17 +151,14 @@ def draw_logo(image: Image.Image, cfg: dict[str, Any], top: int, width_px: int) 
     ox = x0 + int(panel_w * 0.13)
     oy = y0 + int(panel_h * 0.01)
     for polygon in vectors.get("green", []):
-        pts = [(ox + int(x * scale), oy + int(y * scale)) for x, y in polygon]
-        draw.polygon(pts, fill=green)
+        draw.polygon([(ox + int(x * scale), oy + int(y * scale)) for x, y in polygon], fill=green)
     for polygon in vectors.get("white", []):
-        pts = [(ox + int(x * scale), oy + int(y * scale)) for x, y in polygon]
-        draw.polygon(pts, fill=white)
+        draw.polygon([(ox + int(x * scale), oy + int(y * scale)) for x, y in polygon], fill=white)
 
     label = "IMMOBILIARE"
     label_font = font(SANS_FONT, max(24, int(panel_w * 0.048)))
     box = draw.textbbox((0, 0), label, font=label_font)
-    tw = box[2] - box[0]
-    draw.text(((image.width - tw) / 2, y0 + panel_h - int(panel_h * 0.18)), label, font=label_font, fill=white)
+    draw.text(((image.width - (box[2] - box[0])) / 2, y0 + panel_h - int(panel_h * 0.18)), label, font=label_font, fill=white)
 
 
 def draw_premium_slide(raw: str, cfg: dict[str, Any], source: dict[str, Any], width: int, height: int, slide_no: int, slide_count: int, content_format: str) -> Image.Image:
@@ -119,46 +167,33 @@ def draw_premium_slide(raw: str, cfg: dict[str, Any], source: dict[str, Any], wi
     green = brand.get("accent", "#92C205")
     gold = brand.get("gold", "#C8A15A")
     muted = brand.get("muted", "#C7CDC8")
-    bg = darken_photo(download_background(source), width, height)
+    bg = compose_photo(download_background(source), width, height)
     draw = ImageDraw.Draw(bg)
 
-    logo_w = int(width * 0.47)
-    if content_format == "carousel":
-        logo_w = int(width * 0.37)
+    logo_w = int(width * (0.47 if content_format == "reel" else 0.37))
     draw_logo(bg, cfg, top=int(height * 0.025), width_px=logo_w)
 
     lines = [line.strip() for line in str(raw).split("|") if line.strip()]
     panel_margin = int(width * 0.07)
-    panel_top = int(height * (0.48 if content_format == "reel" else 0.51))
+    panel_top = int(height * (0.49 if content_format == "reel" else 0.50))
     panel_bottom = int(height * 0.91)
-    draw.rounded_rectangle(
-        (panel_margin, panel_top, width - panel_margin, panel_bottom),
-        radius=46,
-        fill="#07130E",
-        outline=gold,
-        width=2,
-    )
+    draw.rounded_rectangle((panel_margin, panel_top, width - panel_margin, panel_bottom), radius=46, fill="#07130E", outline=gold, width=2)
 
     title_font = fit_font(draw, lines, width - panel_margin * 2 - 100, 94 if content_format == "reel" else 78, 44)
     line_gap = 16
-    heights = []
-    for line in lines:
-        box = draw.textbbox((0, 0), line, font=title_font)
-        heights.append(box[3] - box[1])
+    heights = [draw.textbbox((0, 0), line, font=title_font)[3] - draw.textbbox((0, 0), line, font=title_font)[1] for line in lines]
     total_h = sum(heights) + max(0, len(lines) - 1) * line_gap
     y = panel_top + max(42, int((panel_bottom - panel_top - total_h) * 0.34))
     for i, line in enumerate(lines):
         box = draw.textbbox((0, 0), line, font=title_font)
-        tw = box[2] - box[0]
         color = primary
         if len(lines) > 1 and i == len(lines) - 1:
             color = green if slide_no == slide_count else gold
-        draw.text(((width - tw) / 2, y), line, font=title_font, fill=color)
+        draw.text(((width - (box[2] - box[0])) / 2, y), line, font=title_font, fill=color)
         y += heights[i] + line_gap
 
     small_font = font(SANS_FONT, 30 if content_format == "reel" else 24)
-    counter = f"{slide_no:02d} / {slide_count:02d}"
-    draw.text((panel_margin + 36, panel_bottom - 60), counter, font=small_font, fill=muted)
+    draw.text((panel_margin + 36, panel_bottom - 60), f"{slide_no:02d} / {slide_count:02d}", font=small_font, fill=muted)
     campaign = str(cfg.get("campaign", {}).get("name") or "F1 IMMOBILIARE").upper()[:34]
     cb = draw.textbbox((0, 0), campaign, font=small_font)
     draw.text((width - panel_margin - 36 - (cb[2] - cb[0]), panel_bottom - 60), campaign, font=small_font, fill=green)
@@ -172,9 +207,7 @@ def draw_premium_slide(raw: str, cfg: dict[str, Any], source: dict[str, Any], wi
 
 def background_sources(cfg: dict[str, Any]) -> list[dict[str, Any]]:
     sources = cfg.get("brand", {}).get("photo_sources", [])
-    if not sources:
-        raise RuntimeError("No premium photo sources configured")
-    return list(sources)
+    return list(sources) if sources else [{"url": "", "credit": "F1 Immobiliare"}]
 
 
 def media_ready(job: dict[str, Any]) -> bool:
@@ -189,8 +222,6 @@ def synthesize_voice(job: dict[str, Any], cfg: dict[str, Any], output: Path) -> 
     text = str(job.get("voiceover") or "").strip()
     if not voice_cfg.get("enabled", False) or not text:
         return None
-    if voice_cfg.get("engine") != "piper":
-        raise RuntimeError("Unsupported voice engine")
     model = str(voice_cfg.get("model") or "it_IT-paola-medium")
     data_dir = Path(os.getenv("PIPER_DATA_DIR", str(ROOT / ".cache" / "piper")))
     output.parent.mkdir(parents=True, exist_ok=True)
@@ -204,12 +235,7 @@ def synthesize_voice(job: dict[str, Any], cfg: dict[str, Any], output: Path) -> 
 def audio_duration(path: Path | None) -> float:
     if not path or not shutil.which("ffprobe"):
         return 0.0
-    result = subprocess.run(
-        ["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "default=noprint_wrappers=1:nokey=1", str(path)],
-        check=True,
-        capture_output=True,
-        text=True,
-    )
+    result = subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "default=noprint_wrappers=1:nokey=1", str(path)], check=True, capture_output=True, text=True)
     try:
         return float(result.stdout.strip())
     except ValueError:
@@ -217,14 +243,9 @@ def audio_duration(path: Path | None) -> float:
 
 
 def render_reel(job: dict[str, Any], cfg: dict[str, Any]) -> Path:
-    brand = cfg.get("brand", {})
-    reel = brand.get("reel", {})
-    width = int(reel.get("width", 1080))
-    height = int(reel.get("height", 1920))
-    default_seconds = float(reel.get("seconds_per_slide", 2.8))
+    reel = cfg.get("brand", {}).get("reel", {})
+    width, height = int(reel.get("width", 1080)), int(reel.get("height", 1920))
     slides = list(job.get("slides") or [])
-    if not slides:
-        raise RuntimeError(f"Job {job.get('id')} has no slides")
     output = ROOT / str(job["media"])
     output.parent.mkdir(parents=True, exist_ok=True)
     if output.exists() and output.stat().st_size > 10_000:
@@ -237,14 +258,13 @@ def render_reel(job: dict[str, Any], cfg: dict[str, Any]) -> Path:
         tmp = Path(tmp_raw)
         voice = synthesize_voice(job, cfg, tmp / "voice.wav")
         duration = audio_duration(voice)
-        seconds = max(2.25, (duration + 1.2) / len(slides)) if duration > 0 else default_seconds
-        frames: list[Path] = []
+        seconds = max(2.25, (duration + 1.2) / len(slides)) if duration > 0 else float(reel.get("seconds_per_slide", 2.8))
         day_seed = int(str(job.get("scheduled_at") or "0000-00-00")[8:10] or 0)
+        frames: list[Path] = []
         for idx, raw in enumerate(slides, 1):
             source = sources[(idx - 1 + day_seed) % len(sources)]
-            image = draw_premium_slide(raw, cfg, source, width, height, idx, len(slides), "reel")
             frame = tmp / f"slide_{idx:02d}.jpg"
-            image.save(frame, "JPEG", quality=91, optimize=True)
+            draw_premium_slide(raw, cfg, source, width, height, idx, len(slides), "reel").save(frame, "JPEG", quality=91, optimize=True)
             frames.append(frame)
 
         concat = tmp / "concat.txt"
@@ -262,9 +282,6 @@ def render_reel(job: dict[str, Any], cfg: dict[str, Any]) -> Path:
             cmd += ["-c:a", "aac", "-b:a", "160k", "-af", "apad", "-shortest"]
         cmd += [str(output)]
         subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
-
-    if output.stat().st_size <= 10_000:
-        raise RuntimeError(f"Rendered file is unexpectedly small: {output}")
     return output
 
 
@@ -273,19 +290,17 @@ def render_carousel(job: dict[str, Any], cfg: dict[str, Any]) -> list[Path]:
     media = list(job.get("media") or [])
     if not slides or len(media) != len(slides):
         raise RuntimeError(f"Carousel {job.get('id')} media/slide count mismatch")
-    carousel_cfg = cfg.get("brand", {}).get("carousel", {})
-    width = int(carousel_cfg.get("width", 1080))
-    height = int(carousel_cfg.get("height", 1350))
+    carousel = cfg.get("brand", {}).get("carousel", {})
+    width, height = int(carousel.get("width", 1080)), int(carousel.get("height", 1350))
     sources = background_sources(cfg)
-    outputs: list[Path] = []
     day_seed = int(str(job.get("scheduled_at") or "0000-00-00")[8:10] or 0)
+    outputs: list[Path] = []
     for idx, (raw, rel) in enumerate(zip(slides, media), 1):
         output = ROOT / str(rel)
         output.parent.mkdir(parents=True, exist_ok=True)
         if not (output.exists() and output.stat().st_size > 10_000):
             source = sources[(idx - 1 + day_seed) % len(sources)]
-            image = draw_premium_slide(raw, cfg, source, width, height, idx, len(slides), "carousel")
-            image.save(output, "JPEG", quality=91, optimize=True)
+            draw_premium_slide(raw, cfg, source, width, height, idx, len(slides), "carousel").save(output, "JPEG", quality=91, optimize=True)
         outputs.append(output)
     return outputs
 
@@ -297,13 +312,9 @@ def main() -> int:
     queue = load_json(QUEUE_PATH)
     rendered = 0
     for job in queue.get("jobs", []):
-        if not job.get("enabled", True):
+        if not job.get("enabled", True) or job.get("status") in {"scheduled", "published", "disabled"}:
             continue
-        if job.get("status") in {"scheduled", "published", "disabled"}:
-            continue
-        if not job.get("client_id") or not job.get("slides") or not job.get("media"):
-            continue
-        if media_ready(job):
+        if not job.get("client_id") or not job.get("slides") or not job.get("media") or media_ready(job):
             continue
         cfg = client(str(job["client_id"]))
         if str(job.get("format") or "reel") == "carousel":
