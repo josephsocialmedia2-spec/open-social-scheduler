@@ -183,7 +183,7 @@ def default_settings(platform: str, job: dict[str, Any], integration: dict[str, 
         return {"__type": "facebook"}
     if platform == "instagram":
         provider = integration_kind(integration)
-        return {"__type": provider, "post_type": "post", "is_trial_reel": False, "collaborators": []}
+        return {"__type": provider, "post_type": "reel", "is_trial_reel": False, "collaborators": []}
     if platform in {"linkedin", "linkedin-page"}:
         return {"__type": platform, "post_as_images_carousel": False}
     if platform == "tiktok":
