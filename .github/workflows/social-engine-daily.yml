@@ -15,8 +15,10 @@ on:
       - 'publisher/build_daily_queue.py'
       - 'publisher/render_reels.py'
       - 'publisher/postiz_publish.py'
+      - 'publisher/requirements.txt'
       - 'publisher/clients/**'
       - 'publisher/content_bank/**'
+      - 'publisher/approvals/**'
 
 permissions:
   contents: write
@@ -28,11 +30,13 @@ concurrency:
 jobs:
   build-render-publish:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 35
     env:
       POSTIZ_API_KEY: ${{ secrets.POSTIZ_API_KEY }}
       POSTIZ_API_URL: ${{ vars.POSTIZ_API_URL || 'https://api.postiz.com/public/v1' }}
       SOCIAL_DATE: ${{ inputs.date }}
+      SOCIAL_START_OFFSET_DAYS: ${{ github.event_name == 'schedule' && '0' || '1' }}
+      PIPER_DATA_DIR: ${{ github.workspace }}/.cache/piper
 
     steps:
       - name: Checkout
@@ -51,12 +55,25 @@ jobs:
           sudo apt-get install -y ffmpeg fonts-dejavu-core
           pip install -r publisher/requirements.txt
 
+      - name: Cache Italian voice
+        uses: actions/cache@v4
+        with:
+          path: .cache/piper
+          key: piper-it-IT-paola-medium-v1
+
+      - name: Prepare Italian voice
+        run: |
+          mkdir -p "$PIPER_DATA_DIR"
+          if [ ! -f "$PIPER_DATA_DIR/it_IT-paola-medium.onnx" ]; then
+            python -m piper.download_voices it_IT-paola-medium --data-dir "$PIPER_DATA_DIR"
+          fi
+
       - name: Validate Python and tenant isolation
         run: |
           python -m py_compile publisher/*.py
           python -m unittest discover -s publisher/tests -v
 
-      - name: Build daily queue
+      - name: Build seven-day queue
         shell: bash
         run: |
           if [ -n "${SOCIAL_DATE:-}" ]; then
@@ -65,19 +82,29 @@ jobs:
             python publisher/build_daily_queue.py
           fi
 
-      - name: Render 9x16 reels
+      - name: Render premium reels and carousels
         run: python publisher/render_reels.py
 
-      - name: Reconcile queue after rendering
+      - name: Reconcile approval, media and integrations
         shell: bash
         run: |
+          export SOCIAL_START_OFFSET_DAYS=0
           if [ -n "${SOCIAL_DATE:-}" ]; then
             python publisher/build_daily_queue.py --date "$SOCIAL_DATE"
           else
             python publisher/build_daily_queue.py
           fi
 
-      - name: Publish/schedule through Postiz
+      - name: Upload preview package
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: social-preview-${{ github.run_id }}
+          path: publisher/media/generated
+          if-no-files-found: ignore
+          retention-days: 7
+
+      - name: Publish or schedule approved jobs through Postiz
         run: python publisher/postiz_publish.py
 
       - name: Persist queue state
@@ -91,7 +118,7 @@ jobs:
           git config user.name 'open-social-engine'
           git config user.email 'open-social-engine@users.noreply.github.com'
           git add publisher/queue.json
-          git commit -m 'Update multi-client social queue'
+          git commit -m 'Update approval-gated social queue'
           git fetch origin main
           git rebase origin/main
           git push origin HEAD:main
