@@ -9,18 +9,12 @@
         "Vaie", "Sant'Antonino di Susa", "Borgone Susa", "Villar Focchiardo", "Bussoleno",
         "Susa", "Rivoli", "Valle di Susa", "Torino ovest"
       ],
-      "topics": [
-        "gruppo cittadini", "sei di", "mercatino", "compro vendo", "eventi", "case immobili",
-        "residenti", "community", "segnalazioni", "attività locali", "cerco casa", "vendo casa"
-      ]
+      "topics": ["cittadini", "mercatino", "immobiliare"]
     },
     "real-media-pro": {
       "label": "Real Media Pro",
       "territories": ["Torino", "Rivoli", "Avigliana", "Valle di Susa"],
-      "topics": [
-        "imprenditori", "commercianti", "attività locali", "professionisti", "networking",
-        "business", "marketing", "negozi", "PMI", "artigiani"
-      ]
+      "topics": ["imprenditori", "attività locali"]
     }
   },
   "status_flow": [
