@@ -1,0 +1,234 @@
+{
+  "attract": [
+    {
+      "slug": "quanto-vale-casa",
+      "title": "Sai davvero quanto vale casa tua?",
+      "slides": [
+        "SAI DAVVERO|QUANTO VALE|CASA TUA?",
+        "IL PREZZO CHE|IMMAGINI|NON È IL MERCATO",
+        "GLI ANNUNCI ONLINE|MOSTRANO PREZZI|RICHIESTI",
+        "IL VALORE CAMBIA|PER ZONA, STATO|E CARATTERISTICHE",
+        "SERVONO DATI|NON IPOTESI",
+        "PRIMA ANALISI|GRATUITA",
+        "SCRIVI|VALORE"
+      ],
+      "caption": "Sai davvero quanto vale oggi casa tua? Una valutazione corretta parte dai dati, non dalle aspettative. {cta}."
+    },
+    {
+      "slug": "errore-portali",
+      "title": "L'errore più comune nel decidere il prezzo",
+      "slides": [
+        "NON DECIDERE|IL PREZZO|COSÌ",
+        "APRI UN PORTALE|E TROVI UNA CASA|SIMILE",
+        "VEDI 180.000 €|E PENSI:|ANCHE LA MIA",
+        "MA È UN PREZZO|RICHIESTO",
+        "NON È DETTO|CHE SIA IL PREZZO|DI VENDITA",
+        "VALUTA PRIMA|DI PUBBLICARE",
+        "SCRIVI|VALORE"
+      ],
+      "caption": "Il prezzo di un annuncio non coincide automaticamente con il valore di mercato. Prima di pubblicare, confrontiamo dati e immobili realmente comparabili. {cta}."
+    },
+    {
+      "slug": "prezzo-alto",
+      "title": "Partire troppo alti può costare caro",
+      "slides": [
+        "PREZZO ALTO?|SEMBRA PRUDENTE",
+        "MA IL MERCATO|TI CONFRONTA|SUBITO",
+        "POCHE RICHIESTE|SONO UN SEGNALE",
+        "POI ARRIVANO|I RIBASSI",
+        "E L'IMMOBILE|SEMBRA FERMO",
+        "IL PRICING|SI DECIDE PRIMA",
+        "SCRIVI|VALORE"
+      ],
+      "caption": "Un prezzo iniziale fuori mercato può ridurre interesse e forza negoziale. La strategia di prezzo si prepara prima della pubblicazione. {cta}."
+    },
+    {
+      "slug": "stessa-metratura",
+      "title": "Stessi metri quadri, valori diversi",
+      "slides": [
+        "100 MQ|NON SIGNIFICA|STESSO VALORE",
+        "PIANO E|ASCENSORE|CONTANO",
+        "ESPOSIZIONE|E LUMINOSITÀ|CONTANO",
+        "STATO INTERNO|E PERTINENZE|CONTANO",
+        "ANCHE LA|MICROZONA|CONTA",
+        "VALUTIAMO|L'IMMOBILE REALE",
+        "SCRIVI|VALORE"
+      ],
+      "caption": "Due immobili della stessa metratura possono avere valori molto diversi. Il prezzo al metro quadro è solo un punto di partenza. {cta}."
+    }
+  ],
+  "nurture": [
+    {
+      "slug": "come-valutiamo",
+      "title": "Come si costruisce una valutazione",
+      "slides": [
+        "COME SI VALUTA|DAVVERO|UN IMMOBILE?",
+        "PARTIAMO|DALLA MICROZONA",
+        "CERCHIAMO|COMPARABILI|COERENTI",
+        "LEGGIAMO|CARATTERISTICHE|E STATO",
+        "VALUTIAMO|DOMANDA E|CONCORRENZA",
+        "DEFINIAMO|UNA FASCIA|DI VALORE",
+        "SCRIVI|VALORE"
+      ],
+      "caption": "Una valutazione seria non nasce da un numero automatico: microzona, comparabili, caratteristiche, domanda e concorrenza devono essere letti insieme. {cta}."
+    },
+    {
+      "slug": "valore-emotivo",
+      "title": "Valore affettivo e valore di mercato",
+      "slides": [
+        "LA TUA CASA|HA UNA STORIA",
+        "PER TE|QUEL VALORE|È REALE",
+        "MA IL MERCATO|USA ALTRI|PARAMETRI",
+        "CONFRONTA|ALTERNATIVE",
+        "MISURA|DOMANDA E|PREZZO",
+        "SEPARIAMO|EMOZIONE E|STRATEGIA",
+        "SCRIVI|VALORE"
+      ],
+      "caption": "Il valore affettivo è importante, ma il mercato confronta alternative, condizioni e prezzi. Una valutazione serve a separare patrimonio emotivo e strategia. {cta}."
+    },
+    {
+      "slug": "microzona",
+      "title": "Bastano poche centinaia di metri",
+      "slides": [
+        "STESSO COMUNE|STESSO VALORE?|NO",
+        "CAMBIA LA|MICROZONA",
+        "CAMBIANO|SERVIZI E|ACCESSIBILITÀ",
+        "CAMBIA LA|DOMANDA",
+        "CAMBIA LA|CONCORRENZA",
+        "IL PREZZO|VA LOCALIZZATO",
+        "SCRIVI|VALORE"
+      ],
+      "caption": "La media comunale può nascondere differenze importanti. Per valutare bene bisogna scendere alla microzona e al singolo immobile. {cta}."
+    },
+    {
+      "slug": "valutazione-non-vendita",
+      "title": "Valutare non significa vendere",
+      "slides": [
+        "NON DEVI|VENDERE OGGI",
+        "PUOI SOLO|VOLER SAPERE|QUANTO VALE",
+        "PER IL TUO|PATRIMONIO",
+        "PER UNA|SCELTA FUTURA",
+        "PER CAPIRE|IL MERCATO",
+        "PRIMA CONOSCI|POI DECIDI",
+        "SCRIVI|VALORE"
+      ],
+      "caption": "Richiedere una valutazione non significa mettere subito casa in vendita. Può essere semplicemente uno strumento per conoscere meglio il proprio patrimonio. {cta}."
+    }
+  ],
+  "hyperlocal": [
+    {
+      "slug": "valore-territorio",
+      "title": "Quanto vale oggi una casa a {territory}?",
+      "slides": [
+        "QUANTO VALE|OGGI UNA CASA|A {territory}?",
+        "NON ESISTE|UN PREZZO UNICO|AL MQ",
+        "CONTANO|VIA E|MICROZONA",
+        "CONTANO|STATO E|PERTINENZE",
+        "CONTA LA|DOMANDA LOCALE",
+        "HAI CASA|A {territory}?",
+        "SCRIVI|VALORE"
+      ],
+      "caption": "Hai un immobile a {territory}? Il valore non si determina con una media generica: bisogna leggere microzona, caratteristiche e domanda locale. {cta}."
+    },
+    {
+      "slug": "vendere-territorio",
+      "title": "Prima di vendere a {territory}",
+      "slides": [
+        "VUOI VENDERE|A {territory}?",
+        "NON PARTIRE|DALL'ANNUNCIO",
+        "PARTI DAL|POSIZIONAMENTO",
+        "CHI È IL|COMPRATORE|PIÙ PROBABILE?",
+        "QUALI CASE|COMPETONO|CON LA TUA?",
+        "POI DECIDI|IL PREZZO",
+        "SCRIVI|VALORE"
+      ],
+      "caption": "Prima di pubblicare un immobile a {territory}, definiamo concorrenza, target e fascia di prezzo. {cta}."
+    },
+    {
+      "slug": "garage-territorio",
+      "title": "Quanto incide un garage a {territory}?",
+      "slides": [
+        "GARAGE A|{territory}",
+        "QUANTO INCIDE|SUL VALORE?",
+        "DIPENDE DALLA|SCARSITÀ IN ZONA",
+        "DALLA|COMODITÀ",
+        "E DALLA|DOMANDA REALE",
+        "VALUTIAMO|ANCHE LE|PERTINENZE",
+        "SCRIVI|VALORE"
+      ],
+      "caption": "Garage, posto auto, cantina e altre pertinenze non incidono allo stesso modo in ogni zona. Vediamo il caso specifico a {territory}. {cta}."
+    },
+    {
+      "slug": "concorrenza-territorio",
+      "title": "Con quante case compete la tua a {territory}?",
+      "slides": [
+        "LA TUA CASA|A {territory}",
+        "NON È SOLA|SUL MERCATO",
+        "IL COMPRATORE|VEDE ANCHE|LE ALTERNATIVE",
+        "CONFRONTA|PREZZO E|QUALITÀ",
+        "LA CONCORRENZA|CAMBIA IL|POSIZIONAMENTO",
+        "ANALIZZIAMOLA|PRIMA",
+        "SCRIVI|VALORE"
+      ],
+      "caption": "Il valore commerciale dipende anche dalle alternative che il compratore trova oggi a {territory}. Analizzare la concorrenza è parte del pricing. {cta}."
+    }
+  ],
+  "convert": [
+    {
+      "slug": "analisi-gratuita",
+      "title": "Prima analisi gratuita",
+      "slides": [
+        "VUOI SAPERE|QUANTO VALE|CASA TUA?",
+        "PARTIAMO|DAI DATI",
+        "ZONA|METRATURA|STATO",
+        "PERTINENZE|E CONCORRENZA",
+        "NESSUN PREZZO|INVENTATO",
+        "PRIMA ANALISI|GRATUITA",
+        "SCRIVI|VALORE"
+      ],
+      "caption": "Vuoi una prima analisi del tuo immobile? Inviaci comune, tipologia e metratura. {cta}."
+    },
+    {
+      "slug": "cinque-domande",
+      "title": "Cinque domande per iniziare",
+      "slides": [
+        "5 DOMANDE|PER INIZIARE",
+        "1. COMUNE?",
+        "2. MQ E|TIPOLOGIA?",
+        "3. PIANO E|ASCENSORE?",
+        "4. STATO|DELL'IMMOBILE?",
+        "5. GARAGE O|PERTINENZE?",
+        "SCRIVI|VALORE"
+      ],
+      "caption": "Per iniziare una prima analisi bastano poche informazioni essenziali. Scrivici comune, mq, tipologia, piano, stato e pertinenze. {cta}."
+    },
+    {
+      "slug": "senza-impegno",
+      "title": "Conoscere il valore prima di decidere",
+      "slides": [
+        "PRIMA|CONOSCI",
+        "POI|DECIDI",
+        "NON SERVE|METTERE CASA|IN VENDITA",
+        "PUOI FARE|UNA PRIMA|VERIFICA",
+        "E CAPIRE|DOVE SEI|NEL MERCATO",
+        "VALUTAZIONE|GRATUITA",
+        "SCRIVI|VALORE"
+      ],
+      "caption": "Conoscere il valore viene prima della decisione di vendere. Richiedi una prima valutazione gratuita e poi scegli con più informazioni. {cta}."
+    },
+    {
+      "slug": "prima-del-prezzo",
+      "title": "Prima del prezzo viene l'analisi",
+      "slides": [
+        "NON PARTIAMO|DAL PREZZO",
+        "PARTIAMO|DALL'IMMOBILE",
+        "DAL MERCATO",
+        "DALLA|CONCORRENZA",
+        "E DAL|COMPRATORE",
+        "POI COSTRUIAMO|IL PRICING",
+        "SCRIVI|VALORE"
+      ],
+      "caption": "Il prezzo è la conclusione dell'analisi, non il punto di partenza. {cta}."
+    }
+  ]
+}
