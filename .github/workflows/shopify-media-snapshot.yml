@@ -1,0 +1,51 @@
+name: Publish Shopify Media Snapshot
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '25 4 * * *'
+  push:
+    paths:
+      - '.github/workflows/shopify-media-snapshot.yml'
+      - 'publisher/shopify_public_media.py'
+      - 'publisher/build_shopify_media_snapshot.py'
+      - 'publisher/clients/real-media-pro.json'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: shopify-media-snapshot
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install requests
+      - name: Build public Shopify snapshot
+        run: python publisher/build_shopify_media_snapshot.py
+      - name: Publish snapshot to GitHub Pages
+        shell: bash
+        run: |
+          git fetch origin gh-pages
+          git worktree add /tmp/gh-pages origin/gh-pages
+          mkdir -p /tmp/gh-pages/shopify-media
+          cp publisher/shopify_media_snapshot.json /tmp/gh-pages/shopify-media/latest.json
+          cd /tmp/gh-pages
+          git config user.name 'open-social-engine'
+          git config user.email 'open-social-engine@users.noreply.github.com'
+          git add shopify-media/latest.json
+          if git diff --cached --quiet; then
+            echo 'Shopify media snapshot unchanged.'
+            exit 0
+          fi
+          git commit -m 'Update Shopify public media snapshot'
+          git push origin HEAD:gh-pages
