@@ -1,0 +1,12 @@
+{
+  "client_id": "f1-immobiliare",
+  "mode": "iso_week",
+  "approved": [],
+  "revoked": [],
+  "policy": {
+    "one_confirmation_per_week": true,
+    "publish_only_after_approval": true,
+    "auto_schedule_after_approval": true
+  },
+  "notes": "Open Social Scheduler may generate previews before approval. No post is submitted to Postiz until the ISO week key is present in approved."
+}
