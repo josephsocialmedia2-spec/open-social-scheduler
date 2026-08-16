@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - agent/direct-api-zero-cost
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:
