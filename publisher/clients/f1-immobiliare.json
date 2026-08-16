@@ -28,15 +28,15 @@
     },
     "photo_sources": [
       {
-        "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/View_of_Sacra_di_San_Michele_%282%29.jpg?width=2400",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/f/ff/View_of_Sacra_di_San_Michele_%282%29.jpg",
         "credit": "Foto: Tournasol7 / Wikimedia Commons · CC BY 4.0"
       },
       {
-        "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Val_di_Susa_from_Sacra_di_San_Michele.jpg?width=2400",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/9/95/Val_di_Susa_from_Sacra_di_San_Michele.jpg",
         "credit": "Foto: Marie-Lan Taÿ Pamart / Wikimedia Commons · CC BY 4.0"
       },
       {
-        "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Lago_Grande_di_Avigliana_%281%29.jpg?width=2400",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/6/6f/Lago_Grande_di_Avigliana_%281%29.jpg",
         "credit": "Foto: Tournasol7 / Wikimedia Commons · CC BY 4.0"
       }
     ],
