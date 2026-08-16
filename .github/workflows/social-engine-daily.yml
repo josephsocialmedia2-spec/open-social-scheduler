@@ -14,6 +14,7 @@ on:
       - '.github/workflows/social-engine-daily.yml'
       - 'publisher/build_daily_queue.py'
       - 'publisher/render_reels.py'
+      - 'publisher/add_reel_subtitles.py'
       - 'publisher/requirements.txt'
       - 'publisher/clients/**'
       - 'publisher/content_bank/**'
@@ -87,6 +88,9 @@ jobs:
       - name: Render premium reels and carousels
         run: python publisher/render_reels.py
 
+      - name: Burn subtitles into final reels
+        run: python publisher/add_reel_subtitles.py
+
       - name: Reconcile approval and media state
         shell: bash
         run: |
@@ -158,12 +162,12 @@ jobs:
               `GitHub ha preparato il pacchetto social F1 per **${key}**.`,
               '',
               '**Posizionamento fisso:** NON A SENSAZIONE. CON I DATI.',
-              '**Sequenza giornaliera:** 08:00 DATI → 12:30 ERRORE → 17:30 PROVA → 20:30 DECISIONE.',
+              '**Sequenza giornaliera:** 09:00 DATI → 12:30 ERRORE → 17:30 PROVA → 20:30 DECISIONE.',
               '',
               '**Nessun contenuto viene pubblicato prima della tua conferma.**',
               '',
               `1. Chat editoriale F1: ${editorialChat}`,
-              `2. Controlla i contenuti: ${repoUrl}/actions/workflows/social-engine-daily.yml`,
+              `2. Controlla i contenuti: https://josephsocialmedia2-spec.github.io/open-social-scheduler/monday-control.html`,
               `3. Se va bene, rispondi a questa issue scrivendo esattamente: **CONFERMO**`,
               '',
               'Dopo CONFERMO, gli slot approvati vengono pubblicati automaticamente alle loro scadenze tramite le API ufficiali configurate.',
