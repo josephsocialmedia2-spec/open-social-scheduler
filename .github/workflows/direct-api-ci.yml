@@ -1,0 +1,42 @@
+name: Direct API Visibility Engine CI
+
+on:
+  push:
+    branches:
+      - agent/direct-api-zero-cost
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: publisher/requirements.txt
+      - name: Install dependencies
+        run: pip install -r publisher/requirements.txt
+      - name: Compile Python
+        run: python -m py_compile publisher/*.py growth/*.py
+      - name: Validate JSON configuration
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          for root in ('publisher/clients','publisher/content_bank','publisher/approvals','growth'):
+              for path in Path(root).glob('*.json'):
+                  json.loads(path.read_text(encoding='utf-8'))
+                  print('OK', path)
+          PY
+      - name: Run publisher tests
+        run: python -m unittest discover -s publisher/tests -v
+      - name: Validate queue build without publishing
+        env:
+          SOCIAL_START_OFFSET_DAYS: '0'
+        run: python publisher/build_daily_queue.py --date 2026-08-17
