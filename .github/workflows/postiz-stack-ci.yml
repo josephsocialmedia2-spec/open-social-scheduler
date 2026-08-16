@@ -5,7 +5,9 @@ on:
   push:
     paths:
       - '.github/workflows/postiz-stack-ci.yml'
+      - '.github/workflows/provision-postiz-hetzner.yml'
       - 'postiz-stack/**'
+      - 'infra/hetzner/**'
 
 permissions:
   contents: read
@@ -17,6 +19,27 @@ jobs:
     steps:
       - name: Checkout Open Social Scheduler
         uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Validate Hetzner provisioning code
+        run: |
+          pip install 'hcloud==2.23.0' 'requests==2.32.5'
+          python -m py_compile infra/hetzner/provision.py
+          python - <<'PY'
+          import os
+          os.environ['POSTIZ_DOMAIN']='social.test.example'
+          import infra.hetzner.provision as p
+          data=p.cloud_init()
+          assert '#cloud-config' in data
+          assert 'social.test.example' in data
+          assert 'open-social-update.timer' in data
+          assert len(data.encode()) < 32768
+          print('Hetzner cloud-init validated.')
+          PY
 
       - name: Clone pinned Postiz upstream
         env:
@@ -48,4 +71,4 @@ jobs:
             -f postiz-stack/docker-compose.override.yml \
             -f postiz-stack/docker-compose.production.yml \
             config >/dev/null
-          echo 'Postiz clone, production overlay and Caddy HTTPS configuration validated.'
+          echo 'Postiz clone, production overlay, Caddy HTTPS and Hetzner provisioning validated.'
