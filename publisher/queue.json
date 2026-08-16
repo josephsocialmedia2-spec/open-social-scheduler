@@ -1,5 +1,111 @@
 {
-  "version": 1,
+  "version": 2,
   "updated_by": "F1 Social Engine",
-  "jobs": []
+  "jobs": [
+    {
+      "id": "f1-immobiliare-2026-08-16-01-quanto-vale-casa",
+      "client_id": "f1-immobiliare",
+      "client_name": "F1 Immobiliare",
+      "category": "attract",
+      "title": "Sai davvero quanto vale casa tua?",
+      "caption": "Sai davvero quanto vale oggi casa tua? Una valutazione corretta parte dai dati, non dalle aspettative. Scrivi VALORE in privato.",
+      "slides": [
+        "SAI DAVVERO|QUANTO VALE|CASA TUA?",
+        "IL PREZZO CHE|IMMAGINI|NON È IL MERCATO",
+        "GLI ANNUNCI ONLINE|MOSTRANO PREZZI|RICHIESTI",
+        "IL VALORE CAMBIA|PER ZONA, STATO|E CARATTERISTICHE",
+        "SERVONO DATI|NON IPOTESI",
+        "PRIMA ANALISI|GRATUITA",
+        "SCRIVI|VALORE"
+      ],
+      "media": "publisher/media/generated/f1-immobiliare/2026-08-16/01-quanto-vale-casa.mp4",
+      "scheduled_at": "2026-08-16T09:00:00+02:00",
+      "platforms": [],
+      "enabled": true,
+      "status": "awaiting_integrations",
+      "published_platforms": [],
+      "postiz_results": [],
+      "created_by": "open-social-scheduler",
+      "blocked_reason": "missing required integration IDs: facebook, instagram"
+    },
+    {
+      "id": "f1-immobiliare-2026-08-16-02-valore-emotivo",
+      "client_id": "f1-immobiliare",
+      "client_name": "F1 Immobiliare",
+      "category": "nurture",
+      "title": "Valore affettivo e valore di mercato",
+      "caption": "Il valore affettivo è importante, ma il mercato confronta alternative, condizioni e prezzi. Una valutazione serve a separare patrimonio emotivo e strategia. Scrivi VALORE in privato.",
+      "slides": [
+        "LA TUA CASA|HA UNA STORIA",
+        "PER TE|QUEL VALORE|È REALE",
+        "MA IL MERCATO|USA ALTRI|PARAMETRI",
+        "CONFRONTA|ALTERNATIVE",
+        "MISURA|DOMANDA E|PREZZO",
+        "SEPARIAMO|EMOZIONE E|STRATEGIA",
+        "SCRIVI|VALORE"
+      ],
+      "media": "publisher/media/generated/f1-immobiliare/2026-08-16/02-valore-emotivo.mp4",
+      "scheduled_at": "2026-08-16T12:30:00+02:00",
+      "platforms": [],
+      "enabled": true,
+      "status": "awaiting_integrations",
+      "published_platforms": [],
+      "postiz_results": [],
+      "created_by": "open-social-scheduler",
+      "blocked_reason": "missing required integration IDs: facebook, instagram"
+    },
+    {
+      "id": "f1-immobiliare-2026-08-16-03-garage-territorio",
+      "client_id": "f1-immobiliare",
+      "client_name": "F1 Immobiliare",
+      "category": "hyperlocal",
+      "title": "Quanto incide un garage a Caprie?",
+      "caption": "Garage, posto auto, cantina e altre pertinenze non incidono allo stesso modo in ogni zona. Vediamo il caso specifico a Caprie. Scrivi VALORE in privato.",
+      "slides": [
+        "GARAGE A|Caprie",
+        "QUANTO INCIDE|SUL VALORE?",
+        "DIPENDE DALLA|SCARSITÀ IN ZONA",
+        "DALLA|COMODITÀ",
+        "E DALLA|DOMANDA REALE",
+        "VALUTIAMO|ANCHE LE|PERTINENZE",
+        "SCRIVI|VALORE"
+      ],
+      "media": "publisher/media/generated/f1-immobiliare/2026-08-16/03-garage-territorio.mp4",
+      "scheduled_at": "2026-08-16T17:30:00+02:00",
+      "platforms": [],
+      "enabled": true,
+      "status": "awaiting_integrations",
+      "published_platforms": [],
+      "postiz_results": [],
+      "created_by": "open-social-scheduler",
+      "blocked_reason": "missing required integration IDs: facebook, instagram"
+    },
+    {
+      "id": "f1-immobiliare-2026-08-16-04-prima-del-prezzo",
+      "client_id": "f1-immobiliare",
+      "client_name": "F1 Immobiliare",
+      "category": "convert",
+      "title": "Prima del prezzo viene l'analisi",
+      "caption": "Il prezzo è la conclusione dell'analisi, non il punto di partenza. Scrivi VALORE in privato.",
+      "slides": [
+        "NON PARTIAMO|DAL PREZZO",
+        "PARTIAMO|DALL'IMMOBILE",
+        "DAL MERCATO",
+        "DALLA|CONCORRENZA",
+        "E DAL|COMPRATORE",
+        "POI COSTRUIAMO|IL PRICING",
+        "SCRIVI|VALORE"
+      ],
+      "media": "publisher/media/generated/f1-immobiliare/2026-08-16/04-prima-del-prezzo.mp4",
+      "scheduled_at": "2026-08-16T20:30:00+02:00",
+      "platforms": [],
+      "enabled": true,
+      "status": "awaiting_integrations",
+      "published_platforms": [],
+      "postiz_results": [],
+      "created_by": "open-social-scheduler",
+      "blocked_reason": "missing required integration IDs: facebook, instagram"
+    }
+  ],
+  "updated_at": "2026-08-16T06:00:49Z"
 }
