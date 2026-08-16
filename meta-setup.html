@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>F1 Immobiliare · Setup Meta OAuth</title>
+<style>
+:root{--bg:#070907;--panel:#101510;--panel2:#0d1711;--text:#f7f7f4;--muted:#b9c0ba;--green:#92c205;--gold:#c8a15a;--line:#263027;--danger:#ff7b72}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(160deg,#050705,#0d1711);color:var(--text);font:16px/1.45 Arial,Helvetica,sans-serif;min-height:100vh}.wrap{max-width:1120px;margin:auto;padding:28px 18px 60px}.hero,.card{background:rgba(10,15,11,.94);border:1px solid var(--line);border-radius:22px}.hero{padding:26px;margin-bottom:18px}h1{margin:0 0 10px;font-size:clamp(30px,5vw,52px);line-height:1}.green{color:var(--green)}.muted{color:var(--muted)}.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.card{padding:20px}.card h2{margin:0 0 10px;font-size:20px}.permissions{display:flex;gap:7px;flex-wrap:wrap}.pill{font:12px/1.2 monospace;background:#172019;border:1px solid #324134;border-radius:999px;padding:7px 9px;color:#dce8dd}label{font-size:13px;color:var(--muted);display:block;margin:14px 0 6px}input,select,textarea{width:100%;border:1px solid #334337;background:#090d0a;color:#fff;border-radius:11px;padding:11px 12px;font:14px monospace}input[type=password]{letter-spacing:.08em}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}.btn,button{appearance:none;border:0;border-radius:11px;padding:11px 14px;background:var(--green);color:#081007;font-weight:900;text-decoration:none;cursor:pointer}.btn.alt,button.alt{background:transparent;color:var(--text);border:1px solid var(--gold)}button.ghost{background:#172019;color:#fff}.status{margin-top:12px;padding:12px;border:1px solid var(--line);border-radius:12px;background:#0b100c;color:var(--muted);white-space:pre-wrap}.status.ok{border-color:var(--green);color:#dff5cf}.status.err{border-color:var(--danger);color:#ffd2ce}.pages{display:grid;gap:10px;margin-top:12px}.page{padding:14px;border:1px solid var(--line);border-radius:14px;background:#0d130e}.page strong{display:block;font-size:17px}.meta{font-size:12px;color:var(--muted);margin:5px 0}.secrets{display:grid;gap:10px;margin-top:12px}.secret{border:1px solid var(--line);border-radius:13px;padding:12px;background:#080c09}.secret-name{font:12px monospace;color:var(--green);margin-bottom:6px}.secret-row{display:grid;grid-template-columns:1fr auto;gap:8px}.secret-row input{margin:0}.note{border-left:3px solid var(--gold);padding-left:12px;color:var(--muted)}.danger{border-left-color:var(--danger)}.wide{grid-column:1/-1}.small{font-size:12px}.step{color:var(--gold);font-weight:900;letter-spacing:.08em;font-size:12px}@media(max-width:780px){.grid{grid-template-columns:1fr}.wide{grid-column:auto}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<section class="hero">
+  <div class="step">F1 IMMOBILIARE · UNA TANTUM</div>
+  <h1>COLLEGA <span class="green">FACEBOOK + INSTAGRAM</span></h1>
+  <p class="muted">Questa pagina non salva token nel repository e non li invia a Open Social Scheduler. Il token che incolli viene usato solo nel tuo browser per interrogare direttamente Meta Graph API.</p>
+</section>
+<section class="grid">
+  <article class="card">
+    <div class="step">PASSO 1</div>
+    <h2>Genera un User Access Token Meta</h2>
+    <p class="muted">Apri Graph API Explorer, seleziona l'app Meta F1 e genera un User Access Token con questi permessi:</p>
+    <div class="permissions"><span class="pill">pages_show_list</span><span class="pill">pages_read_engagement</span><span class="pill">pages_manage_posts</span><span class="pill">instagram_basic</span><span class="pill">instagram_content_publish</span></div>
+    <div class="actions"><a class="btn" href="https://developers.facebook.com/tools/explorer/" target="_blank" rel="noopener">APRI GRAPH API EXPLORER</a></div>
+    <p class="note small">Nel Graph API Explorer usa il tuo account che amministra la Pagina F1 Immobiliare. Non incollare il token in chat, issue GitHub o file.</p>
+  </article>
+  <article class="card">
+    <div class="step">PASSO 2</div>
+    <h2>Leggi Pagina e Instagram collegato</h2>
+    <label for="version">Versione Graph API</label><input id="version" value="v23.0" autocomplete="off">
+    <label for="token">User Access Token temporaneo</label><input id="token" type="password" placeholder="EA..." autocomplete="off">
+    <div class="actions"><button id="load">CARICA LE PAGINE</button><button id="clear" class="ghost">CANCELLA TOKEN</button></div>
+    <div id="status" class="status">In attesa del token.</div>
+  </article>
+  <article class="card wide">
+    <div class="step">PASSO 3</div><h2>Scegli la Pagina F1</h2><p class="muted">Il sistema mostra le Pagine che Meta restituisce al tuo utente. Scegli la Pagina F1 Immobiliare collegata al profilo Instagram corretto.</p><div id="pages" class="pages"><div class="status">Nessuna pagina caricata.</div></div>
+  </article>
+  <article class="card wide">
+    <div class="step">PASSO 4</div><h2>GitHub Secrets da inserire</h2><p class="muted">Quando scegli la Pagina, questi tre valori vengono compilati. Usa i pulsanti COPIA e incollali in GitHub → Settings → Secrets and variables → Actions → New repository secret.</p><div id="secrets" class="secrets"></div>
+    <div class="actions"><a class="btn alt" href="https://github.com/josephsocialmedia2-spec/open-social-scheduler/settings/secrets/actions" target="_blank" rel="noopener">APRI GITHUB SECRETS</a><a class="btn alt" href="https://github.com/josephsocialmedia2-spec/open-social-scheduler/issues/14" target="_blank" rel="noopener">APRI CHECKLIST #14</a></div>
+    <p class="note danger small">I tre valori non devono mai essere committati. `F1_FACEBOOK_PAGE_ACCESS_TOKEN` e `F1_INSTAGRAM_ACCESS_TOKEN` possono coincidere quando usi Instagram API con Facebook Login e il Page Access Token restituito da Meta.</p>
+  </article>
+</section>
+</main>
+<script>
+const $=s=>document.querySelector(s);const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));const status=(msg,type='')=>{const el=$('#status');el.textContent=msg;el.className='status '+type};function graphVersion(){return ($('#version').value||'v23.0').trim().replace(/^\/+|\/+$/g,'')}async function api(path,token){const url=`https://graph.facebook.com/${graphVersion()}/${path}${path.includes('?')?'&':'?'}access_token=${encodeURIComponent(token)}`;const r=await fetch(url,{method:'GET',cache:'no-store'});const j=await r.json();if(!r.ok||j.error)throw new Error(j?.error?.message||`HTTP ${r.status}`);return j}function copy(v){navigator.clipboard.writeText(v).catch(()=>{});}function secretBox(name,value){return `<div class="secret"><div class="secret-name">${esc(name)}</div><div class="secret-row"><input readonly value="${esc(value||'')}" aria-label="${esc(name)}"><button class="ghost" data-copy="${esc(value||'')}">COPIA</button></div></div>`}function showSecrets(page){const ig=page.instagram_business_account||null;const token=page.access_token||'';$('#secrets').innerHTML=secretBox('F1_FACEBOOK_PAGE_ACCESS_TOKEN',token)+secretBox('F1_INSTAGRAM_ACCESS_TOKEN',ig?token:'')+secretBox('F1_INSTAGRAM_USER_ID',ig?.id||'')+(ig?`<div class="status ok">Instagram collegato: ${esc(ig.username||'ID '+ig.id)}</div>`:`<div class="status err">Questa Pagina non restituisce un Instagram Professional collegato. Controlla in Meta Business Suite che Instagram sia collegato alla Pagina F1.</div>`);document.querySelectorAll('[data-copy]').forEach(b=>b.onclick=()=>copy(b.dataset.copy));}function showPages(rows){if(!rows.length){$('#pages').innerHTML='<div class="status err">Meta non ha restituito Pagine gestite. Verifica account e permesso pages_show_list.</div>';return}$('#pages').innerHTML=rows.map((p,i)=>`<div class="page"><strong>${esc(p.name)}</strong><div class="meta">Page ID: ${esc(p.id)} · task: ${esc((p.tasks||[]).join(', ')||'n/d')}</div><div class="meta">Instagram: ${p.instagram_business_account?esc((p.instagram_business_account.username||'')+' · '+p.instagram_business_account.id):'NON COLLEGATO'}</div><button data-page="${i}">USA QUESTA PAGINA</button></div>`).join('');document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>showSecrets(rows[Number(b.dataset.page)]));}$('#load').onclick=async()=>{const token=$('#token').value.trim();if(!token){status('Inserisci prima il User Access Token.','err');return}status('Interrogo Meta Graph API…');try{const fields='id,name,access_token,tasks,instagram_business_account{id,username}';const j=await api(`me/accounts?fields=${encodeURIComponent(fields)}`,token);showPages(j.data||[]);status(`OK: ${(j.data||[]).length} Pagina/e ricevute da Meta. Ora scegli F1 Immobiliare.`,'ok')}catch(e){status('Errore Meta: '+e.message+'\n\nSe il browser blocca la richiesta, esegui in Graph API Explorer: me/accounts?fields=id,name,access_token,tasks,instagram_business_account{id,username}','err')}};$('#clear').onclick=()=>{$('#token').value='';$('#pages').innerHTML='<div class="status">Nessuna pagina caricata.</div>';$('#secrets').innerHTML='';status('Token rimosso dalla pagina.');};
+</script>
+</body>
+</html>
