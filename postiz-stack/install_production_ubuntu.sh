@@ -12,8 +12,18 @@ ENV_FILE="$ROOT/postiz.env"
 
 export DEBIAN_FRONTEND=noninteractive
 apt-get update
-apt-get install -y git curl ca-certificates docker.io docker-compose-v2 openssl
+apt-get install -y git curl ca-certificates docker.io openssl python3
+if apt-cache show docker-compose-v2 >/dev/null 2>&1; then
+  apt-get install -y docker-compose-v2
+elif apt-cache show docker-compose-plugin >/dev/null 2>&1; then
+  apt-get install -y docker-compose-plugin
+else
+  echo "Docker Compose v2 package not found in configured apt repositories." >&2
+  exit 2
+fi
 systemctl enable --now docker
+
+docker compose version
 
 bash "$ROOT/bootstrap_postiz.sh"
 
