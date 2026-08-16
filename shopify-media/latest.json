@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-16T13:26:59+00:00",
+  "generated_at": "2026-08-16T13:28:25+00:00",
   "client_id": "real-media-pro",
   "pages": [
     {
@@ -36,36 +36,36 @@
       "status": "ok"
     },
     {
-      "page_url": "https://f1immobiliare.com/products/gestione-social-standard",
-      "title": "https://f1immobiliare.com/products/gestione-social-standard",
+      "page_url": "https://f1immobiliare.com/products/gestione-social-standard?variant=54321158521171",
+      "title": "https://f1immobiliare.com/products/gestione-social-standard?variant=54321158521171",
       "images": [],
       "videos": [],
       "status": "error",
-      "error": "404 Client Error: Not Found for url: https://f1immobiliare.com/products/gestione-social-standard"
+      "error": "404 Client Error: Not Found for url: https://f1immobiliare.com/products/gestione-social-standard?variant=54321158521171"
     },
     {
-      "page_url": "https://f1immobiliare.com/products/gestione-social-pro",
-      "title": "https://f1immobiliare.com/products/gestione-social-pro",
+      "page_url": "https://f1immobiliare.com/products/gestione-social-pro?variant=54321158553939",
+      "title": "https://f1immobiliare.com/products/gestione-social-pro?variant=54321158553939",
       "images": [],
       "videos": [],
       "status": "error",
-      "error": "404 Client Error: Not Found for url: https://f1immobiliare.com/products/gestione-social-pro"
+      "error": "404 Client Error: Not Found for url: https://f1immobiliare.com/products/gestione-social-pro?variant=54321158553939"
     },
     {
-      "page_url": "https://f1immobiliare.com/products/volantino-digitale",
-      "title": "https://f1immobiliare.com/products/volantino-digitale",
+      "page_url": "https://f1immobiliare.com/products/volantino-digitale?variant=54321156817235",
+      "title": "https://f1immobiliare.com/products/volantino-digitale?variant=54321156817235",
       "images": [],
       "videos": [],
       "status": "error",
-      "error": "404 Client Error: Not Found for url: https://f1immobiliare.com/products/volantino-digitale"
+      "error": "404 Client Error: Not Found for url: https://f1immobiliare.com/products/volantino-digitale?variant=54321156817235"
     },
     {
-      "page_url": "https://f1immobiliare.com/products/presentazione-aziendale",
-      "title": "https://f1immobiliare.com/products/presentazione-aziendale",
+      "page_url": "https://f1immobiliare.com/products/presentazione-aziendale?variant=54321157603667",
+      "title": "https://f1immobiliare.com/products/presentazione-aziendale?variant=54321157603667",
       "images": [],
       "videos": [],
       "status": "error",
-      "error": "404 Client Error: Not Found for url: https://f1immobiliare.com/products/presentazione-aziendale"
+      "error": "404 Client Error: Not Found for url: https://f1immobiliare.com/products/presentazione-aziendale?variant=54321157603667"
     }
   ]
 }
