@@ -1,0 +1,57 @@
+{
+  "id": "f1-immobiliare",
+  "name": "F1 Immobiliare",
+  "active": true,
+  "timezone": "Europe/Rome",
+  "postiz_customer_name": "F1 Immobiliare",
+  "brand": {
+    "status": "provisional-test-layout",
+    "logo": "",
+    "background": "#070907",
+    "background_alt": "#0E120F",
+    "primary": "#F5F4EF",
+    "accent": "#39F28A",
+    "accent_alt": "#20CE70",
+    "muted": "#AEB7B0",
+    "font_title": "DejaVu Sans Bold",
+    "font_body": "DejaVu Sans",
+    "reel": {
+      "width": 1080,
+      "height": 1920,
+      "safe_top": 180,
+      "safe_bottom": 260,
+      "slides": 7,
+      "seconds_per_slide": 2.8
+    }
+  },
+  "campaign": {
+    "name": "Valutazioni immobiliari gratuite",
+    "cta": "Scrivi VALORE in privato",
+    "keyword": "VALORE",
+    "territories": [
+      "Condove",
+      "Avigliana",
+      "Almese",
+      "Villar Dora",
+      "Caprie",
+      "Chiusa di San Michele",
+      "Vaie",
+      "Sant'Antonino di Susa",
+      "Borgone Susa",
+      "Villar Focchiardo"
+    ]
+  },
+  "publishing": {
+    "require_media": true,
+    "slots": ["09:00", "12:30", "17:30", "20:30"],
+    "platforms": ["facebook", "instagram", "tiktok", "linkedin-page", "youtube", "pinterest"]
+  },
+  "integrations": {
+    "facebook": {"id": "", "required": true},
+    "instagram": {"id": "", "required": true},
+    "tiktok": {"id": "", "required": false},
+    "linkedin-page": {"id": "", "required": false},
+    "youtube": {"id": "", "required": false},
+    "pinterest": {"id": "", "required": false, "board": ""}
+  }
+}
