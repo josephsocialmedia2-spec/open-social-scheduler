@@ -4,6 +4,13 @@
   "active": true,
   "timezone": "Europe/Rome",
   "postiz_customer_name": "F1 Immobiliare",
+  "profile_urls": {
+    "facebook": "https://www.facebook.com/F1ImmobiliareValdiSusa",
+    "instagram": "https://www.instagram.com/joseph_malafronte/",
+    "youtube": "https://www.youtube.com/@F1Immobiliare",
+    "pinterest": "https://it.pinterest.com/josephmalafronte/",
+    "linkedin": "https://www.linkedin.com/in/josephmalafronte/"
+  },
   "brand": {
     "status": "provisional-test-layout",
     "logo": "",
@@ -44,13 +51,13 @@
   "publishing": {
     "require_media": true,
     "slots": ["09:00", "12:30", "17:30", "20:30"],
-    "platforms": ["facebook", "instagram", "tiktok", "linkedin-page", "youtube", "pinterest"]
+    "platforms": ["facebook", "instagram", "tiktok", "linkedin", "youtube", "pinterest"]
   },
   "integrations": {
     "facebook": {"id": "", "required": true},
     "instagram": {"id": "", "required": true},
     "tiktok": {"id": "", "required": false},
-    "linkedin-page": {"id": "", "required": false},
+    "linkedin": {"id": "", "required": false},
     "youtube": {"id": "", "required": false},
     "pinterest": {"id": "", "required": false, "board": ""}
   }
