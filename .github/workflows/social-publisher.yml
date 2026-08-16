@@ -8,7 +8,7 @@ on:
         required: true
         type: string
       platforms:
-        description: 'all or comma-separated: facebook,instagram,tiktok,linkedin,youtube,pinterest'
+        description: 'all or comma-separated: facebook,instagram,tiktok,linkedin,linkedin-page,youtube,pinterest'
         required: true
         default: 'all'
         type: string
@@ -36,20 +36,31 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     env:
-      FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.FACEBOOK_PAGE_ACCESS_TOKEN }}
-      INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
-      INSTAGRAM_USER_ID: ${{ secrets.INSTAGRAM_USER_ID }}
-      TIKTOK_ACCESS_TOKEN: ${{ secrets.TIKTOK_ACCESS_TOKEN }}
+      F1_FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.F1_FACEBOOK_PAGE_ACCESS_TOKEN }}
+      F1_INSTAGRAM_ACCESS_TOKEN: ${{ secrets.F1_INSTAGRAM_ACCESS_TOKEN }}
+      F1_INSTAGRAM_USER_ID: ${{ secrets.F1_INSTAGRAM_USER_ID }}
+      F1_TIKTOK_ACCESS_TOKEN: ${{ secrets.F1_TIKTOK_ACCESS_TOKEN }}
+      F1_LINKEDIN_ACCESS_TOKEN: ${{ secrets.F1_LINKEDIN_ACCESS_TOKEN }}
+      F1_LINKEDIN_AUTHOR_URN: ${{ secrets.F1_LINKEDIN_AUTHOR_URN }}
+      F1_YOUTUBE_CLIENT_ID: ${{ secrets.F1_YOUTUBE_CLIENT_ID }}
+      F1_YOUTUBE_CLIENT_SECRET: ${{ secrets.F1_YOUTUBE_CLIENT_SECRET }}
+      F1_YOUTUBE_REFRESH_TOKEN: ${{ secrets.F1_YOUTUBE_REFRESH_TOKEN }}
+      F1_PINTEREST_ACCESS_TOKEN: ${{ secrets.F1_PINTEREST_ACCESS_TOKEN }}
+      F1_PINTEREST_BOARD_ID: ${{ secrets.F1_PINTEREST_BOARD_ID }}
+      RMP_FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.RMP_FACEBOOK_PAGE_ACCESS_TOKEN }}
+      RMP_INSTAGRAM_ACCESS_TOKEN: ${{ secrets.RMP_INSTAGRAM_ACCESS_TOKEN }}
+      RMP_INSTAGRAM_USER_ID: ${{ secrets.RMP_INSTAGRAM_USER_ID }}
+      RMP_TIKTOK_ACCESS_TOKEN: ${{ secrets.RMP_TIKTOK_ACCESS_TOKEN }}
+      RMP_LINKEDIN_ACCESS_TOKEN: ${{ secrets.RMP_LINKEDIN_ACCESS_TOKEN }}
+      RMP_LINKEDIN_AUTHOR_URN: ${{ secrets.RMP_LINKEDIN_AUTHOR_URN }}
+      RMP_YOUTUBE_CLIENT_ID: ${{ secrets.RMP_YOUTUBE_CLIENT_ID }}
+      RMP_YOUTUBE_CLIENT_SECRET: ${{ secrets.RMP_YOUTUBE_CLIENT_SECRET }}
+      RMP_YOUTUBE_REFRESH_TOKEN: ${{ secrets.RMP_YOUTUBE_REFRESH_TOKEN }}
+      RMP_PINTEREST_ACCESS_TOKEN: ${{ secrets.RMP_PINTEREST_ACCESS_TOKEN }}
+      RMP_PINTEREST_BOARD_ID: ${{ secrets.RMP_PINTEREST_BOARD_ID }}
       TIKTOK_PRIVACY_LEVEL: ${{ vars.TIKTOK_PRIVACY_LEVEL || 'PUBLIC_TO_EVERYONE' }}
-      LINKEDIN_ACCESS_TOKEN: ${{ secrets.LINKEDIN_ACCESS_TOKEN }}
-      LINKEDIN_AUTHOR_URN: ${{ secrets.LINKEDIN_AUTHOR_URN }}
       LINKEDIN_VERSION: ${{ vars.LINKEDIN_VERSION || '202601' }}
-      YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
-      YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
-      YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
       YOUTUBE_PRIVACY_STATUS: ${{ vars.YOUTUBE_PRIVACY_STATUS || 'private' }}
-      PINTEREST_ACCESS_TOKEN: ${{ secrets.PINTEREST_ACCESS_TOKEN }}
-      PINTEREST_BOARD_ID: ${{ secrets.PINTEREST_BOARD_ID }}
       PINTEREST_LINK: ${{ vars.PINTEREST_LINK }}
       META_GRAPH_VERSION: ${{ vars.META_GRAPH_VERSION || 'v23.0' }}
 
@@ -139,13 +150,13 @@ jobs:
         if: ${{ inputs.dry_run == true }}
         env:
           APPROVED_MEDIA_PUBLIC_URL: https://example.invalid/dry-run.mp4
-        run: python publisher/direct_api_publish.py --job-id "${{ inputs.job_id }}" --platforms "${{ inputs.platforms }}" --dry-run
+        run: python publisher/direct_api_launcher.py --job-id "${{ inputs.job_id }}" --platforms "${{ inputs.platforms }}" --dry-run
 
       - name: DIRECT PUBLISH after confirmation
         if: ${{ inputs.dry_run == false }}
         env:
           APPROVED_MEDIA_PUBLIC_URL: ${{ steps.public_media.outputs.url }}
-        run: python publisher/direct_api_publish.py --job-id "${{ inputs.job_id }}" --platforms "${{ inputs.platforms }}"
+        run: python publisher/direct_api_launcher.py --job-id "${{ inputs.job_id }}" --platforms "${{ inputs.platforms }}"
 
       - name: Remove temporary Instagram asset
         if: ${{ always() && inputs.dry_run == false && (inputs.platforms == 'all' || contains(inputs.platforms, 'instagram')) }}
