@@ -1,234 +1,416 @@
 {
-  "attract": [
+  "data": [
     {
-      "slug": "quanto-vale-casa",
-      "title": "Sai davvero quanto vale casa tua?",
+      "slug": "g1-quanto-vale-davvero",
+      "title": "Quanto vale davvero casa tua?",
       "slides": [
-        "SAI DAVVERO|QUANTO VALE|CASA TUA?",
-        "IL PREZZO CHE|IMMAGINI|NON È IL MERCATO",
-        "GLI ANNUNCI ONLINE|MOSTRANO PREZZI|RICHIESTI",
-        "IL VALORE CAMBIA|PER ZONA, STATO|E CARATTERISTICHE",
-        "SERVONO DATI|NON IPOTESI",
-        "PRIMA ANALISI|GRATUITA",
-        "SCRIVI|VALORE"
+        "QUANTO VALE|DAVVERO|CASA TUA?",
+        "NON PARTIAMO|DA UN NUMERO|INVENTATO",
+        "COMPARABILI|MICROZONA|CONCORRENZA",
+        "CARATTERISTICHE|DELL'IMMOBILE",
+        "RISPOSTA|DEL MERCATO",
+        "UNA VALUTAZIONE|È UNA CONCLUSIONE",
+        "F1 IMMOBILIARE|NON A SENSAZIONE.|CON I DATI.|{phone}"
       ],
-      "caption": "Sai davvero quanto vale oggi casa tua? Una valutazione corretta parte dai dati, non dalle aspettative. {cta}."
+      "voiceover": "Quando un proprietario ci chiede quanto vale la sua casa, non iniziamo inventando un numero. Guardiamo immobili comparabili, concorrenza nella microzona, caratteristiche dell'immobile e risposta del mercato. Perché una valutazione non dovrebbe essere una sensazione. Dovrebbe essere una conclusione.",
+      "caption": "Quanto vale davvero casa tua? Comparabili, microzona, concorrenza, domanda e strategia di prezzo. {cta}."
     },
     {
-      "slug": "errore-portali",
-      "title": "L'errore più comune nel decidere il prezzo",
+      "slug": "g2-tre-prezzi",
+      "title": "Prezzo desiderato, pubblicato e di mercato",
       "slides": [
-        "NON DECIDERE|IL PREZZO|COSÌ",
-        "APRI UN PORTALE|E TROVI UNA CASA|SIMILE",
-        "VEDI 180.000 €|E PENSI:|ANCHE LA MIA",
-        "MA È UN PREZZO|RICHIESTO",
-        "NON È DETTO|CHE SIA IL PREZZO|DI VENDITA",
-        "VALUTA PRIMA|DI PUBBLICARE",
-        "SCRIVI|VALORE"
+        "TRE PREZZI|NON SONO|LA STESSA COSA",
+        "PREZZO|DESIDERATO",
+        "PREZZO|PUBBLICATO",
+        "PREZZO|SOSTENUTO DAL MERCATO",
+        "CONFONDERLI|COSTA TEMPO",
+        "IL PRICING|NASCE DAI DATI",
+        "F1 IMMOBILIARE|IL PREZZO SI VERIFICA|{phone}"
       ],
-      "caption": "Il prezzo di un annuncio non coincide automaticamente con il valore di mercato. Prima di pubblicare, confrontiamo dati e immobili realmente comparabili. {cta}."
+      "voiceover": "Prezzo desiderato, prezzo pubblicato e prezzo di mercato non sono la stessa cosa. Il primo nasce dalle aspettative, il secondo dalla strategia, il terzo dalla risposta reale degli acquirenti. Il lavoro corretto è farli dialogare prima di pubblicare.",
+      "caption": "Il prezzo non si indovina. Si verifica. {cta}."
     },
     {
-      "slug": "prezzo-alto",
-      "title": "Partire troppo alti può costare caro",
+      "slug": "g3-media-torino",
+      "title": "La media di Torino non valuta casa tua",
       "slides": [
-        "PREZZO ALTO?|SEMBRA PRUDENTE",
-        "MA IL MERCATO|TI CONFRONTA|SUBITO",
-        "POCHE RICHIESTE|SONO UN SEGNALE",
-        "POI ARRIVANO|I RIBASSI",
-        "E L'IMMOBILE|SEMBRA FERMO",
-        "IL PRICING|SI DECIDE PRIMA",
-        "SCRIVI|VALORE"
-      ],
-      "caption": "Un prezzo iniziale fuori mercato può ridurre interesse e forza negoziale. La strategia di prezzo si prepara prima della pubblicazione. {cta}."
-    },
-    {
-      "slug": "stessa-metratura",
-      "title": "Stessi metri quadri, valori diversi",
-      "slides": [
-        "100 MQ|NON SIGNIFICA|STESSO VALORE",
-        "PIANO E|ASCENSORE|CONTANO",
-        "ESPOSIZIONE|E LUMINOSITÀ|CONTANO",
-        "STATO INTERNO|E PERTINENZE|CONTANO",
-        "ANCHE LA|MICROZONA|CONTA",
-        "VALUTIAMO|L'IMMOBILE REALE",
-        "SCRIVI|VALORE"
-      ],
-      "caption": "Due immobili della stessa metratura possono avere valori molto diversi. Il prezzo al metro quadro è solo un punto di partenza. {cta}."
-    }
-  ],
-  "nurture": [
-    {
-      "slug": "come-valutiamo",
-      "title": "Come si costruisce una valutazione",
-      "slides": [
-        "COME SI VALUTA|DAVVERO|UN IMMOBILE?",
-        "PARTIAMO|DALLA MICROZONA",
-        "CERCHIAMO|COMPARABILI|COERENTI",
-        "LEGGIAMO|CARATTERISTICHE|E STATO",
-        "VALUTIAMO|DOMANDA E|CONCORRENZA",
-        "DEFINIAMO|UNA FASCIA|DI VALORE",
-        "SCRIVI|VALORE"
-      ],
-      "caption": "Una valutazione seria non nasce da un numero automatico: microzona, comparabili, caratteristiche, domanda e concorrenza devono essere letti insieme. {cta}."
-    },
-    {
-      "slug": "valore-emotivo",
-      "title": "Valore affettivo e valore di mercato",
-      "slides": [
-        "LA TUA CASA|HA UNA STORIA",
-        "PER TE|QUEL VALORE|È REALE",
-        "MA IL MERCATO|USA ALTRI|PARAMETRI",
-        "CONFRONTA|ALTERNATIVE",
-        "MISURA|DOMANDA E|PREZZO",
-        "SEPARIAMO|EMOZIONE E|STRATEGIA",
-        "SCRIVI|VALORE"
-      ],
-      "caption": "Il valore affettivo è importante, ma il mercato confronta alternative, condizioni e prezzi. Una valutazione serve a separare patrimonio emotivo e strategia. {cta}."
-    },
-    {
-      "slug": "microzona",
-      "title": "Bastano poche centinaia di metri",
-      "slides": [
-        "STESSO COMUNE|STESSO VALORE?|NO",
-        "CAMBIA LA|MICROZONA",
-        "CAMBIANO|SERVIZI E|ACCESSIBILITÀ",
-        "CAMBIA LA|DOMANDA",
-        "CAMBIA LA|CONCORRENZA",
-        "IL PREZZO|VA LOCALIZZATO",
-        "SCRIVI|VALORE"
-      ],
-      "caption": "La media comunale può nascondere differenze importanti. Per valutare bene bisogna scendere alla microzona e al singolo immobile. {cta}."
-    },
-    {
-      "slug": "valutazione-non-vendita",
-      "title": "Valutare non significa vendere",
-      "slides": [
-        "NON DEVI|VENDERE OGGI",
-        "PUOI SOLO|VOLER SAPERE|QUANTO VALE",
-        "PER IL TUO|PATRIMONIO",
-        "PER UNA|SCELTA FUTURA",
-        "PER CAPIRE|IL MERCATO",
-        "PRIMA CONOSCI|POI DECIDI",
-        "SCRIVI|VALORE"
-      ],
-      "caption": "Richiedere una valutazione non significa mettere subito casa in vendita. Può essere semplicemente uno strumento per conoscere meglio il proprio patrimonio. {cta}."
-    }
-  ],
-  "hyperlocal": [
-    {
-      "slug": "valore-territorio",
-      "title": "Quanto vale oggi una casa a {territory}?",
-      "slides": [
-        "QUANTO VALE|OGGI UNA CASA|A {territory}?",
-        "NON ESISTE|UN PREZZO UNICO|AL MQ",
-        "CONTANO|VIA E|MICROZONA",
-        "CONTANO|STATO E|PERTINENZE",
+        "LA MEDIA|DI TORINO|NON VALUTA CASA TUA",
+        "IL COMUNE|NON BASTA",
+        "CONTA LA|MICROZONA",
+        "CONTANO VIA|PIANO|ESPOSIZIONE",
         "CONTA LA|DOMANDA LOCALE",
-        "HAI CASA|A {territory}?",
-        "SCRIVI|VALORE"
+        "IL VALORE|VA LOCALIZZATO",
+        "F1 IMMOBILIARE|CON I DATI|{phone}"
       ],
-      "caption": "Hai un immobile a {territory}? Il valore non si determina con una media generica: bisogna leggere microzona, caratteristiche e domanda locale. {cta}."
+      "voiceover": "La media di Torino, o perfino quella del tuo comune, non basta per valutare casa tua. Due immobili vicini possono ricevere risposte molto diverse. Bisogna scendere alla microzona, alla via e alle caratteristiche reali dell'immobile.",
+      "caption": "La media generale orienta. La microzona decide. {cta}."
     },
     {
-      "slug": "vendere-territorio",
-      "title": "Prima di vendere a {territory}",
+      "slug": "g4-novanta-giorni",
+      "title": "Casa online da 90 giorni: cosa dice il mercato?",
       "slides": [
-        "VUOI VENDERE|A {territory}?",
-        "NON PARTIRE|DALL'ANNUNCIO",
-        "PARTI DAL|POSIZIONAMENTO",
-        "CHI È IL|COMPRATORE|PIÙ PROBABILE?",
-        "QUALI CASE|COMPETONO|CON LA TUA?",
-        "POI DECIDI|IL PREZZO",
-        "SCRIVI|VALORE"
+        "90 GIORNI|ONLINE",
+        "NON È SOLO|TEMPO PASSATO",
+        "È UN|SEGNALE",
+        "PREZZO?|PRESENTAZIONE?",
+        "TARGET?|CONCORRENZA?",
+        "PRIMA DI RIDURRE|SERVE DIAGNOSI",
+        "F1 IMMOBILIARE|PRIMA I DATI|{phone}"
       ],
-      "caption": "Prima di pubblicare un immobile a {territory}, definiamo concorrenza, target e fascia di prezzo. {cta}."
+      "voiceover": "Se una casa è online da novanta giorni senza risultati, il mercato ci sta dando un'informazione. Non significa automaticamente che dobbiamo abbassare il prezzo. Prima bisogna capire se il problema è pricing, presentazione, target o concorrenza.",
+      "caption": "Un immobile fermo va diagnosticato prima di essere ribassato. {cta}."
     },
     {
-      "slug": "garage-territorio",
-      "title": "Quanto incide un garage a {territory}?",
+      "slug": "g5-domanda-agente",
+      "title": "Prima dell'incarico fai questa domanda",
       "slides": [
-        "GARAGE A|{territory}",
-        "QUANTO INCIDE|SUL VALORE?",
-        "DIPENDE DALLA|SCARSITÀ IN ZONA",
-        "DALLA|COMODITÀ",
-        "E DALLA|DOMANDA REALE",
-        "VALUTIAMO|ANCHE LE|PERTINENZE",
-        "SCRIVI|VALORE"
+        "PRIMA|DELL'INCARICO",
+        "CHIEDI:|SU QUALI DATI?",
+        "NON SOLO|QUANTO VALE",
+        "MA PERCHÉ|QUEL PREZZO",
+        "QUALI|COMPARABILI?",
+        "QUALE|STRATEGIA?",
+        "F1 IMMOBILIARE|DEVI POTER CAPIRE|{phone}"
       ],
-      "caption": "Garage, posto auto, cantina e altre pertinenze non incidono allo stesso modo in ogni zona. Vediamo il caso specifico a {territory}. {cta}."
+      "voiceover": "Prima di affidare la vendita, non chiedere soltanto quanto vale la casa. Chiedi su quali dati è stato costruito quel prezzo, quali comparabili sono stati usati e quale strategia verrà applicata dopo la pubblicazione.",
+      "caption": "Non devi credere alla valutazione. Devi poterla capire. {cta}."
     },
     {
-      "slug": "concorrenza-territorio",
-      "title": "Con quante case compete la tua a {territory}?",
+      "slug": "g6-vendita-privata-verifiche",
+      "title": "Vuoi vendere senza agenzia? Parti da cinque verifiche",
       "slides": [
-        "LA TUA CASA|A {territory}",
-        "NON È SOLA|SUL MERCATO",
-        "IL COMPRATORE|VEDE ANCHE|LE ALTERNATIVE",
-        "CONFRONTA|PREZZO E|QUALITÀ",
-        "LA CONCORRENZA|CAMBIA IL|POSIZIONAMENTO",
-        "ANALIZZIAMOLA|PRIMA",
-        "SCRIVI|VALORE"
+        "VUOI VENDERE|DA PRIVATO?",
+        "1. DOCUMENTI",
+        "2. COMPARABILI",
+        "3. CONCORRENZA",
+        "4. PREZZO|5. TARGET",
+        "PRIMA CAPISCI|POI PUBBLICHI",
+        "F1 IMMOBILIARE|SECONDO PARERE|{phone}"
       ],
-      "caption": "Il valore commerciale dipende anche dalle alternative che il compratore trova oggi a {territory}. Analizzare la concorrenza è parte del pricing. {cta}."
+      "voiceover": "Se vuoi vendere senza agenzia, nessun problema. Ma prima verifica documenti, comparabili, concorrenza, prezzo e acquirente probabile. Vendere bene comincia prima dell'annuncio.",
+      "caption": "Anche se vuoi vendere da solo, puoi partire dai dati. F1 può offrirti un secondo parere. {cta}."
+    },
+    {
+      "slug": "g7-cosa-guardiamo",
+      "title": "Cosa guardiamo prima di valutare un immobile",
+      "slides": [
+        "PRIMA DI|VALUTARE",
+        "GUARDIAMO|LA MICROZONA",
+        "SELEZIONIAMO|COMPARABILI",
+        "LEGGIAMO|CONCORRENZA",
+        "STUDIAMO|DOMANDA",
+        "POI COSTRUIAMO|IL PREZZO",
+        "F1 IMMOBILIARE|NON A SENSAZIONE|{phone}"
+      ],
+      "voiceover": "Prima di valutare un immobile guardiamo microzona, comparabili, concorrenza e domanda. Solo dopo costruiamo una fascia di prezzo. È questa la differenza tra una sensazione e un metodo.",
+      "caption": "Prima i dati. Poi la strategia. Poi la vendita. {cta}."
     }
   ],
-  "convert": [
+  "error": [
     {
-      "slug": "analisi-gratuita",
-      "title": "Prima analisi gratuita",
+      "slug": "g1-il-vicino",
+      "title": "Il mio vicino chiede 220.000 euro",
       "slides": [
-        "VUOI SAPERE|QUANTO VALE|CASA TUA?",
-        "PARTIAMO|DAI DATI",
-        "ZONA|METRATURA|STATO",
-        "PERTINENZE|E CONCORRENZA",
-        "NESSUN PREZZO|INVENTATO",
-        "PRIMA ANALISI|GRATUITA",
-        "SCRIVI|VALORE"
+        "IL MIO VICINO|CHIEDE|220.000 €",
+        "LA DOMANDA|È UN'ALTRA",
+        "A QUANTO|È STATO VENDUTO?",
+        "PREZZO RICHIESTO|E VENDUTO|SONO DIVERSI",
+        "NON COPIARE|IL PREZZO",
+        "VERIFICALO",
+        "F1 IMMOBILIARE|IL PREZZO SI VERIFICA|{phone}"
       ],
-      "caption": "Vuoi una prima analisi del tuo immobile? Inviaci comune, tipologia e metratura. {cta}."
+      "voiceover": "Il tuo vicino può chiedere duecentoventimila euro. Ma a quanto è stato venduto un immobile realmente comparabile? Prezzo richiesto e prezzo riconosciuto dal mercato sono due informazioni completamente diverse. Il prezzo non si copia. Si verifica.",
+      "caption": "Il prezzo del vicino non è una valutazione. {cta}."
     },
     {
-      "slug": "cinque-domande",
-      "title": "Cinque domande per iniziare",
+      "slug": "g2-proviamo-alto",
+      "title": "Proviamo alto e poi scendiamo",
       "slides": [
-        "5 DOMANDE|PER INIZIARE",
-        "1. COMUNE?",
-        "2. MQ E|TIPOLOGIA?",
-        "3. PIANO E|ASCENSORE?",
-        "4. STATO|DELL'IMMOBILE?",
-        "5. GARAGE O|PERTINENZE?",
-        "SCRIVI|VALORE"
+        "PROVIAMO ALTO|E POI SCENDIAMO",
+        "SEMBRA|PRUDENTE",
+        "MA IL MERCATO|TI CONFRONTA SUBITO",
+        "POCHE RICHIESTE|SONO UN SEGNALE",
+        "I RIBASSI|RESTANO VISIBILI",
+        "PARTIRE BENE|CONTA",
+        "F1 IMMOBILIARE|CON I DATI|{phone}"
       ],
-      "caption": "Per iniziare una prima analisi bastano poche informazioni essenziali. Scrivici comune, mq, tipologia, piano, stato e pertinenze. {cta}."
+      "voiceover": "Proviamo alto e poi scendiamo non è sempre una strategia prudente. Il mercato confronta subito il tuo immobile con le alternative. Se il prezzo iniziale è fuori posizione, le poche richieste e i ribassi successivi diventano segnali.",
+      "caption": "Il primo prezzo crea il primo posizionamento. {cta}."
     },
     {
-      "slug": "senza-impegno",
-      "title": "Conoscere il valore prima di decidere",
+      "slug": "g3-cinquecento-metri",
+      "title": "Due case a 500 metri possono valere diversamente",
       "slides": [
-        "PRIMA|CONOSCI",
-        "POI|DECIDI",
-        "NON SERVE|METTERE CASA|IN VENDITA",
-        "PUOI FARE|UNA PRIMA|VERIFICA",
-        "E CAPIRE|DOVE SEI|NEL MERCATO",
-        "VALUTAZIONE|GRATUITA",
-        "SCRIVI|VALORE"
+        "500 METRI|POSSONO|CAMBIARE TUTTO",
+        "SERVIZI",
+        "RUMORE|ESPOSIZIONE",
+        "ACCESSIBILITÀ",
+        "DOMANDA",
+        "NON USARE|MEDIE CIECHE",
+        "F1 IMMOBILIARE|MICROZONA|{phone}"
       ],
-      "caption": "Conoscere il valore viene prima della decisione di vendere. Richiedi una prima valutazione gratuita e poi scegli con più informazioni. {cta}."
+      "voiceover": "Due immobili a cinquecento metri di distanza possono avere una risposta di mercato diversa. Servizi, esposizione, rumore, accessibilità e domanda cambiano il posizionamento. La microzona conta.",
+      "caption": "Stesso comune non significa stesso valore. {cta}."
     },
     {
-      "slug": "prima-del-prezzo",
-      "title": "Prima del prezzo viene l'analisi",
+      "slug": "g4-ribasso-senza-diagnosi",
+      "title": "Abbassare senza diagnosi non è una strategia",
       "slides": [
-        "NON PARTIAMO|DAL PREZZO",
-        "PARTIAMO|DALL'IMMOBILE",
-        "DAL MERCATO",
-        "DALLA|CONCORRENZA",
-        "E DAL|COMPRATORE",
-        "POI COSTRUIAMO|IL PRICING",
-        "SCRIVI|VALORE"
+        "NON SI VENDE?|ABBASSIAMO?",
+        "ASPETTA",
+        "IL PROBLEMA|POTREBBE NON ESSERE|SOLO IL PREZZO",
+        "FOTO?|TARGET?",
+        "VISIBILITÀ?|CONCORRENZA?",
+        "DIAGNOSI|PRIMA DEL RIBASSO",
+        "F1 IMMOBILIARE|PRIMA I DATI|{phone}"
       ],
-      "caption": "Il prezzo è la conclusione dell'analisi, non il punto di partenza. {cta}."
+      "voiceover": "Abbassare il prezzo senza capire il problema non è una strategia. Potrebbe essere pricing, ma anche presentazione, target, visibilità o concorrenza. Prima della riduzione serve una diagnosi.",
+      "caption": "Prima di abbassare, capisci perché il mercato non sta rispondendo. {cta}."
+    },
+    {
+      "slug": "g5-non-solo-quanto-vale",
+      "title": "Quanto vale non è l'unica domanda",
+      "slides": [
+        "QUANTO VALE?|NON BASTA",
+        "CHI LA|COMPREREBBE?",
+        "CONTRO COSA|COMPETE?",
+        "COME LA|PRESENTIAMO?",
+        "COSA FACCIAMO|DOPO L'ANNUNCIO?",
+        "QUESTA È|STRATEGIA",
+        "F1 IMMOBILIARE|METODO|{phone}"
+      ],
+      "voiceover": "Quanto vale non è l'unica domanda importante. Dobbiamo sapere chi potrebbe comprarla, contro quali immobili compete, come presentarla e cosa succederà dopo la pubblicazione.",
+      "caption": "Una vendita non è soltanto un prezzo. {cta}."
+    },
+    {
+      "slug": "g6-prezzo-da-soli",
+      "title": "L'errore più frequente quando decidi il prezzo da solo",
+      "slides": [
+        "DECIDERE|IL PREZZO|DA SOLI",
+        "NON È|IL PROBLEMA",
+        "IL PROBLEMA È|USARE DATI SBAGLIATI",
+        "ANNUNCI ≠|VENDITE",
+        "SIMILE ≠|COMPARABILE",
+        "VERIFICA|LE FONTI",
+        "F1 IMMOBILIARE|SECONDO PARERE|{phone}"
+      ],
+      "voiceover": "Decidere il prezzo da soli non è il problema. Il problema è farlo usando dati sbagliati. Un annuncio non è una vendita e una casa simile non è automaticamente un comparabile.",
+      "caption": "Se vuoi decidere da solo, fallo con dati verificabili. {cta}."
+    },
+    {
+      "slug": "g7-comparabile-escluso",
+      "title": "Perché escludiamo un comparabile",
+      "slides": [
+        "SEMBRA|UGUALE",
+        "MA NON È|COMPARABILE",
+        "PIANO DIVERSO?",
+        "STATO DIVERSO?",
+        "MICROZONA DIVERSA?",
+        "ESCLUDERE BENE|È PARTE DEL METODO",
+        "F1 IMMOBILIARE|PROVA|{phone}"
+      ],
+      "voiceover": "Un immobile può sembrare simile ma non essere un buon comparabile. Piano, stato, pertinenze, microzona e condizioni di vendita possono renderlo fuorviante. Anche escludere un dato sbagliato è parte della valutazione.",
+      "caption": "La qualità dei comparabili conta più della quantità. {cta}."
+    }
+  ],
+  "proof": [
+    {
+      "slug": "g1-tre-agenzie",
+      "title": "Tre agenzie. Tre valutazioni diverse.",
+      "slides": [
+        "190.000|210.000|235.000 €",
+        "TRE AGENZIE|TRE VALUTAZIONI",
+        "QUAL È|QUELLA CORRETTA?",
+        "NON PER FORZA|LA PIÙ ALTA",
+        "CHIEDI:|SU QUALI DATI?",
+        "LA MIGLIORE|SI PUÒ SPIEGARE",
+        "F1 IMMOBILIARE|PRIMA I DATI|{phone}"
+      ],
+      "caption": "La valutazione migliore non è quella che piace di più. È quella che può essere spiegata meglio. {cta}."
+    },
+    {
+      "slug": "g2-come-costruiamo-prezzo",
+      "title": "Come F1 costruisce un prezzo di partenza",
+      "slides": [
+        "IL PREZZO|DI PARTENZA",
+        "1. MICROZONA",
+        "2. COMPARABILI",
+        "3. CONCORRENZA",
+        "4. DOMANDA",
+        "5. POSIZIONAMENTO",
+        "F1 IMMOBILIARE|IL PREZZO SI VERIFICA|{phone}"
+      ],
+      "caption": "Il prezzo è la conclusione di un processo: microzona, comparabili, concorrenza, domanda e posizionamento. {cta}."
+    },
+    {
+      "slug": "g3-check-microzona",
+      "title": "Cosa controlliamo nella microzona",
+      "slides": [
+        "MICROZONA|COSA GUARDIAMO?",
+        "ANNUNCI|CONCORRENTI",
+        "SERVIZI|E ACCESSI",
+        "CARATTERISTICHE|DELLA VIA",
+        "DOMANDA|OSSERVABILE",
+        "DIFFERENZE|TRA IMMOBILI",
+        "F1 IMMOBILIARE|CON I DATI|{phone}"
+      ],
+      "caption": "La microzona non è una parola: è un insieme di verifiche concrete. {cta}."
+    },
+    {
+      "slug": "g4-quattro-controlli-fermo",
+      "title": "Quattro controlli quando una casa non riceve richieste",
+      "slides": [
+        "CASA FERMA?|4 CONTROLLI",
+        "1. PRICING",
+        "2. PRESENTAZIONE",
+        "3. DISTRIBUZIONE",
+        "4. TARGET",
+        "POI|DECIDIAMO",
+        "F1 IMMOBILIARE|DIAGNOSI PRIMA|{phone}"
+      ],
+      "caption": "Se un immobile non riceve richieste, controlliamo pricing, presentazione, distribuzione e target prima di intervenire. {cta}."
+    },
+    {
+      "slug": "g5-dopo-pubblicazione",
+      "title": "Cosa succede dopo la pubblicazione",
+      "slides": [
+        "DOPO|L'ANNUNCIO",
+        "MISURIAMO|VISIBILITÀ",
+        "LEGGIAMO|LE RICHIESTE",
+        "CONFRONTIAMO|LE REAZIONI",
+        "CORREGGIAMO|SE SERVE",
+        "LA STRATEGIA|CONTINUA",
+        "F1 IMMOBILIARE|NON SOLO PORTALI|{phone}"
+      ],
+      "caption": "Pubblicare è l'inizio, non la fine. La risposta del mercato deve essere letta e gestita. {cta}."
+    },
+    {
+      "slug": "g6-controllare-concorrenza",
+      "title": "Come controllare gli immobili concorrenti",
+      "slides": [
+        "CONCORRENZA|NON SIGNIFICA|CASE QUALSIASI",
+        "STESSA|MICROZONA",
+        "TIPOLOGIA|COERENTE",
+        "FASCIA|SIMILE",
+        "CARATTERISTICHE|CONFRONTABILI",
+        "POI LEGGI|IL POSIZIONAMENTO",
+        "F1 IMMOBILIARE|METODO|{phone}"
+      ],
+      "caption": "La concorrenza utile è quella che un compratore confronterebbe davvero con casa tua. {cta}."
+    },
+    {
+      "slug": "g7-cosa-vede-compratore",
+      "title": "Cosa vede un compratore nella tua zona",
+      "slides": [
+        "APRiamo|LA RICERCA",
+        "QUESTE SONO|LE ALTERNATIVE",
+        "QUESTI SONO|I PREZZI",
+        "QUESTA È|LA QUALITÀ OFFERTA",
+        "IL COMPRATORE|CONFRONTA",
+        "NOI DOBBIAMO|POSIZIONARE",
+        "F1 IMMOBILIARE|PROVA PRIMA|{phone}"
+      ],
+      "caption": "Per vendere bene dobbiamo guardare il mercato anche con gli occhi del compratore. {cta}."
+    }
+  ],
+  "decision": [
+    {
+      "slug": "g1-prima-fermati",
+      "title": "Prima di mettere casa in vendita, fermati",
+      "slides": [
+        "PRIMA DI|METTERE CASA|IN VENDITA",
+        "FERMATI",
+        "COSA SOSTIENE|IL MERCATO?",
+        "CONTRO QUALI|IMMOBILI COMPETI?",
+        "CHI DOBBIAMO|RAGGIUNGERE?",
+        "POI|PUBBLICHIAMO",
+        "SCRIVI VALUTAZIONE|F1 IMMOBILIARE|{phone}"
+      ],
+      "caption": "Vendere bene comincia prima dell'annuncio. {cta}."
+    },
+    {
+      "slug": "g2-analisi-microzona",
+      "title": "Prima del prezzo richiedi l'analisi della microzona",
+      "slides": [
+        "PRIMA|DEL PREZZO",
+        "GUARDA|LA MICROZONA",
+        "COMPARABILI",
+        "CONCORRENZA",
+        "DOMANDA",
+        "STRATEGIA|DI PREZZO",
+        "SCRIVI VALUTAZIONE|F1 IMMOBILIARE|{phone}"
+      ],
+      "caption": "Analisi strategica del valore del tuo immobile: comparabili, microzona, concorrenza, domanda e pricing. Gratuita e senza impegno. {cta}."
+    },
+    {
+      "slug": "g3-contro-chi-competi",
+      "title": "Vuoi sapere contro quali immobili competerebbe casa tua?",
+      "slides": [
+        "CASA TUA|NON È SOLA",
+        "IL COMPRATORE|VEDE ALTERNATIVE",
+        "QUALI SONO?",
+        "A CHE PREZZO?",
+        "CON QUALE|QUALITÀ?",
+        "SCOPRILO|PRIMA DI PUBBLICARE",
+        "SCRIVI VALUTAZIONE|F1 IMMOBILIARE|{phone}"
+      ],
+      "caption": "Prima di pubblicare, scopri contro quali immobili competeresti oggi. {cta}."
+    },
+    {
+      "slug": "g4-seconda-analisi",
+      "title": "Prima di abbassare il prezzo, chiedi una seconda analisi",
+      "slides": [
+        "STAI PENSANDO|A UN RIBASSO?",
+        "PRIMA|FERMATI",
+        "CAPIAMO|IL PROBLEMA",
+        "PREZZO?|PRESENTAZIONE?",
+        "TARGET?|CONCORRENZA?",
+        "POI DECIDI",
+        "SCRIVI VALUTAZIONE|F1 IMMOBILIARE|{phone}"
+      ],
+      "caption": "Prima del ribasso, una seconda analisi può evitare una correzione sbagliata. {cta}."
+    },
+    {
+      "slug": "g5-strategia-prima-firma",
+      "title": "Una strategia deve essere spiegata prima di firmare",
+      "slides": [
+        "PRIMA|DI FIRMARE",
+        "DEVI SAPERE|COSA SUCCEDERÀ",
+        "COME|POSIZIONIAMO",
+        "DOVE|COMUNICHIAMO",
+        "COSA|MISURIAMO",
+        "COME|CORREGGIAMO",
+        "F1 IMMOBILIARE|DEVI POTER CAPIRE|{phone}"
+      ],
+      "caption": "Una strategia seria può essere spiegata prima dell'incarico. {cta}."
+    },
+    {
+      "slug": "g6-secondo-parere",
+      "title": "Vuoi un secondo parere sul prezzo?",
+      "slides": [
+        "VUOI VENDERE|DA SOLO?",
+        "VA BENE",
+        "MA IL PREZZO|MERITA UN CONTROLLO",
+        "DATI",
+        "COMPARABILI",
+        "MICROZONA",
+        "SCRIVI VALUTAZIONE|F1 IMMOBILIARE|{phone}"
+      ],
+      "caption": "Se vuoi vendere privatamente ma desideri un secondo parere sul prezzo, F1 può analizzarlo con te. {cta}."
+    },
+    {
+      "slug": "g7-annuncio-vs-strategia",
+      "title": "Pubblicare un annuncio non significa costruire una strategia",
+      "slides": [
+        "PUBBLICARE|UN ANNUNCIO",
+        "NON È|UNA STRATEGIA",
+        "SERVONO|DATI",
+        "POSIZIONAMENTO",
+        "DISTRIBUZIONE",
+        "MISURAZIONE",
+        "F1 IMMOBILIARE|PRIMA I DATI.|POI LA STRATEGIA.|{phone}"
+      ],
+      "caption": "Questa è la differenza tra mettere online una casa e costruire una strategia di vendita. {cta}."
     }
   ]
 }
