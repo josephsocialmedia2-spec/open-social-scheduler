@@ -142,6 +142,21 @@ def desired_status(client: dict[str, Any], job: dict[str, Any]) -> tuple[str, st
     return "ready", None
 
 
+def hashtags_for(client: dict[str, Any], ordinal: int, slot_index: int) -> list[str]:
+    sets = client.get("campaign", {}).get("hashtag_sets", [])
+    sets = [row for row in sets if isinstance(row, list) and row]
+    if not sets:
+        return []
+    return [str(tag).strip() for tag in sets[(ordinal + slot_index) % len(sets)] if str(tag).strip()]
+
+
+def caption_with_hashtags(caption: str, hashtags: list[str]) -> str:
+    base = str(caption or "").strip()
+    if not hashtags:
+        return base
+    return base + "\n\n" + " ".join(hashtags)
+
+
 def build_for_client(client: dict[str, Any], target: date) -> list[dict[str, Any]]:
     client_id = client["id"]
     bank_path = BANK_DIR / f"{client_id}.json"
@@ -155,7 +170,8 @@ def build_for_client(client: dict[str, Any], target: date) -> list[dict[str, Any
     if not isinstance(categories, list) or not categories:
         categories = DEFAULT_CATEGORIES
     formats = publishing.get("formats", {})
-    territories = client.get("campaign", {}).get("territories", []) or [""]
+    campaign = client.get("campaign", {})
+    territories = campaign.get("territories", []) or [""]
     ordinal = target.toordinal()
     territory = territories[ordinal % len(territories)]
     approval_key = approval_key_for_date(client, target)
@@ -170,9 +186,9 @@ def build_for_client(client: dict[str, Any], target: date) -> list[dict[str, Any
         item = items[(ordinal + idx) % len(items)]
         tokens = {
             "territory": territory,
-            "cta": client.get("campaign", {}).get("cta", ""),
+            "cta": campaign.get("cta", ""),
             "client": client.get("name", client_id),
-            "phone": str(client.get("campaign", {}).get("phone") or ""),
+            "phone": str(campaign.get("phone") or ""),
         }
         item = replace_tokens(item, tokens)
         hh, mm = [int(x) for x in slots[idx].split(":", 1)]
@@ -186,7 +202,9 @@ def build_for_client(client: dict[str, Any], target: date) -> list[dict[str, Any
             media = f"publisher/media/generated/{client_id}/{target.isoformat()}/{idx + 1:02d}-{slug}.mp4"
 
         specs, _ = integration_specs(client, content_format)
-        voiceover = str(item.get("voiceover") or item.get("caption") or item.get("title") or "")
+        raw_caption = str(item.get("caption") or "")
+        voiceover = str(item.get("voiceover") or raw_caption or item.get("title") or "")
+        hashtags = hashtags_for(client, ordinal, idx)
         job = {
             "id": f"{client_id}-{target.isoformat()}-{idx + 1:02d}-{slug}",
             "client_id": client_id,
@@ -195,11 +213,14 @@ def build_for_client(client: dict[str, Any], target: date) -> list[dict[str, Any
             "editorial_role": category,
             "format": content_format,
             "title": item.get("title", ""),
-            "caption": item.get("caption", ""),
+            "caption": caption_with_hashtags(raw_caption, hashtags),
+            "hashtags": hashtags,
             "voiceover": voiceover,
             "slides": slides,
             "media": media,
             "scheduled_at": scheduled.isoformat(),
+            "territory": territory,
+            "property_focus": campaign.get("property_focus", {}),
             "approval_key": approval_key,
             "platforms": specs,
             "enabled": True,
@@ -262,13 +283,18 @@ def main() -> int:
         targets_by_client[client["id"]] = [start + timedelta(days=i) for i in range(horizon)]
 
     target_keys = {client_id: {d.isoformat() for d in days} for client_id, days in targets_by_client.items()}
+    first_target = {client_id: min(days).isoformat() for client_id, days in targets_by_client.items() if days}
     preserved: list[dict[str, Any]] = []
     replaced = 0
+    pruned_old = 0
     for job in queue["jobs"]:
         client_id = str(job.get("client_id") or "")
         job_date = str(job.get("scheduled_at") or "")[:10]
         is_target = job_date in target_keys.get(client_id, set())
         is_final = job.get("status") in {"published", "scheduled"}
+        if not is_final and client_id in first_target and job_date and job_date < first_target[client_id]:
+            pruned_old += 1
+            continue
         if is_target and not is_final:
             replaced += 1
             continue
@@ -290,7 +316,7 @@ def main() -> int:
     reconcile(queue, client_map)
     queue["updated_at"] = datetime.utcnow().isoformat(timespec="seconds") + "Z"
     save_json(QUEUE_PATH, queue)
-    print(f"Queue reconciled: {replaced} stale future job(s) replaced, {added} new job(s), {len(queue['jobs'])} total.")
+    print(f"Queue reconciled: {pruned_old} stale old job(s) pruned, {replaced} future job(s) replaced, {added} new job(s), {len(queue['jobs'])} total.")
     return 0
 
 
