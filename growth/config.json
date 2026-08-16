@@ -1,0 +1,29 @@
+{
+  "version": 2,
+  "daily_candidate_limit": 40,
+  "brands": {
+    "f1-immobiliare": {
+      "label": "F1 Immobiliare",
+      "territories": [
+        "Avigliana", "Almese", "Villar Dora", "Caprie", "Condove", "Chiusa di San Michele",
+        "Vaie", "Sant'Antonino di Susa", "Borgone Susa", "Villar Focchiardo", "Bussoleno",
+        "Susa", "Rivoli", "Valle di Susa", "Torino ovest"
+      ],
+      "topics": [
+        "gruppo cittadini", "sei di", "mercatino", "compro vendo", "eventi", "case immobili",
+        "residenti", "community", "segnalazioni", "attività locali", "cerco casa", "vendo casa"
+      ]
+    },
+    "real-media-pro": {
+      "label": "Real Media Pro",
+      "territories": ["Torino", "Rivoli", "Avigliana", "Valle di Susa"],
+      "topics": [
+        "imprenditori", "commercianti", "attività locali", "professionisti", "networking",
+        "business", "marketing", "negozi", "PMI", "artigiani"
+      ]
+    }
+  },
+  "status_flow": [
+    "PENDING_APPROVAL", "APPROVED", "JOIN_REQUESTED", "MEMBER", "POST_READY", "PAUSED", "REJECTED"
+  ]
+}
