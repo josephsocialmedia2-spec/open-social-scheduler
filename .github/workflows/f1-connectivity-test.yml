@@ -1,0 +1,33 @@
+name: F1 Social Connectivity Test
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    env:
+      POSTIZ_API_KEY: ${{ secrets.POSTIZ_API_KEY }}
+      POSTIZ_API_URL: ${{ vars.POSTIZ_API_URL || 'https://api.postiz.com/public/v1' }}
+      CLIENT_CONFIG: publisher/clients/f1-immobiliare.json
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check connected Postiz integrations
+        run: python publisher/check_integrations.py
+      - name: Save connectivity report
+        if: always()
+        shell: bash
+        run: |
+          if [ ! -f publisher/connectivity-report.json ]; then exit 0; fi
+          git config user.name 'open-social-engine'
+          git config user.email 'open-social-engine@users.noreply.github.com'
+          git add publisher/connectivity-report.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Update F1 social connectivity report'
+          git push origin HEAD:${GITHUB_REF_NAME}
