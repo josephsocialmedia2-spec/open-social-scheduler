@@ -1,0 +1,23 @@
+services:
+  caddy:
+    image: caddy:2.10-alpine
+    container_name: open-social-caddy
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    environment:
+      POSTIZ_DOMAIN: ${POSTIZ_DOMAIN}
+    volumes:
+      - ${POSTIZ_STACK_DIR}/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    networks:
+      - postiz-network
+    depends_on:
+      - postiz
+
+volumes:
+  caddy_data:
+  caddy_config:
