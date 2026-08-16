@@ -18,6 +18,7 @@ on:
       - 'publisher/clients/**'
       - 'publisher/content_bank/**'
       - 'publisher/approvals/**'
+      - 'publisher/tests/**'
 
 permissions:
   contents: write
