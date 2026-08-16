@@ -22,7 +22,7 @@ permissions:
 
 concurrency:
   group: facebook-group-radar
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   discover:
