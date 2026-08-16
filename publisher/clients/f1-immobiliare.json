@@ -4,6 +4,14 @@
   "active": true,
   "timezone": "Europe/Rome",
   "postiz_customer_name": "F1 Immobiliare",
+  "profile_urls": {
+    "facebook": "https://www.facebook.com/F1ImmobiliareValdiSusa",
+    "instagram": "https://www.instagram.com/joseph_malafronte/",
+    "tiktok": "https://www.tiktok.com/@f1immobiliare",
+    "youtube": "https://www.youtube.com/@F1Immobiliare",
+    "linkedin": "https://www.linkedin.com/in/josephmalafronte/",
+    "pinterest": "https://it.pinterest.com/josephmalafronte/"
+  },
   "brand": {
     "status": "premium-valle-susa-v1",
     "background": "#070907",
@@ -85,6 +93,8 @@
     "horizon_days": 7
   },
   "publishing": {
+    "backend": "direct_api",
+    "secret_prefix": "F1",
     "require_media": true,
     "slots": ["09:00", "12:30", "17:30", "20:30"],
     "formats": {
@@ -93,18 +103,18 @@
       "hyperlocal": "reel",
       "convert": "carousel"
     },
-    "platforms": ["facebook", "instagram", "tiktok", "linkedin-page", "youtube", "pinterest"],
+    "platforms": ["facebook", "instagram", "tiktok", "linkedin", "youtube", "pinterest"],
     "platforms_by_format": {
-      "reel": ["facebook", "instagram", "tiktok", "linkedin-page", "youtube"],
-      "carousel": ["facebook", "instagram", "linkedin-page", "pinterest"]
+      "reel": ["facebook", "instagram", "tiktok", "linkedin", "youtube"],
+      "carousel": ["facebook", "instagram", "linkedin", "pinterest"]
     }
   },
   "integrations": {
-    "facebook": {"id": "", "required": true},
-    "instagram": {"id": "", "required": true},
-    "tiktok": {"id": "", "required": false},
-    "linkedin-page": {"id": "", "required": false},
-    "youtube": {"id": "", "required": false},
-    "pinterest": {"id": "", "required": false, "board": ""}
+    "facebook": {"id": "direct-api", "required": true},
+    "instagram": {"id": "direct-api", "required": true},
+    "tiktok": {"id": "direct-api", "required": false},
+    "linkedin": {"id": "direct-api", "required": false},
+    "youtube": {"id": "direct-api", "required": false},
+    "pinterest": {"id": "direct-api", "required": false, "board": ""}
   }
 }
