@@ -1,0 +1,36 @@
+{
+  "id": "client-slug",
+  "name": "Client Name",
+  "active": false,
+  "timezone": "Europe/Rome",
+  "postiz_customer_name": "Client Name",
+  "brand": {
+    "status": "configure",
+    "logo": "",
+    "background": "#0B0B0B",
+    "primary": "#FFFFFF",
+    "accent": "#00D084",
+    "muted": "#A7A7A7",
+    "font_title": "DejaVu Sans Bold",
+    "font_body": "DejaVu Sans"
+  },
+  "campaign": {
+    "name": "",
+    "cta": "",
+    "keyword": "",
+    "territories": []
+  },
+  "publishing": {
+    "require_media": true,
+    "slots": ["09:00", "12:30", "17:30", "20:30"],
+    "platforms": ["facebook", "instagram", "tiktok", "linkedin-page", "youtube", "pinterest"]
+  },
+  "integrations": {
+    "facebook": {"id": "", "required": true},
+    "instagram": {"id": "", "required": true},
+    "tiktok": {"id": "", "required": false},
+    "linkedin-page": {"id": "", "required": false},
+    "youtube": {"id": "", "required": false},
+    "pinterest": {"id": "", "required": false, "board": ""}
+  }
+}
