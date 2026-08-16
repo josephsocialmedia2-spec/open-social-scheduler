@@ -1,5 +1,6 @@
 {
-  "version": 2,
+  "batch_id": "20260816-084920",
+  "created_at": "2026-08-16T08:49:35+00:00",
   "groups": [
     {
       "id": "FBG-EB678EAB07",
@@ -681,7 +682,5 @@
       "last_post_at": null,
       "notes": ""
     }
-  ],
-  "updated_at": "2026-08-16T08:49:35+00:00",
-  "last_batch_id": "20260816-084920"
+  ]
 }
