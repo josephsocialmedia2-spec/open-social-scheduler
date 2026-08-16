@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "jobs": [
+    {
+      "id": "f1-2026-08-16-reel-01",
+      "enabled": true,
+      "status": "ready",
+      "title": "Sai davvero quanto vale casa tua?",
+      "caption": "Sai davvero quanto vale oggi casa tua? Il prezzo immaginato e il valore di mercato possono essere molto diversi. Scrivi VALORE in privato per una prima valutazione immobiliare gratuita. #F1Immobiliare #ValutazioneImmobiliare #VendereCasa #ValleDiSusa",
+      "media": "publisher/media/F1_Reel_Test_Valutazione_Gratuita.mp4",
+      "scheduled_at": "2026-08-16T18:30:00+02:00",
+      "platforms": [
+        "facebook",
+        "instagram",
+        "linkedin-page",
+        {
+          "platform": "tiktok",
+          "settings": {
+            "video_made_with_ai": true
+          }
+        },
+        "youtube"
+      ],
+      "youtube_tags": [
+        "F1 Immobiliare",
+        "valutazione immobiliare",
+        "Valle di Susa",
+        "vendere casa"
+      ],
+      "published_platforms": []
+    }
+  ]
+}
