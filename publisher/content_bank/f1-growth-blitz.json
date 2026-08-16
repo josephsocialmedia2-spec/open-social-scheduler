@@ -1,0 +1,246 @@
+{
+  "version": 1,
+  "client_id": "f1-immobiliare",
+  "campaign": "F1 Growth Blitz 2026",
+  "reels": [
+    {
+      "id": "reel-segnalatore-01",
+      "pillar": "segnalatori",
+      "title": "Conosci una casa che potrebbe essere venduta?",
+      "hook": "Conosci una casa che potrebbe essere venduta nei prossimi mesi?",
+      "voiceover": "Conosci una casa vuota, ereditata, ferma da tempo o un proprietario che sta pensando di vendere? Una segnalazione può diventare un'opportunità utile per il territorio. F1 non ti chiede di mediare, trattare o convincere nessuno: ci basta l'informazione. Verifichiamo noi la situazione, analizziamo l'immobile e, se ci sono i presupposti, contattiamo il proprietario nel modo corretto. In Valle di Susa molte vendite iniziano prima ancora che compaia un annuncio online. Se conosci una situazione interessante, scrivici. Prima i dati. Poi la strategia. Poi la vendita.",
+      "visuals": ["agente IA adulto elegante", "casa vuota in Valle di Susa", "cartello vendesi generico", "mappa Valle di Susa", "dashboard F1", "WhatsApp F1"],
+      "cta": "Invia la segnalazione su WhatsApp: 3713708294 oppure 3714246300",
+      "caption": "Conosci una casa vuota, ereditata o un proprietario che sta pensando di vendere? Inviaci una semplice segnalazione: F1 verifica e gestisce tutta l'attività immobiliare. WhatsApp 3713708294 / 3714246300.",
+      "hashtags": ["#F1Immobiliare", "#ValleDiSusa", "#VendereCasa", "#SegnalazioneImmobiliare", "#CasaInVendita", "#ImmobiliarePiemonte"]
+    },
+    {
+      "id": "reel-segnalatore-02",
+      "pillar": "segnalatori",
+      "title": "Hai visto un cartello VENDESI?",
+      "hook": "Hai visto un cartello VENDESI che nessuno sembra notare?",
+      "voiceover": "Un cartello su un balcone, una casa chiusa da mesi, un immobile che cambia prezzo più volte. Sono tutti segnali. Il nostro Radar F1 nasce proprio per raccogliere informazioni dal territorio, confrontarle con gli annunci online e capire dove può esserci una reale opportunità. Tu non devi fare il lavoro dell'agente immobiliare. Devi solo segnalarci ciò che hai visto. Noi verifichiamo proprietà, mercato, prezzo e situazione commerciale. Se vivi ad Avigliana, Almese, Condove, Susa, Oulx, Bardonecchia o nei comuni della Valle, puoi diventare una delle antenne informative del territorio F1.",
+      "visuals": ["cartello vendesi generico", "strada di paese Valle di Susa", "radar grafico F1", "agente IA", "mappa con comuni"],
+      "cta": "Scrivi RADAR su WhatsApp",
+      "caption": "Hai visto un cartello VENDESI, una casa vuota o un immobile fermo? Scrivi RADAR su WhatsApp e mandaci la segnalazione. 3713708294 / 3714246300.",
+      "hashtags": ["#F1Radar", "#F1Immobiliare", "#ValleDiSusa", "#Avigliana", "#Susa", "#Oulx"]
+    },
+    {
+      "id": "reel-segnalatore-03",
+      "pillar": "segnalatori",
+      "title": "Casa vuota da mesi: potrebbe esserci una storia dietro",
+      "hook": "Una casa vuota da mesi non è solo una finestra chiusa.",
+      "voiceover": "Dietro una casa vuota può esserci un'eredità, un trasferimento, una seconda casa inutilizzata o semplicemente una decisione rimandata. Non significa automaticamente che sia in vendita, e non dobbiamo inventarlo. Ma può essere una situazione da approfondire con rispetto e metodo. F1 raccoglie segnalazioni informative, verifica i dati disponibili e decide se esistono i presupposti per un contatto corretto. Nessuna pressione, nessuna promessa. Solo un sistema organizzato per capire dove il mercato potrebbe muoversi prima che lo facciano tutti gli altri.",
+      "visuals": ["casa chiusa elegante", "vicolo montano", "agente IA pensieroso", "dashboard dati", "logo F1"],
+      "cta": "Segnala una situazione: WhatsApp F1",
+      "caption": "Una casa vuota non è automaticamente in vendita, ma può essere una situazione da approfondire correttamente. F1 raccoglie segnalazioni informative e verifica i dati. WhatsApp 3713708294 / 3714246300.",
+      "hashtags": ["#F1Immobiliare", "#ValleDiSusa", "#Immobili", "#CasaVuota", "#MercatoImmobiliare", "#PrimaIDati"]
+    },
+    {
+      "id": "reel-segnalatore-04",
+      "pillar": "segnalatori",
+      "title": "Un annuncio ribassato tre volte è un segnale",
+      "hook": "Un immobile ribassato tre volte sta dicendo qualcosa.",
+      "voiceover": "Quando un annuncio cambia prezzo più volte, non significa automaticamente che sia un affare. Significa però che il mercato ha già dato una risposta. F1 monitora nuovi annunci, ribassi, ripubblicazioni e immobili fermi. Se ne trovi uno interessante, mandaci semplicemente il link. Lo analizziamo: prezzo, microzona, tipologia, concorrenza e possibilità reale di intervento. Questo è il nostro modo di lavorare: meno sensazioni, più segnali. La tecnologia non sostituisce l'agente. Gli permette di arrivare prima, meglio informato.",
+      "visuals": ["annuncio immobiliare mockup", "freccia prezzo in calo", "dashboard radar", "mappa Valle", "agente IA"],
+      "cta": "Mandaci il link su WhatsApp",
+      "caption": "Hai trovato un immobile ribassato più volte o fermo da mesi? Mandaci il link. F1 lo analizza con dati, microzona e concorrenza. WhatsApp 3713708294 / 3714246300.",
+      "hashtags": ["#F1Radar", "#RibassoPrezzo", "#ValleDiSusa", "#InvestimentoImmobiliare", "#F1Immobiliare", "#ConIDati"]
+    },
+    {
+      "id": "reel-recruiting-01",
+      "pillar": "recruiting",
+      "title": "Non cerchiamo apriporte",
+      "hook": "Se pensi che l'agente immobiliare apra porte, questo lavoro non fa per te.",
+      "voiceover": "L'agente immobiliare moderno deve saper leggere il mercato, trovare opportunità, parlare con proprietari, usare un CRM, creare relazioni, organizzare visite, seguire documenti e negoziazione. In F1 aggiungiamo radar territoriali, dashboard, contenuti, social, open house e sistemi di follow-up. Non cerchiamo persone da mettere dietro una scrivania. Cerchiamo persone che vogliano costruire una professione, formarsi, ottenere i requisiti previsti e diventare autonome nel tempo. Se vuoi capire come funziona davvero il nostro metodo ipertecnologico, scrivici.",
+      "visuals": ["agente IA uomo", "agente IA donna", "CRM", "mappa", "open house", "social dashboard"],
+      "cta": "Scrivi CARRIERA su WhatsApp",
+      "caption": "Non cerchiamo apriporte. Cerchiamo persone che vogliono imparare mercato, acquisizione, tecnologia, relazione e negoziazione. Scrivi CARRIERA su WhatsApp.",
+      "hashtags": ["#LavoraConNoi", "#AgenteImmobiliare", "#F1Immobiliare", "#ValleDiSusa", "#Carriera", "#Autoimprenditorialita"]
+    },
+    {
+      "id": "reel-recruiting-02",
+      "pillar": "recruiting",
+      "title": "Da aspirante agente a professionista",
+      "hook": "Vuoi entrare nell'immobiliare ma non sai da dove cominciare?",
+      "voiceover": "Il percorso serio non parte dal biglietto da visita. Parte dalle competenze. Territorio, acquisizione, comunicazione, documenti, valutazione, appuntamenti, follow-up e negoziazione. Poi ci sono i requisiti professionali previsti dalla normativa per esercitare la mediazione. F1 vuole costruire un percorso in cui tecnologia e formazione lavorano insieme: radar per trovare opportunità, CRM per non perdere contatti, contenuti per creare fiducia e metodo per trasformare attività in risultati. Non promettiamo scorciatoie. Offriamo un sistema da imparare e far crescere.",
+      "visuals": ["giovane adulto professionale", "formazione", "CRM", "tablet con mappa", "affiancamento agente", "logo F1"],
+      "cta": "Chiedi informazioni sul percorso F1",
+      "caption": "Vuoi entrare nel settore immobiliare? Il percorso corretto parte da competenze, formazione e requisiti professionali. F1 aggiunge tecnologia, CRM, radar e metodo.",
+      "hashtags": ["#CarrieraImmobiliare", "#AgenteImmobiliare", "#Formazione", "#F1Immobiliare", "#ValleDiSusa", "#LavoroPiemonte"]
+    },
+    {
+      "id": "reel-recruiting-03",
+      "pillar": "recruiting",
+      "title": "Autoimprenditorialità: costruisci il tuo territorio",
+      "hook": "E se invece di cercare solo un posto di lavoro costruissi il tuo territorio?",
+      "voiceover": "Nel nostro modello ogni collaboratore deve imparare a conoscere una zona, creare relazioni, leggere i segnali del mercato e diventare riconoscibile. Non significa essere lasciati soli. Significa avere strumenti, affiancamento e metodo per sviluppare progressivamente autonomia. Un comune, una microzona, una rete di contatti. Poi dati, CRM, contenuti, telefonate, appuntamenti e presenza sul territorio. Questa è l'autoimprenditorialità che ci interessa: non slogan, ma responsabilità crescente e capacità di produrre valore.",
+      "visuals": ["mappa con territorio assegnato", "agente IA", "bar/negozi locali", "telefonata", "CRM", "stretta di mano"],
+      "cta": "Scrivi TERRITORIO",
+      "caption": "Costruire una professione significa diventare competente e riconoscibile sul proprio territorio. F1 combina affiancamento, tecnologia, CRM e presenza locale.",
+      "hashtags": ["#Autoimprenditorialita", "#F1Immobiliare", "#ValleDiSusa", "#AgenteImmobiliare", "#Territorio", "#Professione"]
+    },
+    {
+      "id": "reel-recruiting-04",
+      "pillar": "recruiting",
+      "title": "La giornata dell'agente F1 non comincia dalle visite",
+      "hook": "La giornata di un agente F1 non comincia aprendo una porta.",
+      "voiceover": "Comincia leggendo il territorio. Nuovi annunci, ribassi, privati, immobili fermi e contatti da richiamare. Poi CRM, telefonate, appuntamenti, sopralluoghi, analisi e contenuti. Le visite arrivano dopo, quando c'è un immobile correttamente posizionato e un acquirente da seguire. Vogliamo professionisti che capiscano il processo intero, non una singola attività. Se cerchi un modello immobiliare più organizzato, tecnologico e misurabile, F1 sta costruendo proprio questo in Valle di Susa.",
+      "visuals": ["dashboard mattutina", "CRM", "telefonata", "sopralluogo", "agente con tablet", "visita immobile"],
+      "cta": "Scrivi METODO F1",
+      "caption": "La visita è una parte del lavoro, non il lavoro intero. Radar, CRM, acquisizione, analisi, contenuti, follow-up e negoziazione: questo è il processo F1.",
+      "hashtags": ["#MetodoF1", "#AgenteImmobiliare", "#PropTech", "#ValleDiSusa", "#F1Immobiliare", "#RealEstateCareer"]
+    },
+    {
+      "id": "reel-privato-01",
+      "pillar": "vendere_da_solo",
+      "title": "Vuoi vendere casa da solo? Parti da 5 verifiche",
+      "hook": "Vuoi vendere casa da solo? Fallo pure. Ma prima controlla queste cinque cose.",
+      "voiceover": "Uno: documenti. Due: prezzo costruito su comparabili reali, non sugli annunci che ti piacciono. Tre: fotografie e presentazione. Quattro: distribuzione, perché pubblicare in un solo posto limita la domanda. Cinque: gestione dei contatti, delle visite e dei feedback. Vendere da soli è possibile, ma improvvisare può costare mesi e margine. F1 non deve convincerti a firmare un incarico per forza. Può anche darti una seconda analisi prima che tu pubblichi, così almeno parti con dati più solidi.",
+      "visuals": ["proprietario adulto", "documenti", "comparabili", "foto immobile", "portali", "telefono con richieste"],
+      "cta": "Valuta il tuo immobile: f1immobiliare.com/pages/contatti",
+      "caption": "Vuoi vendere casa da solo? Controlla documenti, comparabili, presentazione, distribuzione e gestione dei contatti. Per una seconda analisi: https://f1immobiliare.com/pages/contatti",
+      "hashtags": ["#VendereCasaDaSolo", "#F1Immobiliare", "#ValleDiSusa", "#VendereCasa", "#ValutazioneImmobiliare", "#ProprietariCasa"]
+    },
+    {
+      "id": "reel-privato-02",
+      "pillar": "vendere_da_solo",
+      "title": "2000 visualizzazioni e zero visite",
+      "hook": "Duemila visualizzazioni e zero visite non sono un successo.",
+      "voiceover": "Sono un dato. Significa che le persone vedono l'annuncio ma non compiono il passo successivo. Perché? Prezzo fuori posizione? Foto deboli? Descrizione generica? Immobile confrontato con alternative migliori? Target sbagliato? La risposta non è abbassare automaticamente il prezzo. Prima bisogna capire dove si rompe il percorso. F1 guarda visualizzazioni, richieste, qualità dei contatti, comparabili e concorrenza. Il mercato parla continuamente. Il problema è quando nessuno lo ascolta.",
+      "visuals": ["telefono con 2000 views", "zero richieste", "foto immobile", "comparazione annunci", "grafico", "agente IA"],
+      "cta": "Richiedi una seconda analisi F1",
+      "caption": "Molte visualizzazioni e poche visite sono un segnale da interpretare. Prima di ribassare, bisogna capire prezzo, presentazione, target e concorrenza.",
+      "hashtags": ["#CasaFerma", "#VendereCasa", "#F1Immobiliare", "#ValleDiSusa", "#StrategiaImmobiliare", "#MercatoImmobiliare"]
+    },
+    {
+      "id": "reel-metodo-01",
+      "pillar": "metodo_f1",
+      "title": "Come pubblicizziamo davvero il tuo immobile",
+      "hook": "Pubblicare un annuncio non significa fare marketing immobiliare.",
+      "voiceover": "Per F1 il lancio di un immobile parte prima della pubblicazione. Analisi della microzona e della concorrenza. Strategia prezzo. Foto, video e materiali. Poi distribuzione sui principali portali, sito e social. Per gli immobili selezionati aggiungiamo campagne, duemilacinquecento volantini sul territorio, evento Facebook e Open House. Dopo il lancio raccogliamo richieste, feedback e segnali del mercato per capire se la strategia sta funzionando. Ogni immobile diventa una campagna, non una semplice scheda online.",
+      "visuals": ["analisi dati", "fotografo immobile", "mockup portali", "Reel social", "volantini", "open house", "dashboard risultati"],
+      "cta": "Scopri il piano F1: f1immobiliare.com/pages/contatti",
+      "caption": "Un immobile F1 non viene solo pubblicato: viene analizzato, preparato, distribuito, promosso e misurato. Portali + social + territorio + Open House + follow-up.",
+      "hashtags": ["#MarketingImmobiliare", "#F1Immobiliare", "#OpenHouse", "#ValleDiSusa", "#VendereCasa", "#ImmobiliareDigitale"]
+    },
+    {
+      "id": "reel-metodo-02",
+      "pillar": "metodo_f1",
+      "title": "Il metodo F1 in 60 secondi",
+      "hook": "Ecco cosa succede prima, durante e dopo la pubblicazione di una casa con F1.",
+      "voiceover": "Prima: raccogliamo documenti, analizziamo microzona, comparabili, concorrenza e domanda. Poi costruiamo prezzo, posizionamento e materiali. Durante il lancio distribuiamo l'immobile su portali, sito, social e territorio. Quando previsto, attiviamo volantini, evento Facebook e Open House. Dopo: tracciamo richieste, visite, feedback, ribassi della concorrenza e qualità dei contatti. Poi decidiamo cosa mantenere e cosa correggere. Il metodo F1 è semplice da spiegare: prima i dati, poi la strategia, poi la vendita.",
+      "visuals": ["documenti", "comparabili", "foto/video", "portali", "social", "open house", "dashboard", "logo F1"],
+      "cta": "Valuta il tuo immobile con F1",
+      "caption": "Prima: dati. Durante: distribuzione e promozione. Dopo: misurazione e correzione. Questo è il metodo F1.",
+      "hashtags": ["#MetodoF1", "#F1Immobiliare", "#ValutazioneImmobiliare", "#ValleDiSusa", "#OpenHouse", "#PrimaIDati"]
+    }
+  ],
+  "carousels": [
+    {
+      "id": "carosello-leggi-01",
+      "pillar": "leggi_documenti",
+      "title": "Catasto e urbanistica non sono la stessa cosa",
+      "slides": [
+        "CATASTO E URBANISTICA|NON SONO LA STESSA COSA",
+        "IL CATASTO|IDENTIFICA E DESCRIVE|L'IMMOBILE",
+        "L'URBANISTICA|RIGUARDA I TITOLI|E LA LEGITTIMITÀ EDILIZIA",
+        "UNA PLANIMETRIA CATASTALE|DA SOLA NON DIMOSTRA|LA REGOLARITÀ URBANISTICA",
+        "PRIMA DI VENDERE|SERVONO VERIFICHE|DOCUMENTALI CORRETTE",
+        "SE CI SONO DUBBI|SERVE UN TECNICO|ABILITATO",
+        "F1 IMMOBILIARE|PRIMA I DATI|POI LA VENDITA"
+      ],
+      "caption": "Catasto e urbanistica hanno funzioni diverse. Prima della vendita è opportuno verificare la documentazione e, quando necessario, coinvolgere un tecnico abilitato.",
+      "hashtags": ["#DocumentiCasa", "#F1Immobiliare", "#Urbanistica", "#Catasto", "#VendereCasa", "#ValleDiSusa"]
+    },
+    {
+      "id": "carosello-leggi-02",
+      "pillar": "leggi_documenti",
+      "title": "7 documenti da preparare prima di vendere",
+      "slides": [
+        "VUOI VENDERE?|PREPARA PRIMA I DOCUMENTI",
+        "1|ATTO DI PROVENIENZA",
+        "2|DATI E PLANIMETRIA CATASTALE",
+        "3|APE QUANDO RICHIESTO",
+        "4|DOCUMENTAZIONE URBANISTICA|E TITOLI DISPONIBILI",
+        "5|DOCUMENTI CONDOMINIALI|SE APPLICABILI",
+        "6|SUCCESSIONI / MUTUI / VINCOLI|SE PRESENTI",
+        "7|VERIFICA TECNICA|SE CI SONO DUBBI",
+        "F1 IMMOBILIARE|VENDERE BENE COMINCIA|PRIMA DELL'ANNUNCIO"
+      ],
+      "caption": "Preparare i documenti prima della pubblicazione riduce sorprese e rallentamenti. L'elenco esatto varia in base all'immobile e alla situazione del proprietario.",
+      "hashtags": ["#VendereCasa", "#DocumentiImmobiliari", "#F1Immobiliare", "#ValleDiSusa", "#Casa", "#Immobiliare"]
+    },
+    {
+      "id": "carosello-homestaging-01",
+      "pillar": "home_staging",
+      "title": "La prima visita avviene sul telefono",
+      "slides": [
+        "LA PRIMA VISITA|ALLA TUA CASA|AVVIENE SUL TELEFONO",
+        "PRIMA DI ENTRARE|LE PERSONE VEDONO|LE FOTO",
+        "LUCE|ORDINE|SPAZIO",
+        "TOGLIERE IL SUPERFLUO|AIUTA A LEGGERE|GLI AMBIENTI",
+        "COLORI NEUTRI|RIDUCONO LE DISTRAZIONI",
+        "UNA STANZA DEVE FAR CAPIRE|FUNZIONE E DIMENSIONI",
+        "POI SERVONO|FOTO E VIDEO|COERENTI",
+        "F1 IMMOBILIARE|PRIMA PREPARIAMO|POI PUBBLICHIAMO"
+      ],
+      "caption": "La percezione dell'immobile nasce prima della visita fisica. Preparazione, luce, ordine e fotografie coerenti aiutano l'acquirente a capire gli spazi.",
+      "hashtags": ["#HomeStaging", "#F1Immobiliare", "#VendereCasa", "#FotografiaImmobiliare", "#ValleDiSusa", "#CasaInVendita"]
+    },
+    {
+      "id": "carosello-privato-01",
+      "pillar": "vendere_da_solo",
+      "title": "5 errori di chi vende casa da solo",
+      "slides": [
+        "VENDI CASA DA SOLO?|EVITA QUESTI 5 ERRORI",
+        "1|COPIARE IL PREZZO|DEL VICINO",
+        "2|PUBBLICARE FOTO|SCURE O DISORDINATE",
+        "3|ESSERE PRESENTE|SU POCHI CANALI",
+        "4|NON FILTRARE|LE RICHIESTE",
+        "5|NON LEGGERE|I FEEDBACK DEL MERCATO",
+        "VENDERE DA SOLO|È POSSIBILE|IMPROVVISARE COSTA",
+        "F1 IMMOBILIARE|VUOI UN SECONDO PARERE?"
+      ],
+      "caption": "Vendere da soli è possibile. Il punto è partire preparati: prezzo, presentazione, distribuzione, gestione dei contatti e lettura dei feedback.",
+      "hashtags": ["#VendereCasaDaSolo", "#F1Immobiliare", "#ValutazioneCasa", "#ValleDiSusa", "#Proprietari", "#VendereCasa"]
+    },
+    {
+      "id": "carosello-metodo-01",
+      "pillar": "metodo_f1",
+      "title": "Come F1 pubblicizza il tuo immobile",
+      "slides": [
+        "COME F1|PUBBLICIZZA|IL TUO IMMOBILE",
+        "1|ANALISI IMMOBILE|E MICROZONA",
+        "2|PREZZO E|POSIZIONAMENTO",
+        "3|FOTO VIDEO|E MATERIALI",
+        "4|PORTALI IMMOBILIARI|E SITO",
+        "5|SOCIAL E|CONTENUTI",
+        "6|2.500 VOLANTINI|+ EVENTO FACEBOOK",
+        "7|OPEN HOUSE|+ FOLLOW-UP",
+        "8|DATI E FEEDBACK|PER CORREGGERE",
+        "F1 IMMOBILIARE|OGNI IMMOBILE|È UNA CAMPAGNA"
+      ],
+      "caption": "La pubblicazione è solo una fase. Il piano F1 collega analisi, posizionamento, portali, social, territorio, Open House e misurazione.",
+      "hashtags": ["#MarketingImmobiliare", "#F1Immobiliare", "#OpenHouse", "#ValleDiSusa", "#VendereCasa", "#PianoMarketing"]
+    },
+    {
+      "id": "carosello-recruiting-01",
+      "pillar": "recruiting",
+      "title": "Cosa deve saper fare un agente immobiliare moderno",
+      "slides": [
+        "AGENTE IMMOBILIARE 2026|NON BASTA SAPER|MOSTRARE CASE",
+        "1|LEGGERE IL MERCATO",
+        "2|TROVARE OPPORTUNITÀ",
+        "3|GESTIRE CRM|E FOLLOW-UP",
+        "4|COMUNICARE|ONLINE E OFFLINE",
+        "5|ORGANIZZARE|OPEN HOUSE E VISITE",
+        "6|CONOSCERE DOCUMENTI|E PROCESSO",
+        "7|NEGOZIARE E|SEGUIRE IL CLIENTE",
+        "F1|TECNOLOGIA + TERRITORIO|+ METODO"
+      ],
+      "caption": "L'agente moderno deve unire relazione, territorio, dati e tecnologia. F1 sta costruendo un modello operativo basato su radar, CRM, contenuti, Open House e formazione.",
+      "hashtags": ["#AgenteImmobiliare", "#LavoraConNoi", "#F1Immobiliare", "#PropTech", "#ValleDiSusa", "#CarrieraImmobiliare"]
+    }
+  ]
+}
