@@ -5,6 +5,11 @@ The engine may prepare and render content before approval, but a job cannot beco
 ready for publishing until its approval key has been explicitly approved.
 Future unpublished jobs are replaced when the editorial plan changes, preventing
 duplicate blasts after a content-bank or schedule update.
+
+F1 Immobiliare also has a dedicated Growth Blitz bank. One Reel and one carousel
+per day are pulled from that bank, while the other two slots keep the core F1
+valuation/market content. This gives a 50/50 weekly split between evergreen seller
+education and acquisition/recruiting/growth campaigns.
 """
 
 from __future__ import annotations
@@ -23,6 +28,26 @@ BANK_DIR = ROOT / "publisher" / "content_bank"
 QUEUE_PATH = ROOT / "publisher" / "queue.json"
 DEFAULT_CATEGORIES = ["attract", "nurture", "hyperlocal", "convert"]
 _APPROVAL_CACHE: dict[str, dict[str, Any]] = {}
+
+F1_GROWTH_PATH = BANK_DIR / "f1-growth-blitz.json"
+F1_GROWTH_REEL_PILLARS = [
+    "recruiting",
+    "segnalatori",
+    "vendere_da_solo",
+    "metodo_f1",
+    "segnalatori",
+    "recruiting",
+    "vendere_da_solo",
+]
+F1_GROWTH_CAROUSEL_PILLARS = [
+    "recruiting",
+    "vendere_da_solo",
+    "leggi_documenti",
+    "home_staging",
+    "metodo_f1",
+    "home_staging",
+    "leggi_documenti",
+]
 
 
 def load_json(path: Path) -> dict[str, Any]:
@@ -154,7 +179,43 @@ def caption_with_hashtags(caption: str, hashtags: list[str]) -> str:
     base = str(caption or "").strip()
     if not hashtags:
         return base
-    return base + "\n\n" + " ".join(hashtags)
+    existing = {part for part in base.split() if part.startswith("#")}
+    extra = [tag for tag in hashtags if tag not in existing]
+    return base if not extra else base + "\n\n" + " ".join(extra)
+
+
+def f1_growth_item(target: date, slot_index: int) -> tuple[dict[str, Any] | None, str | None]:
+    """Return one Growth Blitz item for F1 slot 0 (Reel) or 2 (carousel)."""
+    if not F1_GROWTH_PATH.exists() or slot_index not in {0, 2}:
+        return None, None
+    data = load_json(F1_GROWTH_PATH)
+    weekday = target.weekday()  # Monday=0
+    if slot_index == 0:
+        fmt = "reel"
+        pillar = F1_GROWTH_REEL_PILLARS[weekday]
+        pool = [x for x in data.get("reels", []) if x.get("pillar") == pillar]
+    else:
+        fmt = "carousel"
+        pillar = F1_GROWTH_CAROUSEL_PILLARS[weekday]
+        pool = [x for x in data.get("carousels", []) if x.get("pillar") == pillar]
+    if not pool:
+        return None, None
+    item = dict(pool[(target.toordinal() // 7 + slot_index) % len(pool)])
+    item["slug"] = str(item.get("id") or f"growth-{pillar}")
+    item["format"] = fmt
+    if fmt == "reel":
+        # Renderer needs multiple visual slides. Use short, readable beats while
+        # the 60-second voiceover carries the full narrative.
+        item["slides"] = [
+            str(item.get("hook") or item.get("title") or "F1 IMMOBILIARE").upper(),
+            "VALLE DI SUSA|DATI + TERRITORIO",
+            "TECNOLOGIA|+ RELAZIONI",
+            "UN METODO|DA CAPIRE",
+            "UN PROCESSO|DA MISURARE",
+            str(item.get("cta") or "CONTATTA F1").upper(),
+            "F1 IMMOBILIARE|PRIMA I DATI|POI LA STRATEGIA|POI LA VENDITA",
+        ]
+    return item, pillar
 
 
 def build_for_client(client: dict[str, Any], target: date) -> list[dict[str, Any]]:
@@ -180,10 +241,18 @@ def build_for_client(client: dict[str, Any], target: date) -> list[dict[str, Any
     for idx, category in enumerate(categories):
         if idx >= len(slots):
             break
-        items = bank.get(category, [])
-        if not items:
-            continue
-        item = items[(ordinal + idx) % len(items)]
+
+        growth_pillar = None
+        item: dict[str, Any] | None = None
+        if client_id == "f1-immobiliare":
+            item, growth_pillar = f1_growth_item(target, idx)
+
+        if item is None:
+            items = bank.get(category, [])
+            if not items:
+                continue
+            item = dict(items[(ordinal + idx) % len(items)])
+
         tokens = {
             "territory": territory,
             "cta": campaign.get("cta", ""),
@@ -194,7 +263,7 @@ def build_for_client(client: dict[str, Any], target: date) -> list[dict[str, Any
         hh, mm = [int(x) for x in slots[idx].split(":", 1)]
         scheduled = datetime(target.year, target.month, target.day, hh, mm, tzinfo=tz)
         slug = str(item.get("slug") or f"slot-{idx + 1}")
-        content_format = str(formats.get(category) or item.get("format") or "reel").lower()
+        content_format = str(item.get("format") or formats.get(category) or "reel").lower()
         slides = list(item.get("slides") or [])
         if content_format == "carousel":
             media: Any = [f"publisher/media/generated/{client_id}/{target.isoformat()}/{idx + 1:02d}-{slug}/slide-{n:02d}.jpg" for n in range(1, len(slides) + 1)]
@@ -204,19 +273,23 @@ def build_for_client(client: dict[str, Any], target: date) -> list[dict[str, Any
         specs, _ = integration_specs(client, content_format)
         raw_caption = str(item.get("caption") or "")
         voiceover = str(item.get("voiceover") or raw_caption or item.get("title") or "")
-        hashtags = hashtags_for(client, ordinal, idx)
+        item_hashtags = [str(x).strip() for x in item.get("hashtags", []) if str(x).strip()]
+        hashtags = item_hashtags or hashtags_for(client, ordinal, idx)
         job = {
             "id": f"{client_id}-{target.isoformat()}-{idx + 1:02d}-{slug}",
             "client_id": client_id,
             "client_name": client.get("name", client_id),
             "category": category,
-            "editorial_role": category,
+            "editorial_role": growth_pillar or category,
+            "campaign": "F1 Growth Blitz 2026" if growth_pillar else "F1 Core",
             "format": content_format,
             "title": item.get("title", ""),
             "caption": caption_with_hashtags(raw_caption, hashtags),
             "hashtags": hashtags,
             "voiceover": voiceover,
             "slides": slides,
+            "visuals": list(item.get("visuals") or []),
+            "cta": item.get("cta", campaign.get("cta", "")),
             "media": media,
             "scheduled_at": scheduled.isoformat(),
             "territory": territory,
