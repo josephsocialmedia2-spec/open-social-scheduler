@@ -26,7 +26,7 @@ permissions:
 
 concurrency:
   group: open-social-engine-daily
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   build-render-prepare:
@@ -153,13 +153,18 @@ jobs:
               return;
             }
             const repoUrl = `https://github.com/${context.repo.owner}/${context.repo.repo}`;
+            const editorialChat = 'https://chatgpt.com/c/6a814ec3-80cc-83eb-b9b6-a56f02c348e8';
             const body = [
-              `GitHub ha preparato il pacchetto social per **${key}**.`,
+              `GitHub ha preparato il pacchetto social F1 per **${key}**.`,
+              '',
+              '**Posizionamento fisso:** NON A SENSAZIONE. CON I DATI.',
+              '**Sequenza giornaliera:** 08:00 DATI → 12:30 ERRORE → 17:30 PROVA → 20:30 DECISIONE.',
               '',
               '**Nessun contenuto viene pubblicato prima della tua conferma.**',
               '',
-              `1. Controlla i contenuti: ${repoUrl}/actions/workflows/social-engine-daily.yml`,
-              `2. Se va bene, rispondi a questa issue scrivendo esattamente: **CONFERMO**`,
+              `1. Chat editoriale F1: ${editorialChat}`,
+              `2. Controlla i contenuti: ${repoUrl}/actions/workflows/social-engine-daily.yml`,
+              `3. Se va bene, rispondi a questa issue scrivendo esattamente: **CONFERMO**`,
               '',
               'Dopo CONFERMO, gli slot approvati vengono pubblicati automaticamente alle loro scadenze tramite le API ufficiali configurate.',
               '',
