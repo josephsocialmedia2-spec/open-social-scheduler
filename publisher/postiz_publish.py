@@ -1,10 +1,5 @@
 #!/usr/bin/env python3
-"""Publish/schedule queued social posts through Postiz.
-
-The queue is intentionally file-based so ChatGPT or any other process with
-repository write access can add a job. GitHub Actions then sends it to Postiz,
-which handles the official social-provider APIs.
-"""
+"""Publish/schedule queued social posts through Postiz with tenant isolation."""
 
 from __future__ import annotations
 
@@ -19,14 +14,16 @@ from typing import Any
 import requests
 
 ROOT = Path(__file__).resolve().parents[1]
-QUEUE_PATH = Path(os.getenv("F1_SOCIAL_QUEUE", ROOT / "publisher" / "queue.json"))
+QUEUE_PATH = Path(os.getenv("SOCIAL_QUEUE", ROOT / "publisher" / "queue.json"))
+CLIENT_DIR = ROOT / "publisher" / "clients"
 API_BASE = os.getenv("POSTIZ_API_URL", "https://api.postiz.com/public/v1").rstrip("/")
 API_KEY = os.getenv("POSTIZ_API_KEY", "").strip()
+ALLOW_LEGACY_HINTS = os.getenv("ALLOW_LEGACY_ACCOUNT_HINTS", "false").lower() == "true"
 
 ALIASES = {
-    "facebook": {"facebook", "facebook-page"},
+    "facebook": {"facebook"},
     "instagram": {"instagram", "instagram-standalone"},
-    "linkedin": {"linkedin", "linkedin-page"},
+    "linkedin": {"linkedin"},
     "linkedin-page": {"linkedin-page"},
     "tiktok": {"tiktok"},
     "youtube": {"youtube"},
@@ -45,22 +42,30 @@ def api(method: str, path: str, **kwargs: Any) -> requests.Response:
     return response
 
 
+def load_json(path: Path) -> dict[str, Any]:
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
 def load_queue() -> dict[str, Any]:
     if not QUEUE_PATH.exists():
-        print(f"No queue at {QUEUE_PATH}; nothing to do.")
-        return {"version": 1, "jobs": []}
-    with QUEUE_PATH.open("r", encoding="utf-8") as fh:
-        data = json.load(fh)
+        return {"version": 2, "jobs": []}
+    data = load_json(QUEUE_PATH)
     if not isinstance(data.get("jobs"), list):
         raise ValueError("queue.json must contain a jobs array")
     return data
 
 
 def save_queue(data: dict[str, Any]) -> None:
-    QUEUE_PATH.parent.mkdir(parents=True, exist_ok=True)
     tmp = QUEUE_PATH.with_suffix(".tmp")
     tmp.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     tmp.replace(QUEUE_PATH)
+
+
+def load_client(client_id: str) -> dict[str, Any]:
+    path = CLIENT_DIR / f"{client_id}.json"
+    if not path.exists():
+        raise RuntimeError(f"Unknown client_id: {client_id}")
+    return load_json(path)
 
 
 def get_integrations() -> list[dict[str, Any]]:
@@ -75,36 +80,75 @@ def get_integrations() -> list[dict[str, Any]]:
 
 def integration_kind(item: dict[str, Any]) -> str:
     for key in ("identifier", "provider", "type", "providerIdentifier"):
-        value = item.get(key)
-        if value:
-            return str(value).lower()
+        if item.get(key):
+            return str(item[key]).lower()
     return ""
 
 
 def integration_name(item: dict[str, Any]) -> str:
-    for key in ("name", "displayName", "username", "identifier"):
-        value = item.get(key)
-        if value:
-            return str(value)
+    for key in ("name", "displayName", "profile", "username", "identifier"):
+        if item.get(key):
+            return str(item[key])
     return str(item.get("id", ""))
 
 
-def select_integration(integrations: list[dict[str, Any]], platform: str, account_hint: str | None = None) -> dict[str, Any]:
-    platform = platform.lower()
+def verify_exact_integration(integrations: list[dict[str, Any]], platform: str, integration_id: str) -> dict[str, Any]:
     allowed = ALIASES.get(platform, {platform})
-    candidates = [i for i in integrations if integration_kind(i) in allowed]
+    matches = [item for item in integrations if str(item.get("id")) == integration_id]
+    if not matches:
+        raise RuntimeError(f"Configured integration ID for {platform} does not exist: {integration_id}")
+    item = matches[0]
+    kind = integration_kind(item)
+    if kind not in allowed:
+        raise RuntimeError(f"Integration {integration_id} is '{kind}', not '{platform}'")
+    if item.get("disabled") is True:
+        raise RuntimeError(f"Integration {integration_id} ({integration_name(item)}) is disabled")
+    return item
+
+
+def legacy_select(integrations: list[dict[str, Any]], platform: str, account_hint: str | None) -> dict[str, Any]:
+    if not ALLOW_LEGACY_HINTS:
+        raise RuntimeError("Production publishing requires an explicit integration_id per tenant/platform")
+    allowed = ALIASES.get(platform, {platform})
+    candidates = [i for i in integrations if integration_kind(i) in allowed and i.get("disabled") is not True]
     if account_hint:
         hint = account_hint.lower()
-        hinted = [i for i in candidates if hint in integration_name(i).lower()]
-        if hinted:
-            candidates = hinted
-    if not candidates:
-        connected = ", ".join(sorted({integration_kind(i) for i in integrations}))
-        raise RuntimeError(f"No Postiz integration found for '{platform}'. Connected: {connected or 'none'}")
-    if len(candidates) > 1 and not account_hint:
-        names = ", ".join(integration_name(i) for i in candidates)
-        raise RuntimeError(f"Multiple '{platform}' integrations found ({names}). Add account_hint to the queue job.")
+        candidates = [i for i in candidates if hint in integration_name(i).lower()]
+    if len(candidates) != 1:
+        raise RuntimeError(f"Legacy lookup for {platform} is ambiguous or empty; configure integration_id")
     return candidates[0]
+
+
+def resolve_integration(job: dict[str, Any], platform_spec: Any, integrations: list[dict[str, Any]]) -> tuple[str, dict[str, Any], dict[str, Any]]:
+    overrides: dict[str, Any] = {}
+    integration_id = ""
+    account_hint = None
+    if isinstance(platform_spec, str):
+        platform = platform_spec.lower()
+    else:
+        platform = str(platform_spec.get("platform") or "").lower()
+        integration_id = str(platform_spec.get("integration_id") or "").strip()
+        overrides = dict(platform_spec.get("settings") or {})
+        account_hint = platform_spec.get("account_hint")
+    if not platform:
+        raise RuntimeError("Platform specification is missing platform")
+
+    client_id = str(job.get("client_id") or "").strip()
+    if client_id:
+        cfg = load_client(client_id)
+        tenant_cfg = cfg.get("integrations", {}).get(platform, {})
+        tenant_id = str(tenant_cfg.get("id") or "").strip()
+        if integration_id and tenant_id and integration_id != tenant_id:
+            raise RuntimeError(f"Tenant isolation mismatch for {client_id}/{platform}")
+        integration_id = integration_id or tenant_id
+        if platform == "pinterest" and tenant_cfg.get("board") and "board" not in overrides:
+            overrides["board"] = tenant_cfg["board"]
+
+    if integration_id:
+        integration = verify_exact_integration(integrations, platform, integration_id)
+    else:
+        integration = legacy_select(integrations, platform, account_hint or job.get("account_hint"))
+    return platform, integration, overrides
 
 
 def upload_media(path_value: str) -> dict[str, Any]:
@@ -133,14 +177,15 @@ def upload_media(path_value: str) -> dict[str, Any]:
     return payload
 
 
-def default_settings(platform: str, job: dict[str, Any]) -> dict[str, Any]:
-    title = str(job.get("title") or job.get("caption") or "F1 Immobiliare")[:100]
+def default_settings(platform: str, job: dict[str, Any], integration: dict[str, Any]) -> dict[str, Any]:
+    title = str(job.get("title") or job.get("caption") or job.get("client_name") or "Social post")[:100]
     if platform == "facebook":
         return {"__type": "facebook"}
     if platform == "instagram":
-        return {"__type": "instagram", "post_type": "post", "is_trial_reel": False, "collaborators": []}
+        provider = integration_kind(integration)
+        return {"__type": provider, "post_type": "post", "is_trial_reel": False, "collaborators": []}
     if platform in {"linkedin", "linkedin-page"}:
-        return {"__type": "linkedin-page" if platform == "linkedin-page" else "linkedin", "post_as_images_carousel": False}
+        return {"__type": platform, "post_as_images_carousel": False}
     if platform == "tiktok":
         return {
             "__type": "tiktok",
@@ -161,13 +206,11 @@ def default_settings(platform: str, job: dict[str, Any]) -> dict[str, Any]:
             "title": title,
             "type": "public",
             "selfDeclaredMadeForKids": "no",
+            "thumbnail": None,
             "tags": [{"value": x, "label": x} for x in job.get("youtube_tags", [])[:15]],
         }
     if platform == "pinterest":
-        board = job.get("pinterest_board")
-        if not board:
-            raise RuntimeError("Pinterest requires pinterest_board in the queue job")
-        return {"__type": "pinterest", "board": board, "title": title, "link": job.get("link", "")}
+        return {"__type": "pinterest", "title": title, "link": job.get("link", "")}
     return {"__type": platform}
 
 
@@ -183,19 +226,12 @@ def scheduled_type(job: dict[str, Any]) -> tuple[str, str]:
 
 
 def publish_platform(job: dict[str, Any], platform_spec: Any, integrations: list[dict[str, Any]], media: dict[str, Any] | None) -> dict[str, Any]:
-    if isinstance(platform_spec, str):
-        platform = platform_spec.lower()
-        overrides: dict[str, Any] = {}
-        account_hint = job.get("account_hint")
-    else:
-        platform = str(platform_spec["platform"]).lower()
-        overrides = dict(platform_spec.get("settings") or {})
-        account_hint = platform_spec.get("account_hint") or job.get("account_hint")
-
-    integration = select_integration(integrations, platform, account_hint)
-    post_type, date = scheduled_type(job)
-    settings = default_settings(platform, job)
+    platform, integration, overrides = resolve_integration(job, platform_spec, integrations)
+    post_type, publish_date = scheduled_type(job)
+    settings = default_settings(platform, job, integration)
     settings.update(overrides)
+    if platform == "pinterest" and not settings.get("board"):
+        raise RuntimeError("Pinterest requires a board ID in the tenant configuration")
 
     media_array = []
     if media:
@@ -203,7 +239,7 @@ def publish_platform(job: dict[str, Any], platform_spec: Any, integrations: list
 
     payload = {
         "type": post_type,
-        "date": date,
+        "date": publish_date,
         "shortLink": False,
         "tags": [],
         "posts": [{
@@ -213,48 +249,55 @@ def publish_platform(job: dict[str, Any], platform_spec: Any, integrations: list
         }],
     }
     result = api("POST", "/posts", json=payload).json()
-    return {"platform": platform, "integration_id": integration["id"], "result": result}
+    return {
+        "platform": platform,
+        "integration_id": integration["id"],
+        "integration_name": integration_name(integration),
+        "result": result,
+    }
 
 
 def main() -> int:
     if not API_KEY:
-        print("POSTIZ_API_KEY is not configured.", file=sys.stderr)
-        return 2
+        print("POSTIZ_API_KEY is not configured; publisher safely disabled.")
+        return 0
 
     queue = load_queue()
-    jobs = queue.get("jobs", [])
-    ready = [j for j in jobs if j.get("enabled", True) and j.get("status", "ready") == "ready"]
+    ready = [j for j in queue.get("jobs", []) if j.get("enabled", True) and j.get("status") == "ready"]
     if not ready:
         print("No ready jobs.")
         return 0
 
     integrations = get_integrations()
     failures = 0
-
     for job in ready:
         job.setdefault("published_platforms", [])
         job.setdefault("postiz_results", [])
         try:
+            client_id = str(job.get("client_id") or "")
+            if not client_id and not ALLOW_LEGACY_HINTS:
+                raise RuntimeError("Job has no client_id; legacy jobs are disabled")
             media = upload_media(job["media"]) if job.get("media") else None
             requested = job.get("platforms") or []
             if not requested:
-                raise RuntimeError("Job has no platforms")
+                raise RuntimeError("Job has no configured platforms")
 
             for spec in requested:
-                platform = spec if isinstance(spec, str) else spec.get("platform")
+                platform = spec if isinstance(spec, str) else str(spec.get("platform") or "")
                 if platform in job["published_platforms"]:
                     continue
                 result = publish_platform(job, spec, integrations, media)
                 job["postiz_results"].append(result)
                 job["published_platforms"].append(platform)
-                save_queue(queue)  # checkpoint after every provider
-                print(f"Queued {job.get('id')} -> {platform}")
+                save_queue(queue)
+                print(f"Queued {job.get('id')} -> {platform} ({result['integration_name']})")
 
             job["status"] = "scheduled"
             job["submitted_at"] = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
             job.pop("error", None)
-        except Exception as exc:  # keep job retriable, while preventing duplicates via published_platforms
+        except Exception as exc:
             failures += 1
+            job["status"] = "error"
             job["error"] = str(exc)
             print(f"ERROR {job.get('id')}: {exc}", file=sys.stderr)
         finally:
