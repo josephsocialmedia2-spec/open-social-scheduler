@@ -16,14 +16,22 @@ class MultiTenantTests(unittest.TestCase):
         self.f1 = json.loads((ROOT / "publisher/clients/f1-immobiliare.json").read_text(encoding="utf-8"))
         build_daily_queue._APPROVAL_CACHE.clear()
 
-    def test_f1_generates_four_daily_slots(self) -> None:
+    def test_f1_generates_four_daily_editorial_roles(self) -> None:
         jobs = build_daily_queue.build_for_client(self.f1, date(2026, 8, 17))
         self.assertEqual(4, len(jobs))
-        self.assertEqual(["attract", "nurture", "hyperlocal", "convert"], [j["category"] for j in jobs])
-        self.assertEqual(["09:00", "12:30", "17:30", "20:30"], [j["scheduled_at"][11:16] for j in jobs])
-        self.assertEqual(["reel", "carousel", "reel", "carousel"], [j["format"] for j in jobs])
+        self.assertEqual(["data", "error", "proof", "decision"], [j["category"] for j in jobs])
+        self.assertEqual(["08:00", "12:30", "17:30", "20:30"], [j["scheduled_at"][11:16] for j in jobs])
+        self.assertEqual(["reel", "reel", "carousel", "carousel"], [j["format"] for j in jobs])
         self.assertTrue(all(j["client_id"] == "f1-immobiliare" for j in jobs))
         self.assertTrue(all(j["approval_key"] == "2026-W34" for j in jobs))
+        self.assertTrue(all(j["editorial_role"] in {"data", "error", "proof", "decision"} for j in jobs))
+
+    def test_f1_positioning_is_fixed(self) -> None:
+        editorial = self.f1["editorial"]
+        self.assertEqual("F1 IMMOBILIARE = NON A SENSAZIONE. CON I DATI.", editorial["positioning"])
+        self.assertEqual("Prima i dati. Poi la strategia. Poi la vendita.", editorial["master_line"])
+        self.assertEqual("VALUTAZIONE", self.f1["campaign"]["keyword"])
+        self.assertIn("6a814ec3-80cc-83eb-b9b6-a56f02c348e8", editorial["source_chat_url"])
 
     def test_unapproved_week_blocks_publish_before_integrations(self) -> None:
         jobs = build_daily_queue.build_for_client(self.f1, date(2026, 8, 17))
@@ -32,7 +40,8 @@ class MultiTenantTests(unittest.TestCase):
 
     def test_carousel_has_one_media_file_per_slide(self) -> None:
         jobs = build_daily_queue.build_for_client(self.f1, date(2026, 8, 17))
-        carousel = jobs[1]
+        carousel = jobs[2]
+        self.assertEqual("carousel", carousel["format"])
         self.assertIsInstance(carousel["media"], list)
         self.assertEqual(len(carousel["slides"]), len(carousel["media"]))
         self.assertTrue(all(str(x).endswith(".jpg") for x in carousel["media"]))
