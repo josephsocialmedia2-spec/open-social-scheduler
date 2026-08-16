@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "real-media-pro": {
+    "positioning": "Web agency orientata a strategia, Shopify, advertising, CRM e conversione.",
+    "campaigns": [
+      {
+        "id": "rmp-ecommerce-performance",
+        "title": "Come si costruisce un e-commerce che performa",
+        "format": "reel",
+        "duration_seconds": 60,
+        "hook": "Un e-commerce bello non basta. Deve ridurre dubbi e portare all'acquisto.",
+        "sequence": ["prodotto/offerta", "pagina prodotto", "prova sociale", "mobile", "checkout", "tracking", "Meta/Google", "retargeting"],
+        "visual_sources": ["public Shopify storefront screenshots", "product pages", "mobile views", "checkout/landing mockups"],
+        "notes": "Usare Samuele Ferrari come fonte di studio sul modello product research / test / iterazione, senza copiare materiali proprietari o promettere risultati non verificati."
+      },
+      {
+        "id": "rmp-meta-ads",
+        "title": "Campagne Meta Ads: creatività prima del budget",
+        "format": "reel",
+        "duration_seconds": 30,
+        "hook": "Se l'annuncio non ferma il pollice, il targeting non può salvarlo.",
+        "sequence": ["hook 0-3s", "problema", "demo/UGC", "prova", "offerta", "CTA", "A/B test"],
+        "visual_sources": ["original Ads Manager-style mockups", "client creative", "Shopify product media"]
+      },
+      {
+        "id": "rmp-google-ads",
+        "title": "Google Ads: intercettare intenzione di acquisto",
+        "format": "carousel",
+        "sequence": ["Search", "Shopping", "Performance Max", "feed prodotti", "negative keyword", "landing intent match", "ROAS per fase"]
+      },
+      {
+        "id": "rmp-seo-ai",
+        "title": "SEO + AI Search / AEO",
+        "format": "reel",
+        "duration_seconds": 45,
+        "sequence": ["keyword/intento", "pagine utili", "schema/dati prodotto", "recensioni", "brand mentions", "local SEO", "AI discovery"]
+      },
+      {
+        "id": "rmp-portfolio",
+        "title": "I lavori reali Real Media Pro",
+        "format": "reel",
+        "duration_seconds": 45,
+        "sequence": ["prima/dopo", "desktop", "mobile", "CTA", "funzione commerciale", "risultato verificabile"],
+        "visual_sources": ["public Shopify storefront assets owned/authorised by client"]
+      }
+    ]
+  },
+  "f1-immobiliare": {
+    "positioning": "Prima i dati. Poi la strategia. Poi la vendita.",
+    "campaigns": [
+      {
+        "id": "f1-come-pubblicizziamo",
+        "title": "Come viene pubblicizzato il tuo immobile",
+        "format": "reel",
+        "duration_seconds": 60,
+        "hook": "Mettere una casa su un portale non è fare marketing immobiliare.",
+        "sequence": ["analisi", "foto/video", "landing/sito", "portali", "social", "campagne geolocalizzate", "volantini", "open house", "follow-up"],
+        "visual_sources": ["Valle di Susa", "case/villa/appartamento", "original portal-name panels", "social ad mockups", "flyer", "open house"]
+      },
+      {
+        "id": "f1-open-house",
+        "title": "Open House F1",
+        "format": "reel",
+        "duration_seconds": 45,
+        "hook": "Una visita alla volta disperde attenzione. Un evento concentra la domanda.",
+        "sequence": ["lancio", "prenotazioni", "prequalifica", "slot visite", "materiali", "feedback", "proposte"]
+      },
+      {
+        "id": "f1-volantini",
+        "title": "2.500 volantini per portare l'immobile nel territorio",
+        "format": "reel",
+        "duration_seconds": 30,
+        "sequence": ["grafica immobile", "QR", "stampa", "distribuzione microzona", "evento/open house", "lead"]
+      },
+      {
+        "id": "f1-portali",
+        "title": "Dove pubblichiamo il tuo immobile",
+        "format": "carousel",
+        "sequence": ["Immobiliare.it", "Idealista", "Casa.it", "TrovaCasa", "Subito", "Bakeca", "Wikicasa", "TuttoCasa", "Gate-away", "Marketplace"],
+        "notes": "Usare nomi/loghi solo come riferimento nominativo. Per creatività pubblicitaria preferire pannelli originali e mockup, non copiare spot o annunci proprietari dei portali."
+      },
+      {
+        "id": "f1-valutazione-strategica",
+        "title": "Cosa comprende una valutazione immobiliare strategica",
+        "format": "reel",
+        "duration_seconds": 60,
+        "sequence": ["microzona", "comparabili", "concorrenza", "domanda", "caratteristiche immobile", "prezzo sostenibile", "posizionamento", "piano di vendita"]
+      }
+    ]
+  }
+}
