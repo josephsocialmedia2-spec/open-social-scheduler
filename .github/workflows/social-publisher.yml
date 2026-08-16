@@ -1,12 +1,12 @@
-name: F1 Social Publisher
+name: Open Social Publisher
 
 on:
   workflow_dispatch:
   push:
     paths:
       - 'publisher/queue.json'
-      - 'publisher/media/**'
       - 'publisher/postiz_publish.py'
+      - 'publisher/clients/**'
   schedule:
     - cron: '17 * * * *'
 
@@ -14,7 +14,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: f1-social-publisher
+  group: open-social-publisher
   cancel-in-progress: false
 
 jobs:
@@ -45,7 +45,7 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-          cache: 'pip'
+          cache: pip
           cache-dependency-path: publisher/requirements.txt
 
       - name: Install dependencies
@@ -61,11 +61,13 @@ jobs:
         shell: bash
         run: |
           if git diff --quiet -- publisher/queue.json; then
-            echo "Queue unchanged."
+            echo 'Queue unchanged.'
             exit 0
           fi
-          git config user.name "f1-social-bot"
-          git config user.email "f1-social-bot@users.noreply.github.com"
+          git config user.name 'open-social-engine'
+          git config user.email 'open-social-engine@users.noreply.github.com'
           git add publisher/queue.json
-          git commit -m "Update social publishing queue state"
-          git push
+          git commit -m 'Update social publishing queue state'
+          git fetch origin main
+          git rebase origin/main
+          git push origin HEAD:main
