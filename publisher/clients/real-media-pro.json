@@ -1,0 +1,46 @@
+{
+  "id": "real-media-pro",
+  "name": "Real Media Pro",
+  "active": true,
+  "timezone": "Europe/Rome",
+  "postiz_customer_name": "Real Media Pro",
+  "brand": {
+    "status": "provisional-test-layout",
+    "logo": "",
+    "background": "#07111F",
+    "background_alt": "#0D1B2D",
+    "primary": "#F5F8FC",
+    "accent": "#2D7FF9",
+    "accent_alt": "#6EE7A8",
+    "muted": "#AFC0D5",
+    "font_title": "DejaVu Sans Bold",
+    "font_body": "DejaVu Sans",
+    "reel": {
+      "width": 1080,
+      "height": 1920,
+      "safe_top": 180,
+      "safe_bottom": 260,
+      "slides": 7,
+      "seconds_per_slide": 2.8
+    }
+  },
+  "campaign": {
+    "name": "Analisi strategica digitale gratuita",
+    "cta": "Scrivi ANALISI in privato",
+    "keyword": "ANALISI",
+    "territories": ["Torino", "Rivoli", "Avigliana", "Valle di Susa"]
+  },
+  "publishing": {
+    "require_media": true,
+    "slots": ["09:15", "12:45", "17:45", "20:45"],
+    "platforms": ["facebook", "instagram", "tiktok", "linkedin-page", "youtube", "pinterest"]
+  },
+  "integrations": {
+    "facebook": {"id": "", "required": true},
+    "instagram": {"id": "", "required": true},
+    "tiktok": {"id": "", "required": false},
+    "linkedin-page": {"id": "", "required": false},
+    "youtube": {"id": "", "required": false},
+    "pinterest": {"id": "", "required": false, "board": ""}
+  }
+}
