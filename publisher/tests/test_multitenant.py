@@ -14,6 +14,7 @@ ROOT = Path(__file__).resolve().parents[2]
 class MultiTenantTests(unittest.TestCase):
     def setUp(self) -> None:
         self.f1 = json.loads((ROOT / "publisher/clients/f1-immobiliare.json").read_text(encoding="utf-8"))
+        self.rmp = json.loads((ROOT / "publisher/clients/real-media-pro.json").read_text(encoding="utf-8"))
         build_daily_queue._APPROVAL_CACHE.clear()
 
     def test_f1_generates_four_daily_editorial_roles(self) -> None:
@@ -24,11 +25,27 @@ class MultiTenantTests(unittest.TestCase):
         self.assertEqual(["reel", "reel", "carousel", "carousel"], [j["format"] for j in jobs])
         self.assertTrue(all(j["client_id"] == "f1-immobiliare" for j in jobs))
         self.assertTrue(all(j["approval_key"] == "2026-W34" for j in jobs))
-        self.assertTrue(all(j["editorial_role"] in {"data", "error", "proof", "decision"} for j in jobs))
+        allowed_roles = {"data", "error", "proof", "decision", "segnalatori", "recruiting", "metodo", "vendere_da_solo", "leggi_documenti", "home_staging"}
+        self.assertTrue(all(j["editorial_role"] in allowed_roles for j in jobs))
+        self.assertEqual("F1 Growth Blitz 2026", jobs[0]["campaign"])
+        self.assertEqual("F1 Core", jobs[1]["campaign"])
+        self.assertEqual("F1 Growth Blitz 2026", jobs[2]["campaign"])
+        self.assertEqual("F1 Core", jobs[3]["campaign"])
         self.assertTrue(all(j.get("caption") for j in jobs))
         self.assertTrue(all(j.get("hashtags") for j in jobs))
         self.assertTrue(all("#F1Immobiliare" in j["caption"] for j in jobs))
         self.assertTrue(all(j.get("voiceover") for j in jobs if j["format"] == "reel"))
+
+    def test_real_media_pro_generates_weekly_content(self) -> None:
+        self.assertTrue(self.rmp["active"])
+        jobs = build_daily_queue.build_for_client(self.rmp, date(2026, 8, 17))
+        self.assertEqual(4, len(jobs))
+        self.assertEqual(["09:15", "12:45", "17:45", "20:45"], [j["scheduled_at"][11:16] for j in jobs])
+        self.assertEqual(["reel", "carousel", "reel", "carousel"], [j["format"] for j in jobs])
+        self.assertTrue(all(j["client_id"] == "real-media-pro" for j in jobs))
+        self.assertTrue(all(j.get("caption") for j in jobs))
+        self.assertTrue(all(j.get("voiceover") for j in jobs if j["format"] == "reel"))
+        self.assertEqual(60, self.rmp["brand"]["reel"]["target_seconds"])
 
     def test_f1_positioning_is_fixed(self) -> None:
         editorial = self.f1["editorial"]
