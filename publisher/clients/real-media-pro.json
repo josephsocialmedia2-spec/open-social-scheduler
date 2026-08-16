@@ -4,7 +4,7 @@
   "active": false,
   "timezone": "Europe/Rome",
   "brand": {
-    "status": "direct-api-template-v1",
+    "status": "performance-agency-v2",
     "background": "#07111F",
     "background_alt": "#0D1B2D",
     "primary": "#F5F8FC",
@@ -15,15 +15,49 @@
     "font_title": "DejaVu Sans Bold",
     "font_body": "DejaVu Sans",
     "renderer": "premium_photo",
-    "voice": {"enabled": false},
-    "reel": {"width": 1080, "height": 1920, "safe_top": 180, "safe_bottom": 260, "slides": 7, "seconds_per_slide": 2.8},
+    "voice": {"enabled": true, "engine": "piper", "model": "it_IT-paola-medium"},
+    "reel": {"width": 1080, "height": 1920, "safe_top": 180, "safe_bottom": 260, "slides": 8, "seconds_per_slide": 7.5, "target_seconds": 60, "subtitles": true},
     "carousel": {"width": 1080, "height": 1350}
   },
   "campaign": {
-    "name": "Analisi strategica digitale gratuita",
-    "cta": "Scrivi ANALISI in privato",
+    "name": "Real Media Pro · Dalla visibilità alla crescita",
+    "cta": "Richiedi un'analisi strategica gratuita",
     "keyword": "ANALISI",
-    "territories": ["Torino", "Rivoli", "Avigliana", "Valle di Susa"]
+    "territories": ["Torino", "Rivoli", "Avigliana", "Valle di Susa"],
+    "content_pillars": [
+      "audit_digitale",
+      "shopify_ecommerce",
+      "conversion_rate_optimization",
+      "meta_ads",
+      "google_ads",
+      "seo_aeo",
+      "landing_page",
+      "crm_automazioni",
+      "creative_testing",
+      "case_study",
+      "prima_dopo",
+      "dietro_le_quinte"
+    ],
+    "shopify_public_sources": [
+      "https://f1immobiliare.com/pages/partner-pubblicitario-e-tecnologico",
+      "https://f1immobiliare.com/pages/strategia-digitale",
+      "https://f1immobiliare.com/pages/strategia-digitale-1",
+      "https://f1immobiliare.com/products/gestione-social-standard",
+      "https://f1immobiliare.com/products/gestione-social-pro",
+      "https://f1immobiliare.com/products/volantino-digitale",
+      "https://f1immobiliare.com/products/presentazione-aziendale"
+    ],
+    "creative_rules": {
+      "show_real_work": true,
+      "use_public_shopify_media": true,
+      "hook_first_seconds": 3,
+      "proof_before_claim": true,
+      "show_mobile_site": true,
+      "show_product_page": true,
+      "show_ads_manager_style_original_mockups": true,
+      "show_metrics_only_when_verified": true,
+      "avoid_fake_roas_or_revenue": true
+    }
   },
   "approval": {
     "required": true,
@@ -37,17 +71,17 @@
     "require_media": true,
     "slots": ["09:15", "12:45", "17:45", "20:45"],
     "formats": {"attract": "reel", "nurture": "carousel", "hyperlocal": "reel", "convert": "carousel"},
-    "platforms": ["facebook", "instagram", "tiktok", "linkedin-page", "youtube", "pinterest"],
+    "platforms": ["facebook", "instagram", "tiktok", "linkedin", "youtube", "pinterest"],
     "platforms_by_format": {
-      "reel": ["facebook", "instagram", "tiktok", "linkedin-page", "youtube"],
-      "carousel": ["facebook", "instagram", "linkedin-page", "pinterest"]
+      "reel": ["facebook", "instagram", "tiktok", "linkedin", "youtube"],
+      "carousel": ["facebook", "instagram", "linkedin", "pinterest"]
     }
   },
   "integrations": {
     "facebook": {"id": "direct-api", "required": true},
     "instagram": {"id": "direct-api", "required": true},
     "tiktok": {"id": "direct-api", "required": false},
-    "linkedin-page": {"id": "direct-api", "required": false},
+    "linkedin": {"id": "direct-api", "required": false},
     "youtube": {"id": "direct-api", "required": false},
     "pinterest": {"id": "direct-api", "required": false, "board": ""}
   }
