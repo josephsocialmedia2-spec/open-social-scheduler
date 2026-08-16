@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "client_id": "f1-immobiliare",
+  "campaign": "F1 Growth Blitz 2026",
+  "source": "publisher/content_bank/f1-growth-blitz.json",
+  "counts": {"reels": 12, "carousels": 6},
+  "reels": [
+    {"id":"reel-segnalatore-01","pillar":"segnalatori","title":"Conosci una casa che potrebbe essere venduta?","hook":"Conosci una casa che potrebbe essere venduta nei prossimi mesi?","cta":"Invia la segnalazione su WhatsApp: 3713708294 oppure 3714246300"},
+    {"id":"reel-segnalatore-02","pillar":"segnalatori","title":"Hai visto un cartello VENDESI?","hook":"Hai visto un cartello VENDESI che nessuno sembra notare?","cta":"Scrivi RADAR su WhatsApp"},
+    {"id":"reel-segnalatore-03","pillar":"segnalatori","title":"Casa vuota da mesi: potrebbe esserci una storia dietro","hook":"Una casa vuota da mesi non è solo una finestra chiusa.","cta":"Segnala una situazione: WhatsApp F1"},
+    {"id":"reel-segnalatore-04","pillar":"segnalatori","title":"Un annuncio ribassato tre volte è un segnale","hook":"Un immobile ribassato tre volte sta dicendo qualcosa.","cta":"Mandaci il link su WhatsApp"},
+    {"id":"reel-recruiting-01","pillar":"recruiting","title":"Non cerchiamo apriporte","hook":"Se pensi che l'agente immobiliare apra porte, questo lavoro non fa per te.","cta":"Scrivi CARRIERA su WhatsApp"},
+    {"id":"reel-recruiting-02","pillar":"recruiting","title":"Da aspirante agente a professionista","hook":"Vuoi entrare nell'immobiliare ma non sai da dove cominciare?","cta":"Chiedi informazioni sul percorso F1"},
+    {"id":"reel-recruiting-03","pillar":"recruiting","title":"Autoimprenditorialità: costruisci il tuo territorio","hook":"E se invece di cercare solo un posto di lavoro costruissi il tuo territorio?","cta":"Scrivi TERRITORIO"},
+    {"id":"reel-recruiting-04","pillar":"recruiting","title":"La giornata dell'agente F1 non comincia dalle visite","hook":"La giornata di un agente F1 non comincia aprendo una porta.","cta":"Scrivi METODO F1"},
+    {"id":"reel-privato-01","pillar":"vendere_da_solo","title":"Vuoi vendere casa da solo? Parti da 5 verifiche","hook":"Vuoi vendere casa da solo? Fallo pure. Ma prima controlla queste cinque cose.","cta":"Valuta il tuo immobile: f1immobiliare.com/pages/contatti"},
+    {"id":"reel-privato-02","pillar":"vendere_da_solo","title":"2000 visualizzazioni e zero visite","hook":"Duemila visualizzazioni e zero visite non sono un successo.","cta":"Richiedi una seconda analisi F1"},
+    {"id":"reel-metodo-01","pillar":"metodo_f1","title":"Come pubblicizziamo davvero il tuo immobile","hook":"Pubblicare un annuncio non significa fare marketing immobiliare.","cta":"Scopri il piano F1: f1immobiliare.com/pages/contatti"},
+    {"id":"reel-metodo-02","pillar":"metodo_f1","title":"Il metodo F1 in 60 secondi","hook":"Ecco cosa succede prima, durante e dopo la pubblicazione di una casa con F1.","cta":"Valuta il tuo immobile con F1"}
+  ],
+  "carousels": [
+    {"id":"carosello-leggi-01","pillar":"leggi_documenti","title":"Catasto e urbanistica non sono la stessa cosa","slides":7},
+    {"id":"carosello-leggi-02","pillar":"leggi_documenti","title":"7 documenti da preparare prima di vendere","slides":9},
+    {"id":"carosello-homestaging-01","pillar":"home_staging","title":"La prima visita avviene sul telefono","slides":8},
+    {"id":"carosello-privato-01","pillar":"vendere_da_solo","title":"5 errori di chi vende casa da solo","slides":8},
+    {"id":"carosello-metodo-01","pillar":"metodo_f1","title":"Come F1 pubblicizza il tuo immobile","slides":10},
+    {"id":"carosello-recruiting-01","pillar":"recruiting","title":"Cosa deve saper fare un agente immobiliare moderno","slides":9}
+  ]
+}
