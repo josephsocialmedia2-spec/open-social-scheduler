@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Burn readable subtitles into generated Reel MP4 files.
+"""Burn compact F1-green subtitles into generated Reel MP4 files.
 
 Subtitles are derived from each job voiceover and split evenly across the actual
-video duration. The audio track is preserved while video is re-encoded with
-libass subtitles. Carousel media is untouched.
+video duration. They are positioned directly under the F1 logo, while the audio
+track is preserved. Carousel media is untouched.
 """
 from __future__ import annotations
 
@@ -95,10 +95,15 @@ def burn(job: dict[str, Any]) -> bool:
         srt = tmp / "subtitles.srt"
         output = tmp / "subtitled.mp4"
         write_srt(srt, text, total, slides)
+
+        # F1 brand green #92C205 -> ASS AABBGGRR = &H0005C292.
+        # Alignment 8 = top-centre. MarginV 360 places the captions just below
+        # the F1 logo on the 1080x1920 Reel canvas.
         style = (
-            "FontName=DejaVu Sans,FontSize=15,PrimaryColour=&H00FFFFFF,"
-            "OutlineColour=&H00000000,BorderStyle=1,Outline=3,Shadow=1,"
-            "Alignment=2,MarginV=115"
+            "FontName=DejaVu Sans,FontSize=11,Bold=1,"
+            "PrimaryColour=&H0005C292,OutlineColour=&H00000000,"
+            "BorderStyle=1,Outline=2,Shadow=0,Alignment=8,MarginV=360,"
+            "MarginL=105,MarginR=105"
         )
         escaped = str(srt).replace("\\", "/").replace(":", "\\:").replace("'", "\\'")
         vf = f"subtitles='{escaped}':force_style='{style}'"
