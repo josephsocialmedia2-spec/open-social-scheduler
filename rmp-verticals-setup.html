@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Real Media Pro · Setup Verticali Social</title>
+<style>
+:root{--bg:#07111f;--panel:#0d1b2d;--line:#29415e;--text:#f5f8fc;--muted:#9fb1c8;--blue:#2d7ff9;--green:#20c96b;--red:#a5333d}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(155deg,#06101c,#0a1726 55%,#07111f);color:var(--text);font:14px/1.45 Arial,Helvetica,sans-serif}.wrap{width:min(1280px,calc(100% - 24px));margin:18px auto 42px}.hero,.panel{background:rgba(13,27,45,.97);border:1px solid var(--line);border-radius:18px}.hero{padding:20px 22px}.hero h1{margin:4px 0 6px;font-size:clamp(28px,4vw,44px)}.kicker{font-size:11px;font-weight:900;letter-spacing:.14em;color:#6ee7a8}.muted{color:var(--muted)}.panel{padding:16px;margin-top:12px}.grid{display:grid;gap:10px}.row{display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr auto;gap:8px;align-items:center;background:#0a1728;border:1px solid var(--line);border-radius:12px;padding:10px}.row.header{background:#102238;font-weight:800}.name b{display:block}.name small{color:var(--muted)}input{width:100%;background:#081523;color:#fff;border:1px solid #2d4969;border-radius:9px;padding:10px;min-width:0}input:focus{outline:none;border-color:var(--blue)}.status{font-size:11px;font-weight:800;padding:5px 8px;border-radius:999px;border:1px solid #36516e;white-space:nowrap}.status.ok{border-color:#207848;color:#9df0bf}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.btn{border:0;border-radius:10px;padding:10px 13px;font-weight:900;text-decoration:none;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}.btn.green{background:var(--green);color:#04150c}.btn.blue{background:var(--blue);color:white}.btn.dark{background:#17283e;border:1px solid var(--line);color:#fff}.notice{margin-top:10px;color:var(--muted);font-size:12px}.summary{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}.metric{background:#0a1728;border:1px solid var(--line);border-radius:12px;padding:12px}.metric b{display:block;font-size:24px}@media(max-width:900px){.row,.row.header{grid-template-columns:1fr}.row.header{display:none}.summary{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<section class="hero"><div class="kicker">REAL MEDIA PRO · OPEN SOCIAL SCHEDULER</div><h1>SETUP 7 VERTICALI SOCIAL</h1><div class="muted">Facebook + Instagram + LinkedIn · 7 identità editoriali · 21 presenze social</div></section>
+<section class="panel">
+<div class="summary"><div class="metric"><b>7</b><span>identità</span></div><div class="metric"><b>21</b><span>account previsti</span></div><div class="metric"><b id="configuredCount">0</b><span>link inseriti</span></div><div class="metric"><b id="completeCount">0</b><span>verticali complete</span></div></div>
+<div class="grid" id="verticalGrid" style="margin-top:12px"></div>
+<div class="actions"><button class="btn green" onclick="saveAll()">SALVA TUTTI I LINK</button><button class="btn dark" onclick="reloadData()">RICARICA DATI</button><a class="btn blue" href="./content-center.html">APRI CONTENT CENTER</a></div>
+<div class="notice">I dati vengono salvati nello stesso archivio locale usato dal Content Center. I primi 6 verticali vengono associati a Real Media Pro; F1 Immobiliare resta separata.</div>
+</section>
+</main>
+<script>
+const PAGES_PREFIX='rmpcc:pages:';
+const verticals=[
+{id:'rmp-main',client:'rmp',name:'Real Media Pro',type:'Brand principale'},
+{id:'rmp-web-shopify',client:'rmp',name:'Real Media Pro · Web & Shopify',type:'Siti web · Shopify · E-commerce'},
+{id:'rmp-social-ads',client:'rmp',name:'Real Media Pro · Social & Advertising',type:'Social media · Meta Ads · Lead generation'},
+{id:'rmp-video-content',client:'rmp',name:'Real Media Pro · Video & Content',type:'Reel · Video · Grafiche · Caroselli'},
+{id:'rmp-automation-crm',client:'rmp',name:'Real Media Pro · Automazioni & CRM',type:'CRM · Follow-up · Automazioni'},
+{id:'rmp-local-marketing',client:'rmp',name:'Real Media Pro · Local Marketing',type:'Marketing territoriale · QR · Brochure · Volantini'},
+{id:'f1-main',client:'f1',name:'F1 Immobiliare',type:'Immobiliare'}
+];
+function read(key,fallback=[]){try{return JSON.parse(localStorage.getItem(key)||JSON.stringify(fallback))}catch(_){return fallback}}
+function write(key,value){localStorage.setItem(key,JSON.stringify(value))}
+function safeUrl(raw){const v=String(raw||'').trim();if(!v)return '';try{const u=new URL(/^https?:\/\//i.test(v)?v:'https://'+v);return /^https?:$/.test(u.protocol)?u.href:''}catch(_){return ''}}
+function slug(s){return String(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')}
+function findStored(v){const arr=read(PAGES_PREFIX+v.client,[]);return arr.find(x=>x.seedId===v.id)||arr.find(x=>slug(x.name)===slug(v.name))||null}
+function render(){let html='<div class="row header"><div>VERTICALE</div><div>FACEBOOK</div><div>INSTAGRAM</div><div>LINKEDIN</div><div>STATO</div></div>';for(const v of verticals){const s=findStored(v)||{};const complete=!!(s.facebook&&s.instagram&&s.linkedin);html+=`<div class="row" data-id="${v.id}"><div class="name"><b>${v.name}</b><small>${v.type}</small></div><input data-p="facebook" value="${esc(s.facebook||'')}" placeholder="Link Facebook"><input data-p="instagram" value="${esc(s.instagram||'')}" placeholder="Link Instagram"><input data-p="linkedin" value="${esc(s.linkedin||'')}" placeholder="Link LinkedIn"><span class="status ${complete?'ok':''}">${complete?'COMPLETA':'DA COMPLETARE'}</span></div>`}verticalGrid.innerHTML=html;updateMetrics()}
+function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function saveAll(){for(const v of verticals){const row=document.querySelector(`[data-id="${v.id}"]`);const facebook=safeUrl(row.querySelector('[data-p="facebook"]').value);const instagram=safeUrl(row.querySelector('[data-p="instagram"]').value);const linkedin=safeUrl(row.querySelector('[data-p="linkedin"]').value);const key=PAGES_PREFIX+v.client;const arr=read(key,[]);let item=arr.find(x=>x.seedId===v.id)||arr.find(x=>slug(x.name)===slug(v.name));if(!item){item={id:Date.now()+Math.floor(Math.random()*10000),seedId:v.id,name:v.name,facebook:'',instagram:'',linkedin:'',createdAt:new Date().toISOString()};arr.unshift(item)}item.seedId=v.id;item.name=v.name;item.facebook=facebook;item.instagram=instagram;item.linkedin=linkedin;item.updatedAt=new Date().toISOString();write(key,arr)}render();alert('Verticali salvate nel Content Center.')}
+function reloadData(){render()}
+function updateMetrics(){let configured=0,complete=0;for(const v of verticals){const s=findStored(v)||{};configured+=[s.facebook,s.instagram,s.linkedin].filter(Boolean).length;if(s.facebook&&s.instagram&&s.linkedin)complete++}configuredCount.textContent=configured;completeCount.textContent=complete}
+render();
+</script>
+</body>
+</html>
