@@ -1,23 +1,17 @@
 #!/usr/bin/env python3
-"""Build/reconcile a multi-client publishing queue with explicit approval gates.
+"""Build/reconcile the multi-client daily content queue.
 
-The engine may prepare and render content before approval, but a job cannot become
-ready for publishing until its approval key has been explicitly approved.
-Future unpublished jobs are replaced when the editorial plan changes, preventing
-duplicate blasts after a content-bank or schedule update.
-
-F1 Immobiliare also has a dedicated Growth Blitz bank. One Reel and one carousel
-per day are pulled from that bank, while the other two slots keep the core F1
-valuation/market content. This gives a 50/50 weekly split between evergreen seller
-education and acquisition/recruiting/growth campaigns.
+The engine prepares content and media, but publishing remains explicitly manual.
+For clients configured with ``manual_publish_only``, only the current planning
+window is kept as an active candidate pool; older/future draft candidates from
+previous plans are removed while published/scheduled history is preserved.
 """
-
 from __future__ import annotations
 
 import argparse
 import json
 import os
-from datetime import date, datetime, timedelta
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 from zoneinfo import ZoneInfo
@@ -26,28 +20,8 @@ ROOT = Path(__file__).resolve().parents[1]
 CLIENT_DIR = ROOT / "publisher" / "clients"
 BANK_DIR = ROOT / "publisher" / "content_bank"
 QUEUE_PATH = ROOT / "publisher" / "queue.json"
-DEFAULT_CATEGORIES = ["attract", "nurture", "hyperlocal", "convert"]
+DEFAULT_CATEGORIES = ["attract", "nurture", "convert"]
 _APPROVAL_CACHE: dict[str, dict[str, Any]] = {}
-
-F1_GROWTH_PATH = BANK_DIR / "f1-growth-blitz.json"
-F1_GROWTH_REEL_PILLARS = [
-    "recruiting",
-    "segnalatori",
-    "vendere_da_solo",
-    "metodo_f1",
-    "segnalatori",
-    "recruiting",
-    "vendere_da_solo",
-]
-F1_GROWTH_CAROUSEL_PILLARS = [
-    "recruiting",
-    "vendere_da_solo",
-    "leggi_documenti",
-    "home_staging",
-    "metodo_f1",
-    "home_staging",
-    "leggi_documenti",
-]
 
 
 def load_json(path: Path) -> dict[str, Any]:
@@ -184,40 +158,6 @@ def caption_with_hashtags(caption: str, hashtags: list[str]) -> str:
     return base if not extra else base + "\n\n" + " ".join(extra)
 
 
-def f1_growth_item(target: date, slot_index: int) -> tuple[dict[str, Any] | None, str | None]:
-    """Return one Growth Blitz item for F1 slot 0 (Reel) or 2 (carousel)."""
-    if not F1_GROWTH_PATH.exists() or slot_index not in {0, 2}:
-        return None, None
-    data = load_json(F1_GROWTH_PATH)
-    weekday = target.weekday()  # Monday=0
-    if slot_index == 0:
-        fmt = "reel"
-        pillar = F1_GROWTH_REEL_PILLARS[weekday]
-        pool = [x for x in data.get("reels", []) if x.get("pillar") == pillar]
-    else:
-        fmt = "carousel"
-        pillar = F1_GROWTH_CAROUSEL_PILLARS[weekday]
-        pool = [x for x in data.get("carousels", []) if x.get("pillar") == pillar]
-    if not pool:
-        return None, None
-    item = dict(pool[(target.toordinal() // 7 + slot_index) % len(pool)])
-    item["slug"] = str(item.get("id") or f"growth-{pillar}")
-    item["format"] = fmt
-    if fmt == "reel":
-        # Renderer needs multiple visual slides. Use short, readable beats while
-        # the 60-second voiceover carries the full narrative.
-        item["slides"] = [
-            str(item.get("hook") or item.get("title") or "F1 IMMOBILIARE").upper(),
-            "VALLE DI SUSA|DATI + TERRITORIO",
-            "TECNOLOGIA|+ RELAZIONI",
-            "UN METODO|DA CAPIRE",
-            "UN PROCESSO|DA MISURARE",
-            str(item.get("cta") or "CONTATTA F1").upper(),
-            "F1 IMMOBILIARE|PRIMA I DATI|POI LA STRATEGIA|POI LA VENDITA",
-        ]
-    return item, pillar
-
-
 def build_for_client(client: dict[str, Any], target: date) -> list[dict[str, Any]]:
     client_id = client["id"]
     bank_path = BANK_DIR / f"{client_id}.json"
@@ -226,10 +166,8 @@ def build_for_client(client: dict[str, Any], target: date) -> list[dict[str, Any
     bank = load_json(bank_path)
     tz = ZoneInfo(client.get("timezone", "UTC"))
     publishing = client.get("publishing", {})
-    slots = publishing.get("slots", [])
-    categories = publishing.get("categories", DEFAULT_CATEGORIES)
-    if not isinstance(categories, list) or not categories:
-        categories = DEFAULT_CATEGORIES
+    slots = list(publishing.get("slots", []))
+    categories = list(publishing.get("categories", DEFAULT_CATEGORIES))
     formats = publishing.get("formats", {})
     campaign = client.get("campaign", {})
     territories = campaign.get("territories", []) or [""]
@@ -241,22 +179,14 @@ def build_for_client(client: dict[str, Any], target: date) -> list[dict[str, Any
     for idx, category in enumerate(categories):
         if idx >= len(slots):
             break
-
-        growth_pillar = None
-        item: dict[str, Any] | None = None
-        if client_id == "f1-immobiliare":
-            item, growth_pillar = f1_growth_item(target, idx)
-
-        if item is None:
-            items = bank.get(category, [])
-            if not items:
-                continue
-            item = dict(items[(ordinal + idx) % len(items)])
-
+        items = bank.get(category, [])
+        if not items:
+            continue
+        item = dict(items[(ordinal + idx) % len(items)])
         tokens = {
             "territory": territory,
-            "cta": campaign.get("cta", ""),
-            "client": client.get("name", client_id),
+            "cta": str(campaign.get("cta") or ""),
+            "client": str(client.get("name") or client_id),
             "phone": str(campaign.get("phone") or ""),
         }
         item = replace_tokens(item, tokens)
@@ -266,7 +196,10 @@ def build_for_client(client: dict[str, Any], target: date) -> list[dict[str, Any
         content_format = str(item.get("format") or formats.get(category) or "reel").lower()
         slides = list(item.get("slides") or [])
         if content_format == "carousel":
-            media: Any = [f"publisher/media/generated/{client_id}/{target.isoformat()}/{idx + 1:02d}-{slug}/slide-{n:02d}.jpg" for n in range(1, len(slides) + 1)]
+            media: Any = [
+                f"publisher/media/generated/{client_id}/{target.isoformat()}/{idx + 1:02d}-{slug}/slide-{n:02d}.jpg"
+                for n in range(1, len(slides) + 1)
+            ]
         else:
             media = f"publisher/media/generated/{client_id}/{target.isoformat()}/{idx + 1:02d}-{slug}.mp4"
 
@@ -280,8 +213,8 @@ def build_for_client(client: dict[str, Any], target: date) -> list[dict[str, Any
             "client_id": client_id,
             "client_name": client.get("name", client_id),
             "category": category,
-            "editorial_role": growth_pillar or category,
-            "campaign": "F1 Growth Blitz 2026" if growth_pillar else "F1 Core",
+            "editorial_role": category,
+            "campaign": str(campaign.get("name") or "Daily content"),
             "format": content_format,
             "title": item.get("title", ""),
             "caption": caption_with_hashtags(raw_caption, hashtags),
@@ -337,8 +270,8 @@ def main() -> int:
     parser.add_argument("--date", help="Local calendar date YYYY-MM-DD; explicit dates build one day only")
     args = parser.parse_args()
 
-    queue = load_json(QUEUE_PATH) if QUEUE_PATH.exists() else {"version": 3, "jobs": []}
-    queue["version"] = max(int(queue.get("version", 1)), 3)
+    queue = load_json(QUEUE_PATH) if QUEUE_PATH.exists() else {"version": 4, "jobs": []}
+    queue["version"] = max(int(queue.get("version", 1)), 4)
     queue.setdefault("jobs", [])
 
     all_clients = clients()
@@ -356,24 +289,30 @@ def main() -> int:
         targets_by_client[client["id"]] = [start + timedelta(days=i) for i in range(horizon)]
 
     target_keys = {client_id: {d.isoformat() for d in days} for client_id, days in targets_by_client.items()}
-    first_target = {client_id: min(days).isoformat() for client_id, days in targets_by_client.items() if days}
     preserved: list[dict[str, Any]] = []
     replaced = 0
-    pruned_old = 0
+    pruned = 0
+
     for job in queue["jobs"]:
         client_id = str(job.get("client_id") or "")
         job_date = str(job.get("scheduled_at") or "")[:10]
         is_target = job_date in target_keys.get(client_id, set())
         is_final = job.get("status") in {"published", "scheduled"}
-        if not is_final and client_id in first_target and job_date and job_date < first_target[client_id]:
-            pruned_old += 1
+        planning = client_map.get(client_id, {}).get("planning", {})
+        manual_pool = bool(planning.get("manual_publish_only", False))
+
+        if is_final:
+            preserved.append(job)
             continue
-        if is_target and not is_final:
+        if client_id in target_keys and manual_pool and not is_target:
+            pruned += 1
+            continue
+        if is_target:
             replaced += 1
             continue
         preserved.append(job)
-    queue["jobs"] = preserved
 
+    queue["jobs"] = preserved
     existing = {str(j.get("id")) for j in queue["jobs"]}
     added = 0
     for client in all_clients:
@@ -387,9 +326,13 @@ def main() -> int:
                     added += 1
 
     reconcile(queue, client_map)
-    queue["updated_at"] = datetime.utcnow().isoformat(timespec="seconds") + "Z"
+    queue["updated_at"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
     save_json(QUEUE_PATH, queue)
-    print(f"Queue reconciled: {pruned_old} stale old job(s) pruned, {replaced} future job(s) replaced, {added} new job(s), {len(queue['jobs'])} total.")
+    print(
+        f"Queue reconciled: {pruned} out-of-window draft job(s) pruned, "
+        f"{replaced} current draft job(s) replaced, {added} new candidate(s), "
+        f"{len(queue['jobs'])} total including final history."
+    )
     return 0
 
 
