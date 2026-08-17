@@ -1,0 +1,37 @@
+name: Facebook Groups Radar
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '20 6,16 * * *'
+
+permissions:
+  contents: write
+
+jobs:
+  discover-groups:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Discover public Facebook groups
+        run: python scripts/facebook_groups_radar.py
+
+      - name: Commit updated archive
+        run: |
+          if git diff --quiet -- facebook-groups-data.json; then
+            echo "No archive changes"
+            exit 0
+          fi
+          git config user.name "f1-facebook-groups-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add facebook-groups-data.json
+          git commit -m "Update Facebook groups archive"
+          git push
