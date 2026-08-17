@@ -14,6 +14,7 @@ on:
       - '.github/workflows/social-engine-daily.yml'
       - 'publisher/build_daily_queue.py'
       - 'publisher/render_reels.py'
+      - 'publisher/add_reel_subtitles.py'
       - 'publisher/requirements.txt'
       - 'publisher/clients/**'
       - 'publisher/content_bank/**'
@@ -52,16 +53,16 @@ jobs:
       - name: Install renderer dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y ffmpeg fonts-dejavu-core zip
+          sudo apt-get install -y ffmpeg fonts-dejavu-core fonts-noto-color-emoji zip
           pip install -r publisher/requirements.txt
 
-      - name: Cache Italian voice and F1 photos
+      - name: Cache Italian voice and media
         uses: actions/cache@v4
         with:
           path: |
             .cache/piper
             .cache/f1-photos
-          key: f1-social-assets-v3-no-subtitles
+          key: social-assets-v4-green-captions
 
       - name: Prepare Italian voice
         run: |
@@ -84,8 +85,11 @@ jobs:
             python publisher/build_daily_queue.py
           fi
 
-      - name: Render premium reels and carousels
+      - name: Render weekly Reels and carousels
         run: python publisher/render_reels.py
+
+      - name: Add green emoji captions to Reels
+        run: python publisher/add_reel_subtitles.py
 
       - name: Reconcile approval and media state
         shell: bash
@@ -131,31 +135,23 @@ jobs:
             echo 'No generated media available for downloadable preview.'
             exit 0
           fi
-
           rm -rf /tmp/social-release
           mkdir -p /tmp/social-release
-
           while IFS= read -r -d '' file; do
             rel="${file#publisher/media/generated/}"
             safe="${rel//\//__}"
             cp "$file" "/tmp/social-release/$safe"
           done < <(find publisher/media/generated -type f -print0)
-
           for client in f1-immobiliare real-media-pro; do
             if [ -d "publisher/media/generated/$client" ]; then
-              (
-                cd "publisher/media/generated/$client"
-                zip -qr "/tmp/social-release/${client}__SETTIMANA_COMPLETA.zip" .
-              )
+              (cd "publisher/media/generated/$client" && zip -qr "/tmp/social-release/${client}__SETTIMANA_COMPLETA.zip" .)
             fi
           done
-
           cp publisher/queue.json /tmp/social-release/queue.json
-
           gh release delete social-preview-latest --yes --cleanup-tag >/dev/null 2>&1 || true
           gh release create social-preview-latest /tmp/social-release/* \
             --title "Contenuti social pronti - F1 Immobiliare + Real Media Pro" \
-            --notes "Pacchetto automatico più recente. Reel MP4 senza sottotitoli, caroselli JPG e ZIP completi per entrambi i brand. Generato dal workflow ${GITHUB_RUN_ID}."
+            --notes "Pacchetto settimanale: Reel MP4 con logo, sottotitoli verdi/emoji e CTA WhatsApp; caroselli JPG e ZIP completi per entrambi i brand. Generato dal workflow ${GITHUB_RUN_ID}."
 
       - name: Resolve Rome week
         id: week
@@ -178,27 +174,15 @@ jobs:
           script: |
             const key = '${{ steps.week.outputs.key }}';
             const title = `[SOCIAL-WEEK] ${key} - conferma richiesta`;
-            const existing = await github.paginate(github.rest.issues.listForRepo, {
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              state: 'all',
-              per_page: 100
-            });
-            if (existing.some(i => i.title === title)) {
-              core.info(`Approval issue already exists: ${title}`);
-              return;
-            }
-            const editorialChat = 'https://chatgpt.com/c/6a814ec3-80cc-83eb-b9b6-a56f02c348e8';
+            const existing = await github.paginate(github.rest.issues.listForRepo, {owner: context.repo.owner, repo: context.repo.repo, state: 'all', per_page: 100});
+            if (existing.some(i => i.title === title)) return;
             const body = [
               `GitHub ha preparato il pacchetto social F1 + Real Media Pro per **${key}**.`,
               '',
               '**Nessun contenuto viene pubblicato prima della tua conferma.**',
               '',
-              `1. Chat editoriale F1: ${editorialChat}`,
-              `2. Controlla e scarica i contenuti: https://josephsocialmedia2-spec.github.io/open-social-scheduler/monday-control.html`,
-              `3. Se va bene, rispondi a questa issue scrivendo esattamente: **CONFERMO**`,
-              '',
-              'Dopo CONFERMO, gli slot approvati vengono pubblicati automaticamente alle loro scadenze tramite le API ufficiali configurate.',
+              `Controlla e scarica i contenuti: https://josephsocialmedia2-spec.github.io/open-social-scheduler/monday-control.html`,
+              `Se va bene, rispondi a questa issue scrivendo esattamente: **CONFERMO**`,
               '',
               'Per bloccare i contenuti non ancora pubblicati della settimana puoi scrivere **REVOCA**.'
             ].join('\n');
