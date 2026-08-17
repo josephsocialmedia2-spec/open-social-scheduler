@@ -4,7 +4,7 @@
   "active": true,
   "timezone": "Europe/Rome",
   "brand": {
-    "status": "performance-agency-v3-no-subtitles",
+    "status": "performance-agency-v4-daily-simple",
     "background": "#07111F",
     "background_alt": "#0D1B2D",
     "primary": "#F5F8FC",
@@ -23,8 +23,21 @@
     "name": "Real Media Pro · Dalla visibilità alla crescita",
     "cta": "Richiedi un'analisi strategica gratuita",
     "keyword": "ANALISI",
+    "phone": "371 370 8294",
     "territories": ["Torino", "Rivoli", "Avigliana", "Valle di Susa"],
-    "content_pillars": ["audit_digitale","shopify_ecommerce","conversion_rate_optimization","meta_ads","google_ads","seo_aeo","landing_page","crm_automazioni","creative_testing","case_study","prima_dopo","dietro_le_quinte"],
+    "content_pillars": ["shopify_ecommerce", "conversion_rate_optimization", "site_speed", "trust", "product_page", "mobile_experience", "content_marketing", "seo_aeo", "lead_generation", "case_study", "prima_dopo"],
+    "hashtag_sets": [
+      ["#RealMediaPro", "#Shopify", "#Ecommerce", "#SitiWeb", "#Torino", "#MarketingDigitale"],
+      ["#RealMediaPro", "#ShopifyItalia", "#ConversionRate", "#EcommerceItalia", "#WebDesign", "#ValleDiSusa"],
+      ["#RealMediaPro", "#SitiShopify", "#DigitalMarketing", "#LeadGeneration", "#Rivoli", "#Avigliana"]
+    ],
+    "research_sources": [
+      "https://www.facebook.com/business/ads/facebook-instagram-reels-ads",
+      "https://www.facebook.com/business/ads/ad-creative",
+      "https://www.shopify.com/it/blog/topics/content-marketing",
+      "https://www.shopify.com/blog/topics/conversion",
+      "https://www.shopify.com/it/editions/spring2026"
+    ],
     "shopify_public_sources": [
       "https://f1immobiliare.com/pages/partner-pubblicitario-e-tecnologico",
       "https://f1immobiliare.com/pages/strategia-digitale",
@@ -35,8 +48,9 @@
       "https://f1immobiliare.com/products/presentazione-aziendale?variant=54321157603667"
     ],
     "creative_rules": {
+      "simple_first": true,
       "show_real_work": true,
-      "use_public_shopify_media": true,
+      "use_only_owned_generated_or_reusable_media": true,
       "hook_first_seconds": 3,
       "proof_before_claim": true,
       "show_mobile_site": true,
@@ -44,18 +58,21 @@
       "show_ads_manager_style_original_mockups": true,
       "show_metrics_only_when_verified": true,
       "avoid_fake_roas_or_revenue": true,
+      "avoid_copying_shopify_creatives": true,
       "subtitles": false,
-      "single_hook_title_only": true
+      "single_hook_title_only": true,
+      "manual_publish_only": true
     }
   },
   "approval": {"required": true,"mode": "iso_week","file": "publisher/approvals/real-media-pro.json"},
-  "planning": {"horizon_days": 7},
+  "planning": {"horizon_days": 1, "week_view": "daily_candidates", "manual_publish_only": true},
   "publishing": {
     "backend": "direct_api",
     "secret_prefix": "RMP",
     "require_media": true,
-    "slots": ["09:15", "12:45", "17:45", "20:45"],
-    "formats": {"attract": "reel", "nurture": "carousel", "hyperlocal": "reel", "convert": "carousel"},
+    "slots": ["09:15", "14:15", "19:15"],
+    "categories": ["attract", "nurture", "convert"],
+    "formats": {"attract": "reel", "nurture": "carousel", "convert": "reel"},
     "platforms": ["facebook", "instagram", "tiktok", "linkedin", "youtube", "pinterest"],
     "platforms_by_format": {"reel": ["facebook", "instagram", "tiktok", "linkedin", "youtube"],"carousel": ["facebook", "instagram", "linkedin", "pinterest"]}
   },
