@@ -3,397 +3,6 @@
   "updated_by": "F1 Social Engine",
   "jobs": [
     {
-      "id": "f1-immobiliare-2026-08-17-01-reel-recruiting-01",
-      "client_id": "f1-immobiliare",
-      "client_name": "F1 Immobiliare",
-      "category": "data",
-      "editorial_role": "recruiting",
-      "campaign": "F1 Growth Blitz 2026",
-      "format": "reel",
-      "title": "Non cerchiamo apriporte",
-      "caption": "Non cerchiamo apriporte. Cerchiamo persone che vogliono imparare mercato, acquisizione, tecnologia, relazione e negoziazione. Scrivi CARRIERA su WhatsApp.\n\n#LavoraConNoi #AgenteImmobiliare #F1Immobiliare #ValleDiSusa #Carriera #Autoimprenditorialita",
-      "hashtags": [
-        "#LavoraConNoi",
-        "#AgenteImmobiliare",
-        "#F1Immobiliare",
-        "#ValleDiSusa",
-        "#Carriera",
-        "#Autoimprenditorialita"
-      ],
-      "voiceover": "L'agente immobiliare moderno deve saper leggere il mercato, trovare opportunità, parlare con proprietari, usare un CRM, creare relazioni, organizzare visite, seguire documenti e negoziazione. In F1 aggiungiamo radar territoriali, dashboard, contenuti, social, open house e sistemi di follow-up. Non cerchiamo persone da mettere dietro una scrivania. Cerchiamo persone che vogliano costruire una professione, formarsi, ottenere i requisiti previsti e diventare autonome nel tempo. Se vuoi capire come funziona davvero il nostro metodo ipertecnologico, scrivici.",
-      "slides": [
-        "SE PENSI CHE L'AGENTE IMMOBILIARE APRA PORTE, QUESTO LAVORO NON FA PER TE.",
-        "VALLE DI SUSA|DATI + TERRITORIO",
-        "TECNOLOGIA|+ RELAZIONI",
-        "UN METODO|DA CAPIRE",
-        "UN PROCESSO|DA MISURARE",
-        "SCRIVI CARRIERA SU WHATSAPP",
-        "F1 IMMOBILIARE|PRIMA I DATI|POI LA STRATEGIA|POI LA VENDITA"
-      ],
-      "visuals": [
-        "agente IA uomo",
-        "agente IA donna",
-        "CRM",
-        "mappa",
-        "open house",
-        "social dashboard"
-      ],
-      "cta": "Scrivi CARRIERA su WhatsApp",
-      "media": "publisher/media/generated/f1-immobiliare/2026-08-17/01-reel-recruiting-01.mp4",
-      "scheduled_at": "2026-08-17T09:00:00+02:00",
-      "territory": "Bussoleno",
-      "property_focus": {
-        "transaction": "vendita",
-        "min_price_eur": 100000,
-        "exclude": [
-          "affitto",
-          "locazione",
-          "garage",
-          "box",
-          "posto auto",
-          "rustico",
-          "rudere",
-          "terreno"
-        ],
-        "preferred": [
-          "appartamento",
-          "casa",
-          "villa",
-          "villetta",
-          "attico",
-          "bifamiliare",
-          "trifamiliare"
-        ],
-        "cash_subito": {
-          "enabled": true,
-          "label": "F1 CASH SUBITO",
-          "meaning": "acquisto diretto per opportunità immobiliari fortemente scontate e coerenti con i criteri F1",
-          "rule": "non presentarlo come garanzia di acquisto; prima verifica economica, tecnica e documentale"
-        }
-      },
-      "approval_key": "2026-W34",
-      "platforms": [
-        {
-          "platform": "facebook",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "instagram",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "tiktok",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "linkedin",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "youtube",
-          "integration_id": "direct-api"
-        }
-      ],
-      "enabled": true,
-      "status": "awaiting_approval",
-      "published_platforms": [],
-      "postiz_results": [],
-      "video_made_with_ai": true,
-      "created_by": "open-social-scheduler",
-      "blocked_reason": "approval required for 2026-W34"
-    },
-    {
-      "id": "f1-immobiliare-2026-08-17-02-g3-cinquecento-metri",
-      "client_id": "f1-immobiliare",
-      "client_name": "F1 Immobiliare",
-      "category": "error",
-      "editorial_role": "error",
-      "campaign": "F1 Core",
-      "format": "reel",
-      "title": "Due case a 500 metri possono valere diversamente",
-      "caption": "Stesso comune non significa stesso valore. Scrivi VALUTAZIONE in privato.\n\n#F1Immobiliare #ValleDiSusa #Condove #Bussoleno #VillarDora #VendereBene",
-      "hashtags": [
-        "#F1Immobiliare",
-        "#ValleDiSusa",
-        "#Condove",
-        "#Bussoleno",
-        "#VillarDora",
-        "#VendereBene"
-      ],
-      "voiceover": "Due immobili a cinquecento metri di distanza possono avere una risposta di mercato diversa. Servizi, esposizione, rumore, accessibilità e domanda cambiano il posizionamento. La microzona conta.",
-      "slides": [
-        "500 METRI|POSSONO|CAMBIARE TUTTO",
-        "SERVIZI",
-        "RUMORE|ESPOSIZIONE",
-        "ACCESSIBILITÀ",
-        "DOMANDA",
-        "NON USARE|MEDIE CIECHE",
-        "F1 IMMOBILIARE|MICROZONA|371 370 8294"
-      ],
-      "visuals": [],
-      "cta": "Scrivi VALUTAZIONE in privato",
-      "media": "publisher/media/generated/f1-immobiliare/2026-08-17/02-g3-cinquecento-metri.mp4",
-      "scheduled_at": "2026-08-17T12:30:00+02:00",
-      "territory": "Bussoleno",
-      "property_focus": {
-        "transaction": "vendita",
-        "min_price_eur": 100000,
-        "exclude": [
-          "affitto",
-          "locazione",
-          "garage",
-          "box",
-          "posto auto",
-          "rustico",
-          "rudere",
-          "terreno"
-        ],
-        "preferred": [
-          "appartamento",
-          "casa",
-          "villa",
-          "villetta",
-          "attico",
-          "bifamiliare",
-          "trifamiliare"
-        ],
-        "cash_subito": {
-          "enabled": true,
-          "label": "F1 CASH SUBITO",
-          "meaning": "acquisto diretto per opportunità immobiliari fortemente scontate e coerenti con i criteri F1",
-          "rule": "non presentarlo come garanzia di acquisto; prima verifica economica, tecnica e documentale"
-        }
-      },
-      "approval_key": "2026-W34",
-      "platforms": [
-        {
-          "platform": "facebook",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "instagram",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "tiktok",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "linkedin",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "youtube",
-          "integration_id": "direct-api"
-        }
-      ],
-      "enabled": true,
-      "status": "awaiting_approval",
-      "published_platforms": [],
-      "postiz_results": [],
-      "video_made_with_ai": true,
-      "created_by": "open-social-scheduler",
-      "blocked_reason": "approval required for 2026-W34"
-    },
-    {
-      "id": "f1-immobiliare-2026-08-17-03-carosello-recruiting-01",
-      "client_id": "f1-immobiliare",
-      "client_name": "F1 Immobiliare",
-      "category": "proof",
-      "editorial_role": "recruiting",
-      "campaign": "F1 Growth Blitz 2026",
-      "format": "carousel",
-      "title": "Cosa deve saper fare un agente immobiliare moderno",
-      "caption": "L'agente moderno deve unire relazione, territorio, dati e tecnologia. F1 sta costruendo un modello operativo basato su radar, CRM, contenuti, Open House e formazione.\n\n#AgenteImmobiliare #LavoraConNoi #F1Immobiliare #PropTech #ValleDiSusa #CarrieraImmobiliare",
-      "hashtags": [
-        "#AgenteImmobiliare",
-        "#LavoraConNoi",
-        "#F1Immobiliare",
-        "#PropTech",
-        "#ValleDiSusa",
-        "#CarrieraImmobiliare"
-      ],
-      "voiceover": "L'agente moderno deve unire relazione, territorio, dati e tecnologia. F1 sta costruendo un modello operativo basato su radar, CRM, contenuti, Open House e formazione.",
-      "slides": [
-        "AGENTE IMMOBILIARE 2026|NON BASTA SAPER|MOSTRARE CASE",
-        "1|LEGGERE IL MERCATO",
-        "2|TROVARE OPPORTUNITÀ",
-        "3|GESTIRE CRM|E FOLLOW-UP",
-        "4|COMUNICARE|ONLINE E OFFLINE",
-        "5|ORGANIZZARE|OPEN HOUSE E VISITE",
-        "6|CONOSCERE DOCUMENTI|E PROCESSO",
-        "7|NEGOZIARE E|SEGUIRE IL CLIENTE",
-        "F1|TECNOLOGIA + TERRITORIO|+ METODO"
-      ],
-      "visuals": [],
-      "cta": "Scrivi VALUTAZIONE in privato",
-      "media": [
-        "publisher/media/generated/f1-immobiliare/2026-08-17/03-carosello-recruiting-01/slide-01.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-17/03-carosello-recruiting-01/slide-02.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-17/03-carosello-recruiting-01/slide-03.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-17/03-carosello-recruiting-01/slide-04.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-17/03-carosello-recruiting-01/slide-05.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-17/03-carosello-recruiting-01/slide-06.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-17/03-carosello-recruiting-01/slide-07.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-17/03-carosello-recruiting-01/slide-08.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-17/03-carosello-recruiting-01/slide-09.jpg"
-      ],
-      "scheduled_at": "2026-08-17T17:30:00+02:00",
-      "territory": "Bussoleno",
-      "property_focus": {
-        "transaction": "vendita",
-        "min_price_eur": 100000,
-        "exclude": [
-          "affitto",
-          "locazione",
-          "garage",
-          "box",
-          "posto auto",
-          "rustico",
-          "rudere",
-          "terreno"
-        ],
-        "preferred": [
-          "appartamento",
-          "casa",
-          "villa",
-          "villetta",
-          "attico",
-          "bifamiliare",
-          "trifamiliare"
-        ],
-        "cash_subito": {
-          "enabled": true,
-          "label": "F1 CASH SUBITO",
-          "meaning": "acquisto diretto per opportunità immobiliari fortemente scontate e coerenti con i criteri F1",
-          "rule": "non presentarlo come garanzia di acquisto; prima verifica economica, tecnica e documentale"
-        }
-      },
-      "approval_key": "2026-W34",
-      "platforms": [
-        {
-          "platform": "facebook",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "instagram",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "linkedin",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "pinterest",
-          "integration_id": "direct-api"
-        }
-      ],
-      "enabled": true,
-      "status": "awaiting_approval",
-      "published_platforms": [],
-      "postiz_results": [],
-      "video_made_with_ai": false,
-      "created_by": "open-social-scheduler",
-      "blocked_reason": "approval required for 2026-W34"
-    },
-    {
-      "id": "f1-immobiliare-2026-08-17-04-g5-strategia-prima-firma",
-      "client_id": "f1-immobiliare",
-      "client_name": "F1 Immobiliare",
-      "category": "decision",
-      "editorial_role": "decision",
-      "campaign": "F1 Core",
-      "format": "carousel",
-      "title": "Una strategia deve essere spiegata prima di firmare",
-      "caption": "Una strategia seria può essere spiegata prima dell'incarico. Scrivi VALUTAZIONE in privato.\n\n#F1Immobiliare #ValleDiSusa #VendereCasa #ValutazioneImmobiliare #Avigliana #CasaInVendita",
-      "hashtags": [
-        "#F1Immobiliare",
-        "#ValleDiSusa",
-        "#VendereCasa",
-        "#ValutazioneImmobiliare",
-        "#Avigliana",
-        "#CasaInVendita"
-      ],
-      "voiceover": "Una strategia seria può essere spiegata prima dell'incarico. Scrivi VALUTAZIONE in privato.",
-      "slides": [
-        "PRIMA|DI FIRMARE",
-        "DEVI SAPERE|COSA SUCCEDERÀ",
-        "COME|POSIZIONIAMO",
-        "DOVE|COMUNICHIAMO",
-        "COSA|MISURIAMO",
-        "COME|CORREGGIAMO",
-        "F1 IMMOBILIARE|DEVI POTER CAPIRE|371 370 8294"
-      ],
-      "visuals": [],
-      "cta": "Scrivi VALUTAZIONE in privato",
-      "media": [
-        "publisher/media/generated/f1-immobiliare/2026-08-17/04-g5-strategia-prima-firma/slide-01.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-17/04-g5-strategia-prima-firma/slide-02.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-17/04-g5-strategia-prima-firma/slide-03.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-17/04-g5-strategia-prima-firma/slide-04.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-17/04-g5-strategia-prima-firma/slide-05.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-17/04-g5-strategia-prima-firma/slide-06.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-17/04-g5-strategia-prima-firma/slide-07.jpg"
-      ],
-      "scheduled_at": "2026-08-17T20:30:00+02:00",
-      "territory": "Bussoleno",
-      "property_focus": {
-        "transaction": "vendita",
-        "min_price_eur": 100000,
-        "exclude": [
-          "affitto",
-          "locazione",
-          "garage",
-          "box",
-          "posto auto",
-          "rustico",
-          "rudere",
-          "terreno"
-        ],
-        "preferred": [
-          "appartamento",
-          "casa",
-          "villa",
-          "villetta",
-          "attico",
-          "bifamiliare",
-          "trifamiliare"
-        ],
-        "cash_subito": {
-          "enabled": true,
-          "label": "F1 CASH SUBITO",
-          "meaning": "acquisto diretto per opportunità immobiliari fortemente scontate e coerenti con i criteri F1",
-          "rule": "non presentarlo come garanzia di acquisto; prima verifica economica, tecnica e documentale"
-        }
-      },
-      "approval_key": "2026-W34",
-      "platforms": [
-        {
-          "platform": "facebook",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "instagram",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "linkedin",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "pinterest",
-          "integration_id": "direct-api"
-        }
-      ],
-      "enabled": true,
-      "status": "awaiting_approval",
-      "published_platforms": [],
-      "postiz_results": [],
-      "video_made_with_ai": false,
-      "created_by": "open-social-scheduler",
-      "blocked_reason": "approval required for 2026-W34"
-    },
-    {
       "id": "f1-immobiliare-2026-08-18-01-reel-segnalatore-01",
       "client_id": "f1-immobiliare",
       "client_name": "F1 Immobiliare",
@@ -2733,34 +2342,75 @@
       "blocked_reason": "approval required for 2026-W34"
     },
     {
-      "id": "real-media-pro-2026-08-17-01-shopify-che-converte",
-      "client_id": "real-media-pro",
-      "client_name": "Real Media Pro",
-      "category": "attract",
-      "editorial_role": "attract",
-      "campaign": "F1 Core",
+      "id": "f1-immobiliare-2026-08-24-01-reel-recruiting-02",
+      "client_id": "f1-immobiliare",
+      "client_name": "F1 Immobiliare",
+      "category": "data",
+      "editorial_role": "recruiting",
+      "campaign": "F1 Growth Blitz 2026",
       "format": "reel",
-      "title": "Un e-commerce bello non basta",
-      "caption": "Un e-commerce che performa collega prodotto, offerta, pagina, fiducia, checkout e traffico. Real Media Pro parte dal percorso di acquisto, non dal solo layout. Richiedi un'analisi strategica gratuita.",
-      "hashtags": [],
-      "voiceover": "Un e-commerce che performa collega prodotto, offerta, pagina, fiducia, checkout e traffico. Real Media Pro parte dal percorso di acquisto, non dal solo layout. Richiedi un'analisi strategica gratuita.",
-      "slides": [
-        "IL TUO E-COMMERCE È BELLO?",
-        "MA CONVERTE?",
-        "PRODOTTO + OFFERTA",
-        "PAGINA PRODOTTO",
-        "PROVA SOCIALE",
-        "CHECKOUT SENZA ATTRITO",
-        "TRAFFICO QUALIFICATO",
-        "RICHIEDI ANALISI"
+      "title": "Da aspirante agente a professionista",
+      "caption": "Vuoi entrare nel settore immobiliare? Il percorso corretto parte da competenze, formazione e requisiti professionali. F1 aggiunge tecnologia, CRM, radar e metodo.\n\n#CarrieraImmobiliare #AgenteImmobiliare #Formazione #F1Immobiliare #ValleDiSusa #LavoroPiemonte",
+      "hashtags": [
+        "#CarrieraImmobiliare",
+        "#AgenteImmobiliare",
+        "#Formazione",
+        "#F1Immobiliare",
+        "#ValleDiSusa",
+        "#LavoroPiemonte"
       ],
-      "visuals": [],
-      "cta": "Richiedi un'analisi strategica gratuita",
-      "media": "publisher/media/generated/real-media-pro/2026-08-17/01-shopify-che-converte.mp4",
-      "scheduled_at": "2026-08-17T09:15:00+02:00",
-      "territory": "Rivoli",
-      "property_focus": {},
-      "approval_key": "2026-W34",
+      "voiceover": "Il percorso serio non parte dal biglietto da visita. Parte dalle competenze. Territorio, acquisizione, comunicazione, documenti, valutazione, appuntamenti, follow-up e negoziazione. Poi ci sono i requisiti professionali previsti dalla normativa per esercitare la mediazione. F1 vuole costruire un percorso in cui tecnologia e formazione lavorano insieme: radar per trovare opportunità, CRM per non perdere contatti, contenuti per creare fiducia e metodo per trasformare attività in risultati. Non promettiamo scorciatoie. Offriamo un sistema da imparare e far crescere.",
+      "slides": [
+        "VUOI ENTRARE NELL'IMMOBILIARE MA NON SAI DA DOVE COMINCIARE?",
+        "VALLE DI SUSA|DATI + TERRITORIO",
+        "TECNOLOGIA|+ RELAZIONI",
+        "UN METODO|DA CAPIRE",
+        "UN PROCESSO|DA MISURARE",
+        "CHIEDI INFORMAZIONI SUL PERCORSO F1",
+        "F1 IMMOBILIARE|PRIMA I DATI|POI LA STRATEGIA|POI LA VENDITA"
+      ],
+      "visuals": [
+        "giovane adulto professionale",
+        "formazione",
+        "CRM",
+        "tablet con mappa",
+        "affiancamento agente",
+        "logo F1"
+      ],
+      "cta": "Chiedi informazioni sul percorso F1",
+      "media": "publisher/media/generated/f1-immobiliare/2026-08-24/01-reel-recruiting-02.mp4",
+      "scheduled_at": "2026-08-24T09:00:00+02:00",
+      "territory": "Oulx",
+      "property_focus": {
+        "transaction": "vendita",
+        "min_price_eur": 100000,
+        "exclude": [
+          "affitto",
+          "locazione",
+          "garage",
+          "box",
+          "posto auto",
+          "rustico",
+          "rudere",
+          "terreno"
+        ],
+        "preferred": [
+          "appartamento",
+          "casa",
+          "villa",
+          "villetta",
+          "attico",
+          "bifamiliare",
+          "trifamiliare"
+        ],
+        "cash_subito": {
+          "enabled": true,
+          "label": "F1 CASH SUBITO",
+          "meaning": "acquisto diretto per opportunità immobiliari fortemente scontate e coerenti con i criteri F1",
+          "rule": "non presentarlo come garanzia di acquisto; prima verifica economica, tecnica e documentale"
+        }
+      },
+      "approval_key": "2026-W35",
       "platforms": [
         {
           "platform": "facebook",
@@ -2789,101 +2439,71 @@
       "postiz_results": [],
       "video_made_with_ai": true,
       "created_by": "open-social-scheduler",
-      "blocked_reason": "approval required for 2026-W34"
+      "blocked_reason": "approval required for 2026-W35"
     },
     {
-      "id": "real-media-pro-2026-08-17-02-creative-testing",
-      "client_id": "real-media-pro",
-      "client_name": "Real Media Pro",
-      "category": "nurture",
-      "editorial_role": "nurture",
-      "campaign": "F1 Core",
-      "format": "carousel",
-      "title": "Non esiste la creatività perfetta al primo tentativo",
-      "caption": "Il creative testing serve a capire quale messaggio, hook e formato producono davvero risposta. Le decisioni si prendono sui dati, non sulle preferenze estetiche. Richiedi un'analisi strategica gratuita.",
-      "hashtags": [],
-      "voiceover": "Il creative testing serve a capire quale messaggio, hook e formato producono davvero risposta. Le decisioni si prendono sui dati, non sulle preferenze estetiche. Richiedi un'analisi strategica gratuita.",
-      "slides": [
-        "UN SOLO VIDEO NON È UNA STRATEGIA",
-        "TESTA HOOK",
-        "TESTA ANGOLI",
-        "TESTA FORMAT",
-        "TESTA CTA",
-        "MISURA",
-        "TAGLIA I PERDENTI",
-        "SCALA I VINCENTI"
-      ],
-      "visuals": [],
-      "cta": "Richiedi un'analisi strategica gratuita",
-      "media": [
-        "publisher/media/generated/real-media-pro/2026-08-17/02-creative-testing/slide-01.jpg",
-        "publisher/media/generated/real-media-pro/2026-08-17/02-creative-testing/slide-02.jpg",
-        "publisher/media/generated/real-media-pro/2026-08-17/02-creative-testing/slide-03.jpg",
-        "publisher/media/generated/real-media-pro/2026-08-17/02-creative-testing/slide-04.jpg",
-        "publisher/media/generated/real-media-pro/2026-08-17/02-creative-testing/slide-05.jpg",
-        "publisher/media/generated/real-media-pro/2026-08-17/02-creative-testing/slide-06.jpg",
-        "publisher/media/generated/real-media-pro/2026-08-17/02-creative-testing/slide-07.jpg",
-        "publisher/media/generated/real-media-pro/2026-08-17/02-creative-testing/slide-08.jpg"
-      ],
-      "scheduled_at": "2026-08-17T12:45:00+02:00",
-      "territory": "Rivoli",
-      "property_focus": {},
-      "approval_key": "2026-W34",
-      "platforms": [
-        {
-          "platform": "facebook",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "instagram",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "linkedin",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "pinterest",
-          "integration_id": "direct-api"
-        }
-      ],
-      "enabled": true,
-      "status": "awaiting_approval",
-      "published_platforms": [],
-      "postiz_results": [],
-      "video_made_with_ai": false,
-      "created_by": "open-social-scheduler",
-      "blocked_reason": "approval required for 2026-W34"
-    },
-    {
-      "id": "real-media-pro-2026-08-17-03-ecommerce-framework",
-      "client_id": "real-media-pro",
-      "client_name": "Real Media Pro",
-      "category": "hyperlocal",
-      "editorial_role": "hyperlocal",
+      "id": "f1-immobiliare-2026-08-24-02-g3-cinquecento-metri",
+      "client_id": "f1-immobiliare",
+      "client_name": "F1 Immobiliare",
+      "category": "error",
+      "editorial_role": "error",
       "campaign": "F1 Core",
       "format": "reel",
-      "title": "Come costruiamo un e-commerce orientato alla performance",
-      "caption": "Il modello operativo prende spunto dalle logiche oggi più usate nell'e-commerce performance: prodotto/offerta, pagina che riduce attrito, creative testing, paid traffic e misurazione. Richiedi un'analisi strategica gratuita.",
-      "hashtags": [],
-      "voiceover": "Il modello operativo prende spunto dalle logiche oggi più usate nell'e-commerce performance: prodotto/offerta, pagina che riduce attrito, creative testing, paid traffic e misurazione. Richiedi un'analisi strategica gratuita.",
+      "title": "Due case a 500 metri possono valere diversamente",
+      "caption": "Stesso comune non significa stesso valore. Scrivi VALUTAZIONE in privato.\n\n#F1Immobiliare #NonASensazione #ConIDati #StrategiaImmobiliare #PrezzoCasa #ProprietariCasa",
+      "hashtags": [
+        "#F1Immobiliare",
+        "#NonASensazione",
+        "#ConIDati",
+        "#StrategiaImmobiliare",
+        "#PrezzoCasa",
+        "#ProprietariCasa"
+      ],
+      "voiceover": "Due immobili a cinquecento metri di distanza possono avere una risposta di mercato diversa. Servizi, esposizione, rumore, accessibilità e domanda cambiano il posizionamento. La microzona conta.",
       "slides": [
-        "1 PRODOTTO",
-        "2 OFFERTA",
-        "3 PAGINA",
-        "4 FIDUCIA",
-        "5 CHECKOUT",
-        "6 TRAFFICO",
-        "7 RETARGETING",
-        "8 MISURAZIONE"
+        "500 METRI|POSSONO|CAMBIARE TUTTO",
+        "SERVIZI",
+        "RUMORE|ESPOSIZIONE",
+        "ACCESSIBILITÀ",
+        "DOMANDA",
+        "NON USARE|MEDIE CIECHE",
+        "F1 IMMOBILIARE|MICROZONA|371 370 8294"
       ],
       "visuals": [],
-      "cta": "Richiedi un'analisi strategica gratuita",
-      "media": "publisher/media/generated/real-media-pro/2026-08-17/03-ecommerce-framework.mp4",
-      "scheduled_at": "2026-08-17T17:45:00+02:00",
-      "territory": "Rivoli",
-      "property_focus": {},
-      "approval_key": "2026-W34",
+      "cta": "Scrivi VALUTAZIONE in privato",
+      "media": "publisher/media/generated/f1-immobiliare/2026-08-24/02-g3-cinquecento-metri.mp4",
+      "scheduled_at": "2026-08-24T12:30:00+02:00",
+      "territory": "Oulx",
+      "property_focus": {
+        "transaction": "vendita",
+        "min_price_eur": 100000,
+        "exclude": [
+          "affitto",
+          "locazione",
+          "garage",
+          "box",
+          "posto auto",
+          "rustico",
+          "rudere",
+          "terreno"
+        ],
+        "preferred": [
+          "appartamento",
+          "casa",
+          "villa",
+          "villetta",
+          "attico",
+          "bifamiliare",
+          "trifamiliare"
+        ],
+        "cash_subito": {
+          "enabled": true,
+          "label": "F1 CASH SUBITO",
+          "meaning": "acquisto diretto per opportunità immobiliari fortemente scontate e coerenti con i criteri F1",
+          "rule": "non presentarlo come garanzia di acquisto; prima verifica economica, tecnica e documentale"
+        }
+      },
+      "approval_key": "2026-W35",
       "platforms": [
         {
           "platform": "facebook",
@@ -2912,46 +2532,83 @@
       "postiz_results": [],
       "video_made_with_ai": true,
       "created_by": "open-social-scheduler",
-      "blocked_reason": "approval required for 2026-W34"
+      "blocked_reason": "approval required for 2026-W35"
     },
     {
-      "id": "real-media-pro-2026-08-17-04-analisi-gratuita",
-      "client_id": "real-media-pro",
-      "client_name": "Real Media Pro",
-      "category": "convert",
-      "editorial_role": "convert",
-      "campaign": "F1 Core",
+      "id": "f1-immobiliare-2026-08-24-03-carosello-recruiting-01",
+      "client_id": "f1-immobiliare",
+      "client_name": "F1 Immobiliare",
+      "category": "proof",
+      "editorial_role": "recruiting",
+      "campaign": "F1 Growth Blitz 2026",
       "format": "carousel",
-      "title": "Analisi strategica digitale gratuita",
-      "caption": "Ti mostriamo cosa sta funzionando, cosa sta limitando il percorso digitale e quali priorità affrontare per prime. Analisi strategica iniziale gratuita. Richiedi un'analisi strategica gratuita.",
-      "hashtags": [],
-      "voiceover": "Ti mostriamo cosa sta funzionando, cosa sta limitando il percorso digitale e quali priorità affrontare per prime. Analisi strategica iniziale gratuita. Richiedi un'analisi strategica gratuita.",
+      "title": "Cosa deve saper fare un agente immobiliare moderno",
+      "caption": "L'agente moderno deve unire relazione, territorio, dati e tecnologia. F1 sta costruendo un modello operativo basato su radar, CRM, contenuti, Open House e formazione.\n\n#AgenteImmobiliare #LavoraConNoi #F1Immobiliare #PropTech #ValleDiSusa #CarrieraImmobiliare",
+      "hashtags": [
+        "#AgenteImmobiliare",
+        "#LavoraConNoi",
+        "#F1Immobiliare",
+        "#PropTech",
+        "#ValleDiSusa",
+        "#CarrieraImmobiliare"
+      ],
+      "voiceover": "L'agente moderno deve unire relazione, territorio, dati e tecnologia. F1 sta costruendo un modello operativo basato su radar, CRM, contenuti, Open House e formazione.",
       "slides": [
-        "NON PARTIAMO DAI POST",
-        "PARTIAMO DAL BUSINESS",
-        "OFFERTA",
-        "TARGET",
-        "SITO",
-        "TRAFFICO",
-        "CONVERSIONE",
-        "RICHIEDI ANALISI"
+        "AGENTE IMMOBILIARE 2026|NON BASTA SAPER|MOSTRARE CASE",
+        "1|LEGGERE IL MERCATO",
+        "2|TROVARE OPPORTUNITÀ",
+        "3|GESTIRE CRM|E FOLLOW-UP",
+        "4|COMUNICARE|ONLINE E OFFLINE",
+        "5|ORGANIZZARE|OPEN HOUSE E VISITE",
+        "6|CONOSCERE DOCUMENTI|E PROCESSO",
+        "7|NEGOZIARE E|SEGUIRE IL CLIENTE",
+        "F1|TECNOLOGIA + TERRITORIO|+ METODO"
       ],
       "visuals": [],
-      "cta": "Richiedi un'analisi strategica gratuita",
+      "cta": "Scrivi VALUTAZIONE in privato",
       "media": [
-        "publisher/media/generated/real-media-pro/2026-08-17/04-analisi-gratuita/slide-01.jpg",
-        "publisher/media/generated/real-media-pro/2026-08-17/04-analisi-gratuita/slide-02.jpg",
-        "publisher/media/generated/real-media-pro/2026-08-17/04-analisi-gratuita/slide-03.jpg",
-        "publisher/media/generated/real-media-pro/2026-08-17/04-analisi-gratuita/slide-04.jpg",
-        "publisher/media/generated/real-media-pro/2026-08-17/04-analisi-gratuita/slide-05.jpg",
-        "publisher/media/generated/real-media-pro/2026-08-17/04-analisi-gratuita/slide-06.jpg",
-        "publisher/media/generated/real-media-pro/2026-08-17/04-analisi-gratuita/slide-07.jpg",
-        "publisher/media/generated/real-media-pro/2026-08-17/04-analisi-gratuita/slide-08.jpg"
+        "publisher/media/generated/f1-immobiliare/2026-08-24/03-carosello-recruiting-01/slide-01.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-24/03-carosello-recruiting-01/slide-02.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-24/03-carosello-recruiting-01/slide-03.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-24/03-carosello-recruiting-01/slide-04.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-24/03-carosello-recruiting-01/slide-05.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-24/03-carosello-recruiting-01/slide-06.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-24/03-carosello-recruiting-01/slide-07.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-24/03-carosello-recruiting-01/slide-08.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-24/03-carosello-recruiting-01/slide-09.jpg"
       ],
-      "scheduled_at": "2026-08-17T20:45:00+02:00",
-      "territory": "Rivoli",
-      "property_focus": {},
-      "approval_key": "2026-W34",
+      "scheduled_at": "2026-08-24T17:30:00+02:00",
+      "territory": "Oulx",
+      "property_focus": {
+        "transaction": "vendita",
+        "min_price_eur": 100000,
+        "exclude": [
+          "affitto",
+          "locazione",
+          "garage",
+          "box",
+          "posto auto",
+          "rustico",
+          "rudere",
+          "terreno"
+        ],
+        "preferred": [
+          "appartamento",
+          "casa",
+          "villa",
+          "villetta",
+          "attico",
+          "bifamiliare",
+          "trifamiliare"
+        ],
+        "cash_subito": {
+          "enabled": true,
+          "label": "F1 CASH SUBITO",
+          "meaning": "acquisto diretto per opportunità immobiliari fortemente scontate e coerenti con i criteri F1",
+          "rule": "non presentarlo come garanzia di acquisto; prima verifica economica, tecnica e documentale"
+        }
+      },
+      "approval_key": "2026-W35",
       "platforms": [
         {
           "platform": "facebook",
@@ -2976,7 +2633,104 @@
       "postiz_results": [],
       "video_made_with_ai": false,
       "created_by": "open-social-scheduler",
-      "blocked_reason": "approval required for 2026-W34"
+      "blocked_reason": "approval required for 2026-W35"
+    },
+    {
+      "id": "f1-immobiliare-2026-08-24-04-g5-strategia-prima-firma",
+      "client_id": "f1-immobiliare",
+      "client_name": "F1 Immobiliare",
+      "category": "decision",
+      "editorial_role": "decision",
+      "campaign": "F1 Core",
+      "format": "carousel",
+      "title": "Una strategia deve essere spiegata prima di firmare",
+      "caption": "Una strategia seria può essere spiegata prima dell'incarico. Scrivi VALUTAZIONE in privato.\n\n#F1Immobiliare #ValDiSusa #MercatoImmobiliare #VenditaImmobiliare #Susa #PrimaIDati",
+      "hashtags": [
+        "#F1Immobiliare",
+        "#ValDiSusa",
+        "#MercatoImmobiliare",
+        "#VenditaImmobiliare",
+        "#Susa",
+        "#PrimaIDati"
+      ],
+      "voiceover": "Una strategia seria può essere spiegata prima dell'incarico. Scrivi VALUTAZIONE in privato.",
+      "slides": [
+        "PRIMA|DI FIRMARE",
+        "DEVI SAPERE|COSA SUCCEDERÀ",
+        "COME|POSIZIONIAMO",
+        "DOVE|COMUNICHIAMO",
+        "COSA|MISURIAMO",
+        "COME|CORREGGIAMO",
+        "F1 IMMOBILIARE|DEVI POTER CAPIRE|371 370 8294"
+      ],
+      "visuals": [],
+      "cta": "Scrivi VALUTAZIONE in privato",
+      "media": [
+        "publisher/media/generated/f1-immobiliare/2026-08-24/04-g5-strategia-prima-firma/slide-01.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-24/04-g5-strategia-prima-firma/slide-02.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-24/04-g5-strategia-prima-firma/slide-03.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-24/04-g5-strategia-prima-firma/slide-04.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-24/04-g5-strategia-prima-firma/slide-05.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-24/04-g5-strategia-prima-firma/slide-06.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-24/04-g5-strategia-prima-firma/slide-07.jpg"
+      ],
+      "scheduled_at": "2026-08-24T20:30:00+02:00",
+      "territory": "Oulx",
+      "property_focus": {
+        "transaction": "vendita",
+        "min_price_eur": 100000,
+        "exclude": [
+          "affitto",
+          "locazione",
+          "garage",
+          "box",
+          "posto auto",
+          "rustico",
+          "rudere",
+          "terreno"
+        ],
+        "preferred": [
+          "appartamento",
+          "casa",
+          "villa",
+          "villetta",
+          "attico",
+          "bifamiliare",
+          "trifamiliare"
+        ],
+        "cash_subito": {
+          "enabled": true,
+          "label": "F1 CASH SUBITO",
+          "meaning": "acquisto diretto per opportunità immobiliari fortemente scontate e coerenti con i criteri F1",
+          "rule": "non presentarlo come garanzia di acquisto; prima verifica economica, tecnica e documentale"
+        }
+      },
+      "approval_key": "2026-W35",
+      "platforms": [
+        {
+          "platform": "facebook",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "linkedin",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "pinterest",
+          "integration_id": "direct-api"
+        }
+      ],
+      "enabled": true,
+      "status": "awaiting_approval",
+      "published_platforms": [],
+      "postiz_results": [],
+      "video_made_with_ai": false,
+      "created_by": "open-social-scheduler",
+      "blocked_reason": "approval required for 2026-W35"
     },
     {
       "id": "real-media-pro-2026-08-18-01-meta-ads-creative",
@@ -4453,7 +4207,253 @@
       "video_made_with_ai": false,
       "created_by": "open-social-scheduler",
       "blocked_reason": "approval required for 2026-W34"
+    },
+    {
+      "id": "real-media-pro-2026-08-24-01-google-ads-intento",
+      "client_id": "real-media-pro",
+      "client_name": "Real Media Pro",
+      "category": "attract",
+      "editorial_role": "attract",
+      "campaign": "F1 Core",
+      "format": "reel",
+      "title": "Google Ads intercetta domanda già attiva",
+      "caption": "Google Ads funziona quando keyword, feed, annuncio e pagina di destinazione rispondono allo stesso intento. Richiedi un'analisi strategica gratuita.",
+      "hashtags": [],
+      "voiceover": "Google Ads funziona quando keyword, feed, annuncio e pagina di destinazione rispondono allo stesso intento. Richiedi un'analisi strategica gratuita.",
+      "slides": [
+        "CHI CERCA È GIÀ PIÙ VICINO",
+        "MA DEVI ESSERCI",
+        "SEARCH",
+        "SHOPPING",
+        "PERFORMANCE MAX",
+        "FEED PRODOTTI",
+        "LANDING COERENTE",
+        "RICHIEDI ANALISI"
+      ],
+      "visuals": [],
+      "cta": "Richiedi un'analisi strategica gratuita",
+      "media": "publisher/media/generated/real-media-pro/2026-08-24/01-google-ads-intento.mp4",
+      "scheduled_at": "2026-08-24T09:15:00+02:00",
+      "territory": "Torino",
+      "property_focus": {},
+      "approval_key": "2026-W35",
+      "platforms": [
+        {
+          "platform": "facebook",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "tiktok",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "linkedin",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "youtube",
+          "integration_id": "direct-api"
+        }
+      ],
+      "enabled": true,
+      "status": "awaiting_approval",
+      "published_platforms": [],
+      "postiz_results": [],
+      "video_made_with_ai": true,
+      "created_by": "open-social-scheduler",
+      "blocked_reason": "approval required for 2026-W35"
+    },
+    {
+      "id": "real-media-pro-2026-08-24-02-shopify-product-page",
+      "client_id": "real-media-pro",
+      "client_name": "Real Media Pro",
+      "category": "nurture",
+      "editorial_role": "nurture",
+      "campaign": "F1 Core",
+      "format": "carousel",
+      "title": "La pagina prodotto deve togliere dubbi",
+      "caption": "Una product page efficace riduce l'incertezza: beneficio chiaro, prove, FAQ, condizioni e CTA visibile, soprattutto da mobile. Richiedi un'analisi strategica gratuita.",
+      "hashtags": [],
+      "voiceover": "Una product page efficace riduce l'incertezza: beneficio chiaro, prove, FAQ, condizioni e CTA visibile, soprattutto da mobile. Richiedi un'analisi strategica gratuita.",
+      "slides": [
+        "UNA PAGINA PRODOTTO DEVE VENDERE",
+        "PROBLEMA",
+        "BENEFICIO",
+        "DIMOSTRAZIONE",
+        "RECENSIONI",
+        "FAQ",
+        "SPEDIZIONE / RESO",
+        "CTA"
+      ],
+      "visuals": [],
+      "cta": "Richiedi un'analisi strategica gratuita",
+      "media": [
+        "publisher/media/generated/real-media-pro/2026-08-24/02-shopify-product-page/slide-01.jpg",
+        "publisher/media/generated/real-media-pro/2026-08-24/02-shopify-product-page/slide-02.jpg",
+        "publisher/media/generated/real-media-pro/2026-08-24/02-shopify-product-page/slide-03.jpg",
+        "publisher/media/generated/real-media-pro/2026-08-24/02-shopify-product-page/slide-04.jpg",
+        "publisher/media/generated/real-media-pro/2026-08-24/02-shopify-product-page/slide-05.jpg",
+        "publisher/media/generated/real-media-pro/2026-08-24/02-shopify-product-page/slide-06.jpg",
+        "publisher/media/generated/real-media-pro/2026-08-24/02-shopify-product-page/slide-07.jpg",
+        "publisher/media/generated/real-media-pro/2026-08-24/02-shopify-product-page/slide-08.jpg"
+      ],
+      "scheduled_at": "2026-08-24T12:45:00+02:00",
+      "territory": "Torino",
+      "property_focus": {},
+      "approval_key": "2026-W35",
+      "platforms": [
+        {
+          "platform": "facebook",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "linkedin",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "pinterest",
+          "integration_id": "direct-api"
+        }
+      ],
+      "enabled": true,
+      "status": "awaiting_approval",
+      "published_platforms": [],
+      "postiz_results": [],
+      "video_made_with_ai": false,
+      "created_by": "open-social-scheduler",
+      "blocked_reason": "approval required for 2026-W35"
+    },
+    {
+      "id": "real-media-pro-2026-08-24-03-attivita-territorio",
+      "client_id": "real-media-pro",
+      "client_name": "Real Media Pro",
+      "category": "hyperlocal",
+      "editorial_role": "hyperlocal",
+      "campaign": "F1 Core",
+      "format": "reel",
+      "title": "Quanto è visibile la tua attività a Torino?",
+      "caption": "Per un'attività locale la visibilità si costruisce su Google, mappe, social, recensioni e un percorso di contatto semplice. Richiedi un'analisi strategica gratuita.",
+      "hashtags": [],
+      "voiceover": "Per un'attività locale la visibilità si costruisce su Google, mappe, social, recensioni e un percorso di contatto semplice. Richiedi un'analisi strategica gratuita.",
+      "slides": [
+        "HAI UN'ATTIVITÀ A Torino?",
+        "TI TROVANO?",
+        "GOOGLE",
+        "MAPPE",
+        "SOCIAL",
+        "RECENSIONI",
+        "SITO",
+        "RICHIEDI ANALISI"
+      ],
+      "visuals": [],
+      "cta": "Richiedi un'analisi strategica gratuita",
+      "media": "publisher/media/generated/real-media-pro/2026-08-24/03-attivita-territorio.mp4",
+      "scheduled_at": "2026-08-24T17:45:00+02:00",
+      "territory": "Torino",
+      "property_focus": {},
+      "approval_key": "2026-W35",
+      "platforms": [
+        {
+          "platform": "facebook",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "tiktok",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "linkedin",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "youtube",
+          "integration_id": "direct-api"
+        }
+      ],
+      "enabled": true,
+      "status": "awaiting_approval",
+      "published_platforms": [],
+      "postiz_results": [],
+      "video_made_with_ai": true,
+      "created_by": "open-social-scheduler",
+      "blocked_reason": "approval required for 2026-W35"
+    },
+    {
+      "id": "real-media-pro-2026-08-24-04-seo-servizio",
+      "client_id": "real-media-pro",
+      "client_name": "Real Media Pro",
+      "category": "convert",
+      "editorial_role": "convert",
+      "campaign": "F1 Core",
+      "format": "carousel",
+      "title": "SEO e AI Search: rendi il tuo business più facile da trovare",
+      "caption": "SEO, contenuti, local search, reputazione e dati strutturati aiutano il business a essere trovato e compreso nei nuovi percorsi di ricerca. Richiedi un'analisi strategica gratuita.",
+      "hashtags": [],
+      "voiceover": "SEO, contenuti, local search, reputazione e dati strutturati aiutano il business a essere trovato e compreso nei nuovi percorsi di ricerca. Richiedi un'analisi strategica gratuita.",
+      "slides": [
+        "ESSERE TROVATI",
+        "KEYWORD",
+        "PAGINE UTILI",
+        "DATI STRUTTURATI",
+        "LOCAL SEO",
+        "RECENSIONI",
+        "AI SEARCH",
+        "RICHIEDI ANALISI"
+      ],
+      "visuals": [],
+      "cta": "Richiedi un'analisi strategica gratuita",
+      "media": [
+        "publisher/media/generated/real-media-pro/2026-08-24/04-seo-servizio/slide-01.jpg",
+        "publisher/media/generated/real-media-pro/2026-08-24/04-seo-servizio/slide-02.jpg",
+        "publisher/media/generated/real-media-pro/2026-08-24/04-seo-servizio/slide-03.jpg",
+        "publisher/media/generated/real-media-pro/2026-08-24/04-seo-servizio/slide-04.jpg",
+        "publisher/media/generated/real-media-pro/2026-08-24/04-seo-servizio/slide-05.jpg",
+        "publisher/media/generated/real-media-pro/2026-08-24/04-seo-servizio/slide-06.jpg",
+        "publisher/media/generated/real-media-pro/2026-08-24/04-seo-servizio/slide-07.jpg",
+        "publisher/media/generated/real-media-pro/2026-08-24/04-seo-servizio/slide-08.jpg"
+      ],
+      "scheduled_at": "2026-08-24T20:45:00+02:00",
+      "territory": "Torino",
+      "property_focus": {},
+      "approval_key": "2026-W35",
+      "platforms": [
+        {
+          "platform": "facebook",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "linkedin",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "pinterest",
+          "integration_id": "direct-api"
+        }
+      ],
+      "enabled": true,
+      "status": "awaiting_approval",
+      "published_platforms": [],
+      "postiz_results": [],
+      "video_made_with_ai": false,
+      "created_by": "open-social-scheduler",
+      "blocked_reason": "approval required for 2026-W35"
     }
   ],
-  "updated_at": "2026-08-17T07:57:58+00:00"
+  "updated_at": "2026-08-17T08:15:26Z"
 }
