@@ -14,7 +14,6 @@ on:
       - '.github/workflows/social-engine-daily.yml'
       - 'publisher/build_daily_queue.py'
       - 'publisher/render_reels.py'
-      - 'publisher/add_reel_subtitles.py'
       - 'publisher/requirements.txt'
       - 'publisher/clients/**'
       - 'publisher/content_bank/**'
@@ -32,7 +31,7 @@ concurrency:
 jobs:
   build-render-prepare:
     runs-on: ubuntu-latest
-    timeout-minutes: 35
+    timeout-minutes: 45
     env:
       SOCIAL_DATE: ${{ inputs.date }}
       SOCIAL_START_OFFSET_DAYS: ${{ github.event_name == 'schedule' && '0' || '1' }}
@@ -62,7 +61,7 @@ jobs:
           path: |
             .cache/piper
             .cache/f1-photos
-          key: social-assets-v4-green-captions
+          key: social-assets-v5-clean-60s
 
       - name: Prepare Italian voice
         run: |
@@ -85,11 +84,8 @@ jobs:
             python publisher/build_daily_queue.py
           fi
 
-      - name: Render weekly Reels and carousels
+      - name: Render weekly 60-second Reels and carousels
         run: python publisher/render_reels.py
-
-      - name: Add green emoji captions to Reels
-        run: python publisher/add_reel_subtitles.py
 
       - name: Reconcile approval and media state
         shell: bash
@@ -109,21 +105,25 @@ jobs:
           if-no-files-found: ignore
           retention-days: 7
 
-      - name: Persist prepared queue
+      - name: Persist prepared queue without rebase conflicts
         if: always()
         shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           if git diff --quiet -- publisher/queue.json; then
             echo 'Queue unchanged.'
-          else
-            git config user.name 'open-social-engine'
-            git config user.email 'open-social-engine@users.noreply.github.com'
-            git add publisher/queue.json
-            git commit -m 'Prepare approval-gated social queue'
-            git fetch origin main
-            git rebase origin/main
-            git push origin HEAD:main
+            exit 0
           fi
+          CONTENT=$(base64 -w0 publisher/queue.json)
+          SHA=$(gh api "repos/${GITHUB_REPOSITORY}/contents/publisher/queue.json?ref=main" --jq '.sha')
+          gh api "repos/${GITHUB_REPOSITORY}/contents/publisher/queue.json" \
+            --method PUT \
+            -f message='Prepare approval-gated social queue' \
+            -f content="$CONTENT" \
+            -f sha="$SHA" \
+            -f branch='main' >/dev/null
+          echo 'Queue persisted through GitHub Contents API.'
 
       - name: Publish latest downloadable media
         if: always()
@@ -151,7 +151,7 @@ jobs:
           gh release delete social-preview-latest --yes --cleanup-tag >/dev/null 2>&1 || true
           gh release create social-preview-latest /tmp/social-release/* \
             --title "Contenuti social pronti - F1 Immobiliare + Real Media Pro" \
-            --notes "Pacchetto settimanale: Reel MP4 con logo, sottotitoli verdi/emoji e CTA WhatsApp; caroselli JPG e ZIP completi per entrambi i brand. Generato dal workflow ${GITHUB_RUN_ID}."
+            --notes "Pacchetto settimanale pulito: Reel MP4 da 60 secondi con logo, visual coerenti e CTA telefonica; caroselli JPG e ZIP completi per entrambi i brand. Generato dal workflow ${GITHUB_RUN_ID}."
 
       - name: Resolve Rome week
         id: week
