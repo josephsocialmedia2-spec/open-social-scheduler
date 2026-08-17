@@ -14,7 +14,6 @@ on:
       - '.github/workflows/social-engine-daily.yml'
       - 'publisher/build_daily_queue.py'
       - 'publisher/render_reels.py'
-      - 'publisher/add_reel_subtitles.py'
       - 'publisher/requirements.txt'
       - 'publisher/clients/**'
       - 'publisher/content_bank/**'
@@ -62,7 +61,7 @@ jobs:
           path: |
             .cache/piper
             .cache/f1-photos
-          key: f1-social-assets-v2
+          key: f1-social-assets-v3-no-subtitles
 
       - name: Prepare Italian voice
         run: |
@@ -87,9 +86,6 @@ jobs:
 
       - name: Render premium reels and carousels
         run: python publisher/render_reels.py
-
-      - name: Burn subtitles into final reels
-        run: python publisher/add_reel_subtitles.py
 
       - name: Reconcile approval and media state
         shell: bash
@@ -159,7 +155,7 @@ jobs:
           gh release delete social-preview-latest --yes --cleanup-tag >/dev/null 2>&1 || true
           gh release create social-preview-latest /tmp/social-release/* \
             --title "Contenuti social pronti - F1 Immobiliare + Real Media Pro" \
-            --notes "Pacchetto automatico più recente. Reel MP4, caroselli JPG e ZIP completi per entrambi i brand. Generato dal workflow ${GITHUB_RUN_ID}."
+            --notes "Pacchetto automatico più recente. Reel MP4 senza sottotitoli, caroselli JPG e ZIP completi per entrambi i brand. Generato dal workflow ${GITHUB_RUN_ID}."
 
       - name: Resolve Rome week
         id: week
