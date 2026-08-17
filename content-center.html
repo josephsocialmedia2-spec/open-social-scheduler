@@ -32,78 +32,45 @@
 <section class="panel"><div class="manager"><h2>Archivio cliente</h2><div class="muted" id="archiveClientLabel"></div></div><div id="archiveList" class="archive-list" style="margin-top:10px"></div></section>
 <div class="footer">Real Media Pro · Centro operativo multi-cliente</div>
 </main>
-
 <div class="modal" id="newModal"><div class="modal-box"><h2>NUOVO CLIENTE</h2><div class="builder"><input id="newName" placeholder="Nome cliente"><input id="newSector" placeholder="Settore / attività"><div class="row"><button class="btn green" onclick="confirmCreate()">CREA CLIENTE</button><button class="btn dark" onclick="closeModals()">ANNULLA</button></div></div></div></div>
 <div class="modal" id="deleteModal"><div class="modal-box"><h2>ELIMINA CLIENTE</h2><select id="deleteSelect"></select><div class="row" style="margin-top:12px"><button class="btn red" onclick="confirmDelete()">ELIMINA</button><button class="btn dark" onclick="closeModals()">ANNULLA</button></div></div></div>
-
 <script>
-const CLIENTS_KEY='rmpcc:clients';
-const CURRENT_KEY='rmpcc:currentClient';
-const WEEK_PREFIX='rmpcc:week:';
-const ARCHIVE_PREFIX='rmpcc:archive:';
-const SEED=[
- {id:'f1',name:'F1 Immobiliare',type:'Immobiliare'},
- {id:'rmp',name:'Real Media Pro',type:'Web agency'},
- {id:'marta-ruffino',name:'Marta Ruffino',type:'Salute · Riabilitazione pavimento pelvico'},
- {id:'lasacra',name:'Immobiliare La Sacra',type:'Immobiliare'},
- {id:'antica',name:'Antica Cappella',type:'Ristorazione'},
- {id:'cartolibreria',name:'Cartolibreria 10 e Lode',type:'Retail'}
-];
+const CLIENTS_KEY='rmpcc:clients';const CURRENT_KEY='rmpcc:currentClient';const WEEK_PREFIX='rmpcc:week:';const ARCHIVE_PREFIX='rmpcc:archive:';
+const SEED=[{id:'f1',name:'F1 Immobiliare',type:'Immobiliare'},{id:'rmp',name:'Real Media Pro',type:'Web agency'},{id:'marta-ruffino',name:'Marta Ruffino',type:'Salute · Riabilitazione pavimento pelvico'},{id:'lasacra',name:'Immobiliare La Sacra',type:'Immobiliare'},{id:'antica',name:'Antica Cappella',type:'Ristorazione'},{id:'cartolibreria',name:'Cartolibreria 10 e Lode',type:'Retail'}];
 const DAYS=['Lunedì','Martedì','Mercoledì','Giovedì','Venerdì','Sabato','Domenica'];
-const PLATFORMS=[
- {id:'facebook',label:'Facebook',icon:'fa-brands fa-facebook-f'},
- {id:'instagram',label:'Instagram',icon:'fa-brands fa-instagram'},
- {id:'tiktok',label:'TikTok',icon:'fa-brands fa-tiktok'},
- {id:'youtube',label:'YouTube',icon:'fa-brands fa-youtube'},
- {id:'linkedin',label:'LinkedIn',icon:'fa-brands fa-linkedin-in'},
- {id:'pinterest',label:'Pinterest',icon:'fa-brands fa-pinterest-p'}
-];
-let currentClient='';
-let weekStart=mondayOf(new Date());
-
+const PLATFORMS=[{id:'facebook',label:'Facebook',icon:'fa-brands fa-facebook-f'},{id:'instagram',label:'Instagram',icon:'fa-brands fa-instagram'},{id:'tiktok',label:'TikTok',icon:'fa-brands fa-tiktok'},{id:'youtube',label:'YouTube',icon:'fa-brands fa-youtube'},{id:'linkedin',label:'LinkedIn',icon:'fa-brands fa-linkedin-in'},{id:'pinterest',label:'Pinterest',icon:'fa-brands fa-pinterest-p'}];
+let currentClient='';let weekStart=mondayOf(new Date());
 function slug(s){return String(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')}
-function readClients(){try{return JSON.parse(localStorage.getItem(CLIENTS_KEY)||'{}')}catch(_){return {}}}
-function saveClients(v){localStorage.setItem(CLIENTS_KEY,JSON.stringify(v))}
+function readClients(){try{return JSON.parse(localStorage.getItem(CLIENTS_KEY)||'{}')}catch(_){return {}}}function saveClients(v){localStorage.setItem(CLIENTS_KEY,JSON.stringify(v))}
 function ensureClients(){const data=readClients();for(const s of SEED){const exists=Object.values(data).some(c=>slug(c.name)===slug(s.name));if(!exists)data[s.id]={id:s.id,name:s.name,type:s.type,desc:''}}saveClients(data);currentClient=localStorage.getItem(CURRENT_KEY)||Object.keys(data)[0]||'f1';if(!data[currentClient])currentClient=Object.keys(data)[0]||'f1'}
-function allClients(){return Object.values(readClients()).sort((a,b)=>a.name.localeCompare(b.name,'it'))}
-function client(){return readClients()[currentClient]||allClients()[0]}
+function allClients(){return Object.values(readClients()).sort((a,b)=>a.name.localeCompare(b.name,'it'))}function client(){return readClients()[currentClient]||allClients()[0]}
 function selectClient(id){currentClient=id;localStorage.setItem(CURRENT_KEY,id);renderClients();renderHeader();renderCalendar();renderArchive()}
 function renderClients(){clients.innerHTML=allClients().map(c=>`<article class="client ${c.id===currentClient?'active':''}" onclick="selectClient('${c.id.replace(/'/g,"\\'")}')"><small>${escapeHtml(c.type||'Cliente')}</small><h3>${escapeHtml(c.name)}</h3></article>`).join('')}
 function renderHeader(){const c=client();selectedClientName.textContent=c?.name||'Cliente';selectedClientSector.textContent=c?.type||'';archiveClientLabel.textContent=c?.name||'';weekTitle.textContent=weekLabel()}
 function mondayOf(date){const d=new Date(date);d.setHours(12,0,0,0);const day=d.getDay();const diff=day===0?-6:1-day;d.setDate(d.getDate()+diff);return d}
 function isoDate(d){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
-function dateFromIso(s){const [y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d,12,0,0)}
-function weekKey(){return WEEK_PREFIX+currentClient+':'+isoDate(weekStart)}
+function dateFromIso(s){const [y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d,12,0,0)}function weekKey(){return WEEK_PREFIX+currentClient+':'+isoDate(weekStart)}
 function blankWeek(){const slots={};for(let day=0;day<7;day++)for(let h=8;h<=23;h++)slots[`${day}-${h}`]={platforms:[],note:''};return {clientId:currentClient,weekStart:isoDate(weekStart),slots,updatedAt:new Date().toISOString()}}
 function readWeek(){try{const v=JSON.parse(localStorage.getItem(weekKey())||'null');return v&&v.slots?v:blankWeek()}catch(_){return blankWeek()}}
 function saveWeek(v){v.clientId=currentClient;v.weekStart=isoDate(weekStart);v.updatedAt=new Date().toISOString();localStorage.setItem(weekKey(),JSON.stringify(v))}
 function weekLabel(){const end=new Date(weekStart);end.setDate(end.getDate()+6);const f=d=>d.toLocaleDateString('it-IT',{day:'2-digit',month:'2-digit',year:'numeric'});return `${f(weekStart)} — ${f(end)}`}
-function shiftWeek(n){weekStart=new Date(weekStart);weekStart.setDate(weekStart.getDate()+n);renderHeader();renderCalendar();renderArchive()}
-function goCurrentWeek(){weekStart=mondayOf(new Date());renderHeader();renderCalendar();renderArchive()}
+function shiftWeek(n){weekStart=new Date(weekStart);weekStart.setDate(weekStart.getDate()+n);renderHeader();renderCalendar();renderArchive()}function goCurrentWeek(){weekStart=mondayOf(new Date());renderHeader();renderCalendar();renderArchive()}
 function renderCalendar(){const data=readWeek();let html='';for(let h=8;h<=23;h++){html+=`<tr><td class="hour">${String(h).padStart(2,'0')}:00</td>`;for(let day=0;day<7;day++){const key=`${day}-${h}`,slot=data.slots[key]||{platforms:[],note:''};html+=`<td class="slot ${slot.platforms.length?'has-active':''}" data-slot="${key}"><div class="socials">${PLATFORMS.map(p=>`<button class="social ${slot.platforms.includes(p.id)?'on':''}" title="${p.label}" aria-label="${p.label}" onclick="togglePlatform('${key}','${p.id}')"><i class="${p.icon}"></i></button>`).join('')}</div><input value="${escapeAttr(slot.note||'')}" placeholder="contenuto..." oninput="setNote('${key}',this.value)"></td>`}html+='</tr>'}calendarBody.innerHTML=html}
 function togglePlatform(key,pid){const data=readWeek(),slot=data.slots[key]||{platforms:[],note:''};slot.platforms=slot.platforms.includes(pid)?slot.platforms.filter(x=>x!==pid):[...slot.platforms,pid];data.slots[key]=slot;saveWeek(data);renderCalendar()}
 function setNote(key,value){const data=readWeek(),slot=data.slots[key]||{platforms:[],note:''};slot.note=value;data.slots[key]=slot;saveWeek(data)}
-function openNewClient(){newModal.classList.add('open');newName.focus()}
-function openDeleteClient(){const rows=allClients();deleteSelect.innerHTML=rows.map(c=>`<option value="${escapeAttr(c.id)}">${escapeHtml(c.name)}</option>`).join('');deleteSelect.value=currentClient;deleteModal.classList.add('open')}
-function closeModals(){newModal.classList.remove('open');deleteModal.classList.remove('open')}
+function openNewClient(){newModal.classList.add('open');newName.focus()}function openDeleteClient(){const rows=allClients();deleteSelect.innerHTML=rows.map(c=>`<option value="${escapeAttr(c.id)}">${escapeHtml(c.name)}</option>`).join('');deleteSelect.value=currentClient;deleteModal.classList.add('open')}function closeModals(){newModal.classList.remove('open');deleteModal.classList.remove('open')}
 function confirmCreate(){const name=newName.value.trim();if(!name)return alert('Inserisci il nome cliente.');const data=readClients();const id='client-'+slug(name)+'-'+Date.now();data[id]={id,name,type:newSector.value.trim()||'Cliente',desc:''};saveClients(data);newName.value='';newSector.value='';closeModals();selectClient(id)}
 function confirmDelete(){const id=deleteSelect.value;const data=readClients();const c=data[id];if(!c)return;if(!confirm(`Eliminare ${c.name}?`))return;delete data[id];saveClients(data);closeModals();ensureClients();currentClient=Object.keys(readClients())[0];localStorage.setItem(CURRENT_KEY,currentClient);renderAll()}
 function platformNames(ids){return PLATFORMS.filter(p=>ids.includes(p.id)).map(p=>p.label)}
 function clientMessage(){const c=client(),data=readWeek();const end=new Date(weekStart);end.setDate(end.getDate()+6);let lines=[`Ciao ${c?.name||''}, ecco la programmazione social settimanale dal ${weekStart.toLocaleDateString('it-IT')} al ${end.toLocaleDateString('it-IT')}.`,''];let found=false;for(let day=0;day<7;day++){let dayLines=[];for(let h=8;h<=23;h++){const s=data.slots[`${day}-${h}`]||{platforms:[],note:''};if(s.platforms.length){found=true;const p=platformNames(s.platforms).join(', ');dayLines.push(`• ${String(h).padStart(2,'0')}:00 — ${p}${s.note?` — ${s.note}`:''}`)}}if(dayLines.length)lines.push(`${DAYS[day]}:`,...dayLines,'')}if(!found)lines.push('Nessuna pubblicazione ancora selezionata.');const used=[...new Set(Object.values(data.slots).flatMap(s=>s.platforms||[]))];if(used.length)lines.push(`Canali utilizzati: ${platformNames(used).join(', ')}.`);lines.push('','Real Media Pro');return lines.join('\n')}
-async function copyClientMessage(){const text=clientMessage();try{await navigator.clipboard.writeText(text);alert('Messaggio copiato.')}catch(_){prompt('Copia il messaggio:',text)}}
-function sendWhatsapp(){window.open('https://wa.me/?text='+encodeURIComponent(clientMessage()),'_blank','noopener')}
-function sendEmail(){const c=client();location.href='mailto:?subject='+encodeURIComponent(`Programmazione social settimanale - ${c?.name||'Cliente'}`)+'&body='+encodeURIComponent(clientMessage())}
+async function copyClientMessage(){const text=clientMessage();try{await navigator.clipboard.writeText(text);alert('Messaggio copiato.')}catch(_){prompt('Copia il messaggio:',text)}}function sendWhatsapp(){window.open('https://wa.me/?text='+encodeURIComponent(clientMessage()),'_blank','noopener')}function sendEmail(){const c=client();location.href='mailto:?subject='+encodeURIComponent(`Programmazione social settimanale - ${c?.name||'Cliente'}`)+'&body='+encodeURIComponent(clientMessage())}
 function exportWeek(){const c=client(),data=readWeek();const payload={version:1,exportedAt:new Date().toISOString(),client:c,week:data};const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`OSS_${slug(c?.name||'cliente')}_${isoDate(weekStart)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),800)}
 importFile.addEventListener('change',async e=>{const file=e.target.files[0];if(!file)return;try{const payload=JSON.parse(await file.text());if(!payload.week||!payload.week.slots)throw new Error('Formato non valido');if(payload.client?.name){const data=readClients();let target=Object.values(data).find(c=>slug(c.name)===slug(payload.client.name));if(!target){target={id:'client-'+slug(payload.client.name)+'-'+Date.now(),name:payload.client.name,type:payload.client.type||'Cliente'};data[target.id]=target;saveClients(data)}currentClient=target.id;localStorage.setItem(CURRENT_KEY,currentClient)}weekStart=dateFromIso(payload.week.weekStart||isoDate(mondayOf(new Date())));payload.week.clientId=currentClient;payload.week.weekStart=isoDate(weekStart);saveWeek(payload.week);renderAll();alert('Settimana importata. Puoi riprendere il lavoro da qui.')}catch(err){alert('Impossibile importare il file: '+err.message)}finally{e.target.value=''}})
-function archiveKey(){return ARCHIVE_PREFIX+currentClient}
-function readArchive(){try{return JSON.parse(localStorage.getItem(archiveKey())||'[]')}catch(_){return []}}
+function archiveKey(){return ARCHIVE_PREFIX+currentClient}function readArchive(){try{return JSON.parse(localStorage.getItem(archiveKey())||'[]')}catch(_){return []}}
 function archiveWeek(){const arr=readArchive(),data=readWeek();const snapshot={id:Date.now(),savedAt:new Date().toISOString(),weekStart:isoDate(weekStart),data};arr.unshift(snapshot);localStorage.setItem(archiveKey(),JSON.stringify(arr.slice(0,30)));renderArchive();alert('Settimana archiviata per '+(client()?.name||'cliente')+'.')}
-function loadArchive(id){const item=readArchive().find(x=>String(x.id)===String(id));if(!item)return;weekStart=dateFromIso(item.weekStart);saveWeek(item.data);renderHeader();renderCalendar();renderArchive()}
-function deleteArchive(id){const arr=readArchive().filter(x=>String(x.id)!==String(id));localStorage.setItem(archiveKey(),JSON.stringify(arr));renderArchive()}
+function loadArchive(id){const item=readArchive().find(x=>String(x.id)===String(id));if(!item)return;weekStart=dateFromIso(item.weekStart);saveWeek(item.data);renderHeader();renderCalendar();renderArchive()}function deleteArchive(id){const arr=readArchive().filter(x=>String(x.id)!==String(id));localStorage.setItem(archiveKey(),JSON.stringify(arr));renderArchive()}
 function renderArchive(){const arr=readArchive();archiveList.innerHTML=arr.length?arr.map(x=>`<div class="archive-item"><span><b>Settimana ${escapeHtml(x.weekStart)}</b><br><small>salvata ${new Date(x.savedAt).toLocaleString('it-IT')}</small></span><span class="row"><button class="btn soft" onclick="loadArchive('${x.id}')">CARICA</button><button class="btn red" onclick="deleteArchive('${x.id}')"><i class="fa-solid fa-trash"></i></button></span></div>`).join(''):'<div class="muted">Nessuna settimana archiviata per questo cliente.</div>'}
-function escapeHtml(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
-function escapeAttr(s){return escapeHtml(s)}
-function renderAll(){renderClients();renderHeader();renderCalendar();renderArchive()}
+function escapeHtml(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}function escapeAttr(s){return escapeHtml(s)}function renderAll(){renderClients();renderHeader();renderCalendar();renderArchive()}
 ensureClients();renderAll();
 </script>
 </body>
