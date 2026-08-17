@@ -4,7 +4,7 @@
   "active": true,
   "timezone": "Europe/Rome",
   "brand": {
-    "status": "performance-agency-v4-daily-simple",
+    "status": "performance-agency-v5-canva",
     "background": "#07111F",
     "background_alt": "#0D1B2D",
     "primary": "#F5F8FC",
@@ -18,6 +18,41 @@
     "voice": {"enabled": true, "engine": "piper", "model": "it_IT-paola-medium"},
     "reel": {"width": 1080, "height": 1920, "safe_top": 180, "safe_bottom": 260, "slides": 8, "seconds_per_slide": 7.5, "target_seconds": 60, "subtitles": false},
     "carousel": {"width": 1080, "height": 1350}
+  },
+  "visual_pipeline": {
+    "preferred_provider": "canva",
+    "asset_provider": "pixabay",
+    "client_assets_first": true,
+    "legacy_python_renderer": "technical_fallback_only",
+    "legacy_python_output_publishable": false,
+    "reel_master": {
+      "design_id": "DAHSj7D73hQ",
+      "edit_url": "https://www.canva.com/d/lrCCmaCUDTGmZWv",
+      "view_url": "https://www.canva.com/d/KiK9dzSsu3WwXTZ",
+      "format": "1080x1920",
+      "subtitle_safe_area": "lower_25_percent"
+    },
+    "carousel_master": {
+      "design_id": "DAHSj5AZWYM",
+      "edit_url": "https://www.canva.com/d/EtuJYuY23kZZzNz",
+      "view_url": "https://www.canva.com/d/JQkq2h-qDhbjMns",
+      "format": "1080x1350"
+    },
+    "pixabay_sources": [
+      "https://pixabay.com/it/photos/affari-digitali-10150916/",
+      "https://pixabay.com/it/photos/affari-professionale-marketing-10207346/",
+      "https://pixabay.com/it/photos/dati-analisi-affari-grafici-10237243/",
+      "https://pixabay.com/images/search/laptop%20e-commerce/"
+    ],
+    "rules": [
+      "final_visuals_must_use_canva_or_client_supplied_assets",
+      "pixabay_assets_must_be_relevant_to_the_content",
+      "no_fake_metrics",
+      "no_generic_powerpoint_layout",
+      "mobile_readable_typography",
+      "keep_reel_lower_safe_area_clear",
+      "github_handles_queue_voice_approval_and_distribution_not_final_art_direction"
+    ]
   },
   "campaign": {
     "name": "Real Media Pro · Dalla visibilità alla crescita",
@@ -61,7 +96,10 @@
       "avoid_copying_shopify_creatives": true,
       "subtitles": false,
       "single_hook_title_only": true,
-      "manual_publish_only": true
+      "manual_publish_only": true,
+      "final_visual_provider": "canva",
+      "pixabay_for_reusable_broll_and_photos": true,
+      "reject_legacy_python_visuals_for_publication": true
     }
   },
   "approval": {"required": true,"mode": "iso_week","file": "publisher/approvals/real-media-pro.json"},
