@@ -38,7 +38,7 @@
     "final_signature": ["F1 IMMOBILIARE", "NON A SENSAZIONE.", "CON I DATI.", "371 370 8294"]
   },
   "brand": {
-    "status": "premium-valle-susa-v4-no-subtitles",
+    "status": "premium-valle-susa-v5-daily-simple",
     "background": "#070907",
     "background_alt": "#0D1711",
     "primary": "#F7F7F4",
@@ -51,10 +51,17 @@
     "renderer": "premium_photo",
     "single_hook_title_only": true,
     "image_reference_search": {
-      "provider": "Google Images",
-      "query": "CASE IN VENDITA VALLE DI SUSA",
-      "url": "https://www.google.com/search?q=CASE+IN+VENDITA+VALLE+DI+SUSA&udm=2",
-      "rule": "Use the search as visual reference. Publish only images with verified reuse rights or owned/licensed material."
+      "provider": "public/licensed sources",
+      "query": "residential houses interiors exteriors Italy",
+      "rule": "Use only owned, generated or explicitly reusable/licensed residential-property imagery. Never download and republish protected competitor creatives."
+    },
+    "creative_rules": {
+      "simple_first": true,
+      "residential_property_only": true,
+      "no_abstract_marketing_graphics": true,
+      "no_generic_people_as_primary_visual": true,
+      "no_subtitles": true,
+      "manual_publish_only": true
     },
     "presenter_direction": {
       "enabled": true,
@@ -75,34 +82,13 @@
       ]
     },
     "photo_sources": [
-      {
-        "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Villa_Cantamerlo_Avigliana02.JPG",
-        "credit": "Avigliana · Villa Cantamerlo · pubblico dominio"
-      },
-      {
-        "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Avigliana%2C_Italy_%28Unsplash%29.jpg",
-        "credit": "Avigliana · Massimo Mancini · CC0"
-      },
-      {
-        "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Avigliana%2C_Italy_%28Unsplash_yhnOTbw9SPY%29.jpg",
-        "credit": "Avigliana · Massimo Mancini · CC0"
-      },
-      {
-        "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Centro_Storico_Avigliana.JPG",
-        "credit": "Avigliana · centro storico · pubblico dominio"
-      },
-      {
-        "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Avigliana_Centro_Storico.JPG",
-        "credit": "Avigliana · architettura residenziale · pubblico dominio"
-      },
-      {
-        "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Avigliana_Centro_Storico_Tramonto.JPG",
-        "credit": "Avigliana · centro storico · pubblico dominio"
-      },
-      {
-        "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Architecture-villa-house-building-home-construction-542165.jpg",
-        "credit": "Immagine residenziale · CC0"
-      }
+      {"url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Villa_Cantamerlo_Avigliana02.JPG", "credit": "Avigliana · Villa Cantamerlo · pubblico dominio"},
+      {"url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Avigliana%2C_Italy_%28Unsplash%29.jpg", "credit": "Avigliana · Massimo Mancini · CC0"},
+      {"url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Avigliana%2C_Italy_%28Unsplash_yhnOTbw9SPY%29.jpg", "credit": "Avigliana · Massimo Mancini · CC0"},
+      {"url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Centro_Storico_Avigliana.JPG", "credit": "Avigliana · centro storico · pubblico dominio"},
+      {"url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Avigliana_Centro_Storico.JPG", "credit": "Avigliana · architettura residenziale · pubblico dominio"},
+      {"url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Avigliana_Centro_Storico_Tramonto.JPG", "credit": "Avigliana · centro storico · pubblico dominio"},
+      {"url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Architecture-villa-house-building-home-construction-542165.jpg", "credit": "Immagine residenziale · CC0"}
     ],
     "voice": {
       "enabled": true,
@@ -117,14 +103,12 @@
       "safe_top": 180,
       "safe_bottom": 260,
       "slides": 7,
-      "seconds_per_slide": 2.8,
+      "seconds_per_slide": 8.571,
+      "target_seconds": 60,
       "subtitles": false,
       "single_hook_title_only": true
     },
-    "carousel": {
-      "width": 1080,
-      "height": 1350
-    }
+    "carousel": {"width": 1080, "height": 1350}
   },
   "campaign": {
     "name": "F1 · Non a sensazione. Con i dati.",
@@ -157,20 +141,7 @@
       {"town": "Borgone Susa", "weight": 6, "tier": "B"},
       {"town": "Chiusa di San Michele", "weight": 6, "tier": "B"}
     ],
-    "territories": [
-      "Avigliana",
-      "Almese",
-      "Sant'Ambrogio di Torino",
-      "Susa",
-      "Oulx",
-      "Sauze d'Oulx",
-      "Bardonecchia",
-      "Condove",
-      "Villar Dora",
-      "Bussoleno",
-      "Borgone Susa",
-      "Chiusa di San Michele"
-    ],
+    "territories": ["Avigliana", "Almese", "Sant'Ambrogio di Torino", "Susa", "Oulx", "Sauze d'Oulx", "Bardonecchia", "Condove", "Villar Dora", "Bussoleno", "Borgone Susa", "Chiusa di San Michele"],
     "hashtag_sets": [
       ["#F1Immobiliare", "#ValleDiSusa", "#VendereCasa", "#ValutazioneImmobiliare", "#Avigliana", "#CasaInVendita"],
       ["#F1Immobiliare", "#ValDiSusa", "#MercatoImmobiliare", "#VenditaImmobiliare", "#Susa", "#PrimaIDati"],
@@ -180,27 +151,15 @@
       ["#F1Immobiliare", "#NonASensazione", "#ConIDati", "#StrategiaImmobiliare", "#PrezzoCasa", "#ProprietariCasa"]
     ]
   },
-  "approval": {
-    "required": true,
-    "mode": "iso_week",
-    "file": "publisher/approvals/f1-immobiliare.json"
-  },
-  "planning": {
-    "horizon_days": 7,
-    "week_view": "monday_sunday"
-  },
+  "approval": {"required": true, "mode": "iso_week", "file": "publisher/approvals/f1-immobiliare.json"},
+  "planning": {"horizon_days": 1, "week_view": "daily_candidates", "manual_publish_only": true},
   "publishing": {
     "backend": "direct_api",
     "secret_prefix": "F1",
     "require_media": true,
-    "slots": ["09:00", "12:30", "17:30", "20:30"],
-    "categories": ["data", "error", "proof", "decision"],
-    "formats": {
-      "data": "reel",
-      "error": "reel",
-      "proof": "carousel",
-      "decision": "carousel"
-    },
+    "slots": ["09:00", "14:00", "19:00"],
+    "categories": ["data", "error", "proof"],
+    "formats": {"data": "reel", "error": "reel", "proof": "carousel"},
     "platforms": ["facebook", "instagram", "tiktok", "linkedin", "youtube", "pinterest"],
     "platforms_by_format": {
       "reel": ["facebook", "instagram", "tiktok", "linkedin", "youtube"],
