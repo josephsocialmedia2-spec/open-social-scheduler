@@ -1,4 +1,4 @@
-name: Direct Social Publisher
+name: Direct Social Publisher - Manual Only
 
 on:
   workflow_dispatch:
