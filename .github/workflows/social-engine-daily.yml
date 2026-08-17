@@ -13,6 +13,7 @@ on:
     paths:
       - '.github/workflows/social-engine-daily.yml'
       - 'publisher/build_daily_queue.py'
+      - 'publisher/research_signals.py'
       - 'publisher/enrich_queue.py'
       - 'publisher/render_reels.py'
       - 'publisher/requirements.txt'
@@ -36,7 +37,7 @@ jobs:
     timeout-minutes: 45
     env:
       SOCIAL_DATE: ${{ inputs.date }}
-      SOCIAL_START_OFFSET_DAYS: ${{ github.event_name == 'schedule' && '0' || '1' }}
+      SOCIAL_START_OFFSET_DAYS: '0'
       PIPER_DATA_DIR: ${{ github.workspace }}/.cache/piper
       SOCIAL_PHOTO_CACHE: ${{ github.workspace }}/.cache/f1-photos
 
@@ -63,7 +64,7 @@ jobs:
           path: |
             .cache/piper
             .cache/f1-photos
-          key: social-assets-v5-clean-60s
+          key: social-assets-v6-daily-simple-60s
 
       - name: Prepare Italian voice
         run: |
@@ -77,7 +78,10 @@ jobs:
           python -m py_compile publisher/*.py
           python -m unittest discover -s publisher/tests -v
 
-      - name: Build seven-day queue
+      - name: Research fresh public signals
+        run: python publisher/research_signals.py
+
+      - name: Build today's three candidates per brand
         shell: bash
         run: |
           if [ -n "${SOCIAL_DATE:-}" ]; then
@@ -86,13 +90,13 @@ jobs:
             python publisher/build_daily_queue.py
           fi
 
-      - name: Enrich long captions, local hashtags, phone and 60s voiceovers
+      - name: Apply simple research-informed creative plan
         run: python publisher/enrich_queue.py
 
-      - name: Render weekly 60-second Reels and carousels
+      - name: Render today's 60-second Reels and carousels
         run: python publisher/render_reels.py
 
-      - name: Reconcile approval and media state
+      - name: Reconcile media state and preserve research plan
         shell: bash
         run: |
           if [ -n "${SOCIAL_DATE:-}" ]; then
@@ -102,17 +106,15 @@ jobs:
           fi
           python publisher/enrich_queue.py
 
-      - name: Upload preview package
-        if: always()
+      - name: Upload daily preview package
         uses: actions/upload-artifact@v4
         with:
           name: social-preview-${{ github.run_id }}
           path: publisher/media/generated
-          if-no-files-found: ignore
+          if-no-files-found: error
           retention-days: 7
 
-      - name: Persist prepared queue without rebase conflicts
-        if: always()
+      - name: Persist prepared queue safely
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
@@ -121,25 +123,36 @@ jobs:
             echo 'Queue unchanged.'
             exit 0
           fi
-          CONTENT=$(base64 -w0 publisher/queue.json)
           SHA=$(gh api "repos/${GITHUB_REPOSITORY}/contents/publisher/queue.json?ref=main" --jq '.sha')
+          python - "$SHA" <<'PY'
+          import base64
+          import json
+          import sys
+          sha = sys.argv[1]
+          with open('publisher/queue.json', 'rb') as fh:
+              content = base64.b64encode(fh.read()).decode('ascii')
+          payload = {
+              'message': 'Prepare daily manual-review social candidates',
+              'content': content,
+              'sha': sha,
+              'branch': 'main',
+          }
+          with open('/tmp/queue-payload.json', 'w', encoding='utf-8') as fh:
+              json.dump(payload, fh)
+          PY
           gh api "repos/${GITHUB_REPOSITORY}/contents/publisher/queue.json" \
             --method PUT \
-            -f message='Prepare approval-gated social queue' \
-            -f content="$CONTENT" \
-            -f sha="$SHA" \
-            -f branch='main' >/dev/null
+            --input /tmp/queue-payload.json >/dev/null
           echo 'Queue persisted through GitHub Contents API.'
 
-      - name: Publish latest downloadable media
-        if: always()
+      - name: Publish latest downloadable daily media
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           if [ ! -d publisher/media/generated ] || [ -z "$(find publisher/media/generated -type f -print -quit 2>/dev/null)" ]; then
             echo 'No generated media available for downloadable preview.'
-            exit 0
+            exit 1
           fi
           rm -rf /tmp/social-release
           mkdir -p /tmp/social-release
@@ -154,42 +167,65 @@ jobs:
             fi
           done
           cp publisher/queue.json /tmp/social-release/queue.json
+          if [ -f publisher/research/latest.json ]; then
+            cp publisher/research/latest.json /tmp/social-release/research-latest.json
+          fi
           gh release delete social-preview-latest --yes --cleanup-tag >/dev/null 2>&1 || true
           gh release create social-preview-latest /tmp/social-release/* \
-            --title "Contenuti social pronti - F1 Immobiliare + Real Media Pro" \
-            --notes "Pacchetto settimanale pulito: Reel MP4 da 60 secondi con logo, visual coerenti e CTA telefonica; caroselli JPG e ZIP completi per entrambi i brand. Generato dal workflow ${GITHUB_RUN_ID}."
+            --title "Contenuti giornalieri pronti - F1 Immobiliare + Real Media Pro" \
+            --notes "Pacchetto giornaliero DA CONTROLLARE: 3 candidati F1 + 3 candidati Real Media Pro. Nessuna pubblicazione automatica. Reel da 60 secondi, caroselli, caption, CTA e ricerca pubblica di supporto. Workflow ${GITHUB_RUN_ID}."
 
-      - name: Resolve Rome week
-        id: week
+      - name: Resolve Rome date
+        id: day
         shell: bash
         run: |
           python - <<'PY' >> "$GITHUB_OUTPUT"
           from datetime import datetime
           from zoneinfo import ZoneInfo
           now = datetime.now(ZoneInfo('Europe/Rome'))
-          iso = now.date().isocalendar()
-          print(f"key={iso.year}-W{iso.week:02d}")
-          print(f"monday={'true' if now.weekday() == 0 else 'false'}")
           print(f"date={now.date().isoformat()}")
           PY
 
-      - name: Request one weekly confirmation
-        if: steps.week.outputs.monday == 'true'
+      - name: Notify Joseph that today's content is ready
         uses: actions/github-script@v7
         with:
           script: |
-            const key = '${{ steps.week.outputs.key }}';
-            const title = `[SOCIAL-WEEK] ${key} - conferma richiesta`;
-            const existing = await github.paginate(github.rest.issues.listForRepo, {owner: context.repo.owner, repo: context.repo.repo, state: 'all', per_page: 100});
-            if (existing.some(i => i.title === title)) return;
+            const title = '[CONTENUTI GIORNALIERI] - notifiche';
+            const date = '${{ steps.day.outputs.date }}';
+            const issues = await github.paginate(github.rest.issues.listForRepo, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'all',
+              per_page: 100
+            });
+            let issue = issues.find(i => i.title === title);
             const body = [
-              `GitHub ha preparato il pacchetto social F1 + Real Media Pro per **${key}**.`,
+              '@josephsocialmedia2-spec contenuti del **' + date + '** pronti.',
               '',
-              '**Nessun contenuto viene pubblicato prima della tua conferma.**',
+              '**F1 Immobiliare:** 3 contenuti DA CONTROLLARE.',
+              '**Real Media Pro:** 3 contenuti DA CONTROLLARE.',
               '',
-              `Controlla e scarica i contenuti: https://josephsocialmedia2-spec.github.io/open-social-scheduler/monday-control.html`,
-              `Se va bene, rispondi a questa issue scrivendo esattamente: **CONFERMO**`,
+              '**Nessuna pubblicazione automatica:** decidi tu quando, dove e cosa pubblicare.',
               '',
-              'Per bloccare i contenuti non ancora pubblicati della settimana puoi scrivere **REVOCA**.'
+              'Controlla e scarica: https://josephsocialmedia2-spec.github.io/open-social-scheduler/monday-control.html',
+              'Run: https://github.com/' + context.repo.owner + '/' + context.repo.repo + '/actions/runs/' + context.runId
             ].join('\n');
-            await github.rest.issues.create({owner: context.repo.owner, repo: context.repo.repo, title, body});
+            if (!issue) {
+              issue = (await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title,
+                body,
+                assignees: ['josephsocialmedia2-spec']
+              })).data;
+            } else {
+              if (issue.state !== 'open') {
+                await github.rest.issues.update({owner: context.repo.owner, repo: context.repo.repo, issue_number: issue.number, state: 'open'});
+              }
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                body
+              });
+            }
