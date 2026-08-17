@@ -17,8 +17,6 @@ on:
         required: true
         default: false
         type: boolean
-  schedule:
-    - cron: '*/15 * * * *'
 
 permissions:
   contents: write
@@ -100,7 +98,7 @@ jobs:
             echo "available=false" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Publish approved due jobs
+      - name: Publish only when manually launched
         if: steps.media.outputs.available == 'true'
         shell: bash
         run: |
