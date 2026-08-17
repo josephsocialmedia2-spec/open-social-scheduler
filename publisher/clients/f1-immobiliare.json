@@ -38,7 +38,7 @@
     "final_signature": ["F1 IMMOBILIARE", "NON A SENSAZIONE.", "CON I DATI.", "371 370 8294"]
   },
   "brand": {
-    "status": "premium-valle-susa-v3",
+    "status": "premium-valle-susa-v4-no-subtitles",
     "background": "#070907",
     "background_alt": "#0D1711",
     "primary": "#F7F7F4",
@@ -49,12 +49,19 @@
     "font_title": "DejaVu Serif",
     "font_body": "DejaVu Sans",
     "renderer": "premium_photo",
+    "single_hook_title_only": true,
+    "image_reference_search": {
+      "provider": "Google Images",
+      "query": "CASE IN VENDITA VALLE DI SUSA",
+      "url": "https://www.google.com/search?q=CASE+IN+VENDITA+VALLE+DI+SUSA&udm=2",
+      "rule": "Use the search as visual reference. Publish only images with verified reuse rights or owned/licensed material."
+    },
     "presenter_direction": {
       "enabled": true,
       "mode": "ai_real_estate_presenter",
       "rotation": ["female_agent", "male_agent"],
       "look": "attractive, elegant, credible, premium real-estate professional",
-      "subtitles": true,
+      "subtitles": false,
       "rule": "Presenter must support the message, never replace property data or create deceptive testimonials."
     },
     "logo_vectors": {
@@ -69,16 +76,32 @@
     },
     "photo_sources": [
       {
-        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Golden_hour_sulla_Sacra_di_San_Michele.jpg/1280px-Golden_hour_sulla_Sacra_di_San_Michele.jpg",
-        "credit": "Foto: Fedooo89 / Wikimedia Commons · CC BY-SA 4.0"
+        "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Villa_Cantamerlo_Avigliana02.JPG",
+        "credit": "Avigliana · Villa Cantamerlo · pubblico dominio"
       },
       {
-        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Val_di_Susa_from_Sacra_di_San_Michele.jpg/1280px-Val_di_Susa_from_Sacra_di_San_Michele.jpg",
-        "credit": "Foto: Marie-Lan Taÿ Pamart / Wikimedia Commons · CC BY 4.0"
+        "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Avigliana%2C_Italy_%28Unsplash%29.jpg",
+        "credit": "Avigliana · Massimo Mancini · CC0"
       },
       {
-        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Lago_Grande_di_Avigliana_%281%29.jpg/1280px-Lago_Grande_di_Avigliana_%281%29.jpg",
-        "credit": "Foto: Tournasol7 / Wikimedia Commons · CC BY 4.0"
+        "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Avigliana%2C_Italy_%28Unsplash_yhnOTbw9SPY%29.jpg",
+        "credit": "Avigliana · Massimo Mancini · CC0"
+      },
+      {
+        "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Centro_Storico_Avigliana.JPG",
+        "credit": "Avigliana · centro storico · pubblico dominio"
+      },
+      {
+        "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Avigliana_Centro_Storico.JPG",
+        "credit": "Avigliana · architettura residenziale · pubblico dominio"
+      },
+      {
+        "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Avigliana_Centro_Storico_Tramonto.JPG",
+        "credit": "Avigliana · centro storico · pubblico dominio"
+      },
+      {
+        "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Architecture-villa-house-building-home-construction-542165.jpg",
+        "credit": "Immagine residenziale · CC0"
       }
     ],
     "voice": {
@@ -95,7 +118,8 @@
       "safe_bottom": 260,
       "slides": 7,
       "seconds_per_slide": 2.8,
-      "subtitles": true
+      "subtitles": false,
+      "single_hook_title_only": true
     },
     "carousel": {
       "width": 1080,
