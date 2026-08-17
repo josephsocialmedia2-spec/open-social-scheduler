@@ -4,7 +4,7 @@
   "active": true,
   "timezone": "Europe/Rome",
   "brand": {
-    "status": "performance-agency-v2",
+    "status": "performance-agency-v3-no-subtitles",
     "background": "#07111F",
     "background_alt": "#0D1B2D",
     "primary": "#F5F8FC",
@@ -16,7 +16,7 @@
     "font_body": "DejaVu Sans",
     "renderer": "premium_photo",
     "voice": {"enabled": true, "engine": "piper", "model": "it_IT-paola-medium"},
-    "reel": {"width": 1080, "height": 1920, "safe_top": 180, "safe_bottom": 260, "slides": 8, "seconds_per_slide": 7.5, "target_seconds": 60, "subtitles": true},
+    "reel": {"width": 1080, "height": 1920, "safe_top": 180, "safe_bottom": 260, "slides": 8, "seconds_per_slide": 7.5, "target_seconds": 60, "subtitles": false},
     "carousel": {"width": 1080, "height": 1350}
   },
   "campaign": {
@@ -43,7 +43,9 @@
       "show_product_page": true,
       "show_ads_manager_style_original_mockups": true,
       "show_metrics_only_when_verified": true,
-      "avoid_fake_roas_or_revenue": true
+      "avoid_fake_roas_or_revenue": true,
+      "subtitles": false,
+      "single_hook_title_only": true
     }
   },
   "approval": {"required": true,"mode": "iso_week","file": "publisher/approvals/real-media-pro.json"},
