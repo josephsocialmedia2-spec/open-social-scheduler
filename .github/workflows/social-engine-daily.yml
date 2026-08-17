@@ -53,7 +53,7 @@ jobs:
       - name: Install renderer dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y ffmpeg fonts-dejavu-core
+          sudo apt-get install -y ffmpeg fonts-dejavu-core zip
           pip install -r publisher/requirements.txt
 
       - name: Cache Italian voice and F1 photos
@@ -125,6 +125,42 @@ jobs:
             git push origin HEAD:main
           fi
 
+      - name: Publish latest downloadable media
+        if: always()
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [ ! -d publisher/media/generated ] || [ -z "$(find publisher/media/generated -type f -print -quit 2>/dev/null)" ]; then
+            echo 'No generated media available for downloadable preview.'
+            exit 0
+          fi
+
+          rm -rf /tmp/social-release
+          mkdir -p /tmp/social-release
+
+          while IFS= read -r -d '' file; do
+            rel="${file#publisher/media/generated/}"
+            safe="${rel//\//__}"
+            cp "$file" "/tmp/social-release/$safe"
+          done < <(find publisher/media/generated -type f -print0)
+
+          for client in f1-immobiliare real-media-pro; do
+            if [ -d "publisher/media/generated/$client" ]; then
+              (
+                cd "publisher/media/generated/$client"
+                zip -qr "/tmp/social-release/${client}__SETTIMANA_COMPLETA.zip" .
+              )
+            fi
+          done
+
+          cp publisher/queue.json /tmp/social-release/queue.json
+
+          gh release delete social-preview-latest --yes --cleanup-tag >/dev/null 2>&1 || true
+          gh release create social-preview-latest /tmp/social-release/* \
+            --title "Contenuti social pronti - F1 Immobiliare + Real Media Pro" \
+            --notes "Pacchetto automatico più recente. Reel MP4, caroselli JPG e ZIP completi per entrambi i brand. Generato dal workflow ${GITHUB_RUN_ID}."
+
       - name: Resolve Rome week
         id: week
         shell: bash
@@ -156,18 +192,14 @@ jobs:
               core.info(`Approval issue already exists: ${title}`);
               return;
             }
-            const repoUrl = `https://github.com/${context.repo.owner}/${context.repo.repo}`;
             const editorialChat = 'https://chatgpt.com/c/6a814ec3-80cc-83eb-b9b6-a56f02c348e8';
             const body = [
-              `GitHub ha preparato il pacchetto social F1 per **${key}**.`,
-              '',
-              '**Posizionamento fisso:** NON A SENSAZIONE. CON I DATI.',
-              '**Sequenza giornaliera:** 09:00 DATI → 12:30 ERRORE → 17:30 PROVA → 20:30 DECISIONE.',
+              `GitHub ha preparato il pacchetto social F1 + Real Media Pro per **${key}**.`,
               '',
               '**Nessun contenuto viene pubblicato prima della tua conferma.**',
               '',
               `1. Chat editoriale F1: ${editorialChat}`,
-              `2. Controlla i contenuti: https://josephsocialmedia2-spec.github.io/open-social-scheduler/monday-control.html`,
+              `2. Controlla e scarica i contenuti: https://josephsocialmedia2-spec.github.io/open-social-scheduler/monday-control.html`,
               `3. Se va bene, rispondi a questa issue scrivendo esattamente: **CONFERMO**`,
               '',
               'Dopo CONFERMO, gli slot approvati vengono pubblicati automaticamente alle loro scadenze tramite le API ufficiali configurate.',
