@@ -13,11 +13,13 @@ on:
     paths:
       - '.github/workflows/social-engine-daily.yml'
       - 'publisher/build_daily_queue.py'
+      - 'publisher/enrich_queue.py'
       - 'publisher/render_reels.py'
       - 'publisher/requirements.txt'
       - 'publisher/clients/**'
       - 'publisher/content_bank/**'
       - 'publisher/approvals/**'
+      - 'publisher/assets/**'
       - 'publisher/tests/**'
 
 permissions:
@@ -84,6 +86,9 @@ jobs:
             python publisher/build_daily_queue.py
           fi
 
+      - name: Enrich long captions, local hashtags, phone and 60s voiceovers
+        run: python publisher/enrich_queue.py
+
       - name: Render weekly 60-second Reels and carousels
         run: python publisher/render_reels.py
 
@@ -95,6 +100,7 @@ jobs:
           else
             python publisher/build_daily_queue.py
           fi
+          python publisher/enrich_queue.py
 
       - name: Upload preview package
         if: always()
