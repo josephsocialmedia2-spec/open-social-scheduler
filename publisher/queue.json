@@ -1,6 +1,6 @@
 {
-  "version": 4,
-  "updated_by": "F1 Social Engine",
+  "version": 6,
+  "updated_by": "Emergency Fast Lane 1+1",
   "jobs": [
     {
       "id": "f1-immobiliare-2026-08-18-01-g3-media-torino",
@@ -10,8 +10,8 @@
       "editorial_role": "data",
       "campaign": "F1 · Non a sensazione. Con i dati.",
       "format": "reel",
-      "title": "QUANTO VALE OGGI UNA CASA A BORGONE SUSA?",
-      "caption": "QUANTO VALE OGGI UNA CASA A BORGONE SUSA?\n\nSe stai pensando di vendere casa in Borgone Susa, il punto di partenza non è scegliere un numero a sensazione. Bisogna leggere la microzona, gli immobili realmente concorrenti, lo stato della casa, la domanda presente e il modo in cui l'immobile verrà presentato. Una comunicazione semplice funziona quando dietro c'è un posizionamento corretto. F1 Immobiliare parte dai dati e costruisce la strategia di vendita da lì.\n\nPer un confronto sul tuo immobile: WhatsApp / telefono 371 370 8294.\n\n#F1Immobiliare #ValleDiSusa #BorgoneSusa #VendereCasa #CasaInVendita #ValutazioneImmobiliare #MercatoImmobiliare #ImmobiliareTorino #TorinoOvest #PrimaIDati",
+      "title": "IL PREZZO GIUSTO NON SI INVENTA",
+      "caption": "IL PREZZO GIUSTO NON SI INVENTA\n\nUna valutazione credibile nasce dall'incrocio tra dati, immobile e mercato reale. Se stai pensando di vendere casa in Borgone Susa, una valutazione seria non nasce da una cifra presa isolatamente. Bisogna leggere la microzona, le caratteristiche reali dell'immobile, ciò che è effettivamente in concorrenza e la domanda presente. I dati pubblici sono utili quando vengono interpretati nel contesto corretto. Per questo il prezzo di uscita deve essere comprensibile, difendibile e coerente con il mercato.\n\nRichiedi una valutazione gratuita del tuo immobile. Joseph 371 370 8294 · Francesca 371 424 6300.\n\n#F1Immobiliare #ValleDiSusa #BorgoneSusa #VendereCasa #ValutazioneImmobiliare #MercatoImmobiliare #CasaInVendita",
       "hashtags": [
         "#F1Immobiliare",
         "#ValleDiSusa",
@@ -20,20 +20,34 @@
         "#VillarDora",
         "#VendereBene"
       ],
-      "voiceover": "QUANTO VALE OGGI UNA CASA A BORGONE SUSA? Se stai pensando di vendere casa in Borgone Susa, prima di pubblicare un annuncio serve capire dove si trova davvero il valore. Il prezzo medio del comune non basta. Contano microzona, stato dell'immobile, piano, esposizione, qualità degli spazi, concorrenza attiva e domanda reale. Il punto non è riempire internet di pubblicità: è presentare bene la casa, con un prezzo coerente e una strategia comprensibile. F1 Immobiliare parte dai dati, confronta il mercato e costruisce il percorso di vendita. Se vuoi capire da dove partire, scrivici o chiama il 371 370 8294. Prima i dati. Poi la strategia. Poi la vendita.",
+      "voiceover": "IL PREZZO GIUSTO NON SI INVENTA Una valutazione credibile nasce dall'incrocio tra dati, immobile e mercato reale. Se stai pensando di vendere casa in Borgone Susa, il punto è questo: un numero, da solo, non racconta il valore reale di un immobile. Contano la posizione precisa, lo stato della casa, il piano, la luce, gli spazi esterni, gli immobili davvero concorrenti e la domanda che esiste in quel momento. I dati pubblici servono come riferimento, ma devono essere letti insieme al mercato reale. Il prezzo corretto non è quello che ci piacerebbe ottenere: è quello che permette alla casa di essere posizionata bene, difesa con argomenti concreti e presentata alle persone giuste. Se vuoi capire da dove partire, richiedi una valutazione gratuita con F1 Immobiliare. Joseph 371 370 8294, Francesca 371 424 6300. Prima i dati, poi la strategia, poi la vendita.",
       "slides": [
-        "QUANTO VALE OGGI UNA CASA A BORGONE SUSA?",
-        "IL PREZZO MEDIO NON BASTA",
-        "CONTA LA MICROZONA",
-        "CONTA LO STATO DELLA CASA",
-        "CONTA LA CONCORRENZA ATTIVA",
-        "CONTA LA DOMANDA REALE",
-        "F1 IMMOBILIARE | 371 370 8294"
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
       ],
-      "visuals": [],
+      "visuals": [
+        "villa residenziale moderna esterno giorno",
+        "quartiere residenziale italiano curato",
+        "soggiorno luminoso premium",
+        "cucina moderna di qualità",
+        "terrazzo abitabile con vista",
+        "camera matrimoniale elegante",
+        "bagno contemporaneo premium",
+        "facciata e ingresso immobile",
+        "dettaglio architettonico e giardino",
+        "villa residenziale al tramonto"
+      ],
       "cta": "Scrivi VALUTAZIONE in privato",
       "media": "publisher/media/generated/f1-immobiliare/2026-08-18/01-g3-media-torino.mp4",
-      "scheduled_at": "2026-08-18T09:00:00+02:00",
+      "scheduled_at": "2026-08-18T11:27:31+02:00",
       "territory": "Borgone Susa",
       "property_focus": {
         "transaction": "vendita",
@@ -94,217 +108,17 @@
       "video_made_with_ai": true,
       "created_by": "open-social-scheduler",
       "blocked_reason": "approval required for 2026-W34",
-      "visual_rule": "residential_property_only",
+      "research_query": "La media di Torino non valuta casa tua",
       "phone": "371 370 8294",
+      "secondary_phone": "371 424 6300",
+      "visual_rule": "premium_residential_property_only",
       "target_reel_seconds": 60,
-      "production_status": "DA CONTROLLARE",
+      "production_status": "FAST TODAY - PRIORITA IMMEDIATA",
       "publish_decision": "manual",
-      "research_mode": "public_signals_and_official_guidance",
-      "research_basis": []
-    },
-    {
-      "id": "f1-immobiliare-2026-08-18-02-g4-ribasso-senza-diagnosi",
-      "client_id": "f1-immobiliare",
-      "client_name": "F1 Immobiliare",
-      "category": "error",
-      "editorial_role": "error",
-      "campaign": "F1 · Non a sensazione. Con i dati.",
-      "format": "reel",
-      "title": "IL PREZZO SBAGLIATO BLOCCA LA VENDITA?",
-      "caption": "IL PREZZO SBAGLIATO BLOCCA LA VENDITA?\n\nSe stai pensando di vendere casa in Borgone Susa, il punto di partenza non è scegliere un numero a sensazione. Bisogna leggere la microzona, gli immobili realmente concorrenti, lo stato della casa, la domanda presente e il modo in cui l'immobile verrà presentato. Una comunicazione semplice funziona quando dietro c'è un posizionamento corretto. F1 Immobiliare parte dai dati e costruisce la strategia di vendita da lì.\n\nPer un confronto sul tuo immobile: WhatsApp / telefono 371 370 8294.\n\n#F1Immobiliare #ValleDiSusa #BorgoneSusa #VendereCasa #CasaInVendita #ValutazioneImmobiliare #MercatoImmobiliare #ImmobiliareTorino #TorinoOvest #PrimaIDati",
-      "hashtags": [
-        "#F1Immobiliare",
-        "#NonASensazione",
-        "#ConIDati",
-        "#StrategiaImmobiliare",
-        "#PrezzoCasa",
-        "#ProprietariCasa"
-      ],
-      "voiceover": "IL PREZZO SBAGLIATO BLOCCA LA VENDITA? Se stai pensando di vendere casa in Borgone Susa, prima di pubblicare un annuncio serve capire dove si trova davvero il valore. Il prezzo medio del comune non basta. Contano microzona, stato dell'immobile, piano, esposizione, qualità degli spazi, concorrenza attiva e domanda reale. Il punto non è riempire internet di pubblicità: è presentare bene la casa, con un prezzo coerente e una strategia comprensibile. F1 Immobiliare parte dai dati, confronta il mercato e costruisce il percorso di vendita. Se vuoi capire da dove partire, scrivici o chiama il 371 370 8294. Prima i dati. Poi la strategia. Poi la vendita.",
-      "slides": [
-        "IL PREZZO SBAGLIATO BLOCCA LA VENDITA?",
-        "TROPPO ALTO = MENO CONTATTI",
-        "TROPPO BASSO = VALORE PERSO",
-        "I PRIMI GIORNI CONTANO",
-        "CONFRONTA IMMOBILI REALMENTE CONCORRENTI",
-        "PRIMA I DATI. POI LA STRATEGIA.",
-        "F1 IMMOBILIARE | 371 370 8294"
-      ],
-      "visuals": [],
-      "cta": "Scrivi VALUTAZIONE in privato",
-      "media": "publisher/media/generated/f1-immobiliare/2026-08-18/02-g4-ribasso-senza-diagnosi.mp4",
-      "scheduled_at": "2026-08-18T14:00:00+02:00",
-      "territory": "Borgone Susa",
-      "property_focus": {
-        "transaction": "vendita",
-        "min_price_eur": 100000,
-        "exclude": [
-          "affitto",
-          "locazione",
-          "garage",
-          "box",
-          "posto auto",
-          "rustico",
-          "rudere",
-          "terreno"
-        ],
-        "preferred": [
-          "appartamento",
-          "casa",
-          "villa",
-          "villetta",
-          "attico",
-          "bifamiliare",
-          "trifamiliare"
-        ],
-        "cash_subito": {
-          "enabled": true,
-          "label": "F1 CASH SUBITO",
-          "meaning": "acquisto diretto per opportunità immobiliari fortemente scontate e coerenti con i criteri F1",
-          "rule": "non presentarlo come garanzia di acquisto; prima verifica economica, tecnica e documentale"
-        }
-      },
-      "approval_key": "2026-W34",
-      "platforms": [
-        {
-          "platform": "facebook",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "instagram",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "tiktok",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "linkedin",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "youtube",
-          "integration_id": "direct-api"
-        }
-      ],
-      "enabled": true,
-      "status": "awaiting_approval",
-      "published_platforms": [],
-      "postiz_results": [],
-      "video_made_with_ai": true,
-      "created_by": "open-social-scheduler",
-      "blocked_reason": "approval required for 2026-W34",
-      "visual_rule": "residential_property_only",
-      "phone": "371 370 8294",
-      "target_reel_seconds": 60,
-      "production_status": "DA CONTROLLARE",
-      "publish_decision": "manual",
-      "research_mode": "public_signals_and_official_guidance",
-      "research_basis": []
-    },
-    {
-      "id": "f1-immobiliare-2026-08-18-03-g5-dopo-pubblicazione",
-      "client_id": "f1-immobiliare",
-      "client_name": "F1 Immobiliare",
-      "category": "proof",
-      "editorial_role": "proof",
-      "campaign": "F1 · Non a sensazione. Con i dati.",
-      "format": "carousel",
-      "title": "PRIMA DI VENDERE CASA: 5 CONTROLLI",
-      "caption": "PRIMA DI VENDERE CASA: 5 CONTROLLI\n\nSe stai pensando di vendere casa in Borgone Susa, il punto di partenza non è scegliere un numero a sensazione. Bisogna leggere la microzona, gli immobili realmente concorrenti, lo stato della casa, la domanda presente e il modo in cui l'immobile verrà presentato. Una comunicazione semplice funziona quando dietro c'è un posizionamento corretto. F1 Immobiliare parte dai dati e costruisce la strategia di vendita da lì.\n\nPer un confronto sul tuo immobile: WhatsApp / telefono 371 370 8294.\n\n#F1Immobiliare #ValleDiSusa #BorgoneSusa #VendereCasa #CasaInVendita #ValutazioneImmobiliare #MercatoImmobiliare #ImmobiliareTorino #TorinoOvest #PrimaIDati",
-      "hashtags": [
-        "#F1Immobiliare",
-        "#ValleDiSusa",
-        "#VendereCasa",
-        "#ValutazioneImmobiliare",
-        "#Avigliana",
-        "#CasaInVendita"
-      ],
-      "voiceover": "PRIMA DI VENDERE CASA: 5 CONTROLLI Se stai pensando di vendere casa in Borgone Susa, prima di pubblicare un annuncio serve capire dove si trova davvero il valore. Il prezzo medio del comune non basta. Contano microzona, stato dell'immobile, piano, esposizione, qualità degli spazi, concorrenza attiva e domanda reale. Il punto non è riempire internet di pubblicità: è presentare bene la casa, con un prezzo coerente e una strategia comprensibile. F1 Immobiliare parte dai dati, confronta il mercato e costruisce il percorso di vendita. Se vuoi capire da dove partire, scrivici o chiama il 371 370 8294. Prima i dati. Poi la strategia. Poi la vendita.",
-      "slides": [
-        "PRIMA DI VENDERE CASA: 5 CONTROLLI",
-        "1 · VALORE E MICROZONA",
-        "2 · CONCORRENZA ATTIVA",
-        "3 · DOCUMENTAZIONE",
-        "4 · PRESENTAZIONE DELL'IMMOBILE",
-        "5 · STRATEGIA DI USCITA",
-        "F1 IMMOBILIARE | 371 370 8294"
-      ],
-      "visuals": [],
-      "cta": "Scrivi VALUTAZIONE in privato",
-      "media": [
-        "publisher/media/generated/f1-immobiliare/2026-08-18/03-g5-dopo-pubblicazione/slide-01.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-18/03-g5-dopo-pubblicazione/slide-02.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-18/03-g5-dopo-pubblicazione/slide-03.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-18/03-g5-dopo-pubblicazione/slide-04.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-18/03-g5-dopo-pubblicazione/slide-05.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-18/03-g5-dopo-pubblicazione/slide-06.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-18/03-g5-dopo-pubblicazione/slide-07.jpg"
-      ],
-      "scheduled_at": "2026-08-18T19:00:00+02:00",
-      "territory": "Borgone Susa",
-      "property_focus": {
-        "transaction": "vendita",
-        "min_price_eur": 100000,
-        "exclude": [
-          "affitto",
-          "locazione",
-          "garage",
-          "box",
-          "posto auto",
-          "rustico",
-          "rudere",
-          "terreno"
-        ],
-        "preferred": [
-          "appartamento",
-          "casa",
-          "villa",
-          "villetta",
-          "attico",
-          "bifamiliare",
-          "trifamiliare"
-        ],
-        "cash_subito": {
-          "enabled": true,
-          "label": "F1 CASH SUBITO",
-          "meaning": "acquisto diretto per opportunità immobiliari fortemente scontate e coerenti con i criteri F1",
-          "rule": "non presentarlo come garanzia di acquisto; prima verifica economica, tecnica e documentale"
-        }
-      },
-      "approval_key": "2026-W34",
-      "platforms": [
-        {
-          "platform": "facebook",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "instagram",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "linkedin",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "pinterest",
-          "integration_id": "direct-api"
-        }
-      ],
-      "enabled": true,
-      "status": "awaiting_approval",
-      "published_platforms": [],
-      "postiz_results": [],
-      "video_made_with_ai": false,
-      "created_by": "open-social-scheduler",
-      "blocked_reason": "approval required for 2026-W34",
-      "visual_rule": "residential_property_only",
-      "phone": "371 370 8294",
-      "target_reel_seconds": 60,
-      "production_status": "DA CONTROLLARE",
-      "publish_decision": "manual",
-      "research_mode": "public_signals_and_official_guidance",
-      "research_basis": []
+      "research_mode": "google_suggestions_plus_official_sources",
+      "research_basis": [],
+      "no_subtitles": true,
+      "visual_count": 10
     },
     {
       "id": "real-media-pro-2026-08-18-01-meta-ads-creative",
@@ -314,8 +128,8 @@
       "editorial_role": "attract",
       "campaign": "Real Media Pro · Dalla visibilità alla crescita",
       "format": "reel",
-      "title": "IL TUO SITO PORTA CLIENTI?",
-      "caption": "IL TUO SITO PORTA CLIENTI?\n\nUn sito o un e-commerce non deve sembrare complicato per essere efficace. Deve far capire rapidamente cosa offri, funzionare bene da smartphone, ridurre i dubbi e accompagnare la persona verso un'azione concreta. Per questo guardiamo struttura, pagine prodotto o servizio, velocità, fiducia, call to action e misurazione. I contenuti della giornata partono da segnali pubblici e temi attuali del settore, ma la creatività viene ricostruita da zero: niente copie di post o video di terzi.\n\nPer un'analisi del progetto: WhatsApp / telefono 371 370 8294.\n\n#RealMediaPro #Shopify #Ecommerce #SitiWeb #ConversionRate #DigitalMarketing #MarketingDigitale #Avigliana #Torino",
+      "title": "PERCHÉ I SOCIAL FANNO CRESCERE UN'AZIENDA?",
+      "caption": "PERCHÉ I SOCIAL FANNO CRESCERE UN'AZIENDA?\n\nPerché possono creare attenzione, fiducia e domanda, se collegati a un percorso misurabile. Un'azienda cresce online quando contenuti, social, sito e processo commerciale lavorano insieme. La metrica importante non è soltanto quante persone vedono un post, ma quante capiscono l'offerta, si fidano, visitano il sito, lasciano un contatto o acquistano. Per questo ogni contenuto deve avere una funzione nel percorso del cliente e ogni risultato deve poter essere misurato.\n\nRichiedi un'analisi strategica gratuita. Real Media Pro · 371 370 8294.\n\n#RealMediaPro #DigitalMarketing #SocialMediaMarketing #Ecommerce #SitiWeb #LeadGeneration #Avigliana",
       "hashtags": [
         "#RealMediaPro",
         "#ShopifyItalia",
@@ -324,21 +138,34 @@
         "#WebDesign",
         "#ValleDiSusa"
       ],
-      "voiceover": "IL TUO SITO PORTA CLIENTI? Quando analizziamo un sito Shopify o un e-commerce, non partiamo dagli effetti speciali. Partiamo da domande semplici. In pochi secondi si capisce cosa vendi? Da smartphone il percorso è chiaro? La pagina prodotto risponde ai dubbi? Il cliente trova facilmente la call to action? Il sito è veloce e stai misurando quello che succede? Sono questi i controlli che incidono sull'esperienza e sulla conversione. Real Media Pro usa contenuti semplici, esempi originali e dati verificabili, senza copiare creatività di altri brand. Se vuoi capire cosa migliorare nel tuo progetto digitale, scrivici o chiama il 371 370 8294 e richiedi un'analisi strategica.",
+      "voiceover": "PERCHÉ I SOCIAL FANNO CRESCERE UN'AZIENDA? Perché possono creare attenzione, fiducia e domanda, se collegati a un percorso misurabile. Il punto non è pubblicare di più. È costruire un percorso in cui ogni contenuto abbia una funzione. Prima attiri l'attenzione della persona giusta. Poi fai capire il problema e la tua proposta. Costruisci fiducia con esempi, prove e chiarezza. Porti il traffico verso un sito o una pagina che funziona bene da smartphone e rende semplice fare il passo successivo. Infine misuri contatti, richieste e vendite, così capisci cosa migliorare. Quando social, sito e processo commerciale sono scollegati, arrivano numeri ma pochi risultati. Quando lavorano insieme, il digitale diventa una leva concreta di crescita. Se vuoi capire cosa migliorare nella tua azienda, richiedi un'analisi strategica gratuita a Real Media Pro al 371 370 8294.",
       "slides": [
-        "IL TUO SITO PORTA CLIENTI?",
-        "HOME CHIARA IN POCHI SECONDI",
-        "MOBILE PRIMA DI TUTTO",
-        "PAGINE PRODOTTO SEMPLICI",
-        "FIDUCIA E PROVE REALI",
-        "CTA VISIBILE",
-        "MISURA COSA SUCCEDE",
-        "REAL MEDIA PRO | 371 370 8294"
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
       ],
-      "visuals": [],
+      "visuals": [
+        "imprenditore con laptop in ufficio moderno",
+        "smartphone con interfaccia social professionale",
+        "sito ecommerce premium su laptop",
+        "pagina prodotto pulita da smartphone",
+        "dashboard marketing e analytics realistica",
+        "team digitale al lavoro",
+        "checkout ecommerce semplice",
+        "analisi dati business su schermo",
+        "imprenditore che controlla risultati",
+        "workspace digitale premium con laptop e smartphone"
+      ],
       "cta": "Richiedi un'analisi strategica gratuita",
       "media": "publisher/media/generated/real-media-pro/2026-08-18/01-meta-ads-creative.mp4",
-      "scheduled_at": "2026-08-18T09:15:00+02:00",
+      "scheduled_at": "2026-08-18T11:27:31+02:00",
       "territory": "Avigliana",
       "property_focus": {},
       "approval_key": "2026-W34",
@@ -371,166 +198,17 @@
       "video_made_with_ai": true,
       "created_by": "open-social-scheduler",
       "blocked_reason": "approval required for 2026-W34",
-      "research_topic": "SHOPIFY / ECOMMERCE",
-      "visual_rule": "owned_generated_or_reusable_ecommerce_visuals_only",
+      "research_query": "Meta Ads: il problema spesso è la creatività",
       "phone": "371 370 8294",
+      "visual_rule": "pixabay_canva_business_ecommerce_only",
       "target_reel_seconds": 60,
-      "production_status": "DA CONTROLLARE",
+      "production_status": "FAST TODAY - PRIORITA IMMEDIATA",
       "publish_decision": "manual",
-      "research_mode": "public_signals_and_official_guidance",
-      "research_basis": []
-    },
-    {
-      "id": "real-media-pro-2026-08-18-02-crm-followup",
-      "client_id": "real-media-pro",
-      "client_name": "Real Media Pro",
-      "category": "nurture",
-      "editorial_role": "nurture",
-      "campaign": "Real Media Pro · Dalla visibilità alla crescita",
-      "format": "carousel",
-      "title": "5 CONTROLLI PER UN E-COMMERCE CHE DEVE VENDERE",
-      "caption": "5 CONTROLLI PER UN E-COMMERCE CHE DEVE VENDERE\n\nUn sito o un e-commerce non deve sembrare complicato per essere efficace. Deve far capire rapidamente cosa offri, funzionare bene da smartphone, ridurre i dubbi e accompagnare la persona verso un'azione concreta. Per questo guardiamo struttura, pagine prodotto o servizio, velocità, fiducia, call to action e misurazione. I contenuti della giornata partono da segnali pubblici e temi attuali del settore, ma la creatività viene ricostruita da zero: niente copie di post o video di terzi.\n\nPer un'analisi del progetto: WhatsApp / telefono 371 370 8294.\n\n#RealMediaPro #Shopify #Ecommerce #SitiWeb #ConversionRate #DigitalMarketing #MarketingDigitale #Avigliana #Torino",
-      "hashtags": [
-        "#RealMediaPro",
-        "#SitiShopify",
-        "#DigitalMarketing",
-        "#LeadGeneration",
-        "#Rivoli",
-        "#Avigliana"
-      ],
-      "voiceover": "5 CONTROLLI PER UN E-COMMERCE CHE DEVE VENDERE Quando analizziamo un sito Shopify o un e-commerce, non partiamo dagli effetti speciali. Partiamo da domande semplici. In pochi secondi si capisce cosa vendi? Da smartphone il percorso è chiaro? La pagina prodotto risponde ai dubbi? Il cliente trova facilmente la call to action? Il sito è veloce e stai misurando quello che succede? Sono questi i controlli che incidono sull'esperienza e sulla conversione. Real Media Pro usa contenuti semplici, esempi originali e dati verificabili, senza copiare creatività di altri brand. Se vuoi capire cosa migliorare nel tuo progetto digitale, scrivici o chiama il 371 370 8294 e richiedi un'analisi strategica.",
-      "slides": [
-        "5 CONTROLLI PER UN E-COMMERCE CHE DEVE VENDERE",
-        "1 · SI CAPISCE SUBITO COSA VENDI?",
-        "2 · DA MOBILE FUNZIONA BENE?",
-        "3 · LA PAGINA PRODOTTO RISPONDE AI DUBBI?",
-        "4 · IL PERCORSO È SEMPLICE?",
-        "5 · STAI MISURANDO LE CONVERSIONI?",
-        "REAL MEDIA PRO | 371 370 8294"
-      ],
-      "visuals": [],
-      "cta": "Richiedi un'analisi strategica gratuita",
-      "media": [
-        "publisher/media/generated/real-media-pro/2026-08-18/02-crm-followup/slide-01.jpg",
-        "publisher/media/generated/real-media-pro/2026-08-18/02-crm-followup/slide-02.jpg",
-        "publisher/media/generated/real-media-pro/2026-08-18/02-crm-followup/slide-03.jpg",
-        "publisher/media/generated/real-media-pro/2026-08-18/02-crm-followup/slide-04.jpg",
-        "publisher/media/generated/real-media-pro/2026-08-18/02-crm-followup/slide-05.jpg",
-        "publisher/media/generated/real-media-pro/2026-08-18/02-crm-followup/slide-06.jpg",
-        "publisher/media/generated/real-media-pro/2026-08-18/02-crm-followup/slide-07.jpg"
-      ],
-      "scheduled_at": "2026-08-18T14:15:00+02:00",
-      "territory": "Avigliana",
-      "property_focus": {},
-      "approval_key": "2026-W34",
-      "platforms": [
-        {
-          "platform": "facebook",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "instagram",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "linkedin",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "pinterest",
-          "integration_id": "direct-api"
-        }
-      ],
-      "enabled": true,
-      "status": "awaiting_approval",
-      "published_platforms": [],
-      "postiz_results": [],
-      "video_made_with_ai": false,
-      "created_by": "open-social-scheduler",
-      "blocked_reason": "approval required for 2026-W34",
-      "research_topic": "SHOPIFY / ECOMMERCE",
-      "visual_rule": "owned_generated_or_reusable_ecommerce_visuals_only",
-      "phone": "371 370 8294",
-      "target_reel_seconds": 60,
-      "production_status": "DA CONTROLLARE",
-      "publish_decision": "manual",
-      "research_mode": "public_signals_and_official_guidance",
-      "research_basis": []
-    },
-    {
-      "id": "real-media-pro-2026-08-18-03-analisi-gratuita",
-      "client_id": "real-media-pro",
-      "client_name": "Real Media Pro",
-      "category": "convert",
-      "editorial_role": "convert",
-      "campaign": "Real Media Pro · Dalla visibilità alla crescita",
-      "format": "reel",
-      "title": "IL TUO SITO PORTA CLIENTI?",
-      "caption": "IL TUO SITO PORTA CLIENTI?\n\nUn sito o un e-commerce non deve sembrare complicato per essere efficace. Deve far capire rapidamente cosa offri, funzionare bene da smartphone, ridurre i dubbi e accompagnare la persona verso un'azione concreta. Per questo guardiamo struttura, pagine prodotto o servizio, velocità, fiducia, call to action e misurazione. I contenuti della giornata partono da segnali pubblici e temi attuali del settore, ma la creatività viene ricostruita da zero: niente copie di post o video di terzi.\n\nPer un'analisi del progetto: WhatsApp / telefono 371 370 8294.\n\n#RealMediaPro #Shopify #Ecommerce #SitiWeb #ConversionRate #DigitalMarketing #MarketingDigitale #Avigliana #Torino",
-      "hashtags": [
-        "#RealMediaPro",
-        "#Shopify",
-        "#Ecommerce",
-        "#SitiWeb",
-        "#Torino",
-        "#MarketingDigitale"
-      ],
-      "voiceover": "IL TUO SITO PORTA CLIENTI? Quando analizziamo un sito Shopify o un e-commerce, non partiamo dagli effetti speciali. Partiamo da domande semplici. In pochi secondi si capisce cosa vendi? Da smartphone il percorso è chiaro? La pagina prodotto risponde ai dubbi? Il cliente trova facilmente la call to action? Il sito è veloce e stai misurando quello che succede? Sono questi i controlli che incidono sull'esperienza e sulla conversione. Real Media Pro usa contenuti semplici, esempi originali e dati verificabili, senza copiare creatività di altri brand. Se vuoi capire cosa migliorare nel tuo progetto digitale, scrivici o chiama il 371 370 8294 e richiedi un'analisi strategica.",
-      "slides": [
-        "IL TUO SITO PORTA CLIENTI?",
-        "BELLO NON BASTA",
-        "DEVE FAR CAPIRE L'OFFERTA",
-        "DEVE RIDURRE L'ATTRITO",
-        "DEVE PORTARE A UN'AZIONE",
-        "DEVE ESSERE MISURABILE",
-        "PARTIAMO DA UN'ANALISI",
-        "REAL MEDIA PRO | 371 370 8294"
-      ],
-      "visuals": [],
-      "cta": "Richiedi un'analisi strategica gratuita",
-      "media": "publisher/media/generated/real-media-pro/2026-08-18/03-analisi-gratuita.mp4",
-      "scheduled_at": "2026-08-18T19:15:00+02:00",
-      "territory": "Avigliana",
-      "property_focus": {},
-      "approval_key": "2026-W34",
-      "platforms": [
-        {
-          "platform": "facebook",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "instagram",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "tiktok",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "linkedin",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "youtube",
-          "integration_id": "direct-api"
-        }
-      ],
-      "enabled": true,
-      "status": "awaiting_approval",
-      "published_platforms": [],
-      "postiz_results": [],
-      "video_made_with_ai": true,
-      "created_by": "open-social-scheduler",
-      "blocked_reason": "approval required for 2026-W34",
-      "research_topic": "SHOPIFY / ECOMMERCE",
-      "visual_rule": "owned_generated_or_reusable_ecommerce_visuals_only",
-      "phone": "371 370 8294",
-      "target_reel_seconds": 60,
-      "production_status": "DA CONTROLLARE",
-      "publish_decision": "manual",
-      "research_mode": "public_signals_and_official_guidance",
-      "research_basis": []
+      "research_mode": "google_suggestions_plus_official_sources",
+      "research_basis": [],
+      "no_subtitles": true,
+      "visual_count": 10
     }
   ],
-  "updated_at": "2026-08-18T06:28:34+00:00"
+  "updated_at": "2026-08-18T09:27:31+00:00"
 }
