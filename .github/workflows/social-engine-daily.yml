@@ -1,4 +1,4 @@
-name: Open Social Engine Daily - Prepare Only
+name: Open Social Engine Daily - Deluxe Premium
 
 on:
   workflow_dispatch:
@@ -8,7 +8,9 @@ on:
         required: false
         type: string
   schedule:
-    - cron: '10 4 * * *'
+    # Run twice in UTC and gate on Europe/Rome local hour so 01:00 remains exact across DST.
+    - cron: '0 23 * * *'
+    - cron: '0 0 * * *'
   push:
     paths:
       - '.github/workflows/social-engine-daily.yml'
@@ -17,6 +19,7 @@ on:
       - 'publisher/enrich_queue.py'
       - 'publisher/render_reels.py'
       - 'publisher/requirements.txt'
+      - 'publisher/query_history.json'
       - 'publisher/clients/**'
       - 'publisher/content_bank/**'
       - 'publisher/approvals/**'
@@ -32,14 +35,37 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build-render-prepare:
+  rome-gate:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    outputs:
+      run: ${{ steps.check.outputs.run }}
+    steps:
+      - id: check
+        shell: bash
+        run: |
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import os
+          from datetime import datetime
+          from zoneinfo import ZoneInfo
+          event = os.environ.get("GITHUB_EVENT_NAME", "")
+          if event != "schedule":
+              print("run=true")
+          else:
+              now = datetime.now(ZoneInfo("Europe/Rome"))
+              print("run=true" if now.hour == 1 else "run=false")
+              print(f"rome_time={now.isoformat()}")
+          PY
+
+  build-render-prepare:
+    needs: rome-gate
+    if: needs.rome-gate.outputs.run == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
     env:
       SOCIAL_DATE: ${{ inputs.date }}
       SOCIAL_START_OFFSET_DAYS: '0'
       PIPER_DATA_DIR: ${{ github.workspace }}/.cache/piper
-      SOCIAL_PHOTO_CACHE: ${{ github.workspace }}/.cache/f1-photos
+      SOCIAL_PHOTO_CACHE: ${{ github.workspace }}/.cache/social-photos
 
     steps:
       - name: Checkout
@@ -52,21 +78,21 @@ jobs:
           cache: pip
           cache-dependency-path: publisher/requirements.txt
 
-      - name: Install renderer dependencies
+      - name: Install deluxe renderer dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y ffmpeg fonts-dejavu-core fonts-noto-color-emoji zip
+          sudo apt-get install -y ffmpeg fonts-dejavu-core zip
           pip install -r publisher/requirements.txt
 
-      - name: Cache Italian voice and media
+      - name: Cache voice and media
         uses: actions/cache@v4
         with:
           path: |
             .cache/piper
-            .cache/f1-photos
-          key: social-assets-v6-daily-simple-60s
+            .cache/social-photos
+          key: social-assets-v8-deluxe-premium-60s
 
-      - name: Prepare Italian voice
+      - name: Prepare Italian female fallback voice
         run: |
           mkdir -p "$PIPER_DATA_DIR" "$SOCIAL_PHOTO_CACHE"
           if [ ! -f "$PIPER_DATA_DIR/it_IT-paola-medium.onnx" ]; then
@@ -78,10 +104,10 @@ jobs:
           python -m py_compile publisher/*.py
           python -m unittest discover -s publisher/tests -v
 
-      - name: Research fresh public signals
+      - name: Collect fresh Google query suggestions
         run: python publisher/research_signals.py
 
-      - name: Build today's three candidates per brand
+      - name: Build 10 candidates per brand
         shell: bash
         run: |
           if [ -n "${SOCIAL_DATE:-}" ]; then
@@ -90,13 +116,13 @@ jobs:
             python publisher/build_daily_queue.py
           fi
 
-      - name: Apply simple research-informed creative plan
+      - name: Create deluxe captions voiceovers and 10-visual plans
         run: python publisher/enrich_queue.py
 
-      - name: Render today's 60-second Reels and carousels
+      - name: Render 60-second Reels and 10-slide carousels
         run: python publisher/render_reels.py
 
-      - name: Reconcile media state and preserve research plan
+      - name: Reconcile generated media state
         shell: bash
         run: |
           if [ -n "${SOCIAL_DATE:-}" ]; then
@@ -106,54 +132,47 @@ jobs:
           fi
           python publisher/enrich_queue.py
 
-      - name: Upload daily preview package
+      - name: Upload final daily package
         uses: actions/upload-artifact@v4
         with:
-          name: social-preview-${{ github.run_id }}
+          name: social-deluxe-${{ github.run_id }}
           path: publisher/media/generated
           if-no-files-found: error
           retention-days: 7
 
-      - name: Persist prepared queue safely
+      - name: Persist queue and query history safely
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          if git diff --quiet -- publisher/queue.json; then
-            echo 'Queue unchanged.'
-            exit 0
-          fi
-          SHA=$(gh api "repos/${GITHUB_REPOSITORY}/contents/publisher/queue.json?ref=main" --jq '.sha')
-          python - "$SHA" <<'PY'
-          import base64
-          import json
-          import sys
-          sha = sys.argv[1]
-          with open('publisher/queue.json', 'rb') as fh:
+          for FILE in publisher/queue.json publisher/query_history.json publisher/research/latest.json; do
+            [ -f "$FILE" ] || continue
+            if git diff --quiet -- "$FILE"; then
+              echo "$FILE unchanged."
+              continue
+            fi
+            SHA=$(gh api "repos/${GITHUB_REPOSITORY}/contents/${FILE}?ref=main" --jq '.sha' 2>/dev/null || true)
+            python - "$FILE" "$SHA" <<'PY'
+          import base64, json, sys
+          file, sha = sys.argv[1], sys.argv[2]
+          with open(file, 'rb') as fh:
               content = base64.b64encode(fh.read()).decode('ascii')
-          payload = {
-              'message': 'Prepare daily manual-review social candidates',
-              'content': content,
-              'sha': sha,
-              'branch': 'main',
-          }
-          with open('/tmp/queue-payload.json', 'w', encoding='utf-8') as fh:
+          payload = {'message': f'Persist deluxe social state: {file}', 'content': content, 'branch': 'main'}
+          if sha:
+              payload['sha'] = sha
+          with open('/tmp/payload.json', 'w', encoding='utf-8') as fh:
               json.dump(payload, fh)
           PY
-          gh api "repos/${GITHUB_REPOSITORY}/contents/publisher/queue.json" \
-            --method PUT \
-            --input /tmp/queue-payload.json >/dev/null
-          echo 'Queue persisted through GitHub Contents API.'
+            gh api "repos/${GITHUB_REPOSITORY}/contents/${FILE}" --method PUT --input /tmp/payload.json >/dev/null
+          done
 
-      - name: Publish latest downloadable daily media
+      - name: Publish latest downloadable media
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          if [ ! -d publisher/media/generated ] || [ -z "$(find publisher/media/generated -type f -print -quit 2>/dev/null)" ]; then
-            echo 'No generated media available for downloadable preview.'
-            exit 1
-          fi
+          test -d publisher/media/generated
+          test -n "$(find publisher/media/generated -type f -print -quit)"
           rm -rf /tmp/social-release
           mkdir -p /tmp/social-release
           while IFS= read -r -d '' file; do
@@ -163,69 +182,49 @@ jobs:
           done < <(find publisher/media/generated -type f -print0)
           for client in f1-immobiliare real-media-pro; do
             if [ -d "publisher/media/generated/$client" ]; then
-              (cd "publisher/media/generated/$client" && zip -qr "/tmp/social-release/${client}__SETTIMANA_COMPLETA.zip" .)
+              (cd "publisher/media/generated/$client" && zip -qr "/tmp/social-release/${client}__CONTENUTI_DELUXE.zip" .)
             fi
           done
           cp publisher/queue.json /tmp/social-release/queue.json
-          if [ -f publisher/research/latest.json ]; then
-            cp publisher/research/latest.json /tmp/social-release/research-latest.json
-          fi
+          cp publisher/query_history.json /tmp/social-release/query_history.json
+          [ -f publisher/research/latest.json ] && cp publisher/research/latest.json /tmp/social-release/research-latest.json
           gh release delete social-preview-latest --yes --cleanup-tag >/dev/null 2>&1 || true
           gh release create social-preview-latest /tmp/social-release/* \
-            --title "Contenuti giornalieri pronti - F1 Immobiliare + Real Media Pro" \
-            --notes "Pacchetto giornaliero DA CONTROLLARE: 3 candidati F1 + 3 candidati Real Media Pro. Nessuna pubblicazione automatica. Reel da 60 secondi, caroselli, caption, CTA e ricerca pubblica di supporto. Workflow ${GITHUB_RUN_ID}."
+            --title "Contenuti Deluxe Premium - F1 Immobiliare + Real Media Pro" \
+            --notes "Produzione giornaliera: 10 contenuti F1 + 10 contenuti Real Media Pro, 5 Reel e 5 caroselli per brand. Reel 60 secondi, 10 visual, voce femminile naturale, niente sottotitoli. Workflow ${GITHUB_RUN_ID}."
 
-      - name: Resolve Rome date
-        id: day
-        shell: bash
-        run: |
-          python - <<'PY' >> "$GITHUB_OUTPUT"
-          from datetime import datetime
-          from zoneinfo import ZoneInfo
-          now = datetime.now(ZoneInfo('Europe/Rome'))
-          print(f"date={now.date().isoformat()}")
-          PY
-
-      - name: Notify Joseph that today's content is ready
+      - name: Notify final results
         uses: actions/github-script@v7
         with:
           script: |
-            const title = '[CONTENUTI GIORNALIERI] - notifiche';
-            const date = '${{ steps.day.outputs.date }}';
+            const title = '[CONTENUTI DELUXE] - risultati';
             const issues = await github.paginate(github.rest.issues.listForRepo, {
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              state: 'all',
-              per_page: 100
+              owner: context.repo.owner, repo: context.repo.repo, state: 'all', per_page: 100
             });
             let issue = issues.find(i => i.title === title);
             const body = [
-              '@josephsocialmedia2-spec contenuti del **' + date + '** pronti.',
+              '@josephsocialmedia2-spec produzione Deluxe completata.',
               '',
-              '**F1 Immobiliare:** 3 contenuti DA CONTROLLARE.',
-              '**Real Media Pro:** 3 contenuti DA CONTROLLARE.',
-              '',
-              '**Nessuna pubblicazione automatica:** decidi tu quando, dove e cosa pubblicare.',
+              '**F1 Immobiliare:** 10 contenuti finali (5 Reel + 5 caroselli).',
+              '**Real Media Pro:** 10 contenuti finali (5 Reel + 5 caroselli).',
               '',
               'Controlla e scarica: https://josephsocialmedia2-spec.github.io/open-social-scheduler/monday-control.html',
               'Run: https://github.com/' + context.repo.owner + '/' + context.repo.repo + '/actions/runs/' + context.runId
             ].join('\n');
             if (!issue) {
               issue = (await github.rest.issues.create({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                title,
-                body,
+                owner: context.repo.owner, repo: context.repo.repo, title, body,
                 assignees: ['josephsocialmedia2-spec']
               })).data;
             } else {
               if (issue.state !== 'open') {
-                await github.rest.issues.update({owner: context.repo.owner, repo: context.repo.repo, issue_number: issue.number, state: 'open'});
+                await github.rest.issues.update({
+                  owner: context.repo.owner, repo: context.repo.repo,
+                  issue_number: issue.number, state: 'open'
+                });
               }
               await github.rest.issues.createComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: issue.number,
-                body
+                owner: context.repo.owner, repo: context.repo.repo,
+                issue_number: issue.number, body
               });
             }
