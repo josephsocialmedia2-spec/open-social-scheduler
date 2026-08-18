@@ -18,6 +18,7 @@ on:
       - 'publisher/research_signals.py'
       - 'publisher/enrich_queue.py'
       - 'publisher/render_reels.py'
+      - 'publisher/fast_render.py'
       - 'publisher/requirements.txt'
       - 'publisher/query_history.json'
       - 'publisher/clients/**'
@@ -69,10 +70,10 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Python 3.12
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: '3.12'
           cache: pip
@@ -90,7 +91,7 @@ jobs:
           path: |
             .cache/piper
             .cache/social-photos
-          key: social-assets-v8-deluxe-premium-60s
+          key: social-assets-v9-deluxe-direct-cdn-60s
 
       - name: Prepare Italian female fallback voice
         run: |
@@ -119,8 +120,8 @@ jobs:
       - name: Create deluxe captions voiceovers and 10-visual plans
         run: python publisher/enrich_queue.py
 
-      - name: Render 60-second Reels and 10-slide carousels
-        run: python publisher/render_reels.py
+      - name: Render 60-second Reels and 10-slide carousels using direct CDN media
+        run: python publisher/fast_render.py
 
       - name: Reconcile generated media state
         shell: bash
@@ -194,7 +195,7 @@ jobs:
             --notes "Produzione giornaliera: 10 contenuti F1 + 10 contenuti Real Media Pro, 5 Reel e 5 caroselli per brand. Reel 60 secondi, 10 visual, voce femminile naturale, niente sottotitoli. Workflow ${GITHUB_RUN_ID}."
 
       - name: Notify final results
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const title = '[CONTENUTI DELUXE] - risultati';
