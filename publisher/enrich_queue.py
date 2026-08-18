@@ -1,10 +1,5 @@
 #!/usr/bin/env python3
-"""Turn prepared jobs into simple, research-informed daily content candidates.
-
-The output is intentionally conservative: three candidates per brand per day,
-manual publication only, no copying of third-party creatives. Public research
-signals influence the topic and the source links are stored on each job.
-"""
+"""Enrich queue jobs with fresh-query captions, natural voiceover and premium visual plans."""
 from __future__ import annotations
 
 import json
@@ -16,6 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 QUEUE = ROOT / "publisher" / "queue.json"
 RESEARCH = ROOT / "publisher" / "research" / "latest.json"
 PHONE = "371 370 8294"
+FRANCESCA_PHONE = "371 424 6300"
 
 
 def load(path: Path) -> dict[str, Any]:
@@ -37,217 +33,159 @@ def local_tag(territory: str) -> str:
     return "#" + value if value else "#ValleDiSusa"
 
 
-def f1_hashtags(territory: str) -> list[str]:
-    return [
-        "#F1Immobiliare", "#ValleDiSusa", local_tag(territory), "#VendereCasa",
-        "#CasaInVendita", "#ValutazioneImmobiliare", "#MercatoImmobiliare",
-        "#ImmobiliareTorino", "#TorinoOvest", "#PrimaIDati",
-    ]
-
-
-def rmp_hashtags(territory: str) -> list[str]:
-    return [
-        "#RealMediaPro", "#Shopify", "#Ecommerce", "#SitiWeb", "#ConversionRate",
-        "#DigitalMarketing", "#MarketingDigitale", local_tag(territory), "#Torino",
-    ]
-
-
 def ensure_hashtags(caption: str, tags: list[str]) -> str:
     base = re.sub(r"(?:\n\s*)?(?:#[\wÀ-ÿ]+\s*)+$", "", str(caption or "").strip()).strip()
     return base + "\n\n" + " ".join(dict.fromkeys(tags))
 
 
-def research_for(cid: str) -> list[dict[str, str]]:
+def f1_hashtags(territory: str) -> list[str]:
+    return ["#F1Immobiliare", "#ValleDiSusa", local_tag(territory), "#VendereCasa",
+            "#ValutazioneImmobiliare", "#MercatoImmobiliare", "#CasaInVendita"]
+
+
+def rmp_hashtags(territory: str) -> list[str]:
+    return ["#RealMediaPro", "#DigitalMarketing", "#SocialMediaMarketing", "#Ecommerce",
+            "#SitiWeb", "#LeadGeneration", local_tag(territory)]
+
+
+def research_queries(cid: str) -> list[str]:
     if not RESEARCH.exists():
         return []
     try:
         data = load(RESEARCH)
-        rows = data.get("brands", {}).get(cid, {}).get("signals", [])
-        return [x for x in rows if isinstance(x, dict)][:5]
+        rows = data.get("brands", {}).get(cid, {}).get("fresh_queries", [])
+        return [str(x).strip() for x in rows if str(x).strip()]
     except Exception:
         return []
 
 
-def set_slides(job: dict[str, Any], slides: list[str]) -> None:
-    job["slides"] = slides
-    if str(job.get("format") or "") != "carousel":
-        return
-    media = job.get("media")
-    if isinstance(media, list) and media:
-        parent = str(Path(str(media[0])).parent).replace("\\", "/")
-        job["media"] = [f"{parent}/slide-{i:02d}.jpg" for i in range(1, len(slides) + 1)]
+def research_sources(cid: str) -> list[str]:
+    if not RESEARCH.exists():
+        return []
+    try:
+        data = load(RESEARCH)
+        rows = data.get("brands", {}).get(cid, {}).get("official_sources", [])
+        return [str(x).strip() for x in rows if str(x).strip()]
+    except Exception:
+        return []
 
 
-def rmp_live_topic(signals: list[dict[str, str]]) -> tuple[str, str]:
-    text = " ".join(str(x.get("title") or "") for x in signals).lower()
-    checks = [
-        (("speed", "veloc"), "VELOCITÀ DEL SITO", "IL TUO SITO È TROPPO LENTO?"),
-        (("review", "recension", "trust", "fiducia"), "FIDUCIA E RECENSIONI", "IL TUO E-COMMERCE ISPIRA FIDUCIA?"),
-        (("conversion", "cro", "convert"), "CONVERSIONE", "IL TUO SITO CONVERTE DAVVERO?"),
-        (("agentic", "agent", " intelligenza artificiale", " ai "), "AI COMMERCE", "IL TUO E-COMMERCE È PRONTO PER L'AI?"),
-        (("product page", "pagina prodotto", "prodotto"), "PAGINA PRODOTTO", "LA TUA PAGINA PRODOTTO FA COMPRARE?"),
-    ]
-    for keys, topic, hook in checks:
-        if any(k in text for k in keys):
-            return topic, hook
-    return "SHOPIFY / ECOMMERCE", "IL TUO SITO PORTA CLIENTI?"
+def f1_angle(query: str) -> dict[str, Any]:
+    q = query.lower()
+    if "omi" in q or "valori immobiliari" in q:
+        return {"title": "I VALORI OMI BASTANO DAVVERO?", "lead": "Le quotazioni OMI sono una bussola statistica, non il prezzo automatico della tua casa.", "points": ["OMI = intervallo di zona", "microzona", "stato dell'immobile", "piano e luminosità", "spazi esterni", "concorrenza attiva", "domanda reale", "posizionamento finale"]}
+    if "eredit" in q:
+        return {"title": "VENDERE UNA CASA EREDITATA: DA DOVE PARTIRE?", "lead": "Prima della pubblicazione bisogna chiarire documenti, situazione fiscale e valore di mercato.", "points": ["successione", "titolarità", "documentazione", "stato catastale", "valore di mercato", "eventuali imposte", "strategia di vendita", "tempi realistici"]}
+    if "tass" in q or "plusval" in q or "impost" in q:
+        return {"title": "VENDERE CASA: QUALI COSTI DEVI CONOSCERE?", "lead": "La parte fiscale va verificata prima, non alla fine della trattativa.", "points": ["quando hai acquistato", "tipo di immobile", "prima casa", "eventuale plusvalenza", "documenti", "costi da prevedere", "valore netto atteso", "strategia"]}
+    if "catast" in q or "rendita" in q:
+        return {"title": "CATASTO E VALORE DI MERCATO NON SONO LA STESSA COSA", "lead": "Il dato catastale ha una funzione amministrativa e fiscale; il mercato ragiona diversamente.", "points": ["rendita catastale", "dati tecnici", "microzona", "condizioni reali", "comparabili", "domanda", "offerta", "prezzo di uscita"]}
+    if "atto" in q or "dichiarat" in q:
+        return {"title": "COSA RACCONTANO LE COMPRAVENDITE REALI?", "lead": "Gli atti e i dati di mercato aiutano a capire cosa è successo davvero, non cosa si sperava.", "points": ["vendite concluse", "prezzi dichiarati", "zona", "tipologia", "superficie", "stato", "tempo di vendita", "confronto con l'immobile"]}
+    if "prima casa" in q or "acquisto" in q or "comprare" in q:
+        return {"title": "COMPRARE O VENDERE CASA: I DATI DA GUARDARE PRIMA", "lead": "Una decisione immobiliare importante parte da informazioni verificabili.", "points": ["budget", "imposte", "zona", "documentazione", "stato immobile", "comparabili", "domanda", "strategia"]}
+    return {"title": "IL PREZZO GIUSTO NON SI INVENTA", "lead": "Una valutazione credibile nasce dall'incrocio tra dati, immobile e mercato reale.", "points": ["microzona", "comparabili", "stato casa", "piano", "esposizione", "spazi esterni", "concorrenza", "domanda"]}
 
 
-def apply_simple_plan(job: dict[str, Any], signals: list[dict[str, str]]) -> None:
-    cid = str(job.get("client_id") or "")
-    category = str(job.get("category") or "")
-    territory = str(job.get("territory") or "").strip() or "Valle di Susa"
-
-    if cid == "f1-immobiliare":
-        if category == "data":
-            title = f"QUANTO VALE OGGI UNA CASA A {territory.upper()}?"
-            set_slides(job, [
-                title,
-                "IL PREZZO MEDIO NON BASTA",
-                "CONTA LA MICROZONA",
-                "CONTA LO STATO DELLA CASA",
-                "CONTA LA CONCORRENZA ATTIVA",
-                "CONTA LA DOMANDA REALE",
-                f"F1 IMMOBILIARE | {PHONE}",
-            ])
-        elif category == "error":
-            title = "IL PREZZO SBAGLIATO BLOCCA LA VENDITA?"
-            set_slides(job, [
-                title,
-                "TROPPO ALTO = MENO CONTATTI",
-                "TROPPO BASSO = VALORE PERSO",
-                "I PRIMI GIORNI CONTANO",
-                "CONFRONTA IMMOBILI REALMENTE CONCORRENTI",
-                "PRIMA I DATI. POI LA STRATEGIA.",
-                f"F1 IMMOBILIARE | {PHONE}",
-            ])
-        else:
-            title = "PRIMA DI VENDERE CASA: 5 CONTROLLI"
-            set_slides(job, [
-                title,
-                "1 · VALORE E MICROZONA",
-                "2 · CONCORRENZA ATTIVA",
-                "3 · DOCUMENTAZIONE",
-                "4 · PRESENTAZIONE DELL'IMMOBILE",
-                "5 · STRATEGIA DI USCITA",
-                f"F1 IMMOBILIARE | {PHONE}",
-            ])
-        job["title"] = title
-        job["visual_rule"] = "residential_property_only"
-    else:
-        topic, live_hook = rmp_live_topic(signals)
-        job["research_topic"] = topic
-        if category == "attract":
-            title = live_hook
-            set_slides(job, [
-                title,
-                "HOME CHIARA IN POCHI SECONDI",
-                "MOBILE PRIMA DI TUTTO",
-                "PAGINE PRODOTTO SEMPLICI",
-                "FIDUCIA E PROVE REALI",
-                "CTA VISIBILE",
-                "MISURA COSA SUCCEDE",
-                f"REAL MEDIA PRO | {PHONE}",
-            ])
-        elif category == "nurture":
-            title = "5 CONTROLLI PER UN E-COMMERCE CHE DEVE VENDERE"
-            set_slides(job, [
-                title,
-                "1 · SI CAPISCE SUBITO COSA VENDI?",
-                "2 · DA MOBILE FUNZIONA BENE?",
-                "3 · LA PAGINA PRODOTTO RISPONDE AI DUBBI?",
-                "4 · IL PERCORSO È SEMPLICE?",
-                "5 · STAI MISURANDO LE CONVERSIONI?",
-                f"REAL MEDIA PRO | {PHONE}",
-            ])
-        else:
-            title = "IL TUO SITO PORTA CLIENTI?"
-            set_slides(job, [
-                title,
-                "BELLO NON BASTA",
-                "DEVE FAR CAPIRE L'OFFERTA",
-                "DEVE RIDURRE L'ATTRITO",
-                "DEVE PORTARE A UN'AZIONE",
-                "DEVE ESSERE MISURABILE",
-                "PARTIAMO DA UN'ANALISI",
-                f"REAL MEDIA PRO | {PHONE}",
-            ])
-        job["title"] = title
-        job["visual_rule"] = "owned_generated_or_reusable_ecommerce_visuals_only"
+def rmp_angle(query: str) -> dict[str, Any]:
+    q = query.lower()
+    if "shopify" in q or "ecommerce" in q or "e-commerce" in q:
+        return {"title": "IL TUO E-COMMERCE AIUTA DAVVERO A VENDERE?", "lead": "La piattaforma conta, ma il risultato nasce da esperienza, fiducia e percorso d'acquisto.", "points": ["mobile", "pagina prodotto", "chiarezza offerta", "fiducia", "checkout", "velocità", "traffico qualificato", "misurazione"]}
+    if "lead" in q or "contatt" in q:
+        return {"title": "I SOCIAL PORTANO CONTATTI O SOLO VISUALIZZAZIONI?", "lead": "Un contenuto utile deve accompagnare la persona da attenzione a contatto.", "points": ["target", "hook", "problema reale", "prova", "CTA", "landing", "follow-up", "misurazione"]}
+    if "fattur" in q or "vendit" in q:
+        return {"title": "COME I SOCIAL POSSONO INCIDERE SULLE VENDITE", "lead": "I social funzionano quando fanno parte di un sistema commerciale, non quando restano isolati.", "points": ["attenzione", "fiducia", "traffico", "sito", "contatto", "follow-up", "vendita", "analisi"]}
+    if "sito" in q or "conversion" in q or "funnel" in q:
+        return {"title": "IL TUO SITO CONVERTE O FA SOLO PRESENZA?", "lead": "Un sito efficace deve rendere semplice capire, fidarsi e agire.", "points": ["proposta chiara", "mobile", "velocità", "prova sociale", "CTA", "pagine servizio", "tracking", "conversione"]}
+    if "follower" in q or "contenut" in q or "reel" in q:
+        return {"title": "DA FOLLOWER A CLIENTE: COSA DEVE SUCCEDERE?", "lead": "La crescita utile non è solo audience: è capacità di trasformare attenzione in relazione commerciale.", "points": ["contenuto", "fiducia", "ripetizione", "profilo", "CTA", "sito", "contatto", "vendita"]}
+    return {"title": "PERCHÉ I SOCIAL FANNO CRESCERE UN'AZIENDA?", "lead": "Perché possono creare attenzione, fiducia e domanda, se collegati a un percorso misurabile.", "points": ["visibilità", "target", "fiducia", "contenuti", "traffico", "lead", "vendite", "misurazione"]}
 
 
-def caption_for(job: dict[str, Any]) -> str:
-    cid = str(job.get("client_id") or "")
-    title = str(job.get("title") or "").strip()
-    territory = str(job.get("territory") or "").strip()
-    if cid == "f1-immobiliare":
-        body = (
-            f"{title}\n\n"
-            f"Se stai pensando di vendere casa in {territory or 'Valle di Susa'}, il punto di partenza non è scegliere un numero a sensazione. "
-            "Bisogna leggere la microzona, gli immobili realmente concorrenti, lo stato della casa, la domanda presente e il modo in cui l'immobile verrà presentato. "
-            "Una comunicazione semplice funziona quando dietro c'è un posizionamento corretto. F1 Immobiliare parte dai dati e costruisce la strategia di vendita da lì.\n\n"
-            f"Per un confronto sul tuo immobile: WhatsApp / telefono {PHONE}."
-        )
-        return ensure_hashtags(body, f1_hashtags(territory))
-    body = (
-        f"{title}\n\n"
-        "Un sito o un e-commerce non deve sembrare complicato per essere efficace. Deve far capire rapidamente cosa offri, funzionare bene da smartphone, ridurre i dubbi e accompagnare la persona verso un'azione concreta. "
-        "Per questo guardiamo struttura, pagine prodotto o servizio, velocità, fiducia, call to action e misurazione. I contenuti della giornata partono da segnali pubblici e temi attuali del settore, ma la creatività viene ricostruita da zero: niente copie di post o video di terzi.\n\n"
-        f"Per un'analisi del progetto: WhatsApp / telefono {PHONE}."
-    )
+def f1_visuals() -> list[str]:
+    return ["villa residenziale moderna esterno giorno", "quartiere residenziale italiano curato", "soggiorno luminoso premium", "cucina moderna di qualità", "terrazzo abitabile con vista", "camera matrimoniale elegante", "bagno contemporaneo premium", "facciata e ingresso immobile", "dettaglio architettonico e giardino", "villa residenziale al tramonto"]
+
+
+def rmp_visuals() -> list[str]:
+    return ["imprenditore con laptop in ufficio moderno", "smartphone con interfaccia social professionale", "sito ecommerce premium su laptop", "pagina prodotto pulita da smartphone", "dashboard marketing e analytics realistica", "team digitale al lavoro", "checkout ecommerce semplice", "analisi dati business su schermo", "imprenditore che controlla risultati", "workspace digitale premium con laptop e smartphone"]
+
+
+def carousel_slides(angle: dict[str, Any], cid: str) -> list[str]:
+    points = list(angle["points"])[:8]
+    slides = [angle["title"]]
+    slides.extend(str(p).upper() for p in points)
+    slides.append("RICHIEDI UNA VALUTAZIONE GRATUITA DEL TUO IMMOBILE" if cid == "f1-immobiliare" else "RICHIEDI UN'ANALISI STRATEGICA GRATUITA")
+    return slides[:10]
+
+
+def f1_caption(angle: dict[str, Any], query: str, territory: str) -> str:
+    body = (f"{angle['title']}\n\n{angle['lead']} Se stai pensando di vendere casa in {territory or 'Valle di Susa'}, una valutazione seria non nasce da una cifra presa isolatamente. Bisogna leggere la microzona, le caratteristiche reali dell'immobile, ciò che è effettivamente in concorrenza e la domanda presente. I dati pubblici sono utili quando vengono interpretati nel contesto corretto. Per questo il prezzo di uscita deve essere comprensibile, difendibile e coerente con il mercato.\n\nRichiedi una valutazione gratuita del tuo immobile. Joseph {PHONE} · Francesca {FRANCESCA_PHONE}.")
+    return ensure_hashtags(body, f1_hashtags(territory))
+
+
+def rmp_caption(angle: dict[str, Any], query: str, territory: str) -> str:
+    body = (f"{angle['title']}\n\n{angle['lead']} Un'azienda cresce online quando contenuti, social, sito e processo commerciale lavorano insieme. La metrica importante non è soltanto quante persone vedono un post, ma quante capiscono l'offerta, si fidano, visitano il sito, lasciano un contatto o acquistano. Per questo ogni contenuto deve avere una funzione nel percorso del cliente e ogni risultato deve poter essere misurato.\n\nRichiedi un'analisi strategica gratuita. Real Media Pro · {PHONE}.")
     return ensure_hashtags(body, rmp_hashtags(territory))
 
 
-def voiceover_60(job: dict[str, Any]) -> str:
-    cid = str(job.get("client_id") or "")
-    title = str(job.get("title") or "").strip()
-    territory = str(job.get("territory") or "").strip()
-    if cid == "f1-immobiliare":
-        script = (
-            f"{title} Se stai pensando di vendere casa in {territory or 'Valle di Susa'}, prima di pubblicare un annuncio serve capire dove si trova davvero il valore. "
-            "Il prezzo medio del comune non basta. Contano microzona, stato dell'immobile, piano, esposizione, qualità degli spazi, concorrenza attiva e domanda reale. "
-            "Il punto non è riempire internet di pubblicità: è presentare bene la casa, con un prezzo coerente e una strategia comprensibile. "
-            "F1 Immobiliare parte dai dati, confronta il mercato e costruisce il percorso di vendita. Se vuoi capire da dove partire, scrivici o chiama il 371 370 8294. "
-            "Prima i dati. Poi la strategia. Poi la vendita."
-        )
-    else:
-        script = (
-            f"{title} Quando analizziamo un sito Shopify o un e-commerce, non partiamo dagli effetti speciali. Partiamo da domande semplici. "
-            "In pochi secondi si capisce cosa vendi? Da smartphone il percorso è chiaro? La pagina prodotto risponde ai dubbi? Il cliente trova facilmente la call to action? Il sito è veloce e stai misurando quello che succede? "
-            "Sono questi i controlli che incidono sull'esperienza e sulla conversione. Real Media Pro usa contenuti semplici, esempi originali e dati verificabili, senza copiare creatività di altri brand. "
-            "Se vuoi capire cosa migliorare nel tuo progetto digitale, scrivici o chiama il 371 370 8294 e richiedi un'analisi strategica."
-        )
-    words = clean_voice(script).split()
-    return " ".join(words[:165])
+def f1_voice(angle: dict[str, Any], territory: str) -> str:
+    return clean_voice(f"{angle['title']} {angle['lead']} Se stai pensando di vendere casa in {territory or 'Valle di Susa'}, il punto è questo: un numero, da solo, non racconta il valore reale di un immobile. Contano la posizione precisa, lo stato della casa, il piano, la luce, gli spazi esterni, gli immobili davvero concorrenti e la domanda che esiste in quel momento. I dati pubblici servono come riferimento, ma devono essere letti insieme al mercato reale. Il prezzo corretto non è quello che ci piacerebbe ottenere: è quello che permette alla casa di essere posizionata bene, difesa con argomenti concreti e presentata alle persone giuste. Se vuoi capire da dove partire, richiedi una valutazione gratuita con F1 Immobiliare. Joseph {PHONE}, Francesca {FRANCESCA_PHONE}. Prima i dati, poi la strategia, poi la vendita.")
+
+
+def rmp_voice(angle: dict[str, Any]) -> str:
+    return clean_voice(f"{angle['title']} {angle['lead']} Il punto non è pubblicare di più. È costruire un percorso in cui ogni contenuto abbia una funzione. Prima attiri l'attenzione della persona giusta. Poi fai capire il problema e la tua proposta. Costruisci fiducia con esempi, prove e chiarezza. Porti il traffico verso un sito o una pagina che funziona bene da smartphone e rende semplice fare il passo successivo. Infine misuri contatti, richieste e vendite, così capisci cosa migliorare. Quando social, sito e processo commerciale sono scollegati, arrivano numeri ma pochi risultati. Quando lavorano insieme, il digitale diventa una leva concreta di crescita. Se vuoi capire cosa migliorare nella tua azienda, richiedi un'analisi strategica gratuita a Real Media Pro al {PHONE}.")
 
 
 def main() -> int:
     if not QUEUE.exists():
         return 0
     data = load(QUEUE)
+    grouped_index: dict[str, int] = {"f1-immobiliare": 0, "real-media-pro": 0}
     changed = 0
-    for job in data.get("jobs", []):
+    for job in sorted(data.get("jobs", []), key=lambda j: str(j.get("scheduled_at") or "")):
         cid = str(job.get("client_id") or "")
-        if cid not in {"f1-immobiliare", "real-media-pro"}:
+        if cid not in grouped_index or job.get("status") in {"published", "disabled"}:
             continue
-        if job.get("status") in {"published", "disabled"}:
-            continue
-        signals = research_for(cid)
-        apply_simple_plan(job, signals)
-        job["caption"] = caption_for(job)
-        job["voiceover"] = voiceover_60(job)
-        job["phone"] = PHONE
+        queries = research_queries(cid)
+        idx = grouped_index[cid]
+        query = queries[idx % len(queries)] if queries else str(job.get("title") or "")
+        grouped_index[cid] += 1
+        territory = str(job.get("territory") or "").strip()
+        angle = f1_angle(query) if cid == "f1-immobiliare" else rmp_angle(query)
+
+        job["research_query"] = query
+        job["title"] = angle["title"]
+        job["visuals"] = f1_visuals() if cid == "f1-immobiliare" else rmp_visuals()
+        job["slides"] = carousel_slides(angle, cid) if str(job.get("format")) == "carousel" else [""] * 10
+        if str(job.get("format")) == "carousel":
+            media = job.get("media")
+            if isinstance(media, list) and media:
+                parent = str(Path(str(media[0])).parent).replace("\\", "/")
+                job["media"] = [f"{parent}/slide-{i:02d}.jpg" for i in range(1, 11)]
+
+        if cid == "f1-immobiliare":
+            job["caption"] = f1_caption(angle, query, territory)
+            job["voiceover"] = f1_voice(angle, territory)
+            job["phone"] = PHONE
+            job["secondary_phone"] = FRANCESCA_PHONE
+            job["visual_rule"] = "premium_residential_property_only"
+        else:
+            job["caption"] = rmp_caption(angle, query, territory)
+            job["voiceover"] = rmp_voice(angle)
+            job["phone"] = PHONE
+            job["visual_rule"] = "pixabay_canva_business_ecommerce_only"
+
         job["target_reel_seconds"] = 60
         job["production_status"] = "DA CONTROLLARE"
         job["publish_decision"] = "manual"
-        job["research_mode"] = "public_signals_and_official_guidance"
-        job["research_basis"] = [
-            {"title": str(x.get("title") or ""), "url": str(x.get("url") or "")}
-            for x in signals[:3]
-        ]
+        job["research_mode"] = "google_suggestions_plus_official_sources"
+        job["research_basis"] = [{"url": u} for u in research_sources(cid)]
+        job["no_subtitles"] = True
+        job["visual_count"] = 10
         changed += 1
+
     save(QUEUE, data)
-    print(f"Enriched {changed} daily candidate(s) with simple plans, research basis, phone CTA and 60s voiceovers.")
+    print(f"Enriched {changed} candidate(s) with fresh query, premium caption, 10 visuals and natural voiceover.")
     return 0
 
 
