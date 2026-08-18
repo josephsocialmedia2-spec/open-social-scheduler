@@ -25,17 +25,18 @@ F1=[
  'https://pixabay.com/photos/real-estate-kitchen-interior-design-8428506/',
  'https://pixabay.com/photos/bedroom-interior-design-modern-8572584/',
 ]
+# Authentic photography only: no legacy Python mockups and no AI-generated stock.
 RMP=[
- 'https://pixabay.com/photos/business-professional-marketing-10207346/',
- 'https://pixabay.com/photos/data-analysis-business-charts-10237243/',
- 'https://pixabay.com/it/photos/affari-digitali-10150916/',
- 'https://pixabay.com/it/photos/proprietario-di-una-piccola-attivit%C3%A0-10150921/',
- 'https://pixabay.com/photos/laptop-notebook-business-charts-1836990/',
- 'https://pixabay.com/photos/analysis-analytics-business-charts-1841158/',
- 'https://pixabay.com/photos/ecommerce-online-shopping-marketing-3563183/',
- 'https://pixabay.com/photos/online-shopping-ecommerce-4275963/',
- 'https://pixabay.com/photos/social-media-marketing-5971028/',
- 'https://pixabay.com/photos/mobile-phone-social-media-media-2563782/',
+ 'https://pixabay.com/photos/laptop-workspace-web-design-work-2443749/',
+ 'https://pixabay.com/photos/desk-work-business-office-finance-3139127/',
+ 'https://pixabay.com/photos/laptop-office-web-design-coding-8305452/',
+ 'https://pixabay.com/photos/desk-laptop-notebook-pen-workspace-593327/',
+ 'https://pixabay.com/photos/laptop-notebook-work-keyboard-2443052/',
+ 'https://pixabay.com/photos/office-internet-web-design-computer-4009348/',
+ 'https://pixabay.com/photos/web-design-notebook-computer-office-1419696/',
+ 'https://pixabay.com/photos/woman-laptop-coworking-entrepreneur-4780153/',
+ 'https://pixabay.com/photos/meeting-business-office-group-team-5395567/',
+ 'https://pixabay.com/photos/laptop-woman-business-woman-data-8474325/',
 ]
 
 def load(p:Path)->dict[str,Any]: return json.loads(p.read_text(encoding='utf-8'))
@@ -163,7 +164,7 @@ def make_video(frames:list[Path],v:Path|None,m:Path,out:Path,target:float=60)->N
         o=f'x{i}'; filters.append(f'[{cur}][v{i}]xfade=transition=fade:duration={tr}:offset={i*(dur-tr):.3f}[{o}]'); cur=o
     if vi is not None:filters += [f'[{vi}:a]volume=1.0,apad[voice]',f'[{mi}:a]volume=0.055[music]','[voice][music]amix=inputs=2:duration=first:dropout_transition=2[aout]']
     else:filters += [f'[{mi}:a]volume=0.07,apad[aout]']
-    cmd += ['-filter_complex',';'.join(filters),'-map',f'[{cur}]','-map','[aout]','-c:v','libx264','-crf','19','-preset','medium','-c:a','aac','-b:a','192k','-movflags','+faststart','-t',f'{target:.3f}',str(out)]
+    cmd += ['-filter_complex',';'.join(filters),'-map',f'[{cur}]','-map','[aout]','-c:v','libx264','-crf','20','-preset','veryfast','-c:a','aac','-b:a','192k','-movflags','+faststart','-t',f'{target:.3f}',str(out)]
     subprocess.run(cmd,check=True,stdout=subprocess.DEVNULL,stderr=subprocess.PIPE)
 
 def render_reel(job:dict[str,Any],c:dict[str,Any])->Path:
