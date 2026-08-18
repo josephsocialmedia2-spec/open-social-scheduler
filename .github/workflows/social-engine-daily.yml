@@ -1,4 +1,4 @@
-name: Open Social Engine Daily - Deluxe Premium
+name: Open Social Engine - 6 Every 4 Hours
 
 on:
   workflow_dispatch:
@@ -8,19 +8,21 @@ on:
         required: false
         type: string
   schedule:
-    # Run twice in UTC and gate on Europe/Rome local hour so 01:00 remains exact across DST.
-    - cron: '0 23 * * *'
-    - cron: '0 0 * * *'
+    # GitHub checks hourly; the Rome gate runs production only at 00,04,08,12,16,20.
+    # This preserves the exact 4-hour cadence across CET/CEST changes.
+    - cron: '0 * * * *'
   push:
     paths:
       - '.github/workflows/social-engine-daily.yml'
-      - 'publisher/build_daily_queue.py'
+      - 'publisher/build_cycle_queue.py'
+      - 'publisher/enrich_cycle.py'
       - 'publisher/research_signals.py'
       - 'publisher/enrich_queue.py'
       - 'publisher/render_reels.py'
-      - 'publisher/fast_render.py'
+      - 'publisher/render_fresh_visuals.py'
       - 'publisher/requirements.txt'
       - 'publisher/query_history.json'
+      - 'publisher/image_history.json'
       - 'publisher/clients/**'
       - 'publisher/content_bank/**'
       - 'publisher/approvals/**'
@@ -32,7 +34,7 @@ permissions:
   issues: write
 
 concurrency:
-  group: open-social-engine-daily
+  group: open-social-engine-4h
   cancel-in-progress: true
 
 jobs:
@@ -40,6 +42,8 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       run: ${{ steps.check.outputs.run }}
+      cycle_hour: ${{ steps.check.outputs.cycle_hour }}
+      rome_time: ${{ steps.check.outputs.rome_time }}
     steps:
       - id: check
         shell: bash
@@ -48,29 +52,37 @@ jobs:
           import os
           from datetime import datetime
           from zoneinfo import ZoneInfo
-          event = os.environ.get("GITHUB_EVENT_NAME", "")
-          if event != "schedule":
-              print("run=true")
+          now = datetime.now(ZoneInfo('Europe/Rome'))
+          event = os.environ.get('GITHUB_EVENT_NAME', '')
+          cycle_hours = (0, 4, 8, 12, 16, 20)
+          if event == 'schedule':
+              run = now.hour in cycle_hours
+              hour = now.hour if run else max(h for h in cycle_hours if h <= now.hour)
           else:
-              now = datetime.now(ZoneInfo("Europe/Rome"))
-              print("run=true" if now.hour == 1 else "run=false")
-              print(f"rome_time={now.isoformat()}")
+              run = True
+              hour = max(h for h in cycle_hours if h <= now.hour)
+          print(f"run={'true' if run else 'false'}")
+          print(f"cycle_hour={hour}")
+          print(f"rome_time={now.isoformat()}")
           PY
 
   build-render-prepare:
     needs: rome-gate
     if: needs.rome-gate.outputs.run == 'true'
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 70
     env:
       SOCIAL_DATE: ${{ inputs.date }}
-      SOCIAL_START_OFFSET_DAYS: '0'
+      SOCIAL_CYCLE_HOUR: ${{ needs.rome-gate.outputs.cycle_hour }}
+      SOCIAL_RESET_LEGACY: '1'
       PIPER_DATA_DIR: ${{ github.workspace }}/.cache/piper
       SOCIAL_PHOTO_CACHE: ${{ github.workspace }}/.cache/social-photos
 
     steps:
       - name: Checkout
         uses: actions/checkout@v5
+        with:
+          ref: main
 
       - name: Python 3.12
         uses: actions/setup-python@v6
@@ -79,101 +91,108 @@ jobs:
           cache: pip
           cache-dependency-path: publisher/requirements.txt
 
-      - name: Install deluxe renderer dependencies
+      - name: Install Deluxe production dependencies
+        shell: bash
         run: |
+          set -euxo pipefail
           sudo apt-get update
           sudo apt-get install -y ffmpeg fonts-dejavu-core zip
-          pip install -r publisher/requirements.txt
+          python -m pip install --disable-pip-version-check -r publisher/requirements.txt
 
-      - name: Cache voice and media
+      - name: Cache voice and discovered media
         uses: actions/cache@v4
         with:
           path: |
             .cache/piper
             .cache/social-photos
-          key: social-assets-v9-deluxe-direct-cdn-60s
+          key: social-assets-v10-fresh-pixabay-4h
 
       - name: Prepare Italian female fallback voice
+        shell: bash
         run: |
           mkdir -p "$PIPER_DATA_DIR" "$SOCIAL_PHOTO_CACHE"
           if [ ! -f "$PIPER_DATA_DIR/it_IT-paola-medium.onnx" ]; then
             python -m piper.download_voices it_IT-paola-medium --data-dir "$PIPER_DATA_DIR"
           fi
 
-      - name: Validate Python and tenant isolation
+      - name: Validate Python
         run: |
           python -m py_compile publisher/*.py
           python -m unittest discover -s publisher/tests -v
 
-      - name: Collect fresh Google query suggestions
+      - name: Collect fresh research queries
         run: python publisher/research_signals.py
 
-      - name: Build 10 candidates per brand
+      - name: Build exactly 6 contents for this 4-hour cycle
+        run: python publisher/build_cycle_queue.py
+
+      - name: Enrich only this cycle
+        run: python publisher/enrich_cycle.py
+
+      - name: Render with fresh non-repeating Pixabay photography
+        run: python publisher/render_fresh_visuals.py
+
+      - name: Reconcile generated media state without rebuilding content
+        run: python publisher/build_cycle_queue.py --reconcile-only
+
+      - name: Verify exact cycle composition and media
         shell: bash
         run: |
-          if [ -n "${SOCIAL_DATE:-}" ]; then
-            python publisher/build_daily_queue.py --date "$SOCIAL_DATE"
-          else
-            python publisher/build_daily_queue.py
-          fi
+          set -euxo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          q=json.load(open('publisher/queue.json',encoding='utf-8'))
+          key=q.get('current_cycle')
+          jobs=[j for j in q.get('jobs',[]) if j.get('cycle_key')==key]
+          assert len(jobs)==6, len(jobs)
+          assert sum(j.get('format')=='reel' for j in jobs)==4
+          assert sum(j.get('format')=='carousel' for j in jobs)==2
+          assert all(len(j.get('visual_asset_urls') or [])==10 for j in jobs)
+          for j in jobs:
+              media=j.get('media')
+              paths=media if isinstance(media,list) else [media]
+              for rel in paths:
+                  p=Path(rel)
+                  assert p.exists() and p.stat().st_size>0, rel
+          print('VERIFIED: 6 contents, 4 Reel, 2 carousels, 10 unique visuals each')
+          PY
 
-      - name: Create deluxe captions voiceovers and 10-visual plans
-        run: python publisher/enrich_queue.py
-
-      - name: Render 60-second Reels and 10-slide carousels using direct CDN media
-        run: python publisher/fast_render.py
-
-      - name: Reconcile generated media state
-        shell: bash
-        run: |
-          if [ -n "${SOCIAL_DATE:-}" ]; then
-            python publisher/build_daily_queue.py --date "$SOCIAL_DATE"
-          else
-            python publisher/build_daily_queue.py
-          fi
-          python publisher/enrich_queue.py
-
-      - name: Upload final daily package
+      - name: Upload current-cycle package
         uses: actions/upload-artifact@v4
         with:
-          name: social-deluxe-${{ github.run_id }}
+          name: social-deluxe-cycle-${{ github.run_id }}
           path: publisher/media/generated
           if-no-files-found: error
           retention-days: 7
 
-      - name: Persist queue and query history safely
+      - name: Persist queue, query history and visual memory
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          for FILE in publisher/queue.json publisher/query_history.json publisher/research/latest.json; do
+          set -euo pipefail
+          for FILE in publisher/queue.json publisher/query_history.json publisher/research/latest.json publisher/image_history.json; do
             [ -f "$FILE" ] || continue
-            if git diff --quiet -- "$FILE"; then
-              echo "$FILE unchanged."
-              continue
-            fi
             SHA=$(gh api "repos/${GITHUB_REPOSITORY}/contents/${FILE}?ref=main" --jq '.sha' 2>/dev/null || true)
             python - "$FILE" "$SHA" <<'PY'
           import base64, json, sys
           file, sha = sys.argv[1], sys.argv[2]
-          with open(file, 'rb') as fh:
-              content = base64.b64encode(fh.read()).decode('ascii')
-          payload = {'message': f'Persist deluxe social state: {file}', 'content': content, 'branch': 'main'}
+          content = base64.b64encode(open(file,'rb').read()).decode('ascii')
+          payload = {'message': f'Persist 4-hour Deluxe state: {file}', 'content': content, 'branch': 'main'}
           if sha:
               payload['sha'] = sha
-          with open('/tmp/payload.json', 'w', encoding='utf-8') as fh:
-              json.dump(payload, fh)
+          json.dump(payload, open('/tmp/payload.json','w',encoding='utf-8'))
           PY
             gh api "repos/${GITHUB_REPOSITORY}/contents/${FILE}" --method PUT --input /tmp/payload.json >/dev/null
           done
 
-      - name: Publish latest downloadable media
+      - name: Replace latest release with this cycle
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          test -d publisher/media/generated
-          test -n "$(find publisher/media/generated -type f -print -quit)"
+          set -euxo pipefail
           rm -rf /tmp/social-release
           mkdir -p /tmp/social-release
           while IFS= read -r -d '' file; do
@@ -183,49 +202,38 @@ jobs:
           done < <(find publisher/media/generated -type f -print0)
           for client in f1-immobiliare real-media-pro; do
             if [ -d "publisher/media/generated/$client" ]; then
-              (cd "publisher/media/generated/$client" && zip -qr "/tmp/social-release/${client}__SETTIMANA_COMPLETA.zip" .)
+              (cd "publisher/media/generated/$client" && zip -qr "/tmp/social-release/${client}__CICLO_CORRENTE.zip" .)
             fi
           done
           cp publisher/queue.json /tmp/social-release/queue.json
-          cp publisher/query_history.json /tmp/social-release/query_history.json
-          [ -f publisher/research/latest.json ] && cp publisher/research/latest.json /tmp/social-release/research-latest.json
+          cp publisher/image_history.json /tmp/social-release/image_history.json
           gh release delete social-preview-latest --yes --cleanup-tag >/dev/null 2>&1 || true
           gh release create social-preview-latest /tmp/social-release/* \
-            --title "Contenuti Deluxe Premium - F1 Immobiliare + Real Media Pro" \
-            --notes "Produzione giornaliera: 10 contenuti F1 + 10 contenuti Real Media Pro, 5 Reel e 5 caroselli per brand. Reel 60 secondi, 10 visual, voce femminile naturale, niente sottotitoli. Workflow ${GITHUB_RUN_ID}."
+            --title "6 Contenuti Deluxe - ciclo ${{ needs.rome-gate.outputs.cycle_hour }}:00" \
+            --notes "Ciclo ogni 4 ore: 6 contenuti totali = 4 Reel + 2 caroselli. F1: 2 Reel + 1 carosello. Real Media Pro: 2 Reel + 1 carosello. Ogni asset usa 10 visual Pixabay unici con controllo anti-ripetizione. Run ${GITHUB_RUN_ID}."
 
-      - name: Notify final results
+      - name: Notify final results only
         uses: actions/github-script@v8
         with:
           script: |
-            const title = '[CONTENUTI DELUXE] - risultati';
-            const issues = await github.paginate(github.rest.issues.listForRepo, {
-              owner: context.repo.owner, repo: context.repo.repo, state: 'all', per_page: 100
-            });
-            let issue = issues.find(i => i.title === title);
-            const body = [
-              '@josephsocialmedia2-spec produzione Deluxe completata.',
+            const title='[CONTENUTI 4H] - risultati';
+            const body=[
+              '@josephsocialmedia2-spec ciclo Deluxe completato.',
               '',
-              '**F1 Immobiliare:** 10 contenuti finali (5 Reel + 5 caroselli).',
-              '**Real Media Pro:** 10 contenuti finali (5 Reel + 5 caroselli).',
+              '**6 contenuti pronti:** 4 Reel + 2 caroselli.',
+              '**F1 Immobiliare:** 2 Reel + 1 carosello.',
+              '**Real Media Pro:** 2 Reel + 1 carosello.',
+              '**Visual:** 10 immagini uniche per contenuto, con memoria anti-ripetizione.',
               '',
-              'Controlla e scarica: https://josephsocialmedia2-spec.github.io/open-social-scheduler/monday-control.html',
+              'Download: https://github.com/josephsocialmedia2-spec/open-social-scheduler/releases/tag/social-preview-latest',
+              'Controllo: https://josephsocialmedia2-spec.github.io/open-social-scheduler/monday-control.html',
               'Run: https://github.com/' + context.repo.owner + '/' + context.repo.repo + '/actions/runs/' + context.runId
             ].join('\n');
-            if (!issue) {
-              issue = (await github.rest.issues.create({
-                owner: context.repo.owner, repo: context.repo.repo, title, body,
-                assignees: ['josephsocialmedia2-spec']
-              })).data;
-            } else {
-              if (issue.state !== 'open') {
-                await github.rest.issues.update({
-                  owner: context.repo.owner, repo: context.repo.repo,
-                  issue_number: issue.number, state: 'open'
-                });
-              }
-              await github.rest.issues.createComment({
-                owner: context.repo.owner, repo: context.repo.repo,
-                issue_number: issue.number, body
-              });
+            const issues=await github.paginate(github.rest.issues.listForRepo,{owner:context.repo.owner,repo:context.repo.repo,state:'all',per_page:100});
+            let issue=issues.find(i=>i.title===title);
+            if(!issue){
+              issue=(await github.rest.issues.create({owner:context.repo.owner,repo:context.repo.repo,title,body,assignees:['josephsocialmedia2-spec']})).data;
+            }else{
+              if(issue.state!=='open') await github.rest.issues.update({owner:context.repo.owner,repo:context.repo.repo,issue_number:issue.number,state:'open'});
+              await github.rest.issues.createComment({owner:context.repo.owner,repo:context.repo.repo,issue_number:issue.number,body});
             }
