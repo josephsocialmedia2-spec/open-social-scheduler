@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "updated_at": null,
+  "policy": {
+    "archive_only_validated": true,
+    "use_for_future_generation": true,
+    "keep_query_history": true,
+    "remember_visual_sources": true
+  },
+  "approved": {
+    "f1-immobiliare": [],
+    "real-media-pro": []
+  }
+}
