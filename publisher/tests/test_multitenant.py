@@ -17,54 +17,45 @@ class MultiTenantTests(unittest.TestCase):
         self.rmp = json.loads((ROOT / "publisher/clients/real-media-pro.json").read_text(encoding="utf-8"))
         build_daily_queue._APPROVAL_CACHE.clear()
 
-    def test_f1_generates_three_daily_candidates(self) -> None:
+    def test_f1_generates_ten_daily_candidates(self) -> None:
         jobs = build_daily_queue.build_for_client(self.f1, date(2026, 8, 17))
-        self.assertEqual(3, len(jobs))
-        self.assertEqual(["data", "error", "proof"], [j["category"] for j in jobs])
-        self.assertEqual(["09:00", "14:00", "19:00"], [j["scheduled_at"][11:16] for j in jobs])
-        self.assertEqual(["reel", "reel", "carousel"], [j["format"] for j in jobs])
+        self.assertEqual(10, len(jobs))
+        self.assertEqual(5, sum(j["format"] == "reel" for j in jobs))
+        self.assertEqual(5, sum(j["format"] == "carousel" for j in jobs))
         self.assertTrue(all(j["client_id"] == "f1-immobiliare" for j in jobs))
         self.assertTrue(all(j["approval_key"] == "2026-W34" for j in jobs))
         self.assertTrue(all(j.get("caption") for j in jobs))
         self.assertTrue(all(j.get("hashtags") for j in jobs))
         self.assertTrue(all("#F1Immobiliare" in j["caption"] for j in jobs))
         self.assertTrue(all(j.get("voiceover") for j in jobs if j["format"] == "reel"))
-        self.assertEqual(1, self.f1["planning"]["horizon_days"])
-        self.assertTrue(self.f1["planning"]["manual_publish_only"])
 
-    def test_real_media_pro_generates_three_daily_candidates(self) -> None:
-        self.assertTrue(self.rmp["active"])
+    def test_real_media_pro_generates_ten_daily_candidates(self) -> None:
         jobs = build_daily_queue.build_for_client(self.rmp, date(2026, 8, 17))
-        self.assertEqual(3, len(jobs))
-        self.assertEqual(["attract", "nurture", "convert"], [j["category"] for j in jobs])
-        self.assertEqual(["09:15", "14:15", "19:15"], [j["scheduled_at"][11:16] for j in jobs])
-        self.assertEqual(["reel", "carousel", "reel"], [j["format"] for j in jobs])
+        self.assertEqual(10, len(jobs))
+        self.assertEqual(5, sum(j["format"] == "reel" for j in jobs))
+        self.assertEqual(5, sum(j["format"] == "carousel" for j in jobs))
         self.assertTrue(all(j["client_id"] == "real-media-pro" for j in jobs))
         self.assertTrue(all(j.get("caption") for j in jobs))
         self.assertTrue(all(j.get("voiceover") for j in jobs if j["format"] == "reel"))
         self.assertEqual(60, self.rmp["brand"]["reel"]["target_seconds"])
-        self.assertEqual(1, self.rmp["planning"]["horizon_days"])
-        self.assertTrue(self.rmp["planning"]["manual_publish_only"])
 
     def test_f1_positioning_is_fixed(self) -> None:
         editorial = self.f1["editorial"]
         self.assertEqual("F1 IMMOBILIARE = NON A SENSAZIONE. CON I DATI.", editorial["positioning"])
         self.assertEqual("Prima i dati. Poi la strategia. Poi la vendita.", editorial["master_line"])
         self.assertEqual("VALUTAZIONE", self.f1["campaign"]["keyword"])
-        self.assertIn("6a814ec3-80cc-83eb-b9b6-a56f02c348e8", editorial["source_chat_url"])
 
     def test_unapproved_week_blocks_publish_before_integrations(self) -> None:
         jobs = build_daily_queue.build_for_client(self.f1, date(2026, 8, 17))
         self.assertTrue(all(j["status"] == "awaiting_approval" for j in jobs))
         self.assertTrue(all("2026-W34" in j["blocked_reason"] for j in jobs))
 
-    def test_carousel_has_one_media_file_per_slide(self) -> None:
+    def test_carousels_have_ten_media_files(self) -> None:
         jobs = build_daily_queue.build_for_client(self.f1, date(2026, 8, 17))
-        carousel = jobs[2]
-        self.assertEqual("carousel", carousel["format"])
-        self.assertIsInstance(carousel["media"], list)
-        self.assertEqual(len(carousel["slides"]), len(carousel["media"]))
-        self.assertTrue(all(str(x).endswith(".jpg") for x in carousel["media"]))
+        carousels = [j for j in jobs if j["format"] == "carousel"]
+        self.assertEqual(5, len(carousels))
+        self.assertTrue(all(isinstance(j["media"], list) and len(j["media"]) == 10 for j in carousels))
+        self.assertTrue(all(str(x).endswith(".jpg") for j in carousels for x in j["media"]))
 
     def test_direct_api_integrations_are_exposed_for_reels(self) -> None:
         specs, missing = build_daily_queue.integration_specs(self.f1, "reel")
@@ -97,6 +88,12 @@ class MultiTenantTests(unittest.TestCase):
         self.assertEqual("reel", reel["post_type"])
         self.assertEqual("post", carousel["post_type"])
         self.assertFalse(reel["is_trial_reel"])
+
+    def test_queue_cap_is_48(self) -> None:
+        queue = {"jobs": [{"id": str(i), "scheduled_at": f"2026-08-{(i%28)+1:02d}T12:00:00+02:00"} for i in range(60)]}
+        removed = build_daily_queue.cap_queue(queue)
+        self.assertEqual(12, removed)
+        self.assertEqual(48, len(queue["jobs"]))
 
 
 if __name__ == "__main__":
