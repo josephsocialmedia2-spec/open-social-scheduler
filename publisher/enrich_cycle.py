@@ -38,9 +38,9 @@ def main() -> int:
     try:
         rc = enrich.main()
         enriched = load()
-    finally:
-        # Merge the enriched jobs back into the untouched full queue.
-        pass
+    except Exception:
+        save(full)
+        raise
 
     by_id = {str(j.get("id")): j for j in enriched.get("jobs", [])}
     merged = []
