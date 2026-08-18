@@ -1,0 +1,3 @@
+FORCE DELUXE REGENERATION
+Requested: 2026-08-18
+Reason: replace legacy queue/media with current Deluxe Premium pipeline.
