@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "source": "F1IMMOBILIARESOCIAL.zip",
+  "policy": "Use only PNG and MP4 files from the supplied archive as style/video references. PDF and XLSX files are ignored.",
+  "brands": {
+    "f1-immobiliare": {
+      "folder": "F1",
+      "png_models": [
+        "ChatGPT Image 16 ago 2026, 21_56_18.png",
+        "ChatGPT Image 16 ago 2026, 22_02_55.png",
+        "ChatGPT Image 17 ago 2026, 11_36_49 (1).png",
+        "ChatGPT Image 17 ago 2026, 11_36_50 (2).png",
+        "Progetto senza titolo (1).png"
+      ],
+      "mp4_models": [
+        "REEL F1 IMMOBILIAE.mp4"
+      ],
+      "derived_style": {
+        "palette": ["#000000", "#FFFFFF", "#92C205"],
+        "layout": "vertical premium, strong white/black/neon-green hierarchy",
+        "headline": "large condensed uppercase hook, very high contrast",
+        "background": "realistic residential property photography",
+        "presenter": "Joseph or Francesca integrated in the lower/right area without covering the property",
+        "logo": "F1 Immobiliare at the top",
+        "cta": "large WhatsApp/phone strip at the bottom",
+        "avoid": ["walls of text", "subtitles", "generic repeated stock set", "fake ecommerce graphics"]
+      }
+    },
+    "real-media-pro": {
+      "folder": "REAL",
+      "png_models": [
+        "1.png",
+        "2.png",
+        "3.png",
+        "4.png",
+        "ChatGPT Image 17 ago 2026, 11_36_50 (3).png",
+        "ChatGPT Image 17 ago 2026, 11_36_50 (4).png"
+      ],
+      "mp4_models": [
+        "download (1).mp4",
+        "REEL F1 IMMOBILIAE.mp4"
+      ],
+      "derived_style": {
+        "palette": ["#050505", "#FFFFFF", "#70A92F", "#92C205"],
+        "layout": "vertical premium business creative with strong headline hierarchy",
+        "headline": "large condensed uppercase text, selected words in green",
+        "background": "realistic websites, ecommerce, laptop, smartphone, digital-business photography",
+        "presenter": "professional portrait integrated in lower/right area when used",
+        "brand": "REAL MEDIA PRO clearly visible",
+        "cta": "WhatsApp/phone strip at the bottom",
+        "avoid": ["legacy fake Shopify mockups", "same ten photos on every Reel", "busy unreadable layouts", "F1 branding"]
+      }
+    }
+  }
+}
