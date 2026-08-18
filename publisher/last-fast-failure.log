@@ -1,0 +1,36 @@
+RUN_ID=32119595216
+==== FAILED LOGS ====
+build-two-now	Render the two priority Reels with resilient image loading	﻿2026-08-18T09:04:21.7104124Z ##[group]Run python publisher/fast_render.py
+build-two-now	Render the two priority Reels with resilient image loading	2026-08-18T09:04:21.7104510Z ^[[36;1mpython publisher/fast_render.py^[[0m
+build-two-now	Render the two priority Reels with resilient image loading	2026-08-18T09:04:21.7140918Z shell: /usr/bin/bash -e {0}
+build-two-now	Render the two priority Reels with resilient image loading	2026-08-18T09:04:21.7141202Z env:
+build-two-now	Render the two priority Reels with resilient image loading	2026-08-18T09:04:21.7141481Z   SOCIAL_DATE: 2026-08-18
+build-two-now	Render the two priority Reels with resilient image loading	2026-08-18T09:04:21.7142109Z   PIPER_DATA_DIR: /home/runner/work/open-social-scheduler/open-social-scheduler/.cache/piper
+build-two-now	Render the two priority Reels with resilient image loading	2026-08-18T09:04:21.7143454Z   SOCIAL_PHOTO_CACHE: /home/runner/work/open-social-scheduler/open-social-scheduler/.cache/social-photos
+build-two-now	Render the two priority Reels with resilient image loading	2026-08-18T09:04:21.7144192Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.13/x64
+build-two-now	Render the two priority Reels with resilient image loading	2026-08-18T09:04:21.7144808Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.13/x64/lib/pkgconfig
+build-two-now	Render the two priority Reels with resilient image loading	2026-08-18T09:04:21.7145342Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.13/x64
+build-two-now	Render the two priority Reels with resilient image loading	2026-08-18T09:04:21.7145902Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.13/x64
+build-two-now	Render the two priority Reels with resilient image loading	2026-08-18T09:04:21.7146409Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.13/x64
+build-two-now	Render the two priority Reels with resilient image loading	2026-08-18T09:04:21.7157321Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.13/x64/lib
+build-two-now	Render the two priority Reels with resilient image loading	2026-08-18T09:04:21.7157961Z ##[endgroup]
+build-two-now	Render the two priority Reels with resilient image loading	2026-08-18T09:09:39.5180939Z Traceback (most recent call last):
+build-two-now	Render the two priority Reels with resilient image loading	2026-08-18T09:09:39.5191563Z   File "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/fast_render.py", line 90, in <module>
+build-two-now	Render the two priority Reels with resilient image loading	2026-08-18T09:09:39.5192912Z     raise SystemExit(rr.main())
+build-two-now	Render the two priority Reels with resilient image loading	2026-08-18T09:09:39.5193352Z                      ^^^^^^^^^
+build-two-now	Render the two priority Reels with resilient image loading	2026-08-18T09:09:39.5193966Z   File "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/render_reels.py", line 199, in main
+build-two-now	Render the two priority Reels with resilient image loading	2026-08-18T09:09:39.5194907Z     k=counts.get(cid,0); job['_presenter']=('joseph' if k%2==0 else 'francesca') if cid=='f1-immobiliare' else ''; counts[cid]=k+1; render_reel(job,c)
+build-two-now	Render the two priority Reels with resilient image loading	2026-08-18T09:09:39.5195649Z                                                                                                                                     ^^^^^^^^^^^^^^^^^^
+build-two-now	Render the two priority Reels with resilient image loading	2026-08-18T09:09:39.5196399Z   File "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/render_reels.py", line 175, in render_reel
+build-two-now	Render the two priority Reels with resilient image loading	2026-08-18T09:09:39.5197242Z     p=t/f'f{i:02d}.jpg'; frame(c,src[(i+seed)%10],w,h,'reel',who=who).save(p,'JPEG',quality=94,optimize=True); frames.append(p)
+build-two-now	Render the two priority Reels with resilient image loading	2026-08-18T09:09:39.5197783Z                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+build-two-now	Render the two priority Reels with resilient image loading	2026-08-18T09:09:39.5198404Z   File "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/render_reels.py", line 124, in frame
+build-two-now	Render the two priority Reels with resilient image loading	2026-08-18T09:09:39.5199586Z     im=fit(url,w,h); ov=Image.new('RGBA',im.size,(0,0,0,0)); od=ImageDraw.Draw(ov); od.rectangle((0,0,w,int(h*.17)),fill=(0,0,0,22)); od.rectangle((0,int(h*.83),w,h),fill=(0,0,0,32)); base=im.convert('RGBA'); base.alpha_composite(ov); im=base.convert('RGB')
+build-two-now	Render the two priority Reels with resilient image loading	2026-08-18T09:09:39.5200455Z        ^^^^^^^^^^^^
+build-two-now	Render the two priority Reels with resilient image loading	2026-08-18T09:09:39.5200956Z   File "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/render_reels.py", line 61, in fit
+build-two-now	Render the two priority Reels with resilient image loading	2026-08-18T09:09:39.5201748Z     return ImageOps.fit(get_image(url),(w,h),method=Image.Resampling.LANCZOS,centering=(.5,.5)).convert('RGB')
+build-two-now	Render the two priority Reels with resilient image loading	2026-08-18T09:09:39.5202254Z                         ^^^^^^^^^^^^^^
+build-two-now	Render the two priority Reels with resilient image loading	2026-08-18T09:09:39.5203195Z   File "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/fast_render.py", line 63, in resilient_get_image
+build-two-now	Render the two priority Reels with resilient image loading	2026-08-18T09:09:39.5203999Z     raise RuntimeError("No usable premium image source. " + " | ".join(errors[-4:]))
+build-two-now	Render the two priority Reels with resilient image loading	2026-08-18T09:09:39.5209072Z RuntimeError: No usable premium image source. https://pixabay.com/photos/living-room-interior-design-modern-8572596/: Pixabay resolution failed after retries: https://pixabay.com/photos/living-room-interior-design-modern-8572596/: 403 Client Error: Forbidden for url: https://pixabay.com/photos/living-room-interior-design-modern-8572596/ | https://pixabay.com/photos/kitchen-interior-modern-real-estate-8260437/: Pixabay resolution failed after retries: https://pixabay.com/photos/kitchen-interior-modern-real-estate-8260437/: 403 Client Error: Forbidden for url: https://pixabay.com/photos/kitchen-interior-modern-real-estate-8260437/ | https://pixabay.com/photos/bedroom-real-estate-interior-modern-8260423/: Pixabay resolution failed after retries: https://pixabay.com/photos/bedroom-real-estate-interior-modern-8260423/: 403 Client Error: Forbidden for url: https://pixabay.com/photos/bedroom-real-estate-interior-modern-8260423/ | https://pixabay.com/photos/bathroom-interior-design-modern-8556101/: Pixabay resolution failed after retries: https://pixabay.com/photos/bathroom-interior-design-modern-8556101/: 403 Client Error: Forbidden for url: https://pixabay.com/photos/bathroom-interior-design-modern-8556101/
+build-two-now	Render the two priority Reels with resilient image loading	2026-08-18T09:09:39.5541324Z ##[error]Process completed with exit code 1.
