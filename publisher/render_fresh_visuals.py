@@ -1,10 +1,14 @@
 #!/usr/bin/env python3
-"""Render the current 4-hour cycle with fresh, non-repeating Pixabay photography.
+"""Render the active 4-hour cycle with varied Pixabay photography.
 
-Unlike the legacy renderer, this module does NOT rotate the same ten URLs. For each
-job it discovers fresh Pixabay CDN assets through web image search, rejects photos
-already used in the repository history, validates downloads, records the exact
-asset URLs in the queue, and only then renders the final media.
+Policy:
+- every single Reel/carousel must contain 10 different source images;
+- prefer images never used recently for that brand;
+- never go back to a fixed 10-image rotation;
+- if search supply is temporarily limited, allow controlled reuse across DIFFERENT
+  contents rather than failing the whole production, while still keeping the 10
+  frames inside each content unique;
+- persist exact URLs and freshness statistics in GitHub memory.
 """
 from __future__ import annotations
 
@@ -26,11 +30,14 @@ import render_reels as rr
 ROOT = Path(__file__).resolve().parents[1]
 QUEUE = ROOT / "publisher" / "queue.json"
 HISTORY = ROOT / "publisher" / "image_history.json"
-MAX_HISTORY_PER_BRAND = 320
-USED_THIS_RUN: set[str] = set()
+MAX_HISTORY_PER_BRAND = 500
+SESSION_USED: dict[str, set[str]] = {
+    "f1-immobiliare": set(),
+    "real-media-pro": set(),
+}
 
-# Emergency-only licensed Pixabay CDN fallback. It is used only if dynamic search
-# cannot supply enough fresh assets. Dynamic discovery is always attempted first.
+# Known-good direct Pixabay assets. They are ONLY a safety net after dynamic
+# discovery. They are not used as the normal repeating visual set.
 FALLBACK = {
     "f1-immobiliare": [
         "https://cdn.pixabay.com/photo/2025/08/29/17/52/modern-villa-exterior-9804538_1280.jpg",
@@ -66,27 +73,27 @@ def load(path: Path, default: dict) -> dict:
 
 
 def save(path: Path, data: dict) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
 def photo_key(url: str) -> str:
-    """Collapse 640/1280 variants of the same Pixabay photo into one history key."""
-    path = url.split("?", 1)[0]
-    path = re.sub(r"_(?:340|640|960|1280|1920)\.(jpg|jpeg|png|webp)$", r".\1", path, flags=re.I)
-    return path
+    path = str(url).split("?", 1)[0]
+    return re.sub(
+        r"_(?:340|640|960|1280|1920)\.(jpg|jpeg|png|webp)$",
+        r".\1",
+        path,
+        flags=re.I,
+    )
 
 
-def valid_pixabay_candidate(item: dict[str, Any]) -> str | None:
+def candidate_url(item: dict[str, Any]) -> str | None:
     image = str(item.get("image") or item.get("thumbnail") or "").strip()
-    page = str(item.get("url") or item.get("source") or "").strip()
     if not image:
         return None
     if "cdn.pixabay.com/" in image:
         return image
     if "pixabay.com/" in image and "/get/" in image:
-        return image
-    # Some search engines proxy thumbnails. Never use those as final assets.
-    if "pixabay.com" in page and "cdn.pixabay.com" in image:
         return image
     return None
 
@@ -94,49 +101,72 @@ def valid_pixabay_candidate(item: dict[str, Any]) -> str | None:
 def search_queries(job: dict[str, Any]) -> list[str]:
     cid = str(job.get("client_id") or "")
     title = re.sub(r"[^A-Za-zÀ-ÿ0-9 ]+", " ", str(job.get("title") or "")).strip()
+    territory = re.sub(r"[^A-Za-zÀ-ÿ0-9 ]+", " ", str(job.get("territory") or "")).strip()
     visuals = [str(x).strip() for x in job.get("visuals", []) if str(x).strip()]
+
     if cid == "f1-immobiliare":
-        core = "real estate residential house home interior exterior architecture"
         anchors = [
-            "modern house exterior real estate",
-            "luxury living room apartment interior",
-            "modern kitchen bedroom bathroom home",
+            "modern house exterior residential architecture",
+            "apartment living room bright interior",
+            "modern kitchen residential interior",
+            "bedroom apartment interior",
+            "bathroom modern home interior",
+            "villa garden residential exterior",
+            "balcony terrace apartment home",
         ]
     else:
-        core = "digital business ecommerce marketing laptop smartphone online shop"
         anchors = [
-            "ecommerce laptop online shopping business",
-            "digital marketing workspace analytics smartphone",
-            "website online store entrepreneur office",
+            "entrepreneur laptop modern office",
+            "ecommerce online shop laptop smartphone",
+            "digital marketing analytics workspace",
+            "website design laptop business",
+            "online shopping checkout smartphone",
+            "business team digital office",
+            "small business owner laptop",
         ]
-    queries = [f"{title} {core} site:pixabay.com"] if title else []
-    for anchor in anchors:
-        queries.append(f"{anchor} site:pixabay.com")
-    for visual in visuals[:3]:
-        queries.append(f"{visual} site:pixabay.com")
-    return queries
+
+    queries: list[str] = []
+    if title:
+        queries.append(f"{title} pixabay")
+    if territory and cid == "f1-immobiliare":
+        queries.append(f"residential home architecture {territory} pixabay")
+    for visual in visuals:
+        queries.append(f"{visual} pixabay")
+    queries.extend(f"{x} pixabay" for x in anchors)
+
+    out: list[str] = []
+    seen: set[str] = set()
+    for q in queries:
+        key = q.lower().strip()
+        if key and key not in seen:
+            out.append(q)
+            seen.add(key)
+    return out[:15]
 
 
-def discover(job: dict[str, Any], recent: set[str], need: int = 10) -> list[str]:
+def discover(job: dict[str, Any], max_urls: int = 90) -> list[str]:
     found: list[str] = []
     seen: set[str] = set()
     for query in search_queries(job):
-        try:
-            with DDGS() as ddgs:
-                rows = list(ddgs.images(query, max_results=45) or [])
-        except Exception as exc:
-            print(f"WARN image search failed: {query}: {exc}")
-            continue
+        rows: list[dict[str, Any]] = []
+        for attempt in range(2):
+            try:
+                with DDGS() as ddgs:
+                    rows = list(ddgs.images(query, max_results=70) or [])
+                break
+            except Exception as exc:
+                print(f"WARN image search attempt {attempt + 1} failed: {query}: {exc}")
+                time.sleep(1.5 + attempt)
         for row in rows:
-            url = valid_pixabay_candidate(row)
+            url = candidate_url(row)
             if not url:
                 continue
             key = photo_key(url)
-            if key in seen or key in USED_THIS_RUN or key in recent:
+            if key in seen:
                 continue
             seen.add(key)
             found.append(url)
-            if len(found) >= need:
+            if len(found) >= max_urls:
                 return found
     return found
 
@@ -146,15 +176,16 @@ def direct_get_image(url: str) -> Image.Image:
     cache = rr.CACHE / (hashlib.sha256(url.encode()).hexdigest() + ".jpg")
     if cache.exists() and cache.stat().st_size > 12000:
         return Image.open(cache).convert("RGB")
-    last: Exception | None = None
+
     headers = {
         "User-Agent": "Mozilla/5.0 Open-Social-Scheduler/FreshVisuals",
         "Accept": "image/avif,image/webp,image/apng,image/*,*/*;q=0.8",
         "Referer": "https://pixabay.com/",
     }
+    last: Exception | None = None
     for attempt in range(4):
         try:
-            response = requests.get(url, headers=headers, timeout=40)
+            response = requests.get(url, headers=headers, timeout=35)
             response.raise_for_status()
             image = Image.open(BytesIO(response.content)).convert("RGB")
             if image.width < 500 or image.height < 500:
@@ -167,44 +198,63 @@ def direct_get_image(url: str) -> Image.Image:
     raise RuntimeError(f"image download failed: {url}: {last}")
 
 
-def usable_urls(job: dict[str, Any], recent: set[str]) -> list[str]:
-    urls = discover(job, recent, need=18)
-    out: list[str] = []
-    for url in urls:
-        try:
-            direct_get_image(url)
-        except Exception as exc:
-            print(f"WARN rejecting image {url}: {exc}")
-            continue
-        key = photo_key(url)
-        if key in USED_THIS_RUN or key in recent:
-            continue
-        out.append(url)
-        USED_THIS_RUN.add(key)
-        if len(out) == 10:
-            return out
-
-    # Emergency fallback only; prefer unused fallback URLs.
+def choose_urls(job: dict[str, Any], recent: set[str]) -> tuple[list[str], int]:
+    """Return 10 unique images for this content and number that are fully fresh."""
     cid = str(job.get("client_id") or "")
-    for url in FALLBACK.get(cid, []):
-        key = photo_key(url)
-        if key in USED_THIS_RUN:
-            continue
-        try:
-            direct_get_image(url)
-        except Exception:
-            continue
-        out.append(url)
-        USED_THIS_RUN.add(key)
-        if len(out) == 10:
-            return out
+    session = SESSION_USED.setdefault(cid, set())
+    discovered = discover(job)
 
-    # A job must never silently render 10 duplicated frames.
-    if len(out) < 10:
+    fresh_candidates: list[str] = []
+    reuse_candidates: list[str] = []
+    seen: set[str] = set()
+    for url in discovered + FALLBACK.get(cid, []):
+        key = photo_key(url)
+        if key in seen:
+            continue
+        seen.add(key)
+        if key not in recent and key not in session:
+            fresh_candidates.append(url)
+        else:
+            reuse_candidates.append(url)
+
+    selected: list[str] = []
+    selected_keys: set[str] = set()
+    fresh_count = 0
+
+    def consume(rows: list[str], mark_fresh: bool) -> None:
+        nonlocal fresh_count
+        for url in rows:
+            if len(selected) >= 10:
+                return
+            key = photo_key(url)
+            if key in selected_keys:
+                continue
+            try:
+                direct_get_image(url)
+            except Exception as exc:
+                print(f"WARN rejecting image {url}: {exc}")
+                continue
+            selected.append(url)
+            selected_keys.add(key)
+            if mark_fresh:
+                fresh_count += 1
+
+    # Strong preference: new images not seen in recent history and not already
+    # used by another content in this cycle.
+    consume(fresh_candidates, True)
+
+    # Reliability fallback: controlled reuse across different contents is allowed
+    # only if necessary. Inside this content the ten frames remain all different.
+    if len(selected) < 10:
+        consume(reuse_candidates, False)
+
+    if len(selected) < 10:
         raise RuntimeError(
-            f"Fresh visual policy blocked {job.get('id')}: only {len(out)} unique usable Pixabay images found"
+            f"Visual source shortage for {job.get('id')}: only {len(selected)} unique usable Pixabay images found"
         )
-    return out
+
+    session.update(selected_keys)
+    return selected[:10], fresh_count
 
 
 def render_reel(job: dict[str, Any], c: dict[str, Any], urls: list[str], presenter_name: str | None) -> Path:
@@ -212,14 +262,16 @@ def render_reel(job: dict[str, Any], c: dict[str, Any], urls: list[str], present
     out.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(prefix="oss-fresh-") as td:
         t = Path(td)
-        v = rr.voice(job, t)
-        m = rr.music(t / "music.wav")
+        voice = rr.voice(job, t)
+        music = rr.music(t / "music.wav")
         frames: list[Path] = []
         for i, url in enumerate(urls[:10]):
             p = t / f"f{i:02d}.jpg"
-            rr.frame(c, url, 1080, 1920, "reel", who=presenter_name).save(p, "JPEG", quality=94, optimize=True)
+            rr.frame(c, url, 1080, 1920, "reel", who=presenter_name).save(
+                p, "JPEG", quality=94, optimize=True
+            )
             frames.append(p)
-        rr.make_video(frames, v, m, out, 60)
+        rr.make_video(frames, voice, music, out, 60)
     return out
 
 
@@ -229,10 +281,12 @@ def render_carousel(job: dict[str, Any], c: dict[str, Any], urls: list[str]) -> 
     if len(media) != 10:
         raise RuntimeError(f"Carousel {job.get('id')} must have exactly 10 media paths")
     outs: list[Path] = []
-    for i, (title, rel, url) in enumerate(zip(slides, media, urls[:10])):
+    for title, rel, url in zip(slides, media, urls[:10]):
         out = ROOT / str(rel)
         out.parent.mkdir(parents=True, exist_ok=True)
-        rr.frame(c, url, 1080, 1350, "carousel", title=title).save(out, "JPEG", quality=94, optimize=True)
+        rr.frame(c, url, 1080, 1350, "carousel", title=title).save(
+            out, "JPEG", quality=94, optimize=True
+        )
         outs.append(out)
     return outs
 
@@ -252,38 +306,58 @@ def main() -> int:
         print("No current-cycle jobs to render")
         return 0
 
-    counts: dict[str, int] = {}
+    presenter_counts: dict[str, int] = {}
     rendered = 0
-    for job in sorted(jobs, key=lambda j: (str(j.get("client_id")), int(j.get("cycle_position", 0)))):
+    for job in sorted(
+        jobs,
+        key=lambda j: (str(j.get("client_id")), int(j.get("cycle_position", 0))),
+    ):
         cid = str(job.get("client_id") or "")
         brand_hist = history.setdefault("brands", {}).setdefault(cid, {"recent": []})
         recent_rows = list(brand_hist.get("recent", []))
-        recent = {str(row.get("key") if isinstance(row, dict) else row) for row in recent_rows}
-        urls = usable_urls(job, recent)
+        recent = {
+            str(row.get("key") if isinstance(row, dict) else row)
+            for row in recent_rows
+        }
+
+        urls, fresh_count = choose_urls(job, recent)
         job["visual_asset_urls"] = urls
-        job["visual_source"] = "pixabay_dynamic_non_repeating"
-        job["visual_uniqueness"] = "10 unique frames; repository history checked"
-        c = rr.cfg(cid)
+        job["visual_source"] = "pixabay_dynamic_varied"
+        job["visual_uniqueness"] = "10 unique source images inside this content"
+        job["fresh_visual_count"] = fresh_count
+        job["reused_visual_count"] = 10 - fresh_count
+
+        client = rr.cfg(cid)
         if str(job.get("format") or "reel") == "carousel":
-            render_carousel(job, c, urls)
+            render_carousel(job, client, urls)
         else:
-            k = counts.get(cid, 0)
-            presenter_name = ("joseph" if k % 2 == 0 else "francesca") if cid == "f1-immobiliare" else None
-            counts[cid] = k + 1
+            n = presenter_counts.get(cid, 0)
+            presenter_name = (
+                "joseph" if n % 2 == 0 else "francesca"
+            ) if cid == "f1-immobiliare" else None
+            presenter_counts[cid] = n + 1
             job["_presenter"] = presenter_name or ""
-            render_reel(job, c, urls, presenter_name)
+            render_reel(job, client, urls, presenter_name)
+
         rendered += 1
         stamp = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
         for url in urls:
-            recent_rows.append({"key": photo_key(url), "url": url, "used_at": stamp, "job_id": job.get("id")})
+            recent_rows.append({
+                "key": photo_key(url),
+                "url": url,
+                "used_at": stamp,
+                "job_id": job.get("id"),
+            })
         brand_hist["recent"] = recent_rows[-MAX_HISTORY_PER_BRAND:]
 
-    queue["updated_by"] = "Fresh Pixabay visual renderer"
-    queue["visual_policy"] = "never reuse same 10-image set; reject duplicate recent photos"
+    queue["updated_by"] = "Resilient fresh Pixabay renderer"
+    queue["visual_policy"] = (
+        "10 different images per content; prefer unseen history; controlled cross-content reuse only on source shortage"
+    )
     save(QUEUE, queue)
     history["updated_at"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
     save(HISTORY, history)
-    print(f"Rendered {rendered} current-cycle contents with fresh Pixabay visuals")
+    print(f"Rendered {rendered} current-cycle contents with varied Pixabay visuals")
     return 0
 
 
