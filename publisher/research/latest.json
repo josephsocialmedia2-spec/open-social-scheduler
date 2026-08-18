@@ -1,0 +1,56 @@
+{
+  "generated_at": "2026-08-18T15:55:40+00:00",
+  "policy": {
+    "query_source": "Google autocomplete suggestions",
+    "avoid_duplicates": true,
+    "copy_third_party_creatives": false,
+    "allowed_media": [
+      "owned",
+      "generated",
+      "Pixabay licensed",
+      "Canva/client assets"
+    ]
+  },
+  "brands": {
+    "f1-immobiliare": {
+      "base_query": "agenzia delle entrate vendere comprare casa",
+      "fresh_queries": [
+        "agenzia delle entrate consultazione valori immobiliari dichiarati guida",
+        "agenzia delle entrate consultazione valori immobiliari dichiarati checklist",
+        "agenzia delle entrate consultazione valori immobiliari dichiarati cosa sapere",
+        "agenzia delle entrate consultazione valori immobiliari dichiarati come funziona",
+        "agenzia delle entrate atti di vendita immobili spiegazione",
+        "agenzia delle entrate atti di vendita immobili errori",
+        "agenzia delle entrate atti di vendita immobili guida",
+        "agenzia delle entrate atti di vendita immobili checklist",
+        "agenzia delle entrate atti di vendita immobili cosa sapere",
+        "agenzia delle entrate atti di vendita immobili come funziona"
+      ],
+      "official_sources": [
+        "https://www.agenziaentrate.gov.it/portale/web/guest/schede/fabbricatiterreni/omi",
+        "https://www.agenziaentrate.gov.it/portale/web/guest/cittadini/acquisto-o-vendita-di-un-immobile"
+      ]
+    },
+    "real-media-pro": {
+      "base_query": "perché i social fanno crescere la tua azienda con i fatturati e le vendite",
+      "fresh_queries": [
+        "social media lead generation aziende guida",
+        "social media lead generation aziende checklist",
+        "social media lead generation aziende cosa sapere",
+        "social media lead generation aziende come funziona",
+        "social media e fatturato aziendale spiegazione",
+        "social media e fatturato aziendale errori",
+        "social media e fatturato aziendale guida",
+        "social media e fatturato aziendale checklist",
+        "social media e fatturato aziendale cosa sapere",
+        "social media e fatturato aziendale come funziona"
+      ],
+      "official_sources": [
+        "https://www.facebook.com/business/ads/facebook-instagram-reels-ads",
+        "https://www.facebook.com/business/ads/ad-creative",
+        "https://www.shopify.com/it/blog/topics/content-marketing",
+        "https://www.shopify.com/blog/topics/conversion"
+      ]
+    }
+  }
+}
