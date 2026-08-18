@@ -182,7 +182,7 @@ jobs:
           done < <(find publisher/media/generated -type f -print0)
           for client in f1-immobiliare real-media-pro; do
             if [ -d "publisher/media/generated/$client" ]; then
-              (cd "publisher/media/generated/$client" && zip -qr "/tmp/social-release/${client}__CONTENUTI_DELUXE.zip" .)
+              (cd "publisher/media/generated/$client" && zip -qr "/tmp/social-release/${client}__SETTIMANA_COMPLETA.zip" .)
             fi
           done
           cp publisher/queue.json /tmp/social-release/queue.json
