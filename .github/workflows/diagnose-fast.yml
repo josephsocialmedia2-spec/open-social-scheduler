@@ -1,0 +1,35 @@
+name: Diagnose Failed Fast Today
+
+on:
+  push:
+    paths:
+      - '.github/workflows/diagnose-fast.yml'
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: write
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Capture latest failed fast run
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euxo pipefail
+          RUN_ID=$(gh run list --workflow fast-today.yml --status failure --limit 1 --json databaseId --jq '.[0].databaseId')
+          test -n "$RUN_ID"
+          {
+            echo "RUN_ID=$RUN_ID"
+            echo "==== FAILED LOGS ===="
+            gh run view "$RUN_ID" --log-failed || true
+          } > publisher/last-fast-failure.log
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add publisher/last-fast-failure.log
+          git commit -m "Capture latest fast workflow failure log" || exit 0
+          git push
