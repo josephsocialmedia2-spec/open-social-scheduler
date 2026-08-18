@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Render 60-second Reels and carousels for F1 Immobiliare and Real Media Pro."""
+"""Deluxe renderer: 10 clean visuals, natural female voice, no subtitles."""
 from __future__ import annotations
-import base64, hashlib, json, os, subprocess, sys, tempfile, time
+import asyncio, base64, hashlib, html, json, math, os, re, struct, subprocess, sys, tempfile, time, wave
 from io import BytesIO
 from pathlib import Path
 from typing import Any
@@ -9,201 +9,194 @@ import requests
 from PIL import Image, ImageDraw, ImageFont, ImageOps
 
 ROOT=Path(__file__).resolve().parents[1]
-QUEUE_PATH=ROOT/'publisher'/'queue.json'
-CLIENT_DIR=ROOT/'publisher'/'clients'
-ASSET_DIR=ROOT/'publisher'/'assets'
-PHOTO_CACHE=Path(os.getenv('SOCIAL_PHOTO_CACHE',str(ROOT/'.cache'/'social-photos')))
-SANS=Path('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf')
-SANS_B=Path('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf')
-_BG={}
-_PRESENTER={}
+QUEUE=ROOT/'publisher'/'queue.json'; CLIENTS=ROOT/'publisher'/'clients'; ASSETS=ROOT/'publisher'/'assets'
+CACHE=Path(os.getenv('SOCIAL_PHOTO_CACHE',str(ROOT/'.cache'/'social-photos')))
+SANS=Path('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf'); BOLD=Path('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf')
 
-F1_HOUSE_SOURCES=[
- {"url":"https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1800&q=88","credit":"Unsplash · residential house"},
- {"url":"https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&w=1800&q=88","credit":"Unsplash · residential house"},
- {"url":"https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1800&q=88","credit":"Unsplash · residential interior"},
- {"url":"https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1800&q=88","credit":"Unsplash · residential interior"},
+F1=[
+ 'https://pixabay.com/photos/modern-villa-exterior-9804538/',
+ 'https://pixabay.com/photos/contemporary-villa-facade-9804533/',
+ 'https://pixabay.com/photos/luxury-villa-facade-9804536/',
+ 'https://pixabay.com/photos/living-room-modern-interior-9795892/',
+ 'https://pixabay.com/photos/living-room-interior-design-modern-8572596/',
+ 'https://pixabay.com/photos/kitchen-interior-modern-real-estate-8260437/',
+ 'https://pixabay.com/photos/bedroom-real-estate-interior-modern-8260423/',
+ 'https://pixabay.com/photos/bathroom-interior-design-modern-8556101/',
+ 'https://pixabay.com/photos/real-estate-kitchen-interior-design-8428506/',
+ 'https://pixabay.com/photos/bedroom-interior-design-modern-8572584/',
 ]
-RMP_SOURCES=[
- {"url":"https://cdn.pixabay.com/photo/2018/07/31/14/52/ecommerce-3575280_1280.jpg","credit":"Pixabay · ecommerce"},
- {"url":"https://cdn.pixabay.com/photo/2019/06/15/16/06/online-4275963_1280.jpg","credit":"Pixabay · online shopping"},
- {"url":"https://cdn.pixabay.com/photo/2020/09/15/15/17/laptop-5573883_1280.jpg","credit":"Pixabay · digital marketing"},
+RMP=[
+ 'https://pixabay.com/photos/business-professional-marketing-10207346/',
+ 'https://pixabay.com/photos/data-analysis-business-charts-10237243/',
+ 'https://pixabay.com/it/photos/affari-digitali-10150916/',
+ 'https://pixabay.com/it/photos/proprietario-di-una-piccola-attivit%C3%A0-10150921/',
+ 'https://pixabay.com/photos/laptop-notebook-business-charts-1836990/',
+ 'https://pixabay.com/photos/analysis-analytics-business-charts-1841158/',
+ 'https://pixabay.com/photos/ecommerce-online-shopping-marketing-3563183/',
+ 'https://pixabay.com/photos/online-shopping-ecommerce-4275963/',
+ 'https://pixabay.com/photos/social-media-marketing-5971028/',
+ 'https://pixabay.com/photos/mobile-phone-social-media-media-2563782/',
 ]
 
-def load_json(p:Path)->dict[str,Any]: return json.loads(p.read_text(encoding='utf-8'))
-def cfg_for(cid:str)->dict[str,Any]: return load_json(CLIENT_DIR/f'{cid}.json')
-def ff(path:Path,size:int): return ImageFont.truetype(str(path),size)
+def load(p:Path)->dict[str,Any]: return json.loads(p.read_text(encoding='utf-8'))
+def ff(p:Path,n:int): return ImageFont.truetype(str(p),n)
+def cfg(cid:str): return load(CLIENTS/f'{cid}.json')
 
-def fallback(seed:int=0)->Image.Image:
-    w,h=1600,1100
-    im=Image.new('RGB',(w,h),'#edf2ee'); d=ImageDraw.Draw(im)
-    d.rectangle((90,80,w-90,h-90),fill='#ffffff',outline='#d5ddd7',width=4)
-    d.rounded_rectangle((250,210,1350,850),radius=34,fill='#f7f8f7',outline='#cdd5d0',width=4)
-    d.rectangle((350,300,1250,680),fill='#dce6df')
-    d.text((500,730),'REAL MEDIA PRO',font=ff(SANS_B,72),fill='#1f2622')
-    return im
+def resolve_pixabay(url:str)->str:
+    r=requests.get(url,headers={'User-Agent':'Mozilla/5.0','Accept-Language':'it-IT,it;q=0.9'},timeout=25); r.raise_for_status()
+    for pat in (r'<meta[^>]+property=["\']og:image["\'][^>]+content=["\']([^"\']+)',r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+property=["\']og:image["\']'):
+        m=re.search(pat,r.text,re.I)
+        if m:return html.unescape(m.group(1))
+    raise RuntimeError(f'Pixabay image not resolved: {url}')
 
-def load_presenter(name:str):
-    if name in _PRESENTER:return _PRESENTER[name].copy()
-    p=ASSET_DIR/f'{name}_presenter.jpg.b64'
-    if not p.exists(): return None
-    try:
-        raw=base64.b64decode(p.read_text(encoding='utf-8').strip())
-        im=Image.open(BytesIO(raw)).convert('RGB')
-        _PRESENTER[name]=im
-        return im.copy()
-    except Exception:
-        return None
+def get_image(url:str)->Image.Image:
+    direct=resolve_pixabay(url) if 'pixabay.com/' in url and 'cdn.pixabay.com/' not in url else url
+    CACHE.mkdir(parents=True,exist_ok=True); p=CACHE/(hashlib.sha256(direct.encode()).hexdigest()+'.jpg')
+    if p.exists() and p.stat().st_size>12000:return Image.open(p).convert('RGB')
+    r=requests.get(direct,headers={'User-Agent':'Mozilla/5.0 Open-Social-Scheduler/Deluxe','Accept':'image/*'},timeout=35); r.raise_for_status()
+    im=Image.open(BytesIO(r.content)).convert('RGB'); im.save(p,'JPEG',quality=94,optimize=True); return im
 
-def download(src:dict[str,Any])->Image.Image:
-    url=str(src.get('url') or '')
-    if not url:return fallback()
-    if url in _BG:return _BG[url].copy()
-    PHOTO_CACHE.mkdir(parents=True,exist_ok=True)
-    cp=PHOTO_CACHE/(hashlib.sha256(url.encode()).hexdigest()+'.jpg')
-    if cp.exists() and cp.stat().st_size>12000:
-        im=Image.open(cp).convert('RGB'); _BG[url]=im; return im.copy()
-    headers={'User-Agent':'Mozilla/5.0 Open-Social-Scheduler/2.0','Accept':'image/avif,image/webp,image/apng,image/*,*/*;q=0.8'}
-    for n in range(3):
-        try:
-            r=requests.get(url,headers=headers,timeout=40)
-            r.raise_for_status()
-            im=Image.open(BytesIO(r.content)).convert('RGB')
-            im.save(cp,'JPEG',quality=92,optimize=True)
-            _BG[url]=im
-            return im.copy()
-        except Exception as e:
-            if n==2: print(f'WARN image {url}: {e}',file=sys.stderr)
-            time.sleep(1+n)
-    return fallback()
+def fit(url:str,w:int,h:int)->Image.Image:
+    return ImageOps.fit(get_image(url),(w,h),method=Image.Resampling.LANCZOS,centering=(.5,.5)).convert('RGB')
 
-def sources(cfg):
-    cid=str(cfg.get('id'))
-    if cid=='f1-immobiliare': return F1_HOUSE_SOURCES
-    if cid=='real-media-pro': return RMP_SOURCES
-    own=list(cfg.get('brand',{}).get('photo_sources',[]) or [])
-    return own or RMP_SOURCES
+def presenter(name:str)->Image.Image|None:
+    p=ASSETS/f'{name}_presenter.jpg.b64'
+    if not p.exists():return None
+    try:return Image.open(BytesIO(base64.b64decode(p.read_text().strip()))).convert('RGB')
+    except Exception:return None
 
-def compose(im,w,h):
-    bg=ImageOps.fit(im,(w,h),method=Image.Resampling.LANCZOS,centering=(0.5,0.5)).convert('RGBA')
-    shade=Image.new('RGBA',(w,h),(0,0,0,0)); sd=ImageDraw.Draw(shade)
-    for y in range(h):
-        a=40 if y<h*.18 else (58 if y>h*.78 else 4)
-        sd.line((0,y,w,y),fill=(0,0,0,a))
-    bg.alpha_composite(shade)
-    return bg.convert('RGB')
+def f1_logo(im:Image.Image,c:dict[str,Any],top:int)->int:
+    d=ImageDraw.Draw(im,'RGBA'); brand=c['brand']; v=brand.get('logo_vectors',{}); green=brand.get('accent','#92C205')
+    pw=int(im.width*.36); ph=int(pw*.55); x=(im.width-pw)//2
+    d.rounded_rectangle((x,top,x+pw,top+ph),radius=26,fill=(255,255,255,228))
+    scale=pw*.72/500; ox=x+int(pw*.14); oy=top+int(ph*.02)
+    for poly in v.get('green',[]):d.polygon([(ox+int(a*scale),oy+int(b*scale)) for a,b in poly],fill=green)
+    for poly in v.get('white',[]):d.polygon([(ox+int(a*scale),oy+int(b*scale)) for a,b in poly],fill='#0A0B0A')
+    label='IMMOBILIARE'; f=ff(BOLD,max(18,int(pw*.055))); b=d.textbbox((0,0),label,font=f)
+    d.text(((im.width-(b[2]-b[0]))/2,top+ph-int(ph*.20)),label,font=f,fill='#111')
+    return top+ph
 
-def wrap(draw,text,font,maxw):
-    words=str(text).split(); lines=[]; cur=''
-    for word in words:
-        test=(cur+' '+word).strip()
-        if draw.textbbox((0,0),test,font=font)[2]<=maxw: cur=test
+def header(im:Image.Image,c:dict[str,Any],fmt:str)->None:
+    cid=c['id']; d=ImageDraw.Draw(im,'RGBA'); top=int(im.height*.025)
+    if cid=='f1-immobiliare':
+        bottom=f1_logo(im,c,top); text='RICHIEDI UNA VALUTAZIONE GRATUITA DEL TUO IMMOBILE'; f=ff(BOLD,30 if fmt=='reel' else 23); b=d.textbbox((0,0),text,font=f); y=bottom+20
+        d.rounded_rectangle(((im.width-(b[2]-b[0]))/2-18,y-9,(im.width+(b[2]-b[0]))/2+18,y+(b[3]-b[1])+15),radius=18,fill=(255,255,255,224))
+        d.text(((im.width-(b[2]-b[0]))/2,y),text,font=f,fill=c['brand'].get('accent','#92C205'))
+    else:
+        text='REAL MEDIA PRO'; f=ff(BOLD,44 if fmt=='reel' else 34); b=d.textbbox((0,0),text,font=f); w=b[2]-b[0]; x=(im.width-w)//2
+        d.rounded_rectangle((x-28,top,x+w+28,top+94),radius=28,fill=(5,16,31,230),outline=(45,127,249,240),width=3); d.text((x,top+20),text,font=f,fill='white')
+
+def contact(im:Image.Image,c:dict[str,Any],fmt:str)->None:
+    d=ImageDraw.Draw(im,'RGBA'); h=104 if fmt=='reel' else 82; y=im.height-h-24; w=int(im.width*.88); x=(im.width-w)//2; accent=c['brand'].get('accent','#2D7FF9')
+    d.rounded_rectangle((x,y,x+w,y+h),radius=h//2,fill=(255,255,255,238),outline=accent,width=4)
+    text='371 370 8294  •  371 424 6300' if c['id']=='f1-immobiliare' else '371 370 8294'; f=ff(BOLD,37 if fmt=='reel' else 28); b=d.textbbox((0,0),text,font=f)
+    d.text(((im.width-(b[2]-b[0]))/2,y+(h-(b[3]-b[1]))/2-5),text,font=f,fill='#0A0B0A')
+
+def add_presenter(im:Image.Image,name:str|None)->None:
+    if not name:return
+    pic=presenter(name)
+    if pic is None:return
+    th=int(im.height*.27); ratio=th/pic.height; pic=pic.resize((int(pic.width*ratio),th),Image.Resampling.LANCZOS)
+    mask=Image.new('L',pic.size,0); ImageDraw.Draw(mask).rounded_rectangle((0,0,pic.width-1,pic.height-1),radius=28,fill=255)
+    tile=Image.new('RGBA',pic.size,(0,0,0,0)); tile.paste(pic,(0,0),mask); base=im.convert('RGBA'); x=im.width-pic.width-24; y=im.height-th-128
+    sh=Image.new('RGBA',base.size,(0,0,0,0)); ImageDraw.Draw(sh).rounded_rectangle((x-7,y-7,x+pic.width+7,y+pic.height+7),radius=34,fill=(0,0,0,80)); base.alpha_composite(sh); base.alpha_composite(tile,(x,y)); im.paste(base.convert('RGB'))
+
+def wrap(d:ImageDraw.ImageDraw,text:str,f,maxw:int)->list[str]:
+    lines=[]; cur=''
+    for word in str(text).split():
+        t=(cur+' '+word).strip()
+        if d.textbbox((0,0),t,font=f)[2]<=maxw:cur=t
         else:
             if cur:lines.append(cur)
             cur=word
     if cur:lines.append(cur)
     return lines[:4]
 
-def draw_logo(im,cfg,top):
-    d=ImageDraw.Draw(im); cid=str(cfg.get('id')); brand=cfg.get('brand',{})
-    if cid=='f1-immobiliare' and brand.get('logo_vectors'):
-        pw=int(im.width*.27); ph=int(pw*.57); x=(im.width-pw)//2
-        scale=pw*.74/500; ox=x+int(pw*.13); oy=top+int(ph*.01)
-        for poly in brand['logo_vectors'].get('green',[]): d.polygon([(ox+int(a*scale),oy+int(b*scale)) for a,b in poly],fill=brand.get('accent','#92C205'))
-        for poly in brand['logo_vectors'].get('white',[]): d.polygon([(ox+int(a*scale),oy+int(b*scale)) for a,b in poly],fill='#FFFFFF')
-        f=ff(SANS_B,max(16,int(pw*.05))); label='IMMOBILIARE'; box=d.textbbox((0,0),label,font=f)
-        d.text(((im.width-(box[2]-box[0]))/2,top+ph-int(ph*.20)),label,font=f,fill='white')
-    else:
-        text='REAL MEDIA PRO'; f=ff(SANS_B,52); box=d.textbbox((0,0),text,font=f); pad=22
-        x=(im.width-(box[2]-box[0]))/2
-        d.rounded_rectangle((x-pad,top,x+(box[2]-box[0])+pad,top+82),radius=24,fill=(255,255,255,235),outline='#61A844',width=3)
-        d.text((x,top+12),text,font=f,fill='#151a17')
+def carousel_title(im:Image.Image,c:dict[str,Any],text:str)->None:
+    if not text:return
+    d=ImageDraw.Draw(im,'RGBA'); f=ff(BOLD,62); lines=wrap(d,text,f,int(im.width*.80)); lh=76; total=lh*len(lines); y=int(im.height*.50-total/2); maxw=max(d.textbbox((0,0),x,font=f)[2] for x in lines); x=(im.width-maxw)//2
+    d.rounded_rectangle((x-34,y-28,im.width-x+34,y+total+28),radius=32,fill=(255,255,255,230)); fill=c['brand'].get('accent','#92C205') if c['id']=='f1-immobiliare' else '#07111F'
+    for line in lines:
+        b=d.textbbox((0,0),line,font=f); d.text(((im.width-(b[2]-b[0]))/2,y),line,font=f,fill=fill); y+=lh
 
-def draw_whatsapp(im,fmt):
-    d=ImageDraw.Draw(im); phone='371 370 8294'
-    h=94 if fmt=='reel' else 74; y=im.height-h-24; w=int(im.width*.76); x=(im.width-w)//2
-    d.rounded_rectangle((x,y,x+w,y+h),radius=h//2,fill=(255,255,255,240),outline='#61A844',width=3)
-    f=ff(SANS_B,40 if fmt=='reel' else 28)
-    d.text((x+62,y+20),f'WHATSAPP  {phone}',font=f,fill='#111111')
+def frame(c:dict[str,Any],url:str,w:int,h:int,fmt:str,title:str='',who:str|None=None)->Image.Image:
+    im=fit(url,w,h); ov=Image.new('RGBA',im.size,(0,0,0,0)); od=ImageDraw.Draw(ov); od.rectangle((0,0,w,int(h*.17)),fill=(0,0,0,22)); od.rectangle((0,int(h*.83),w,h),fill=(0,0,0,32)); base=im.convert('RGBA'); base.alpha_composite(ov); im=base.convert('RGB')
+    header(im,c,fmt)
+    if fmt=='carousel':carousel_title(im,c,title)
+    if c['id']=='f1-immobiliare' and fmt=='reel':add_presenter(im,who)
+    contact(im,c,fmt); return im
 
-def draw_presenter(im,name):
-    if not name:return
-    pic=load_presenter(name)
-    if pic is None:return
-    target_h=int(im.height*.28); ratio=target_h/pic.height; target_w=int(pic.width*ratio)
-    pic=pic.resize((target_w,target_h),Image.Resampling.LANCZOS)
-    mask=Image.new('L',pic.size,0); md=ImageDraw.Draw(mask); md.rounded_rectangle((0,0,pic.width-1,pic.height-1),radius=28,fill=255)
-    tile=Image.new('RGBA',pic.size,(0,0,0,0)); tile.paste(pic,(0,0),mask)
-    base=im.convert('RGBA'); base.alpha_composite(tile,(im.width-target_w-22,im.height-target_h-115))
-    im.paste(base.convert('RGB'))
+async def edge_save(text:str,out:Path)->None:
+    import edge_tts
+    await edge_tts.Communicate(text=text,voice='it-IT-IsabellaNeural',rate='-4%',volume='+0%').save(str(out))
 
-def draw_slide(raw,cfg,src,w,h,fmt,presenter=None):
-    im=compose(download(src),w,h); d=ImageDraw.Draw(im); cid=str(cfg.get('id'))
-    draw_logo(im,cfg,int(h*.025))
-    hook=str(raw).split('|')[0].strip() if raw else ''
-    if hook:
-        fs=78 if fmt=='reel' else 60; f=ff(SANS_B,fs); lines=wrap(d,hook,f,int(w*.80))
-        lh=fs+8; total=lh*len(lines); y=int(h*.40-total/2)
-        for ln in lines:
-            box=d.textbbox((0,0),ln,font=f)
-            fill='#61A844' if cid=='real-media-pro' else 'white'
-            d.text(((w-(box[2]-box[0]))/2,y),ln,font=f,fill=fill,stroke_width=2,stroke_fill='#111111')
-            y+=lh
-    if fmt=='reel': draw_presenter(im,presenter)
-    draw_whatsapp(im,fmt)
-    return im
+def voice(job:dict[str,Any],temp:Path)->Path|None:
+    text=str(job.get('voiceover') or '').strip()
+    if not text:return None
+    out=temp/'voice.mp3'
+    try:
+        asyncio.run(edge_save(text,out))
+        if out.exists() and out.stat().st_size>1000:return out
+    except Exception as e:print(f'WARN Edge TTS: {e}',file=sys.stderr)
+    p=temp/'voice.wav'; data=Path(os.getenv('PIPER_DATA_DIR',str(ROOT/'.cache'/'piper')))
+    try:
+        subprocess.run([sys.executable,'-m','piper','-m','it_IT-paola-medium','--data-dir',str(data),'-f',str(p),'--',text],check=True,stdout=subprocess.DEVNULL,stderr=subprocess.PIPE); return p if p.exists() else None
+    except Exception as e:print(f'WARN Piper: {e}',file=sys.stderr); return None
 
-def synth(job,cfg,out):
-    vc=cfg.get('brand',{}).get('voice',{}); text=str(job.get('voiceover') or '').strip()
-    if not vc.get('enabled',False) or not text:return None
-    model=str(vc.get('model') or 'it_IT-paola-medium')
-    data=Path(os.getenv('PIPER_DATA_DIR',str(ROOT/'.cache'/'piper')))
-    subprocess.run([sys.executable,'-m','piper','-m',model,'--data-dir',str(data),'-f',str(out),'--',text],check=True,stdout=subprocess.DEVNULL,stderr=subprocess.PIPE)
-    return out if out.exists() else None
-
-def render_reel(job,cfg):
-    rc=cfg.get('brand',{}).get('reel',{}); w,h=int(rc.get('width',1080)),int(rc.get('height',1920))
-    slides=list(job.get('slides') or [job.get('title','')]); out=ROOT/str(job['media']); out.parent.mkdir(parents=True,exist_ok=True)
-    ss=sources(cfg); target=float(rc.get('target_seconds',60) or 60); sec=target/max(1,len(slides)); presenter=str(job.get('_presenter') or '') or None
-    with tempfile.TemporaryDirectory(prefix='oss-reel-') as td:
-        tmp=Path(td); voice=synth(job,cfg,tmp/'voice.wav'); seed=int(str(job.get('scheduled_at') or '0000-00-00')[8:10] or 0); frames=[]
-        for i,raw in enumerate(slides,1):
-            p=tmp/f's{i:02d}.jpg'; draw_slide(raw,cfg,ss[(i-1+seed)%len(ss)],w,h,'reel',presenter).save(p,'JPEG',quality=92,optimize=True); frames.append(p)
-        con=tmp/'concat.txt'
-        with con.open('w',encoding='utf-8') as fh:
-            for p in frames: fh.write(f"file '{p.as_posix()}'\nduration {sec:.3f}\n")
-            fh.write(f"file '{frames[-1].as_posix()}'\n")
-        cmd=['ffmpeg','-y','-f','concat','-safe','0','-i',str(con)]
-        if voice:cmd+=['-i',str(voice)]
-        cmd+=['-vf','fps=30,format=yuv420p','-c:v','libx264','-crf','20','-preset','medium','-movflags','+faststart']
-        if voice:cmd+=['-c:a','aac','-b:a','160k','-af','apad']
-        cmd+=['-t',f'{target:.3f}',str(out)]
-        subprocess.run(cmd,check=True,stdout=subprocess.DEVNULL,stderr=subprocess.PIPE)
+def music(out:Path,seconds:float=60)->Path:
+    sr=22050; notes=[220,277.18,329.63,415.30,246.94,311.13,369.99,466.16]; total=int(sr*seconds)
+    with wave.open(str(out),'w') as wf:
+        wf.setnchannels(1); wf.setsampwidth(2); wf.setframerate(sr)
+        for i in range(total):
+            t=i/sr; f0=notes[int(t/1.5)%len(notes)]; env=.38+.62*(.5-.5*math.cos(2*math.pi*((t%1.5)/1.5))); sample=(math.sin(2*math.pi*f0*t)*.55+math.sin(2*math.pi*f0*.5*t)*.25+math.sin(2*math.pi*f0*1.5*t)*.12)*env*.10; wf.writeframes(struct.pack('<h',max(-32767,min(32767,int(sample*32767)))))
     return out
 
-def render_carousel(job,cfg):
-    cc=cfg.get('brand',{}).get('carousel',{}); w,h=int(cc.get('width',1080)),int(cc.get('height',1350))
-    slides=list(job.get('slides') or []); media=list(job.get('media') or []); ss=sources(cfg); seed=int(str(job.get('scheduled_at') or '0000-00-00')[8:10] or 0)
-    for i,(raw,rel) in enumerate(zip(slides,media),1):
-        out=ROOT/str(rel); out.parent.mkdir(parents=True,exist_ok=True)
-        draw_slide(raw,cfg,ss[(i-1+seed)%len(ss)],w,h,'carousel').save(out,'JPEG',quality=92,optimize=True)
+def make_video(frames:list[Path],v:Path|None,m:Path,out:Path,target:float=60)->None:
+    n=len(frames); tr=.6; dur=(target+(n-1)*tr)/n; cmd=['ffmpeg','-y']
+    for p in frames:cmd+=['-loop','1','-t',f'{dur:.3f}','-i',str(p)]
+    vi=None
+    if v:vi=n; cmd+=['-i',str(v)]
+    mi=n+(1 if v else 0); cmd+=['-i',str(m)]; filters=[]; fc=max(1,int(round(dur*30)))
+    for i in range(n):filters.append(f"[{i}:v]scale=1188:2112:force_original_aspect_ratio=increase,crop=1188:2112,zoompan=z='min(zoom+0.0004,1.05)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d={fc}:s=1080x1920:fps=30,format=yuv420p[v{i}]")
+    cur='v0'
+    for i in range(1,n):
+        o=f'x{i}'; filters.append(f'[{cur}][v{i}]xfade=transition=fade:duration={tr}:offset={i*(dur-tr):.3f}[{o}]'); cur=o
+    if vi is not None:filters += [f'[{vi}:a]volume=1.0,apad[voice]',f'[{mi}:a]volume=0.055[music]','[voice][music]amix=inputs=2:duration=first:dropout_transition=2[aout]']
+    else:filters += [f'[{mi}:a]volume=0.07,apad[aout]']
+    cmd += ['-filter_complex',';'.join(filters),'-map',f'[{cur}]','-map','[aout]','-c:v','libx264','-crf','19','-preset','medium','-c:a','aac','-b:a','192k','-movflags','+faststart','-t',f'{target:.3f}',str(out)]
+    subprocess.run(cmd,check=True,stdout=subprocess.DEVNULL,stderr=subprocess.PIPE)
 
-def main():
-    if not QUEUE_PATH.exists():return 0
-    q=load_json(QUEUE_PATH); reel_count={}
-    for job in q.get('jobs',[]):
-        if not job.get('enabled',True) or job.get('status') in {'scheduled','published','disabled'}:continue
-        if not job.get('client_id') or not job.get('media'):continue
-        cid=str(job['client_id']); cfg=cfg_for(cid)
-        if str(job.get('format') or 'reel')=='carousel':
-            render_carousel(job,cfg)
+def render_reel(job:dict[str,Any],c:dict[str,Any])->Path:
+    w,h=1080,1920; out=ROOT/str(job['media']); out.parent.mkdir(parents=True,exist_ok=True); src=F1 if c['id']=='f1-immobiliare' else RMP; who=str(job.get('_presenter') or '') or None
+    with tempfile.TemporaryDirectory(prefix='oss-deluxe-') as td:
+        t=Path(td); v=voice(job,t); m=music(t/'music.wav'); frames=[]; seed=int(str(job.get('scheduled_at') or '0000-00-00')[8:10] or 0)
+        for i in range(10):
+            p=t/f'f{i:02d}.jpg'; frame(c,src[(i+seed)%10],w,h,'reel',who=who).save(p,'JPEG',quality=94,optimize=True); frames.append(p)
+        make_video(frames,v,m,out,60)
+    return out
+
+def render_carousel(job:dict[str,Any],c:dict[str,Any])->list[Path]:
+    slides=(list(job.get('slides') or [])+['']*10)[:10]; media=list(job.get('media') or []); src=F1 if c['id']=='f1-immobiliare' else RMP
+    if len(media)!=10:raise RuntimeError(f"Carousel {job.get('id')} must have 10 files")
+    seed=int(str(job.get('scheduled_at') or '0000-00-00')[8:10] or 0); outs=[]
+    for i,(title,rel) in enumerate(zip(slides,media)):
+        out=ROOT/str(rel); out.parent.mkdir(parents=True,exist_ok=True); frame(c,src[(i+seed)%10],1080,1350,'carousel',title=title).save(out,'JPEG',quality=94,optimize=True); outs.append(out)
+    return outs
+
+def main()->int:
+    if not QUEUE.exists():return 0
+    q=load(QUEUE); jobs=[j for j in q.get('jobs',[]) if j.get('enabled',True) and j.get('status') not in {'scheduled','published','disabled'}]
+    if jobs:
+        day=max(str(j.get('scheduled_at') or '')[:10] for j in jobs); jobs=[j for j in jobs if str(j.get('scheduled_at') or '')[:10]==day]
+    counts={}; done=0
+    for job in jobs:
+        cid=str(job.get('client_id') or '')
+        if cid not in {'f1-immobiliare','real-media-pro'} or not job.get('media'):continue
+        c=cfg(cid)
+        if str(job.get('format') or 'reel')=='carousel':render_carousel(job,c)
         else:
-            k=reel_count.get(cid,0)
-            if k%2==0: job['_presenter']='joseph' if (k//2)%2==0 else 'francesca'
-            else: job['_presenter']=''
-            reel_count[cid]=k+1
-            render_reel(job,cfg)
-    return 0
+            k=counts.get(cid,0); job['_presenter']=('joseph' if k%2==0 else 'francesca') if cid=='f1-immobiliare' else ''; counts[cid]=k+1; render_reel(job,c)
+        done+=1
+    print(f'Rendered {done} deluxe premium asset set(s).'); return 0
 
-if __name__=='__main__':
-    raise SystemExit(main())
+if __name__=='__main__':raise SystemExit(main())
