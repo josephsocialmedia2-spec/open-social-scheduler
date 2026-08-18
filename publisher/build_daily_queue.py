@@ -1,11 +1,5 @@
 #!/usr/bin/env python3
-"""Build/reconcile the multi-client daily content queue.
-
-The engine prepares content and media, but publishing remains explicitly manual.
-For clients configured with ``manual_publish_only``, only the current planning
-window is kept as an active candidate pool; older/future draft candidates from
-previous plans are removed while published/scheduled history is preserved.
-"""
+"""Build/reconcile the multi-client daily content queue with a rolling 48-item cap."""
 from __future__ import annotations
 
 import argparse
@@ -22,6 +16,7 @@ BANK_DIR = ROOT / "publisher" / "content_bank"
 QUEUE_PATH = ROOT / "publisher" / "queue.json"
 DEFAULT_CATEGORIES = ["attract", "nurture", "convert"]
 _APPROVAL_CACHE: dict[str, dict[str, Any]] = {}
+MAX_QUEUE_ITEMS = 48
 
 
 def load_json(path: Path) -> dict[str, Any]:
@@ -122,9 +117,7 @@ def approval_state(client: dict[str, Any], key: str) -> bool:
 def media_exists(media_value: Any) -> bool:
     values = media_value if isinstance(media_value, list) else [media_value]
     values = [str(v).strip() for v in values if str(v or "").strip()]
-    if not values:
-        return False
-    return all((ROOT / value).exists() for value in values)
+    return bool(values) and all((ROOT / value).exists() for value in values)
 
 
 def desired_status(client: dict[str, Any], job: dict[str, Any]) -> tuple[str, str | None]:
@@ -169,6 +162,18 @@ def build_for_client(client: dict[str, Any], target: date) -> list[dict[str, Any
     slots = list(publishing.get("slots", []))
     categories = list(publishing.get("categories", DEFAULT_CATEGORIES))
     formats = publishing.get("formats", {})
+    format_sequence = list(publishing.get("format_sequence", []))
+
+    # Deluxe daily production: 10 publishable candidates per brand,
+    # split 5 Reels + 5 carousels. Config remains backward-compatible.
+    if client_id == "f1-immobiliare":
+        slots = ["08:00", "09:15", "10:30", "11:45", "13:00", "14:15", "15:30", "16:45", "18:00", "19:15"]
+        categories = ["data", "error", "proof", "data", "error", "proof", "data", "error", "proof", "data"]
+        format_sequence = ["reel", "carousel", "reel", "carousel", "reel", "carousel", "reel", "carousel", "reel", "carousel"]
+    elif client_id == "real-media-pro":
+        slots = ["08:10", "09:25", "10:40", "11:55", "13:10", "14:25", "15:40", "16:55", "18:10", "19:25"]
+        categories = ["attract", "nurture", "convert", "attract", "nurture", "convert", "attract", "nurture", "convert", "attract"]
+        format_sequence = ["reel", "carousel", "reel", "carousel", "reel", "carousel", "reel", "carousel", "reel", "carousel"]
     campaign = client.get("campaign", {})
     territories = campaign.get("territories", []) or [""]
     ordinal = target.toordinal()
@@ -193,12 +198,17 @@ def build_for_client(client: dict[str, Any], target: date) -> list[dict[str, Any
         hh, mm = [int(x) for x in slots[idx].split(":", 1)]
         scheduled = datetime(target.year, target.month, target.day, hh, mm, tzinfo=tz)
         slug = str(item.get("slug") or f"slot-{idx + 1}")
-        content_format = str(item.get("format") or formats.get(category) or "reel").lower()
+        content_format = (
+            str(format_sequence[idx]).lower()
+            if idx < len(format_sequence)
+            else str(item.get("format") or formats.get(category) or "reel").lower()
+        )
         slides = list(item.get("slides") or [])
         if content_format == "carousel":
+            slide_count = max(10, len(slides))
             media: Any = [
                 f"publisher/media/generated/{client_id}/{target.isoformat()}/{idx + 1:02d}-{slug}/slide-{n:02d}.jpg"
-                for n in range(1, len(slides) + 1)
+                for n in range(1, slide_count + 1)
             ]
         else:
             media = f"publisher/media/generated/{client_id}/{target.isoformat()}/{idx + 1:02d}-{slug}.mp4"
@@ -265,13 +275,23 @@ def reconcile(queue: dict[str, Any], client_map: dict[str, dict[str, Any]]) -> N
             job.pop("blocked_reason", None)
 
 
+def cap_queue(queue: dict[str, Any], limit: int = MAX_QUEUE_ITEMS) -> int:
+    jobs = list(queue.get("jobs", []))
+    if len(jobs) <= limit:
+        return 0
+    jobs.sort(key=lambda j: (str(j.get("scheduled_at") or ""), str(j.get("id") or "")), reverse=True)
+    removed = len(jobs) - limit
+    queue["jobs"] = jobs[:limit]
+    return removed
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--date", help="Local calendar date YYYY-MM-DD; explicit dates build one day only")
     args = parser.parse_args()
 
-    queue = load_json(QUEUE_PATH) if QUEUE_PATH.exists() else {"version": 4, "jobs": []}
-    queue["version"] = max(int(queue.get("version", 1)), 4)
+    queue = load_json(QUEUE_PATH) if QUEUE_PATH.exists() else {"version": 5, "jobs": []}
+    queue["version"] = max(int(queue.get("version", 1)), 5)
     queue.setdefault("jobs", [])
 
     all_clients = clients()
@@ -291,21 +311,13 @@ def main() -> int:
     target_keys = {client_id: {d.isoformat() for d in days} for client_id, days in targets_by_client.items()}
     preserved: list[dict[str, Any]] = []
     replaced = 0
-    pruned = 0
-
     for job in queue["jobs"]:
         client_id = str(job.get("client_id") or "")
         job_date = str(job.get("scheduled_at") or "")[:10]
         is_target = job_date in target_keys.get(client_id, set())
         is_final = job.get("status") in {"published", "scheduled"}
-        planning = client_map.get(client_id, {}).get("planning", {})
-        manual_pool = bool(planning.get("manual_publish_only", False))
-
         if is_final:
             preserved.append(job)
-            continue
-        if client_id in target_keys and manual_pool and not is_target:
-            pruned += 1
             continue
         if is_target:
             replaced += 1
@@ -326,12 +338,13 @@ def main() -> int:
                     added += 1
 
     reconcile(queue, client_map)
+    removed = cap_queue(queue)
     queue["updated_at"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
     save_json(QUEUE_PATH, queue)
     print(
-        f"Queue reconciled: {pruned} out-of-window draft job(s) pruned, "
-        f"{replaced} current draft job(s) replaced, {added} new candidate(s), "
-        f"{len(queue['jobs'])} total including final history."
+        f"Queue reconciled: {replaced} current draft job(s) replaced, "
+        f"{added} new candidate(s), {removed} oldest item(s) removed, "
+        f"{len(queue['jobs'])} total."
     )
     return 0
 
