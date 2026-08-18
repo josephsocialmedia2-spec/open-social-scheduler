@@ -1,0 +1,108 @@
+name: Diagnose Current 4H Production
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/diagnose-current-4h.yml'
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    env:
+      SOCIAL_CYCLE_HOUR: '16'
+      SOCIAL_RESET_LEGACY: '1'
+      PIPER_DATA_DIR: ${{ github.workspace }}/.cache/piper
+      SOCIAL_PHOTO_CACHE: ${{ github.workspace }}/.cache/social-photos
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: main
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        shell: bash
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg fonts-dejavu-core zip
+          python -m pip install --disable-pip-version-check -r publisher/requirements.txt
+
+      - name: Prepare diagnostics
+        shell: bash
+        run: |
+          mkdir -p diagnostics "$PIPER_DATA_DIR" "$SOCIAL_PHOTO_CACHE"
+          : > diagnostics/current-4h.log
+
+      - name: Run production stages and capture exact failure
+        id: diag
+        shell: bash
+        run: |
+          set +e
+          run_stage() {
+            NAME="$1"; shift
+            echo "===== $NAME =====" | tee -a diagnostics/current-4h.log
+            "$@" 2>&1 | tee -a diagnostics/current-4h.log
+            RC=${PIPESTATUS[0]}
+            echo "EXIT_CODE=$RC" | tee -a diagnostics/current-4h.log
+            echo | tee -a diagnostics/current-4h.log
+            if [ "$RC" -ne 0 ]; then
+              echo "failed_stage=$NAME" >> "$GITHUB_OUTPUT"
+              echo "failed_code=$RC" >> "$GITHUB_OUTPUT"
+              return "$RC"
+            fi
+            return 0
+          }
+
+          run_stage COMPILE python -m py_compile publisher/build_cycle_queue.py publisher/enrich_cycle.py publisher/enrich_queue.py publisher/render_reels.py publisher/render_fresh_visuals.py || true
+          if ! grep -q '^failed_stage=' "$GITHUB_OUTPUT"; then run_stage TESTS python -m unittest discover -s publisher/tests -v || true; fi
+          if ! grep -q '^failed_stage=' "$GITHUB_OUTPUT"; then run_stage RESEARCH python publisher/research_signals.py || true; fi
+          if ! grep -q '^failed_stage=' "$GITHUB_OUTPUT"; then run_stage BUILD_CYCLE python publisher/build_cycle_queue.py || true; fi
+          if ! grep -q '^failed_stage=' "$GITHUB_OUTPUT"; then run_stage ENRICH_CYCLE python publisher/enrich_cycle.py || true; fi
+          if ! grep -q '^failed_stage=' "$GITHUB_OUTPUT"; then run_stage RENDER_FRESH python publisher/render_fresh_visuals.py || true; fi
+          if ! grep -q '^failed_stage=' "$GITHUB_OUTPUT"; then run_stage RECONCILE python publisher/build_cycle_queue.py --reconcile-only || true; fi
+
+          if grep -q '^failed_stage=' "$GITHUB_OUTPUT"; then
+            exit 1
+          fi
+
+      - name: Publish diagnostic issue
+        if: always()
+        uses: actions/github-script@v8
+        env:
+          FAILED_STAGE: ${{ steps.diag.outputs.failed_stage }}
+          FAILED_CODE: ${{ steps.diag.outputs.failed_code }}
+        with:
+          script: |
+            const fs = require('fs');
+            const path = 'diagnostics/current-4h.log';
+            let log = fs.existsSync(path) ? fs.readFileSync(path,'utf8') : 'diagnostic log unavailable';
+            if (log.length > 50000) log = log.slice(-50000);
+            const stage = process.env.FAILED_STAGE || 'NONE';
+            const code = process.env.FAILED_CODE || '0';
+            const title = '[DIAG 4H] exact production failure';
+            const body = [
+              `Stage: **${stage}**`,
+              `Exit code: **${code}**`,
+              '',
+              '```text',
+              log,
+              '```',
+              '',
+              `Run: https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`
+            ].join('\n');
+            const issues = await github.paginate(github.rest.issues.listForRepo,{owner:context.repo.owner,repo:context.repo.repo,state:'all',per_page:100});
+            let issue = issues.find(i => i.title === title);
+            if (!issue) {
+              await github.rest.issues.create({owner:context.repo.owner,repo:context.repo.repo,title,body,assignees:['josephsocialmedia2-spec']});
+            } else {
+              if (issue.state !== 'open') await github.rest.issues.update({owner:context.repo.owner,repo:context.repo.repo,issue_number:issue.number,state:'open'});
+              await github.rest.issues.createComment({owner:context.repo.owner,repo:context.repo.repo,issue_number:issue.number,body});
+            }
