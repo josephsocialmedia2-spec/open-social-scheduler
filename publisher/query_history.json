@@ -1,4 +1,145 @@
 {
   "version": 1,
-  "items": []
+  "items": [
+    {
+      "brand": "f1-immobiliare",
+      "query_base": "agenzia delle entrate vendere comprare casa",
+      "query": "agenzia delle entrate valori immobiliari",
+      "used_at": "2026-08-18T13:16:44+00:00",
+      "status": "reserved_for_content"
+    },
+    {
+      "brand": "f1-immobiliare",
+      "query_base": "agenzia delle entrate vendere comprare casa",
+      "query": "agenzia delle entrate consultazione valori immobiliari dichiarati",
+      "used_at": "2026-08-18T13:16:44+00:00",
+      "status": "reserved_for_content"
+    },
+    {
+      "brand": "f1-immobiliare",
+      "query_base": "agenzia delle entrate vendere comprare casa",
+      "query": "agenzia delle entrate atti di vendita immobili",
+      "used_at": "2026-08-18T13:16:44+00:00",
+      "status": "reserved_for_content"
+    },
+    {
+      "brand": "f1-immobiliare",
+      "query_base": "agenzia delle entrate vendere comprare casa",
+      "query": "agenzia delle entrate tasse vendita casa ereditata",
+      "used_at": "2026-08-18T13:16:44+00:00",
+      "status": "reserved_for_content"
+    },
+    {
+      "brand": "f1-immobiliare",
+      "query_base": "agenzia delle entrate vendere comprare casa",
+      "query": "agenzia delle entrate plusvalenza vendita casa",
+      "used_at": "2026-08-18T13:16:44+00:00",
+      "status": "reserved_for_content"
+    },
+    {
+      "brand": "f1-immobiliare",
+      "query_base": "agenzia delle entrate vendere comprare casa",
+      "query": "agenzia delle entrate prezzo valore compravendita",
+      "used_at": "2026-08-18T13:16:44+00:00",
+      "status": "reserved_for_content"
+    },
+    {
+      "brand": "f1-immobiliare",
+      "query_base": "agenzia delle entrate vendere comprare casa",
+      "query": "agenzia delle entrate rendita catastale vendita casa",
+      "used_at": "2026-08-18T13:16:44+00:00",
+      "status": "reserved_for_content"
+    },
+    {
+      "brand": "f1-immobiliare",
+      "query_base": "agenzia delle entrate vendere comprare casa",
+      "query": "agenzia delle entrate prima casa vendita riacquisto",
+      "used_at": "2026-08-18T13:16:44+00:00",
+      "status": "reserved_for_content"
+    },
+    {
+      "brand": "f1-immobiliare",
+      "query_base": "agenzia delle entrate vendere comprare casa",
+      "query": "agenzia delle entrate imposte acquisto casa",
+      "used_at": "2026-08-18T13:16:44+00:00",
+      "status": "reserved_for_content"
+    },
+    {
+      "brand": "f1-immobiliare",
+      "query_base": "agenzia delle entrate vendere comprare casa",
+      "query": "agenzia delle entrate guida acquisto casa",
+      "used_at": "2026-08-18T13:16:44+00:00",
+      "status": "reserved_for_content"
+    },
+    {
+      "brand": "real-media-pro",
+      "query_base": "perché i social fanno crescere la tua azienda con i fatturati e le vendite",
+      "query": "perché i social aumentano le vendite aziendali",
+      "used_at": "2026-08-18T13:16:44+00:00",
+      "status": "reserved_for_content"
+    },
+    {
+      "brand": "real-media-pro",
+      "query_base": "perché i social fanno crescere la tua azienda con i fatturati e le vendite",
+      "query": "social media lead generation aziende",
+      "used_at": "2026-08-18T13:16:44+00:00",
+      "status": "reserved_for_content"
+    },
+    {
+      "brand": "real-media-pro",
+      "query_base": "perché i social fanno crescere la tua azienda con i fatturati e le vendite",
+      "query": "social media e fatturato aziendale",
+      "used_at": "2026-08-18T13:16:44+00:00",
+      "status": "reserved_for_content"
+    },
+    {
+      "brand": "real-media-pro",
+      "query_base": "perché i social fanno crescere la tua azienda con i fatturati e le vendite",
+      "query": "come trasformare follower in clienti",
+      "used_at": "2026-08-18T13:16:44+00:00",
+      "status": "reserved_for_content"
+    },
+    {
+      "brand": "real-media-pro",
+      "query_base": "perché i social fanno crescere la tua azienda con i fatturati e le vendite",
+      "query": "sito web conversioni e vendite",
+      "used_at": "2026-08-18T13:16:44+00:00",
+      "status": "reserved_for_content"
+    },
+    {
+      "brand": "real-media-pro",
+      "query_base": "perché i social fanno crescere la tua azienda con i fatturati e le vendite",
+      "query": "shopify aumentare vendite ecommerce",
+      "used_at": "2026-08-18T13:16:44+00:00",
+      "status": "reserved_for_content"
+    },
+    {
+      "brand": "real-media-pro",
+      "query_base": "perché i social fanno crescere la tua azienda con i fatturati e le vendite",
+      "query": "ecommerce mobile conversioni",
+      "used_at": "2026-08-18T13:16:44+00:00",
+      "status": "reserved_for_content"
+    },
+    {
+      "brand": "real-media-pro",
+      "query_base": "perché i social fanno crescere la tua azienda con i fatturati e le vendite",
+      "query": "contenuti social che generano contatti",
+      "used_at": "2026-08-18T13:16:44+00:00",
+      "status": "reserved_for_content"
+    },
+    {
+      "brand": "real-media-pro",
+      "query_base": "perché i social fanno crescere la tua azienda con i fatturati e le vendite",
+      "query": "social proof fiducia clienti",
+      "used_at": "2026-08-18T13:16:44+00:00",
+      "status": "reserved_for_content"
+    },
+    {
+      "brand": "real-media-pro",
+      "query_base": "perché i social fanno crescere la tua azienda con i fatturati e le vendite",
+      "query": "marketing digitale crescita aziendale",
+      "used_at": "2026-08-18T13:16:44+00:00",
+      "status": "reserved_for_content"
+    }
+  ]
 }
