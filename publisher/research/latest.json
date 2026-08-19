@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-19T10:24:34+00:00",
+  "generated_at": "2026-08-19T14:30:03+00:00",
   "policy": {
     "query_source": "Google autocomplete suggestions",
     "avoid_duplicates": true,
@@ -15,16 +15,16 @@
     "f1-immobiliare": {
       "base_query": "agenzia delle entrate vendere comprare casa",
       "fresh_queries": [
-        "agenzia delle entrate plusvalenza vendita casa cosa sapere",
-        "agenzia delle entrate plusvalenza vendita casa come funziona",
-        "agenzia delle entrate prezzo valore compravendita spiegazione",
-        "agenzia delle entrate prezzo valore compravendita errori",
-        "agenzia delle entrate prezzo valore compravendita guida",
-        "agenzia delle entrate prezzo valore compravendita checklist",
-        "agenzia delle entrate prezzo valore compravendita cosa sapere",
-        "agenzia delle entrate prezzo valore compravendita come funziona",
-        "agenzia delle entrate rendita catastale vendita casa spiegazione",
-        "agenzia delle entrate rendita catastale vendita casa errori"
+        "agenzia delle entrate rendita catastale vendita casa guida",
+        "agenzia delle entrate rendita catastale vendita casa checklist",
+        "agenzia delle entrate rendita catastale vendita casa cosa sapere",
+        "agenzia delle entrate rendita catastale vendita casa come funziona",
+        "agenzia delle entrate prima casa vendita riacquisto spiegazione",
+        "agenzia delle entrate prima casa vendita riacquisto errori",
+        "agenzia delle entrate prima casa vendita riacquisto guida",
+        "agenzia delle entrate prima casa vendita riacquisto checklist",
+        "agenzia delle entrate prima casa vendita riacquisto cosa sapere",
+        "agenzia delle entrate prima casa vendita riacquisto come funziona"
       ],
       "official_sources": [
         "https://www.agenziaentrate.gov.it/portale/web/guest/schede/fabbricatiterreni/omi",
@@ -34,16 +34,16 @@
     "real-media-pro": {
       "base_query": "perché i social fanno crescere la tua azienda con i fatturati e le vendite",
       "fresh_queries": [
-        "sito web conversioni e vendite cosa sapere",
-        "sito web conversioni e vendite come funziona",
-        "shopify aumentare vendite ecommerce spiegazione",
-        "shopify aumentare vendite ecommerce errori",
-        "shopify aumentare vendite ecommerce guida",
-        "shopify aumentare vendite ecommerce checklist",
-        "shopify aumentare vendite ecommerce cosa sapere",
-        "shopify aumentare vendite ecommerce come funziona",
-        "ecommerce mobile conversioni spiegazione",
-        "ecommerce mobile conversioni errori"
+        "ecommerce mobile conversioni guida",
+        "ecommerce mobile conversioni checklist",
+        "ecommerce mobile conversioni cosa sapere",
+        "ecommerce mobile conversioni come funziona",
+        "contenuti social che generano contatti spiegazione",
+        "contenuti social che generano contatti errori",
+        "contenuti social che generano contatti guida",
+        "contenuti social che generano contatti checklist",
+        "contenuti social che generano contatti cosa sapere",
+        "contenuti social che generano contatti come funziona"
       ],
       "official_sources": [
         "https://www.facebook.com/business/ads/facebook-instagram-reels-ads",
