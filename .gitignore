@@ -3,9 +3,14 @@
 *.env
 !*.env.example
 postiz-stack/postiz.env
+postiz-stack/windows/postiz.env
 
 # Cloned upstream sources (kept separate from OSS code)
 postiz-stack/vendor/
+
+# Local disaster-recovery snapshots (can be synced to Google Drive)
+postiz-stack/offline-backups/
+postiz-stack/windows/offline-backups/
 
 # Generated social media
 publisher/media/generated/
