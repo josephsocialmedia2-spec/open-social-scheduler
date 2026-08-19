@@ -1,4 +1,4 @@
-name: Direct Social Publisher - Manual Only
+name: Direct Social Publisher - Automatic
 
 on:
   workflow_dispatch:
@@ -17,6 +17,14 @@ on:
         required: true
         default: false
         type: boolean
+  schedule:
+    # Automatic publication check every 15 minutes. Queue scheduled_at remains
+    # the source of truth, so nothing is published before its planned time.
+    - cron: '*/15 * * * *'
+  workflow_run:
+    # Also run immediately after a successful 4-hour content-production cycle.
+    workflows: ['Open Social Engine - 6 Every 4 Hours']
+    types: [completed]
 
 permissions:
   contents: write
@@ -28,8 +36,9 @@ concurrency:
 
 jobs:
   publish-due:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 35
     env:
       GH_TOKEN: ${{ github.token }}
       GITHUB_TOKEN: ${{ github.token }}
@@ -79,32 +88,61 @@ jobs:
       - name: Install publisher dependencies
         run: pip install -r publisher/requirements.txt
 
-      - name: Download latest rendered preview artifact
+      - name: Download recent rendered media
         id: media
         shell: bash
         run: |
-          RUN_ID=$(gh api "repos/${GITHUB_REPOSITORY}/actions/workflows/social-engine-daily.yml/runs?branch=main&status=success&per_page=20" --jq '.workflow_runs[0].id // empty')
-          if [ -z "$RUN_ID" ]; then
+          set -u
+          mkdir -p publisher/media/generated
+          AVAILABLE=false
+
+          if [ "${{ github.event_name }}" = "workflow_run" ]; then
+            RUN_IDS="${{ github.event.workflow_run.id }}"
+          else
+            RUN_IDS=$(gh api "repos/${GITHUB_REPOSITORY}/actions/workflows/social-engine-daily.yml/runs?branch=main&status=success&per_page=4" --jq '.workflow_runs[].id' 2>/dev/null || true)
+          fi
+
+          if [ -z "${RUN_IDS:-}" ]; then
             echo "No successful social-engine-daily run is available yet."
             echo "available=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
-          mkdir -p publisher/media/generated
-          if gh run download "$RUN_ID" -n "social-preview-$RUN_ID" -D publisher/media/generated; then
-            echo "Downloaded preview media from run $RUN_ID"
-            echo "available=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "Preview artifact unavailable for run $RUN_ID."
-            echo "available=false" >> "$GITHUB_OUTPUT"
-          fi
 
-      - name: Publish only when manually launched
+          for RUN_ID in $RUN_IDS; do
+            DOWNLOADED=false
+            for NAME in "social-deluxe-cycle-$RUN_ID" "social-deluxe-$RUN_ID" "social-preview-$RUN_ID"; do
+              if gh run download "$RUN_ID" -n "$NAME" -D publisher/media/generated >/dev/null 2>&1; then
+                echo "Downloaded $NAME from run $RUN_ID"
+                AVAILABLE=true
+                DOWNLOADED=true
+                break
+              fi
+            done
+            if [ "$DOWNLOADED" = "false" ]; then
+              echo "No compatible media artifact found for run $RUN_ID"
+            fi
+          done
+
+          echo "available=$AVAILABLE" >> "$GITHUB_OUTPUT"
+
+      - name: Publish approved jobs automatically when due
         if: steps.media.outputs.available == 'true'
         shell: bash
         run: |
-          ARGS=(--platforms "${{ inputs.platforms || 'all' }}" --strict)
-          if [ -n "${{ inputs.job_id }}" ]; then ARGS+=(--job-id "${{ inputs.job_id }}"); fi
-          if [ "${{ inputs.dry_run }}" = "true" ]; then ARGS+=(--dry-run); fi
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            PLATFORMS="${{ inputs.platforms }}"
+            JOB_ID="${{ inputs.job_id }}"
+            DRY_RUN="${{ inputs.dry_run }}"
+          else
+            PLATFORMS="all"
+            JOB_ID=""
+            DRY_RUN="false"
+          fi
+
+          ARGS=(--platforms "$PLATFORMS")
+          if [ -n "$JOB_ID" ]; then ARGS+=(--job-id "$JOB_ID"); fi
+          if [ "$DRY_RUN" = "true" ]; then ARGS+=(--dry-run --strict); fi
+
           python publisher/direct_api_entry.py "${ARGS[@]}"
 
       - name: Persist publication state
@@ -115,7 +153,7 @@ jobs:
           git config user.name 'open-social-engine'
           git config user.email 'open-social-engine@users.noreply.github.com'
           git add publisher/queue.json
-          git commit -m 'Update direct social publication state'
+          git commit -m 'Update automatic direct social publication state'
           git fetch origin main
           git rebase origin/main
           git push origin HEAD:main
