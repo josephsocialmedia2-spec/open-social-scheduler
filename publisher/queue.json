@@ -3303,7 +3303,7 @@
       "reused_visual_count": 0
     }
   ],
-  "updated_at": "2026-08-19T15:13:56+00:00",
+  "updated_at": "2026-08-19T15:50:22+00:00",
   "current_cycle": "2026-08-19T16:00",
   "visual_policy": "10 different images per content; prefer unseen history; controlled cross-content reuse only on source shortage"
 }
