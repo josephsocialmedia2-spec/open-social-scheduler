@@ -1,0 +1,69 @@
+name: Snapshot Postiz Offline
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/postiz-offline-snapshot.yml'
+      - 'postiz-stack/windows/INSTALLA_POSTIZ_WINDOWS.ps1'
+      - 'postiz-stack/windows/BACKUP_POSTIZ_WINDOWS.ps1'
+
+permissions:
+  contents: write
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    env:
+      POSTIZ_VERSION: v2.22.1
+      COMPOSE_COMMIT: dd4969e5e694cd009619a0d53cff14c21104580b
+      RELEASE_TAG: postiz-offline-v2.22.1
+    steps:
+      - name: Checkout Open Social Scheduler
+        uses: actions/checkout@v4
+
+      - name: Create independent Postiz source bundle
+        shell: bash
+        run: |
+          set -euo pipefail
+          git clone --branch "$POSTIZ_VERSION" https://github.com/gitroomhq/postiz-app.git postiz-app
+          git -C postiz-app bundle create "../postiz-app-${POSTIZ_VERSION}.bundle" --all
+
+      - name: Create independent Docker Compose bundle
+        shell: bash
+        run: |
+          set -euo pipefail
+          git clone https://github.com/gitroomhq/postiz-docker-compose.git postiz-docker-compose
+          git -C postiz-docker-compose checkout --detach "$COMPOSE_COMMIT"
+          git -C postiz-docker-compose bundle create ../postiz-docker-compose.bundle --all
+
+      - name: Create manifest and checksums
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat > postiz-offline-manifest.txt <<EOF
+          Open Social Scheduler - independent Postiz recovery snapshot
+          Postiz version: ${POSTIZ_VERSION}
+          Docker Compose commit: ${COMPOSE_COMMIT}
+          Created by: ${GITHUB_REPOSITORY}@${GITHUB_SHA}
+          EOF
+          sha256sum "postiz-app-${POSTIZ_VERSION}.bundle" postiz-docker-compose.bundle > SHA256SUMS.txt
+
+      - name: Publish recovery release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if ! gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
+            gh release create "$RELEASE_TAG" \
+              --title "Postiz offline recovery ${POSTIZ_VERSION}" \
+              --notes "Independent source snapshots used by Open Social Scheduler for disaster recovery. Upstream license notices remain inside the source bundle."
+          fi
+          gh release upload "$RELEASE_TAG" \
+            "postiz-app-${POSTIZ_VERSION}.bundle" \
+            postiz-docker-compose.bundle \
+            postiz-offline-manifest.txt \
+            SHA256SUMS.txt \
+            --clobber
