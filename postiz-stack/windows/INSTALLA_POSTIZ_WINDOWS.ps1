@@ -9,6 +9,7 @@ $ComposeFile = Join-Path $ComposeRepo 'docker-compose.yaml'
 $OverrideFile = Join-Path $StackRoot 'docker-compose.override.yml'
 $EnvFile = Join-Path $PSScriptRoot 'postiz.env'
 $BackupScript = Join-Path $PSScriptRoot 'BACKUP_POSTIZ_WINDOWS.ps1'
+$ScheduleScript = Join-Path $PSScriptRoot 'ATTIVA_BACKUP_AUTOMATICO_POSTIZ_WINDOWS.ps1'
 $BaseUrl = 'http://localhost:4007'
 $PostizVersion = 'v2.22.1'
 $ComposeCommit = 'dd4969e5e694cd009619a0d53cff14c21104580b'
@@ -157,6 +158,15 @@ if (Test-Path $BackupScript) {
         & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $BackupScript
     } catch {
         Write-Warning "Postiz e avviato, ma il backup iniziale non e riuscito: $($_.Exception.Message)"
+    }
+}
+
+# Daily data backup. Docker images remain pinned and are already included in the initial full snapshot.
+if (Test-Path $ScheduleScript) {
+    try {
+        & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $ScheduleScript
+    } catch {
+        Write-Warning "Backup automatico non registrato: $($_.Exception.Message). Puoi eseguire ATTIVA_BACKUP_AUTOMATICO_POSTIZ_WINDOWS.bat."
     }
 }
 
