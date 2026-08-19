@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-18T22:19:56+00:00",
+  "generated_at": "2026-08-19T10:24:34+00:00",
   "policy": {
     "query_source": "Google autocomplete suggestions",
     "avoid_duplicates": true,
@@ -15,16 +15,16 @@
     "f1-immobiliare": {
       "base_query": "agenzia delle entrate vendere comprare casa",
       "fresh_queries": [
-        "agenzia delle entrate tasse vendita casa ereditata spiegazione",
-        "agenzia delle entrate tasse vendita casa ereditata errori",
-        "agenzia delle entrate tasse vendita casa ereditata guida",
-        "agenzia delle entrate tasse vendita casa ereditata checklist",
-        "agenzia delle entrate tasse vendita casa ereditata cosa sapere",
-        "agenzia delle entrate tasse vendita casa ereditata come funziona",
-        "agenzia delle entrate plusvalenza vendita casa spiegazione",
-        "agenzia delle entrate plusvalenza vendita casa errori",
-        "agenzia delle entrate plusvalenza vendita casa guida",
-        "agenzia delle entrate plusvalenza vendita casa checklist"
+        "agenzia delle entrate plusvalenza vendita casa cosa sapere",
+        "agenzia delle entrate plusvalenza vendita casa come funziona",
+        "agenzia delle entrate prezzo valore compravendita spiegazione",
+        "agenzia delle entrate prezzo valore compravendita errori",
+        "agenzia delle entrate prezzo valore compravendita guida",
+        "agenzia delle entrate prezzo valore compravendita checklist",
+        "agenzia delle entrate prezzo valore compravendita cosa sapere",
+        "agenzia delle entrate prezzo valore compravendita come funziona",
+        "agenzia delle entrate rendita catastale vendita casa spiegazione",
+        "agenzia delle entrate rendita catastale vendita casa errori"
       ],
       "official_sources": [
         "https://www.agenziaentrate.gov.it/portale/web/guest/schede/fabbricatiterreni/omi",
@@ -34,16 +34,16 @@
     "real-media-pro": {
       "base_query": "perché i social fanno crescere la tua azienda con i fatturati e le vendite",
       "fresh_queries": [
-        "come trasformare follower in clienti spiegazione",
-        "come trasformare follower in clienti errori",
-        "come trasformare follower in clienti guida",
-        "come trasformare follower in clienti checklist",
-        "come trasformare follower in clienti cosa sapere",
-        "come trasformare follower in clienti come funziona",
-        "sito web conversioni e vendite spiegazione",
-        "sito web conversioni e vendite errori",
-        "sito web conversioni e vendite guida",
-        "sito web conversioni e vendite checklist"
+        "sito web conversioni e vendite cosa sapere",
+        "sito web conversioni e vendite come funziona",
+        "shopify aumentare vendite ecommerce spiegazione",
+        "shopify aumentare vendite ecommerce errori",
+        "shopify aumentare vendite ecommerce guida",
+        "shopify aumentare vendite ecommerce checklist",
+        "shopify aumentare vendite ecommerce cosa sapere",
+        "shopify aumentare vendite ecommerce come funziona",
+        "ecommerce mobile conversioni spiegazione",
+        "ecommerce mobile conversioni errori"
       ],
       "official_sources": [
         "https://www.facebook.com/business/ads/facebook-instagram-reels-ads",
