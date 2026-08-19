@@ -77,12 +77,12 @@ if (Test-Path $ComposeFile) {
     Copy-Item $ComposeFile (Join-Path $BackupDir 'docker-compose.yaml') -Force
 }
 
-# 3) Databases and media. These contain the operational state needed to continue publishing.
+# 3) Databases and media. Dumps are restorable into a clean host.
 if ((docker ps --format '{{.Names}}') -contains 'postiz-postgres') {
-    & docker exec postiz-postgres pg_dump -U postiz-user -d postiz-db-local | Set-Content -Encoding UTF8 (Join-Path $BackupDir 'postiz-db.sql')
+    & docker exec postiz-postgres pg_dump --clean --if-exists --create -U postiz-user -d postiz-db-local | Set-Content -Encoding UTF8 (Join-Path $BackupDir 'postiz-db.sql')
 }
 if ((docker ps --format '{{.Names}}') -contains 'temporal-postgresql') {
-    & docker exec temporal-postgresql pg_dumpall -U temporal | Set-Content -Encoding UTF8 (Join-Path $BackupDir 'temporal-db.sql')
+    & docker exec temporal-postgresql pg_dumpall --clean --if-exists -U temporal | Set-Content -Encoding UTF8 (Join-Path $BackupDir 'temporal-db.sql')
 }
 if ((docker ps --format '{{.Names}}') -contains 'postiz-redis') {
     & docker exec postiz-redis redis-cli SAVE | Out-Null
