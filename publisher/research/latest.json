@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-20T06:39:45+00:00",
+  "generated_at": "2026-08-20T10:26:11+00:00",
   "policy": {
     "query_source": "Google autocomplete suggestions",
     "avoid_duplicates": true,
@@ -14,12 +14,7 @@
   "brands": {
     "f1-immobiliare": {
       "base_query": "agenzia delle entrate vendere comprare casa",
-      "fresh_queries": [
-        "agenzia delle entrate omi quotazioni immobiliari guida",
-        "agenzia delle entrate omi quotazioni immobiliari checklist",
-        "agenzia delle entrate omi quotazioni immobiliari cosa sapere",
-        "agenzia delle entrate omi quotazioni immobiliari come funziona"
-      ],
+      "fresh_queries": [],
       "official_sources": [
         "https://www.agenziaentrate.gov.it/portale/web/guest/schede/fabbricatiterreni/omi",
         "https://www.agenziaentrate.gov.it/portale/web/guest/cittadini/acquisto-o-vendita-di-un-immobile"
@@ -27,12 +22,7 @@
     },
     "real-media-pro": {
       "base_query": "perché i social fanno crescere la tua azienda con i fatturati e le vendite",
-      "fresh_queries": [
-        "funnel social sito vendita guida",
-        "funnel social sito vendita checklist",
-        "funnel social sito vendita cosa sapere",
-        "funnel social sito vendita come funziona"
-      ],
+      "fresh_queries": [],
       "official_sources": [
         "https://www.facebook.com/business/ads/facebook-instagram-reels-ads",
         "https://www.facebook.com/business/ads/ad-creative",
