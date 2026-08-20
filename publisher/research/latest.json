@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-20T02:53:51+00:00",
+  "generated_at": "2026-08-20T06:39:45+00:00",
   "policy": {
     "query_source": "Google autocomplete suggestions",
     "avoid_duplicates": true,
@@ -15,16 +15,10 @@
     "f1-immobiliare": {
       "base_query": "agenzia delle entrate vendere comprare casa",
       "fresh_queries": [
-        "agenzia delle entrate guida acquisto casa cosa sapere",
-        "agenzia delle entrate guida acquisto casa come funziona",
-        "agenzia delle entrate valore dichiarato immobile spiegazione",
-        "agenzia delle entrate valore dichiarato immobile errori",
-        "agenzia delle entrate valore dichiarato immobile guida",
-        "agenzia delle entrate valore dichiarato immobile checklist",
-        "agenzia delle entrate valore dichiarato immobile cosa sapere",
-        "agenzia delle entrate valore dichiarato immobile come funziona",
-        "agenzia delle entrate omi quotazioni immobiliari spiegazione",
-        "agenzia delle entrate omi quotazioni immobiliari errori"
+        "agenzia delle entrate omi quotazioni immobiliari guida",
+        "agenzia delle entrate omi quotazioni immobiliari checklist",
+        "agenzia delle entrate omi quotazioni immobiliari cosa sapere",
+        "agenzia delle entrate omi quotazioni immobiliari come funziona"
       ],
       "official_sources": [
         "https://www.agenziaentrate.gov.it/portale/web/guest/schede/fabbricatiterreni/omi",
@@ -34,16 +28,10 @@
     "real-media-pro": {
       "base_query": "perché i social fanno crescere la tua azienda con i fatturati e le vendite",
       "fresh_queries": [
-        "marketing digitale crescita aziendale cosa sapere",
-        "marketing digitale crescita aziendale come funziona",
-        "reel per aziende e vendite spiegazione",
-        "reel per aziende e vendite errori",
-        "reel per aziende e vendite guida",
-        "reel per aziende e vendite checklist",
-        "reel per aziende e vendite cosa sapere",
-        "reel per aziende e vendite come funziona",
-        "funnel social sito vendita spiegazione",
-        "funnel social sito vendita errori"
+        "funnel social sito vendita guida",
+        "funnel social sito vendita checklist",
+        "funnel social sito vendita cosa sapere",
+        "funnel social sito vendita come funziona"
       ],
       "official_sources": [
         "https://www.facebook.com/business/ads/facebook-instagram-reels-ads",
