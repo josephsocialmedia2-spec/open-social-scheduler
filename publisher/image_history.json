@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-08-20T10:44:16Z",
+  "updated_at": "2026-08-20T15:10:28Z",
   "brands": {
     "f1-immobiliare": {
       "recent": [
@@ -1443,6 +1443,186 @@
           "url": "https://cdn.pixabay.com/photo/2019/06/04/05/48/architecture-4250717_1280.jpg",
           "used_at": "2026-08-20T10:32:26Z",
           "job_id": "f1-immobiliare-2026-08-20-c12-03-08-g5-non-solo-quanto-vale"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2020/04/30/23/08/house-5114887_960_720.jpg",
+          "url": "https://cdn.pixabay.com/photo/2020/04/30/23/08/house-5114887_960_720.jpg",
+          "used_at": "2026-08-20T14:40:36Z",
+          "job_id": "f1-immobiliare-2026-08-20-c16-01-07-g4-novanta-giorni"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2015/11/06/11/40/multi-family-home-1026386.jpg",
+          "url": "https://cdn.pixabay.com/photo/2015/11/06/11/40/multi-family-home-1026386_1280.jpg",
+          "used_at": "2026-08-20T14:40:36Z",
+          "job_id": "f1-immobiliare-2026-08-20-c16-01-07-g4-novanta-giorni"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2022/05/18/23/08/architecture-7206298_960_720.jpg",
+          "url": "https://cdn.pixabay.com/photo/2022/05/18/23/08/architecture-7206298_960_720.jpg",
+          "used_at": "2026-08-20T14:40:36Z",
+          "job_id": "f1-immobiliare-2026-08-20-c16-01-07-g4-novanta-giorni"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2023/11/07/13/44/house-8372418.jpg",
+          "url": "https://cdn.pixabay.com/photo/2023/11/07/13/44/house-8372418_1280.jpg",
+          "used_at": "2026-08-20T14:40:36Z",
+          "job_id": "f1-immobiliare-2026-08-20-c16-01-07-g4-novanta-giorni"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2017/11/16/15/06/architecture-2954880.jpg",
+          "url": "https://cdn.pixabay.com/photo/2017/11/16/15/06/architecture-2954880_1280.jpg",
+          "used_at": "2026-08-20T14:40:36Z",
+          "job_id": "f1-immobiliare-2026-08-20-c16-01-07-g4-novanta-giorni"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2017/06/17/10/52/architecture-2411844.jpg",
+          "url": "https://cdn.pixabay.com/photo/2017/06/17/10/52/architecture-2411844_1280.jpg",
+          "used_at": "2026-08-20T14:40:36Z",
+          "job_id": "f1-immobiliare-2026-08-20-c16-01-07-g4-novanta-giorni"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2016/08/21/18/36/home-1610485.jpg",
+          "url": "https://cdn.pixabay.com/photo/2016/08/21/18/36/home-1610485_1280.jpg",
+          "used_at": "2026-08-20T14:40:36Z",
+          "job_id": "f1-immobiliare-2026-08-20-c16-01-07-g4-novanta-giorni"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2020/04/12/08/23/architecture-5033283.jpg",
+          "url": "https://cdn.pixabay.com/photo/2020/04/12/08/23/architecture-5033283_1280.jpg",
+          "used_at": "2026-08-20T14:40:36Z",
+          "job_id": "f1-immobiliare-2026-08-20-c16-01-07-g4-novanta-giorni"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2022/05/18/23/16/home-7206309_960_720.jpg",
+          "url": "https://cdn.pixabay.com/photo/2022/05/18/23/16/home-7206309_960_720.jpg",
+          "used_at": "2026-08-20T14:40:36Z",
+          "job_id": "f1-immobiliare-2026-08-20-c16-01-07-g4-novanta-giorni"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2018/09/06/20/16/architecture-3659212_960_720.jpg",
+          "url": "https://cdn.pixabay.com/photo/2018/09/06/20/16/architecture-3659212_960_720.jpg",
+          "used_at": "2026-08-20T14:40:36Z",
+          "job_id": "f1-immobiliare-2026-08-20-c16-01-07-g4-novanta-giorni"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2020/04/30/23/08/house-5114887_960_720.jpg",
+          "url": "https://cdn.pixabay.com/photo/2020/04/30/23/08/house-5114887_960_720.jpg",
+          "used_at": "2026-08-20T14:47:55Z",
+          "job_id": "f1-immobiliare-2026-08-20-c16-02-09-g6-controllare-concorrenza"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2017/09/12/18/22/architecture-2743155.jpg",
+          "url": "https://cdn.pixabay.com/photo/2017/09/12/18/22/architecture-2743155_1280.jpg",
+          "used_at": "2026-08-20T14:47:55Z",
+          "job_id": "f1-immobiliare-2026-08-20-c16-02-09-g6-controllare-concorrenza"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2020/03/18/07/13/architecture-4943018_960_720.jpg",
+          "url": "https://cdn.pixabay.com/photo/2020/03/18/07/13/architecture-4943018_960_720.jpg",
+          "used_at": "2026-08-20T14:47:55Z",
+          "job_id": "f1-immobiliare-2026-08-20-c16-02-09-g6-controllare-concorrenza"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2015/11/06/11/40/multi-family-home-1026386.jpg",
+          "url": "https://cdn.pixabay.com/photo/2015/11/06/11/40/multi-family-home-1026386_1280.jpg",
+          "used_at": "2026-08-20T14:47:55Z",
+          "job_id": "f1-immobiliare-2026-08-20-c16-02-09-g6-controllare-concorrenza"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2022/05/18/23/08/architecture-7206298_960_720.jpg",
+          "url": "https://cdn.pixabay.com/photo/2022/05/18/23/08/architecture-7206298_960_720.jpg",
+          "used_at": "2026-08-20T14:47:55Z",
+          "job_id": "f1-immobiliare-2026-08-20-c16-02-09-g6-controllare-concorrenza"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2023/12/10/10/10/house-8440981.jpg",
+          "url": "https://cdn.pixabay.com/photo/2023/12/10/10/10/house-8440981_1280.jpg",
+          "used_at": "2026-08-20T14:47:55Z",
+          "job_id": "f1-immobiliare-2026-08-20-c16-02-09-g6-controllare-concorrenza"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2023/11/07/13/44/house-8372418.jpg",
+          "url": "https://cdn.pixabay.com/photo/2023/11/07/13/44/house-8372418_1280.jpg",
+          "used_at": "2026-08-20T14:47:55Z",
+          "job_id": "f1-immobiliare-2026-08-20-c16-02-09-g6-controllare-concorrenza"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2022/05/18/23/05/architecture-7206296.jpg",
+          "url": "https://cdn.pixabay.com/photo/2022/05/18/23/05/architecture-7206296_1280.jpg",
+          "used_at": "2026-08-20T14:47:55Z",
+          "job_id": "f1-immobiliare-2026-08-20-c16-02-09-g6-controllare-concorrenza"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2017/11/16/15/06/architecture-2954880.jpg",
+          "url": "https://cdn.pixabay.com/photo/2017/11/16/15/06/architecture-2954880_1280.jpg",
+          "used_at": "2026-08-20T14:47:55Z",
+          "job_id": "f1-immobiliare-2026-08-20-c16-02-09-g6-controllare-concorrenza"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2017/06/17/10/52/architecture-2411844.jpg",
+          "url": "https://cdn.pixabay.com/photo/2017/06/17/10/52/architecture-2411844_1280.jpg",
+          "used_at": "2026-08-20T14:47:55Z",
+          "job_id": "f1-immobiliare-2026-08-20-c16-02-09-g6-controllare-concorrenza"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2020/04/30/23/08/house-5114887_960_720.jpg",
+          "url": "https://cdn.pixabay.com/photo/2020/04/30/23/08/house-5114887_960_720.jpg",
+          "used_at": "2026-08-20T14:54:13Z",
+          "job_id": "f1-immobiliare-2026-08-20-c16-03-10-g7-cosa-guardiamo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2020/03/18/07/13/architecture-4943018_960_720.jpg",
+          "url": "https://cdn.pixabay.com/photo/2020/03/18/07/13/architecture-4943018_960_720.jpg",
+          "used_at": "2026-08-20T14:54:13Z",
+          "job_id": "f1-immobiliare-2026-08-20-c16-03-10-g7-cosa-guardiamo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2017/09/12/18/22/architecture-2743155.jpg",
+          "url": "https://cdn.pixabay.com/photo/2017/09/12/18/22/architecture-2743155_1280.jpg",
+          "used_at": "2026-08-20T14:54:13Z",
+          "job_id": "f1-immobiliare-2026-08-20-c16-03-10-g7-cosa-guardiamo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2015/11/06/11/40/multi-family-home-1026386.jpg",
+          "url": "https://cdn.pixabay.com/photo/2015/11/06/11/40/multi-family-home-1026386_1280.jpg",
+          "used_at": "2026-08-20T14:54:13Z",
+          "job_id": "f1-immobiliare-2026-08-20-c16-03-10-g7-cosa-guardiamo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2022/05/18/23/08/architecture-7206298_960_720.jpg",
+          "url": "https://cdn.pixabay.com/photo/2022/05/18/23/08/architecture-7206298_960_720.jpg",
+          "used_at": "2026-08-20T14:54:13Z",
+          "job_id": "f1-immobiliare-2026-08-20-c16-03-10-g7-cosa-guardiamo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2023/12/10/10/10/house-8440981.jpg",
+          "url": "https://cdn.pixabay.com/photo/2023/12/10/10/10/house-8440981_1280.jpg",
+          "used_at": "2026-08-20T14:54:13Z",
+          "job_id": "f1-immobiliare-2026-08-20-c16-03-10-g7-cosa-guardiamo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2023/11/07/13/44/house-8372418.jpg",
+          "url": "https://cdn.pixabay.com/photo/2023/11/07/13/44/house-8372418_1280.jpg",
+          "used_at": "2026-08-20T14:54:13Z",
+          "job_id": "f1-immobiliare-2026-08-20-c16-03-10-g7-cosa-guardiamo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2022/05/18/23/05/architecture-7206296.jpg",
+          "url": "https://cdn.pixabay.com/photo/2022/05/18/23/05/architecture-7206296_1280.jpg",
+          "used_at": "2026-08-20T14:54:13Z",
+          "job_id": "f1-immobiliare-2026-08-20-c16-03-10-g7-cosa-guardiamo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2017/06/17/10/52/architecture-2411844.jpg",
+          "url": "https://cdn.pixabay.com/photo/2017/06/17/10/52/architecture-2411844_1280.jpg",
+          "used_at": "2026-08-20T14:54:13Z",
+          "job_id": "f1-immobiliare-2026-08-20-c16-03-10-g7-cosa-guardiamo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2016/08/21/18/36/home-1610485.jpg",
+          "url": "https://cdn.pixabay.com/photo/2016/08/21/18/36/home-1610485_1280.jpg",
+          "used_at": "2026-08-20T14:54:13Z",
+          "job_id": "f1-immobiliare-2026-08-20-c16-03-10-g7-cosa-guardiamo"
         }
       ]
     },
@@ -2887,6 +3067,186 @@
           "url": "https://cdn.pixabay.com/photo/2014/12/30/08/10/social-media-583687_1280.jpg",
           "used_at": "2026-08-20T10:44:16Z",
           "job_id": "real-media-pro-2026-08-20-c12-03-08-crm-followup"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2023/10/05/07/13/contact-8295065.png",
+          "url": "https://cdn.pixabay.com/photo/2023/10/05/07/13/contact-8295065_1280.png",
+          "used_at": "2026-08-20T15:00:08Z",
+          "job_id": "real-media-pro-2026-08-20-c16-01-07-sito-che-perde-lead"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2024/01/03/06/35/ai-generated-8484741.png",
+          "url": "https://cdn.pixabay.com/photo/2024/01/03/06/35/ai-generated-8484741_1280.png",
+          "used_at": "2026-08-20T15:00:08Z",
+          "job_id": "real-media-pro-2026-08-20-c16-01-07-sito-che-perde-lead"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2015/05/31/10/51/technology-791029.jpg",
+          "url": "https://cdn.pixabay.com/photo/2015/05/31/10/51/technology-791029_1280.jpg",
+          "used_at": "2026-08-20T15:00:08Z",
+          "job_id": "real-media-pro-2026-08-20-c16-01-07-sito-che-perde-lead"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2024/02/26/14/13/laptop-8598085_960_720.jpg",
+          "url": "https://cdn.pixabay.com/photo/2024/02/26/14/13/laptop-8598085_960_720.jpg",
+          "used_at": "2026-08-20T15:00:08Z",
+          "job_id": "real-media-pro-2026-08-20-c16-01-07-sito-che-perde-lead"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2023/10/01/07/09/laptop-8286953_960_720.jpg",
+          "url": "https://cdn.pixabay.com/photo/2023/10/01/07/09/laptop-8286953_960_720.jpg",
+          "used_at": "2026-08-20T15:00:08Z",
+          "job_id": "real-media-pro-2026-08-20-c16-01-07-sito-che-perde-lead"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2016/11/19/13/08/business-1839191.jpg",
+          "url": "https://cdn.pixabay.com/photo/2016/11/19/13/08/business-1839191_1280.jpg",
+          "used_at": "2026-08-20T15:00:08Z",
+          "job_id": "real-media-pro-2026-08-20-c16-01-07-sito-che-perde-lead"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2016/11/29/01/36/businessman-1866582.jpg",
+          "url": "https://cdn.pixabay.com/photo/2016/11/29/01/36/businessman-1866582_1280.jpg",
+          "used_at": "2026-08-20T15:00:08Z",
+          "job_id": "real-media-pro-2026-08-20-c16-01-07-sito-che-perde-lead"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2020/01/26/20/14/computer-4795762.jpg",
+          "url": "https://cdn.pixabay.com/photo/2020/01/26/20/14/computer-4795762_1280.jpg",
+          "used_at": "2026-08-20T15:00:08Z",
+          "job_id": "real-media-pro-2026-08-20-c16-01-07-sito-che-perde-lead"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2020/03/06/08/00/laptop-4906312.jpg",
+          "url": "https://cdn.pixabay.com/photo/2020/03/06/08/00/laptop-4906312_1280.jpg",
+          "used_at": "2026-08-20T15:00:08Z",
+          "job_id": "real-media-pro-2026-08-20-c16-01-07-sito-che-perde-lead"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2017/04/14/17/22/laptops-2230826_960_720.jpg",
+          "url": "https://cdn.pixabay.com/photo/2017/04/14/17/22/laptops-2230826_960_720.jpg",
+          "used_at": "2026-08-20T15:00:08Z",
+          "job_id": "real-media-pro-2026-08-20-c16-01-07-sito-che-perde-lead"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2022/12/10/21/41/social-media-7647812_960_720.jpg",
+          "url": "https://cdn.pixabay.com/photo/2022/12/10/21/41/social-media-7647812_960_720.jpg",
+          "used_at": "2026-08-20T15:05:34Z",
+          "job_id": "real-media-pro-2026-08-20-c16-02-09-analisi-gratuita"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2016/12/19/08/41/mobile-phone-1917742.jpg",
+          "url": "https://cdn.pixabay.com/photo/2016/12/19/08/41/mobile-phone-1917742_1280.jpg",
+          "used_at": "2026-08-20T15:05:34Z",
+          "job_id": "real-media-pro-2026-08-20-c16-02-09-analisi-gratuita"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2018/04/10/09/00/mobile-phone-3306756.jpg",
+          "url": "https://cdn.pixabay.com/photo/2018/04/10/09/00/mobile-phone-3306756_1280.jpg",
+          "used_at": "2026-08-20T15:05:34Z",
+          "job_id": "real-media-pro-2026-08-20-c16-02-09-analisi-gratuita"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2018/07/31/21/12/iphone-3575947_960_720.jpg",
+          "url": "https://cdn.pixabay.com/photo/2018/07/31/21/12/iphone-3575947_960_720.jpg",
+          "used_at": "2026-08-20T15:05:34Z",
+          "job_id": "real-media-pro-2026-08-20-c16-02-09-analisi-gratuita"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2013/10/25/17/26/tree-200795.jpg",
+          "url": "https://cdn.pixabay.com/photo/2013/10/25/17/26/tree-200795_1280.jpg",
+          "used_at": "2026-08-20T15:05:34Z",
+          "job_id": "real-media-pro-2026-08-20-c16-02-09-analisi-gratuita"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2022/04/04/16/25/business-7111770.jpg",
+          "url": "https://cdn.pixabay.com/photo/2022/04/04/16/25/business-7111770_1280.jpg",
+          "used_at": "2026-08-20T15:05:34Z",
+          "job_id": "real-media-pro-2026-08-20-c16-02-09-analisi-gratuita"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2022/06/08/05/42/integration-7249768.jpg",
+          "url": "https://cdn.pixabay.com/photo/2022/06/08/05/42/integration-7249768_1280.jpg",
+          "used_at": "2026-08-20T15:05:34Z",
+          "job_id": "real-media-pro-2026-08-20-c16-02-09-analisi-gratuita"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2015/05/31/10/51/technology-791029.jpg",
+          "url": "https://cdn.pixabay.com/photo/2015/05/31/10/51/technology-791029_1280.jpg",
+          "used_at": "2026-08-20T15:05:34Z",
+          "job_id": "real-media-pro-2026-08-20-c16-02-09-analisi-gratuita"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2024/02/26/14/13/laptop-8598085_960_720.jpg",
+          "url": "https://cdn.pixabay.com/photo/2024/02/26/14/13/laptop-8598085_960_720.jpg",
+          "used_at": "2026-08-20T15:05:34Z",
+          "job_id": "real-media-pro-2026-08-20-c16-02-09-analisi-gratuita"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2023/10/01/07/09/laptop-8286953_960_720.jpg",
+          "url": "https://cdn.pixabay.com/photo/2023/10/01/07/09/laptop-8286953_960_720.jpg",
+          "used_at": "2026-08-20T15:05:34Z",
+          "job_id": "real-media-pro-2026-08-20-c16-02-09-analisi-gratuita"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2013/10/25/17/26/tree-200795.jpg",
+          "url": "https://cdn.pixabay.com/photo/2013/10/25/17/26/tree-200795_1280.jpg",
+          "used_at": "2026-08-20T15:10:28Z",
+          "job_id": "real-media-pro-2026-08-20-c16-03-10-google-ads-intento"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2022/04/04/16/25/business-7111770.jpg",
+          "url": "https://cdn.pixabay.com/photo/2022/04/04/16/25/business-7111770_1280.jpg",
+          "used_at": "2026-08-20T15:10:28Z",
+          "job_id": "real-media-pro-2026-08-20-c16-03-10-google-ads-intento"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2022/06/08/05/42/integration-7249768.jpg",
+          "url": "https://cdn.pixabay.com/photo/2022/06/08/05/42/integration-7249768_1280.jpg",
+          "used_at": "2026-08-20T15:10:28Z",
+          "job_id": "real-media-pro-2026-08-20-c16-03-10-google-ads-intento"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2015/05/31/10/51/technology-791029.jpg",
+          "url": "https://cdn.pixabay.com/photo/2015/05/31/10/51/technology-791029_1280.jpg",
+          "used_at": "2026-08-20T15:10:28Z",
+          "job_id": "real-media-pro-2026-08-20-c16-03-10-google-ads-intento"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2024/02/26/14/13/laptop-8598085_960_720.jpg",
+          "url": "https://cdn.pixabay.com/photo/2024/02/26/14/13/laptop-8598085_960_720.jpg",
+          "used_at": "2026-08-20T15:10:28Z",
+          "job_id": "real-media-pro-2026-08-20-c16-03-10-google-ads-intento"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2017/06/29/01/02/business-man-2452808.jpg",
+          "url": "https://cdn.pixabay.com/photo/2017/06/29/01/02/business-man-2452808_1280.jpg",
+          "used_at": "2026-08-20T15:10:28Z",
+          "job_id": "real-media-pro-2026-08-20-c16-03-10-google-ads-intento"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2023/09/06/06/37/laptop-8236497.jpg",
+          "url": "https://cdn.pixabay.com/photo/2023/09/06/06/37/laptop-8236497_1280.jpg",
+          "used_at": "2026-08-20T15:10:28Z",
+          "job_id": "real-media-pro-2026-08-20-c16-03-10-google-ads-intento"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2026/02/19/06/50/u_ksgszajtc6-laptop-10132318_960_720.png",
+          "url": "https://cdn.pixabay.com/photo/2026/02/19/06/50/u_ksgszajtc6-laptop-10132318_960_720.png",
+          "used_at": "2026-08-20T15:10:28Z",
+          "job_id": "real-media-pro-2026-08-20-c16-03-10-google-ads-intento"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2023/10/01/07/09/laptop-8286953_960_720.jpg",
+          "url": "https://cdn.pixabay.com/photo/2023/10/01/07/09/laptop-8286953_960_720.jpg",
+          "used_at": "2026-08-20T15:10:28Z",
+          "job_id": "real-media-pro-2026-08-20-c16-03-10-google-ads-intento"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2016/11/19/13/08/business-1839191.jpg",
+          "url": "https://cdn.pixabay.com/photo/2016/11/19/13/08/business-1839191_1280.jpg",
+          "used_at": "2026-08-20T15:10:28Z",
+          "job_id": "real-media-pro-2026-08-20-c16-03-10-google-ads-intento"
         }
       ]
     }
