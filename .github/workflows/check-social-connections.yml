@@ -1,0 +1,58 @@
+name: Check Social Connections
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/check-social-connections.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    env:
+      F1_FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.F1_FACEBOOK_PAGE_ACCESS_TOKEN }}
+      F1_INSTAGRAM_ACCESS_TOKEN: ${{ secrets.F1_INSTAGRAM_ACCESS_TOKEN }}
+      F1_INSTAGRAM_USER_ID: ${{ secrets.F1_INSTAGRAM_USER_ID }}
+      F1_TIKTOK_ACCESS_TOKEN: ${{ secrets.F1_TIKTOK_ACCESS_TOKEN }}
+      F1_LINKEDIN_ACCESS_TOKEN: ${{ secrets.F1_LINKEDIN_ACCESS_TOKEN }}
+      F1_LINKEDIN_AUTHOR_URN: ${{ secrets.F1_LINKEDIN_AUTHOR_URN }}
+      F1_YOUTUBE_CLIENT_ID: ${{ secrets.F1_YOUTUBE_CLIENT_ID }}
+      F1_YOUTUBE_CLIENT_SECRET: ${{ secrets.F1_YOUTUBE_CLIENT_SECRET }}
+      F1_YOUTUBE_REFRESH_TOKEN: ${{ secrets.F1_YOUTUBE_REFRESH_TOKEN }}
+      F1_PINTEREST_ACCESS_TOKEN: ${{ secrets.F1_PINTEREST_ACCESS_TOKEN }}
+      F1_PINTEREST_BOARD_ID: ${{ secrets.F1_PINTEREST_BOARD_ID }}
+    steps:
+      - name: Report connection readiness without exposing secrets
+        shell: bash
+        run: |
+          set -euo pipefail
+          check() {
+            local label="$1"; shift
+            local ok=true
+            local missing=()
+            for name in "$@"; do
+              if [ -z "${!name:-}" ]; then
+                ok=false
+                missing+=("$name")
+              fi
+            done
+            if [ "$ok" = true ]; then
+              echo "✅ $label: PRONTO" >> "$GITHUB_STEP_SUMMARY"
+            else
+              echo "❌ $label: MANCANO ${missing[*]}" >> "$GITHUB_STEP_SUMMARY"
+            fi
+          }
+
+          echo '# Stato collegamenti social F1' >> "$GITHUB_STEP_SUMMARY"
+          echo '' >> "$GITHUB_STEP_SUMMARY"
+          check 'Facebook' F1_FACEBOOK_PAGE_ACCESS_TOKEN
+          check 'Instagram' F1_INSTAGRAM_ACCESS_TOKEN F1_INSTAGRAM_USER_ID
+          check 'TikTok' F1_TIKTOK_ACCESS_TOKEN
+          check 'LinkedIn' F1_LINKEDIN_ACCESS_TOKEN F1_LINKEDIN_AUTHOR_URN
+          check 'YouTube' F1_YOUTUBE_CLIENT_ID F1_YOUTUBE_CLIENT_SECRET F1_YOUTUBE_REFRESH_TOKEN
+          check 'Pinterest' F1_PINTEREST_ACCESS_TOKEN F1_PINTEREST_BOARD_ID
+          echo '' >> "$GITHUB_STEP_SUMMARY"
+          echo 'I valori dei secret non vengono mai stampati.' >> "$GITHUB_STEP_SUMMARY"
