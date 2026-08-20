@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-08-20T07:15:59Z",
+  "updated_at": "2026-08-20T10:44:16Z",
   "brands": {
     "f1-immobiliare": {
       "recent": [
@@ -1263,6 +1263,186 @@
           "url": "https://cdn.pixabay.com/photo/2015/11/06/11/40/multi-family-home-1026386_1280.jpg",
           "used_at": "2026-08-20T07:01:12Z",
           "job_id": "f1-immobiliare-2026-08-20-c08-03-06-g3-check-microzona"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2025/08/29/17/52/modern-villa-exterior-9804538.jpg",
+          "url": "https://cdn.pixabay.com/photo/2025/08/29/17/52/modern-villa-exterior-9804538_1280.jpg",
+          "used_at": "2026-08-20T10:27:06Z",
+          "job_id": "f1-immobiliare-2026-08-20-c12-01-03-g7-cosa-vede-compratore"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2025/08/29/17/52/luxury-villa-facade-9804536.jpg",
+          "url": "https://cdn.pixabay.com/photo/2025/08/29/17/52/luxury-villa-facade-9804536_1280.jpg",
+          "used_at": "2026-08-20T10:27:06Z",
+          "job_id": "f1-immobiliare-2026-08-20-c12-01-03-g7-cosa-vede-compratore"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2025/08/25/10/19/living-room-9795892.jpg",
+          "url": "https://cdn.pixabay.com/photo/2025/08/25/10/19/living-room-9795892_1280.jpg",
+          "used_at": "2026-08-20T10:27:06Z",
+          "job_id": "f1-immobiliare-2026-08-20-c12-01-03-g7-cosa-vede-compratore"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2017/09/15/15/22/modern-2752472.jpg",
+          "url": "https://cdn.pixabay.com/photo/2017/09/15/15/22/modern-2752472_1280.jpg",
+          "used_at": "2026-08-20T10:27:06Z",
+          "job_id": "f1-immobiliare-2026-08-20-c12-01-03-g7-cosa-vede-compratore"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2023/12/11/06/20/real-estate-8442802.jpg",
+          "url": "https://cdn.pixabay.com/photo/2023/12/11/06/20/real-estate-8442802_1280.jpg",
+          "used_at": "2026-08-20T10:27:06Z",
+          "job_id": "f1-immobiliare-2026-08-20-c12-01-03-g7-cosa-vede-compratore"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2024/03/27/10/34/apartment-8658767.jpg",
+          "url": "https://cdn.pixabay.com/photo/2024/03/27/10/34/apartment-8658767_1280.jpg",
+          "used_at": "2026-08-20T10:27:06Z",
+          "job_id": "f1-immobiliare-2026-08-20-c12-01-03-g7-cosa-vede-compratore"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2023/09/18/12/05/kitchen-8260437.jpg",
+          "url": "https://cdn.pixabay.com/photo/2023/09/18/12/05/kitchen-8260437_1280.jpg",
+          "used_at": "2026-08-20T10:27:06Z",
+          "job_id": "f1-immobiliare-2026-08-20-c12-01-03-g7-cosa-vede-compratore"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2024/02/06/07/01/bathroom-8556101.jpg",
+          "url": "https://cdn.pixabay.com/photo/2024/02/06/07/01/bathroom-8556101_1280.jpg",
+          "used_at": "2026-08-20T10:27:06Z",
+          "job_id": "f1-immobiliare-2026-08-20-c12-01-03-g7-cosa-vede-compratore"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2023/12/04/01/27/real-estate-8428506.jpg",
+          "url": "https://cdn.pixabay.com/photo/2023/12/04/01/27/real-estate-8428506_1280.jpg",
+          "used_at": "2026-08-20T10:27:06Z",
+          "job_id": "f1-immobiliare-2026-08-20-c12-01-03-g7-cosa-vede-compratore"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2024/02/14/07/08/bedroom-8572584.jpg",
+          "url": "https://cdn.pixabay.com/photo/2024/02/14/07/08/bedroom-8572584_1280.jpg",
+          "used_at": "2026-08-20T10:27:06Z",
+          "job_id": "f1-immobiliare-2026-08-20-c12-01-03-g7-cosa-vede-compratore"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2020/02/09/03/30/villa-4831848.jpg",
+          "url": "https://cdn.pixabay.com/photo/2020/02/09/03/30/villa-4831848_1280.jpg",
+          "used_at": "2026-08-20T10:29:54Z",
+          "job_id": "f1-immobiliare-2026-08-20-c12-02-05-g2-proviamo-alto"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2018/04/08/00/35/home-3300086_960_720.jpg",
+          "url": "https://cdn.pixabay.com/photo/2018/04/08/00/35/home-3300086_960_720.jpg",
+          "used_at": "2026-08-20T10:29:54Z",
+          "job_id": "f1-immobiliare-2026-08-20-c12-02-05-g2-proviamo-alto"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2014/09/05/17/42/architecture-436458_960_720.jpg",
+          "url": "https://cdn.pixabay.com/photo/2014/09/05/17/42/architecture-436458_960_720.jpg",
+          "used_at": "2026-08-20T10:29:54Z",
+          "job_id": "f1-immobiliare-2026-08-20-c12-02-05-g2-proviamo-alto"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2019/06/04/05/49/architecture-4250725.jpg",
+          "url": "https://cdn.pixabay.com/photo/2019/06/04/05/49/architecture-4250725_1280.jpg",
+          "used_at": "2026-08-20T10:29:54Z",
+          "job_id": "f1-immobiliare-2026-08-20-c12-02-05-g2-proviamo-alto"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2019/06/04/05/49/architecture-4250719.jpg",
+          "url": "https://cdn.pixabay.com/photo/2019/06/04/05/49/architecture-4250719_1280.jpg",
+          "used_at": "2026-08-20T10:29:54Z",
+          "job_id": "f1-immobiliare-2026-08-20-c12-02-05-g2-proviamo-alto"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2018/07/14/17/33/architecture-3538062.jpg",
+          "url": "https://cdn.pixabay.com/photo/2018/07/14/17/33/architecture-3538062_1280.jpg",
+          "used_at": "2026-08-20T10:29:54Z",
+          "job_id": "f1-immobiliare-2026-08-20-c12-02-05-g2-proviamo-alto"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2017/08/01/18/08/architecture-2567019.jpg",
+          "url": "https://cdn.pixabay.com/photo/2017/08/01/18/08/architecture-2567019_1280.jpg",
+          "used_at": "2026-08-20T10:29:54Z",
+          "job_id": "f1-immobiliare-2026-08-20-c12-02-05-g2-proviamo-alto"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2018/05/06/12/15/architecture-3378441.jpg",
+          "url": "https://cdn.pixabay.com/photo/2018/05/06/12/15/architecture-3378441_1280.jpg",
+          "used_at": "2026-08-20T10:29:54Z",
+          "job_id": "f1-immobiliare-2026-08-20-c12-02-05-g2-proviamo-alto"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2018/04/05/13/09/architecture-3292801.jpg",
+          "url": "https://cdn.pixabay.com/photo/2018/04/05/13/09/architecture-3292801_1280.jpg",
+          "used_at": "2026-08-20T10:29:54Z",
+          "job_id": "f1-immobiliare-2026-08-20-c12-02-05-g2-proviamo-alto"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2010/12/13/10/01/architecture-2130.jpg",
+          "url": "https://cdn.pixabay.com/photo/2010/12/13/10/01/architecture-2130_1280.jpg",
+          "used_at": "2026-08-20T10:29:54Z",
+          "job_id": "f1-immobiliare-2026-08-20-c12-02-05-g2-proviamo-alto"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2021/05/06/19/47/house-6234461_960_720.png",
+          "url": "https://cdn.pixabay.com/photo/2021/05/06/19/47/house-6234461_960_720.png",
+          "used_at": "2026-08-20T10:32:26Z",
+          "job_id": "f1-immobiliare-2026-08-20-c12-03-08-g5-non-solo-quanto-vale"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2024/06/09/12/59/home-8818675.jpg",
+          "url": "https://cdn.pixabay.com/photo/2024/06/09/12/59/home-8818675_1280.jpg",
+          "used_at": "2026-08-20T10:32:26Z",
+          "job_id": "f1-immobiliare-2026-08-20-c12-03-08-g5-non-solo-quanto-vale"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2017/07/01/22/14/architecture-2462938.jpg",
+          "url": "https://cdn.pixabay.com/photo/2017/07/01/22/14/architecture-2462938_1280.jpg",
+          "used_at": "2026-08-20T10:32:26Z",
+          "job_id": "f1-immobiliare-2026-08-20-c12-03-08-g5-non-solo-quanto-vale"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2023/06/30/13/53/architecture-8098404.jpg",
+          "url": "https://cdn.pixabay.com/photo/2023/06/30/13/53/architecture-8098404_1280.jpg",
+          "used_at": "2026-08-20T10:32:26Z",
+          "job_id": "f1-immobiliare-2026-08-20-c12-03-08-g5-non-solo-quanto-vale"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2018/03/25/18/54/architecture-3260311.jpg",
+          "url": "https://cdn.pixabay.com/photo/2018/03/25/18/54/architecture-3260311_1280.jpg",
+          "used_at": "2026-08-20T10:32:26Z",
+          "job_id": "f1-immobiliare-2026-08-20-c12-03-08-g5-non-solo-quanto-vale"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2024/06/09/12/59/home-8818678_960_720.jpg",
+          "url": "https://cdn.pixabay.com/photo/2024/06/09/12/59/home-8818678_960_720.jpg",
+          "used_at": "2026-08-20T10:32:26Z",
+          "job_id": "f1-immobiliare-2026-08-20-c12-03-08-g5-non-solo-quanto-vale"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2023/11/25/11/13/architecture-8411571_960_720.jpg",
+          "url": "https://cdn.pixabay.com/photo/2023/11/25/11/13/architecture-8411571_960_720.jpg",
+          "used_at": "2026-08-20T10:32:26Z",
+          "job_id": "f1-immobiliare-2026-08-20-c12-03-08-g5-non-solo-quanto-vale"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2024/06/09/12/59/home-8818676.jpg",
+          "url": "https://cdn.pixabay.com/photo/2024/06/09/12/59/home-8818676_1280.jpg",
+          "used_at": "2026-08-20T10:32:26Z",
+          "job_id": "f1-immobiliare-2026-08-20-c12-03-08-g5-non-solo-quanto-vale"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2018/10/22/16/22/design-3765738.jpg",
+          "url": "https://cdn.pixabay.com/photo/2018/10/22/16/22/design-3765738_1280.jpg",
+          "used_at": "2026-08-20T10:32:26Z",
+          "job_id": "f1-immobiliare-2026-08-20-c12-03-08-g5-non-solo-quanto-vale"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2019/06/04/05/48/architecture-4250717.jpg",
+          "url": "https://cdn.pixabay.com/photo/2019/06/04/05/48/architecture-4250717_1280.jpg",
+          "used_at": "2026-08-20T10:32:26Z",
+          "job_id": "f1-immobiliare-2026-08-20-c12-03-08-g5-non-solo-quanto-vale"
         }
       ]
     },
@@ -2527,6 +2707,186 @@
           "url": "https://cdn.pixabay.com/photo/2021/03/23/05/48/social-media-6116389_1280.jpg",
           "used_at": "2026-08-20T07:15:59Z",
           "job_id": "real-media-pro-2026-08-20-c08-03-06-shopify-servizio"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2017/03/07/09/33/smartphone-2123520.jpg",
+          "url": "https://cdn.pixabay.com/photo/2017/03/07/09/33/smartphone-2123520_1280.jpg",
+          "used_at": "2026-08-20T10:36:18Z",
+          "job_id": "real-media-pro-2026-08-20-c12-01-03-advertising-sistema"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2018/11/26/21/28/telephone-3840285.jpg",
+          "url": "https://cdn.pixabay.com/photo/2018/11/26/21/28/telephone-3840285_1280.jpg",
+          "used_at": "2026-08-20T10:36:18Z",
+          "job_id": "real-media-pro-2026-08-20-c12-01-03-advertising-sistema"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2021/07/05/15/29/social-media-6389437.jpg",
+          "url": "https://cdn.pixabay.com/photo/2021/07/05/15/29/social-media-6389437_1280.jpg",
+          "used_at": "2026-08-20T10:36:18Z",
+          "job_id": "real-media-pro-2026-08-20-c12-01-03-advertising-sistema"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2019/08/28/05/00/smartphone-4435866.jpg",
+          "url": "https://cdn.pixabay.com/photo/2019/08/28/05/00/smartphone-4435866_1280.jpg",
+          "used_at": "2026-08-20T10:36:18Z",
+          "job_id": "real-media-pro-2026-08-20-c12-01-03-advertising-sistema"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2014/03/22/22/17/phone-292994.jpg",
+          "url": "https://cdn.pixabay.com/photo/2014/03/22/22/17/phone-292994_1280.jpg",
+          "used_at": "2026-08-20T10:36:18Z",
+          "job_id": "real-media-pro-2026-08-20-c12-01-03-advertising-sistema"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2020/09/08/12/38/social-media-5554523.jpg",
+          "url": "https://cdn.pixabay.com/photo/2020/09/08/12/38/social-media-5554523_1280.jpg",
+          "used_at": "2026-08-20T10:36:18Z",
+          "job_id": "real-media-pro-2026-08-20-c12-01-03-advertising-sistema"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2018/08/02/10/35/iphone-3579255.jpg",
+          "url": "https://cdn.pixabay.com/photo/2018/08/02/10/35/iphone-3579255_1280.jpg",
+          "used_at": "2026-08-20T10:36:18Z",
+          "job_id": "real-media-pro-2026-08-20-c12-01-03-advertising-sistema"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2018/08/02/10/32/iphone-3579240.jpg",
+          "url": "https://cdn.pixabay.com/photo/2018/08/02/10/32/iphone-3579240_1280.jpg",
+          "used_at": "2026-08-20T10:36:18Z",
+          "job_id": "real-media-pro-2026-08-20-c12-01-03-advertising-sistema"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2016/01/29/09/57/hands-1167618.jpg",
+          "url": "https://cdn.pixabay.com/photo/2016/01/29/09/57/hands-1167618_1280.jpg",
+          "used_at": "2026-08-20T10:36:18Z",
+          "job_id": "real-media-pro-2026-08-20-c12-01-03-advertising-sistema"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2014/12/17/21/55/smartphone-571961.jpg",
+          "url": "https://cdn.pixabay.com/photo/2014/12/17/21/55/smartphone-571961_1280.jpg",
+          "used_at": "2026-08-20T10:36:18Z",
+          "job_id": "real-media-pro-2026-08-20-c12-01-03-advertising-sistema"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2017/03/07/09/33/smartphone-2123520.jpg",
+          "url": "https://cdn.pixabay.com/photo/2017/03/07/09/33/smartphone-2123520_1280.jpg",
+          "used_at": "2026-08-20T10:40:06Z",
+          "job_id": "real-media-pro-2026-08-20-c12-02-05-audit-digitale"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2018/11/26/21/28/telephone-3840285.jpg",
+          "url": "https://cdn.pixabay.com/photo/2018/11/26/21/28/telephone-3840285_1280.jpg",
+          "used_at": "2026-08-20T10:40:06Z",
+          "job_id": "real-media-pro-2026-08-20-c12-02-05-audit-digitale"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2021/07/05/15/29/social-media-6389437.jpg",
+          "url": "https://cdn.pixabay.com/photo/2021/07/05/15/29/social-media-6389437_1280.jpg",
+          "used_at": "2026-08-20T10:40:06Z",
+          "job_id": "real-media-pro-2026-08-20-c12-02-05-audit-digitale"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2019/08/28/05/00/smartphone-4435866.jpg",
+          "url": "https://cdn.pixabay.com/photo/2019/08/28/05/00/smartphone-4435866_1280.jpg",
+          "used_at": "2026-08-20T10:40:06Z",
+          "job_id": "real-media-pro-2026-08-20-c12-02-05-audit-digitale"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2014/03/22/22/17/phone-292994.jpg",
+          "url": "https://cdn.pixabay.com/photo/2014/03/22/22/17/phone-292994_1280.jpg",
+          "used_at": "2026-08-20T10:40:06Z",
+          "job_id": "real-media-pro-2026-08-20-c12-02-05-audit-digitale"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2020/09/08/12/38/social-media-5554523.jpg",
+          "url": "https://cdn.pixabay.com/photo/2020/09/08/12/38/social-media-5554523_1280.jpg",
+          "used_at": "2026-08-20T10:40:06Z",
+          "job_id": "real-media-pro-2026-08-20-c12-02-05-audit-digitale"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2018/08/02/10/35/iphone-3579255.jpg",
+          "url": "https://cdn.pixabay.com/photo/2018/08/02/10/35/iphone-3579255_1280.jpg",
+          "used_at": "2026-08-20T10:40:06Z",
+          "job_id": "real-media-pro-2026-08-20-c12-02-05-audit-digitale"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2018/08/02/10/32/iphone-3579240.jpg",
+          "url": "https://cdn.pixabay.com/photo/2018/08/02/10/32/iphone-3579240_1280.jpg",
+          "used_at": "2026-08-20T10:40:06Z",
+          "job_id": "real-media-pro-2026-08-20-c12-02-05-audit-digitale"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2016/01/29/09/57/hands-1167618.jpg",
+          "url": "https://cdn.pixabay.com/photo/2016/01/29/09/57/hands-1167618_1280.jpg",
+          "used_at": "2026-08-20T10:40:06Z",
+          "job_id": "real-media-pro-2026-08-20-c12-02-05-audit-digitale"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2014/12/17/21/55/smartphone-571961.jpg",
+          "url": "https://cdn.pixabay.com/photo/2014/12/17/21/55/smartphone-571961_1280.jpg",
+          "used_at": "2026-08-20T10:40:06Z",
+          "job_id": "real-media-pro-2026-08-20-c12-02-05-audit-digitale"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2023/10/05/07/13/contact-8295065.png",
+          "url": "https://cdn.pixabay.com/photo/2023/10/05/07/13/contact-8295065_1280.png",
+          "used_at": "2026-08-20T10:44:16Z",
+          "job_id": "real-media-pro-2026-08-20-c12-03-08-crm-followup"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2022/12/26/16/21/social-media-icons-7679334.png",
+          "url": "https://cdn.pixabay.com/photo/2022/12/26/16/21/social-media-icons-7679334_1280.png",
+          "used_at": "2026-08-20T10:44:16Z",
+          "job_id": "real-media-pro-2026-08-20-c12-03-08-crm-followup"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2024/01/03/06/35/ai-generated-8484741.png",
+          "url": "https://cdn.pixabay.com/photo/2024/01/03/06/35/ai-generated-8484741_1280.png",
+          "used_at": "2026-08-20T10:44:16Z",
+          "job_id": "real-media-pro-2026-08-20-c12-03-08-crm-followup"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2017/03/07/09/33/smartphone-2123520.jpg",
+          "url": "https://cdn.pixabay.com/photo/2017/03/07/09/33/smartphone-2123520_1280.jpg",
+          "used_at": "2026-08-20T10:44:16Z",
+          "job_id": "real-media-pro-2026-08-20-c12-03-08-crm-followup"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2021/07/05/15/29/social-media-6389437.jpg",
+          "url": "https://cdn.pixabay.com/photo/2021/07/05/15/29/social-media-6389437_1280.jpg",
+          "used_at": "2026-08-20T10:44:16Z",
+          "job_id": "real-media-pro-2026-08-20-c12-03-08-crm-followup"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2014/03/22/22/17/phone-292994.jpg",
+          "url": "https://cdn.pixabay.com/photo/2014/03/22/22/17/phone-292994_1280.jpg",
+          "used_at": "2026-08-20T10:44:16Z",
+          "job_id": "real-media-pro-2026-08-20-c12-03-08-crm-followup"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2014/12/17/21/55/smartphone-571961.jpg",
+          "url": "https://cdn.pixabay.com/photo/2014/12/17/21/55/smartphone-571961_1280.jpg",
+          "used_at": "2026-08-20T10:44:16Z",
+          "job_id": "real-media-pro-2026-08-20-c12-03-08-crm-followup"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2018/05/27/21/01/social-media-3434581_960_720.jpg",
+          "url": "https://cdn.pixabay.com/photo/2018/05/27/21/01/social-media-3434581_960_720.jpg",
+          "used_at": "2026-08-20T10:44:16Z",
+          "job_id": "real-media-pro-2026-08-20-c12-03-08-crm-followup"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2016/09/28/18/12/smartphone-1701086_960_720.jpg",
+          "url": "https://cdn.pixabay.com/photo/2016/09/28/18/12/smartphone-1701086_960_720.jpg",
+          "used_at": "2026-08-20T10:44:16Z",
+          "job_id": "real-media-pro-2026-08-20-c12-03-08-crm-followup"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2014/12/30/08/10/social-media-583687.jpg",
+          "url": "https://cdn.pixabay.com/photo/2014/12/30/08/10/social-media-583687_1280.jpg",
+          "used_at": "2026-08-20T10:44:16Z",
+          "job_id": "real-media-pro-2026-08-20-c12-03-08-crm-followup"
         }
       ]
     }
