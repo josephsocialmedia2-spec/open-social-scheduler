@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-08-20T03:13:15Z",
+  "updated_at": "2026-08-20T07:15:59Z",
   "brands": {
     "f1-immobiliare": {
       "recent": [
@@ -1083,6 +1083,186 @@
           "url": "https://cdn.pixabay.com/photo/2021/04/22/17/55/beach-6199688_960_720.jpg",
           "used_at": "2026-08-20T03:03:44Z",
           "job_id": "f1-immobiliare-2026-08-20-c04-03-04-g1-quanto-vale-davvero"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2026/01/24/13/44/heron-10086249.jpg",
+          "url": "https://cdn.pixabay.com/photo/2026/01/24/13/44/heron-10086249_1280.jpg",
+          "used_at": "2026-08-20T06:47:03Z",
+          "job_id": "f1-immobiliare-2026-08-20-c08-01-09-g6-controllare-concorrenza"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2018/05/20/22/40/deco-3417010.jpg",
+          "url": "https://cdn.pixabay.com/photo/2018/05/20/22/40/deco-3417010_1280.jpg",
+          "used_at": "2026-08-20T06:47:03Z",
+          "job_id": "f1-immobiliare-2026-08-20-c08-01-09-g6-controllare-concorrenza"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2023/02/04/06/47/landscape-7766527_960_720.jpg",
+          "url": "https://cdn.pixabay.com/photo/2023/02/04/06/47/landscape-7766527_960_720.jpg",
+          "used_at": "2026-08-20T06:47:03Z",
+          "job_id": "f1-immobiliare-2026-08-20-c08-01-09-g6-controllare-concorrenza"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2025/08/29/17/52/luxury-villa-facade-9804536.jpg",
+          "url": "https://cdn.pixabay.com/photo/2025/08/29/17/52/luxury-villa-facade-9804536_1280.jpg",
+          "used_at": "2026-08-20T06:47:03Z",
+          "job_id": "f1-immobiliare-2026-08-20-c08-01-09-g6-controllare-concorrenza"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2025/08/25/10/19/living-room-9795892.jpg",
+          "url": "https://cdn.pixabay.com/photo/2025/08/25/10/19/living-room-9795892_1280.jpg",
+          "used_at": "2026-08-20T06:47:03Z",
+          "job_id": "f1-immobiliare-2026-08-20-c08-01-09-g6-controllare-concorrenza"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2017/09/15/15/22/modern-2752472.jpg",
+          "url": "https://cdn.pixabay.com/photo/2017/09/15/15/22/modern-2752472_1280.jpg",
+          "used_at": "2026-08-20T06:47:03Z",
+          "job_id": "f1-immobiliare-2026-08-20-c08-01-09-g6-controllare-concorrenza"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2023/12/11/06/20/real-estate-8442802.jpg",
+          "url": "https://cdn.pixabay.com/photo/2023/12/11/06/20/real-estate-8442802_1280.jpg",
+          "used_at": "2026-08-20T06:47:03Z",
+          "job_id": "f1-immobiliare-2026-08-20-c08-01-09-g6-controllare-concorrenza"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2024/03/27/10/34/apartment-8658767.jpg",
+          "url": "https://cdn.pixabay.com/photo/2024/03/27/10/34/apartment-8658767_1280.jpg",
+          "used_at": "2026-08-20T06:47:03Z",
+          "job_id": "f1-immobiliare-2026-08-20-c08-01-09-g6-controllare-concorrenza"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2023/09/18/12/05/kitchen-8260437.jpg",
+          "url": "https://cdn.pixabay.com/photo/2023/09/18/12/05/kitchen-8260437_1280.jpg",
+          "used_at": "2026-08-20T06:47:03Z",
+          "job_id": "f1-immobiliare-2026-08-20-c08-01-09-g6-controllare-concorrenza"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2024/02/06/07/01/bathroom-8556101.jpg",
+          "url": "https://cdn.pixabay.com/photo/2024/02/06/07/01/bathroom-8556101_1280.jpg",
+          "used_at": "2026-08-20T06:47:03Z",
+          "job_id": "f1-immobiliare-2026-08-20-c08-01-09-g6-controllare-concorrenza"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2024/01/31/18/44/ai-generated-8544622.png",
+          "url": "https://cdn.pixabay.com/photo/2024/01/31/18/44/ai-generated-8544622_1280.png",
+          "used_at": "2026-08-20T06:54:15Z",
+          "job_id": "f1-immobiliare-2026-08-20-c08-02-01-g5-domanda-agente"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2017/08/07/08/43/architecture-2601541_960_720.jpg",
+          "url": "https://cdn.pixabay.com/photo/2017/08/07/08/43/architecture-2601541_960_720.jpg",
+          "used_at": "2026-08-20T06:54:15Z",
+          "job_id": "f1-immobiliare-2026-08-20-c08-02-01-g5-domanda-agente"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2017/08/07/20/40/architecture-2607636_960_720.jpg",
+          "url": "https://cdn.pixabay.com/photo/2017/08/07/20/40/architecture-2607636_960_720.jpg",
+          "used_at": "2026-08-20T06:54:15Z",
+          "job_id": "f1-immobiliare-2026-08-20-c08-02-01-g5-domanda-agente"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2021/12/29/16/11/architecture-6902126_960_720.jpg",
+          "url": "https://cdn.pixabay.com/photo/2021/12/29/16/11/architecture-6902126_960_720.jpg",
+          "used_at": "2026-08-20T06:54:15Z",
+          "job_id": "f1-immobiliare-2026-08-20-c08-02-01-g5-domanda-agente"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2017/08/07/00/33/architecture-2597998_960_720.jpg",
+          "url": "https://cdn.pixabay.com/photo/2017/08/07/00/33/architecture-2597998_960_720.jpg",
+          "used_at": "2026-08-20T06:54:15Z",
+          "job_id": "f1-immobiliare-2026-08-20-c08-02-01-g5-domanda-agente"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2020/12/14/07/25/terrazzo-5830183.png",
+          "url": "https://cdn.pixabay.com/photo/2020/12/14/07/25/terrazzo-5830183_1280.png",
+          "used_at": "2026-08-20T06:54:15Z",
+          "job_id": "f1-immobiliare-2026-08-20-c08-02-01-g5-domanda-agente"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2020/12/14/07/25/terrazzo-5830179.png",
+          "url": "https://cdn.pixabay.com/photo/2020/12/14/07/25/terrazzo-5830179_1280.png",
+          "used_at": "2026-08-20T06:54:15Z",
+          "job_id": "f1-immobiliare-2026-08-20-c08-02-01-g5-domanda-agente"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2023/12/04/01/27/real-estate-8428506.jpg",
+          "url": "https://cdn.pixabay.com/photo/2023/12/04/01/27/real-estate-8428506_1280.jpg",
+          "used_at": "2026-08-20T06:54:15Z",
+          "job_id": "f1-immobiliare-2026-08-20-c08-02-01-g5-domanda-agente"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2024/02/14/07/08/bedroom-8572584.jpg",
+          "url": "https://cdn.pixabay.com/photo/2024/02/14/07/08/bedroom-8572584_1280.jpg",
+          "used_at": "2026-08-20T06:54:15Z",
+          "job_id": "f1-immobiliare-2026-08-20-c08-02-01-g5-domanda-agente"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2017/11/16/15/05/architecture-2954874_960_720.jpg",
+          "url": "https://cdn.pixabay.com/photo/2017/11/16/15/05/architecture-2954874_960_720.jpg",
+          "used_at": "2026-08-20T06:54:15Z",
+          "job_id": "f1-immobiliare-2026-08-20-c08-02-01-g5-domanda-agente"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2021/10/22/22/49/kitchen-6733726.jpg",
+          "url": "https://cdn.pixabay.com/photo/2021/10/22/22/49/kitchen-6733726_1280.jpg",
+          "used_at": "2026-08-20T07:01:12Z",
+          "job_id": "f1-immobiliare-2026-08-20-c08-03-06-g3-check-microzona"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2021/01/08/15/56/cucina-5900267.jpg",
+          "url": "https://cdn.pixabay.com/photo/2021/01/08/15/56/cucina-5900267_1280.jpg",
+          "used_at": "2026-08-20T07:01:12Z",
+          "job_id": "f1-immobiliare-2026-08-20-c08-03-06-g3-check-microzona"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2021/04/16/14/08/kitchen-6183681.jpg",
+          "url": "https://cdn.pixabay.com/photo/2021/04/16/14/08/kitchen-6183681_1280.jpg",
+          "used_at": "2026-08-20T07:01:12Z",
+          "job_id": "f1-immobiliare-2026-08-20-c08-03-06-g3-check-microzona"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2021/04/16/15/40/kitchen-6183908_960_720.jpg",
+          "url": "https://cdn.pixabay.com/photo/2021/04/16/15/40/kitchen-6183908_960_720.jpg",
+          "used_at": "2026-08-20T07:01:12Z",
+          "job_id": "f1-immobiliare-2026-08-20-c08-03-06-g3-check-microzona"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2021/01/14/10/44/cucina-5916478_960_720.jpg",
+          "url": "https://cdn.pixabay.com/photo/2021/01/14/10/44/cucina-5916478_960_720.jpg",
+          "used_at": "2026-08-20T07:01:12Z",
+          "job_id": "f1-immobiliare-2026-08-20-c08-03-06-g3-check-microzona"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2020/12/28/18/35/cucina-5868135_960_720.jpg",
+          "url": "https://cdn.pixabay.com/photo/2020/12/28/18/35/cucina-5868135_960_720.jpg",
+          "used_at": "2026-08-20T07:01:12Z",
+          "job_id": "f1-immobiliare-2026-08-20-c08-03-06-g3-check-microzona"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2020/12/28/18/35/cucina-5868137.jpg",
+          "url": "https://cdn.pixabay.com/photo/2020/12/28/18/35/cucina-5868137_1280.jpg",
+          "used_at": "2026-08-20T07:01:12Z",
+          "job_id": "f1-immobiliare-2026-08-20-c08-03-06-g3-check-microzona"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2021/01/20/09/58/cucina-5933644.jpg",
+          "url": "https://cdn.pixabay.com/photo/2021/01/20/09/58/cucina-5933644_1280.jpg",
+          "used_at": "2026-08-20T07:01:12Z",
+          "job_id": "f1-immobiliare-2026-08-20-c08-03-06-g3-check-microzona"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2017/11/16/15/05/architecture-2954874_960_720.jpg",
+          "url": "https://cdn.pixabay.com/photo/2017/11/16/15/05/architecture-2954874_960_720.jpg",
+          "used_at": "2026-08-20T07:01:12Z",
+          "job_id": "f1-immobiliare-2026-08-20-c08-03-06-g3-check-microzona"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2015/11/06/11/40/multi-family-home-1026386.jpg",
+          "url": "https://cdn.pixabay.com/photo/2015/11/06/11/40/multi-family-home-1026386_1280.jpg",
+          "used_at": "2026-08-20T07:01:12Z",
+          "job_id": "f1-immobiliare-2026-08-20-c08-03-06-g3-check-microzona"
         }
       ]
     },
@@ -2167,6 +2347,186 @@
           "url": "https://cdn.pixabay.com/photo/2023/03/01/14/01/tab-7823156_1280.png",
           "used_at": "2026-08-20T03:13:15Z",
           "job_id": "real-media-pro-2026-08-20-c04-03-04-meta-ads-creative"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2020/02/14/18/05/ecommerce-4849055_960_720.jpg",
+          "url": "https://cdn.pixabay.com/photo/2020/02/14/18/05/ecommerce-4849055_960_720.jpg",
+          "used_at": "2026-08-20T07:05:50Z",
+          "job_id": "real-media-pro-2026-08-20-c08-01-09-analisi-gratuita"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2018/07/10/22/26/ecommerce-3529837.jpg",
+          "url": "https://cdn.pixabay.com/photo/2018/07/10/22/26/ecommerce-3529837_1280.jpg",
+          "used_at": "2026-08-20T07:05:50Z",
+          "job_id": "real-media-pro-2026-08-20-c08-01-09-analisi-gratuita"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2022/03/24/22/57/online-shop-7090027.png",
+          "url": "https://cdn.pixabay.com/photo/2022/03/24/22/57/online-shop-7090027_1280.png",
+          "used_at": "2026-08-20T07:05:50Z",
+          "job_id": "real-media-pro-2026-08-20-c08-01-09-analisi-gratuita"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2018/03/11/06/14/shopping-3216064_960_720.jpg",
+          "url": "https://cdn.pixabay.com/photo/2018/03/11/06/14/shopping-3216064_960_720.jpg",
+          "used_at": "2026-08-20T07:05:50Z",
+          "job_id": "real-media-pro-2026-08-20-c08-01-09-analisi-gratuita"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2018/05/19/14/59/shopping-3413656.jpg",
+          "url": "https://cdn.pixabay.com/photo/2018/05/19/14/59/shopping-3413656_1280.jpg",
+          "used_at": "2026-08-20T07:05:50Z",
+          "job_id": "real-media-pro-2026-08-20-c08-01-09-analisi-gratuita"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2021/02/01/16/08/e-commerce-5971154.png",
+          "url": "https://cdn.pixabay.com/photo/2021/02/01/16/08/e-commerce-5971154_640.png",
+          "used_at": "2026-08-20T07:05:50Z",
+          "job_id": "real-media-pro-2026-08-20-c08-01-09-analisi-gratuita"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2021/03/19/13/40/online-6107598.png",
+          "url": "https://cdn.pixabay.com/photo/2021/03/19/13/40/online-6107598_1280.png",
+          "used_at": "2026-08-20T07:05:50Z",
+          "job_id": "real-media-pro-2026-08-20-c08-01-09-analisi-gratuita"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2021/01/30/14/43/laptop-5964102.jpg",
+          "url": "https://cdn.pixabay.com/photo/2021/01/30/14/43/laptop-5964102_1280.jpg",
+          "used_at": "2026-08-20T07:05:50Z",
+          "job_id": "real-media-pro-2026-08-20-c08-01-09-analisi-gratuita"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2024/10/06/22/36/shipping-9101364.png",
+          "url": "https://cdn.pixabay.com/photo/2024/10/06/22/36/shipping-9101364_1280.png",
+          "used_at": "2026-08-20T07:05:50Z",
+          "job_id": "real-media-pro-2026-08-20-c08-01-09-analisi-gratuita"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2019/02/16/14/19/shopping-4000414.jpg",
+          "url": "https://cdn.pixabay.com/photo/2019/02/16/14/19/shopping-4000414_1280.jpg",
+          "used_at": "2026-08-20T07:05:50Z",
+          "job_id": "real-media-pro-2026-08-20-c08-01-09-analisi-gratuita"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2015/05/31/10/51/technology-791029.jpg",
+          "url": "https://cdn.pixabay.com/photo/2015/05/31/10/51/technology-791029_1280.jpg",
+          "used_at": "2026-08-20T07:12:05Z",
+          "job_id": "real-media-pro-2026-08-20-c08-02-01-seo-ai-search"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2017/06/29/01/02/business-man-2452808.jpg",
+          "url": "https://cdn.pixabay.com/photo/2017/06/29/01/02/business-man-2452808_1280.jpg",
+          "used_at": "2026-08-20T07:12:05Z",
+          "job_id": "real-media-pro-2026-08-20-c08-02-01-seo-ai-search"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2024/02/26/14/13/laptop-8598085_960_720.jpg",
+          "url": "https://cdn.pixabay.com/photo/2024/02/26/14/13/laptop-8598085_960_720.jpg",
+          "used_at": "2026-08-20T07:12:05Z",
+          "job_id": "real-media-pro-2026-08-20-c08-02-01-seo-ai-search"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2023/09/06/06/37/laptop-8236497.jpg",
+          "url": "https://cdn.pixabay.com/photo/2023/09/06/06/37/laptop-8236497_1280.jpg",
+          "used_at": "2026-08-20T07:12:05Z",
+          "job_id": "real-media-pro-2026-08-20-c08-02-01-seo-ai-search"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2026/02/19/06/50/u_ksgszajtc6-laptop-10132318_960_720.png",
+          "url": "https://cdn.pixabay.com/photo/2026/02/19/06/50/u_ksgszajtc6-laptop-10132318_960_720.png",
+          "used_at": "2026-08-20T07:12:05Z",
+          "job_id": "real-media-pro-2026-08-20-c08-02-01-seo-ai-search"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2023/10/01/07/09/laptop-8286953_960_720.jpg",
+          "url": "https://cdn.pixabay.com/photo/2023/10/01/07/09/laptop-8286953_960_720.jpg",
+          "used_at": "2026-08-20T07:12:05Z",
+          "job_id": "real-media-pro-2026-08-20-c08-02-01-seo-ai-search"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2016/11/29/01/36/businessman-1866582.jpg",
+          "url": "https://cdn.pixabay.com/photo/2016/11/29/01/36/businessman-1866582_1280.jpg",
+          "used_at": "2026-08-20T07:12:05Z",
+          "job_id": "real-media-pro-2026-08-20-c08-02-01-seo-ai-search"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2020/01/26/20/14/computer-4795762.jpg",
+          "url": "https://cdn.pixabay.com/photo/2020/01/26/20/14/computer-4795762_1280.jpg",
+          "used_at": "2026-08-20T07:12:05Z",
+          "job_id": "real-media-pro-2026-08-20-c08-02-01-seo-ai-search"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2020/03/06/08/00/laptop-4906312.jpg",
+          "url": "https://cdn.pixabay.com/photo/2020/03/06/08/00/laptop-4906312_1280.jpg",
+          "used_at": "2026-08-20T07:12:05Z",
+          "job_id": "real-media-pro-2026-08-20-c08-02-01-seo-ai-search"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2023/11/10/20/37/office-8380073.jpg",
+          "url": "https://cdn.pixabay.com/photo/2023/11/10/20/37/office-8380073_1280.jpg",
+          "used_at": "2026-08-20T07:12:05Z",
+          "job_id": "real-media-pro-2026-08-20-c08-02-01-seo-ai-search"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2023/02/12/13/28/business-7785093.png",
+          "url": "https://cdn.pixabay.com/photo/2023/02/12/13/28/business-7785093_1280.png",
+          "used_at": "2026-08-20T07:15:59Z",
+          "job_id": "real-media-pro-2026-08-20-c08-03-06-shopify-servizio"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2019/09/05/03/47/trading-4453011.jpg",
+          "url": "https://cdn.pixabay.com/photo/2019/09/05/03/47/trading-4453011_1280.jpg",
+          "used_at": "2026-08-20T07:15:59Z",
+          "job_id": "real-media-pro-2026-08-20-c08-03-06-shopify-servizio"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2017/03/07/09/33/smartphone-2123520.jpg",
+          "url": "https://cdn.pixabay.com/photo/2017/03/07/09/33/smartphone-2123520_1280.jpg",
+          "used_at": "2026-08-20T07:15:59Z",
+          "job_id": "real-media-pro-2026-08-20-c08-03-06-shopify-servizio"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2021/07/05/15/29/social-media-6389437.jpg",
+          "url": "https://cdn.pixabay.com/photo/2021/07/05/15/29/social-media-6389437_1280.jpg",
+          "used_at": "2026-08-20T07:15:59Z",
+          "job_id": "real-media-pro-2026-08-20-c08-03-06-shopify-servizio"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2014/03/22/22/17/phone-292994.jpg",
+          "url": "https://cdn.pixabay.com/photo/2014/03/22/22/17/phone-292994_1280.jpg",
+          "used_at": "2026-08-20T07:15:59Z",
+          "job_id": "real-media-pro-2026-08-20-c08-03-06-shopify-servizio"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2018/08/02/10/32/iphone-3579240.jpg",
+          "url": "https://cdn.pixabay.com/photo/2018/08/02/10/32/iphone-3579240_1280.jpg",
+          "used_at": "2026-08-20T07:15:59Z",
+          "job_id": "real-media-pro-2026-08-20-c08-03-06-shopify-servizio"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2016/09/28/18/12/smartphone-1701086_960_720.jpg",
+          "url": "https://cdn.pixabay.com/photo/2016/09/28/18/12/smartphone-1701086_960_720.jpg",
+          "used_at": "2026-08-20T07:15:59Z",
+          "job_id": "real-media-pro-2026-08-20-c08-03-06-shopify-servizio"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2014/07/24/08/43/social-media-400854.png",
+          "url": "https://cdn.pixabay.com/photo/2014/07/24/08/43/social-media-400854_1280.png",
+          "used_at": "2026-08-20T07:15:59Z",
+          "job_id": "real-media-pro-2026-08-20-c08-03-06-shopify-servizio"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2025/04/02/13/38/smartphone-9509166.png",
+          "url": "https://cdn.pixabay.com/photo/2025/04/02/13/38/smartphone-9509166_1280.png",
+          "used_at": "2026-08-20T07:15:59Z",
+          "job_id": "real-media-pro-2026-08-20-c08-03-06-shopify-servizio"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2021/03/23/05/48/social-media-6116389.jpg",
+          "url": "https://cdn.pixabay.com/photo/2021/03/23/05/48/social-media-6116389_1280.jpg",
+          "used_at": "2026-08-20T07:15:59Z",
+          "job_id": "real-media-pro-2026-08-20-c08-03-06-shopify-servizio"
         }
       ]
     }
