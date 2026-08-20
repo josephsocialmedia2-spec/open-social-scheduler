@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-19T22:21:05+00:00",
+  "generated_at": "2026-08-20T02:53:51+00:00",
   "policy": {
     "query_source": "Google autocomplete suggestions",
     "avoid_duplicates": true,
@@ -15,16 +15,16 @@
     "f1-immobiliare": {
       "base_query": "agenzia delle entrate vendere comprare casa",
       "fresh_queries": [
-        "agenzia delle entrate imposte acquisto casa spiegazione",
-        "agenzia delle entrate imposte acquisto casa errori",
-        "agenzia delle entrate imposte acquisto casa guida",
-        "agenzia delle entrate imposte acquisto casa checklist",
-        "agenzia delle entrate imposte acquisto casa cosa sapere",
-        "agenzia delle entrate imposte acquisto casa come funziona",
-        "agenzia delle entrate guida acquisto casa spiegazione",
-        "agenzia delle entrate guida acquisto casa errori",
-        "agenzia delle entrate guida acquisto casa guida",
-        "agenzia delle entrate guida acquisto casa checklist"
+        "agenzia delle entrate guida acquisto casa cosa sapere",
+        "agenzia delle entrate guida acquisto casa come funziona",
+        "agenzia delle entrate valore dichiarato immobile spiegazione",
+        "agenzia delle entrate valore dichiarato immobile errori",
+        "agenzia delle entrate valore dichiarato immobile guida",
+        "agenzia delle entrate valore dichiarato immobile checklist",
+        "agenzia delle entrate valore dichiarato immobile cosa sapere",
+        "agenzia delle entrate valore dichiarato immobile come funziona",
+        "agenzia delle entrate omi quotazioni immobiliari spiegazione",
+        "agenzia delle entrate omi quotazioni immobiliari errori"
       ],
       "official_sources": [
         "https://www.agenziaentrate.gov.it/portale/web/guest/schede/fabbricatiterreni/omi",
@@ -34,16 +34,16 @@
     "real-media-pro": {
       "base_query": "perché i social fanno crescere la tua azienda con i fatturati e le vendite",
       "fresh_queries": [
-        "social proof fiducia clienti spiegazione",
-        "social proof fiducia clienti errori",
-        "social proof fiducia clienti guida",
-        "social proof fiducia clienti checklist",
-        "social proof fiducia clienti cosa sapere",
-        "social proof fiducia clienti come funziona",
-        "marketing digitale crescita aziendale spiegazione",
-        "marketing digitale crescita aziendale errori",
-        "marketing digitale crescita aziendale guida",
-        "marketing digitale crescita aziendale checklist"
+        "marketing digitale crescita aziendale cosa sapere",
+        "marketing digitale crescita aziendale come funziona",
+        "reel per aziende e vendite spiegazione",
+        "reel per aziende e vendite errori",
+        "reel per aziende e vendite guida",
+        "reel per aziende e vendite checklist",
+        "reel per aziende e vendite cosa sapere",
+        "reel per aziende e vendite come funziona",
+        "funnel social sito vendita spiegazione",
+        "funnel social sito vendita errori"
       ],
       "official_sources": [
         "https://www.facebook.com/business/ads/facebook-instagram-reels-ads",
