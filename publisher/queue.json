@@ -5776,9 +5776,834 @@
       "visual_uniqueness": "10 unique source images inside this content",
       "fresh_visual_count": 2,
       "reused_visual_count": 8
+    },
+    {
+      "id": "f1-immobiliare-2026-08-20-c12-01-03-g7-cosa-vede-compratore",
+      "client_id": "f1-immobiliare",
+      "client_name": "F1 Immobiliare",
+      "category": "proof",
+      "editorial_role": "proof",
+      "campaign": "F1 · Non a sensazione. Con i dati.",
+      "format": "reel",
+      "title": "IL PREZZO GIUSTO NON SI INVENTA",
+      "caption": "IL PREZZO GIUSTO NON SI INVENTA\n\nUna valutazione credibile nasce dall'incrocio tra dati, immobile e mercato reale. Se stai pensando di vendere casa in Avigliana, una valutazione seria non nasce da una cifra presa isolatamente. Bisogna leggere la microzona, le caratteristiche reali dell'immobile, ciò che è effettivamente in concorrenza e la domanda presente. I dati pubblici sono utili quando vengono interpretati nel contesto corretto. Per questo il prezzo di uscita deve essere comprensibile, difendibile e coerente con il mercato.\n\nRichiedi una valutazione gratuita del tuo immobile. Joseph 371 370 8294 · Francesca 371 424 6300.\n\n#F1Immobiliare #ValleDiSusa #Avigliana #VendereCasa #ValutazioneImmobiliare #MercatoImmobiliare #CasaInVendita",
+      "hashtags": [
+        "#F1Immobiliare",
+        "#ValleDiSusa",
+        "#CasaTorino",
+        "#ImmobiliareTorino",
+        "#Almese",
+        "#SantAmbrogioDiTorino"
+      ],
+      "voiceover": "IL PREZZO GIUSTO NON SI INVENTA Una valutazione credibile nasce dall'incrocio tra dati, immobile e mercato reale. Se stai pensando di vendere casa in Avigliana, il punto è questo: un numero, da solo, non racconta il valore reale di un immobile. Contano la posizione precisa, lo stato della casa, il piano, la luce, gli spazi esterni, gli immobili davvero concorrenti e la domanda che esiste in quel momento. I dati pubblici servono come riferimento, ma devono essere letti insieme al mercato reale. Il prezzo corretto non è quello che ci piacerebbe ottenere: è quello che permette alla casa di essere posizionata bene, difesa con argomenti concreti e presentata alle persone giuste. Se vuoi capire da dove partire, richiedi una valutazione gratuita con F1 Immobiliare. Joseph 371 370 8294, Francesca 371 424 6300. Prima i dati, poi la strategia, poi la vendita.",
+      "slides": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "visuals": [
+        "villa residenziale moderna esterno giorno",
+        "quartiere residenziale italiano curato",
+        "soggiorno luminoso premium",
+        "cucina moderna di qualità",
+        "terrazzo abitabile con vista",
+        "camera matrimoniale elegante",
+        "bagno contemporaneo premium",
+        "facciata e ingresso immobile",
+        "dettaglio architettonico e giardino",
+        "villa residenziale al tramonto"
+      ],
+      "cta": "Scrivi VALUTAZIONE in privato",
+      "media": "publisher/media/generated/f1-immobiliare/2026-08-20/cycle-12/01-20-c12-01-03-g7-cosa-vede-compratore.mp4",
+      "scheduled_at": "2026-08-20T12:00:00+02:00",
+      "territory": "Avigliana",
+      "property_focus": {
+        "transaction": "vendita",
+        "min_price_eur": 100000,
+        "exclude": [
+          "affitto",
+          "locazione",
+          "garage",
+          "box",
+          "posto auto",
+          "rustico",
+          "rudere",
+          "terreno"
+        ],
+        "preferred": [
+          "appartamento",
+          "casa",
+          "villa",
+          "villetta",
+          "attico",
+          "bifamiliare",
+          "trifamiliare"
+        ],
+        "cash_subito": {
+          "enabled": true,
+          "label": "F1 CASH SUBITO",
+          "meaning": "acquisto diretto per opportunità immobiliari fortemente scontate e coerenti con i criteri F1",
+          "rule": "non presentarlo come garanzia di acquisto; prima verifica economica, tecnica e documentale"
+        }
+      },
+      "approval_key": "2026-W34",
+      "platforms": [
+        {
+          "platform": "facebook",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "tiktok",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "linkedin",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "youtube",
+          "integration_id": "direct-api"
+        }
+      ],
+      "enabled": true,
+      "status": "awaiting_approval",
+      "published_platforms": [],
+      "postiz_results": [],
+      "video_made_with_ai": true,
+      "created_by": "open-social-scheduler",
+      "blocked_reason": "approval required for 2026-W34",
+      "cycle_key": "2026-08-20T12:00",
+      "cycle_hour": 12,
+      "cycle_index": 3,
+      "cycle_position": 1,
+      "production_mode": "6-every-4h",
+      "production_status": "DA CONTROLLARE",
+      "research_query": "Cosa vede un compratore nella tua zona",
+      "phone": "371 370 8294",
+      "secondary_phone": "371 424 6300",
+      "visual_rule": "premium_residential_property_only",
+      "target_reel_seconds": 60,
+      "publish_decision": "manual",
+      "research_mode": "google_suggestions_plus_official_sources",
+      "research_basis": [
+        {
+          "url": "https://www.agenziaentrate.gov.it/portale/web/guest/schede/fabbricatiterreni/omi"
+        },
+        {
+          "url": "https://www.agenziaentrate.gov.it/portale/web/guest/cittadini/acquisto-o-vendita-di-un-immobile"
+        }
+      ],
+      "no_subtitles": true,
+      "visual_count": 10,
+      "visual_asset_urls": [
+        "https://cdn.pixabay.com/photo/2025/08/29/17/52/modern-villa-exterior-9804538_1280.jpg",
+        "https://cdn.pixabay.com/photo/2025/08/29/17/52/luxury-villa-facade-9804536_1280.jpg",
+        "https://cdn.pixabay.com/photo/2025/08/25/10/19/living-room-9795892_1280.jpg",
+        "https://cdn.pixabay.com/photo/2017/09/15/15/22/modern-2752472_1280.jpg",
+        "https://cdn.pixabay.com/photo/2023/12/11/06/20/real-estate-8442802_1280.jpg",
+        "https://cdn.pixabay.com/photo/2024/03/27/10/34/apartment-8658767_1280.jpg",
+        "https://cdn.pixabay.com/photo/2023/09/18/12/05/kitchen-8260437_1280.jpg",
+        "https://cdn.pixabay.com/photo/2024/02/06/07/01/bathroom-8556101_1280.jpg",
+        "https://cdn.pixabay.com/photo/2023/12/04/01/27/real-estate-8428506_1280.jpg",
+        "https://cdn.pixabay.com/photo/2024/02/14/07/08/bedroom-8572584_1280.jpg"
+      ],
+      "visual_source": "pixabay_dynamic_varied",
+      "visual_uniqueness": "10 unique source images inside this content",
+      "fresh_visual_count": 0,
+      "reused_visual_count": 10,
+      "_presenter": "joseph"
+    },
+    {
+      "id": "f1-immobiliare-2026-08-20-c12-02-05-g2-proviamo-alto",
+      "client_id": "f1-immobiliare",
+      "client_name": "F1 Immobiliare",
+      "category": "error",
+      "editorial_role": "error",
+      "campaign": "F1 · Non a sensazione. Con i dati.",
+      "format": "reel",
+      "title": "IL PREZZO GIUSTO NON SI INVENTA",
+      "caption": "IL PREZZO GIUSTO NON SI INVENTA\n\nUna valutazione credibile nasce dall'incrocio tra dati, immobile e mercato reale. Se stai pensando di vendere casa in Avigliana, una valutazione seria non nasce da una cifra presa isolatamente. Bisogna leggere la microzona, le caratteristiche reali dell'immobile, ciò che è effettivamente in concorrenza e la domanda presente. I dati pubblici sono utili quando vengono interpretati nel contesto corretto. Per questo il prezzo di uscita deve essere comprensibile, difendibile e coerente con il mercato.\n\nRichiedi una valutazione gratuita del tuo immobile. Joseph 371 370 8294 · Francesca 371 424 6300.\n\n#F1Immobiliare #ValleDiSusa #Avigliana #VendereCasa #ValutazioneImmobiliare #MercatoImmobiliare #CasaInVendita",
+      "hashtags": [
+        "#F1Immobiliare",
+        "#ValleDiSusa",
+        "#Condove",
+        "#Bussoleno",
+        "#VillarDora",
+        "#VendereBene"
+      ],
+      "voiceover": "IL PREZZO GIUSTO NON SI INVENTA Una valutazione credibile nasce dall'incrocio tra dati, immobile e mercato reale. Se stai pensando di vendere casa in Avigliana, il punto è questo: un numero, da solo, non racconta il valore reale di un immobile. Contano la posizione precisa, lo stato della casa, il piano, la luce, gli spazi esterni, gli immobili davvero concorrenti e la domanda che esiste in quel momento. I dati pubblici servono come riferimento, ma devono essere letti insieme al mercato reale. Il prezzo corretto non è quello che ci piacerebbe ottenere: è quello che permette alla casa di essere posizionata bene, difesa con argomenti concreti e presentata alle persone giuste. Se vuoi capire da dove partire, richiedi una valutazione gratuita con F1 Immobiliare. Joseph 371 370 8294, Francesca 371 424 6300. Prima i dati, poi la strategia, poi la vendita.",
+      "slides": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "visuals": [
+        "villa residenziale moderna esterno giorno",
+        "quartiere residenziale italiano curato",
+        "soggiorno luminoso premium",
+        "cucina moderna di qualità",
+        "terrazzo abitabile con vista",
+        "camera matrimoniale elegante",
+        "bagno contemporaneo premium",
+        "facciata e ingresso immobile",
+        "dettaglio architettonico e giardino",
+        "villa residenziale al tramonto"
+      ],
+      "cta": "Scrivi VALUTAZIONE in privato",
+      "media": "publisher/media/generated/f1-immobiliare/2026-08-20/cycle-12/02-20-c12-02-05-g2-proviamo-alto.mp4",
+      "scheduled_at": "2026-08-20T12:08:00+02:00",
+      "territory": "Avigliana",
+      "property_focus": {
+        "transaction": "vendita",
+        "min_price_eur": 100000,
+        "exclude": [
+          "affitto",
+          "locazione",
+          "garage",
+          "box",
+          "posto auto",
+          "rustico",
+          "rudere",
+          "terreno"
+        ],
+        "preferred": [
+          "appartamento",
+          "casa",
+          "villa",
+          "villetta",
+          "attico",
+          "bifamiliare",
+          "trifamiliare"
+        ],
+        "cash_subito": {
+          "enabled": true,
+          "label": "F1 CASH SUBITO",
+          "meaning": "acquisto diretto per opportunità immobiliari fortemente scontate e coerenti con i criteri F1",
+          "rule": "non presentarlo come garanzia di acquisto; prima verifica economica, tecnica e documentale"
+        }
+      },
+      "approval_key": "2026-W34",
+      "platforms": [
+        {
+          "platform": "facebook",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "tiktok",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "linkedin",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "youtube",
+          "integration_id": "direct-api"
+        }
+      ],
+      "enabled": true,
+      "status": "awaiting_approval",
+      "published_platforms": [],
+      "postiz_results": [],
+      "video_made_with_ai": true,
+      "created_by": "open-social-scheduler",
+      "blocked_reason": "approval required for 2026-W34",
+      "cycle_key": "2026-08-20T12:00",
+      "cycle_hour": 12,
+      "cycle_index": 3,
+      "cycle_position": 2,
+      "production_mode": "6-every-4h",
+      "production_status": "DA CONTROLLARE",
+      "research_query": "Proviamo alto e poi scendiamo",
+      "phone": "371 370 8294",
+      "secondary_phone": "371 424 6300",
+      "visual_rule": "premium_residential_property_only",
+      "target_reel_seconds": 60,
+      "publish_decision": "manual",
+      "research_mode": "google_suggestions_plus_official_sources",
+      "research_basis": [
+        {
+          "url": "https://www.agenziaentrate.gov.it/portale/web/guest/schede/fabbricatiterreni/omi"
+        },
+        {
+          "url": "https://www.agenziaentrate.gov.it/portale/web/guest/cittadini/acquisto-o-vendita-di-un-immobile"
+        }
+      ],
+      "no_subtitles": true,
+      "visual_count": 10,
+      "visual_asset_urls": [
+        "https://cdn.pixabay.com/photo/2020/02/09/03/30/villa-4831848_1280.jpg",
+        "https://cdn.pixabay.com/photo/2018/04/08/00/35/home-3300086_960_720.jpg",
+        "https://cdn.pixabay.com/photo/2014/09/05/17/42/architecture-436458_960_720.jpg",
+        "https://cdn.pixabay.com/photo/2019/06/04/05/49/architecture-4250725_1280.jpg",
+        "https://cdn.pixabay.com/photo/2019/06/04/05/49/architecture-4250719_1280.jpg",
+        "https://cdn.pixabay.com/photo/2018/07/14/17/33/architecture-3538062_1280.jpg",
+        "https://cdn.pixabay.com/photo/2017/08/01/18/08/architecture-2567019_1280.jpg",
+        "https://cdn.pixabay.com/photo/2018/05/06/12/15/architecture-3378441_1280.jpg",
+        "https://cdn.pixabay.com/photo/2018/04/05/13/09/architecture-3292801_1280.jpg",
+        "https://cdn.pixabay.com/photo/2010/12/13/10/01/architecture-2130_1280.jpg"
+      ],
+      "visual_source": "pixabay_dynamic_varied",
+      "visual_uniqueness": "10 unique source images inside this content",
+      "fresh_visual_count": 10,
+      "reused_visual_count": 0,
+      "_presenter": "francesca"
+    },
+    {
+      "id": "f1-immobiliare-2026-08-20-c12-03-08-g5-non-solo-quanto-vale",
+      "client_id": "f1-immobiliare",
+      "client_name": "F1 Immobiliare",
+      "category": "error",
+      "editorial_role": "error",
+      "campaign": "F1 · Non a sensazione. Con i dati.",
+      "format": "carousel",
+      "title": "IL PREZZO GIUSTO NON SI INVENTA",
+      "caption": "IL PREZZO GIUSTO NON SI INVENTA\n\nUna valutazione credibile nasce dall'incrocio tra dati, immobile e mercato reale. Se stai pensando di vendere casa in Avigliana, una valutazione seria non nasce da una cifra presa isolatamente. Bisogna leggere la microzona, le caratteristiche reali dell'immobile, ciò che è effettivamente in concorrenza e la domanda presente. I dati pubblici sono utili quando vengono interpretati nel contesto corretto. Per questo il prezzo di uscita deve essere comprensibile, difendibile e coerente con il mercato.\n\nRichiedi una valutazione gratuita del tuo immobile. Joseph 371 370 8294 · Francesca 371 424 6300.\n\n#F1Immobiliare #ValleDiSusa #Avigliana #VendereCasa #ValutazioneImmobiliare #MercatoImmobiliare #CasaInVendita",
+      "hashtags": [
+        "#F1Immobiliare",
+        "#ValDiSusa",
+        "#MercatoImmobiliare",
+        "#VenditaImmobiliare",
+        "#Susa",
+        "#PrimaIDati"
+      ],
+      "voiceover": "IL PREZZO GIUSTO NON SI INVENTA Una valutazione credibile nasce dall'incrocio tra dati, immobile e mercato reale. Se stai pensando di vendere casa in Avigliana, il punto è questo: un numero, da solo, non racconta il valore reale di un immobile. Contano la posizione precisa, lo stato della casa, il piano, la luce, gli spazi esterni, gli immobili davvero concorrenti e la domanda che esiste in quel momento. I dati pubblici servono come riferimento, ma devono essere letti insieme al mercato reale. Il prezzo corretto non è quello che ci piacerebbe ottenere: è quello che permette alla casa di essere posizionata bene, difesa con argomenti concreti e presentata alle persone giuste. Se vuoi capire da dove partire, richiedi una valutazione gratuita con F1 Immobiliare. Joseph 371 370 8294, Francesca 371 424 6300. Prima i dati, poi la strategia, poi la vendita.",
+      "slides": [
+        "IL PREZZO GIUSTO NON SI INVENTA",
+        "MICROZONA",
+        "COMPARABILI",
+        "STATO CASA",
+        "PIANO",
+        "ESPOSIZIONE",
+        "SPAZI ESTERNI",
+        "CONCORRENZA",
+        "DOMANDA",
+        "RICHIEDI UNA VALUTAZIONE GRATUITA DEL TUO IMMOBILE"
+      ],
+      "visuals": [
+        "villa residenziale moderna esterno giorno",
+        "quartiere residenziale italiano curato",
+        "soggiorno luminoso premium",
+        "cucina moderna di qualità",
+        "terrazzo abitabile con vista",
+        "camera matrimoniale elegante",
+        "bagno contemporaneo premium",
+        "facciata e ingresso immobile",
+        "dettaglio architettonico e giardino",
+        "villa residenziale al tramonto"
+      ],
+      "cta": "Scrivi VALUTAZIONE in privato",
+      "media": [
+        "publisher/media/generated/f1-immobiliare/2026-08-20/cycle-12/03-20-c12-03-08-g5-non-solo-quanto-vale/slide-01.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-20/cycle-12/03-20-c12-03-08-g5-non-solo-quanto-vale/slide-02.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-20/cycle-12/03-20-c12-03-08-g5-non-solo-quanto-vale/slide-03.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-20/cycle-12/03-20-c12-03-08-g5-non-solo-quanto-vale/slide-04.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-20/cycle-12/03-20-c12-03-08-g5-non-solo-quanto-vale/slide-05.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-20/cycle-12/03-20-c12-03-08-g5-non-solo-quanto-vale/slide-06.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-20/cycle-12/03-20-c12-03-08-g5-non-solo-quanto-vale/slide-07.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-20/cycle-12/03-20-c12-03-08-g5-non-solo-quanto-vale/slide-08.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-20/cycle-12/03-20-c12-03-08-g5-non-solo-quanto-vale/slide-09.jpg",
+        "publisher/media/generated/f1-immobiliare/2026-08-20/cycle-12/03-20-c12-03-08-g5-non-solo-quanto-vale/slide-10.jpg"
+      ],
+      "scheduled_at": "2026-08-20T12:16:00+02:00",
+      "territory": "Avigliana",
+      "property_focus": {
+        "transaction": "vendita",
+        "min_price_eur": 100000,
+        "exclude": [
+          "affitto",
+          "locazione",
+          "garage",
+          "box",
+          "posto auto",
+          "rustico",
+          "rudere",
+          "terreno"
+        ],
+        "preferred": [
+          "appartamento",
+          "casa",
+          "villa",
+          "villetta",
+          "attico",
+          "bifamiliare",
+          "trifamiliare"
+        ],
+        "cash_subito": {
+          "enabled": true,
+          "label": "F1 CASH SUBITO",
+          "meaning": "acquisto diretto per opportunità immobiliari fortemente scontate e coerenti con i criteri F1",
+          "rule": "non presentarlo come garanzia di acquisto; prima verifica economica, tecnica e documentale"
+        }
+      },
+      "approval_key": "2026-W34",
+      "platforms": [
+        {
+          "platform": "facebook",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "linkedin",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "pinterest",
+          "integration_id": "direct-api"
+        }
+      ],
+      "enabled": true,
+      "status": "awaiting_approval",
+      "published_platforms": [],
+      "postiz_results": [],
+      "video_made_with_ai": false,
+      "created_by": "open-social-scheduler",
+      "blocked_reason": "approval required for 2026-W34",
+      "cycle_key": "2026-08-20T12:00",
+      "cycle_hour": 12,
+      "cycle_index": 3,
+      "cycle_position": 3,
+      "production_mode": "6-every-4h",
+      "production_status": "DA CONTROLLARE",
+      "research_query": "Quanto vale non è l'unica domanda",
+      "phone": "371 370 8294",
+      "secondary_phone": "371 424 6300",
+      "visual_rule": "premium_residential_property_only",
+      "target_reel_seconds": 60,
+      "publish_decision": "manual",
+      "research_mode": "google_suggestions_plus_official_sources",
+      "research_basis": [
+        {
+          "url": "https://www.agenziaentrate.gov.it/portale/web/guest/schede/fabbricatiterreni/omi"
+        },
+        {
+          "url": "https://www.agenziaentrate.gov.it/portale/web/guest/cittadini/acquisto-o-vendita-di-un-immobile"
+        }
+      ],
+      "no_subtitles": true,
+      "visual_count": 10,
+      "visual_asset_urls": [
+        "https://cdn.pixabay.com/photo/2021/05/06/19/47/house-6234461_960_720.png",
+        "https://cdn.pixabay.com/photo/2024/06/09/12/59/home-8818675_1280.jpg",
+        "https://cdn.pixabay.com/photo/2017/07/01/22/14/architecture-2462938_1280.jpg",
+        "https://cdn.pixabay.com/photo/2023/06/30/13/53/architecture-8098404_1280.jpg",
+        "https://cdn.pixabay.com/photo/2018/03/25/18/54/architecture-3260311_1280.jpg",
+        "https://cdn.pixabay.com/photo/2024/06/09/12/59/home-8818678_960_720.jpg",
+        "https://cdn.pixabay.com/photo/2023/11/25/11/13/architecture-8411571_960_720.jpg",
+        "https://cdn.pixabay.com/photo/2024/06/09/12/59/home-8818676_1280.jpg",
+        "https://cdn.pixabay.com/photo/2018/10/22/16/22/design-3765738_1280.jpg",
+        "https://cdn.pixabay.com/photo/2019/06/04/05/48/architecture-4250717_1280.jpg"
+      ],
+      "visual_source": "pixabay_dynamic_varied",
+      "visual_uniqueness": "10 unique source images inside this content",
+      "fresh_visual_count": 10,
+      "reused_visual_count": 0
+    },
+    {
+      "id": "real-media-pro-2026-08-20-c12-01-03-advertising-sistema",
+      "client_id": "real-media-pro",
+      "client_name": "Real Media Pro",
+      "category": "convert",
+      "editorial_role": "convert",
+      "campaign": "Real Media Pro · Dalla visibilità alla crescita",
+      "format": "reel",
+      "title": "IL TUO SITO CONVERTE O FA SOLO PRESENZA?",
+      "caption": "IL TUO SITO CONVERTE O FA SOLO PRESENZA?\n\nUn sito efficace deve rendere semplice capire, fidarsi e agire. Un'azienda cresce online quando contenuti, social, sito e processo commerciale lavorano insieme. La metrica importante non è soltanto quante persone vedono un post, ma quante capiscono l'offerta, si fidano, visitano il sito, lasciano un contatto o acquistano. Per questo ogni contenuto deve avere una funzione nel percorso del cliente e ogni risultato deve poter essere misurato.\n\nRichiedi un'analisi strategica gratuita. Real Media Pro · 371 370 8294.\n\n#RealMediaPro #DigitalMarketing #SocialMediaMarketing #Ecommerce #SitiWeb #LeadGeneration #Torino",
+      "hashtags": [
+        "#RealMediaPro",
+        "#SitiShopify",
+        "#DigitalMarketing",
+        "#LeadGeneration",
+        "#Rivoli",
+        "#Avigliana"
+      ],
+      "voiceover": "IL TUO SITO CONVERTE O FA SOLO PRESENZA? Un sito efficace deve rendere semplice capire, fidarsi e agire. Il punto non è pubblicare di più. È costruire un percorso in cui ogni contenuto abbia una funzione. Prima attiri l'attenzione della persona giusta. Poi fai capire il problema e la tua proposta. Costruisci fiducia con esempi, prove e chiarezza. Porti il traffico verso un sito o una pagina che funziona bene da smartphone e rende semplice fare il passo successivo. Infine misuri contatti, richieste e vendite, così capisci cosa migliorare. Quando social, sito e processo commerciale sono scollegati, arrivano numeri ma pochi risultati. Quando lavorano insieme, il digitale diventa una leva concreta di crescita. Se vuoi capire cosa migliorare nella tua azienda, richiedi un'analisi strategica gratuita a Real Media Pro al 371 370 8294.",
+      "slides": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "visuals": [
+        "imprenditore con laptop in ufficio moderno",
+        "smartphone con interfaccia social professionale",
+        "sito ecommerce premium su laptop",
+        "pagina prodotto pulita da smartphone",
+        "dashboard marketing e analytics realistica",
+        "team digitale al lavoro",
+        "checkout ecommerce semplice",
+        "analisi dati business su schermo",
+        "imprenditore che controlla risultati",
+        "workspace digitale premium con laptop e smartphone"
+      ],
+      "cta": "Richiedi un'analisi strategica gratuita",
+      "media": "publisher/media/generated/real-media-pro/2026-08-20/cycle-12/01-08-20-c12-01-03-advertising-sistema.mp4",
+      "scheduled_at": "2026-08-20T12:30:00+02:00",
+      "territory": "Torino",
+      "property_focus": {},
+      "approval_key": "2026-W34",
+      "platforms": [
+        {
+          "platform": "facebook",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "tiktok",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "linkedin",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "youtube",
+          "integration_id": "direct-api"
+        }
+      ],
+      "enabled": true,
+      "status": "awaiting_approval",
+      "published_platforms": [],
+      "postiz_results": [],
+      "video_made_with_ai": true,
+      "created_by": "open-social-scheduler",
+      "blocked_reason": "approval required for 2026-W34",
+      "cycle_key": "2026-08-20T12:00",
+      "cycle_hour": 12,
+      "cycle_index": 3,
+      "cycle_position": 1,
+      "production_mode": "6-every-4h",
+      "production_status": "DA CONTROLLARE",
+      "research_query": "Meta Ads e Google Ads devono lavorare con il sito",
+      "phone": "371 370 8294",
+      "visual_rule": "pixabay_canva_business_ecommerce_only",
+      "target_reel_seconds": 60,
+      "publish_decision": "manual",
+      "research_mode": "google_suggestions_plus_official_sources",
+      "research_basis": [
+        {
+          "url": "https://www.facebook.com/business/ads/facebook-instagram-reels-ads"
+        },
+        {
+          "url": "https://www.facebook.com/business/ads/ad-creative"
+        },
+        {
+          "url": "https://www.shopify.com/it/blog/topics/content-marketing"
+        },
+        {
+          "url": "https://www.shopify.com/blog/topics/conversion"
+        }
+      ],
+      "no_subtitles": true,
+      "visual_count": 10,
+      "visual_asset_urls": [
+        "https://cdn.pixabay.com/photo/2017/03/07/09/33/smartphone-2123520_1280.jpg",
+        "https://cdn.pixabay.com/photo/2018/11/26/21/28/telephone-3840285_1280.jpg",
+        "https://cdn.pixabay.com/photo/2021/07/05/15/29/social-media-6389437_1280.jpg",
+        "https://cdn.pixabay.com/photo/2019/08/28/05/00/smartphone-4435866_1280.jpg",
+        "https://cdn.pixabay.com/photo/2014/03/22/22/17/phone-292994_1280.jpg",
+        "https://cdn.pixabay.com/photo/2020/09/08/12/38/social-media-5554523_1280.jpg",
+        "https://cdn.pixabay.com/photo/2018/08/02/10/35/iphone-3579255_1280.jpg",
+        "https://cdn.pixabay.com/photo/2018/08/02/10/32/iphone-3579240_1280.jpg",
+        "https://cdn.pixabay.com/photo/2016/01/29/09/57/hands-1167618_1280.jpg",
+        "https://cdn.pixabay.com/photo/2014/12/17/21/55/smartphone-571961_1280.jpg"
+      ],
+      "visual_source": "pixabay_dynamic_varied",
+      "visual_uniqueness": "10 unique source images inside this content",
+      "fresh_visual_count": 0,
+      "reused_visual_count": 10,
+      "_presenter": ""
+    },
+    {
+      "id": "real-media-pro-2026-08-20-c12-02-05-audit-digitale",
+      "client_id": "real-media-pro",
+      "client_name": "Real Media Pro",
+      "category": "nurture",
+      "editorial_role": "nurture",
+      "campaign": "Real Media Pro · Dalla visibilità alla crescita",
+      "format": "reel",
+      "title": "PERCHÉ I SOCIAL FANNO CRESCERE UN'AZIENDA?",
+      "caption": "PERCHÉ I SOCIAL FANNO CRESCERE UN'AZIENDA?\n\nPerché possono creare attenzione, fiducia e domanda, se collegati a un percorso misurabile. Un'azienda cresce online quando contenuti, social, sito e processo commerciale lavorano insieme. La metrica importante non è soltanto quante persone vedono un post, ma quante capiscono l'offerta, si fidano, visitano il sito, lasciano un contatto o acquistano. Per questo ogni contenuto deve avere una funzione nel percorso del cliente e ogni risultato deve poter essere misurato.\n\nRichiedi un'analisi strategica gratuita. Real Media Pro · 371 370 8294.\n\n#RealMediaPro #DigitalMarketing #SocialMediaMarketing #Ecommerce #SitiWeb #LeadGeneration #Torino",
+      "hashtags": [
+        "#RealMediaPro",
+        "#ShopifyItalia",
+        "#ConversionRate",
+        "#EcommerceItalia",
+        "#WebDesign",
+        "#ValleDiSusa"
+      ],
+      "voiceover": "PERCHÉ I SOCIAL FANNO CRESCERE UN'AZIENDA? Perché possono creare attenzione, fiducia e domanda, se collegati a un percorso misurabile. Il punto non è pubblicare di più. È costruire un percorso in cui ogni contenuto abbia una funzione. Prima attiri l'attenzione della persona giusta. Poi fai capire il problema e la tua proposta. Costruisci fiducia con esempi, prove e chiarezza. Porti il traffico verso un sito o una pagina che funziona bene da smartphone e rende semplice fare il passo successivo. Infine misuri contatti, richieste e vendite, così capisci cosa migliorare. Quando social, sito e processo commerciale sono scollegati, arrivano numeri ma pochi risultati. Quando lavorano insieme, il digitale diventa una leva concreta di crescita. Se vuoi capire cosa migliorare nella tua azienda, richiedi un'analisi strategica gratuita a Real Media Pro al 371 370 8294.",
+      "slides": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "visuals": [
+        "imprenditore con laptop in ufficio moderno",
+        "smartphone con interfaccia social professionale",
+        "sito ecommerce premium su laptop",
+        "pagina prodotto pulita da smartphone",
+        "dashboard marketing e analytics realistica",
+        "team digitale al lavoro",
+        "checkout ecommerce semplice",
+        "analisi dati business su schermo",
+        "imprenditore che controlla risultati",
+        "workspace digitale premium con laptop e smartphone"
+      ],
+      "cta": "Richiedi un'analisi strategica gratuita",
+      "media": "publisher/media/generated/real-media-pro/2026-08-20/cycle-12/02-08-20-c12-02-05-audit-digitale.mp4",
+      "scheduled_at": "2026-08-20T12:38:00+02:00",
+      "territory": "Torino",
+      "property_focus": {},
+      "approval_key": "2026-W34",
+      "platforms": [
+        {
+          "platform": "facebook",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "tiktok",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "linkedin",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "youtube",
+          "integration_id": "direct-api"
+        }
+      ],
+      "enabled": true,
+      "status": "awaiting_approval",
+      "published_platforms": [],
+      "postiz_results": [],
+      "video_made_with_ai": true,
+      "created_by": "open-social-scheduler",
+      "blocked_reason": "approval required for 2026-W34",
+      "cycle_key": "2026-08-20T12:00",
+      "cycle_hour": 12,
+      "cycle_index": 3,
+      "cycle_position": 2,
+      "production_mode": "6-every-4h",
+      "production_status": "DA CONTROLLARE",
+      "research_query": "Cosa controlliamo in un audit digitale",
+      "phone": "371 370 8294",
+      "visual_rule": "pixabay_canva_business_ecommerce_only",
+      "target_reel_seconds": 60,
+      "publish_decision": "manual",
+      "research_mode": "google_suggestions_plus_official_sources",
+      "research_basis": [
+        {
+          "url": "https://www.facebook.com/business/ads/facebook-instagram-reels-ads"
+        },
+        {
+          "url": "https://www.facebook.com/business/ads/ad-creative"
+        },
+        {
+          "url": "https://www.shopify.com/it/blog/topics/content-marketing"
+        },
+        {
+          "url": "https://www.shopify.com/blog/topics/conversion"
+        }
+      ],
+      "no_subtitles": true,
+      "visual_count": 10,
+      "visual_asset_urls": [
+        "https://cdn.pixabay.com/photo/2017/03/07/09/33/smartphone-2123520_1280.jpg",
+        "https://cdn.pixabay.com/photo/2018/11/26/21/28/telephone-3840285_1280.jpg",
+        "https://cdn.pixabay.com/photo/2021/07/05/15/29/social-media-6389437_1280.jpg",
+        "https://cdn.pixabay.com/photo/2019/08/28/05/00/smartphone-4435866_1280.jpg",
+        "https://cdn.pixabay.com/photo/2014/03/22/22/17/phone-292994_1280.jpg",
+        "https://cdn.pixabay.com/photo/2020/09/08/12/38/social-media-5554523_1280.jpg",
+        "https://cdn.pixabay.com/photo/2018/08/02/10/35/iphone-3579255_1280.jpg",
+        "https://cdn.pixabay.com/photo/2018/08/02/10/32/iphone-3579240_1280.jpg",
+        "https://cdn.pixabay.com/photo/2016/01/29/09/57/hands-1167618_1280.jpg",
+        "https://cdn.pixabay.com/photo/2014/12/17/21/55/smartphone-571961_1280.jpg"
+      ],
+      "visual_source": "pixabay_dynamic_varied",
+      "visual_uniqueness": "10 unique source images inside this content",
+      "fresh_visual_count": 0,
+      "reused_visual_count": 10,
+      "_presenter": ""
+    },
+    {
+      "id": "real-media-pro-2026-08-20-c12-03-08-crm-followup",
+      "client_id": "real-media-pro",
+      "client_name": "Real Media Pro",
+      "category": "nurture",
+      "editorial_role": "nurture",
+      "campaign": "Real Media Pro · Dalla visibilità alla crescita",
+      "format": "carousel",
+      "title": "I SOCIAL PORTANO CONTATTI O SOLO VISUALIZZAZIONI?",
+      "caption": "I SOCIAL PORTANO CONTATTI O SOLO VISUALIZZAZIONI?\n\nUn contenuto utile deve accompagnare la persona da attenzione a contatto. Un'azienda cresce online quando contenuti, social, sito e processo commerciale lavorano insieme. La metrica importante non è soltanto quante persone vedono un post, ma quante capiscono l'offerta, si fidano, visitano il sito, lasciano un contatto o acquistano. Per questo ogni contenuto deve avere una funzione nel percorso del cliente e ogni risultato deve poter essere misurato.\n\nRichiedi un'analisi strategica gratuita. Real Media Pro · 371 370 8294.\n\n#RealMediaPro #DigitalMarketing #SocialMediaMarketing #Ecommerce #SitiWeb #LeadGeneration #Torino",
+      "hashtags": [
+        "#RealMediaPro",
+        "#ShopifyItalia",
+        "#ConversionRate",
+        "#EcommerceItalia",
+        "#WebDesign",
+        "#ValleDiSusa"
+      ],
+      "voiceover": "I SOCIAL PORTANO CONTATTI O SOLO VISUALIZZAZIONI? Un contenuto utile deve accompagnare la persona da attenzione a contatto. Il punto non è pubblicare di più. È costruire un percorso in cui ogni contenuto abbia una funzione. Prima attiri l'attenzione della persona giusta. Poi fai capire il problema e la tua proposta. Costruisci fiducia con esempi, prove e chiarezza. Porti il traffico verso un sito o una pagina che funziona bene da smartphone e rende semplice fare il passo successivo. Infine misuri contatti, richieste e vendite, così capisci cosa migliorare. Quando social, sito e processo commerciale sono scollegati, arrivano numeri ma pochi risultati. Quando lavorano insieme, il digitale diventa una leva concreta di crescita. Se vuoi capire cosa migliorare nella tua azienda, richiedi un'analisi strategica gratuita a Real Media Pro al 371 370 8294.",
+      "slides": [
+        "I SOCIAL PORTANO CONTATTI O SOLO VISUALIZZAZIONI?",
+        "TARGET",
+        "HOOK",
+        "PROBLEMA REALE",
+        "PROVA",
+        "CTA",
+        "LANDING",
+        "FOLLOW-UP",
+        "MISURAZIONE",
+        "RICHIEDI UN'ANALISI STRATEGICA GRATUITA"
+      ],
+      "visuals": [
+        "imprenditore con laptop in ufficio moderno",
+        "smartphone con interfaccia social professionale",
+        "sito ecommerce premium su laptop",
+        "pagina prodotto pulita da smartphone",
+        "dashboard marketing e analytics realistica",
+        "team digitale al lavoro",
+        "checkout ecommerce semplice",
+        "analisi dati business su schermo",
+        "imprenditore che controlla risultati",
+        "workspace digitale premium con laptop e smartphone"
+      ],
+      "cta": "Richiedi un'analisi strategica gratuita",
+      "media": [
+        "publisher/media/generated/real-media-pro/2026-08-20/cycle-12/03-08-20-c12-03-08-crm-followup/slide-01.jpg",
+        "publisher/media/generated/real-media-pro/2026-08-20/cycle-12/03-08-20-c12-03-08-crm-followup/slide-02.jpg",
+        "publisher/media/generated/real-media-pro/2026-08-20/cycle-12/03-08-20-c12-03-08-crm-followup/slide-03.jpg",
+        "publisher/media/generated/real-media-pro/2026-08-20/cycle-12/03-08-20-c12-03-08-crm-followup/slide-04.jpg",
+        "publisher/media/generated/real-media-pro/2026-08-20/cycle-12/03-08-20-c12-03-08-crm-followup/slide-05.jpg",
+        "publisher/media/generated/real-media-pro/2026-08-20/cycle-12/03-08-20-c12-03-08-crm-followup/slide-06.jpg",
+        "publisher/media/generated/real-media-pro/2026-08-20/cycle-12/03-08-20-c12-03-08-crm-followup/slide-07.jpg",
+        "publisher/media/generated/real-media-pro/2026-08-20/cycle-12/03-08-20-c12-03-08-crm-followup/slide-08.jpg",
+        "publisher/media/generated/real-media-pro/2026-08-20/cycle-12/03-08-20-c12-03-08-crm-followup/slide-09.jpg",
+        "publisher/media/generated/real-media-pro/2026-08-20/cycle-12/03-08-20-c12-03-08-crm-followup/slide-10.jpg"
+      ],
+      "scheduled_at": "2026-08-20T12:46:00+02:00",
+      "territory": "Torino",
+      "property_focus": {},
+      "approval_key": "2026-W34",
+      "platforms": [
+        {
+          "platform": "facebook",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "linkedin",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "pinterest",
+          "integration_id": "direct-api"
+        }
+      ],
+      "enabled": true,
+      "status": "awaiting_approval",
+      "published_platforms": [],
+      "postiz_results": [],
+      "video_made_with_ai": false,
+      "created_by": "open-social-scheduler",
+      "blocked_reason": "approval required for 2026-W34",
+      "cycle_key": "2026-08-20T12:00",
+      "cycle_hour": 12,
+      "cycle_index": 3,
+      "cycle_position": 3,
+      "production_mode": "6-every-4h",
+      "production_status": "DA CONTROLLARE",
+      "research_query": "Un lead senza follow-up vale meno",
+      "phone": "371 370 8294",
+      "visual_rule": "pixabay_canva_business_ecommerce_only",
+      "target_reel_seconds": 60,
+      "publish_decision": "manual",
+      "research_mode": "google_suggestions_plus_official_sources",
+      "research_basis": [
+        {
+          "url": "https://www.facebook.com/business/ads/facebook-instagram-reels-ads"
+        },
+        {
+          "url": "https://www.facebook.com/business/ads/ad-creative"
+        },
+        {
+          "url": "https://www.shopify.com/it/blog/topics/content-marketing"
+        },
+        {
+          "url": "https://www.shopify.com/blog/topics/conversion"
+        }
+      ],
+      "no_subtitles": true,
+      "visual_count": 10,
+      "visual_asset_urls": [
+        "https://cdn.pixabay.com/photo/2023/10/05/07/13/contact-8295065_1280.png",
+        "https://cdn.pixabay.com/photo/2022/12/26/16/21/social-media-icons-7679334_1280.png",
+        "https://cdn.pixabay.com/photo/2024/01/03/06/35/ai-generated-8484741_1280.png",
+        "https://cdn.pixabay.com/photo/2017/03/07/09/33/smartphone-2123520_1280.jpg",
+        "https://cdn.pixabay.com/photo/2021/07/05/15/29/social-media-6389437_1280.jpg",
+        "https://cdn.pixabay.com/photo/2014/03/22/22/17/phone-292994_1280.jpg",
+        "https://cdn.pixabay.com/photo/2014/12/17/21/55/smartphone-571961_1280.jpg",
+        "https://cdn.pixabay.com/photo/2018/05/27/21/01/social-media-3434581_960_720.jpg",
+        "https://cdn.pixabay.com/photo/2016/09/28/18/12/smartphone-1701086_960_720.jpg",
+        "https://cdn.pixabay.com/photo/2014/12/30/08/10/social-media-583687_1280.jpg"
+      ],
+      "visual_source": "pixabay_dynamic_varied",
+      "visual_uniqueness": "10 unique source images inside this content",
+      "fresh_visual_count": 2,
+      "reused_visual_count": 8
     }
   ],
-  "updated_at": "2026-08-20T10:12:41+00:00",
-  "current_cycle": "2026-08-20T08:00",
+  "updated_at": "2026-08-20T10:44:16+00:00",
+  "current_cycle": "2026-08-20T12:00",
   "visual_policy": "10 different images per content; prefer unseen history; controlled cross-content reuse only on source shortage"
 }
