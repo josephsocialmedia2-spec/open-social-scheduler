@@ -3,6 +3,1334 @@
   "updated_by": "Photo-only renderer with manual image priority",
   "jobs": [
     {
+      "id": "real-media-pro-2026-08-21-c08-03-09-shopify-servizio",
+      "client_id": "real-media-pro",
+      "client_name": "Real Media Pro",
+      "category": "convert",
+      "editorial_role": "convert",
+      "campaign": "Real Media Pro · Dalla visibilità alla crescita",
+      "format": "photo",
+      "title": "SOCIAL + SITO + VENDITE",
+      "caption": "SOCIAL, SITO E VENDITE: UN UNICO PERCORSO.\n\nI social attirano attenzione. Il sito deve trasformarla in interesse, richiesta o acquisto. Se i due sistemi sono scollegati, si perdono opportunità. Real Media Pro costruisce un percorso digitale misurabile.\n\nRichiedi un'analisi strategica gratuita.\n371 370 8294\n\n#RealMediaPro #SocialMediaMarketing #Ecommerce #SitiWeb #LeadGeneration #Torino",
+      "hashtags": [
+        "#RealMediaPro",
+        "#Shopify",
+        "#Ecommerce",
+        "#SitiWeb",
+        "#Torino",
+        "#MarketingDigitale"
+      ],
+      "voiceover": "Real Media Pro realizza siti e-commerce e siti aziendali in Shopify collegati a campagne, WhatsApp, moduli e tracciamento. Richiedi un'analisi strategica gratuita.",
+      "slides": [
+        "SHOPIFY",
+        "MOBILE FIRST",
+        "PAGINE CHIARE",
+        "WHATSAPP / FORM",
+        "LANDING ADV",
+        "E-COMMERCE",
+        "TRACKING",
+        "PARLIAMONE"
+      ],
+      "visuals": [],
+      "cta": "Richiedi un'analisi strategica gratuita",
+      "media": "publisher/media/generated/real-media-pro/2026-08-21/cycle-08/03-08-21-c08-03-09-shopify-servizio.jpg",
+      "scheduled_at": "2026-08-21T08:46:00+02:00",
+      "territory": "Rivoli",
+      "property_focus": {},
+      "approval_key": "2026-W34",
+      "platforms": [
+        {
+          "platform": "facebook",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "tiktok",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "linkedin",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "youtube",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "pinterest",
+          "integration_id": "direct-api"
+        }
+      ],
+      "enabled": true,
+      "status": "awaiting_approval",
+      "published_platforms": [],
+      "postiz_results": [],
+      "video_made_with_ai": false,
+      "created_by": "open-social-scheduler",
+      "blocked_reason": "approval required for 2026-W34",
+      "cycle_key": "2026-08-21T08:00",
+      "cycle_hour": 8,
+      "cycle_index": 2,
+      "cycle_position": 3,
+      "production_mode": "photos-only-6-every-4h",
+      "production_status": "PHOTO READY",
+      "publication_ready": true,
+      "output_type": "static-photo",
+      "no_video": true,
+      "no_audio": true,
+      "no_reel": true,
+      "visual_mode": "rmp-ecommerce-photo",
+      "design_reference_url": "https://themes.shopify.com/?locale=it",
+      "design_reference_rule": "inspired by modern ecommerce presentation only; never copy a Shopify theme",
+      "search_query_override": "digital business ecommerce analytics workspace",
+      "search_queries": [
+        "ecommerce website laptop premium workspace",
+        "online shop smartphone laptop business",
+        "digital marketing ecommerce workspace",
+        "product photography ecommerce desk"
+      ],
+      "visual_asset_urls": [
+        "https://cdn.pixabay.com/photo/2018/08/09/14/01/ecommerce-3594580_640.jpg"
+      ],
+      "visual_source": "pixabay-fresh-static-photo",
+      "visual_count": 1,
+      "fresh_visual_count": 1,
+      "reused_visual_count": 0
+    },
+    {
+      "id": "real-media-pro-2026-08-21-c08-02-08-audit-digitale",
+      "client_id": "real-media-pro",
+      "client_name": "Real Media Pro",
+      "category": "nurture",
+      "editorial_role": "nurture",
+      "campaign": "Real Media Pro · Dalla visibilità alla crescita",
+      "format": "photo",
+      "title": "ECOMMERCE CHE CONVERTE",
+      "caption": "ECOMMERCE: DESIGN E CONVERSIONE DEVONO LAVORARE INSIEME.\n\nUna vetrina digitale moderna deve essere leggibile da smartphone, veloce e costruita per accompagnare il cliente dal prodotto al checkout. Real Media Pro progetta strategie digitali orientate a contatti e vendite.\n\nRichiedi un'analisi strategica gratuita.\n371 370 8294\n\n#RealMediaPro #Ecommerce #Shopify #SitiWeb #MarketingDigitale #AziendeLocali",
+      "hashtags": [
+        "#RealMediaPro",
+        "#SitiShopify",
+        "#DigitalMarketing",
+        "#LeadGeneration",
+        "#Rivoli",
+        "#Avigliana"
+      ],
+      "voiceover": "L'analisi strategica collega posizionamento, sito, SEO, advertising, contenuti e gestione dei lead. Non guardiamo un singolo canale isolato. Richiedi un'analisi strategica gratuita.",
+      "slides": [
+        "AUDIT DIGITALE",
+        "POSIZIONAMENTO",
+        "SITO / SHOPIFY",
+        "SEO / AEO",
+        "META ADS",
+        "GOOGLE ADS",
+        "CRM / FOLLOW-UP",
+        "PIANO OPERATIVO"
+      ],
+      "visuals": [],
+      "cta": "Richiedi un'analisi strategica gratuita",
+      "media": "publisher/media/generated/real-media-pro/2026-08-21/cycle-08/02-08-21-c08-02-08-audit-digitale.jpg",
+      "scheduled_at": "2026-08-21T08:38:00+02:00",
+      "territory": "Rivoli",
+      "property_focus": {},
+      "approval_key": "2026-W34",
+      "platforms": [
+        {
+          "platform": "facebook",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "tiktok",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "linkedin",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "youtube",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "pinterest",
+          "integration_id": "direct-api"
+        }
+      ],
+      "enabled": true,
+      "status": "awaiting_approval",
+      "published_platforms": [],
+      "postiz_results": [],
+      "video_made_with_ai": false,
+      "created_by": "open-social-scheduler",
+      "blocked_reason": "approval required for 2026-W34",
+      "cycle_key": "2026-08-21T08:00",
+      "cycle_hour": 8,
+      "cycle_index": 2,
+      "cycle_position": 2,
+      "production_mode": "photos-only-6-every-4h",
+      "production_status": "PHOTO READY",
+      "publication_ready": true,
+      "output_type": "static-photo",
+      "no_video": true,
+      "no_audio": true,
+      "no_reel": true,
+      "visual_mode": "rmp-ecommerce-photo",
+      "design_reference_url": "https://themes.shopify.com/?locale=it",
+      "design_reference_rule": "inspired by modern ecommerce presentation only; never copy a Shopify theme",
+      "search_query_override": "online store product page laptop smartphone",
+      "search_queries": [
+        "ecommerce website laptop premium workspace",
+        "online shop smartphone laptop business",
+        "digital marketing ecommerce workspace",
+        "product photography ecommerce desk"
+      ],
+      "visual_asset_urls": [
+        "https://cdn.pixabay.com/photo/2017/06/25/14/30/responsive-2440940_1280.png"
+      ],
+      "visual_source": "pixabay-fresh-static-photo",
+      "visual_count": 1,
+      "fresh_visual_count": 1,
+      "reused_visual_count": 0
+    },
+    {
+      "id": "real-media-pro-2026-08-21-c08-01-07-shopify-che-converte",
+      "client_id": "real-media-pro",
+      "client_name": "Real Media Pro",
+      "category": "attract",
+      "editorial_role": "attract",
+      "campaign": "Real Media Pro · Dalla visibilità alla crescita",
+      "format": "photo",
+      "title": "SITO CHE VENDE",
+      "caption": "IL TUO SITO AIUTA DAVVERO A VENDERE?\n\nUn sito efficace non è solo bello: deve rendere chiara l'offerta, guidare la persona e facilitare il contatto o l'acquisto. Real Media Pro analizza presenza digitale, sito, social e percorso commerciale per individuare cosa migliorare.\n\nRichiedi un'analisi strategica gratuita.\n371 370 8294\n\n#RealMediaPro #SitiWeb #Ecommerce #Shopify #DigitalMarketing #Torino #ValleDiSusa",
+      "hashtags": [
+        "#RealMediaPro",
+        "#ShopifyItalia",
+        "#ConversionRate",
+        "#EcommerceItalia",
+        "#WebDesign",
+        "#ValleDiSusa"
+      ],
+      "voiceover": "Un e-commerce che performa collega prodotto, offerta, pagina, fiducia, checkout e traffico. Real Media Pro parte dal percorso di acquisto, non dal solo layout. Richiedi un'analisi strategica gratuita.",
+      "slides": [
+        "IL TUO E-COMMERCE È BELLO?",
+        "MA CONVERTE?",
+        "PRODOTTO + OFFERTA",
+        "PAGINA PRODOTTO",
+        "PROVA SOCIALE",
+        "CHECKOUT SENZA ATTRITO",
+        "TRAFFICO QUALIFICATO",
+        "RICHIEDI ANALISI"
+      ],
+      "visuals": [],
+      "cta": "Richiedi un'analisi strategica gratuita",
+      "media": "publisher/media/generated/real-media-pro/2026-08-21/cycle-08/01-08-21-c08-01-07-shopify-che-converte.jpg",
+      "scheduled_at": "2026-08-21T08:30:00+02:00",
+      "territory": "Rivoli",
+      "property_focus": {},
+      "approval_key": "2026-W34",
+      "platforms": [
+        {
+          "platform": "facebook",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "tiktok",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "linkedin",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "youtube",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "pinterest",
+          "integration_id": "direct-api"
+        }
+      ],
+      "enabled": true,
+      "status": "awaiting_approval",
+      "published_platforms": [],
+      "postiz_results": [],
+      "video_made_with_ai": false,
+      "created_by": "open-social-scheduler",
+      "blocked_reason": "approval required for 2026-W34",
+      "cycle_key": "2026-08-21T08:00",
+      "cycle_hour": 8,
+      "cycle_index": 2,
+      "cycle_position": 1,
+      "production_mode": "photos-only-6-every-4h",
+      "production_status": "PHOTO READY",
+      "publication_ready": true,
+      "output_type": "static-photo",
+      "no_video": true,
+      "no_audio": true,
+      "no_reel": true,
+      "visual_mode": "rmp-ecommerce-photo",
+      "design_reference_url": "https://themes.shopify.com/?locale=it",
+      "design_reference_rule": "inspired by modern ecommerce presentation only; never copy a Shopify theme",
+      "search_query_override": "ecommerce website laptop premium workspace",
+      "search_queries": [
+        "ecommerce website laptop premium workspace",
+        "online shop smartphone laptop business",
+        "digital marketing ecommerce workspace",
+        "product photography ecommerce desk"
+      ],
+      "visual_asset_urls": [
+        "https://cdn.pixabay.com/photo/2020/12/28/10/04/laptop-5866526_960_720.jpg"
+      ],
+      "visual_source": "pixabay-fresh-static-photo",
+      "visual_count": 1,
+      "fresh_visual_count": 1,
+      "reused_visual_count": 0
+    },
+    {
+      "id": "f1-immobiliare-2026-08-21-c08-03-09-g7-cosa-vede-compratore",
+      "client_id": "f1-immobiliare",
+      "client_name": "F1 Immobiliare",
+      "category": "proof",
+      "editorial_role": "proof",
+      "campaign": "F1 · Non a sensazione. Con i dati.",
+      "format": "photo",
+      "title": "CASE IN VALLE DI SUSA · VALUTAZIONE IMMOBILIARE",
+      "caption": "VUOI VENDERE CASA IN VALLE DI SUSA?\n\nPrima di pubblicare un annuncio, parti da una valutazione immobiliare costruita su dati, caratteristiche reali dell'immobile, microzona e confronto con il mercato.\n\nF1 Immobiliare organizza la vendita partendo dall'analisi, non da un prezzo scelto a sensazione.\n\nRichiedi una valutazione gratuita del tuo immobile.\n371 370 8294 · 371 424 6300\n\n#F1Immobiliare #ValleDiSusa #VendereCasa #ValutazioneImmobiliare #Susa #Bussoleno #Condove #Avigliana #Almese #Rivoli",
+      "hashtags": [
+        "#F1Immobiliare",
+        "#AltaValleDiSusa",
+        "#Oulx",
+        "#Bardonecchia",
+        "#SauzeDOulx",
+        "#InvestimentoImmobiliare"
+      ],
+      "voiceover": "Per vendere bene dobbiamo guardare il mercato anche con gli occhi del compratore. Scrivi VALUTAZIONE in privato.",
+      "slides": [
+        "APRiamo|LA RICERCA",
+        "QUESTE SONO|LE ALTERNATIVE",
+        "QUESTI SONO|I PREZZI",
+        "QUESTA È|LA QUALITÀ OFFERTA",
+        "IL COMPRATORE|CONFRONTA",
+        "NOI DOBBIAMO|POSIZIONARE",
+        "F1 IMMOBILIARE|PROVA PRIMA|371 370 8294"
+      ],
+      "visuals": [],
+      "cta": "Scrivi VALUTAZIONE in privato",
+      "media": "publisher/media/generated/f1-immobiliare/2026-08-21/cycle-08/03-21-c08-03-09-g7-cosa-vede-compratore.jpg",
+      "scheduled_at": "2026-08-21T08:16:00+02:00",
+      "territory": "Almese",
+      "property_focus": {
+        "transaction": "vendita",
+        "min_price_eur": 100000,
+        "exclude": [
+          "affitto",
+          "locazione",
+          "garage",
+          "box",
+          "posto auto",
+          "rustico",
+          "rudere",
+          "terreno"
+        ],
+        "preferred": [
+          "appartamento",
+          "casa",
+          "villa",
+          "villetta",
+          "attico",
+          "bifamiliare",
+          "trifamiliare"
+        ],
+        "cash_subito": {
+          "enabled": true,
+          "label": "F1 CASH SUBITO",
+          "meaning": "acquisto diretto per opportunità immobiliari fortemente scontate e coerenti con i criteri F1",
+          "rule": "non presentarlo come garanzia di acquisto; prima verifica economica, tecnica e documentale"
+        }
+      },
+      "approval_key": "2026-W34",
+      "platforms": [
+        {
+          "platform": "facebook",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "tiktok",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "linkedin",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "youtube",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "pinterest",
+          "integration_id": "direct-api"
+        }
+      ],
+      "enabled": true,
+      "status": "awaiting_approval",
+      "published_platforms": [],
+      "postiz_results": [],
+      "video_made_with_ai": false,
+      "created_by": "open-social-scheduler",
+      "blocked_reason": "approval required for 2026-W34",
+      "cycle_key": "2026-08-21T08:00",
+      "cycle_hour": 8,
+      "cycle_index": 2,
+      "cycle_position": 3,
+      "production_mode": "photos-only-6-every-4h",
+      "production_status": "PHOTO READY",
+      "publication_ready": true,
+      "output_type": "static-photo",
+      "no_video": true,
+      "no_audio": true,
+      "no_reel": true,
+      "visual_mode": "valle-di-susa-homes-photo",
+      "search_query_override": "case in Valle di Susa",
+      "search_queries": [
+        "case in Valle di Susa",
+        "casa alpina Piemonte",
+        "villa montagna Piemonte",
+        "casa con giardino montagne Italia",
+        "borgo alpino casa pietra Italia"
+      ],
+      "visual_asset_urls": [
+        "https://cdn.pixabay.com/photo/2023/02/28/20/18/house-7821717_960_720.jpg"
+      ],
+      "visual_source": "pixabay-fresh-static-photo",
+      "visual_count": 1,
+      "fresh_visual_count": 1,
+      "reused_visual_count": 0
+    },
+    {
+      "id": "f1-immobiliare-2026-08-21-c08-02-08-g6-prezzo-da-soli",
+      "client_id": "f1-immobiliare",
+      "client_name": "F1 Immobiliare",
+      "category": "error",
+      "editorial_role": "error",
+      "campaign": "F1 · Non a sensazione. Con i dati.",
+      "format": "photo",
+      "title": "LAVORA CON F1 IMMOBILIARE",
+      "caption": "LAVORA CON F1 IMMOBILIARE.\n\nCerchiamo collaboratori e collaboratrici da formare e affiancare, oltre ad agenti immobiliari già abilitati.\n\nPer chi non è ancora abilitato, il percorso iniziale riguarda presidio della zona, contatto con residenti e proprietari, ricerca immobili, appuntamenti e raccolta delle informazioni iniziali, sempre con affiancamento. Le attività riservate alla mediazione e alla negoziazione vengono svolte da professionisti abilitati.\n\nInvia il curriculum a f1immobiliaresusa@outlook.it\n371 370 8294\n\n#F1Immobiliare #LavoraConNoi #Immobiliare #ValleDiSusa #TorinoOvest",
+      "hashtags": [
+        "#F1Immobiliare",
+        "#ValleDiSusa",
+        "#CasaTorino",
+        "#ImmobiliareTorino",
+        "#Almese",
+        "#SantAmbrogioDiTorino"
+      ],
+      "voiceover": "Decidere il prezzo da soli non è il problema. Il problema è farlo usando dati sbagliati. Un annuncio non è una vendita e una casa simile non è automaticamente un comparabile.",
+      "slides": [
+        "DECIDERE|IL PREZZO|DA SOLI",
+        "NON È|IL PROBLEMA",
+        "IL PROBLEMA È|USARE DATI SBAGLIATI",
+        "ANNUNCI ≠|VENDITE",
+        "SIMILE ≠|COMPARABILE",
+        "VERIFICA|LE FONTI",
+        "F1 IMMOBILIARE|SECONDO PARERE|371 370 8294"
+      ],
+      "visuals": [],
+      "cta": "Scrivi VALUTAZIONE in privato",
+      "media": "publisher/media/generated/f1-immobiliare/2026-08-21/cycle-08/02-21-c08-02-08-g6-prezzo-da-soli.jpg",
+      "scheduled_at": "2026-08-21T08:08:00+02:00",
+      "territory": "Almese",
+      "property_focus": {
+        "transaction": "vendita",
+        "min_price_eur": 100000,
+        "exclude": [
+          "affitto",
+          "locazione",
+          "garage",
+          "box",
+          "posto auto",
+          "rustico",
+          "rudere",
+          "terreno"
+        ],
+        "preferred": [
+          "appartamento",
+          "casa",
+          "villa",
+          "villetta",
+          "attico",
+          "bifamiliare",
+          "trifamiliare"
+        ],
+        "cash_subito": {
+          "enabled": true,
+          "label": "F1 CASH SUBITO",
+          "meaning": "acquisto diretto per opportunità immobiliari fortemente scontate e coerenti con i criteri F1",
+          "rule": "non presentarlo come garanzia di acquisto; prima verifica economica, tecnica e documentale"
+        }
+      },
+      "approval_key": "2026-W34",
+      "platforms": [
+        {
+          "platform": "facebook",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "tiktok",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "linkedin",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "youtube",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "pinterest",
+          "integration_id": "direct-api"
+        }
+      ],
+      "enabled": true,
+      "status": "awaiting_approval",
+      "published_platforms": [],
+      "postiz_results": [],
+      "video_made_with_ai": false,
+      "created_by": "open-social-scheduler",
+      "blocked_reason": "approval required for 2026-W34",
+      "cycle_key": "2026-08-21T08:00",
+      "cycle_hour": 8,
+      "cycle_index": 2,
+      "cycle_position": 2,
+      "production_mode": "photos-only-6-every-4h",
+      "production_status": "PHOTO READY",
+      "publication_ready": true,
+      "output_type": "static-photo",
+      "no_video": true,
+      "no_audio": true,
+      "no_reel": true,
+      "visual_mode": "f1-recruiting-photo",
+      "search_query_override": "real estate professional office Italy",
+      "search_queries": [
+        "real estate agent office Italy",
+        "property consultant office professional",
+        "business team real estate meeting"
+      ],
+      "visual_asset_urls": [
+        "https://cdn.pixabay.com/photo/2024/02/22/11/47/real-estate-8589913_1280.jpg"
+      ],
+      "visual_source": "pixabay-fresh-static-photo",
+      "visual_count": 1,
+      "fresh_visual_count": 1,
+      "reused_visual_count": 0
+    },
+    {
+      "id": "f1-immobiliare-2026-08-21-c08-01-07-g5-domanda-agente",
+      "client_id": "f1-immobiliare",
+      "client_name": "F1 Immobiliare",
+      "category": "data",
+      "editorial_role": "data",
+      "campaign": "F1 · Non a sensazione. Con i dati.",
+      "format": "photo",
+      "title": "CASE IN VALLE DI SUSA · VALUTAZIONE IMMOBILIARE",
+      "caption": "VUOI VENDERE CASA IN VALLE DI SUSA?\n\nPrima di pubblicare un annuncio, parti da una valutazione immobiliare costruita su dati, caratteristiche reali dell'immobile, microzona e confronto con il mercato.\n\nF1 Immobiliare organizza la vendita partendo dall'analisi, non da un prezzo scelto a sensazione.\n\nRichiedi una valutazione gratuita del tuo immobile.\n371 370 8294 · 371 424 6300\n\n#F1Immobiliare #ValleDiSusa #VendereCasa #ValutazioneImmobiliare #Susa #Bussoleno #Condove #Avigliana #Almese #Rivoli",
+      "hashtags": [
+        "#F1Immobiliare",
+        "#ValDiSusa",
+        "#MercatoImmobiliare",
+        "#VenditaImmobiliare",
+        "#Susa",
+        "#PrimaIDati"
+      ],
+      "voiceover": "Prima di affidare la vendita, non chiedere soltanto quanto vale la casa. Chiedi su quali dati è stato costruito quel prezzo, quali comparabili sono stati usati e quale strategia verrà applicata dopo la pubblicazione.",
+      "slides": [
+        "PRIMA|DELL'INCARICO",
+        "CHIEDI:|SU QUALI DATI?",
+        "NON SOLO|QUANTO VALE",
+        "MA PERCHÉ|QUEL PREZZO",
+        "QUALI|COMPARABILI?",
+        "QUALE|STRATEGIA?",
+        "F1 IMMOBILIARE|DEVI POTER CAPIRE|371 370 8294"
+      ],
+      "visuals": [],
+      "cta": "Scrivi VALUTAZIONE in privato",
+      "media": "publisher/media/generated/f1-immobiliare/2026-08-21/cycle-08/01-21-c08-01-07-g5-domanda-agente.jpg",
+      "scheduled_at": "2026-08-21T08:00:00+02:00",
+      "territory": "Almese",
+      "property_focus": {
+        "transaction": "vendita",
+        "min_price_eur": 100000,
+        "exclude": [
+          "affitto",
+          "locazione",
+          "garage",
+          "box",
+          "posto auto",
+          "rustico",
+          "rudere",
+          "terreno"
+        ],
+        "preferred": [
+          "appartamento",
+          "casa",
+          "villa",
+          "villetta",
+          "attico",
+          "bifamiliare",
+          "trifamiliare"
+        ],
+        "cash_subito": {
+          "enabled": true,
+          "label": "F1 CASH SUBITO",
+          "meaning": "acquisto diretto per opportunità immobiliari fortemente scontate e coerenti con i criteri F1",
+          "rule": "non presentarlo come garanzia di acquisto; prima verifica economica, tecnica e documentale"
+        }
+      },
+      "approval_key": "2026-W34",
+      "platforms": [
+        {
+          "platform": "facebook",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "tiktok",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "linkedin",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "youtube",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "pinterest",
+          "integration_id": "direct-api"
+        }
+      ],
+      "enabled": true,
+      "status": "awaiting_approval",
+      "published_platforms": [],
+      "postiz_results": [],
+      "video_made_with_ai": false,
+      "created_by": "open-social-scheduler",
+      "blocked_reason": "approval required for 2026-W34",
+      "cycle_key": "2026-08-21T08:00",
+      "cycle_hour": 8,
+      "cycle_index": 2,
+      "cycle_position": 1,
+      "production_mode": "photos-only-6-every-4h",
+      "production_status": "PHOTO READY",
+      "publication_ready": true,
+      "output_type": "static-photo",
+      "no_video": true,
+      "no_audio": true,
+      "no_reel": true,
+      "visual_mode": "valle-di-susa-homes-photo",
+      "search_query_override": "case in Valle di Susa",
+      "search_queries": [
+        "case in Valle di Susa",
+        "casa alpina Piemonte",
+        "villa montagna Piemonte",
+        "casa con giardino montagne Italia",
+        "borgo alpino casa pietra Italia"
+      ],
+      "visual_asset_urls": [
+        "https://cdn.pixabay.com/photo/2021/08/08/13/49/valley-6530967_1280.jpg"
+      ],
+      "visual_source": "pixabay-fresh-static-photo",
+      "visual_count": 1,
+      "fresh_visual_count": 1,
+      "reused_visual_count": 0
+    },
+    {
+      "id": "real-media-pro-2026-08-21-c04-03-06-advertising-sistema",
+      "client_id": "real-media-pro",
+      "client_name": "Real Media Pro",
+      "category": "convert",
+      "editorial_role": "convert",
+      "campaign": "Real Media Pro · Dalla visibilità alla crescita",
+      "format": "photo",
+      "title": "SOCIAL + SITO + VENDITE",
+      "caption": "SOCIAL, SITO E VENDITE: UN UNICO PERCORSO.\n\nI social attirano attenzione. Il sito deve trasformarla in interesse, richiesta o acquisto. Se i due sistemi sono scollegati, si perdono opportunità. Real Media Pro costruisce un percorso digitale misurabile.\n\nRichiedi un'analisi strategica gratuita.\n371 370 8294\n\n#RealMediaPro #SocialMediaMarketing #Ecommerce #SitiWeb #LeadGeneration #Torino",
+      "hashtags": [
+        "#RealMediaPro",
+        "#Shopify",
+        "#Ecommerce",
+        "#SitiWeb",
+        "#Torino",
+        "#MarketingDigitale"
+      ],
+      "voiceover": "La pubblicità funziona meglio quando Meta, Google, landing page, CRM e misurazione sono progettati come un unico sistema. Richiedi un'analisi strategica gratuita.",
+      "slides": [
+        "ADV SENZA LANDING?",
+        "RISCHI DI PAGARE TRAFFICO",
+        "META CREA DOMANDA",
+        "GOOGLE INTERCETTA INTENTO",
+        "LANDING CONVERTE",
+        "CRM SEGUE",
+        "DATI OTTIMIZZANO",
+        "RICHIEDI ANALISI"
+      ],
+      "visuals": [],
+      "cta": "Richiedi un'analisi strategica gratuita",
+      "media": "publisher/media/generated/real-media-pro/2026-08-21/cycle-04/03-08-21-c04-03-06-advertising-sistema.jpg",
+      "scheduled_at": "2026-08-21T04:46:00+02:00",
+      "territory": "Rivoli",
+      "property_focus": {},
+      "approval_key": "2026-W34",
+      "platforms": [
+        {
+          "platform": "facebook",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "tiktok",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "linkedin",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "youtube",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "pinterest",
+          "integration_id": "direct-api"
+        }
+      ],
+      "enabled": true,
+      "status": "awaiting_approval",
+      "published_platforms": [],
+      "postiz_results": [],
+      "video_made_with_ai": false,
+      "created_by": "open-social-scheduler",
+      "blocked_reason": "approval required for 2026-W34",
+      "cycle_key": "2026-08-21T04:00",
+      "cycle_hour": 4,
+      "cycle_index": 1,
+      "cycle_position": 3,
+      "production_mode": "photos-only-6-every-4h",
+      "production_status": "PHOTO READY",
+      "publication_ready": true,
+      "output_type": "static-photo",
+      "no_video": true,
+      "no_audio": true,
+      "no_reel": true,
+      "visual_mode": "rmp-ecommerce-photo",
+      "design_reference_url": "https://themes.shopify.com/?locale=it",
+      "design_reference_rule": "inspired by modern ecommerce presentation only; never copy a Shopify theme",
+      "search_query_override": "digital business ecommerce analytics workspace",
+      "search_queries": [
+        "ecommerce website laptop premium workspace",
+        "online shop smartphone laptop business",
+        "digital marketing ecommerce workspace",
+        "product photography ecommerce desk"
+      ],
+      "visual_asset_urls": [
+        "https://cdn.pixabay.com/photo/2021/12/27/19/28/e-commerce-6898102_1280.png"
+      ],
+      "visual_source": "pixabay-fresh-static-photo",
+      "visual_count": 1,
+      "fresh_visual_count": 1,
+      "reused_visual_count": 0
+    },
+    {
+      "id": "real-media-pro-2026-08-21-c04-02-05-shopify-product-page",
+      "client_id": "real-media-pro",
+      "client_name": "Real Media Pro",
+      "category": "nurture",
+      "editorial_role": "nurture",
+      "campaign": "Real Media Pro · Dalla visibilità alla crescita",
+      "format": "photo",
+      "title": "ECOMMERCE CHE CONVERTE",
+      "caption": "ECOMMERCE: DESIGN E CONVERSIONE DEVONO LAVORARE INSIEME.\n\nUna vetrina digitale moderna deve essere leggibile da smartphone, veloce e costruita per accompagnare il cliente dal prodotto al checkout. Real Media Pro progetta strategie digitali orientate a contatti e vendite.\n\nRichiedi un'analisi strategica gratuita.\n371 370 8294\n\n#RealMediaPro #Ecommerce #Shopify #SitiWeb #MarketingDigitale #AziendeLocali",
+      "hashtags": [
+        "#RealMediaPro",
+        "#SitiShopify",
+        "#DigitalMarketing",
+        "#LeadGeneration",
+        "#Rivoli",
+        "#Avigliana"
+      ],
+      "voiceover": "Una product page efficace riduce l'incertezza: beneficio chiaro, prove, FAQ, condizioni e CTA visibile, soprattutto da mobile. Richiedi un'analisi strategica gratuita.",
+      "slides": [
+        "UNA PAGINA PRODOTTO DEVE VENDERE",
+        "PROBLEMA",
+        "BENEFICIO",
+        "DIMOSTRAZIONE",
+        "RECENSIONI",
+        "FAQ",
+        "SPEDIZIONE / RESO",
+        "CTA"
+      ],
+      "visuals": [],
+      "cta": "Richiedi un'analisi strategica gratuita",
+      "media": "publisher/media/generated/real-media-pro/2026-08-21/cycle-04/02-08-21-c04-02-05-shopify-product-page.jpg",
+      "scheduled_at": "2026-08-21T04:38:00+02:00",
+      "territory": "Rivoli",
+      "property_focus": {},
+      "approval_key": "2026-W34",
+      "platforms": [
+        {
+          "platform": "facebook",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "tiktok",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "linkedin",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "youtube",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "pinterest",
+          "integration_id": "direct-api"
+        }
+      ],
+      "enabled": true,
+      "status": "awaiting_approval",
+      "published_platforms": [],
+      "postiz_results": [],
+      "video_made_with_ai": false,
+      "created_by": "open-social-scheduler",
+      "blocked_reason": "approval required for 2026-W34",
+      "cycle_key": "2026-08-21T04:00",
+      "cycle_hour": 4,
+      "cycle_index": 1,
+      "cycle_position": 2,
+      "production_mode": "photos-only-6-every-4h",
+      "production_status": "PHOTO READY",
+      "publication_ready": true,
+      "output_type": "static-photo",
+      "no_video": true,
+      "no_audio": true,
+      "no_reel": true,
+      "visual_mode": "rmp-ecommerce-photo",
+      "design_reference_url": "https://themes.shopify.com/?locale=it",
+      "design_reference_rule": "inspired by modern ecommerce presentation only; never copy a Shopify theme",
+      "search_query_override": "online store product page laptop smartphone",
+      "search_queries": [
+        "ecommerce website laptop premium workspace",
+        "online shop smartphone laptop business",
+        "digital marketing ecommerce workspace",
+        "product photography ecommerce desk"
+      ],
+      "visual_asset_urls": [
+        "https://cdn.pixabay.com/photo/2020/08/26/14/29/technology-5519649_1280.jpg"
+      ],
+      "visual_source": "pixabay-fresh-static-photo",
+      "visual_count": 1,
+      "fresh_visual_count": 1,
+      "reused_visual_count": 0
+    },
+    {
+      "id": "real-media-pro-2026-08-21-c04-01-04-google-ads-intento",
+      "client_id": "real-media-pro",
+      "client_name": "Real Media Pro",
+      "category": "attract",
+      "editorial_role": "attract",
+      "campaign": "Real Media Pro · Dalla visibilità alla crescita",
+      "format": "photo",
+      "title": "SITO CHE VENDE",
+      "caption": "IL TUO SITO AIUTA DAVVERO A VENDERE?\n\nUn sito efficace non è solo bello: deve rendere chiara l'offerta, guidare la persona e facilitare il contatto o l'acquisto. Real Media Pro analizza presenza digitale, sito, social e percorso commerciale per individuare cosa migliorare.\n\nRichiedi un'analisi strategica gratuita.\n371 370 8294\n\n#RealMediaPro #SitiWeb #Ecommerce #Shopify #DigitalMarketing #Torino #ValleDiSusa",
+      "hashtags": [
+        "#RealMediaPro",
+        "#ShopifyItalia",
+        "#ConversionRate",
+        "#EcommerceItalia",
+        "#WebDesign",
+        "#ValleDiSusa"
+      ],
+      "voiceover": "Google Ads funziona quando keyword, feed, annuncio e pagina di destinazione rispondono allo stesso intento. Richiedi un'analisi strategica gratuita.",
+      "slides": [
+        "CHI CERCA È GIÀ PIÙ VICINO",
+        "MA DEVI ESSERCI",
+        "SEARCH",
+        "SHOPPING",
+        "PERFORMANCE MAX",
+        "FEED PRODOTTI",
+        "LANDING COERENTE",
+        "RICHIEDI ANALISI"
+      ],
+      "visuals": [],
+      "cta": "Richiedi un'analisi strategica gratuita",
+      "media": "publisher/media/generated/real-media-pro/2026-08-21/cycle-04/01-08-21-c04-01-04-google-ads-intento.jpg",
+      "scheduled_at": "2026-08-21T04:30:00+02:00",
+      "territory": "Rivoli",
+      "property_focus": {},
+      "approval_key": "2026-W34",
+      "platforms": [
+        {
+          "platform": "facebook",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "tiktok",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "linkedin",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "youtube",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "pinterest",
+          "integration_id": "direct-api"
+        }
+      ],
+      "enabled": true,
+      "status": "awaiting_approval",
+      "published_platforms": [],
+      "postiz_results": [],
+      "video_made_with_ai": false,
+      "created_by": "open-social-scheduler",
+      "blocked_reason": "approval required for 2026-W34",
+      "cycle_key": "2026-08-21T04:00",
+      "cycle_hour": 4,
+      "cycle_index": 1,
+      "cycle_position": 1,
+      "production_mode": "photos-only-6-every-4h",
+      "production_status": "PHOTO READY",
+      "publication_ready": true,
+      "output_type": "static-photo",
+      "no_video": true,
+      "no_audio": true,
+      "no_reel": true,
+      "visual_mode": "rmp-ecommerce-photo",
+      "design_reference_url": "https://themes.shopify.com/?locale=it",
+      "design_reference_rule": "inspired by modern ecommerce presentation only; never copy a Shopify theme",
+      "search_query_override": "ecommerce website laptop premium workspace",
+      "search_queries": [
+        "ecommerce website laptop premium workspace",
+        "online shop smartphone laptop business",
+        "digital marketing ecommerce workspace",
+        "product photography ecommerce desk"
+      ],
+      "visual_asset_urls": [
+        "https://cdn.pixabay.com/photo/2024/07/10/14/30/laptop-8885977_960_720.jpg"
+      ],
+      "visual_source": "pixabay-fresh-static-photo",
+      "visual_count": 1,
+      "fresh_visual_count": 1,
+      "reused_visual_count": 0
+    },
+    {
+      "id": "f1-immobiliare-2026-08-21-c04-03-06-g4-quattro-controlli-fermo",
+      "client_id": "f1-immobiliare",
+      "client_name": "F1 Immobiliare",
+      "category": "proof",
+      "editorial_role": "proof",
+      "campaign": "F1 · Non a sensazione. Con i dati.",
+      "format": "photo",
+      "title": "CASE IN VALLE DI SUSA · VALUTAZIONE IMMOBILIARE",
+      "caption": "VUOI VENDERE CASA IN VALLE DI SUSA?\n\nPrima di pubblicare un annuncio, parti da una valutazione immobiliare costruita su dati, caratteristiche reali dell'immobile, microzona e confronto con il mercato.\n\nF1 Immobiliare organizza la vendita partendo dall'analisi, non da un prezzo scelto a sensazione.\n\nRichiedi una valutazione gratuita del tuo immobile.\n371 370 8294 · 371 424 6300\n\n#F1Immobiliare #ValleDiSusa #VendereCasa #ValutazioneImmobiliare #Susa #Bussoleno #Condove #Avigliana #Almese #Rivoli",
+      "hashtags": [
+        "#F1Immobiliare",
+        "#ValleDiSusa",
+        "#VendereCasa",
+        "#ValutazioneImmobiliare",
+        "#Avigliana",
+        "#CasaInVendita"
+      ],
+      "voiceover": "Se un immobile non riceve richieste, controlliamo pricing, presentazione, distribuzione e target prima di intervenire. Scrivi VALUTAZIONE in privato.",
+      "slides": [
+        "CASA FERMA?|4 CONTROLLI",
+        "1. PRICING",
+        "2. PRESENTAZIONE",
+        "3. DISTRIBUZIONE",
+        "4. TARGET",
+        "POI|DECIDIAMO",
+        "F1 IMMOBILIARE|DIAGNOSI PRIMA|371 370 8294"
+      ],
+      "visuals": [],
+      "cta": "Scrivi VALUTAZIONE in privato",
+      "media": "publisher/media/generated/f1-immobiliare/2026-08-21/cycle-04/03-21-c04-03-06-g4-quattro-controlli-fermo.jpg",
+      "scheduled_at": "2026-08-21T04:16:00+02:00",
+      "territory": "Almese",
+      "property_focus": {
+        "transaction": "vendita",
+        "min_price_eur": 100000,
+        "exclude": [
+          "affitto",
+          "locazione",
+          "garage",
+          "box",
+          "posto auto",
+          "rustico",
+          "rudere",
+          "terreno"
+        ],
+        "preferred": [
+          "appartamento",
+          "casa",
+          "villa",
+          "villetta",
+          "attico",
+          "bifamiliare",
+          "trifamiliare"
+        ],
+        "cash_subito": {
+          "enabled": true,
+          "label": "F1 CASH SUBITO",
+          "meaning": "acquisto diretto per opportunità immobiliari fortemente scontate e coerenti con i criteri F1",
+          "rule": "non presentarlo come garanzia di acquisto; prima verifica economica, tecnica e documentale"
+        }
+      },
+      "approval_key": "2026-W34",
+      "platforms": [
+        {
+          "platform": "facebook",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "tiktok",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "linkedin",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "youtube",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "pinterest",
+          "integration_id": "direct-api"
+        }
+      ],
+      "enabled": true,
+      "status": "awaiting_approval",
+      "published_platforms": [],
+      "postiz_results": [],
+      "video_made_with_ai": false,
+      "created_by": "open-social-scheduler",
+      "blocked_reason": "approval required for 2026-W34",
+      "cycle_key": "2026-08-21T04:00",
+      "cycle_hour": 4,
+      "cycle_index": 1,
+      "cycle_position": 3,
+      "production_mode": "photos-only-6-every-4h",
+      "production_status": "PHOTO READY",
+      "publication_ready": true,
+      "output_type": "static-photo",
+      "no_video": true,
+      "no_audio": true,
+      "no_reel": true,
+      "visual_mode": "valle-di-susa-homes-photo",
+      "search_query_override": "case in Valle di Susa",
+      "search_queries": [
+        "case in Valle di Susa",
+        "casa alpina Piemonte",
+        "villa montagna Piemonte",
+        "casa con giardino montagne Italia",
+        "borgo alpino casa pietra Italia"
+      ],
+      "visual_asset_urls": [
+        "https://cdn.pixabay.com/photo/2017/07/25/00/59/house-2536610_1280.jpg"
+      ],
+      "visual_source": "pixabay-fresh-static-photo",
+      "visual_count": 1,
+      "fresh_visual_count": 1,
+      "reused_visual_count": 0
+    },
+    {
+      "id": "f1-immobiliare-2026-08-21-c04-02-05-g3-cinquecento-metri",
+      "client_id": "f1-immobiliare",
+      "client_name": "F1 Immobiliare",
+      "category": "error",
+      "editorial_role": "error",
+      "campaign": "F1 · Non a sensazione. Con i dati.",
+      "format": "photo",
+      "title": "LAVORA CON F1 IMMOBILIARE",
+      "caption": "LAVORA CON F1 IMMOBILIARE.\n\nCerchiamo collaboratori e collaboratrici da formare e affiancare, oltre ad agenti immobiliari già abilitati.\n\nPer chi non è ancora abilitato, il percorso iniziale riguarda presidio della zona, contatto con residenti e proprietari, ricerca immobili, appuntamenti e raccolta delle informazioni iniziali, sempre con affiancamento. Le attività riservate alla mediazione e alla negoziazione vengono svolte da professionisti abilitati.\n\nInvia il curriculum a f1immobiliaresusa@outlook.it\n371 370 8294\n\n#F1Immobiliare #LavoraConNoi #Immobiliare #ValleDiSusa #TorinoOvest",
+      "hashtags": [
+        "#F1Immobiliare",
+        "#NonASensazione",
+        "#ConIDati",
+        "#StrategiaImmobiliare",
+        "#PrezzoCasa",
+        "#ProprietariCasa"
+      ],
+      "voiceover": "Due immobili a cinquecento metri di distanza possono avere una risposta di mercato diversa. Servizi, esposizione, rumore, accessibilità e domanda cambiano il posizionamento. La microzona conta.",
+      "slides": [
+        "500 METRI|POSSONO|CAMBIARE TUTTO",
+        "SERVIZI",
+        "RUMORE|ESPOSIZIONE",
+        "ACCESSIBILITÀ",
+        "DOMANDA",
+        "NON USARE|MEDIE CIECHE",
+        "F1 IMMOBILIARE|MICROZONA|371 370 8294"
+      ],
+      "visuals": [],
+      "cta": "Scrivi VALUTAZIONE in privato",
+      "media": "publisher/media/generated/f1-immobiliare/2026-08-21/cycle-04/02-21-c04-02-05-g3-cinquecento-metri.jpg",
+      "scheduled_at": "2026-08-21T04:08:00+02:00",
+      "territory": "Almese",
+      "property_focus": {
+        "transaction": "vendita",
+        "min_price_eur": 100000,
+        "exclude": [
+          "affitto",
+          "locazione",
+          "garage",
+          "box",
+          "posto auto",
+          "rustico",
+          "rudere",
+          "terreno"
+        ],
+        "preferred": [
+          "appartamento",
+          "casa",
+          "villa",
+          "villetta",
+          "attico",
+          "bifamiliare",
+          "trifamiliare"
+        ],
+        "cash_subito": {
+          "enabled": true,
+          "label": "F1 CASH SUBITO",
+          "meaning": "acquisto diretto per opportunità immobiliari fortemente scontate e coerenti con i criteri F1",
+          "rule": "non presentarlo come garanzia di acquisto; prima verifica economica, tecnica e documentale"
+        }
+      },
+      "approval_key": "2026-W34",
+      "platforms": [
+        {
+          "platform": "facebook",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "tiktok",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "linkedin",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "youtube",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "pinterest",
+          "integration_id": "direct-api"
+        }
+      ],
+      "enabled": true,
+      "status": "awaiting_approval",
+      "published_platforms": [],
+      "postiz_results": [],
+      "video_made_with_ai": false,
+      "created_by": "open-social-scheduler",
+      "blocked_reason": "approval required for 2026-W34",
+      "cycle_key": "2026-08-21T04:00",
+      "cycle_hour": 4,
+      "cycle_index": 1,
+      "cycle_position": 2,
+      "production_mode": "photos-only-6-every-4h",
+      "production_status": "PHOTO READY",
+      "publication_ready": true,
+      "output_type": "static-photo",
+      "no_video": true,
+      "no_audio": true,
+      "no_reel": true,
+      "visual_mode": "f1-recruiting-photo",
+      "search_query_override": "real estate professional office Italy",
+      "search_queries": [
+        "real estate agent office Italy",
+        "property consultant office professional",
+        "business team real estate meeting"
+      ],
+      "visual_asset_urls": [
+        "https://cdn.pixabay.com/photo/2023/09/03/09/26/real-estate-8230197_960_720.jpg"
+      ],
+      "visual_source": "pixabay-fresh-static-photo",
+      "visual_count": 1,
+      "fresh_visual_count": 1,
+      "reused_visual_count": 0
+    },
+    {
+      "id": "f1-immobiliare-2026-08-21-c04-01-04-g2-tre-prezzi",
+      "client_id": "f1-immobiliare",
+      "client_name": "F1 Immobiliare",
+      "category": "data",
+      "editorial_role": "data",
+      "campaign": "F1 · Non a sensazione. Con i dati.",
+      "format": "photo",
+      "title": "CASE IN VALLE DI SUSA · VALUTAZIONE IMMOBILIARE",
+      "caption": "VUOI VENDERE CASA IN VALLE DI SUSA?\n\nPrima di pubblicare un annuncio, parti da una valutazione immobiliare costruita su dati, caratteristiche reali dell'immobile, microzona e confronto con il mercato.\n\nF1 Immobiliare organizza la vendita partendo dall'analisi, non da un prezzo scelto a sensazione.\n\nRichiedi una valutazione gratuita del tuo immobile.\n371 370 8294 · 371 424 6300\n\n#F1Immobiliare #ValleDiSusa #VendereCasa #ValutazioneImmobiliare #Susa #Bussoleno #Condove #Avigliana #Almese #Rivoli",
+      "hashtags": [
+        "#F1Immobiliare",
+        "#ValleDiSusa",
+        "#Condove",
+        "#Bussoleno",
+        "#VillarDora",
+        "#VendereBene"
+      ],
+      "voiceover": "Prezzo desiderato, prezzo pubblicato e prezzo di mercato non sono la stessa cosa. Il primo nasce dalle aspettative, il secondo dalla strategia, il terzo dalla risposta reale degli acquirenti. Il lavoro corretto è farli dialogare prima di pubblicare.",
+      "slides": [
+        "TRE PREZZI|NON SONO|LA STESSA COSA",
+        "PREZZO|DESIDERATO",
+        "PREZZO|PUBBLICATO",
+        "PREZZO|SOSTENUTO DAL MERCATO",
+        "CONFONDERLI|COSTA TEMPO",
+        "IL PRICING|NASCE DAI DATI",
+        "F1 IMMOBILIARE|IL PREZZO SI VERIFICA|371 370 8294"
+      ],
+      "visuals": [],
+      "cta": "Scrivi VALUTAZIONE in privato",
+      "media": "publisher/media/generated/f1-immobiliare/2026-08-21/cycle-04/01-21-c04-01-04-g2-tre-prezzi.jpg",
+      "scheduled_at": "2026-08-21T04:00:00+02:00",
+      "territory": "Almese",
+      "property_focus": {
+        "transaction": "vendita",
+        "min_price_eur": 100000,
+        "exclude": [
+          "affitto",
+          "locazione",
+          "garage",
+          "box",
+          "posto auto",
+          "rustico",
+          "rudere",
+          "terreno"
+        ],
+        "preferred": [
+          "appartamento",
+          "casa",
+          "villa",
+          "villetta",
+          "attico",
+          "bifamiliare",
+          "trifamiliare"
+        ],
+        "cash_subito": {
+          "enabled": true,
+          "label": "F1 CASH SUBITO",
+          "meaning": "acquisto diretto per opportunità immobiliari fortemente scontate e coerenti con i criteri F1",
+          "rule": "non presentarlo come garanzia di acquisto; prima verifica economica, tecnica e documentale"
+        }
+      },
+      "approval_key": "2026-W34",
+      "platforms": [
+        {
+          "platform": "facebook",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "tiktok",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "linkedin",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "youtube",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "pinterest",
+          "integration_id": "direct-api"
+        }
+      ],
+      "enabled": true,
+      "status": "awaiting_approval",
+      "published_platforms": [],
+      "postiz_results": [],
+      "video_made_with_ai": false,
+      "created_by": "open-social-scheduler",
+      "blocked_reason": "approval required for 2026-W34",
+      "cycle_key": "2026-08-21T04:00",
+      "cycle_hour": 4,
+      "cycle_index": 1,
+      "cycle_position": 1,
+      "production_mode": "photos-only-6-every-4h",
+      "production_status": "PHOTO READY",
+      "publication_ready": true,
+      "output_type": "static-photo",
+      "no_video": true,
+      "no_audio": true,
+      "no_reel": true,
+      "visual_mode": "valle-di-susa-homes-photo",
+      "search_query_override": "case in Valle di Susa",
+      "search_queries": [
+        "case in Valle di Susa",
+        "casa alpina Piemonte",
+        "villa montagna Piemonte",
+        "casa con giardino montagne Italia",
+        "borgo alpino casa pietra Italia"
+      ],
+      "visual_asset_urls": [
+        "https://cdn.pixabay.com/photo/2014/10/04/18/27/houses-473841_1280.jpg"
+      ],
+      "visual_source": "pixabay-fresh-static-photo",
+      "visual_count": 1,
+      "fresh_visual_count": 1,
+      "reused_visual_count": 0
+    },
+    {
       "id": "real-media-pro-2026-08-21-c00-03-02-creative-testing",
       "client_id": "real-media-pro",
       "client_name": "Real Media Pro",
@@ -4951,1499 +6279,10 @@
       "fresh_visual_count": 10,
       "reused_visual_count": 0,
       "_presenter": "joseph"
-    },
-    {
-      "id": "real-media-pro-2026-08-20-c00-03-02-shopify-product-page",
-      "client_id": "real-media-pro",
-      "client_name": "Real Media Pro",
-      "category": "nurture",
-      "editorial_role": "nurture",
-      "campaign": "Real Media Pro · Dalla visibilità alla crescita",
-      "format": "carousel",
-      "title": "PERCHÉ I SOCIAL FANNO CRESCERE UN'AZIENDA?",
-      "caption": "PERCHÉ I SOCIAL FANNO CRESCERE UN'AZIENDA?\n\nPerché possono creare attenzione, fiducia e domanda, se collegati a un percorso misurabile. Un'azienda cresce online quando contenuti, social, sito e processo commerciale lavorano insieme. La metrica importante non è soltanto quante persone vedono un post, ma quante capiscono l'offerta, si fidano, visitano il sito, lasciano un contatto o acquistano. Per questo ogni contenuto deve avere una funzione nel percorso del cliente e ogni risultato deve poter essere misurato.\n\nRichiedi un'analisi strategica gratuita. Real Media Pro · 371 370 8294.\n\n#RealMediaPro #DigitalMarketing #SocialMediaMarketing #Ecommerce #SitiWeb #LeadGeneration #Torino",
-      "hashtags": [
-        "#RealMediaPro",
-        "#ShopifyItalia",
-        "#ConversionRate",
-        "#EcommerceItalia",
-        "#WebDesign",
-        "#ValleDiSusa"
-      ],
-      "voiceover": "PERCHÉ I SOCIAL FANNO CRESCERE UN'AZIENDA? Perché possono creare attenzione, fiducia e domanda, se collegati a un percorso misurabile. Il punto non è pubblicare di più. È costruire un percorso in cui ogni contenuto abbia una funzione. Prima attiri l'attenzione della persona giusta. Poi fai capire il problema e la tua proposta. Costruisci fiducia con esempi, prove e chiarezza. Porti il traffico verso un sito o una pagina che funziona bene da smartphone e rende semplice fare il passo successivo. Infine misuri contatti, richieste e vendite, così capisci cosa migliorare. Quando social, sito e processo commerciale sono scollegati, arrivano numeri ma pochi risultati. Quando lavorano insieme, il digitale diventa una leva concreta di crescita. Se vuoi capire cosa migliorare nella tua azienda, richiedi un'analisi strategica gratuita a Real Media Pro al 371 370 8294.",
-      "slides": [
-        "PERCHÉ I SOCIAL FANNO CRESCERE UN'AZIENDA?",
-        "VISIBILITÀ",
-        "TARGET",
-        "FIDUCIA",
-        "CONTENUTI",
-        "TRAFFICO",
-        "LEAD",
-        "VENDITE",
-        "MISURAZIONE",
-        "RICHIEDI UN'ANALISI STRATEGICA GRATUITA"
-      ],
-      "visuals": [
-        "imprenditore con laptop in ufficio moderno",
-        "smartphone con interfaccia social professionale",
-        "sito ecommerce premium su laptop",
-        "pagina prodotto pulita da smartphone",
-        "dashboard marketing e analytics realistica",
-        "team digitale al lavoro",
-        "checkout ecommerce semplice",
-        "analisi dati business su schermo",
-        "imprenditore che controlla risultati",
-        "workspace digitale premium con laptop e smartphone"
-      ],
-      "cta": "Richiedi un'analisi strategica gratuita",
-      "media": [
-        "publisher/media/generated/real-media-pro/2026-08-20/cycle-00/03-08-20-c00-03-02-shopify-product-page/slide-01.jpg",
-        "publisher/media/generated/real-media-pro/2026-08-20/cycle-00/03-08-20-c00-03-02-shopify-product-page/slide-02.jpg",
-        "publisher/media/generated/real-media-pro/2026-08-20/cycle-00/03-08-20-c00-03-02-shopify-product-page/slide-03.jpg",
-        "publisher/media/generated/real-media-pro/2026-08-20/cycle-00/03-08-20-c00-03-02-shopify-product-page/slide-04.jpg",
-        "publisher/media/generated/real-media-pro/2026-08-20/cycle-00/03-08-20-c00-03-02-shopify-product-page/slide-05.jpg",
-        "publisher/media/generated/real-media-pro/2026-08-20/cycle-00/03-08-20-c00-03-02-shopify-product-page/slide-06.jpg",
-        "publisher/media/generated/real-media-pro/2026-08-20/cycle-00/03-08-20-c00-03-02-shopify-product-page/slide-07.jpg",
-        "publisher/media/generated/real-media-pro/2026-08-20/cycle-00/03-08-20-c00-03-02-shopify-product-page/slide-08.jpg",
-        "publisher/media/generated/real-media-pro/2026-08-20/cycle-00/03-08-20-c00-03-02-shopify-product-page/slide-09.jpg",
-        "publisher/media/generated/real-media-pro/2026-08-20/cycle-00/03-08-20-c00-03-02-shopify-product-page/slide-10.jpg"
-      ],
-      "scheduled_at": "2026-08-20T00:46:00+02:00",
-      "territory": "Torino",
-      "property_focus": {},
-      "approval_key": "2026-W34",
-      "platforms": [
-        {
-          "platform": "facebook",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "instagram",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "linkedin",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "pinterest",
-          "integration_id": "direct-api"
-        }
-      ],
-      "enabled": true,
-      "status": "awaiting_approval",
-      "published_platforms": [],
-      "postiz_results": [],
-      "video_made_with_ai": false,
-      "created_by": "open-social-scheduler",
-      "blocked_reason": "approval required for 2026-W34",
-      "cycle_key": "2026-08-20T00:00",
-      "cycle_hour": 0,
-      "cycle_index": 0,
-      "cycle_position": 3,
-      "production_mode": "6-every-4h",
-      "production_status": "DA CONTROLLARE",
-      "research_query": "social proof fiducia clienti guida",
-      "phone": "371 370 8294",
-      "visual_rule": "pixabay_canva_business_ecommerce_only",
-      "target_reel_seconds": 60,
-      "publish_decision": "manual",
-      "research_mode": "google_suggestions_plus_official_sources",
-      "research_basis": [
-        {
-          "url": "https://www.facebook.com/business/ads/facebook-instagram-reels-ads"
-        },
-        {
-          "url": "https://www.facebook.com/business/ads/ad-creative"
-        },
-        {
-          "url": "https://www.shopify.com/it/blog/topics/content-marketing"
-        },
-        {
-          "url": "https://www.shopify.com/blog/topics/conversion"
-        }
-      ],
-      "no_subtitles": true,
-      "visual_count": 10,
-      "visual_asset_urls": [
-        "https://cdn.pixabay.com/photo/2024/05/25/16/29/data-8787376_960_720.png",
-        "https://cdn.pixabay.com/photo/2025/04/09/11/18/data-analytics-9523773_1280.jpg",
-        "https://cdn.pixabay.com/photo/2013/10/25/17/26/tree-200795_1280.jpg",
-        "https://cdn.pixabay.com/photo/2022/04/04/16/25/business-7111770_1280.jpg",
-        "https://cdn.pixabay.com/photo/2022/06/08/05/42/integration-7249768_1280.jpg",
-        "https://cdn.pixabay.com/photo/2015/05/31/10/51/technology-791029_1280.jpg",
-        "https://cdn.pixabay.com/photo/2024/02/26/14/13/laptop-8598085_960_720.jpg",
-        "https://cdn.pixabay.com/photo/2020/03/06/08/00/laptop-4906312_1280.jpg",
-        "https://cdn.pixabay.com/photo/2023/11/10/20/37/office-8380073_1280.jpg",
-        "https://cdn.pixabay.com/photo/2024/07/13/17/38/laptop-8892716_960_720.jpg"
-      ],
-      "visual_source": "pixabay_dynamic_varied",
-      "visual_uniqueness": "10 unique source images inside this content",
-      "fresh_visual_count": 2,
-      "reused_visual_count": 8
-    },
-    {
-      "id": "real-media-pro-2026-08-20-c00-02-03-advertising-sistema",
-      "client_id": "real-media-pro",
-      "client_name": "Real Media Pro",
-      "category": "convert",
-      "editorial_role": "convert",
-      "campaign": "Real Media Pro · Dalla visibilità alla crescita",
-      "format": "reel",
-      "title": "PERCHÉ I SOCIAL FANNO CRESCERE UN'AZIENDA?",
-      "caption": "PERCHÉ I SOCIAL FANNO CRESCERE UN'AZIENDA?\n\nPerché possono creare attenzione, fiducia e domanda, se collegati a un percorso misurabile. Un'azienda cresce online quando contenuti, social, sito e processo commerciale lavorano insieme. La metrica importante non è soltanto quante persone vedono un post, ma quante capiscono l'offerta, si fidano, visitano il sito, lasciano un contatto o acquistano. Per questo ogni contenuto deve avere una funzione nel percorso del cliente e ogni risultato deve poter essere misurato.\n\nRichiedi un'analisi strategica gratuita. Real Media Pro · 371 370 8294.\n\n#RealMediaPro #DigitalMarketing #SocialMediaMarketing #Ecommerce #SitiWeb #LeadGeneration #Torino",
-      "hashtags": [
-        "#RealMediaPro",
-        "#SitiShopify",
-        "#DigitalMarketing",
-        "#LeadGeneration",
-        "#Rivoli",
-        "#Avigliana"
-      ],
-      "voiceover": "PERCHÉ I SOCIAL FANNO CRESCERE UN'AZIENDA? Perché possono creare attenzione, fiducia e domanda, se collegati a un percorso misurabile. Il punto non è pubblicare di più. È costruire un percorso in cui ogni contenuto abbia una funzione. Prima attiri l'attenzione della persona giusta. Poi fai capire il problema e la tua proposta. Costruisci fiducia con esempi, prove e chiarezza. Porti il traffico verso un sito o una pagina che funziona bene da smartphone e rende semplice fare il passo successivo. Infine misuri contatti, richieste e vendite, così capisci cosa migliorare. Quando social, sito e processo commerciale sono scollegati, arrivano numeri ma pochi risultati. Quando lavorano insieme, il digitale diventa una leva concreta di crescita. Se vuoi capire cosa migliorare nella tua azienda, richiedi un'analisi strategica gratuita a Real Media Pro al 371 370 8294.",
-      "slides": [
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""
-      ],
-      "visuals": [
-        "imprenditore con laptop in ufficio moderno",
-        "smartphone con interfaccia social professionale",
-        "sito ecommerce premium su laptop",
-        "pagina prodotto pulita da smartphone",
-        "dashboard marketing e analytics realistica",
-        "team digitale al lavoro",
-        "checkout ecommerce semplice",
-        "analisi dati business su schermo",
-        "imprenditore che controlla risultati",
-        "workspace digitale premium con laptop e smartphone"
-      ],
-      "cta": "Richiedi un'analisi strategica gratuita",
-      "media": "publisher/media/generated/real-media-pro/2026-08-20/cycle-00/02-08-20-c00-02-03-advertising-sistema.mp4",
-      "scheduled_at": "2026-08-20T00:38:00+02:00",
-      "territory": "Torino",
-      "property_focus": {},
-      "approval_key": "2026-W34",
-      "platforms": [
-        {
-          "platform": "facebook",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "instagram",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "tiktok",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "linkedin",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "youtube",
-          "integration_id": "direct-api"
-        }
-      ],
-      "enabled": true,
-      "status": "awaiting_approval",
-      "published_platforms": [],
-      "postiz_results": [],
-      "video_made_with_ai": true,
-      "created_by": "open-social-scheduler",
-      "blocked_reason": "approval required for 2026-W34",
-      "cycle_key": "2026-08-20T00:00",
-      "cycle_hour": 0,
-      "cycle_index": 0,
-      "cycle_position": 2,
-      "production_mode": "6-every-4h",
-      "production_status": "DA CONTROLLARE",
-      "research_query": "social proof fiducia clienti errori",
-      "phone": "371 370 8294",
-      "visual_rule": "pixabay_canva_business_ecommerce_only",
-      "target_reel_seconds": 60,
-      "publish_decision": "manual",
-      "research_mode": "google_suggestions_plus_official_sources",
-      "research_basis": [
-        {
-          "url": "https://www.facebook.com/business/ads/facebook-instagram-reels-ads"
-        },
-        {
-          "url": "https://www.facebook.com/business/ads/ad-creative"
-        },
-        {
-          "url": "https://www.shopify.com/it/blog/topics/content-marketing"
-        },
-        {
-          "url": "https://www.shopify.com/blog/topics/conversion"
-        }
-      ],
-      "no_subtitles": true,
-      "visual_count": 10,
-      "visual_asset_urls": [
-        "https://cdn.pixabay.com/photo/2015/09/05/21/13/analytics-925379_1280.jpg",
-        "https://cdn.pixabay.com/photo/2013/10/25/17/26/tree-200795_1280.jpg",
-        "https://cdn.pixabay.com/photo/2022/04/04/16/25/business-7111770_1280.jpg",
-        "https://cdn.pixabay.com/photo/2022/06/08/05/42/integration-7249768_1280.jpg",
-        "https://cdn.pixabay.com/photo/2015/05/31/10/51/technology-791029_1280.jpg",
-        "https://cdn.pixabay.com/photo/2024/02/26/14/13/laptop-8598085_960_720.jpg",
-        "https://cdn.pixabay.com/photo/2017/06/29/01/02/business-man-2452808_1280.jpg",
-        "https://cdn.pixabay.com/photo/2023/09/06/06/37/laptop-8236497_1280.jpg",
-        "https://cdn.pixabay.com/photo/2026/02/19/06/50/u_ksgszajtc6-laptop-10132318_960_720.png",
-        "https://cdn.pixabay.com/photo/2023/10/01/07/09/laptop-8286953_960_720.jpg"
-      ],
-      "visual_source": "pixabay_dynamic_varied",
-      "visual_uniqueness": "10 unique source images inside this content",
-      "fresh_visual_count": 1,
-      "reused_visual_count": 9,
-      "_presenter": ""
-    },
-    {
-      "id": "real-media-pro-2026-08-20-c00-01-01-seo-ai-search",
-      "client_id": "real-media-pro",
-      "client_name": "Real Media Pro",
-      "category": "attract",
-      "editorial_role": "attract",
-      "campaign": "Real Media Pro · Dalla visibilità alla crescita",
-      "format": "reel",
-      "title": "PERCHÉ I SOCIAL FANNO CRESCERE UN'AZIENDA?",
-      "caption": "PERCHÉ I SOCIAL FANNO CRESCERE UN'AZIENDA?\n\nPerché possono creare attenzione, fiducia e domanda, se collegati a un percorso misurabile. Un'azienda cresce online quando contenuti, social, sito e processo commerciale lavorano insieme. La metrica importante non è soltanto quante persone vedono un post, ma quante capiscono l'offerta, si fidano, visitano il sito, lasciano un contatto o acquistano. Per questo ogni contenuto deve avere una funzione nel percorso del cliente e ogni risultato deve poter essere misurato.\n\nRichiedi un'analisi strategica gratuita. Real Media Pro · 371 370 8294.\n\n#RealMediaPro #DigitalMarketing #SocialMediaMarketing #Ecommerce #SitiWeb #LeadGeneration #Torino",
-      "hashtags": [
-        "#RealMediaPro",
-        "#Shopify",
-        "#Ecommerce",
-        "#SitiWeb",
-        "#Torino",
-        "#MarketingDigitale"
-      ],
-      "voiceover": "PERCHÉ I SOCIAL FANNO CRESCERE UN'AZIENDA? Perché possono creare attenzione, fiducia e domanda, se collegati a un percorso misurabile. Il punto non è pubblicare di più. È costruire un percorso in cui ogni contenuto abbia una funzione. Prima attiri l'attenzione della persona giusta. Poi fai capire il problema e la tua proposta. Costruisci fiducia con esempi, prove e chiarezza. Porti il traffico verso un sito o una pagina che funziona bene da smartphone e rende semplice fare il passo successivo. Infine misuri contatti, richieste e vendite, così capisci cosa migliorare. Quando social, sito e processo commerciale sono scollegati, arrivano numeri ma pochi risultati. Quando lavorano insieme, il digitale diventa una leva concreta di crescita. Se vuoi capire cosa migliorare nella tua azienda, richiedi un'analisi strategica gratuita a Real Media Pro al 371 370 8294.",
-      "slides": [
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""
-      ],
-      "visuals": [
-        "imprenditore con laptop in ufficio moderno",
-        "smartphone con interfaccia social professionale",
-        "sito ecommerce premium su laptop",
-        "pagina prodotto pulita da smartphone",
-        "dashboard marketing e analytics realistica",
-        "team digitale al lavoro",
-        "checkout ecommerce semplice",
-        "analisi dati business su schermo",
-        "imprenditore che controlla risultati",
-        "workspace digitale premium con laptop e smartphone"
-      ],
-      "cta": "Richiedi un'analisi strategica gratuita",
-      "media": "publisher/media/generated/real-media-pro/2026-08-20/cycle-00/01-08-20-c00-01-01-seo-ai-search.mp4",
-      "scheduled_at": "2026-08-20T00:30:00+02:00",
-      "territory": "Torino",
-      "property_focus": {},
-      "approval_key": "2026-W34",
-      "platforms": [
-        {
-          "platform": "facebook",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "instagram",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "tiktok",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "linkedin",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "youtube",
-          "integration_id": "direct-api"
-        }
-      ],
-      "enabled": true,
-      "status": "awaiting_approval",
-      "published_platforms": [],
-      "postiz_results": [],
-      "video_made_with_ai": true,
-      "created_by": "open-social-scheduler",
-      "blocked_reason": "approval required for 2026-W34",
-      "cycle_key": "2026-08-20T00:00",
-      "cycle_hour": 0,
-      "cycle_index": 0,
-      "cycle_position": 1,
-      "production_mode": "6-every-4h",
-      "production_status": "DA CONTROLLARE",
-      "research_query": "social proof fiducia clienti spiegazione",
-      "phone": "371 370 8294",
-      "visual_rule": "pixabay_canva_business_ecommerce_only",
-      "target_reel_seconds": 60,
-      "publish_decision": "manual",
-      "research_mode": "google_suggestions_plus_official_sources",
-      "research_basis": [
-        {
-          "url": "https://www.facebook.com/business/ads/facebook-instagram-reels-ads"
-        },
-        {
-          "url": "https://www.facebook.com/business/ads/ad-creative"
-        },
-        {
-          "url": "https://www.shopify.com/it/blog/topics/content-marketing"
-        },
-        {
-          "url": "https://www.shopify.com/blog/topics/conversion"
-        }
-      ],
-      "no_subtitles": true,
-      "visual_count": 10,
-      "visual_asset_urls": [
-        "https://cdn.pixabay.com/photo/2022/04/04/16/25/business-7111770_1280.jpg",
-        "https://cdn.pixabay.com/photo/2022/06/08/05/42/integration-7249768_1280.jpg",
-        "https://cdn.pixabay.com/photo/2018/07/31/14/52/ecommerce-3575280_1280.jpg",
-        "https://cdn.pixabay.com/photo/2013/10/25/17/26/tree-200795_1280.jpg",
-        "https://cdn.pixabay.com/photo/2015/05/31/10/51/technology-791029_1280.jpg",
-        "https://cdn.pixabay.com/photo/2024/02/26/14/13/laptop-8598085_960_720.jpg",
-        "https://cdn.pixabay.com/photo/2023/10/01/07/09/laptop-8286953_960_720.jpg",
-        "https://cdn.pixabay.com/photo/2016/11/19/13/08/business-1839191_1280.jpg",
-        "https://cdn.pixabay.com/photo/2016/11/29/01/36/businessman-1866582_1280.jpg",
-        "https://cdn.pixabay.com/photo/2020/01/26/20/14/computer-4795762_1280.jpg"
-      ],
-      "visual_source": "pixabay_dynamic_varied",
-      "visual_uniqueness": "10 unique source images inside this content",
-      "fresh_visual_count": 3,
-      "reused_visual_count": 7,
-      "_presenter": ""
-    },
-    {
-      "id": "f1-immobiliare-2026-08-20-c00-03-02-g6-prezzo-da-soli",
-      "client_id": "f1-immobiliare",
-      "client_name": "F1 Immobiliare",
-      "category": "error",
-      "editorial_role": "error",
-      "campaign": "F1 · Non a sensazione. Con i dati.",
-      "format": "carousel",
-      "title": "VENDERE CASA: QUALI COSTI DEVI CONOSCERE?",
-      "caption": "VENDERE CASA: QUALI COSTI DEVI CONOSCERE?\n\nLa parte fiscale va verificata prima, non alla fine della trattativa. Se stai pensando di vendere casa in Avigliana, una valutazione seria non nasce da una cifra presa isolatamente. Bisogna leggere la microzona, le caratteristiche reali dell'immobile, ciò che è effettivamente in concorrenza e la domanda presente. I dati pubblici sono utili quando vengono interpretati nel contesto corretto. Per questo il prezzo di uscita deve essere comprensibile, difendibile e coerente con il mercato.\n\nRichiedi una valutazione gratuita del tuo immobile. Joseph 371 370 8294 · Francesca 371 424 6300.\n\n#F1Immobiliare #ValleDiSusa #Avigliana #VendereCasa #ValutazioneImmobiliare #MercatoImmobiliare #CasaInVendita",
-      "hashtags": [
-        "#F1Immobiliare",
-        "#ValDiSusa",
-        "#MercatoImmobiliare",
-        "#VenditaImmobiliare",
-        "#Susa",
-        "#PrimaIDati"
-      ],
-      "voiceover": "VENDERE CASA: QUALI COSTI DEVI CONOSCERE? La parte fiscale va verificata prima, non alla fine della trattativa. Se stai pensando di vendere casa in Avigliana, il punto è questo: un numero, da solo, non racconta il valore reale di un immobile. Contano la posizione precisa, lo stato della casa, il piano, la luce, gli spazi esterni, gli immobili davvero concorrenti e la domanda che esiste in quel momento. I dati pubblici servono come riferimento, ma devono essere letti insieme al mercato reale. Il prezzo corretto non è quello che ci piacerebbe ottenere: è quello che permette alla casa di essere posizionata bene, difesa con argomenti concreti e presentata alle persone giuste. Se vuoi capire da dove partire, richiedi una valutazione gratuita con F1 Immobiliare. Joseph 371 370 8294, Francesca 371 424 6300. Prima i dati, poi la strategia, poi la vendita.",
-      "slides": [
-        "VENDERE CASA: QUALI COSTI DEVI CONOSCERE?",
-        "QUANDO HAI ACQUISTATO",
-        "TIPO DI IMMOBILE",
-        "PRIMA CASA",
-        "EVENTUALE PLUSVALENZA",
-        "DOCUMENTI",
-        "COSTI DA PREVEDERE",
-        "VALORE NETTO ATTESO",
-        "STRATEGIA",
-        "RICHIEDI UNA VALUTAZIONE GRATUITA DEL TUO IMMOBILE"
-      ],
-      "visuals": [
-        "villa residenziale moderna esterno giorno",
-        "quartiere residenziale italiano curato",
-        "soggiorno luminoso premium",
-        "cucina moderna di qualità",
-        "terrazzo abitabile con vista",
-        "camera matrimoniale elegante",
-        "bagno contemporaneo premium",
-        "facciata e ingresso immobile",
-        "dettaglio architettonico e giardino",
-        "villa residenziale al tramonto"
-      ],
-      "cta": "Scrivi VALUTAZIONE in privato",
-      "media": [
-        "publisher/media/generated/f1-immobiliare/2026-08-20/cycle-00/03-20-c00-03-02-g6-prezzo-da-soli/slide-01.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-20/cycle-00/03-20-c00-03-02-g6-prezzo-da-soli/slide-02.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-20/cycle-00/03-20-c00-03-02-g6-prezzo-da-soli/slide-03.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-20/cycle-00/03-20-c00-03-02-g6-prezzo-da-soli/slide-04.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-20/cycle-00/03-20-c00-03-02-g6-prezzo-da-soli/slide-05.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-20/cycle-00/03-20-c00-03-02-g6-prezzo-da-soli/slide-06.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-20/cycle-00/03-20-c00-03-02-g6-prezzo-da-soli/slide-07.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-20/cycle-00/03-20-c00-03-02-g6-prezzo-da-soli/slide-08.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-20/cycle-00/03-20-c00-03-02-g6-prezzo-da-soli/slide-09.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-20/cycle-00/03-20-c00-03-02-g6-prezzo-da-soli/slide-10.jpg"
-      ],
-      "scheduled_at": "2026-08-20T00:16:00+02:00",
-      "territory": "Avigliana",
-      "property_focus": {
-        "transaction": "vendita",
-        "min_price_eur": 100000,
-        "exclude": [
-          "affitto",
-          "locazione",
-          "garage",
-          "box",
-          "posto auto",
-          "rustico",
-          "rudere",
-          "terreno"
-        ],
-        "preferred": [
-          "appartamento",
-          "casa",
-          "villa",
-          "villetta",
-          "attico",
-          "bifamiliare",
-          "trifamiliare"
-        ],
-        "cash_subito": {
-          "enabled": true,
-          "label": "F1 CASH SUBITO",
-          "meaning": "acquisto diretto per opportunità immobiliari fortemente scontate e coerenti con i criteri F1",
-          "rule": "non presentarlo come garanzia di acquisto; prima verifica economica, tecnica e documentale"
-        }
-      },
-      "approval_key": "2026-W34",
-      "platforms": [
-        {
-          "platform": "facebook",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "instagram",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "linkedin",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "pinterest",
-          "integration_id": "direct-api"
-        }
-      ],
-      "enabled": true,
-      "status": "awaiting_approval",
-      "published_platforms": [],
-      "postiz_results": [],
-      "video_made_with_ai": false,
-      "created_by": "open-social-scheduler",
-      "blocked_reason": "approval required for 2026-W34",
-      "cycle_key": "2026-08-20T00:00",
-      "cycle_hour": 0,
-      "cycle_index": 0,
-      "cycle_position": 3,
-      "production_mode": "6-every-4h",
-      "production_status": "DA CONTROLLARE",
-      "research_query": "agenzia delle entrate imposte acquisto casa guida",
-      "phone": "371 370 8294",
-      "secondary_phone": "371 424 6300",
-      "visual_rule": "premium_residential_property_only",
-      "target_reel_seconds": 60,
-      "publish_decision": "manual",
-      "research_mode": "google_suggestions_plus_official_sources",
-      "research_basis": [
-        {
-          "url": "https://www.agenziaentrate.gov.it/portale/web/guest/schede/fabbricatiterreni/omi"
-        },
-        {
-          "url": "https://www.agenziaentrate.gov.it/portale/web/guest/cittadini/acquisto-o-vendita-di-un-immobile"
-        }
-      ],
-      "no_subtitles": true,
-      "visual_count": 10,
-      "visual_asset_urls": [
-        "https://cdn.pixabay.com/photo/2015/11/17/00/32/houses-1046786_960_720.jpg",
-        "https://cdn.pixabay.com/photo/2017/08/05/13/55/architecture-2583777_960_720.jpg",
-        "https://cdn.pixabay.com/photo/2022/09/17/21/21/architecture-7461858_1280.jpg",
-        "https://cdn.pixabay.com/photo/2022/11/21/13/13/architecture-7607018_960_720.jpg",
-        "https://cdn.pixabay.com/photo/2020/08/25/06/58/architecture-5515869_1280.jpg",
-        "https://cdn.pixabay.com/photo/2017/08/06/10/34/architecture-2591107_960_720.jpg",
-        "https://cdn.pixabay.com/photo/2017/02/16/23/12/villa-2072914_1280.jpg",
-        "https://cdn.pixabay.com/photo/2020/07/16/08/10/livorno-5410119_960_720.jpg",
-        "https://cdn.pixabay.com/photo/2023/02/17/11/19/ai-generated-7795817_1280.jpg",
-        "https://cdn.pixabay.com/photo/2014/05/22/14/24/kitchen-351094_1280.jpg"
-      ],
-      "visual_source": "pixabay_dynamic_varied",
-      "visual_uniqueness": "10 unique source images inside this content",
-      "fresh_visual_count": 10,
-      "reused_visual_count": 0
-    },
-    {
-      "id": "f1-immobiliare-2026-08-20-c00-02-03-g7-cosa-vede-compratore",
-      "client_id": "f1-immobiliare",
-      "client_name": "F1 Immobiliare",
-      "category": "proof",
-      "editorial_role": "proof",
-      "campaign": "F1 · Non a sensazione. Con i dati.",
-      "format": "reel",
-      "title": "VENDERE CASA: QUALI COSTI DEVI CONOSCERE?",
-      "caption": "VENDERE CASA: QUALI COSTI DEVI CONOSCERE?\n\nLa parte fiscale va verificata prima, non alla fine della trattativa. Se stai pensando di vendere casa in Avigliana, una valutazione seria non nasce da una cifra presa isolatamente. Bisogna leggere la microzona, le caratteristiche reali dell'immobile, ciò che è effettivamente in concorrenza e la domanda presente. I dati pubblici sono utili quando vengono interpretati nel contesto corretto. Per questo il prezzo di uscita deve essere comprensibile, difendibile e coerente con il mercato.\n\nRichiedi una valutazione gratuita del tuo immobile. Joseph 371 370 8294 · Francesca 371 424 6300.\n\n#F1Immobiliare #ValleDiSusa #Avigliana #VendereCasa #ValutazioneImmobiliare #MercatoImmobiliare #CasaInVendita",
-      "hashtags": [
-        "#F1Immobiliare",
-        "#ValleDiSusa",
-        "#CasaTorino",
-        "#ImmobiliareTorino",
-        "#Almese",
-        "#SantAmbrogioDiTorino"
-      ],
-      "voiceover": "VENDERE CASA: QUALI COSTI DEVI CONOSCERE? La parte fiscale va verificata prima, non alla fine della trattativa. Se stai pensando di vendere casa in Avigliana, il punto è questo: un numero, da solo, non racconta il valore reale di un immobile. Contano la posizione precisa, lo stato della casa, il piano, la luce, gli spazi esterni, gli immobili davvero concorrenti e la domanda che esiste in quel momento. I dati pubblici servono come riferimento, ma devono essere letti insieme al mercato reale. Il prezzo corretto non è quello che ci piacerebbe ottenere: è quello che permette alla casa di essere posizionata bene, difesa con argomenti concreti e presentata alle persone giuste. Se vuoi capire da dove partire, richiedi una valutazione gratuita con F1 Immobiliare. Joseph 371 370 8294, Francesca 371 424 6300. Prima i dati, poi la strategia, poi la vendita.",
-      "slides": [
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""
-      ],
-      "visuals": [
-        "villa residenziale moderna esterno giorno",
-        "quartiere residenziale italiano curato",
-        "soggiorno luminoso premium",
-        "cucina moderna di qualità",
-        "terrazzo abitabile con vista",
-        "camera matrimoniale elegante",
-        "bagno contemporaneo premium",
-        "facciata e ingresso immobile",
-        "dettaglio architettonico e giardino",
-        "villa residenziale al tramonto"
-      ],
-      "cta": "Scrivi VALUTAZIONE in privato",
-      "media": "publisher/media/generated/f1-immobiliare/2026-08-20/cycle-00/02-20-c00-02-03-g7-cosa-vede-compratore.mp4",
-      "scheduled_at": "2026-08-20T00:08:00+02:00",
-      "territory": "Avigliana",
-      "property_focus": {
-        "transaction": "vendita",
-        "min_price_eur": 100000,
-        "exclude": [
-          "affitto",
-          "locazione",
-          "garage",
-          "box",
-          "posto auto",
-          "rustico",
-          "rudere",
-          "terreno"
-        ],
-        "preferred": [
-          "appartamento",
-          "casa",
-          "villa",
-          "villetta",
-          "attico",
-          "bifamiliare",
-          "trifamiliare"
-        ],
-        "cash_subito": {
-          "enabled": true,
-          "label": "F1 CASH SUBITO",
-          "meaning": "acquisto diretto per opportunità immobiliari fortemente scontate e coerenti con i criteri F1",
-          "rule": "non presentarlo come garanzia di acquisto; prima verifica economica, tecnica e documentale"
-        }
-      },
-      "approval_key": "2026-W34",
-      "platforms": [
-        {
-          "platform": "facebook",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "instagram",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "tiktok",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "linkedin",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "youtube",
-          "integration_id": "direct-api"
-        }
-      ],
-      "enabled": true,
-      "status": "awaiting_approval",
-      "published_platforms": [],
-      "postiz_results": [],
-      "video_made_with_ai": true,
-      "created_by": "open-social-scheduler",
-      "blocked_reason": "approval required for 2026-W34",
-      "cycle_key": "2026-08-20T00:00",
-      "cycle_hour": 0,
-      "cycle_index": 0,
-      "cycle_position": 2,
-      "production_mode": "6-every-4h",
-      "production_status": "DA CONTROLLARE",
-      "research_query": "agenzia delle entrate imposte acquisto casa errori",
-      "phone": "371 370 8294",
-      "secondary_phone": "371 424 6300",
-      "visual_rule": "premium_residential_property_only",
-      "target_reel_seconds": 60,
-      "publish_decision": "manual",
-      "research_mode": "google_suggestions_plus_official_sources",
-      "research_basis": [
-        {
-          "url": "https://www.agenziaentrate.gov.it/portale/web/guest/schede/fabbricatiterreni/omi"
-        },
-        {
-          "url": "https://www.agenziaentrate.gov.it/portale/web/guest/cittadini/acquisto-o-vendita-di-un-immobile"
-        }
-      ],
-      "no_subtitles": true,
-      "visual_count": 10,
-      "visual_asset_urls": [
-        "https://cdn.pixabay.com/photo/2023/12/10/10/10/house-8440981_1280.jpg",
-        "https://cdn.pixabay.com/photo/2023/11/07/13/44/house-8372418_1280.jpg",
-        "https://cdn.pixabay.com/photo/2022/05/18/23/05/architecture-7206296_1280.jpg",
-        "https://cdn.pixabay.com/photo/2017/11/16/15/06/architecture-2954880_1280.jpg",
-        "https://cdn.pixabay.com/photo/2016/08/21/18/36/home-1610485_1280.jpg",
-        "https://cdn.pixabay.com/photo/2015/11/06/11/47/multi-family-home-1026471_1280.jpg",
-        "https://cdn.pixabay.com/photo/2023/04/17/09/26/building-7931960_960_720.jpg",
-        "https://cdn.pixabay.com/photo/2022/05/18/23/16/home-7206309_960_720.jpg",
-        "https://cdn.pixabay.com/photo/2014/08/02/01/01/house-407964_960_720.jpg",
-        "https://cdn.pixabay.com/photo/2018/09/06/20/16/architecture-3659212_960_720.jpg"
-      ],
-      "visual_source": "pixabay_dynamic_varied",
-      "visual_uniqueness": "10 unique source images inside this content",
-      "fresh_visual_count": 10,
-      "reused_visual_count": 0,
-      "_presenter": "francesca"
-    },
-    {
-      "id": "f1-immobiliare-2026-08-20-c00-01-01-g5-domanda-agente",
-      "client_id": "f1-immobiliare",
-      "client_name": "F1 Immobiliare",
-      "category": "data",
-      "editorial_role": "data",
-      "campaign": "F1 · Non a sensazione. Con i dati.",
-      "format": "reel",
-      "title": "VENDERE CASA: QUALI COSTI DEVI CONOSCERE?",
-      "caption": "VENDERE CASA: QUALI COSTI DEVI CONOSCERE?\n\nLa parte fiscale va verificata prima, non alla fine della trattativa. Se stai pensando di vendere casa in Avigliana, una valutazione seria non nasce da una cifra presa isolatamente. Bisogna leggere la microzona, le caratteristiche reali dell'immobile, ciò che è effettivamente in concorrenza e la domanda presente. I dati pubblici sono utili quando vengono interpretati nel contesto corretto. Per questo il prezzo di uscita deve essere comprensibile, difendibile e coerente con il mercato.\n\nRichiedi una valutazione gratuita del tuo immobile. Joseph 371 370 8294 · Francesca 371 424 6300.\n\n#F1Immobiliare #ValleDiSusa #Avigliana #VendereCasa #ValutazioneImmobiliare #MercatoImmobiliare #CasaInVendita",
-      "hashtags": [
-        "#F1Immobiliare",
-        "#ValleDiSusa",
-        "#VendereCasa",
-        "#ValutazioneImmobiliare",
-        "#Avigliana",
-        "#CasaInVendita"
-      ],
-      "voiceover": "VENDERE CASA: QUALI COSTI DEVI CONOSCERE? La parte fiscale va verificata prima, non alla fine della trattativa. Se stai pensando di vendere casa in Avigliana, il punto è questo: un numero, da solo, non racconta il valore reale di un immobile. Contano la posizione precisa, lo stato della casa, il piano, la luce, gli spazi esterni, gli immobili davvero concorrenti e la domanda che esiste in quel momento. I dati pubblici servono come riferimento, ma devono essere letti insieme al mercato reale. Il prezzo corretto non è quello che ci piacerebbe ottenere: è quello che permette alla casa di essere posizionata bene, difesa con argomenti concreti e presentata alle persone giuste. Se vuoi capire da dove partire, richiedi una valutazione gratuita con F1 Immobiliare. Joseph 371 370 8294, Francesca 371 424 6300. Prima i dati, poi la strategia, poi la vendita.",
-      "slides": [
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""
-      ],
-      "visuals": [
-        "villa residenziale moderna esterno giorno",
-        "quartiere residenziale italiano curato",
-        "soggiorno luminoso premium",
-        "cucina moderna di qualità",
-        "terrazzo abitabile con vista",
-        "camera matrimoniale elegante",
-        "bagno contemporaneo premium",
-        "facciata e ingresso immobile",
-        "dettaglio architettonico e giardino",
-        "villa residenziale al tramonto"
-      ],
-      "cta": "Scrivi VALUTAZIONE in privato",
-      "media": "publisher/media/generated/f1-immobiliare/2026-08-20/cycle-00/01-20-c00-01-01-g5-domanda-agente.mp4",
-      "scheduled_at": "2026-08-20T00:00:00+02:00",
-      "territory": "Avigliana",
-      "property_focus": {
-        "transaction": "vendita",
-        "min_price_eur": 100000,
-        "exclude": [
-          "affitto",
-          "locazione",
-          "garage",
-          "box",
-          "posto auto",
-          "rustico",
-          "rudere",
-          "terreno"
-        ],
-        "preferred": [
-          "appartamento",
-          "casa",
-          "villa",
-          "villetta",
-          "attico",
-          "bifamiliare",
-          "trifamiliare"
-        ],
-        "cash_subito": {
-          "enabled": true,
-          "label": "F1 CASH SUBITO",
-          "meaning": "acquisto diretto per opportunità immobiliari fortemente scontate e coerenti con i criteri F1",
-          "rule": "non presentarlo come garanzia di acquisto; prima verifica economica, tecnica e documentale"
-        }
-      },
-      "approval_key": "2026-W34",
-      "platforms": [
-        {
-          "platform": "facebook",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "instagram",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "tiktok",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "linkedin",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "youtube",
-          "integration_id": "direct-api"
-        }
-      ],
-      "enabled": true,
-      "status": "awaiting_approval",
-      "published_platforms": [],
-      "postiz_results": [],
-      "video_made_with_ai": true,
-      "created_by": "open-social-scheduler",
-      "blocked_reason": "approval required for 2026-W34",
-      "cycle_key": "2026-08-20T00:00",
-      "cycle_hour": 0,
-      "cycle_index": 0,
-      "cycle_position": 1,
-      "production_mode": "6-every-4h",
-      "production_status": "DA CONTROLLARE",
-      "research_query": "agenzia delle entrate imposte acquisto casa spiegazione",
-      "phone": "371 370 8294",
-      "secondary_phone": "371 424 6300",
-      "visual_rule": "premium_residential_property_only",
-      "target_reel_seconds": 60,
-      "publish_decision": "manual",
-      "research_mode": "google_suggestions_plus_official_sources",
-      "research_basis": [
-        {
-          "url": "https://www.agenziaentrate.gov.it/portale/web/guest/schede/fabbricatiterreni/omi"
-        },
-        {
-          "url": "https://www.agenziaentrate.gov.it/portale/web/guest/cittadini/acquisto-o-vendita-di-un-immobile"
-        }
-      ],
-      "no_subtitles": true,
-      "visual_count": 10,
-      "visual_asset_urls": [
-        "https://cdn.pixabay.com/photo/2017/11/16/15/05/architecture-2954874_960_720.jpg",
-        "https://cdn.pixabay.com/photo/2022/05/18/23/08/architecture-7206298_960_720.jpg",
-        "https://cdn.pixabay.com/photo/2020/04/12/08/23/architecture-5033283_1280.jpg",
-        "https://cdn.pixabay.com/photo/2024/02/13/18/22/architecture-8571585_1280.jpg",
-        "https://cdn.pixabay.com/photo/2017/08/07/10/46/architecture-2602512_1280.jpg",
-        "https://cdn.pixabay.com/photo/2015/11/06/11/48/multi-family-home-1026490_960_720.jpg",
-        "https://cdn.pixabay.com/photo/2018/03/10/00/10/architecture-3212990_1280.jpg",
-        "https://cdn.pixabay.com/photo/2024/03/07/15/57/houses-8618837_960_720.jpg",
-        "https://cdn.pixabay.com/photo/2015/11/06/11/40/multi-family-home-1026386_1280.jpg",
-        "https://cdn.pixabay.com/photo/2022/05/23/16/14/architecture-7216601_960_720.jpg"
-      ],
-      "visual_source": "pixabay_dynamic_varied",
-      "visual_uniqueness": "10 unique source images inside this content",
-      "fresh_visual_count": 10,
-      "reused_visual_count": 0,
-      "_presenter": "joseph"
-    },
-    {
-      "id": "f1-immobiliare-2026-08-21-c04-01-04-g2-tre-prezzi",
-      "client_id": "f1-immobiliare",
-      "client_name": "F1 Immobiliare",
-      "category": "data",
-      "editorial_role": "data",
-      "campaign": "F1 · Non a sensazione. Con i dati.",
-      "format": "photo",
-      "title": "CASE IN VALLE DI SUSA · VALUTAZIONE IMMOBILIARE",
-      "caption": "VUOI VENDERE CASA IN VALLE DI SUSA?\n\nPrima di pubblicare un annuncio, parti da una valutazione immobiliare costruita su dati, caratteristiche reali dell'immobile, microzona e confronto con il mercato.\n\nF1 Immobiliare organizza la vendita partendo dall'analisi, non da un prezzo scelto a sensazione.\n\nRichiedi una valutazione gratuita del tuo immobile.\n371 370 8294 · 371 424 6300\n\n#F1Immobiliare #ValleDiSusa #VendereCasa #ValutazioneImmobiliare #Susa #Bussoleno #Condove #Avigliana #Almese #Rivoli",
-      "hashtags": [
-        "#F1Immobiliare",
-        "#ValleDiSusa",
-        "#Condove",
-        "#Bussoleno",
-        "#VillarDora",
-        "#VendereBene"
-      ],
-      "voiceover": "Prezzo desiderato, prezzo pubblicato e prezzo di mercato non sono la stessa cosa. Il primo nasce dalle aspettative, il secondo dalla strategia, il terzo dalla risposta reale degli acquirenti. Il lavoro corretto è farli dialogare prima di pubblicare.",
-      "slides": [
-        "TRE PREZZI|NON SONO|LA STESSA COSA",
-        "PREZZO|DESIDERATO",
-        "PREZZO|PUBBLICATO",
-        "PREZZO|SOSTENUTO DAL MERCATO",
-        "CONFONDERLI|COSTA TEMPO",
-        "IL PRICING|NASCE DAI DATI",
-        "F1 IMMOBILIARE|IL PREZZO SI VERIFICA|371 370 8294"
-      ],
-      "visuals": [],
-      "cta": "Scrivi VALUTAZIONE in privato",
-      "media": "publisher/media/generated/f1-immobiliare/2026-08-21/cycle-04/01-21-c04-01-04-g2-tre-prezzi.jpg",
-      "scheduled_at": "2026-08-21T04:00:00+02:00",
-      "territory": "Almese",
-      "property_focus": {
-        "transaction": "vendita",
-        "min_price_eur": 100000,
-        "exclude": [
-          "affitto",
-          "locazione",
-          "garage",
-          "box",
-          "posto auto",
-          "rustico",
-          "rudere",
-          "terreno"
-        ],
-        "preferred": [
-          "appartamento",
-          "casa",
-          "villa",
-          "villetta",
-          "attico",
-          "bifamiliare",
-          "trifamiliare"
-        ],
-        "cash_subito": {
-          "enabled": true,
-          "label": "F1 CASH SUBITO",
-          "meaning": "acquisto diretto per opportunità immobiliari fortemente scontate e coerenti con i criteri F1",
-          "rule": "non presentarlo come garanzia di acquisto; prima verifica economica, tecnica e documentale"
-        }
-      },
-      "approval_key": "2026-W34",
-      "platforms": [
-        {
-          "platform": "facebook",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "instagram",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "tiktok",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "linkedin",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "youtube",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "pinterest",
-          "integration_id": "direct-api"
-        }
-      ],
-      "enabled": true,
-      "status": "awaiting_approval",
-      "published_platforms": [],
-      "postiz_results": [],
-      "video_made_with_ai": false,
-      "created_by": "open-social-scheduler",
-      "blocked_reason": "approval required for 2026-W34",
-      "cycle_key": "2026-08-21T04:00",
-      "cycle_hour": 4,
-      "cycle_index": 1,
-      "cycle_position": 1,
-      "production_mode": "photos-only-6-every-4h",
-      "production_status": "PHOTO READY",
-      "publication_ready": true,
-      "output_type": "static-photo",
-      "no_video": true,
-      "no_audio": true,
-      "no_reel": true,
-      "visual_mode": "valle-di-susa-homes-photo",
-      "search_query_override": "case in Valle di Susa",
-      "search_queries": [
-        "case in Valle di Susa",
-        "casa alpina Piemonte",
-        "villa montagna Piemonte",
-        "casa con giardino montagne Italia",
-        "borgo alpino casa pietra Italia"
-      ],
-      "visual_asset_urls": [
-        "https://cdn.pixabay.com/photo/2014/10/04/18/27/houses-473841_1280.jpg"
-      ],
-      "visual_source": "pixabay-fresh-static-photo",
-      "visual_count": 1,
-      "fresh_visual_count": 1,
-      "reused_visual_count": 0
-    },
-    {
-      "id": "f1-immobiliare-2026-08-21-c04-02-05-g3-cinquecento-metri",
-      "client_id": "f1-immobiliare",
-      "client_name": "F1 Immobiliare",
-      "category": "error",
-      "editorial_role": "error",
-      "campaign": "F1 · Non a sensazione. Con i dati.",
-      "format": "photo",
-      "title": "LAVORA CON F1 IMMOBILIARE",
-      "caption": "LAVORA CON F1 IMMOBILIARE.\n\nCerchiamo collaboratori e collaboratrici da formare e affiancare, oltre ad agenti immobiliari già abilitati.\n\nPer chi non è ancora abilitato, il percorso iniziale riguarda presidio della zona, contatto con residenti e proprietari, ricerca immobili, appuntamenti e raccolta delle informazioni iniziali, sempre con affiancamento. Le attività riservate alla mediazione e alla negoziazione vengono svolte da professionisti abilitati.\n\nInvia il curriculum a f1immobiliaresusa@outlook.it\n371 370 8294\n\n#F1Immobiliare #LavoraConNoi #Immobiliare #ValleDiSusa #TorinoOvest",
-      "hashtags": [
-        "#F1Immobiliare",
-        "#NonASensazione",
-        "#ConIDati",
-        "#StrategiaImmobiliare",
-        "#PrezzoCasa",
-        "#ProprietariCasa"
-      ],
-      "voiceover": "Due immobili a cinquecento metri di distanza possono avere una risposta di mercato diversa. Servizi, esposizione, rumore, accessibilità e domanda cambiano il posizionamento. La microzona conta.",
-      "slides": [
-        "500 METRI|POSSONO|CAMBIARE TUTTO",
-        "SERVIZI",
-        "RUMORE|ESPOSIZIONE",
-        "ACCESSIBILITÀ",
-        "DOMANDA",
-        "NON USARE|MEDIE CIECHE",
-        "F1 IMMOBILIARE|MICROZONA|371 370 8294"
-      ],
-      "visuals": [],
-      "cta": "Scrivi VALUTAZIONE in privato",
-      "media": "publisher/media/generated/f1-immobiliare/2026-08-21/cycle-04/02-21-c04-02-05-g3-cinquecento-metri.jpg",
-      "scheduled_at": "2026-08-21T04:08:00+02:00",
-      "territory": "Almese",
-      "property_focus": {
-        "transaction": "vendita",
-        "min_price_eur": 100000,
-        "exclude": [
-          "affitto",
-          "locazione",
-          "garage",
-          "box",
-          "posto auto",
-          "rustico",
-          "rudere",
-          "terreno"
-        ],
-        "preferred": [
-          "appartamento",
-          "casa",
-          "villa",
-          "villetta",
-          "attico",
-          "bifamiliare",
-          "trifamiliare"
-        ],
-        "cash_subito": {
-          "enabled": true,
-          "label": "F1 CASH SUBITO",
-          "meaning": "acquisto diretto per opportunità immobiliari fortemente scontate e coerenti con i criteri F1",
-          "rule": "non presentarlo come garanzia di acquisto; prima verifica economica, tecnica e documentale"
-        }
-      },
-      "approval_key": "2026-W34",
-      "platforms": [
-        {
-          "platform": "facebook",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "instagram",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "tiktok",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "linkedin",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "youtube",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "pinterest",
-          "integration_id": "direct-api"
-        }
-      ],
-      "enabled": true,
-      "status": "awaiting_approval",
-      "published_platforms": [],
-      "postiz_results": [],
-      "video_made_with_ai": false,
-      "created_by": "open-social-scheduler",
-      "blocked_reason": "approval required for 2026-W34",
-      "cycle_key": "2026-08-21T04:00",
-      "cycle_hour": 4,
-      "cycle_index": 1,
-      "cycle_position": 2,
-      "production_mode": "photos-only-6-every-4h",
-      "production_status": "PHOTO READY",
-      "publication_ready": true,
-      "output_type": "static-photo",
-      "no_video": true,
-      "no_audio": true,
-      "no_reel": true,
-      "visual_mode": "f1-recruiting-photo",
-      "search_query_override": "real estate professional office Italy",
-      "search_queries": [
-        "real estate agent office Italy",
-        "property consultant office professional",
-        "business team real estate meeting"
-      ],
-      "visual_asset_urls": [
-        "https://cdn.pixabay.com/photo/2023/09/03/09/26/real-estate-8230197_960_720.jpg"
-      ],
-      "visual_source": "pixabay-fresh-static-photo",
-      "visual_count": 1,
-      "fresh_visual_count": 1,
-      "reused_visual_count": 0
-    },
-    {
-      "id": "f1-immobiliare-2026-08-21-c04-03-06-g4-quattro-controlli-fermo",
-      "client_id": "f1-immobiliare",
-      "client_name": "F1 Immobiliare",
-      "category": "proof",
-      "editorial_role": "proof",
-      "campaign": "F1 · Non a sensazione. Con i dati.",
-      "format": "photo",
-      "title": "CASE IN VALLE DI SUSA · VALUTAZIONE IMMOBILIARE",
-      "caption": "VUOI VENDERE CASA IN VALLE DI SUSA?\n\nPrima di pubblicare un annuncio, parti da una valutazione immobiliare costruita su dati, caratteristiche reali dell'immobile, microzona e confronto con il mercato.\n\nF1 Immobiliare organizza la vendita partendo dall'analisi, non da un prezzo scelto a sensazione.\n\nRichiedi una valutazione gratuita del tuo immobile.\n371 370 8294 · 371 424 6300\n\n#F1Immobiliare #ValleDiSusa #VendereCasa #ValutazioneImmobiliare #Susa #Bussoleno #Condove #Avigliana #Almese #Rivoli",
-      "hashtags": [
-        "#F1Immobiliare",
-        "#ValleDiSusa",
-        "#VendereCasa",
-        "#ValutazioneImmobiliare",
-        "#Avigliana",
-        "#CasaInVendita"
-      ],
-      "voiceover": "Se un immobile non riceve richieste, controlliamo pricing, presentazione, distribuzione e target prima di intervenire. Scrivi VALUTAZIONE in privato.",
-      "slides": [
-        "CASA FERMA?|4 CONTROLLI",
-        "1. PRICING",
-        "2. PRESENTAZIONE",
-        "3. DISTRIBUZIONE",
-        "4. TARGET",
-        "POI|DECIDIAMO",
-        "F1 IMMOBILIARE|DIAGNOSI PRIMA|371 370 8294"
-      ],
-      "visuals": [],
-      "cta": "Scrivi VALUTAZIONE in privato",
-      "media": "publisher/media/generated/f1-immobiliare/2026-08-21/cycle-04/03-21-c04-03-06-g4-quattro-controlli-fermo.jpg",
-      "scheduled_at": "2026-08-21T04:16:00+02:00",
-      "territory": "Almese",
-      "property_focus": {
-        "transaction": "vendita",
-        "min_price_eur": 100000,
-        "exclude": [
-          "affitto",
-          "locazione",
-          "garage",
-          "box",
-          "posto auto",
-          "rustico",
-          "rudere",
-          "terreno"
-        ],
-        "preferred": [
-          "appartamento",
-          "casa",
-          "villa",
-          "villetta",
-          "attico",
-          "bifamiliare",
-          "trifamiliare"
-        ],
-        "cash_subito": {
-          "enabled": true,
-          "label": "F1 CASH SUBITO",
-          "meaning": "acquisto diretto per opportunità immobiliari fortemente scontate e coerenti con i criteri F1",
-          "rule": "non presentarlo come garanzia di acquisto; prima verifica economica, tecnica e documentale"
-        }
-      },
-      "approval_key": "2026-W34",
-      "platforms": [
-        {
-          "platform": "facebook",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "instagram",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "tiktok",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "linkedin",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "youtube",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "pinterest",
-          "integration_id": "direct-api"
-        }
-      ],
-      "enabled": true,
-      "status": "awaiting_approval",
-      "published_platforms": [],
-      "postiz_results": [],
-      "video_made_with_ai": false,
-      "created_by": "open-social-scheduler",
-      "blocked_reason": "approval required for 2026-W34",
-      "cycle_key": "2026-08-21T04:00",
-      "cycle_hour": 4,
-      "cycle_index": 1,
-      "cycle_position": 3,
-      "production_mode": "photos-only-6-every-4h",
-      "production_status": "PHOTO READY",
-      "publication_ready": true,
-      "output_type": "static-photo",
-      "no_video": true,
-      "no_audio": true,
-      "no_reel": true,
-      "visual_mode": "valle-di-susa-homes-photo",
-      "search_query_override": "case in Valle di Susa",
-      "search_queries": [
-        "case in Valle di Susa",
-        "casa alpina Piemonte",
-        "villa montagna Piemonte",
-        "casa con giardino montagne Italia",
-        "borgo alpino casa pietra Italia"
-      ],
-      "visual_asset_urls": [
-        "https://cdn.pixabay.com/photo/2017/07/25/00/59/house-2536610_1280.jpg"
-      ],
-      "visual_source": "pixabay-fresh-static-photo",
-      "visual_count": 1,
-      "fresh_visual_count": 1,
-      "reused_visual_count": 0
-    },
-    {
-      "id": "real-media-pro-2026-08-21-c04-01-04-google-ads-intento",
-      "client_id": "real-media-pro",
-      "client_name": "Real Media Pro",
-      "category": "attract",
-      "editorial_role": "attract",
-      "campaign": "Real Media Pro · Dalla visibilità alla crescita",
-      "format": "photo",
-      "title": "SITO CHE VENDE",
-      "caption": "IL TUO SITO AIUTA DAVVERO A VENDERE?\n\nUn sito efficace non è solo bello: deve rendere chiara l'offerta, guidare la persona e facilitare il contatto o l'acquisto. Real Media Pro analizza presenza digitale, sito, social e percorso commerciale per individuare cosa migliorare.\n\nRichiedi un'analisi strategica gratuita.\n371 370 8294\n\n#RealMediaPro #SitiWeb #Ecommerce #Shopify #DigitalMarketing #Torino #ValleDiSusa",
-      "hashtags": [
-        "#RealMediaPro",
-        "#ShopifyItalia",
-        "#ConversionRate",
-        "#EcommerceItalia",
-        "#WebDesign",
-        "#ValleDiSusa"
-      ],
-      "voiceover": "Google Ads funziona quando keyword, feed, annuncio e pagina di destinazione rispondono allo stesso intento. Richiedi un'analisi strategica gratuita.",
-      "slides": [
-        "CHI CERCA È GIÀ PIÙ VICINO",
-        "MA DEVI ESSERCI",
-        "SEARCH",
-        "SHOPPING",
-        "PERFORMANCE MAX",
-        "FEED PRODOTTI",
-        "LANDING COERENTE",
-        "RICHIEDI ANALISI"
-      ],
-      "visuals": [],
-      "cta": "Richiedi un'analisi strategica gratuita",
-      "media": "publisher/media/generated/real-media-pro/2026-08-21/cycle-04/01-08-21-c04-01-04-google-ads-intento.jpg",
-      "scheduled_at": "2026-08-21T04:30:00+02:00",
-      "territory": "Rivoli",
-      "property_focus": {},
-      "approval_key": "2026-W34",
-      "platforms": [
-        {
-          "platform": "facebook",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "instagram",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "tiktok",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "linkedin",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "youtube",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "pinterest",
-          "integration_id": "direct-api"
-        }
-      ],
-      "enabled": true,
-      "status": "awaiting_approval",
-      "published_platforms": [],
-      "postiz_results": [],
-      "video_made_with_ai": false,
-      "created_by": "open-social-scheduler",
-      "blocked_reason": "approval required for 2026-W34",
-      "cycle_key": "2026-08-21T04:00",
-      "cycle_hour": 4,
-      "cycle_index": 1,
-      "cycle_position": 1,
-      "production_mode": "photos-only-6-every-4h",
-      "production_status": "PHOTO READY",
-      "publication_ready": true,
-      "output_type": "static-photo",
-      "no_video": true,
-      "no_audio": true,
-      "no_reel": true,
-      "visual_mode": "rmp-ecommerce-photo",
-      "design_reference_url": "https://themes.shopify.com/?locale=it",
-      "design_reference_rule": "inspired by modern ecommerce presentation only; never copy a Shopify theme",
-      "search_query_override": "ecommerce website laptop premium workspace",
-      "search_queries": [
-        "ecommerce website laptop premium workspace",
-        "online shop smartphone laptop business",
-        "digital marketing ecommerce workspace",
-        "product photography ecommerce desk"
-      ],
-      "visual_asset_urls": [
-        "https://cdn.pixabay.com/photo/2024/07/10/14/30/laptop-8885977_960_720.jpg"
-      ],
-      "visual_source": "pixabay-fresh-static-photo",
-      "visual_count": 1,
-      "fresh_visual_count": 1,
-      "reused_visual_count": 0
-    },
-    {
-      "id": "real-media-pro-2026-08-21-c04-02-05-shopify-product-page",
-      "client_id": "real-media-pro",
-      "client_name": "Real Media Pro",
-      "category": "nurture",
-      "editorial_role": "nurture",
-      "campaign": "Real Media Pro · Dalla visibilità alla crescita",
-      "format": "photo",
-      "title": "ECOMMERCE CHE CONVERTE",
-      "caption": "ECOMMERCE: DESIGN E CONVERSIONE DEVONO LAVORARE INSIEME.\n\nUna vetrina digitale moderna deve essere leggibile da smartphone, veloce e costruita per accompagnare il cliente dal prodotto al checkout. Real Media Pro progetta strategie digitali orientate a contatti e vendite.\n\nRichiedi un'analisi strategica gratuita.\n371 370 8294\n\n#RealMediaPro #Ecommerce #Shopify #SitiWeb #MarketingDigitale #AziendeLocali",
-      "hashtags": [
-        "#RealMediaPro",
-        "#SitiShopify",
-        "#DigitalMarketing",
-        "#LeadGeneration",
-        "#Rivoli",
-        "#Avigliana"
-      ],
-      "voiceover": "Una product page efficace riduce l'incertezza: beneficio chiaro, prove, FAQ, condizioni e CTA visibile, soprattutto da mobile. Richiedi un'analisi strategica gratuita.",
-      "slides": [
-        "UNA PAGINA PRODOTTO DEVE VENDERE",
-        "PROBLEMA",
-        "BENEFICIO",
-        "DIMOSTRAZIONE",
-        "RECENSIONI",
-        "FAQ",
-        "SPEDIZIONE / RESO",
-        "CTA"
-      ],
-      "visuals": [],
-      "cta": "Richiedi un'analisi strategica gratuita",
-      "media": "publisher/media/generated/real-media-pro/2026-08-21/cycle-04/02-08-21-c04-02-05-shopify-product-page.jpg",
-      "scheduled_at": "2026-08-21T04:38:00+02:00",
-      "territory": "Rivoli",
-      "property_focus": {},
-      "approval_key": "2026-W34",
-      "platforms": [
-        {
-          "platform": "facebook",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "instagram",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "tiktok",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "linkedin",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "youtube",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "pinterest",
-          "integration_id": "direct-api"
-        }
-      ],
-      "enabled": true,
-      "status": "awaiting_approval",
-      "published_platforms": [],
-      "postiz_results": [],
-      "video_made_with_ai": false,
-      "created_by": "open-social-scheduler",
-      "blocked_reason": "approval required for 2026-W34",
-      "cycle_key": "2026-08-21T04:00",
-      "cycle_hour": 4,
-      "cycle_index": 1,
-      "cycle_position": 2,
-      "production_mode": "photos-only-6-every-4h",
-      "production_status": "PHOTO READY",
-      "publication_ready": true,
-      "output_type": "static-photo",
-      "no_video": true,
-      "no_audio": true,
-      "no_reel": true,
-      "visual_mode": "rmp-ecommerce-photo",
-      "design_reference_url": "https://themes.shopify.com/?locale=it",
-      "design_reference_rule": "inspired by modern ecommerce presentation only; never copy a Shopify theme",
-      "search_query_override": "online store product page laptop smartphone",
-      "search_queries": [
-        "ecommerce website laptop premium workspace",
-        "online shop smartphone laptop business",
-        "digital marketing ecommerce workspace",
-        "product photography ecommerce desk"
-      ],
-      "visual_asset_urls": [
-        "https://cdn.pixabay.com/photo/2020/08/26/14/29/technology-5519649_1280.jpg"
-      ],
-      "visual_source": "pixabay-fresh-static-photo",
-      "visual_count": 1,
-      "fresh_visual_count": 1,
-      "reused_visual_count": 0
-    },
-    {
-      "id": "real-media-pro-2026-08-21-c04-03-06-advertising-sistema",
-      "client_id": "real-media-pro",
-      "client_name": "Real Media Pro",
-      "category": "convert",
-      "editorial_role": "convert",
-      "campaign": "Real Media Pro · Dalla visibilità alla crescita",
-      "format": "photo",
-      "title": "SOCIAL + SITO + VENDITE",
-      "caption": "SOCIAL, SITO E VENDITE: UN UNICO PERCORSO.\n\nI social attirano attenzione. Il sito deve trasformarla in interesse, richiesta o acquisto. Se i due sistemi sono scollegati, si perdono opportunità. Real Media Pro costruisce un percorso digitale misurabile.\n\nRichiedi un'analisi strategica gratuita.\n371 370 8294\n\n#RealMediaPro #SocialMediaMarketing #Ecommerce #SitiWeb #LeadGeneration #Torino",
-      "hashtags": [
-        "#RealMediaPro",
-        "#Shopify",
-        "#Ecommerce",
-        "#SitiWeb",
-        "#Torino",
-        "#MarketingDigitale"
-      ],
-      "voiceover": "La pubblicità funziona meglio quando Meta, Google, landing page, CRM e misurazione sono progettati come un unico sistema. Richiedi un'analisi strategica gratuita.",
-      "slides": [
-        "ADV SENZA LANDING?",
-        "RISCHI DI PAGARE TRAFFICO",
-        "META CREA DOMANDA",
-        "GOOGLE INTERCETTA INTENTO",
-        "LANDING CONVERTE",
-        "CRM SEGUE",
-        "DATI OTTIMIZZANO",
-        "RICHIEDI ANALISI"
-      ],
-      "visuals": [],
-      "cta": "Richiedi un'analisi strategica gratuita",
-      "media": "publisher/media/generated/real-media-pro/2026-08-21/cycle-04/03-08-21-c04-03-06-advertising-sistema.jpg",
-      "scheduled_at": "2026-08-21T04:46:00+02:00",
-      "territory": "Rivoli",
-      "property_focus": {},
-      "approval_key": "2026-W34",
-      "platforms": [
-        {
-          "platform": "facebook",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "instagram",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "tiktok",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "linkedin",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "youtube",
-          "integration_id": "direct-api"
-        },
-        {
-          "platform": "pinterest",
-          "integration_id": "direct-api"
-        }
-      ],
-      "enabled": true,
-      "status": "awaiting_approval",
-      "published_platforms": [],
-      "postiz_results": [],
-      "video_made_with_ai": false,
-      "created_by": "open-social-scheduler",
-      "blocked_reason": "approval required for 2026-W34",
-      "cycle_key": "2026-08-21T04:00",
-      "cycle_hour": 4,
-      "cycle_index": 1,
-      "cycle_position": 3,
-      "production_mode": "photos-only-6-every-4h",
-      "production_status": "PHOTO READY",
-      "publication_ready": true,
-      "output_type": "static-photo",
-      "no_video": true,
-      "no_audio": true,
-      "no_reel": true,
-      "visual_mode": "rmp-ecommerce-photo",
-      "design_reference_url": "https://themes.shopify.com/?locale=it",
-      "design_reference_rule": "inspired by modern ecommerce presentation only; never copy a Shopify theme",
-      "search_query_override": "digital business ecommerce analytics workspace",
-      "search_queries": [
-        "ecommerce website laptop premium workspace",
-        "online shop smartphone laptop business",
-        "digital marketing ecommerce workspace",
-        "product photography ecommerce desk"
-      ],
-      "visual_asset_urls": [
-        "https://cdn.pixabay.com/photo/2021/12/27/19/28/e-commerce-6898102_1280.png"
-      ],
-      "visual_source": "pixabay-fresh-static-photo",
-      "visual_count": 1,
-      "fresh_visual_count": 1,
-      "reused_visual_count": 0
     }
   ],
-  "updated_at": "2026-08-21T05:59:28+00:00",
-  "current_cycle": "2026-08-21T04:00",
+  "updated_at": "2026-08-21T06:41:51+00:00",
+  "current_cycle": "2026-08-21T08:00",
   "visual_policy": "10 different images per content; F1 priority reels change image every 2 seconds; prefer unseen history",
   "f1_reel_policy": {
     "reels_per_cycle": 2,
