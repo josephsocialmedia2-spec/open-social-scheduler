@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-08-21T18:45:06Z",
+  "updated_at": "2026-08-21T22:31:48Z",
   "brands": {
     "f1-immobiliare": {
       "recent": [
@@ -2482,6 +2482,30 @@
           "url": "https://cdn.pixabay.com/photo/2022/05/28/20/19/house-7227928_960_720.jpg",
           "used_at": "2026-08-21T18:45:06Z",
           "job_id": "f1-immobiliare-2026-08-21-c20-01-06-g4-quattro-controlli-fermo",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2023/09/21/03/25/houses-8265947.jpg",
+          "url": "https://cdn.pixabay.com/photo/2023/09/21/03/25/houses-8265947_1280.jpg",
+          "used_at": "2026-08-21T22:31:41Z",
+          "job_id": "f1-immobiliare-2026-08-22-c00-03-03-g2-come-costruiamo-prezzo",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2024/12/29/13/41/professional-9297989.jpg",
+          "url": "https://cdn.pixabay.com/photo/2024/12/29/13/41/professional-9297989_640.jpg",
+          "used_at": "2026-08-21T22:31:45Z",
+          "job_id": "f1-immobiliare-2026-08-22-c00-02-02-g1-il-vicino",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2022/04/06/11/27/italy-7115371.jpg",
+          "url": "https://cdn.pixabay.com/photo/2022/04/06/11/27/italy-7115371_1280.jpg",
+          "used_at": "2026-08-21T22:31:48Z",
+          "job_id": "f1-immobiliare-2026-08-22-c00-01-01-g7-cosa-guardiamo",
           "output_type": "static-photo",
           "source_type": "pixabay-fresh-static-photo"
         }
@@ -4967,6 +4991,30 @@
           "url": "https://cdn.pixabay.com/photo/2024/10/11/17/31/ai-generated-9113582_960_720.jpg",
           "used_at": "2026-08-21T18:44:59Z",
           "job_id": "real-media-pro-2026-08-21-c20-01-06-advertising-sistema",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2016/03/27/19/00/coffee-1283672.jpg",
+          "url": "https://cdn.pixabay.com/photo/2016/03/27/19/00/coffee-1283672_1280.jpg",
+          "used_at": "2026-08-21T22:30:58Z",
+          "job_id": "real-media-pro-2026-08-22-c00-03-03-analisi-gratuita",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2021/10/08/07/19/laptop-6690481.jpg",
+          "url": "https://cdn.pixabay.com/photo/2021/10/08/07/19/laptop-6690481_1280.jpg",
+          "used_at": "2026-08-21T22:31:01Z",
+          "job_id": "real-media-pro-2026-08-22-c00-02-02-crm-followup",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2022/02/06/07/20/laptop-6996433.jpg",
+          "url": "https://cdn.pixabay.com/photo/2022/02/06/07/20/laptop-6996433_1280.jpg",
+          "used_at": "2026-08-21T22:31:39Z",
+          "job_id": "real-media-pro-2026-08-22-c00-01-01-shopify-che-converte",
           "output_type": "static-photo",
           "source_type": "pixabay-fresh-static-photo"
         }
