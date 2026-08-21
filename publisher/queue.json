@@ -1,6 +1,6 @@
 {
-  "version": 7,
-  "updated_by": "Original Shopify-inspired RMP renderer",
+  "version": 8,
+  "updated_by": "Photo-only renderer",
   "jobs": [
     {
       "id": "real-media-pro-2026-08-21-c00-03-02-creative-testing",
@@ -5778,50 +5778,36 @@
       "_presenter": "joseph"
     },
     {
-      "id": "f1-immobiliare-2026-08-21-c04-01-05-g3-cinquecento-metri",
+      "id": "f1-immobiliare-2026-08-21-c04-01-04-g2-tre-prezzi",
       "client_id": "f1-immobiliare",
       "client_name": "F1 Immobiliare",
-      "category": "error",
-      "editorial_role": "error",
+      "category": "data",
+      "editorial_role": "data",
       "campaign": "F1 · Non a sensazione. Con i dati.",
-      "format": "reel",
-      "title": "CASE IN VALLE DI SUSA: QUANTO VALE DAVVERO LA TUA?",
-      "caption": "CASE IN VALLE DI SUSA: QUANTO VALE DAVVERO LA TUA?\n\nSe stai pensando di vendere, il punto di partenza non è l'annuncio: è una valutazione costruita sulla zona precisa, sulle caratteristiche dell'immobile, sullo stato della casa, sugli immobili realmente concorrenti e sulla domanda presente.\n\nF1 Immobiliare analizza il mercato della Valle di Susa e costruisce una strategia di vendita coerente con il tuo immobile.\n\nRichiedi una valutazione gratuita. 371 370 8294 · 371 424 6300\n\n#F1Immobiliare #ValleDiSusa #VendereCasa #ValutazioneImmobiliare #MercatoImmobiliare #CasaInVendita",
+      "format": "photo",
+      "title": "CASE IN VALLE DI SUSA · VALUTAZIONE IMMOBILIARE",
+      "caption": "VUOI VENDERE CASA IN VALLE DI SUSA?\n\nPrima di pubblicare un annuncio, parti da una valutazione immobiliare costruita su dati, caratteristiche reali dell'immobile, microzona e confronto con il mercato.\n\nF1 Immobiliare organizza la vendita partendo dall'analisi, non da un prezzo scelto a sensazione.\n\nRichiedi una valutazione gratuita del tuo immobile.\n371 370 8294 · 371 424 6300\n\n#F1Immobiliare #ValleDiSusa #VendereCasa #ValutazioneImmobiliare #Susa #Bussoleno #Condove #Avigliana #Almese #Rivoli",
       "hashtags": [
         "#F1Immobiliare",
-        "#NonASensazione",
-        "#ConIDati",
-        "#StrategiaImmobiliare",
-        "#PrezzoCasa",
-        "#ProprietariCasa"
+        "#ValleDiSusa",
+        "#Condove",
+        "#Bussoleno",
+        "#VillarDora",
+        "#VendereBene"
       ],
-      "voiceover": "Hai una casa in Valle di Susa e stai pensando di venderla? Prima dell'annuncio serve una valutazione basata su zona, caratteristiche, stato dell'immobile, concorrenza e domanda reale. F1 Immobiliare analizza il mercato e costruisce una strategia di vendita. Richiedi una valutazione gratuita.",
+      "voiceover": "Prezzo desiderato, prezzo pubblicato e prezzo di mercato non sono la stessa cosa. Il primo nasce dalle aspettative, il secondo dalla strategia, il terzo dalla risposta reale degli acquirenti. Il lavoro corretto è farli dialogare prima di pubblicare.",
       "slides": [
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""
+        "TRE PREZZI|NON SONO|LA STESSA COSA",
+        "PREZZO|DESIDERATO",
+        "PREZZO|PUBBLICATO",
+        "PREZZO|SOSTENUTO DAL MERCATO",
+        "CONFONDERLI|COSTA TEMPO",
+        "IL PRICING|NASCE DAI DATI",
+        "F1 IMMOBILIARE|IL PREZZO SI VERIFICA|371 370 8294"
       ],
-      "visuals": [
-        "villa con giardino ai piedi delle montagne della Valle di Susa",
-        "casa in pietra e legno in borgo alpino piemontese",
-        "appartamento con balcone e vista sulle montagne",
-        "villa contemporanea in contesto alpino",
-        "casa indipendente con giardino in valle",
-        "terrazza panoramica di abitazione in montagna",
-        "interno moderno con vista sul verde e montagne",
-        "quartiere residenziale verde in valle alpina",
-        "casa tradizionale piemontese ristrutturata",
-        "villa in pietra al tramonto con panorama alpino"
-      ],
+      "visuals": [],
       "cta": "Scrivi VALUTAZIONE in privato",
-      "media": "publisher/media/generated/f1-immobiliare/2026-08-21/cycle-04/01-21-c04-01-05-g3-cinquecento-metri.mp4",
+      "media": "publisher/media/generated/f1-immobiliare/2026-08-21/cycle-04/01-21-c04-01-04-g2-tre-prezzi.jpg",
       "scheduled_at": "2026-08-21T04:00:00+02:00",
       "territory": "Almese",
       "property_focus": {
@@ -5874,116 +5860,78 @@
         {
           "platform": "youtube",
           "integration_id": "direct-api"
+        },
+        {
+          "platform": "pinterest",
+          "integration_id": "direct-api"
         }
       ],
       "enabled": true,
       "status": "awaiting_approval",
       "published_platforms": [],
       "postiz_results": [],
-      "video_made_with_ai": true,
+      "video_made_with_ai": false,
       "created_by": "open-social-scheduler",
       "blocked_reason": "approval required for 2026-W34",
       "cycle_key": "2026-08-21T04:00",
       "cycle_hour": 4,
       "cycle_index": 1,
       "cycle_position": 1,
-      "production_mode": "6-every-4h",
-      "production_status": "F1 REEL CASE VALLE DI SUSA - 2 SEC PER IMMAGINE",
-      "research_query": "case in Valle di Susa",
-      "phone": "371 370 8294",
-      "secondary_phone": "371 424 6300",
-      "visual_rule": "premium_residential_property_only",
-      "target_reel_seconds": 60,
-      "publish_decision": "manual",
-      "research_mode": "google_suggestions_plus_official_sources",
-      "research_basis": [
-        {
-          "url": "https://www.agenziaentrate.gov.it/portale/web/guest/schede/fabbricatiterreni/omi"
-        },
-        {
-          "url": "https://www.agenziaentrate.gov.it/portale/web/guest/cittadini/acquisto-o-vendita-di-un-immobile"
-        }
-      ],
-      "no_subtitles": true,
-      "visual_count": 10,
-      "content_pillar": "valuation-homes",
-      "visual_mode": "valle-di-susa-homes",
+      "production_mode": "photos-only-6-every-4h",
+      "production_status": "PHOTO READY",
+      "publication_ready": true,
+      "output_type": "static-photo",
+      "no_video": true,
+      "no_audio": true,
+      "no_reel": true,
+      "visual_mode": "valle-di-susa-homes-photo",
       "search_query_override": "case in Valle di Susa",
       "search_queries": [
         "case in Valle di Susa",
-        "ville Valle di Susa",
-        "case montagna Piemonte",
-        "casa con giardino Valle di Susa",
-        "appartamenti Valle di Susa"
+        "casa alpina Piemonte",
+        "villa montagna Piemonte",
+        "casa con giardino montagne Italia",
+        "borgo alpino casa pietra Italia"
       ],
-      "fixed_header_text": "RICHIEDI UNA VALUTAZIONE GRATUITA DEL TUO IMMOBILE",
-      "fixed_contact_text": "371 370 8294  •  371 424 6300",
-      "show_presenter": false,
-      "reel_duration_seconds": 20,
-      "image_change_seconds": 2,
       "visual_asset_urls": [
-        "https://cdn.pixabay.com/photo/2019/08/13/18/09/verzasca-valley-4403925_1280.jpg",
-        "https://cdn.pixabay.com/photo/2021/05/06/13/47/outlook-6233449_1280.jpg",
-        "https://cdn.pixabay.com/photo/2015/11/02/13/02/valle-daosta-1018366_960_720.jpg",
-        "https://cdn.pixabay.com/photo/2017/10/10/16/45/borgo-2837907_1280.jpg",
-        "https://cdn.pixabay.com/photo/2017/10/10/16/45/borgo-2837905_960_720.jpg",
-        "https://cdn.pixabay.com/photo/2023/12/14/20/17/winter-8449605_960_720.jpg",
-        "https://cdn.pixabay.com/photo/2018/03/05/08/48/home-3200267_960_720.jpg",
-        "https://cdn.pixabay.com/photo/2020/12/03/12/57/house-5800444_1280.jpg",
-        "https://cdn.pixabay.com/photo/2021/06/28/15/05/mountains-6371886_1280.jpg",
-        "https://cdn.pixabay.com/photo/2017/11/16/19/29/cottage-2955582_1280.jpg"
+        "https://cdn.pixabay.com/photo/2017/08/25/22/01/italy-2681567_960_720.jpg"
       ],
-      "visual_source": "pixabay_dynamic_query_varied",
-      "visual_uniqueness": "10 unique source images inside this content",
-      "fresh_visual_count": 10,
-      "reused_visual_count": 0,
-      "_presenter": "joseph"
+      "visual_source": "pixabay-fresh-static-photo",
+      "visual_count": 1,
+      "fresh_visual_count": 1,
+      "reused_visual_count": 0
     },
     {
-      "id": "f1-immobiliare-2026-08-21-c04-02-07-g5-domanda-agente",
+      "id": "f1-immobiliare-2026-08-21-c04-02-05-g3-cinquecento-metri",
       "client_id": "f1-immobiliare",
       "client_name": "F1 Immobiliare",
-      "category": "data",
-      "editorial_role": "data",
+      "category": "error",
+      "editorial_role": "error",
       "campaign": "F1 · Non a sensazione. Con i dati.",
-      "format": "reel",
+      "format": "photo",
       "title": "LAVORA CON F1 IMMOBILIARE",
-      "caption": "LAVORA CON F1 IMMOBILIARE\n\nSelezioniamo collaboratori e collaboratrici per la Valle di Susa. Valutiamo sia persone da formare e affiancare, anche senza abilitazione, sia agenti immobiliari già abilitati.\n\nPer chi entra senza abilitazione, il percorso iniziale riguarda presidio della zona, contatto con residenti e proprietari, ricerca immobili, appuntamenti e raccolta delle informazioni e della documentazione iniziale, sempre con affiancamento. Le attività di mediazione e negoziazione riservate dalla normativa sono svolte dai soggetti abilitati.\n\nCerchiamo attitudine ai rapporti umani, costanza, capacità organizzativa e orientamento agli obiettivi.\n\nInvia il curriculum a f1immobiliaresusa@outlook.it\n\n#F1Immobiliare #LavoraConNoi #ValleDiSusa #Immobiliare #RicercaPersonale #AgenteImmobiliare",
+      "caption": "LAVORA CON F1 IMMOBILIARE.\n\nCerchiamo collaboratori e collaboratrici da formare e affiancare, oltre ad agenti immobiliari già abilitati.\n\nPer chi non è ancora abilitato, il percorso iniziale riguarda presidio della zona, contatto con residenti e proprietari, ricerca immobili, appuntamenti e raccolta delle informazioni iniziali, sempre con affiancamento. Le attività riservate alla mediazione e alla negoziazione vengono svolte da professionisti abilitati.\n\nInvia il curriculum a f1immobiliaresusa@outlook.it\n371 370 8294\n\n#F1Immobiliare #LavoraConNoi #Immobiliare #ValleDiSusa #TorinoOvest",
       "hashtags": [
         "#F1Immobiliare",
-        "#ValDiSusa",
-        "#MercatoImmobiliare",
-        "#VenditaImmobiliare",
-        "#Susa",
-        "#PrimaIDati"
+        "#NonASensazione",
+        "#ConIDati",
+        "#StrategiaImmobiliare",
+        "#PrezzoCasa",
+        "#ProprietariCasa"
       ],
-      "voiceover": "F1 Immobiliare cerca collaboratori e collaboratrici per la Valle di Susa, sia persone da formare sia agenti immobiliari già abilitati. Per chi inizia: territorio, contatti, ricerca immobili e appuntamenti, sempre in affiancamento. Se vuoi crescere nel settore immobiliare, invia il curriculum a f1immobiliaresusa chiocciola outlook punto it.",
+      "voiceover": "Due immobili a cinquecento metri di distanza possono avere una risposta di mercato diversa. Servizi, esposizione, rumore, accessibilità e domanda cambiano il posizionamento. La microzona conta.",
       "slides": [
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""
+        "500 METRI|POSSONO|CAMBIARE TUTTO",
+        "SERVIZI",
+        "RUMORE|ESPOSIZIONE",
+        "ACCESSIBILITÀ",
+        "DOMANDA",
+        "NON USARE|MEDIE CIECHE",
+        "F1 IMMOBILIARE|MICROZONA|371 370 8294"
       ],
-      "visuals": [
-        "team immobiliare professionale in ufficio moderno",
-        "professionista immobiliare che parla con un proprietario",
-        "collaboratore immobiliare al lavoro sul territorio",
-        "riunione di formazione di un team immobiliare",
-        "professionista con smartphone e agenda durante attività di zona",
-        "accoglienza cliente in agenzia immobiliare",
-        "visita immobiliare con cliente e professionista",
-        "team misto che pianifica obiettivi commerciali",
-        "professionista immobiliare davanti a una casa residenziale",
-        "colloquio professionale in ufficio immobiliare"
-      ],
+      "visuals": [],
       "cta": "Scrivi VALUTAZIONE in privato",
-      "media": "publisher/media/generated/f1-immobiliare/2026-08-21/cycle-04/02-21-c04-02-07-g5-domanda-agente.mp4",
+      "media": "publisher/media/generated/f1-immobiliare/2026-08-21/cycle-04/02-21-c04-02-05-g3-cinquecento-metri.jpg",
       "scheduled_at": "2026-08-21T04:08:00+02:00",
       "territory": "Almese",
       "property_focus": {
@@ -6036,128 +5984,76 @@
         {
           "platform": "youtube",
           "integration_id": "direct-api"
+        },
+        {
+          "platform": "pinterest",
+          "integration_id": "direct-api"
         }
       ],
       "enabled": true,
       "status": "awaiting_approval",
       "published_platforms": [],
       "postiz_results": [],
-      "video_made_with_ai": true,
+      "video_made_with_ai": false,
       "created_by": "open-social-scheduler",
       "blocked_reason": "approval required for 2026-W34",
       "cycle_key": "2026-08-21T04:00",
       "cycle_hour": 4,
       "cycle_index": 1,
       "cycle_position": 2,
-      "production_mode": "6-every-4h",
-      "production_status": "F1 REEL RICERCA PERSONALE - 2 SEC PER IMMAGINE",
-      "research_query": "lavoro immobiliare Valle di Susa",
-      "phone": "371 370 8294",
-      "secondary_phone": "371 424 6300",
-      "visual_rule": "premium_residential_property_only",
-      "target_reel_seconds": 60,
-      "publish_decision": "manual",
-      "research_mode": "google_suggestions_plus_official_sources",
-      "research_basis": [
-        {
-          "url": "https://www.agenziaentrate.gov.it/portale/web/guest/schede/fabbricatiterreni/omi"
-        },
-        {
-          "url": "https://www.agenziaentrate.gov.it/portale/web/guest/cittadini/acquisto-o-vendita-di-un-immobile"
-        }
-      ],
-      "no_subtitles": true,
-      "visual_count": 10,
-      "content_pillar": "real-estate-recruiting",
-      "visual_mode": "f1-recruiting",
-      "search_query_override": "lavoro immobiliare Valle di Susa",
+      "production_mode": "photos-only-6-every-4h",
+      "production_status": "PHOTO READY",
+      "publication_ready": true,
+      "output_type": "static-photo",
+      "no_video": true,
+      "no_audio": true,
+      "no_reel": true,
+      "visual_mode": "f1-recruiting-photo",
+      "search_query_override": "real estate professional office Italy",
       "search_queries": [
-        "real estate agent team office Italy",
-        "real estate professional meeting client office",
-        "property consultant neighborhood work",
-        "real estate team training office",
-        "real estate agent showing house client"
+        "real estate agent office Italy",
+        "property consultant office professional",
+        "business team real estate meeting"
       ],
-      "fixed_header_text": "LAVORA CON F1 IMMOBILIARE",
-      "fixed_contact_text": "CV: f1immobiliaresusa@outlook.it",
-      "show_presenter": false,
-      "reel_duration_seconds": 20,
-      "image_change_seconds": 2,
-      "recruitment_compliance": "Selezione inclusiva senza requisiti di sesso o eta; candidati con o senza abilitazione. I non abilitati svolgono attivita di supporto, ricerca, territorio e appuntamenti; mediazione e negoziazione riservate ai soggetti abilitati.",
       "visual_asset_urls": [
-        "https://cdn.pixabay.com/photo/2021/05/26/19/40/team-photo-6286140_1280.jpg",
-        "https://cdn.pixabay.com/photo/2025/04/26/09/22/real-estate-9560901_1280.png",
-        "https://cdn.pixabay.com/photo/2018/10/31/14/35/house-3785933_1280.jpg",
-        "https://cdn.pixabay.com/photo/2023/12/29/03/10/ai-generated-8475435_1280.jpg",
-        "https://cdn.pixabay.com/photo/2020/09/22/22/14/houses-5594446_960_720.jpg",
-        "https://cdn.pixabay.com/photo/2018/04/07/03/06/real-estate-3297625_1440_2560.jpg",
-        "https://cdn.pixabay.com/photo/2025/03/02/20/32/houses-9442768_1280.jpg",
-        "https://cdn.pixabay.com/photo/2014/03/25/22/44/house-298212_1280.jpg",
-        "https://cdn.pixabay.com/photo/2021/02/08/06/42/propertyconsultant-5993842_1280.jpg",
-        "https://cdn.pixabay.com/photo/2024/02/19/09/21/ai-generated-8582949_1280.jpg"
+        "https://cdn.pixabay.com/photo/2024/07/03/10/41/real-8869666_1280.jpg"
       ],
-      "visual_source": "pixabay_dynamic_query_varied",
-      "visual_uniqueness": "10 unique source images inside this content",
-      "fresh_visual_count": 10,
-      "reused_visual_count": 0,
-      "_presenter": "francesca"
+      "visual_source": "pixabay-fresh-static-photo",
+      "visual_count": 1,
+      "fresh_visual_count": 1,
+      "reused_visual_count": 0
     },
     {
-      "id": "f1-immobiliare-2026-08-21-c04-03-04-g2-tre-prezzi",
+      "id": "f1-immobiliare-2026-08-21-c04-03-06-g4-quattro-controlli-fermo",
       "client_id": "f1-immobiliare",
       "client_name": "F1 Immobiliare",
-      "category": "data",
-      "editorial_role": "data",
+      "category": "proof",
+      "editorial_role": "proof",
       "campaign": "F1 · Non a sensazione. Con i dati.",
-      "format": "carousel",
-      "title": "IL PREZZO GIUSTO NON SI INVENTA",
-      "caption": "IL PREZZO GIUSTO NON SI INVENTA\n\nUna valutazione credibile nasce dall'incrocio tra dati, immobile e mercato reale. Se stai pensando di vendere casa in Almese, una valutazione seria non nasce da una cifra presa isolatamente. Bisogna leggere la microzona, le caratteristiche reali dell'immobile, ciò che è effettivamente in concorrenza e la domanda presente. I dati pubblici sono utili quando vengono interpretati nel contesto corretto. Per questo il prezzo di uscita deve essere comprensibile, difendibile e coerente con il mercato.\n\nRichiedi una valutazione gratuita del tuo immobile. Joseph 371 370 8294 · Francesca 371 424 6300.\n\n#F1Immobiliare #ValleDiSusa #Almese #VendereCasa #ValutazioneImmobiliare #MercatoImmobiliare #CasaInVendita",
+      "format": "photo",
+      "title": "CASE IN VALLE DI SUSA · VALUTAZIONE IMMOBILIARE",
+      "caption": "VUOI VENDERE CASA IN VALLE DI SUSA?\n\nPrima di pubblicare un annuncio, parti da una valutazione immobiliare costruita su dati, caratteristiche reali dell'immobile, microzona e confronto con il mercato.\n\nF1 Immobiliare organizza la vendita partendo dall'analisi, non da un prezzo scelto a sensazione.\n\nRichiedi una valutazione gratuita del tuo immobile.\n371 370 8294 · 371 424 6300\n\n#F1Immobiliare #ValleDiSusa #VendereCasa #ValutazioneImmobiliare #Susa #Bussoleno #Condove #Avigliana #Almese #Rivoli",
       "hashtags": [
         "#F1Immobiliare",
         "#ValleDiSusa",
-        "#Condove",
-        "#Bussoleno",
-        "#VillarDora",
-        "#VendereBene"
+        "#VendereCasa",
+        "#ValutazioneImmobiliare",
+        "#Avigliana",
+        "#CasaInVendita"
       ],
-      "voiceover": "IL PREZZO GIUSTO NON SI INVENTA Una valutazione credibile nasce dall'incrocio tra dati, immobile e mercato reale. Se stai pensando di vendere casa in Almese, il punto è questo: un numero, da solo, non racconta il valore reale di un immobile. Contano la posizione precisa, lo stato della casa, il piano, la luce, gli spazi esterni, gli immobili davvero concorrenti e la domanda che esiste in quel momento. I dati pubblici servono come riferimento, ma devono essere letti insieme al mercato reale. Il prezzo corretto non è quello che ci piacerebbe ottenere: è quello che permette alla casa di essere posizionata bene, difesa con argomenti concreti e presentata alle persone giuste. Se vuoi capire da dove partire, richiedi una valutazione gratuita con F1 Immobiliare. Joseph 371 370 8294, Francesca 371 424 6300. Prima i dati, poi la strategia, poi la vendita.",
+      "voiceover": "Se un immobile non riceve richieste, controlliamo pricing, presentazione, distribuzione e target prima di intervenire. Scrivi VALUTAZIONE in privato.",
       "slides": [
-        "IL PREZZO GIUSTO NON SI INVENTA",
-        "MICROZONA",
-        "COMPARABILI",
-        "STATO CASA",
-        "PIANO",
-        "ESPOSIZIONE",
-        "SPAZI ESTERNI",
-        "CONCORRENZA",
-        "DOMANDA",
-        "RICHIEDI UNA VALUTAZIONE GRATUITA DEL TUO IMMOBILE"
+        "CASA FERMA?|4 CONTROLLI",
+        "1. PRICING",
+        "2. PRESENTAZIONE",
+        "3. DISTRIBUZIONE",
+        "4. TARGET",
+        "POI|DECIDIAMO",
+        "F1 IMMOBILIARE|DIAGNOSI PRIMA|371 370 8294"
       ],
-      "visuals": [
-        "villa residenziale moderna esterno giorno",
-        "quartiere residenziale italiano curato",
-        "soggiorno luminoso premium",
-        "cucina moderna di qualità",
-        "terrazzo abitabile con vista",
-        "camera matrimoniale elegante",
-        "bagno contemporaneo premium",
-        "facciata e ingresso immobile",
-        "dettaglio architettonico e giardino",
-        "villa residenziale al tramonto"
-      ],
+      "visuals": [],
       "cta": "Scrivi VALUTAZIONE in privato",
-      "media": [
-        "publisher/media/generated/f1-immobiliare/2026-08-21/cycle-04/03-21-c04-03-04-g2-tre-prezzi/slide-01.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-21/cycle-04/03-21-c04-03-04-g2-tre-prezzi/slide-02.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-21/cycle-04/03-21-c04-03-04-g2-tre-prezzi/slide-03.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-21/cycle-04/03-21-c04-03-04-g2-tre-prezzi/slide-04.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-21/cycle-04/03-21-c04-03-04-g2-tre-prezzi/slide-05.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-21/cycle-04/03-21-c04-03-04-g2-tre-prezzi/slide-06.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-21/cycle-04/03-21-c04-03-04-g2-tre-prezzi/slide-07.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-21/cycle-04/03-21-c04-03-04-g2-tre-prezzi/slide-08.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-21/cycle-04/03-21-c04-03-04-g2-tre-prezzi/slide-09.jpg",
-        "publisher/media/generated/f1-immobiliare/2026-08-21/cycle-04/03-21-c04-03-04-g2-tre-prezzi/slide-10.jpg"
-      ],
+      "media": "publisher/media/generated/f1-immobiliare/2026-08-21/cycle-04/03-21-c04-03-06-g4-quattro-controlli-fermo.jpg",
       "scheduled_at": "2026-08-21T04:16:00+02:00",
       "territory": "Almese",
       "property_focus": {
@@ -6200,7 +6096,15 @@
           "integration_id": "direct-api"
         },
         {
+          "platform": "tiktok",
+          "integration_id": "direct-api"
+        },
+        {
           "platform": "linkedin",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "youtube",
           "integration_id": "direct-api"
         },
         {
@@ -6219,87 +6123,62 @@
       "cycle_hour": 4,
       "cycle_index": 1,
       "cycle_position": 3,
-      "production_mode": "6-every-4h",
-      "production_status": "DA CONTROLLARE",
-      "research_query": "Prezzo desiderato, pubblicato e di mercato",
-      "phone": "371 370 8294",
-      "secondary_phone": "371 424 6300",
-      "visual_rule": "premium_residential_property_only",
-      "target_reel_seconds": 60,
-      "publish_decision": "manual",
-      "research_mode": "google_suggestions_plus_official_sources",
-      "research_basis": [
-        {
-          "url": "https://www.agenziaentrate.gov.it/portale/web/guest/schede/fabbricatiterreni/omi"
-        },
-        {
-          "url": "https://www.agenziaentrate.gov.it/portale/web/guest/cittadini/acquisto-o-vendita-di-un-immobile"
-        }
+      "production_mode": "photos-only-6-every-4h",
+      "production_status": "PHOTO READY",
+      "publication_ready": true,
+      "output_type": "static-photo",
+      "no_video": true,
+      "no_audio": true,
+      "no_reel": true,
+      "visual_mode": "valle-di-susa-homes-photo",
+      "search_query_override": "case in Valle di Susa",
+      "search_queries": [
+        "case in Valle di Susa",
+        "casa alpina Piemonte",
+        "villa montagna Piemonte",
+        "casa con giardino montagne Italia",
+        "borgo alpino casa pietra Italia"
       ],
-      "no_subtitles": true,
-      "visual_count": 10,
       "visual_asset_urls": [
-        "https://cdn.pixabay.com/photo/2023/09/25/15/06/living-room-8275326_1280.jpg",
-        "https://cdn.pixabay.com/photo/2023/09/18/12/01/living-room-8260397_1280.jpg",
-        "https://cdn.pixabay.com/photo/2023/09/18/11/54/living-room-8260338_1280.jpg",
-        "https://cdn.pixabay.com/photo/2019/09/27/11/36/lounge-4508291_1280.jpg",
-        "https://cdn.pixabay.com/photo/2020/02/20/23/02/living-room-4866159_960_720.jpg",
-        "https://cdn.pixabay.com/photo/2023/12/31/15/27/living-room-8480192_1280.jpg",
-        "https://cdn.pixabay.com/photo/2023/09/25/15/06/living-room-8275327_1280.jpg",
-        "https://cdn.pixabay.com/photo/2023/09/18/11/54/living-room-8260337_1280.jpg",
-        "https://cdn.pixabay.com/photo/2023/12/11/06/21/living-room-8442895_960_720.jpg",
-        "https://cdn.pixabay.com/photo/2023/09/18/12/02/living-room-8260413_960_720.jpg"
+        "https://cdn.pixabay.com/photo/2017/07/25/00/37/house-2536552_1280.jpg"
       ],
-      "visual_source": "pixabay_dynamic_query_varied",
-      "visual_uniqueness": "10 unique source images inside this content",
-      "fresh_visual_count": 10,
+      "visual_source": "pixabay-fresh-static-photo",
+      "visual_count": 1,
+      "fresh_visual_count": 1,
       "reused_visual_count": 0
     },
     {
-      "id": "real-media-pro-2026-08-21-c04-01-05-shopify-product-page",
+      "id": "real-media-pro-2026-08-21-c04-01-04-google-ads-intento",
       "client_id": "real-media-pro",
       "client_name": "Real Media Pro",
-      "category": "nurture",
-      "editorial_role": "nurture",
+      "category": "attract",
+      "editorial_role": "attract",
       "campaign": "Real Media Pro · Dalla visibilità alla crescita",
-      "format": "reel",
-      "title": "IL TUO SITO PORTA CLIENTI?",
-      "caption": "IL TUO SITO PORTA CLIENTI O È SOLO BELLO DA VEDERE?\n\nUn e-commerce efficace deve essere chiaro, veloce da smartphone e costruito per accompagnare la persona dalla scoperta del prodotto fino al contatto o all'acquisto. Design, pagine prodotto, fiducia, checkout e misurazione devono lavorare insieme.\n\nReal Media Pro progetta siti ed e-commerce con una logica commerciale, non semplicemente grafica.\n\nRichiedi un'analisi strategica: 371 370 8294\n\n#RealMediaPro #Shopify #Ecommerce #SitiWeb #DigitalMarketing #MarketingDigitale #AziendeLocali",
+      "format": "photo",
+      "title": "SITO CHE VENDE",
+      "caption": "IL TUO SITO AIUTA DAVVERO A VENDERE?\n\nUn sito efficace non è solo bello: deve rendere chiara l'offerta, guidare la persona e facilitare il contatto o l'acquisto. Real Media Pro analizza presenza digitale, sito, social e percorso commerciale per individuare cosa migliorare.\n\nRichiedi un'analisi strategica gratuita.\n371 370 8294\n\n#RealMediaPro #SitiWeb #Ecommerce #Shopify #DigitalMarketing #Torino #ValleDiSusa",
       "hashtags": [
         "#RealMediaPro",
-        "#SitiShopify",
-        "#DigitalMarketing",
-        "#LeadGeneration",
-        "#Rivoli",
-        "#Avigliana"
+        "#ShopifyItalia",
+        "#ConversionRate",
+        "#EcommerceItalia",
+        "#WebDesign",
+        "#ValleDiSusa"
       ],
-      "voiceover": "Il tuo sito porta clienti o è solo bello da vedere? Un e-commerce efficace deve essere chiaro, veloce da smartphone e semplice da usare. Pagina prodotto, fiducia, checkout e percorso d'acquisto devono lavorare insieme. Real Media Pro costruisce siti ed e-commerce con una logica commerciale.",
+      "voiceover": "Google Ads funziona quando keyword, feed, annuncio e pagina di destinazione rispondono allo stesso intento. Richiedi un'analisi strategica gratuita.",
       "slides": [
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""
+        "CHI CERCA È GIÀ PIÙ VICINO",
+        "MA DEVI ESSERCI",
+        "SEARCH",
+        "SHOPPING",
+        "PERFORMANCE MAX",
+        "FEED PRODOTTI",
+        "LANDING COERENTE",
+        "RICHIEDI ANALISI"
       ],
-      "visuals": [
-        "imprenditore con laptop in ufficio moderno",
-        "smartphone con interfaccia social professionale",
-        "sito ecommerce premium su laptop",
-        "pagina prodotto pulita da smartphone",
-        "dashboard marketing e analytics realistica",
-        "team digitale al lavoro",
-        "checkout ecommerce semplice",
-        "analisi dati business su schermo",
-        "imprenditore che controlla risultati",
-        "workspace digitale premium con laptop e smartphone"
-      ],
+      "visuals": [],
       "cta": "Richiedi un'analisi strategica gratuita",
-      "media": "publisher/media/generated/real-media-pro/2026-08-21/cycle-04/01-08-21-c04-01-05-shopify-product-page.mp4",
+      "media": "publisher/media/generated/real-media-pro/2026-08-21/cycle-04/01-08-21-c04-01-04-google-ads-intento.jpg",
       "scheduled_at": "2026-08-21T04:30:00+02:00",
       "territory": "Rivoli",
       "property_focus": {},
@@ -6324,132 +6203,80 @@
         {
           "platform": "youtube",
           "integration_id": "direct-api"
+        },
+        {
+          "platform": "pinterest",
+          "integration_id": "direct-api"
         }
       ],
       "enabled": true,
       "status": "awaiting_approval",
       "published_platforms": [],
       "postiz_results": [],
-      "video_made_with_ai": true,
+      "video_made_with_ai": false,
       "created_by": "open-social-scheduler",
       "blocked_reason": "approval required for 2026-W34",
       "cycle_key": "2026-08-21T04:00",
       "cycle_hour": 4,
       "cycle_index": 1,
       "cycle_position": 1,
-      "production_mode": "6-every-4h",
-      "production_status": "RMP SHOPIFY-INSPIRED ORIGINAL REEL - 2 SEC PER IMMAGINE",
-      "research_query": "Shopify Theme Store ecommerce design conversion",
-      "phone": "371 370 8294",
-      "visual_rule": "pixabay_canva_business_ecommerce_only",
-      "target_reel_seconds": 60,
-      "publish_decision": "manual",
-      "research_mode": "google_suggestions_plus_official_sources",
-      "research_basis": [
-        {
-          "url": "https://www.facebook.com/business/ads/facebook-instagram-reels-ads"
-        },
-        {
-          "url": "https://www.facebook.com/business/ads/ad-creative"
-        },
-        {
-          "url": "https://www.shopify.com/it/blog/topics/content-marketing"
-        },
-        {
-          "url": "https://www.shopify.com/blog/topics/conversion"
-        }
-      ],
-      "no_subtitles": true,
-      "visual_count": 10,
-      "visual_mode": "shopify-theme-inspired-original",
-      "design_reference_url": "https://themes.shopify.com/?locale=it",
-      "design_reference_rule": "Use Shopify Theme Store only for high-level layout inspiration. Create original visuals; never copy theme screenshots or branding.",
-      "source_mode": "original-ecommerce-layout-from-licensed-product-photography",
-      "images_per_reel": 10,
-      "reel_duration_seconds": 20,
-      "image_change_seconds": 2,
-      "fixed_header_text": "REAL MEDIA PRO",
-      "fixed_contact_text": "SITI • ECOMMERCE • SHOPIFY  |  371 370 8294",
-      "show_presenter": false,
-      "search_queries": [
-        "fashion product minimal ecommerce",
-        "skincare cosmetics product minimal",
-        "jewelry accessories product minimal",
-        "home decor furniture minimal product",
-        "stationery notebook product minimal",
-        "tech accessories product minimal",
-        "gourmet food product minimal",
-        "wellness beauty product minimal",
-        "creator digital tools workspace minimal",
-        "home living lifestyle product minimal"
-      ],
-      "content_pillar": "website-conversion",
-      "visual_asset_urls": [
-        "https://cdn.pixabay.com/photo/2025/03/12/09/53/fashion-9464657_1280.jpg",
-        "https://cdn.pixabay.com/photo/2020/04/02/05/19/beauty-4993472_1280.jpg",
-        "https://cdn.pixabay.com/photo/2020/04/02/05/19/beauty-4993471_1280.jpg",
-        "https://cdn.pixabay.com/photo/2024/08/13/17/59/skincare-8966709_1280.jpg",
-        "https://cdn.pixabay.com/photo/2024/08/13/17/59/skincare-8966708_1280.jpg",
-        "https://cdn.pixabay.com/photo/2024/10/17/08/54/skincare-9126914_1280.jpg",
-        "https://cdn.pixabay.com/photo/2024/01/04/13/48/cosmetics-8487528_1280.jpg",
-        "https://cdn.pixabay.com/photo/2023/06/30/08/07/ai-generated-8097867_1280.jpg",
-        "https://cdn.pixabay.com/photo/2024/04/24/05/08/skin-8716656_960_720.jpg",
-        "https://cdn.pixabay.com/photo/2023/02/23/08/34/cosmetics-7808189_960_720.jpg"
-      ],
-      "visual_source": "original_shopify_theme_store_inspired_composition_from_licensed_photos",
-      "visual_uniqueness": "10 unique source images inside this content",
-      "fresh_visual_count": 10,
-      "reused_visual_count": 0,
-      "_presenter": "",
-      "copyright_policy": "original composition; no copied Shopify theme screenshots",
+      "production_mode": "photos-only-6-every-4h",
+      "production_status": "PHOTO READY",
       "publication_ready": true,
-      "caption_ready": true
+      "output_type": "static-photo",
+      "no_video": true,
+      "no_audio": true,
+      "no_reel": true,
+      "visual_mode": "rmp-ecommerce-photo",
+      "design_reference_url": "https://themes.shopify.com/?locale=it",
+      "design_reference_rule": "inspired by modern ecommerce presentation only; never copy a Shopify theme",
+      "search_query_override": "ecommerce website laptop premium workspace",
+      "search_queries": [
+        "ecommerce website laptop premium workspace",
+        "online shop smartphone laptop business",
+        "digital marketing ecommerce workspace",
+        "product photography ecommerce desk"
+      ],
+      "visual_asset_urls": [
+        "https://cdn.pixabay.com/photo/2017/06/26/12/56/laptop-2443735_1280.jpg"
+      ],
+      "visual_source": "pixabay-fresh-static-photo",
+      "visual_count": 1,
+      "fresh_visual_count": 1,
+      "reused_visual_count": 0
     },
     {
-      "id": "real-media-pro-2026-08-21-c04-02-07-shopify-che-converte",
+      "id": "real-media-pro-2026-08-21-c04-02-05-shopify-product-page",
       "client_id": "real-media-pro",
       "client_name": "Real Media Pro",
-      "category": "attract",
-      "editorial_role": "attract",
+      "category": "nurture",
+      "editorial_role": "nurture",
       "campaign": "Real Media Pro · Dalla visibilità alla crescita",
-      "format": "reel",
-      "title": "SHOPIFY È GIUSTO PER LA TUA ATTIVITÀ?",
-      "caption": "SHOPIFY È GIUSTO PER LA TUA ATTIVITÀ?\n\nLa piattaforma è solo una parte del risultato. Prima servono una proposta chiara, un catalogo ben organizzato, pagine prodotto credibili, un'esperienza mobile semplice e un percorso di acquisto senza attriti. Poi si collegano traffico, social e misurazione.\n\nReal Media Pro costruisce il sistema digitale intorno agli obiettivi reali dell'azienda.\n\nRichiedi un'analisi strategica: 371 370 8294\n\n#RealMediaPro #Shopify #Ecommerce #SitiWeb #SocialMediaManager #DigitalMarketing #Torino #ValleDiSusa",
+      "format": "photo",
+      "title": "ECOMMERCE CHE CONVERTE",
+      "caption": "ECOMMERCE: DESIGN E CONVERSIONE DEVONO LAVORARE INSIEME.\n\nUna vetrina digitale moderna deve essere leggibile da smartphone, veloce e costruita per accompagnare il cliente dal prodotto al checkout. Real Media Pro progetta strategie digitali orientate a contatti e vendite.\n\nRichiedi un'analisi strategica gratuita.\n371 370 8294\n\n#RealMediaPro #Ecommerce #Shopify #SitiWeb #MarketingDigitale #AziendeLocali",
       "hashtags": [
         "#RealMediaPro",
-        "#ShopifyItalia",
-        "#ConversionRate",
-        "#EcommerceItalia",
-        "#WebDesign",
-        "#ValleDiSusa"
+        "#SitiShopify",
+        "#DigitalMarketing",
+        "#LeadGeneration",
+        "#Rivoli",
+        "#Avigliana"
       ],
-      "voiceover": "Shopify è giusto per la tua attività? La piattaforma da sola non basta. Servono catalogo chiaro, pagine prodotto credibili, esperienza mobile semplice, checkout senza attriti e una strategia per portare traffico qualificato. Real Media Pro costruisce il sistema digitale intorno agli obiettivi dell'azienda.",
+      "voiceover": "Una product page efficace riduce l'incertezza: beneficio chiaro, prove, FAQ, condizioni e CTA visibile, soprattutto da mobile. Richiedi un'analisi strategica gratuita.",
       "slides": [
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""
+        "UNA PAGINA PRODOTTO DEVE VENDERE",
+        "PROBLEMA",
+        "BENEFICIO",
+        "DIMOSTRAZIONE",
+        "RECENSIONI",
+        "FAQ",
+        "SPEDIZIONE / RESO",
+        "CTA"
       ],
-      "visuals": [
-        "imprenditore con laptop in ufficio moderno",
-        "smartphone con interfaccia social professionale",
-        "sito ecommerce premium su laptop",
-        "pagina prodotto pulita da smartphone",
-        "dashboard marketing e analytics realistica",
-        "team digitale al lavoro",
-        "checkout ecommerce semplice",
-        "analisi dati business su schermo",
-        "imprenditore che controlla risultati",
-        "workspace digitale premium con laptop e smartphone"
-      ],
+      "visuals": [],
       "cta": "Richiedi un'analisi strategica gratuita",
-      "media": "publisher/media/generated/real-media-pro/2026-08-21/cycle-04/02-08-21-c04-02-07-shopify-che-converte.mp4",
+      "media": "publisher/media/generated/real-media-pro/2026-08-21/cycle-04/02-08-21-c04-02-05-shopify-product-page.jpg",
       "scheduled_at": "2026-08-21T04:38:00+02:00",
       "territory": "Rivoli",
       "property_focus": {},
@@ -6474,143 +6301,80 @@
         {
           "platform": "youtube",
           "integration_id": "direct-api"
+        },
+        {
+          "platform": "pinterest",
+          "integration_id": "direct-api"
         }
       ],
       "enabled": true,
       "status": "awaiting_approval",
       "published_platforms": [],
       "postiz_results": [],
-      "video_made_with_ai": true,
+      "video_made_with_ai": false,
       "created_by": "open-social-scheduler",
       "blocked_reason": "approval required for 2026-W34",
       "cycle_key": "2026-08-21T04:00",
       "cycle_hour": 4,
       "cycle_index": 1,
       "cycle_position": 2,
-      "production_mode": "6-every-4h",
-      "production_status": "RMP SHOPIFY-INSPIRED ORIGINAL REEL - 2 SEC PER IMMAGINE",
-      "research_query": "Shopify ecommerce business mobile product checkout",
-      "phone": "371 370 8294",
-      "visual_rule": "pixabay_canva_business_ecommerce_only",
-      "target_reel_seconds": 60,
-      "publish_decision": "manual",
-      "research_mode": "google_suggestions_plus_official_sources",
-      "research_basis": [
-        {
-          "url": "https://www.facebook.com/business/ads/facebook-instagram-reels-ads"
-        },
-        {
-          "url": "https://www.facebook.com/business/ads/ad-creative"
-        },
-        {
-          "url": "https://www.shopify.com/it/blog/topics/content-marketing"
-        },
-        {
-          "url": "https://www.shopify.com/blog/topics/conversion"
-        }
-      ],
-      "no_subtitles": true,
-      "visual_count": 10,
-      "visual_mode": "shopify-theme-inspired-original",
-      "design_reference_url": "https://themes.shopify.com/?locale=it",
-      "design_reference_rule": "Use Shopify Theme Store only for high-level layout inspiration. Create original visuals; never copy theme screenshots or branding.",
-      "source_mode": "original-ecommerce-layout-from-licensed-product-photography",
-      "images_per_reel": 10,
-      "reel_duration_seconds": 20,
-      "image_change_seconds": 2,
-      "fixed_header_text": "REAL MEDIA PRO",
-      "fixed_contact_text": "SITI • ECOMMERCE • SHOPIFY  |  371 370 8294",
-      "show_presenter": false,
-      "search_queries": [
-        "fashion product minimal ecommerce",
-        "skincare cosmetics product minimal",
-        "jewelry accessories product minimal",
-        "home decor furniture minimal product",
-        "stationery notebook product minimal",
-        "tech accessories product minimal",
-        "gourmet food product minimal",
-        "wellness beauty product minimal",
-        "creator digital tools workspace minimal",
-        "home living lifestyle product minimal"
-      ],
-      "content_pillar": "shopify-ecommerce",
-      "visual_asset_urls": [
-        "https://cdn.pixabay.com/photo/2021/02/26/11/51/cosmetics-6051633_1280.jpg",
-        "https://cdn.pixabay.com/photo/2020/08/09/15/58/cosmetics-5475900_1280.jpg",
-        "https://cdn.pixabay.com/photo/2024/05/29/22/17/beauty-8797331_1280.jpg",
-        "https://cdn.pixabay.com/photo/2020/04/02/05/19/beauty-4993470_1280.jpg",
-        "https://cdn.pixabay.com/photo/2021/11/12/17/55/makeup-6789714_1280.jpg",
-        "https://cdn.pixabay.com/video/2025/09/03/301407_tiny.jpg",
-        "https://cdn.pixabay.com/photo/2017/05/30/19/42/cosmetic-2357981_1280.jpg",
-        "https://cdn.pixabay.com/photo/2020/04/02/05/19/beauty-4993469_1280.jpg",
-        "https://cdn.pixabay.com/video/2025/09/03/301425_tiny.jpg",
-        "https://cdn.pixabay.com/photo/2024/03/11/14/36/ai-generated-8626818_1280.png"
-      ],
-      "visual_source": "original_shopify_theme_store_inspired_composition_from_licensed_photos",
-      "visual_uniqueness": "10 unique source images inside this content",
-      "fresh_visual_count": 10,
-      "reused_visual_count": 0,
-      "_presenter": "",
-      "copyright_policy": "original composition; no copied Shopify theme screenshots",
+      "production_mode": "photos-only-6-every-4h",
+      "production_status": "PHOTO READY",
       "publication_ready": true,
-      "caption_ready": true
+      "output_type": "static-photo",
+      "no_video": true,
+      "no_audio": true,
+      "no_reel": true,
+      "visual_mode": "rmp-ecommerce-photo",
+      "design_reference_url": "https://themes.shopify.com/?locale=it",
+      "design_reference_rule": "inspired by modern ecommerce presentation only; never copy a Shopify theme",
+      "search_query_override": "online store product page laptop smartphone",
+      "search_queries": [
+        "ecommerce website laptop premium workspace",
+        "online shop smartphone laptop business",
+        "digital marketing ecommerce workspace",
+        "product photography ecommerce desk"
+      ],
+      "visual_asset_urls": [
+        "https://cdn.pixabay.com/photo/2020/08/26/14/29/laptop-5519651_960_720.jpg"
+      ],
+      "visual_source": "pixabay-fresh-static-photo",
+      "visual_count": 1,
+      "fresh_visual_count": 1,
+      "reused_visual_count": 0
     },
     {
-      "id": "real-media-pro-2026-08-21-c04-03-04-google-ads-intento",
+      "id": "real-media-pro-2026-08-21-c04-03-06-advertising-sistema",
       "client_id": "real-media-pro",
       "client_name": "Real Media Pro",
-      "category": "attract",
-      "editorial_role": "attract",
+      "category": "convert",
+      "editorial_role": "convert",
       "campaign": "Real Media Pro · Dalla visibilità alla crescita",
-      "format": "carousel",
-      "title": "PERCHÉ I SOCIAL FANNO CRESCERE UN'AZIENDA?",
-      "caption": "PERCHÉ I SOCIAL FANNO CRESCERE UN'AZIENDA?\n\nPerché possono creare attenzione, fiducia e domanda, se collegati a un percorso misurabile. Un'azienda cresce online quando contenuti, social, sito e processo commerciale lavorano insieme. La metrica importante non è soltanto quante persone vedono un post, ma quante capiscono l'offerta, si fidano, visitano il sito, lasciano un contatto o acquistano. Per questo ogni contenuto deve avere una funzione nel percorso del cliente e ogni risultato deve poter essere misurato.\n\nRichiedi un'analisi strategica gratuita. Real Media Pro · 371 370 8294.\n\n#RealMediaPro #DigitalMarketing #SocialMediaMarketing #Ecommerce #SitiWeb #LeadGeneration #Rivoli",
+      "format": "photo",
+      "title": "SOCIAL + SITO + VENDITE",
+      "caption": "SOCIAL, SITO E VENDITE: UN UNICO PERCORSO.\n\nI social attirano attenzione. Il sito deve trasformarla in interesse, richiesta o acquisto. Se i due sistemi sono scollegati, si perdono opportunità. Real Media Pro costruisce un percorso digitale misurabile.\n\nRichiedi un'analisi strategica gratuita.\n371 370 8294\n\n#RealMediaPro #SocialMediaMarketing #Ecommerce #SitiWeb #LeadGeneration #Torino",
       "hashtags": [
         "#RealMediaPro",
-        "#ShopifyItalia",
-        "#ConversionRate",
-        "#EcommerceItalia",
-        "#WebDesign",
-        "#ValleDiSusa"
+        "#Shopify",
+        "#Ecommerce",
+        "#SitiWeb",
+        "#Torino",
+        "#MarketingDigitale"
       ],
-      "voiceover": "PERCHÉ I SOCIAL FANNO CRESCERE UN'AZIENDA? Perché possono creare attenzione, fiducia e domanda, se collegati a un percorso misurabile. Il punto non è pubblicare di più. È costruire un percorso in cui ogni contenuto abbia una funzione. Prima attiri l'attenzione della persona giusta. Poi fai capire il problema e la tua proposta. Costruisci fiducia con esempi, prove e chiarezza. Porti il traffico verso un sito o una pagina che funziona bene da smartphone e rende semplice fare il passo successivo. Infine misuri contatti, richieste e vendite, così capisci cosa migliorare. Quando social, sito e processo commerciale sono scollegati, arrivano numeri ma pochi risultati. Quando lavorano insieme, il digitale diventa una leva concreta di crescita. Se vuoi capire cosa migliorare nella tua azienda, richiedi un'analisi strategica gratuita a Real Media Pro al 371 370 8294.",
+      "voiceover": "La pubblicità funziona meglio quando Meta, Google, landing page, CRM e misurazione sono progettati come un unico sistema. Richiedi un'analisi strategica gratuita.",
       "slides": [
-        "PERCHÉ I SOCIAL FANNO CRESCERE UN'AZIENDA?",
-        "VISIBILITÀ",
-        "TARGET",
-        "FIDUCIA",
-        "CONTENUTI",
-        "TRAFFICO",
-        "LEAD",
-        "VENDITE",
-        "MISURAZIONE",
-        "RICHIEDI UN'ANALISI STRATEGICA GRATUITA"
+        "ADV SENZA LANDING?",
+        "RISCHI DI PAGARE TRAFFICO",
+        "META CREA DOMANDA",
+        "GOOGLE INTERCETTA INTENTO",
+        "LANDING CONVERTE",
+        "CRM SEGUE",
+        "DATI OTTIMIZZANO",
+        "RICHIEDI ANALISI"
       ],
-      "visuals": [
-        "imprenditore con laptop in ufficio moderno",
-        "smartphone con interfaccia social professionale",
-        "sito ecommerce premium su laptop",
-        "pagina prodotto pulita da smartphone",
-        "dashboard marketing e analytics realistica",
-        "team digitale al lavoro",
-        "checkout ecommerce semplice",
-        "analisi dati business su schermo",
-        "imprenditore che controlla risultati",
-        "workspace digitale premium con laptop e smartphone"
-      ],
+      "visuals": [],
       "cta": "Richiedi un'analisi strategica gratuita",
-      "media": [
-        "publisher/media/generated/real-media-pro/2026-08-21/cycle-04/03-08-21-c04-03-04-google-ads-intento/slide-01.jpg",
-        "publisher/media/generated/real-media-pro/2026-08-21/cycle-04/03-08-21-c04-03-04-google-ads-intento/slide-02.jpg",
-        "publisher/media/generated/real-media-pro/2026-08-21/cycle-04/03-08-21-c04-03-04-google-ads-intento/slide-03.jpg",
-        "publisher/media/generated/real-media-pro/2026-08-21/cycle-04/03-08-21-c04-03-04-google-ads-intento/slide-04.jpg",
-        "publisher/media/generated/real-media-pro/2026-08-21/cycle-04/03-08-21-c04-03-04-google-ads-intento/slide-05.jpg",
-        "publisher/media/generated/real-media-pro/2026-08-21/cycle-04/03-08-21-c04-03-04-google-ads-intento/slide-06.jpg",
-        "publisher/media/generated/real-media-pro/2026-08-21/cycle-04/03-08-21-c04-03-04-google-ads-intento/slide-07.jpg",
-        "publisher/media/generated/real-media-pro/2026-08-21/cycle-04/03-08-21-c04-03-04-google-ads-intento/slide-08.jpg",
-        "publisher/media/generated/real-media-pro/2026-08-21/cycle-04/03-08-21-c04-03-04-google-ads-intento/slide-09.jpg",
-        "publisher/media/generated/real-media-pro/2026-08-21/cycle-04/03-08-21-c04-03-04-google-ads-intento/slide-10.jpg"
-      ],
+      "media": "publisher/media/generated/real-media-pro/2026-08-21/cycle-04/03-08-21-c04-03-06-advertising-sistema.jpg",
       "scheduled_at": "2026-08-21T04:46:00+02:00",
       "territory": "Rivoli",
       "property_focus": {},
@@ -6625,7 +6389,15 @@
           "integration_id": "direct-api"
         },
         {
+          "platform": "tiktok",
+          "integration_id": "direct-api"
+        },
+        {
           "platform": "linkedin",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "youtube",
           "integration_id": "direct-api"
         },
         {
@@ -6644,49 +6416,33 @@
       "cycle_hour": 4,
       "cycle_index": 1,
       "cycle_position": 3,
-      "production_mode": "6-every-4h",
-      "production_status": "DA CONTROLLARE",
-      "research_query": "Google Ads intercetta domanda già attiva",
-      "phone": "371 370 8294",
-      "visual_rule": "pixabay_canva_business_ecommerce_only",
-      "target_reel_seconds": 60,
-      "publish_decision": "manual",
-      "research_mode": "google_suggestions_plus_official_sources",
-      "research_basis": [
-        {
-          "url": "https://www.facebook.com/business/ads/facebook-instagram-reels-ads"
-        },
-        {
-          "url": "https://www.facebook.com/business/ads/ad-creative"
-        },
-        {
-          "url": "https://www.shopify.com/it/blog/topics/content-marketing"
-        },
-        {
-          "url": "https://www.shopify.com/blog/topics/conversion"
-        }
+      "production_mode": "photos-only-6-every-4h",
+      "production_status": "PHOTO READY",
+      "publication_ready": true,
+      "output_type": "static-photo",
+      "no_video": true,
+      "no_audio": true,
+      "no_reel": true,
+      "visual_mode": "rmp-ecommerce-photo",
+      "design_reference_url": "https://themes.shopify.com/?locale=it",
+      "design_reference_rule": "inspired by modern ecommerce presentation only; never copy a Shopify theme",
+      "search_query_override": "digital business ecommerce analytics workspace",
+      "search_queries": [
+        "ecommerce website laptop premium workspace",
+        "online shop smartphone laptop business",
+        "digital marketing ecommerce workspace",
+        "product photography ecommerce desk"
       ],
-      "no_subtitles": true,
-      "visual_count": 10,
       "visual_asset_urls": [
-        "https://cdn.pixabay.com/photo/2022/08/23/17/09/spinning-tops-7406132_960_720.png",
-        "https://cdn.pixabay.com/photo/2017/01/19/13/22/ecommerce-1992280_1280.png",
-        "https://cdn.pixabay.com/photo/2017/12/03/19/19/smartphone-2995676_1280.png",
-        "https://cdn.pixabay.com/photo/2022/10/04/04/41/online-7497335_1280.jpg",
-        "https://cdn.pixabay.com/photo/2016/06/03/13/57/digital-marketing-1433427_1280.jpg",
-        "https://cdn.pixabay.com/photo/2026/03/15/02/14/cyberco-digital-marketing-10174516_640.png",
-        "https://cdn.pixabay.com/photo/2021/11/07/04/16/seo-6774808_1280.png",
-        "https://cdn.pixabay.com/photo/2015/07/17/22/42/startup-849804_1280.jpg",
-        "https://cdn.pixabay.com/photo/2024/04/25/11/04/laptop-8719563_1280.jpg",
-        "https://cdn.pixabay.com/photo/2026/03/07/11/42/cyberco-web-designer-10160858_960_720.png"
+        "https://cdn.pixabay.com/photo/2016/11/19/21/01/analysis-1841158_1280.jpg"
       ],
-      "visual_source": "pixabay_dynamic_query_varied",
-      "visual_uniqueness": "10 unique source images inside this content",
-      "fresh_visual_count": 10,
+      "visual_source": "pixabay-fresh-static-photo",
+      "visual_count": 1,
+      "fresh_visual_count": 1,
       "reused_visual_count": 0
     }
   ],
-  "updated_at": "2026-08-21T05:18:20+00:00",
+  "updated_at": "2026-08-21T05:40:12+00:00",
   "current_cycle": "2026-08-21T04:00",
   "visual_policy": "10 different images per content; F1 priority reels change image every 2 seconds; prefer unseen history",
   "f1_reel_policy": {
@@ -6706,5 +6462,13 @@
     "image_change_seconds": 2,
     "duration_seconds": 20,
     "captions_ready_for_publication": true
+  },
+  "output_policy": "STATIC PHOTOS ONLY - JPG/PNG - NO REELS - NO MP4",
+  "photo_policy": {
+    "contents_per_cycle": 6,
+    "f1": "2 Valle di Susa property/valuation photos + 1 recruiting photo",
+    "real_media_pro": "3 static ecommerce/business photos",
+    "video": false,
+    "audio": false
   }
 }
