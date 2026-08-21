@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-08-21T14:45:29Z",
+  "updated_at": "2026-08-21T18:45:06Z",
   "brands": {
     "f1-immobiliare": {
       "recent": [
@@ -2458,6 +2458,30 @@
           "url": "https://cdn.pixabay.com/photo/2025/08/15/06/29/mountain-cabin-9776289_1280.jpg",
           "used_at": "2026-08-21T14:45:29Z",
           "job_id": "f1-immobiliare-2026-08-21-c16-01-03-g1-tre-agenzie",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2019/11/06/21/30/house-4607188.jpg",
+          "url": "https://cdn.pixabay.com/photo/2019/11/06/21/30/house-4607188_1280.jpg",
+          "used_at": "2026-08-21T18:45:01Z",
+          "job_id": "f1-immobiliare-2026-08-21-c20-03-08-g6-prezzo-da-soli",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2024/02/22/11/47/real-estate-8589913_960_720.jpg",
+          "url": "https://cdn.pixabay.com/photo/2024/02/22/11/47/real-estate-8589913_960_720.jpg",
+          "used_at": "2026-08-21T18:45:03Z",
+          "job_id": "f1-immobiliare-2026-08-21-c20-02-07-g5-domanda-agente",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2022/05/28/20/19/house-7227928_960_720.jpg",
+          "url": "https://cdn.pixabay.com/photo/2022/05/28/20/19/house-7227928_960_720.jpg",
+          "used_at": "2026-08-21T18:45:06Z",
+          "job_id": "f1-immobiliare-2026-08-21-c20-01-06-g4-quattro-controlli-fermo",
           "output_type": "static-photo",
           "source_type": "pixabay-fresh-static-photo"
         }
@@ -4919,6 +4943,30 @@
           "url": "https://cdn.pixabay.com/photo/2021/08/07/10/38/laptop-6528298_960_720.jpg",
           "used_at": "2026-08-21T14:43:24Z",
           "job_id": "real-media-pro-2026-08-21-c16-01-03-seo-servizio",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2025/02/03/19/42/business-9380070.png",
+          "url": "https://cdn.pixabay.com/photo/2025/02/03/19/42/business-9380070_1280.png",
+          "used_at": "2026-08-21T18:44:06Z",
+          "job_id": "real-media-pro-2026-08-21-c20-03-08-audit-digitale",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2018/02/24/21/40/smartphone-3179295.jpg",
+          "url": "https://cdn.pixabay.com/photo/2018/02/24/21/40/smartphone-3179295_1280.jpg",
+          "used_at": "2026-08-21T18:44:08Z",
+          "job_id": "real-media-pro-2026-08-21-c20-02-07-shopify-che-converte",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2024/10/11/17/31/ai-generated-9113582_960_720.jpg",
+          "url": "https://cdn.pixabay.com/photo/2024/10/11/17/31/ai-generated-9113582_960_720.jpg",
+          "used_at": "2026-08-21T18:44:59Z",
+          "job_id": "real-media-pro-2026-08-21-c20-01-06-advertising-sistema",
           "output_type": "static-photo",
           "source_type": "pixabay-fresh-static-photo"
         }
