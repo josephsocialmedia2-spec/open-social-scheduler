@@ -6686,7 +6686,7 @@
       "reused_visual_count": 0
     }
   ],
-  "updated_at": "2026-08-21T05:08:46+00:00",
+  "updated_at": "2026-08-21T05:18:20+00:00",
   "current_cycle": "2026-08-21T04:00",
   "visual_policy": "10 different images per content; F1 priority reels change image every 2 seconds; prefer unseen history",
   "f1_reel_policy": {
