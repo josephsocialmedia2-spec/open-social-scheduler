@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-08-21T05:07:31Z",
+  "updated_at": "2026-08-21T05:40:12Z",
   "brands": {
     "f1-immobiliare": {
       "recent": [
@@ -2343,6 +2343,27 @@
           "url": "https://cdn.pixabay.com/photo/2023/09/18/12/02/living-room-8260413_960_720.jpg",
           "used_at": "2026-08-21T05:06:23Z",
           "job_id": "f1-immobiliare-2026-08-21-c04-03-04-g2-tre-prezzi"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2017/08/25/22/01/italy-2681567_960_720.jpg",
+          "url": "https://cdn.pixabay.com/photo/2017/08/25/22/01/italy-2681567_960_720.jpg",
+          "used_at": "2026-08-21T05:39:28Z",
+          "job_id": "f1-immobiliare-2026-08-21-c04-01-04-g2-tre-prezzi",
+          "output_type": "static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2024/07/03/10/41/real-8869666.jpg",
+          "url": "https://cdn.pixabay.com/photo/2024/07/03/10/41/real-8869666_1280.jpg",
+          "used_at": "2026-08-21T05:39:31Z",
+          "job_id": "f1-immobiliare-2026-08-21-c04-02-05-g3-cinquecento-metri",
+          "output_type": "static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2017/07/25/00/37/house-2536552.jpg",
+          "url": "https://cdn.pixabay.com/photo/2017/07/25/00/37/house-2536552_1280.jpg",
+          "used_at": "2026-08-21T05:39:33Z",
+          "job_id": "f1-immobiliare-2026-08-21-c04-03-06-g4-quattro-controlli-fermo",
+          "output_type": "static-photo"
         }
       ]
     },
@@ -4687,6 +4708,27 @@
           "url": "https://cdn.pixabay.com/photo/2026/03/07/11/42/cyberco-web-designer-10160858_960_720.png",
           "used_at": "2026-08-21T05:07:31Z",
           "job_id": "real-media-pro-2026-08-21-c04-03-04-google-ads-intento"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2017/06/26/12/56/laptop-2443735.jpg",
+          "url": "https://cdn.pixabay.com/photo/2017/06/26/12/56/laptop-2443735_1280.jpg",
+          "used_at": "2026-08-21T05:39:36Z",
+          "job_id": "real-media-pro-2026-08-21-c04-01-04-google-ads-intento",
+          "output_type": "static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2020/08/26/14/29/laptop-5519651_960_720.jpg",
+          "url": "https://cdn.pixabay.com/photo/2020/08/26/14/29/laptop-5519651_960_720.jpg",
+          "used_at": "2026-08-21T05:39:38Z",
+          "job_id": "real-media-pro-2026-08-21-c04-02-05-shopify-product-page",
+          "output_type": "static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2016/11/19/21/01/analysis-1841158.jpg",
+          "url": "https://cdn.pixabay.com/photo/2016/11/19/21/01/analysis-1841158_1280.jpg",
+          "used_at": "2026-08-21T05:40:12Z",
+          "job_id": "real-media-pro-2026-08-21-c04-03-06-advertising-sistema",
+          "output_type": "static-photo"
         }
       ]
     }
