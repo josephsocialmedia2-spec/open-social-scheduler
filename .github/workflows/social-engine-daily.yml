@@ -8,8 +8,6 @@ on:
         required: false
         type: string
   schedule:
-    # GitHub checks hourly; the Rome gate runs production only at 00,04,08,12,16,20.
-    # This preserves the exact 4-hour cadence across CET/CEST changes.
     - cron: '0 * * * *'
   push:
     paths:
@@ -17,10 +15,12 @@ on:
       - 'publisher/build_cycle_queue.py'
       - 'publisher/enrich_cycle.py'
       - 'publisher/apply_f1_priority_reels.py'
+      - 'publisher/apply_rmp_priority_reels.py'
       - 'publisher/research_signals.py'
       - 'publisher/enrich_queue.py'
       - 'publisher/render_reels.py'
       - 'publisher/render_fresh_visuals.py'
+      - 'publisher/render_shopify_reels.py'
       - 'publisher/requirements.txt'
       - 'publisher/query_history.json'
       - 'publisher/image_history.json'
@@ -106,7 +106,7 @@ jobs:
           path: |
             .cache/piper
             .cache/social-photos
-          key: social-assets-v11-f1-homes-recruiting-2sec
+          key: social-assets-v12-f1-rmp-2sec-shopify-original
 
       - name: Prepare Italian female fallback voice
         shell: bash
@@ -130,16 +130,22 @@ jobs:
       - name: Enrich only this cycle
         run: python publisher/enrich_cycle.py
 
-      - name: Lock F1 to 1 homes Reel and 1 recruiting Reel
+      - name: Lock F1 to homes and recruiting Reels
         run: python publisher/apply_f1_priority_reels.py
 
-      - name: Render with fresh non-repeating Pixabay photography
+      - name: Lock Real Media Pro to original Shopify-inspired Reels
+        run: python publisher/apply_rmp_priority_reels.py
+
+      - name: Render licensed fresh source photography
         run: python publisher/render_fresh_visuals.py
+
+      - name: Compose original Shopify-inspired RMP Reel graphics
+        run: python publisher/render_shopify_reels.py
 
       - name: Reconcile generated media state without rebuilding content
         run: python publisher/build_cycle_queue.py --reconcile-only
 
-      - name: Verify exact cycle composition and F1 Reel policy
+      - name: Verify publication-ready cycle
         shell: bash
         run: |
           set -euxo pipefail
@@ -154,16 +160,23 @@ jobs:
           assert sum(j.get('format')=='carousel' for j in jobs)==2
           assert all(len(j.get('visual_asset_urls') or [])==10 for j in jobs)
 
-          f1_reels=sorted(
-              [j for j in jobs if j.get('client_id')=='f1-immobiliare' and j.get('format')=='reel'],
-              key=lambda j:int(j.get('cycle_position',0))
-          )
-          assert len(f1_reels)==2
-          assert f1_reels[0].get('content_pillar')=='valuation-homes'
-          assert f1_reels[0].get('search_query_override')=='case in Valle di Susa'
-          assert f1_reels[1].get('content_pillar')=='real-estate-recruiting'
-          assert all(float(j.get('image_change_seconds') or 0)==2 for j in f1_reels)
-          assert all(float(j.get('reel_duration_seconds') or 0)==20 for j in f1_reels)
+          f1=sorted([j for j in jobs if j.get('client_id')=='f1-immobiliare' and j.get('format')=='reel'],key=lambda j:int(j.get('cycle_position',0)))
+          assert len(f1)==2
+          assert f1[0].get('content_pillar')=='valuation-homes'
+          assert f1[0].get('search_query_override')=='case in Valle di Susa'
+          assert f1[1].get('content_pillar')=='real-estate-recruiting'
+          assert all(float(j.get('image_change_seconds') or 0)==2 for j in f1)
+          assert all(float(j.get('reel_duration_seconds') or 0)==20 for j in f1)
+          assert all(str(j.get('caption') or '').strip() for j in f1)
+
+          rmp=sorted([j for j in jobs if j.get('client_id')=='real-media-pro' and j.get('format')=='reel'],key=lambda j:int(j.get('cycle_position',0)))
+          assert len(rmp)==2
+          assert all(j.get('visual_mode')=='shopify-theme-inspired-original' for j in rmp)
+          assert all(float(j.get('image_change_seconds') or 0)==2 for j in rmp)
+          assert all(float(j.get('reel_duration_seconds') or 0)==20 for j in rmp)
+          assert all(j.get('publication_ready') is True for j in rmp)
+          assert all(str(j.get('caption') or '').strip() for j in rmp)
+          assert all('themes.shopify.com' in str(j.get('design_reference_url') or '') for j in rmp)
 
           for j in jobs:
               media=j.get('media')
@@ -171,7 +184,7 @@ jobs:
               for rel in paths:
                   p=Path(rel)
                   assert p.exists() and p.stat().st_size>0, rel
-          print('VERIFIED: 6 contents; F1 = case Valle di Susa Reel + recruiting Reel; 10 images x 2 seconds')
+          print('VERIFIED: ready to download + captions. F1 and RMP reels = 10 images x 2 seconds / 20 seconds.')
           PY
 
       - name: Upload current-cycle package
@@ -225,8 +238,8 @@ jobs:
           cp publisher/image_history.json /tmp/social-release/image_history.json
           gh release delete social-preview-latest --yes --cleanup-tag >/dev/null 2>&1 || true
           gh release create social-preview-latest /tmp/social-release/* \
-            --title "6 Contenuti Deluxe - ciclo ${{ needs.rome-gate.outputs.cycle_hour }}:00" \
-            --notes "F1: Reel 1 CASE IN VALLE DI SUSA / valutazione; Reel 2 RICERCA PERSONALE. Entrambi: 10 immagini, cambio esatto ogni 2 secondi. F1 completa il ciclo con 1 carosello. Real Media Pro: 2 Reel + 1 carosello. Run ${GITHUB_RUN_ID}."
+            --title "REEL PRONTI + CAPTION - ciclo ${{ needs.rome-gate.outputs.cycle_hour }}:00" \
+            --notes "File pronti da scaricare e pubblicare. F1: CASE IN VALLE DI SUSA + RICERCA PERSONALE. RMP: 2 Reel con grafiche originali ispirate al linguaggio visivo del Shopify Theme Store, senza copiare i temi. Tutti i Reel: 10 immagini, cambio ogni 2 secondi, durata 20 secondi. Le caption sono nella coda e nel Monday Control. Run ${GITHUB_RUN_ID}."
 
       - name: Notify final results only
         uses: actions/github-script@v8
@@ -234,16 +247,16 @@ jobs:
           script: |
             const title='[CONTENUTI 4H] - risultati';
             const body=[
-              '@josephsocialmedia2-spec ciclo Deluxe completato.',
+              '@josephsocialmedia2-spec ciclo completato.',
               '',
+              '**REEL PRONTI DA SCARICARE + CAPTION PRONTE DA COPIARE.**',
               '**F1 Reel 1:** CASE IN VALLE DI SUSA / valutazione immobiliare.',
               '**F1 Reel 2:** RICERCA PERSONALE immobiliare.',
-              '**Regola Reel F1:** 10 immagini, cambio ogni 2 secondi, durata 20 secondi.',
-              '**F1:** 2 Reel + 1 carosello.',
-              '**Real Media Pro:** 2 Reel + 1 carosello.',
+              '**Real Media Pro:** 2 Reel originali ispirati al linguaggio visuale Shopify Theme Store.',
+              '**Regola Reel:** 10 immagini · cambio ogni 2 secondi · durata 20 secondi.',
               '',
               'Download: https://github.com/josephsocialmedia2-spec/open-social-scheduler/releases/tag/social-preview-latest',
-              'Controllo: https://josephsocialmedia2-spec.github.io/open-social-scheduler/monday-control.html',
+              'Controllo + caption: https://josephsocialmedia2-spec.github.io/open-social-scheduler/monday-control.html',
               'Run: https://github.com/' + context.repo.owner + '/' + context.repo.repo + '/actions/runs/' + context.runId
             ].join('\n');
             const issues=await github.paginate(github.rest.issues.listForRepo,{owner:context.repo.owner,repo:context.repo.repo,state:'all',per_page:100});
