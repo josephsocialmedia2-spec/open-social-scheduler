@@ -1,6 +1,6 @@
 {
   "version": 8,
-  "updated_by": "Photo-only renderer",
+  "updated_by": "Photo-only renderer with manual image priority",
   "jobs": [
     {
       "id": "real-media-pro-2026-08-21-c00-03-02-creative-testing",
@@ -5894,7 +5894,7 @@
         "borgo alpino casa pietra Italia"
       ],
       "visual_asset_urls": [
-        "https://cdn.pixabay.com/photo/2017/08/25/22/01/italy-2681567_960_720.jpg"
+        "https://cdn.pixabay.com/photo/2014/10/04/18/27/houses-473841_1280.jpg"
       ],
       "visual_source": "pixabay-fresh-static-photo",
       "visual_count": 1,
@@ -6016,7 +6016,7 @@
         "business team real estate meeting"
       ],
       "visual_asset_urls": [
-        "https://cdn.pixabay.com/photo/2024/07/03/10/41/real-8869666_1280.jpg"
+        "https://cdn.pixabay.com/photo/2023/09/03/09/26/real-estate-8230197_960_720.jpg"
       ],
       "visual_source": "pixabay-fresh-static-photo",
       "visual_count": 1,
@@ -6140,7 +6140,7 @@
         "borgo alpino casa pietra Italia"
       ],
       "visual_asset_urls": [
-        "https://cdn.pixabay.com/photo/2017/07/25/00/37/house-2536552_1280.jpg"
+        "https://cdn.pixabay.com/photo/2017/07/25/00/59/house-2536610_1280.jpg"
       ],
       "visual_source": "pixabay-fresh-static-photo",
       "visual_count": 1,
@@ -6238,7 +6238,7 @@
         "product photography ecommerce desk"
       ],
       "visual_asset_urls": [
-        "https://cdn.pixabay.com/photo/2017/06/26/12/56/laptop-2443735_1280.jpg"
+        "https://cdn.pixabay.com/photo/2024/07/10/14/30/laptop-8885977_960_720.jpg"
       ],
       "visual_source": "pixabay-fresh-static-photo",
       "visual_count": 1,
@@ -6336,7 +6336,7 @@
         "product photography ecommerce desk"
       ],
       "visual_asset_urls": [
-        "https://cdn.pixabay.com/photo/2020/08/26/14/29/laptop-5519651_960_720.jpg"
+        "https://cdn.pixabay.com/photo/2020/08/26/14/29/technology-5519649_1280.jpg"
       ],
       "visual_source": "pixabay-fresh-static-photo",
       "visual_count": 1,
@@ -6434,7 +6434,7 @@
         "product photography ecommerce desk"
       ],
       "visual_asset_urls": [
-        "https://cdn.pixabay.com/photo/2016/11/19/21/01/analysis-1841158_1280.jpg"
+        "https://cdn.pixabay.com/photo/2021/12/27/19/28/e-commerce-6898102_1280.png"
       ],
       "visual_source": "pixabay-fresh-static-photo",
       "visual_count": 1,
@@ -6442,7 +6442,7 @@
       "reused_visual_count": 0
     }
   ],
-  "updated_at": "2026-08-21T05:40:12+00:00",
+  "updated_at": "2026-08-21T05:53:38+00:00",
   "current_cycle": "2026-08-21T04:00",
   "visual_policy": "10 different images per content; F1 priority reels change image every 2 seconds; prefer unseen history",
   "f1_reel_policy": {
@@ -6470,5 +6470,9 @@
     "real_media_pro": "3 static ecommerce/business photos",
     "video": false,
     "audio": false
+  },
+  "manual_upload_folders": {
+    "f1-immobiliare": "publisher/manual_images/f1-immobiliare/",
+    "real-media-pro": "publisher/manual_images/real-media-pro/"
   }
 }
