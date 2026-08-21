@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-08-21T05:53:38Z",
+  "updated_at": "2026-08-21T06:41:51Z",
   "brands": {
     "f1-immobiliare": {
       "recent": [
@@ -2386,6 +2386,30 @@
           "url": "https://cdn.pixabay.com/photo/2017/07/25/00/59/house-2536610_1280.jpg",
           "used_at": "2026-08-21T05:52:44Z",
           "job_id": "f1-immobiliare-2026-08-21-c04-03-06-g4-quattro-controlli-fermo",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2023/02/28/20/18/house-7821717_960_720.jpg",
+          "url": "https://cdn.pixabay.com/photo/2023/02/28/20/18/house-7821717_960_720.jpg",
+          "used_at": "2026-08-21T06:41:15Z",
+          "job_id": "f1-immobiliare-2026-08-21-c08-03-09-g7-cosa-vede-compratore",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2024/02/22/11/47/real-estate-8589913.jpg",
+          "url": "https://cdn.pixabay.com/photo/2024/02/22/11/47/real-estate-8589913_1280.jpg",
+          "used_at": "2026-08-21T06:41:34Z",
+          "job_id": "f1-immobiliare-2026-08-21-c08-02-08-g6-prezzo-da-soli",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2021/08/08/13/49/valley-6530967.jpg",
+          "url": "https://cdn.pixabay.com/photo/2021/08/08/13/49/valley-6530967_1280.jpg",
+          "used_at": "2026-08-21T06:41:51Z",
+          "job_id": "f1-immobiliare-2026-08-21-c08-01-07-g5-domanda-agente",
           "output_type": "static-photo",
           "source_type": "pixabay-fresh-static-photo"
         }
@@ -4775,6 +4799,30 @@
           "url": "https://cdn.pixabay.com/photo/2021/12/27/19/28/e-commerce-6898102_1280.png",
           "used_at": "2026-08-21T05:53:38Z",
           "job_id": "real-media-pro-2026-08-21-c04-03-06-advertising-sistema",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2018/08/09/14/01/ecommerce-3594580.jpg",
+          "url": "https://cdn.pixabay.com/photo/2018/08/09/14/01/ecommerce-3594580_640.jpg",
+          "used_at": "2026-08-21T06:40:53Z",
+          "job_id": "real-media-pro-2026-08-21-c08-03-09-shopify-servizio",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2017/06/25/14/30/responsive-2440940.png",
+          "url": "https://cdn.pixabay.com/photo/2017/06/25/14/30/responsive-2440940_1280.png",
+          "used_at": "2026-08-21T06:40:55Z",
+          "job_id": "real-media-pro-2026-08-21-c08-02-08-audit-digitale",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2020/12/28/10/04/laptop-5866526_960_720.jpg",
+          "url": "https://cdn.pixabay.com/photo/2020/12/28/10/04/laptop-5866526_960_720.jpg",
+          "used_at": "2026-08-21T06:41:13Z",
+          "job_id": "real-media-pro-2026-08-21-c08-01-07-shopify-che-converte",
           "output_type": "static-photo",
           "source_type": "pixabay-fresh-static-photo"
         }
