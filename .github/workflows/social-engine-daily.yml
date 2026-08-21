@@ -16,6 +16,7 @@ on:
       - '.github/workflows/social-engine-daily.yml'
       - 'publisher/build_cycle_queue.py'
       - 'publisher/enrich_cycle.py'
+      - 'publisher/apply_f1_priority_reels.py'
       - 'publisher/research_signals.py'
       - 'publisher/enrich_queue.py'
       - 'publisher/render_reels.py'
@@ -100,12 +101,12 @@ jobs:
           python -m pip install --disable-pip-version-check -r publisher/requirements.txt
 
       - name: Cache voice and discovered media
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: |
             .cache/piper
             .cache/social-photos
-          key: social-assets-v10-fresh-pixabay-4h
+          key: social-assets-v11-f1-homes-recruiting-2sec
 
       - name: Prepare Italian female fallback voice
         shell: bash
@@ -129,13 +130,16 @@ jobs:
       - name: Enrich only this cycle
         run: python publisher/enrich_cycle.py
 
+      - name: Lock F1 to 1 homes Reel and 1 recruiting Reel
+        run: python publisher/apply_f1_priority_reels.py
+
       - name: Render with fresh non-repeating Pixabay photography
         run: python publisher/render_fresh_visuals.py
 
       - name: Reconcile generated media state without rebuilding content
         run: python publisher/build_cycle_queue.py --reconcile-only
 
-      - name: Verify exact cycle composition and media
+      - name: Verify exact cycle composition and F1 Reel policy
         shell: bash
         run: |
           set -euxo pipefail
@@ -149,13 +153,25 @@ jobs:
           assert sum(j.get('format')=='reel' for j in jobs)==4
           assert sum(j.get('format')=='carousel' for j in jobs)==2
           assert all(len(j.get('visual_asset_urls') or [])==10 for j in jobs)
+
+          f1_reels=sorted(
+              [j for j in jobs if j.get('client_id')=='f1-immobiliare' and j.get('format')=='reel'],
+              key=lambda j:int(j.get('cycle_position',0))
+          )
+          assert len(f1_reels)==2
+          assert f1_reels[0].get('content_pillar')=='valuation-homes'
+          assert f1_reels[0].get('search_query_override')=='case in Valle di Susa'
+          assert f1_reels[1].get('content_pillar')=='real-estate-recruiting'
+          assert all(float(j.get('image_change_seconds') or 0)==2 for j in f1_reels)
+          assert all(float(j.get('reel_duration_seconds') or 0)==20 for j in f1_reels)
+
           for j in jobs:
               media=j.get('media')
               paths=media if isinstance(media,list) else [media]
               for rel in paths:
                   p=Path(rel)
                   assert p.exists() and p.stat().st_size>0, rel
-          print('VERIFIED: 6 contents, 4 Reel, 2 carousels, 10 unique visuals each')
+          print('VERIFIED: 6 contents; F1 = case Valle di Susa Reel + recruiting Reel; 10 images x 2 seconds')
           PY
 
       - name: Upload current-cycle package
@@ -210,7 +226,7 @@ jobs:
           gh release delete social-preview-latest --yes --cleanup-tag >/dev/null 2>&1 || true
           gh release create social-preview-latest /tmp/social-release/* \
             --title "6 Contenuti Deluxe - ciclo ${{ needs.rome-gate.outputs.cycle_hour }}:00" \
-            --notes "Ciclo ogni 4 ore: 6 contenuti totali = 4 Reel + 2 caroselli. F1: 2 Reel + 1 carosello. Real Media Pro: 2 Reel + 1 carosello. Ogni asset usa 10 visual Pixabay unici con controllo anti-ripetizione. Run ${GITHUB_RUN_ID}."
+            --notes "F1: Reel 1 CASE IN VALLE DI SUSA / valutazione; Reel 2 RICERCA PERSONALE. Entrambi: 10 immagini, cambio esatto ogni 2 secondi. F1 completa il ciclo con 1 carosello. Real Media Pro: 2 Reel + 1 carosello. Run ${GITHUB_RUN_ID}."
 
       - name: Notify final results only
         uses: actions/github-script@v8
@@ -220,10 +236,11 @@ jobs:
             const body=[
               '@josephsocialmedia2-spec ciclo Deluxe completato.',
               '',
-              '**6 contenuti pronti:** 4 Reel + 2 caroselli.',
-              '**F1 Immobiliare:** 2 Reel + 1 carosello.',
+              '**F1 Reel 1:** CASE IN VALLE DI SUSA / valutazione immobiliare.',
+              '**F1 Reel 2:** RICERCA PERSONALE immobiliare.',
+              '**Regola Reel F1:** 10 immagini, cambio ogni 2 secondi, durata 20 secondi.',
+              '**F1:** 2 Reel + 1 carosello.',
               '**Real Media Pro:** 2 Reel + 1 carosello.',
-              '**Visual:** 10 immagini uniche per contenuto, con memoria anti-ripetizione.',
               '',
               'Download: https://github.com/josephsocialmedia2-spec/open-social-scheduler/releases/tag/social-preview-latest',
               'Controllo: https://josephsocialmedia2-spec.github.io/open-social-scheduler/monday-control.html',
