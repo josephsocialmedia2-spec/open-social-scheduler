@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-08-22T14:28:46Z",
+  "updated_at": "2026-08-22T18:42:07Z",
   "brands": {
     "f1-immobiliare": {
       "recent": [
@@ -2602,6 +2602,30 @@
           "url": "https://cdn.pixabay.com/photo/2021/09/20/13/29/villa-6640875_1280.jpg",
           "used_at": "2026-08-22T14:28:46Z",
           "job_id": "f1-immobiliare-2026-08-22-c16-01-03-g2-come-costruiamo-prezzo",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2021/02/27/16/41/town-6055141.jpg",
+          "url": "https://cdn.pixabay.com/photo/2021/02/27/16/41/town-6055141_1280.jpg",
+          "used_at": "2026-08-22T18:40:39Z",
+          "job_id": "f1-immobiliare-2026-08-22-c20-03-08-g7-comparabile-escluso",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2024/03/07/22/56/buildings-8619494_960_720.jpg",
+          "url": "https://cdn.pixabay.com/photo/2024/03/07/22/56/buildings-8619494_960_720.jpg",
+          "used_at": "2026-08-22T18:41:15Z",
+          "job_id": "f1-immobiliare-2026-08-22-c20-02-07-g6-vendita-privata-verifiche",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2022/01/12/23/21/houses-6934102.jpg",
+          "url": "https://cdn.pixabay.com/photo/2022/01/12/23/21/houses-6934102_1280.jpg",
+          "used_at": "2026-08-22T18:42:07Z",
+          "job_id": "f1-immobiliare-2026-08-22-c20-01-06-g5-dopo-pubblicazione",
           "output_type": "static-photo",
           "source_type": "pixabay-fresh-static-photo"
         }
@@ -5207,6 +5231,30 @@
           "url": "https://cdn.pixabay.com/photo/2023/11/10/20/37/desk-8380078_1280.jpg",
           "used_at": "2026-08-22T14:27:18Z",
           "job_id": "real-media-pro-2026-08-22-c16-01-03-analisi-gratuita",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2020/11/11/08/16/ecommerce-5731814.jpg",
+          "url": "https://cdn.pixabay.com/photo/2020/11/11/08/16/ecommerce-5731814_640.jpg",
+          "used_at": "2026-08-22T18:39:11Z",
+          "job_id": "real-media-pro-2026-08-22-c20-03-08-shopify-product-page",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2020/08/24/19/01/laptop-5514833.jpg",
+          "url": "https://cdn.pixabay.com/photo/2020/08/24/19/01/laptop-5514833_640.jpg",
+          "used_at": "2026-08-22T18:39:13Z",
+          "job_id": "real-media-pro-2026-08-22-c20-02-07-meta-ads-creative",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2015/01/09/02/45/laptop-593673.jpg",
+          "url": "https://cdn.pixabay.com/photo/2015/01/09/02/45/laptop-593673_1280.jpg",
+          "used_at": "2026-08-22T18:39:14Z",
+          "job_id": "real-media-pro-2026-08-22-c20-01-06-seo-servizio",
           "output_type": "static-photo",
           "source_type": "pixabay-fresh-static-photo"
         }
