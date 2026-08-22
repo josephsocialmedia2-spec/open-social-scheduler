@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-08-22T03:01:28Z",
+  "updated_at": "2026-08-22T06:52:03Z",
   "brands": {
     "f1-immobiliare": {
       "recent": [
@@ -2530,6 +2530,30 @@
           "url": "https://cdn.pixabay.com/photo/2023/09/24/18/34/mountains-8273579_1280.jpg",
           "used_at": "2026-08-22T03:01:28Z",
           "job_id": "f1-immobiliare-2026-08-22-c04-01-04-g3-media-torino",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2022/08/31/11/10/house-7423051_960_720.jpg",
+          "url": "https://cdn.pixabay.com/photo/2022/08/31/11/10/house-7423051_960_720.jpg",
+          "used_at": "2026-08-22T06:51:26Z",
+          "job_id": "f1-immobiliare-2026-08-22-c08-03-09-g1-tre-agenzie",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2020/05/11/23/37/real-estate-5160650_960_720.jpg",
+          "url": "https://cdn.pixabay.com/photo/2020/05/11/23/37/real-estate-5160650_960_720.jpg",
+          "used_at": "2026-08-22T06:51:28Z",
+          "job_id": "f1-immobiliare-2026-08-22-c08-02-08-g7-comparabile-escluso",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2013/10/29/22/57/house-202639.jpg",
+          "url": "https://cdn.pixabay.com/photo/2013/10/29/22/57/house-202639_1280.jpg",
+          "used_at": "2026-08-22T06:52:03Z",
+          "job_id": "f1-immobiliare-2026-08-22-c08-01-07-g6-vendita-privata-verifiche",
           "output_type": "static-photo",
           "source_type": "pixabay-fresh-static-photo"
         }
@@ -5063,6 +5087,30 @@
           "url": "https://cdn.pixabay.com/photo/2022/03/12/08/05/workspace-7063595_960_720.jpg",
           "used_at": "2026-08-22T03:01:04Z",
           "job_id": "real-media-pro-2026-08-22-c04-01-04-seo-ai-search",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2023/06/19/07/23/e-commerce-8073631.jpg",
+          "url": "https://cdn.pixabay.com/photo/2023/06/19/07/23/e-commerce-8073631_1280.jpg",
+          "used_at": "2026-08-22T06:50:30Z",
+          "job_id": "real-media-pro-2026-08-22-c08-03-09-advertising-sistema",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2026/01/09/05/58/05-58-24-448_960_720.png",
+          "url": "https://cdn.pixabay.com/photo/2026/01/09/05/58/05-58-24-448_960_720.png",
+          "used_at": "2026-08-22T06:50:32Z",
+          "job_id": "real-media-pro-2026-08-22-c08-02-08-shopify-product-page",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2024/04/30/02/57/ai-generated-8729179_960_720.jpg",
+          "url": "https://cdn.pixabay.com/photo/2024/04/30/02/57/ai-generated-8729179_960_720.jpg",
+          "used_at": "2026-08-22T06:50:51Z",
+          "job_id": "real-media-pro-2026-08-22-c08-01-07-meta-ads-creative",
           "output_type": "static-photo",
           "source_type": "pixabay-fresh-static-photo"
         }
