@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-08-22T10:34:12Z",
+  "updated_at": "2026-08-22T14:28:46Z",
   "brands": {
     "f1-immobiliare": {
       "recent": [
@@ -2578,6 +2578,30 @@
           "url": "https://cdn.pixabay.com/photo/2019/12/18/16/33/away-4704340_1280.jpg",
           "used_at": "2026-08-22T10:34:12Z",
           "job_id": "f1-immobiliare-2026-08-22-c12-01-10-g2-tre-prezzi",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2023/12/14/20/17/winter-8449605.jpg",
+          "url": "https://cdn.pixabay.com/photo/2023/12/14/20/17/winter-8449605_1280.jpg",
+          "used_at": "2026-08-22T14:27:52Z",
+          "job_id": "f1-immobiliare-2026-08-22-c16-03-05-g4-ribasso-senza-diagnosi",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2022/09/07/00/13/office-7437652_960_720.jpg",
+          "url": "https://cdn.pixabay.com/photo/2022/09/07/00/13/office-7437652_960_720.jpg",
+          "used_at": "2026-08-22T14:28:11Z",
+          "job_id": "f1-immobiliare-2026-08-22-c16-02-04-g3-media-torino",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2021/09/20/13/29/villa-6640875.jpg",
+          "url": "https://cdn.pixabay.com/photo/2021/09/20/13/29/villa-6640875_1280.jpg",
+          "used_at": "2026-08-22T14:28:46Z",
+          "job_id": "f1-immobiliare-2026-08-22-c16-01-03-g2-come-costruiamo-prezzo",
           "output_type": "static-photo",
           "source_type": "pixabay-fresh-static-photo"
         }
@@ -5159,6 +5183,30 @@
           "url": "https://cdn.pixabay.com/photo/2020/06/19/21/18/laptop-5318837_960_720.jpg",
           "used_at": "2026-08-22T10:31:56Z",
           "job_id": "real-media-pro-2026-08-22-c12-01-10-sito-che-perde-lead",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/video/2024/09/26/233382_tiny.jpg",
+          "url": "https://cdn.pixabay.com/video/2024/09/26/233382_tiny.jpg",
+          "used_at": "2026-08-22T14:27:12Z",
+          "job_id": "real-media-pro-2026-08-22-c16-03-05-creative-testing",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2018/03/07/14/44/business-3206112.jpg",
+          "url": "https://cdn.pixabay.com/photo/2018/03/07/14/44/business-3206112_1280.jpg",
+          "used_at": "2026-08-22T14:27:15Z",
+          "job_id": "real-media-pro-2026-08-22-c16-02-04-seo-ai-search",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2023/11/10/20/37/desk-8380078.jpg",
+          "url": "https://cdn.pixabay.com/photo/2023/11/10/20/37/desk-8380078_1280.jpg",
+          "used_at": "2026-08-22T14:27:18Z",
+          "job_id": "real-media-pro-2026-08-22-c16-01-03-analisi-gratuita",
           "output_type": "static-photo",
           "source_type": "pixabay-fresh-static-photo"
         }
