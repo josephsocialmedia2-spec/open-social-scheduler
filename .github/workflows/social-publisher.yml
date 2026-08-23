@@ -1,10 +1,10 @@
-name: Direct Social Publisher - Automatic
+name: Automatic Social Publisher - PHOTO
 
 on:
   workflow_dispatch:
     inputs:
       job_id:
-        description: 'Optional exact queue job ID; blank = all approved jobs due now'
+        description: 'Optional exact queue job ID; blank = all ready jobs due now'
         required: false
         type: string
       platforms:
@@ -18,12 +18,9 @@ on:
         default: false
         type: boolean
   schedule:
-    # Automatic publication check every 15 minutes. Queue scheduled_at remains
-    # the source of truth, so nothing is published before its planned time.
     - cron: '*/15 * * * *'
   workflow_run:
-    # Also run immediately after a successful 4-hour content-production cycle.
-    workflows: ['Open Social Engine - 6 Every 4 Hours']
+    workflows: ['Open Social Engine - PHOTO ONLY - 4 Every 4 Hours']
     types: [completed]
 
 permissions:
@@ -31,7 +28,7 @@ permissions:
   actions: read
 
 concurrency:
-  group: open-social-state
+  group: open-social-auto-publisher
   cancel-in-progress: false
 
 jobs:
@@ -43,43 +40,33 @@ jobs:
       GH_TOKEN: ${{ github.token }}
       GITHUB_TOKEN: ${{ github.token }}
       META_GRAPH_VERSION: ${{ vars.META_GRAPH_VERSION || 'v23.0' }}
-      LINKEDIN_VERSION: ${{ vars.LINKEDIN_VERSION || '202604' }}
+      LINKEDIN_VERSION: ${{ vars.LINKEDIN_VERSION || '202606' }}
       TIKTOK_PRIVACY_LEVEL: ${{ vars.TIKTOK_PRIVACY_LEVEL || 'SELF_ONLY' }}
-      YOUTUBE_PRIVACY_STATUS: ${{ vars.YOUTUBE_PRIVACY_STATUS || 'private' }}
-      YOUTUBE_CATEGORY_ID: ${{ vars.YOUTUBE_CATEGORY_ID || '22' }}
       F1_FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.F1_FACEBOOK_PAGE_ACCESS_TOKEN }}
       F1_INSTAGRAM_ACCESS_TOKEN: ${{ secrets.F1_INSTAGRAM_ACCESS_TOKEN }}
       F1_INSTAGRAM_USER_ID: ${{ secrets.F1_INSTAGRAM_USER_ID }}
-      F1_TIKTOK_ACCESS_TOKEN: ${{ secrets.F1_TIKTOK_ACCESS_TOKEN }}
       F1_LINKEDIN_ACCESS_TOKEN: ${{ secrets.F1_LINKEDIN_ACCESS_TOKEN }}
       F1_LINKEDIN_AUTHOR_URN: ${{ secrets.F1_LINKEDIN_AUTHOR_URN }}
-      F1_YOUTUBE_CLIENT_ID: ${{ secrets.F1_YOUTUBE_CLIENT_ID }}
-      F1_YOUTUBE_CLIENT_SECRET: ${{ secrets.F1_YOUTUBE_CLIENT_SECRET }}
-      F1_YOUTUBE_REFRESH_TOKEN: ${{ secrets.F1_YOUTUBE_REFRESH_TOKEN }}
       F1_PINTEREST_ACCESS_TOKEN: ${{ secrets.F1_PINTEREST_ACCESS_TOKEN }}
       F1_PINTEREST_BOARD_ID: ${{ secrets.F1_PINTEREST_BOARD_ID }}
       F1_PINTEREST_LINK: ${{ vars.F1_PINTEREST_LINK || 'https://f1immobiliare.com/' }}
       RMP_FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.RMP_FACEBOOK_PAGE_ACCESS_TOKEN }}
       RMP_INSTAGRAM_ACCESS_TOKEN: ${{ secrets.RMP_INSTAGRAM_ACCESS_TOKEN }}
       RMP_INSTAGRAM_USER_ID: ${{ secrets.RMP_INSTAGRAM_USER_ID }}
-      RMP_TIKTOK_ACCESS_TOKEN: ${{ secrets.RMP_TIKTOK_ACCESS_TOKEN }}
       RMP_LINKEDIN_ACCESS_TOKEN: ${{ secrets.RMP_LINKEDIN_ACCESS_TOKEN }}
       RMP_LINKEDIN_AUTHOR_URN: ${{ secrets.RMP_LINKEDIN_AUTHOR_URN }}
-      RMP_YOUTUBE_CLIENT_ID: ${{ secrets.RMP_YOUTUBE_CLIENT_ID }}
-      RMP_YOUTUBE_CLIENT_SECRET: ${{ secrets.RMP_YOUTUBE_CLIENT_SECRET }}
-      RMP_YOUTUBE_REFRESH_TOKEN: ${{ secrets.RMP_YOUTUBE_REFRESH_TOKEN }}
       RMP_PINTEREST_ACCESS_TOKEN: ${{ secrets.RMP_PINTEREST_ACCESS_TOKEN }}
       RMP_PINTEREST_BOARD_ID: ${{ secrets.RMP_PINTEREST_BOARD_ID }}
       RMP_PINTEREST_LINK: ${{ vars.RMP_PINTEREST_LINK }}
 
     steps:
-      - name: Checkout main state
-        uses: actions/checkout@v4
+      - name: Checkout latest queue and publisher
+        uses: actions/checkout@v5
         with:
           ref: main
 
       - name: Python 3.12
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: '3.12'
           cache: pip
@@ -88,44 +75,38 @@ jobs:
       - name: Install publisher dependencies
         run: pip install -r publisher/requirements.txt
 
-      - name: Download recent rendered media
+      - name: Download recent manual-photo artifacts
         id: media
         shell: bash
         run: |
           set -u
+          rm -rf publisher/media/generated
           mkdir -p publisher/media/generated
           AVAILABLE=false
 
           if [ "${{ github.event_name }}" = "workflow_run" ]; then
             RUN_IDS="${{ github.event.workflow_run.id }}"
           else
-            RUN_IDS=$(gh api "repos/${GITHUB_REPOSITORY}/actions/workflows/social-engine-daily.yml/runs?branch=main&status=success&per_page=4" --jq '.workflow_runs[].id' 2>/dev/null || true)
+            RUN_IDS=$(gh api "repos/${GITHUB_REPOSITORY}/actions/workflows/social-engine-daily.yml/runs?branch=main&status=success&per_page=6" --jq '.workflow_runs[].id' 2>/dev/null || true)
           fi
 
           if [ -z "${RUN_IDS:-}" ]; then
-            echo "No successful social-engine-daily run is available yet."
+            echo "No successful photo-engine run is available yet."
             echo "available=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
 
           for RUN_ID in $RUN_IDS; do
-            DOWNLOADED=false
-            for NAME in "social-deluxe-cycle-$RUN_ID" "social-deluxe-$RUN_ID" "social-preview-$RUN_ID"; do
-              if gh run download "$RUN_ID" -n "$NAME" -D publisher/media/generated >/dev/null 2>&1; then
-                echo "Downloaded $NAME from run $RUN_ID"
-                AVAILABLE=true
-                DOWNLOADED=true
-                break
-              fi
-            done
-            if [ "$DOWNLOADED" = "false" ]; then
-              echo "No compatible media artifact found for run $RUN_ID"
+            if gh run download "$RUN_ID" -n "social-photo-cycle-$RUN_ID" -D publisher/media/generated >/dev/null 2>&1; then
+              echo "Downloaded social-photo-cycle-$RUN_ID"
+              AVAILABLE=true
+              break
             fi
           done
 
           echo "available=$AVAILABLE" >> "$GITHUB_OUTPUT"
 
-      - name: Publish approved jobs automatically when due
+      - name: Publish ready manual-photo jobs automatically
         if: steps.media.outputs.available == 'true'
         shell: bash
         run: |
@@ -142,18 +123,22 @@ jobs:
           ARGS=(--platforms "$PLATFORMS")
           if [ -n "$JOB_ID" ]; then ARGS+=(--job-id "$JOB_ID"); fi
           if [ "$DRY_RUN" = "true" ]; then ARGS+=(--dry-run --strict); fi
-
           python publisher/direct_api_entry.py "${ARGS[@]}"
+
+      - name: Explain when nothing can publish
+        if: steps.media.outputs.available != 'true'
+        run: |
+          echo 'No rendered user-uploaded photo artifact is available. Nothing was published.'
 
       - name: Persist publication state
         if: always()
         shell: bash
         run: |
           if git diff --quiet -- publisher/queue.json; then exit 0; fi
-          git config user.name 'open-social-engine'
-          git config user.email 'open-social-engine@users.noreply.github.com'
+          git config user.name 'open-social-auto-publisher'
+          git config user.email 'open-social-auto-publisher@users.noreply.github.com'
           git add publisher/queue.json
-          git commit -m 'Update automatic direct social publication state'
+          git commit -m 'Persist automatic social publication state'
           git fetch origin main
           git rebase origin/main
           git push origin HEAD:main
