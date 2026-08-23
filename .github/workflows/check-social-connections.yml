@@ -1,10 +1,11 @@
-name: Check Social Connections
+name: Check Automatic Social Connections
 
 on:
   workflow_dispatch:
   push:
     paths:
       - '.github/workflows/check-social-connections.yml'
+      - '.github/workflows/social-publisher.yml'
 
 permissions:
   contents: read
@@ -16,16 +17,19 @@ jobs:
       F1_FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.F1_FACEBOOK_PAGE_ACCESS_TOKEN }}
       F1_INSTAGRAM_ACCESS_TOKEN: ${{ secrets.F1_INSTAGRAM_ACCESS_TOKEN }}
       F1_INSTAGRAM_USER_ID: ${{ secrets.F1_INSTAGRAM_USER_ID }}
-      F1_TIKTOK_ACCESS_TOKEN: ${{ secrets.F1_TIKTOK_ACCESS_TOKEN }}
       F1_LINKEDIN_ACCESS_TOKEN: ${{ secrets.F1_LINKEDIN_ACCESS_TOKEN }}
       F1_LINKEDIN_AUTHOR_URN: ${{ secrets.F1_LINKEDIN_AUTHOR_URN }}
-      F1_YOUTUBE_CLIENT_ID: ${{ secrets.F1_YOUTUBE_CLIENT_ID }}
-      F1_YOUTUBE_CLIENT_SECRET: ${{ secrets.F1_YOUTUBE_CLIENT_SECRET }}
-      F1_YOUTUBE_REFRESH_TOKEN: ${{ secrets.F1_YOUTUBE_REFRESH_TOKEN }}
       F1_PINTEREST_ACCESS_TOKEN: ${{ secrets.F1_PINTEREST_ACCESS_TOKEN }}
       F1_PINTEREST_BOARD_ID: ${{ secrets.F1_PINTEREST_BOARD_ID }}
+      RMP_FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.RMP_FACEBOOK_PAGE_ACCESS_TOKEN }}
+      RMP_INSTAGRAM_ACCESS_TOKEN: ${{ secrets.RMP_INSTAGRAM_ACCESS_TOKEN }}
+      RMP_INSTAGRAM_USER_ID: ${{ secrets.RMP_INSTAGRAM_USER_ID }}
+      RMP_LINKEDIN_ACCESS_TOKEN: ${{ secrets.RMP_LINKEDIN_ACCESS_TOKEN }}
+      RMP_LINKEDIN_AUTHOR_URN: ${{ secrets.RMP_LINKEDIN_AUTHOR_URN }}
+      RMP_PINTEREST_ACCESS_TOKEN: ${{ secrets.RMP_PINTEREST_ACCESS_TOKEN }}
+      RMP_PINTEREST_BOARD_ID: ${{ secrets.RMP_PINTEREST_BOARD_ID }}
     steps:
-      - name: Report connection readiness without exposing secrets
+      - name: Report readiness without exposing secrets
         shell: bash
         run: |
           set -euo pipefail
@@ -46,13 +50,19 @@ jobs:
             fi
           }
 
-          echo '# Stato collegamenti social F1' >> "$GITHUB_STEP_SUMMARY"
+          echo '# Pubblicazione automatica foto' >> "$GITHUB_STEP_SUMMARY"
           echo '' >> "$GITHUB_STEP_SUMMARY"
+          echo '## F1 Immobiliare' >> "$GITHUB_STEP_SUMMARY"
           check 'Facebook' F1_FACEBOOK_PAGE_ACCESS_TOKEN
           check 'Instagram' F1_INSTAGRAM_ACCESS_TOKEN F1_INSTAGRAM_USER_ID
-          check 'TikTok' F1_TIKTOK_ACCESS_TOKEN
           check 'LinkedIn' F1_LINKEDIN_ACCESS_TOKEN F1_LINKEDIN_AUTHOR_URN
-          check 'YouTube' F1_YOUTUBE_CLIENT_ID F1_YOUTUBE_CLIENT_SECRET F1_YOUTUBE_REFRESH_TOKEN
           check 'Pinterest' F1_PINTEREST_ACCESS_TOKEN F1_PINTEREST_BOARD_ID
           echo '' >> "$GITHUB_STEP_SUMMARY"
+          echo '## Real Media Pro' >> "$GITHUB_STEP_SUMMARY"
+          check 'Facebook' RMP_FACEBOOK_PAGE_ACCESS_TOKEN
+          check 'Instagram' RMP_INSTAGRAM_ACCESS_TOKEN RMP_INSTAGRAM_USER_ID
+          check 'LinkedIn' RMP_LINKEDIN_ACCESS_TOKEN RMP_LINKEDIN_AUTHOR_URN
+          check 'Pinterest' RMP_PINTEREST_ACCESS_TOKEN RMP_PINTEREST_BOARD_ID
+          echo '' >> "$GITHUB_STEP_SUMMARY"
+          echo 'TikTok e YouTube sono esclusi dal ciclo foto attuale.' >> "$GITHUB_STEP_SUMMARY"
           echo 'I valori dei secret non vengono mai stampati.' >> "$GITHUB_STEP_SUMMARY"
