@@ -22,6 +22,11 @@ on:
   workflow_run:
     workflows: ['Open Social Engine - PHOTO ONLY - 4 Every 4 Hours']
     types: [completed]
+  push:
+    paths:
+      - '.github/workflows/social-publisher.yml'
+      - 'publisher/photo_api_entry.py'
+      - 'publisher/direct_api_publish.py'
 
 permissions:
   contents: write
@@ -41,7 +46,6 @@ jobs:
       GITHUB_TOKEN: ${{ github.token }}
       META_GRAPH_VERSION: ${{ vars.META_GRAPH_VERSION || 'v23.0' }}
       LINKEDIN_VERSION: ${{ vars.LINKEDIN_VERSION || '202606' }}
-      TIKTOK_PRIVACY_LEVEL: ${{ vars.TIKTOK_PRIVACY_LEVEL || 'SELF_ONLY' }}
       F1_FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.F1_FACEBOOK_PAGE_ACCESS_TOKEN }}
       F1_INSTAGRAM_ACCESS_TOKEN: ${{ secrets.F1_INSTAGRAM_ACCESS_TOKEN }}
       F1_INSTAGRAM_USER_ID: ${{ secrets.F1_INSTAGRAM_USER_ID }}
@@ -74,6 +78,9 @@ jobs:
 
       - name: Install publisher dependencies
         run: pip install -r publisher/requirements.txt
+
+      - name: Validate automatic photo publisher
+        run: python -m py_compile publisher/photo_api_entry.py publisher/direct_api_publish.py
 
       - name: Download recent manual-photo artifacts
         id: media
@@ -123,7 +130,7 @@ jobs:
           ARGS=(--platforms "$PLATFORMS")
           if [ -n "$JOB_ID" ]; then ARGS+=(--job-id "$JOB_ID"); fi
           if [ "$DRY_RUN" = "true" ]; then ARGS+=(--dry-run --strict); fi
-          python publisher/direct_api_entry.py "${ARGS[@]}"
+          python publisher/photo_api_entry.py "${ARGS[@]}"
 
       - name: Explain when nothing can publish
         if: steps.media.outputs.available != 'true'
