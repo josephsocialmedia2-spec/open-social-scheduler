@@ -19,6 +19,7 @@
 const OWNER='josephsocialmedia2-spec',REPO='open-social-scheduler';
 const API='https://api.github.com/repos/'+OWNER+'/'+REPO;
 const RAW='https://raw.githubusercontent.com/'+OWNER+'/'+REPO+'/';
+const LATEST_RELEASE='https://github.com/'+OWNER+'/'+REPO+'/releases/download/social-preview-latest/';
 let allJobs=[];
 const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 const cutoff=()=>{const d=new Date();d.setHours(0,0,0,0);d.setDate(d.getDate()-2);return d};
@@ -28,11 +29,11 @@ const itTime=v=>new Date(v).toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2
 const brandClass=id=>id==='real-media-pro'?'rmp':'f1';
 const brandName=id=>id==='real-media-pro'?'REAL MEDIA PRO':'F1 IMMOBILIARE';
 function key(path){return String(path||'').replace(/^publisher\/media\/generated\//,'').replaceAll('/','__')}
-function assetFor(job,assets){const k=key(job.media),releaseAsset=(assets||[]).find(a=>a.name===k);if(releaseAsset)return releaseAsset;const fallback=(job.visual_asset_urls||[]).find(u=>/^https?:\/\//i.test(String(u||'')));return fallback?{browser_download_url:fallback,name:'foto-originale'}:null}
+function assetFor(job,assets,source){const k=key(job.media),releaseAsset=(assets||[]).find(a=>a.name===k);if(releaseAsset)return releaseAsset;if(source==='latest'&&k)return{browser_download_url:LATEST_RELEASE+encodeURIComponent(k),name:k};const fallback=(job.visual_asset_urls||[]).find(u=>/^https?:\/\//i.test(String(u||'')));return fallback?{browser_download_url:fallback,name:'foto-originale'}:null}
 function cycleDate(cycle,jobs){const d=dateOf(cycle);if(d)return d;return dateOf(jobs?.[0]?.scheduled_at)||new Date()}
 function copyCaption(uid){const j=allJobs.find(x=>x._uid===uid);if(!j?.caption)return;navigator.clipboard.writeText(j.caption).then(()=>{const b=document.getElementById('copy-'+uid);if(b){b.textContent='COPIATA ✓';setTimeout(()=>b.textContent='COPIA CAPTION',1400)}})}
 function card(job,assets,source){
- const a=assetFor(job,assets),uid=job._uid;
+ const a=assetFor(job,assets,source),uid=job._uid;
  const media=a?'<div class="media"><a href="'+esc(a.browser_download_url)+'" target="_blank"><img loading="lazy" src="'+esc(a.browser_download_url)+'" alt="'+esc(job.title)+'"></a></div>':'<div class="media"><div class="missing">FOTO NON PIÙ PRESENTE NELLA VECCHIA RELEASE<br><small>Caption recuperata dalla cronologia Git</small></div></div>';
  return '<article class="card '+brandClass(job.client_id)+'">'+media+'<div class="body"><div class="brand">'+brandName(job.client_id)+' · FOTO</div><div class="title">'+esc(job.title||'Contenuto')+'</div><div class="meta">'+esc(job.scheduled_at?itTime(job.scheduled_at):'')+(source==='git'?' · RECUPERATO':'')+'</div><div class="caption-label">CAPTION PRONTA</div><div class="caption">'+esc(job.caption||'')+'</div><div class="actions">'+(a?'<a class="btn '+(job.client_id==='real-media-pro'?'rmp':'')+'" href="'+esc(a.browser_download_url)+'">SCARICA FOTO</a>':'')+'<button id="copy-'+uid+'" class="btn alt" onclick="copyCaption(\''+uid+'\')">COPIA CAPTION</button></div></div></article>'
 }
@@ -65,9 +66,25 @@ async function recoveredCycles(known){
  }
  return out
 }
+async function latestCycle(){
+ const q=await json(RAW+'main/publisher/queue.json?t='+Date.now());
+ const jobs=(q.jobs||[]).filter(j=>j.cycle_key===q.current_cycle&&j.format==='photo'&&['f1-immobiliare','real-media-pro'].includes(j.client_id));
+ return jobs.length?{key:q.current_cycle||new Date().toISOString(),jobs,assets:[],source:'latest'}:null
+}
+async function archiveInBackground(latest){
+ try{
+  const result=await Promise.race([
+   Promise.all([releaseCycles(),recoveredCycles(latest?[latest]:[])]),
+   new Promise(resolve=>setTimeout(()=>resolve(null),7000))
+  ]);
+  if(!result)return;
+  const cycles=[latest,...result.flat()].filter(Boolean);
+  const n=render(cycles);const st=document.getElementById('status');st.className='status';st.textContent='ULTIMI 3 GIORNI · '+n+' CICLI VISIBILI · archivio aggiornato '+new Date().toLocaleString('it-IT')+'.';
+ }catch(_){}
+}
 async function load(){
  const st=document.getElementById('status');
- try{const archived=await releaseCycles();const recovered=await recoveredCycles(archived);const n=render([...archived,...recovered]);st.className='status';st.textContent='ULTIMI 3 GIORNI · '+n+' CICLI VISIBILI · archivio aggiornato '+new Date().toLocaleString('it-IT')+'.'}
+ try{const latest=await latestCycle();const n=render(latest?[latest]:[]);st.className='status';st.textContent='CONTENUTI DI OGGI PRONTI · '+n+' CICLO VISIBILE.';archiveInBackground(latest)}
  catch(e){st.className='status error';st.textContent='ERRORE NEL CARICAMENTO: '+e.message}
 }
 load();
