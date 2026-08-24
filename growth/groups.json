@@ -714,42 +714,8 @@
       "member_at": null,
       "last_post_at": null,
       "notes": ""
-    },
-    {
-      "id": "FBG-063A068D26",
-      "brand": "f1-immobiliare",
-      "territory": "Almese",
-      "name": "SEI DI ALMESE SE... (ver. 2.0)",
-      "url": "https://www.facebook.com/groups/1612274875481626/",
-      "source_query": "site:facebook.com/groups \"Almese\" \"cittadini\"",
-      "snippet": "Popular groups · Find communities for you · Over 1 billion people across the globe are using Facebook Groups to explore their favorite topics · Log in · Categories · Science & tech · Travel · Animals · Sports & fitness · Entertainment",
-      "status": "PENDING_APPROVAL",
-      "batch_id": "20260823-054601",
-      "discovered_at": "2026-08-23T05:46:16+00:00",
-      "approved_at": null,
-      "join_requested_at": null,
-      "member_at": null,
-      "last_post_at": null,
-      "notes": ""
-    },
-    {
-      "id": "FBG-9D885CE9DA",
-      "brand": "f1-immobiliare",
-      "territory": "Villar Focchiardo",
-      "name": "GRUPPO ALPINI DI VILLAR FOCCHIARDO - Facebook",
-      "url": "https://www.facebook.com/groups/466517227095886/",
-      "source_query": "site:facebook.com/groups \"Villar Focchiardo\" \"cittadini\"",
-      "snippet": "Gruppo di Villar Focchiardo \"Riccardo Panizza\" Via Conte Carroccio, 30 10050 Villar Focchiardo Torino Email: villarfocchiardo.valsusa@ana.it Villar Focchiardo Alovisi Massimo 2w · Public 1-2 agosto 2026 Pian dell'Orso +10 Giuseppe Grasso and 47 others 48 reactions · 1 comment · 20 shares Alovisi Massimo 3w · Public Ed anche quest'anno ...",
-      "status": "PENDING_APPROVAL",
-      "batch_id": "20260823-054601",
-      "discovered_at": "2026-08-23T05:48:45+00:00",
-      "approved_at": null,
-      "join_requested_at": null,
-      "member_at": null,
-      "last_post_at": null,
-      "notes": ""
     }
   ],
-  "updated_at": "2026-08-23T05:51:18+00:00",
-  "last_batch_id": "20260823-054601"
+  "updated_at": "2026-08-21T05:50:36+00:00",
+  "last_batch_id": "20260821-054907"
 }
