@@ -176,7 +176,7 @@ jobs:
             gh api "repos/${GITHUB_REPOSITORY}/contents/${FILE}" --method PUT --input /tmp/payload.json >/dev/null
           done
 
-      - name: Replace latest release with available photos
+      - name: Archive cycle and refresh latest release
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
@@ -195,10 +195,22 @@ jobs:
             fi
           done
           cp publisher/queue.json /tmp/social-release/queue.json
+          CYCLE_KEY=$(python - <<'PY'
+          import json
+          q=json.load(open('publisher/queue.json',encoding='utf-8'))
+          print(str(q.get('current_cycle') or 'unknown').replace(':','-'))
+          PY
+          )
+          ARCHIVE_TAG="social-preview-archive-${CYCLE_KEY}"
+          TITLE="4 FOTO DA CARTELLE - ciclo ${CYCLE_KEY}"
+          NOTES="Archivio permanente del ciclo ${CYCLE_KEY}. F1 Immobiliare + Real Media Pro. Foto e caption conservate per lo storico mobile. Run ${GITHUB_RUN_ID}."
+          if ! gh release view "$ARCHIVE_TAG" >/dev/null 2>&1; then
+            gh release create "$ARCHIVE_TAG" /tmp/social-release/* --title "$TITLE" --notes "$NOTES"
+          fi
           gh release delete social-preview-latest --yes --cleanup-tag >/dev/null 2>&1 || true
           gh release create social-preview-latest /tmp/social-release/* \
-            --title "4 FOTO DA CARTELLE + PUBBLICAZIONE AUTOMATICA - ciclo ${{ needs.rome-gate.outputs.cycle_hour }}:00" \
-            --notes "Ciclo: F1 principale + RIC LAVORO F1 + RMP principale + RIC LAVORO RMP. Solo le immagini caricate dall'utente diventano READY e vengono inviate al publisher automatico. Facebook, Instagram, LinkedIn e Pinterest quando le relative credenziali sono disponibili. Nessun Reel, MP4 o audio. Run ${GITHUB_RUN_ID}."
+            --title "4 FOTO DA CARTELLE + PUBBLICAZIONE AUTOMATICA - ciclo ${CYCLE_KEY}" \
+            --notes "$NOTES"
 
       - name: Notify folder-photo results
         uses: actions/github-script@v8
