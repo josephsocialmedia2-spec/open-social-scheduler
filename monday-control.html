@@ -28,7 +28,7 @@ const itTime=v=>new Date(v).toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2
 const brandClass=id=>id==='real-media-pro'?'rmp':'f1';
 const brandName=id=>id==='real-media-pro'?'REAL MEDIA PRO':'F1 IMMOBILIARE';
 function key(path){return String(path||'').replace(/^publisher\/media\/generated\//,'').replaceAll('/','__')}
-function assetFor(job,assets){const k=key(job.media);return (assets||[]).find(a=>a.name===k)}
+function assetFor(job,assets){const k=key(job.media),releaseAsset=(assets||[]).find(a=>a.name===k);if(releaseAsset)return releaseAsset;const fallback=(job.visual_asset_urls||[]).find(u=>/^https?:\/\//i.test(String(u||'')));return fallback?{browser_download_url:fallback,name:'foto-originale'}:null}
 function cycleDate(cycle,jobs){const d=dateOf(cycle);if(d)return d;return dateOf(jobs?.[0]?.scheduled_at)||new Date()}
 function copyCaption(uid){const j=allJobs.find(x=>x._uid===uid);if(!j?.caption)return;navigator.clipboard.writeText(j.caption).then(()=>{const b=document.getElementById('copy-'+uid);if(b){b.textContent='COPIATA ✓';setTimeout(()=>b.textContent='COPIA CAPTION',1400)}})}
 function card(job,assets,source){
