@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-08-24T16:59:25Z",
+  "updated_at": "2026-08-24T18:52:25Z",
   "brands": {
     "f1-immobiliare": {
       "recent": [
@@ -2698,6 +2698,30 @@
           "url": "https://cdn.pixabay.com/photo/2020/04/12/22/19/mountain-5036022_1280.jpg",
           "used_at": "2026-08-24T16:56:35Z",
           "job_id": "f1-immobiliare-2026-08-24-c16-03-05-g6-prezzo-da-soli",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2021/02/04/14/38/alpine-hut-5981535_960_720.jpg",
+          "url": "https://cdn.pixabay.com/photo/2021/02/04/14/38/alpine-hut-5981535_960_720.jpg",
+          "used_at": "2026-08-24T18:51:15Z",
+          "job_id": "f1-immobiliare-2026-08-24-c20-03-08-g2-proviamo-alto",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/video/2024/02/02/198888-909564511_tiny.jpg",
+          "url": "https://cdn.pixabay.com/video/2024/02/02/198888-909564511_tiny.jpg",
+          "used_at": "2026-08-24T18:51:18Z",
+          "job_id": "f1-immobiliare-2026-08-24-c20-02-07-g1-quanto-vale-davvero",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2021/12/16/20/20/mountains-6875168_960_720.jpg",
+          "url": "https://cdn.pixabay.com/photo/2021/12/16/20/20/mountains-6875168_960_720.jpg",
+          "used_at": "2026-08-24T18:52:25Z",
+          "job_id": "f1-immobiliare-2026-08-24-c20-01-06-g7-cosa-vede-compratore",
           "output_type": "static-photo",
           "source_type": "pixabay-fresh-static-photo"
         }
@@ -5399,6 +5423,30 @@
           "url": "https://cdn.pixabay.com/photo/2018/04/13/16/49/laptop-3317007_1280.jpg",
           "used_at": "2026-08-24T16:59:25Z",
           "job_id": "real-media-pro-2026-08-24-c16-03-05-audit-digitale",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2015/09/05/23/25/business-926221.jpg",
+          "url": "https://cdn.pixabay.com/photo/2015/09/05/23/25/business-926221_1280.jpg",
+          "used_at": "2026-08-24T18:48:57Z",
+          "job_id": "real-media-pro-2026-08-24-c20-03-08-crm-followup",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2022/03/25/01/44/online-shop-7090116.png",
+          "url": "https://cdn.pixabay.com/photo/2022/03/25/01/44/online-shop-7090116_1280.png",
+          "used_at": "2026-08-24T18:50:04Z",
+          "job_id": "real-media-pro-2026-08-24-c20-02-07-seo-ai-search",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2024/06/14/12/15/developer-8829735.jpg",
+          "url": "https://cdn.pixabay.com/photo/2024/06/14/12/15/developer-8829735_1280.jpg",
+          "used_at": "2026-08-24T18:50:07Z",
+          "job_id": "real-media-pro-2026-08-24-c20-01-06-shopify-servizio",
           "output_type": "static-photo",
           "source_type": "pixabay-fresh-static-photo"
         }
