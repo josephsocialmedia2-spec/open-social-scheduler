@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-08-25T14:54:00Z",
+  "updated_at": "2026-08-25T18:50:22Z",
   "brands": {
     "f1-immobiliare": {
       "recent": [
@@ -2842,6 +2842,30 @@
           "url": "manual://publisher/manual_images/f1-immobiliare/RIC LAVORO F1/image-gen-1(20260816-073206).png",
           "used_at": "2026-08-25T14:54:00Z",
           "job_id": "f1-immobiliare-2026-08-25-c16-01-03-g5-dopo-pubblicazione",
+          "output_type": "static-photo",
+          "source_type": "manual-upload"
+        },
+        {
+          "key": "manual://publisher/manual_images/f1-immobiliare/RIC LAVORO F1/image-gen-1(20260817-093557).png",
+          "url": "manual://publisher/manual_images/f1-immobiliare/RIC LAVORO F1/image-gen-1(20260817-093557).png",
+          "used_at": "2026-08-25T18:50:22Z",
+          "job_id": "f1-immobiliare-2026-08-25-c20-03-08-g3-cinquecento-metri",
+          "output_type": "static-photo",
+          "source_type": "manual-upload"
+        },
+        {
+          "key": "manual://publisher/manual_images/f1-immobiliare/RIC LAVORO F1/image-gen-1(20260817-111804) (1).png",
+          "url": "manual://publisher/manual_images/f1-immobiliare/RIC LAVORO F1/image-gen-1(20260817-111804) (1).png",
+          "used_at": "2026-08-25T18:50:22Z",
+          "job_id": "f1-immobiliare-2026-08-25-c20-02-07-g2-tre-prezzi",
+          "output_type": "static-photo",
+          "source_type": "manual-upload"
+        },
+        {
+          "key": "manual://publisher/manual_images/f1-immobiliare/RIC LAVORO F1/image-gen-1(20260817-111804).png",
+          "url": "manual://publisher/manual_images/f1-immobiliare/RIC LAVORO F1/image-gen-1(20260817-111804).png",
+          "used_at": "2026-08-25T18:50:22Z",
+          "job_id": "f1-immobiliare-2026-08-25-c20-01-06-g1-tre-agenzie",
           "output_type": "static-photo",
           "source_type": "manual-upload"
         }
@@ -5687,6 +5711,30 @@
           "url": "https://cdn.pixabay.com/photo/2023/12/12/08/12/woman-8444805_1280.jpg",
           "used_at": "2026-08-25T14:53:59Z",
           "job_id": "real-media-pro-2026-08-25-c16-01-03-seo-servizio",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2016/09/30/19/10/ecommerce-1706105.png",
+          "url": "https://cdn.pixabay.com/photo/2016/09/30/19/10/ecommerce-1706105_1280.png",
+          "used_at": "2026-08-25T18:47:51Z",
+          "job_id": "real-media-pro-2026-08-25-c20-03-08-audit-digitale",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2016/03/26/13/09/laptop-1280536.jpg",
+          "url": "https://cdn.pixabay.com/photo/2016/03/26/13/09/laptop-1280536_1280.jpg",
+          "used_at": "2026-08-25T18:50:03Z",
+          "job_id": "real-media-pro-2026-08-25-c20-02-07-sito-che-perde-lead",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2015/04/20/17/40/laptop-731904_960_720.jpg",
+          "url": "https://cdn.pixabay.com/photo/2015/04/20/17/40/laptop-731904_960_720.jpg",
+          "used_at": "2026-08-25T18:50:22Z",
+          "job_id": "real-media-pro-2026-08-25-c20-01-06-advertising-sistema",
           "output_type": "static-photo",
           "source_type": "pixabay-fresh-static-photo"
         }
