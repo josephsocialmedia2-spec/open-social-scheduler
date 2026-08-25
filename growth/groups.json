@@ -714,8 +714,25 @@
       "member_at": null,
       "last_post_at": null,
       "notes": ""
+    },
+    {
+      "id": "FBG-CE46DD5AC5",
+      "brand": "f1-immobiliare",
+      "territory": "Avigliana",
+      "name": "Valle di Susa Avigliana Centro storico Panorama dal castello",
+      "url": "https://www.facebook.com/groups/450413288428785/",
+      "source_query": "site:facebook.com/groups \"Avigliana\" \"mercatino\"",
+      "snippet": "October 25, 2024 - See posts, photos and more on Facebook",
+      "status": "PENDING_APPROVAL",
+      "batch_id": "20260825-054832",
+      "discovered_at": "2026-08-25T05:48:34+00:00",
+      "approved_at": null,
+      "join_requested_at": null,
+      "member_at": null,
+      "last_post_at": null,
+      "notes": ""
     }
   ],
-  "updated_at": "2026-08-21T05:50:36+00:00",
-  "last_batch_id": "20260821-054907"
+  "updated_at": "2026-08-25T05:49:36+00:00",
+  "last_batch_id": "20260825-054832"
 }
