@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-08-25T07:05:00Z",
+  "updated_at": "2026-08-25T10:41:15Z",
   "brands": {
     "f1-immobiliare": {
       "recent": [
@@ -2770,6 +2770,30 @@
           "url": "https://cdn.pixabay.com/photo/2019/08/26/09/30/house-4431217_960_720.jpg",
           "used_at": "2026-08-25T07:05:00Z",
           "job_id": "f1-immobiliare-2026-08-25-c08-01-07-g2-tre-prezzi",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2019/09/03/10/53/the-alps-4449150.jpg",
+          "url": "https://cdn.pixabay.com/photo/2019/09/03/10/53/the-alps-4449150_1280.jpg",
+          "used_at": "2026-08-25T10:40:34Z",
+          "job_id": "f1-immobiliare-2026-08-25-c12-03-02-g4-ribasso-senza-diagnosi",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2021/04/10/11/26/real-6166739.jpg",
+          "url": "https://cdn.pixabay.com/photo/2021/04/10/11/26/real-6166739_1280.jpg",
+          "used_at": "2026-08-25T10:40:38Z",
+          "job_id": "f1-immobiliare-2026-08-25-c12-02-01-g3-media-torino",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2021/02/04/14/38/alpine-hut-5981535.jpg",
+          "url": "https://cdn.pixabay.com/photo/2021/02/04/14/38/alpine-hut-5981535_1280.jpg",
+          "used_at": "2026-08-25T10:41:15Z",
+          "job_id": "f1-immobiliare-2026-08-25-c12-01-10-g5-domanda-agente",
           "output_type": "static-photo",
           "source_type": "pixabay-fresh-static-photo"
         }
@@ -5543,6 +5567,30 @@
           "url": "https://cdn.pixabay.com/photo/2020/08/25/18/29/workplace-5517762_960_720.jpg",
           "used_at": "2026-08-25T06:58:21Z",
           "job_id": "real-media-pro-2026-08-25-c08-01-07-sito-che-perde-lead",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2021/05/09/18/52/laptop-6241789_960_720.jpg",
+          "url": "https://cdn.pixabay.com/photo/2021/05/09/18/52/laptop-6241789_960_720.jpg",
+          "used_at": "2026-08-25T10:39:50Z",
+          "job_id": "real-media-pro-2026-08-25-c12-03-02-creative-testing",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2015/09/05/22/33/office-925806.jpg",
+          "url": "https://cdn.pixabay.com/photo/2015/09/05/22/33/office-925806_1280.jpg",
+          "used_at": "2026-08-25T10:39:54Z",
+          "job_id": "real-media-pro-2026-08-25-c12-02-01-seo-ai-search",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2016/03/26/13/09/workspace-1280538.jpg",
+          "url": "https://cdn.pixabay.com/photo/2016/03/26/13/09/workspace-1280538_1280.jpg",
+          "used_at": "2026-08-25T10:39:57Z",
+          "job_id": "real-media-pro-2026-08-25-c12-01-10-google-ads-intento",
           "output_type": "static-photo",
           "source_type": "pixabay-fresh-static-photo"
         }
