@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-08-25T13:30:19Z",
+  "updated_at": "2026-08-25T14:54:00Z",
   "brands": {
     "f1-immobiliare": {
       "recent": [
@@ -2818,6 +2818,30 @@
           "url": "manual://publisher/manual_images/f1-immobiliare/RIC LAVORO F1/ChatGPT Image 24 ago 2026, 18_51_05 (1).png",
           "used_at": "2026-08-25T13:28:19Z",
           "job_id": "f1-immobiliare-2026-08-25-c12-03-02-g4-ribasso-senza-diagnosi",
+          "output_type": "static-photo",
+          "source_type": "manual-upload"
+        },
+        {
+          "key": "manual://publisher/manual_images/f1-immobiliare/RIC LAVORO F1/ChatGPT Image 24 ago 2026, 18_51_05 (2).png",
+          "url": "manual://publisher/manual_images/f1-immobiliare/RIC LAVORO F1/ChatGPT Image 24 ago 2026, 18_51_05 (2).png",
+          "used_at": "2026-08-25T14:53:59Z",
+          "job_id": "f1-immobiliare-2026-08-25-c16-03-05-g7-comparabile-escluso",
+          "output_type": "static-photo",
+          "source_type": "manual-upload"
+        },
+        {
+          "key": "manual://publisher/manual_images/f1-immobiliare/RIC LAVORO F1/Cortile soleggiato con giardino urbano.png",
+          "url": "manual://publisher/manual_images/f1-immobiliare/RIC LAVORO F1/Cortile soleggiato con giardino urbano.png",
+          "used_at": "2026-08-25T14:53:59Z",
+          "job_id": "f1-immobiliare-2026-08-25-c16-02-04-g6-vendita-privata-verifiche",
+          "output_type": "static-photo",
+          "source_type": "manual-upload"
+        },
+        {
+          "key": "manual://publisher/manual_images/f1-immobiliare/RIC LAVORO F1/image-gen-1(20260816-073206).png",
+          "url": "manual://publisher/manual_images/f1-immobiliare/RIC LAVORO F1/image-gen-1(20260816-073206).png",
+          "used_at": "2026-08-25T14:54:00Z",
+          "job_id": "f1-immobiliare-2026-08-25-c16-01-03-g5-dopo-pubblicazione",
           "output_type": "static-photo",
           "source_type": "manual-upload"
         }
@@ -5639,6 +5663,30 @@
           "url": "https://cdn.pixabay.com/photo/2022/03/12/08/05/workspace-7063595_1280.jpg",
           "used_at": "2026-08-25T13:30:19Z",
           "job_id": "real-media-pro-2026-08-25-c12-03-02-creative-testing",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2023/05/02/06/58/digital-marketing-7964508_1440_2560.png",
+          "url": "https://cdn.pixabay.com/photo/2023/05/02/06/58/digital-marketing-7964508_1440_2560.png",
+          "used_at": "2026-08-25T14:53:22Z",
+          "job_id": "real-media-pro-2026-08-25-c16-03-05-shopify-product-page",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2021/01/30/16/37/online-shop-5964488.jpg",
+          "url": "https://cdn.pixabay.com/photo/2021/01/30/16/37/online-shop-5964488_1280.jpg",
+          "used_at": "2026-08-25T14:53:58Z",
+          "job_id": "real-media-pro-2026-08-25-c16-02-04-meta-ads-creative",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2023/12/12/08/12/woman-8444805.jpg",
+          "url": "https://cdn.pixabay.com/photo/2023/12/12/08/12/woman-8444805_1280.jpg",
+          "used_at": "2026-08-25T14:53:59Z",
+          "job_id": "real-media-pro-2026-08-25-c16-01-03-seo-servizio",
           "output_type": "static-photo",
           "source_type": "pixabay-fresh-static-photo"
         }
