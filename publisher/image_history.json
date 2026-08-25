@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-08-25T10:41:15Z",
+  "updated_at": "2026-08-25T13:30:19Z",
   "brands": {
     "f1-immobiliare": {
       "recent": [
@@ -2796,6 +2796,30 @@
           "job_id": "f1-immobiliare-2026-08-25-c12-01-10-g5-domanda-agente",
           "output_type": "static-photo",
           "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "manual://publisher/manual_images/f1-immobiliare/RIC LAVORO F1/Certificato_Valutazione_Professionale_Aurigemma_Francesca (1).png",
+          "url": "manual://publisher/manual_images/f1-immobiliare/RIC LAVORO F1/Certificato_Valutazione_Professionale_Aurigemma_Francesca (1).png",
+          "used_at": "2026-08-25T13:28:19Z",
+          "job_id": "f1-immobiliare-2026-08-25-c12-01-10-g5-domanda-agente",
+          "output_type": "static-photo",
+          "source_type": "manual-upload"
+        },
+        {
+          "key": "manual://publisher/manual_images/f1-immobiliare/RIC LAVORO F1/Certificato_Valutazione_Professionale_Aurigemma_Francesca.png",
+          "url": "manual://publisher/manual_images/f1-immobiliare/RIC LAVORO F1/Certificato_Valutazione_Professionale_Aurigemma_Francesca.png",
+          "used_at": "2026-08-25T13:28:19Z",
+          "job_id": "f1-immobiliare-2026-08-25-c12-02-01-g3-media-torino",
+          "output_type": "static-photo",
+          "source_type": "manual-upload"
+        },
+        {
+          "key": "manual://publisher/manual_images/f1-immobiliare/RIC LAVORO F1/ChatGPT Image 24 ago 2026, 18_51_05 (1).png",
+          "url": "manual://publisher/manual_images/f1-immobiliare/RIC LAVORO F1/ChatGPT Image 24 ago 2026, 18_51_05 (1).png",
+          "used_at": "2026-08-25T13:28:19Z",
+          "job_id": "f1-immobiliare-2026-08-25-c12-03-02-g4-ribasso-senza-diagnosi",
+          "output_type": "static-photo",
+          "source_type": "manual-upload"
         }
       ]
     },
@@ -5591,6 +5615,30 @@
           "url": "https://cdn.pixabay.com/photo/2016/03/26/13/09/workspace-1280538_1280.jpg",
           "used_at": "2026-08-25T10:39:57Z",
           "job_id": "real-media-pro-2026-08-25-c12-01-10-google-ads-intento",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2017/01/17/03/57/desktop-1985856.jpg",
+          "url": "https://cdn.pixabay.com/photo/2017/01/17/03/57/desktop-1985856_1280.jpg",
+          "used_at": "2026-08-25T13:28:21Z",
+          "job_id": "real-media-pro-2026-08-25-c12-01-10-google-ads-intento",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2015/05/20/08/57/laptop-775002_960_720.jpg",
+          "url": "https://cdn.pixabay.com/photo/2015/05/20/08/57/laptop-775002_960_720.jpg",
+          "used_at": "2026-08-25T13:28:56Z",
+          "job_id": "real-media-pro-2026-08-25-c12-02-01-seo-ai-search",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2022/03/12/08/05/workspace-7063595.jpg",
+          "url": "https://cdn.pixabay.com/photo/2022/03/12/08/05/workspace-7063595_1280.jpg",
+          "used_at": "2026-08-25T13:30:19Z",
+          "job_id": "real-media-pro-2026-08-25-c12-03-02-creative-testing",
           "output_type": "static-photo",
           "source_type": "pixabay-fresh-static-photo"
         }
