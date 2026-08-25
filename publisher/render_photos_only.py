@@ -69,7 +69,7 @@ def manual_candidates(cid: str) -> list[tuple[str, Path]]:
     if not folder.exists():
         return []
     rows: list[tuple[str, Path]] = []
-    for path in sorted(folder.iterdir(), key=lambda p: p.name.casefold()):
+    for path in sorted(folder.rglob("*"), key=lambda p: p.relative_to(folder).as_posix().casefold()):
         if not path.is_file() or path.suffix.lower() not in ALLOWED:
             continue
         rel = path.relative_to(ROOT).as_posix()
