@@ -19,6 +19,7 @@ on:
       - 'publisher/requirements.txt'
       - 'publisher/image_history.json'
       - 'publisher/clients/**'
+      - 'publisher/manual_images/**'
 
 permissions:
   contents: write
