@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-08-26T07:02:30Z",
+  "updated_at": "2026-08-26T10:45:50Z",
   "brands": {
     "f1-immobiliare": {
       "recent": [
@@ -2914,6 +2914,30 @@
           "url": "manual://publisher/manual_images/f1-immobiliare/RIC LAVORO F1/image-gen-1(20260821-052307).png",
           "used_at": "2026-08-26T07:02:30Z",
           "job_id": "f1-immobiliare-2026-08-26-c08-01-07-g3-media-torino",
+          "output_type": "static-photo",
+          "source_type": "manual-upload"
+        },
+        {
+          "key": "manual://publisher/manual_images/f1-immobiliare/RIC LAVORO F1/image-gen-1(20260821-080952).png",
+          "url": "manual://publisher/manual_images/f1-immobiliare/RIC LAVORO F1/image-gen-1(20260821-080952).png",
+          "used_at": "2026-08-26T10:45:50Z",
+          "job_id": "f1-immobiliare-2026-08-26-c12-03-02-g5-non-solo-quanto-vale",
+          "output_type": "static-photo",
+          "source_type": "manual-upload"
+        },
+        {
+          "key": "manual://publisher/manual_images/f1-immobiliare/RIC LAVORO F1/image-gen-1(20260821-081602).png",
+          "url": "manual://publisher/manual_images/f1-immobiliare/RIC LAVORO F1/image-gen-1(20260821-081602).png",
+          "used_at": "2026-08-26T10:45:50Z",
+          "job_id": "f1-immobiliare-2026-08-26-c12-02-01-g4-novanta-giorni",
+          "output_type": "static-photo",
+          "source_type": "manual-upload"
+        },
+        {
+          "key": "manual://publisher/manual_images/f1-immobiliare/RIC LAVORO F1/image-gen-1(20260821-082120).png",
+          "url": "manual://publisher/manual_images/f1-immobiliare/RIC LAVORO F1/image-gen-1(20260821-082120).png",
+          "used_at": "2026-08-26T10:45:50Z",
+          "job_id": "f1-immobiliare-2026-08-26-c12-01-10-g6-vendita-privata-verifiche",
           "output_type": "static-photo",
           "source_type": "manual-upload"
         }
@@ -5831,6 +5855,30 @@
           "url": "https://cdn.pixabay.com/photo/2026/04/22/11/56/customstickers1-digital-marketing-10240842_1280.png",
           "used_at": "2026-08-26T07:02:30Z",
           "job_id": "real-media-pro-2026-08-26-c08-01-07-shopify-che-converte",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2019/09/30/15/22/online-shopping-4516037.jpg",
+          "url": "https://cdn.pixabay.com/photo/2019/09/30/15/22/online-shopping-4516037_1280.jpg",
+          "used_at": "2026-08-26T10:42:14Z",
+          "job_id": "real-media-pro-2026-08-26-c12-03-02-crm-followup",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2019/03/25/08/55/shopping-4079710.jpg",
+          "url": "https://cdn.pixabay.com/photo/2019/03/25/08/55/shopping-4079710_1280.jpg",
+          "used_at": "2026-08-26T10:44:26Z",
+          "job_id": "real-media-pro-2026-08-26-c12-02-01-sito-che-perde-lead",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2020/02/12/09/19/business-4842080.png",
+          "url": "https://cdn.pixabay.com/photo/2020/02/12/09/19/business-4842080_1280.png",
+          "used_at": "2026-08-26T10:45:50Z",
+          "job_id": "real-media-pro-2026-08-26-c12-01-10-seo-ai-search",
           "output_type": "static-photo",
           "source_type": "pixabay-fresh-static-photo"
         }
