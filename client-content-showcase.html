@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Real Media Pro · Vetrina Contenuti Cliente</title>
+<style>
+:root{--panel:#0a110b;--line:#2d3b2e;--text:#f6f8f4;--muted:#aab4aa;--lime:#9fe000;--mint:#67e8c4;--soft:#111912}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:linear-gradient(180deg,#020402,#071008);color:var(--text);font:15px/1.45 Arial,sans-serif}.wrap{width:min(1400px,calc(100% - 24px));margin:auto;padding:22px 0 70px}h1{margin:0 0 4px;font-size:clamp(30px,7vw,48px);line-height:1}.sub,.meta{color:var(--muted)}.hero{display:grid;grid-template-columns:1.25fr .75fr;gap:16px;align-items:end;padding:18px 0 4px}.hero-right{border:1px solid var(--line);background:#081009;border-radius:16px;padding:14px}.hero-right strong{color:var(--lime)}.toolbar,.actions,.sectors{display:flex;gap:8px;flex-wrap:wrap}.toolbar{margin:18px 0 10px}.btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border:0;border-radius:10px;padding:11px 13px;font-weight:900;cursor:pointer;background:var(--lime);color:#061005}.btn.alt{background:transparent;color:#fff;border:1px solid #465448}.btn.mint{background:var(--mint);color:#05120e}.sector{background:#09100a;color:#fff;border:1px solid #334235;border-radius:999px;padding:9px 12px;font-weight:900;cursor:pointer}.sector.active{background:var(--lime);color:#061005;border-color:var(--lime)}.status{padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#09100a;color:#cbd3cb;margin:14px 0 18px}.status b{color:var(--lime)}.summary{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}.kpi{border:1px solid var(--line);border-radius:14px;background:#09100a;padding:14px}.kpi .n{font-size:28px;font-weight:900;color:var(--lime)}.kpi small{color:var(--muted)}.section-title{font-size:23px;margin:30px 0 12px;padding-bottom:8px;border-bottom:1px solid #314132}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden;min-width:0}.media{background:#000;min-height:170px;position:relative;overflow:hidden}.media img{width:100%;display:block;aspect-ratio:4/5;object-fit:cover;transition:transform .35s ease}.card:hover .media img{transform:scale(1.025)}.format{position:absolute;top:10px;left:10px;background:rgba(0,0,0,.76);color:#fff;border:1px solid rgba(255,255,255,.15);border-radius:999px;padding:6px 9px;font-size:10px;font-weight:900;letter-spacing:.06em}.goal{position:absolute;right:10px;bottom:10px;background:var(--lime);color:#071007;border-radius:999px;padding:6px 9px;font-size:10px;font-weight:900}.body{padding:12px}.brand{font-size:10px;font-weight:900;letter-spacing:.08em;color:var(--lime)}.title{font-size:18px;font-weight:900;margin:5px 0 7px}.caption-label{font-size:10px;font-weight:900;color:var(--muted);margin:12px 0 6px}.caption{white-space:pre-wrap;background:#050805;border:1px solid #334235;border-radius:10px;padding:10px;min-height:112px;font-size:12px}.cta{margin-top:10px;border-left:3px solid var(--mint);padding:8px 10px;background:#08100b;border-radius:0 8px 8px 0;font-size:12px}.cta b{color:var(--mint)}.frequency{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}.freq{border:1px solid var(--line);border-radius:14px;padding:14px;background:#09100a}.freq strong{display:block;font-size:20px;color:var(--lime)}.story-strip{display:flex;gap:10px;overflow:auto;padding:4px 0 8px;scroll-snap-type:x mandatory}.story{flex:0 0 160px;border:1px solid var(--line);border-radius:18px;background:#09100a;padding:8px;scroll-snap-align:start}.story img{width:100%;aspect-ratio:9/16;object-fit:cover;border-radius:12px}.story b{display:block;margin-top:7px;font-size:12px}.proposal{margin-top:28px;border:1px solid #3c551d;background:linear-gradient(135deg,#09100a,#0f1a10);border-radius:18px;padding:18px}.proposal h2{margin:0 0 7px}.proposal strong{color:var(--lime)}.footer{text-align:center;color:#778179;font-size:11px;margin-top:34px}.hidden{display:none!important}@media(max-width:1050px){.grid{grid-template-columns:repeat(2,1fr)}.summary{grid-template-columns:repeat(2,1fr)}.hero{grid-template-columns:1fr}}@media(max-width:700px){.grid,.summary,.frequency{grid-template-columns:1fr}.toolbar .btn{flex:1 1 46%}.sector{flex:1 1 45%;text-align:center}.story{flex-basis:135px}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <section class="hero">
+    <div>
+      <h1>LA TUA PAGINA POTREBBE ESSERE COSÌ</h1>
+      <div class="sub">Una vetrina contenuti da scorrere insieme al cliente: post, Reel, Stories, CTA e frequenza pensati per portare persone reali all'attività.</div>
+    </div>
+    <div class="hero-right">Non mostriamo “post a caso”. Mostriamo <strong>cosa pubblicheremmo, perché lo pubblicheremmo e quale azione vogliamo ottenere</strong>.</div>
+  </section>
+
+  <div class="toolbar">
+    <button class="btn" onclick="scrollToContent()">VEDI I CONTENUTI</button>
+    <button class="btn mint" onclick="document.getElementById('proposta').scrollIntoView()">VEDI LA STRATEGIA</button>
+  </div>
+
+  <div class="sectors" id="sectors"></div>
+  <div id="status" class="status"></div>
+  <div id="summary" class="summary"></div>
+
+  <h2 class="section-title" id="contenuti">CONTENUTI CHE IL CLIENTE VEDREBBE SCORRENDO</h2>
+  <div id="grid" class="grid"></div>
+
+  <h2 class="section-title">STORIES / APPUNTAMENTI / URGENZA</h2>
+  <div id="stories" class="story-strip"></div>
+
+  <h2 class="section-title">FREQUENZA DI PUBBLICAZIONE</h2>
+  <div id="frequency" class="frequency"></div>
+
+  <section class="proposal" id="proposta">
+    <h2>VUOI PIÙ CLIENTI? FACCIAMO COSÌ.</h2>
+    <p id="proposalText"></p>
+    <div class="actions"><button class="btn" onclick="scrollToContent()">RIVEDI LA VETRINA</button></div>
+  </section>
+  <div class="footer">Real Media Pro · vetrina dimostrativa per presentazione cliente · ramo separato client-content-showcase</div>
+</main>
+<script>
+const SECTORS={
+  immobiliare:{label:'AGENZIA IMMOBILIARE',accent:'F1 / AGENZIA',summary:['Immobili','Valutazioni','Open House','Risultati'],proposal:'Per un\'agenzia immobiliare la pagina deve alternare immobili, acquisizione venditori, prove sociali e contenuti di zona. L\'obiettivo non è solo ottenere like: è generare richieste di valutazione, visite e nuovi incarichi.',frequency:['3 Reel / settimana','2 Post o Carousel','Stories 5–7 giorni'],images:['https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=900&q=80'],cards:[
+    ['REEL','APPENA MESSO IN VENDITA','Nuovo immobile con apertura forte, zona, beneficio principale e invito alla visita.','PRENOTA UNA VISITA','ACQUISIZIONE'],
+    ['CAROUSEL','QUANTO VALE CASA TUA?','Microzona, comparabili e perché una valutazione corretta cambia il risultato di vendita.','RICHIEDI UNA VALUTAZIONE','LEAD VENDITORI'],
+    ['POST','OPEN HOUSE','Data, orario, posti disponibili e motivo concreto per prenotarsi.','PRENOTA IL TUO SLOT','EVENTO'],
+    ['REEL','TOUR IMMOBILE','Ingresso, zona giorno, camere, esterni e dettaglio emozionale in 30–45 secondi.','SCOPRI L\'IMMOBILE','VISITE'],
+    ['POST','VENDUTO','Raccontiamo il risultato, il metodo e la prova sociale senza limitarci al cartello venduto.','VUOI VENDERE ANCHE TU?','FIDUCIA'],
+    ['CAROUSEL','3 ERRORI CHE FANNO PERDERE VALORE','Prezzo, presentazione e strategia: cosa correggere prima della pubblicazione.','SCOPRI IL METODO','AUTOREVOLEZZA'],
+    ['REEL','VIVERE QUI','Scuole, servizi, collegamenti e qualità della microzona: non vendiamo solo muri.','SCOPRI LA ZONA','DESIDERIO'],
+    ['POST','PRIMA / DOPO PRESENTAZIONE','Come cambia la percezione con foto, ordine, copy e piano marketing.','RICHIEDI IL PIANO','DIFFERENZIAZIONE'],
+    ['REEL','DIETRO LE QUINTE','Foto, video, campagne, telefonate e follow-up: cosa facciamo per vendere.','AFFIDACI IL TUO IMMOBILE','METODO']
+  ]},
+  ristorante:{label:'RISTORANTE',accent:'RISTORANTE',summary:['Cerimonie','Menu speciali','Eventi','Prenotazioni'],proposal:'Per un ristorante la pagina deve far desiderare l\'esperienza e creare occasioni concrete per venire: cerimonie, menu speciali, degustazioni, domeniche, eventi e posti limitati. Ogni contenuto deve poter chiudere con una prenotazione.',frequency:['3 Reel / settimana','2 Post o Carousel','Stories quotidiane'],images:['https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=900&q=80'],cards:[
+    ['REEL','CERIMONIE CHE RESTANO IMPRESSE','Sala, mise en place, piatti e dettagli per matrimoni, comunioni e ricorrenze.','CHIEDI DISPONIBILITÀ','CERIMONIE'],
+    ['CAROUSEL','MENU CERIMONIA','Percorso completo: aperitivo, portate, dessert e opzioni personalizzate.','RICHIEDI IL MENU','SCONTRINO'],
+    ['REEL','LA SALA PRIMA DELL\'ARRIVO','Preparazione tavoli, luci e accoglienza: facciamo vivere il momento prima della visita.','PRENOTA UN SOPRALLUOGO','DESIDERIO'],
+    ['POST','PRANZO DELLA DOMENICA','Menu, data e posti disponibili. Un appuntamento ricorrente, non un post isolato.','PRENOTA IL TAVOLO','FREQUENZA'],
+    ['REEL','PIATTO FIRMA','Preparazione ravvicinata, servizio e reazione finale.','VIENI A PROVARLO','ACQUISIZIONE'],
+    ['POST','SERATA DEGUSTAZIONE','Tema, produttore, menu e numero di posti.','RISERVA ORA','EVENTO'],
+    ['CAROUSEL','COMPLEANNO / ANNIVERSARIO','Tre formule possibili per trasformare una ricorrenza in una prenotazione.','ORGANIZZA IL TUO EVENTO','CERIMONIE'],
+    ['REEL','DIETRO LE QUINTE IN CUCINA','Persone, preparazione e cura: la fiducia passa anche da qui.','SCOPRI CHI SIAMO','FIDUCIA'],
+    ['POST','ULTIMI POSTI WEEKEND','Urgenza reale e CTA semplice su WhatsApp o telefono.','BLOCCA IL TAVOLO','CONVERSIONE']
+  ]},
+  parrucchiere:{label:'PARRUCCHIERE',accent:'HAIR',summary:['Prima/Dopo','Colore','Trattamenti','Prenotazioni'],proposal:'Per un parrucchiere la pagina deve mostrare trasformazioni reali, problemi risolti e appuntamenti commerciali ricorrenti: colore day, trattamento stagionale, bridal hair e pacchetti frequenza.',frequency:['3 Reel / settimana','2 Carousel / Post','Stories 5–7 giorni'],images:['https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?auto=format&fit=crop&w=900&q=80'],cards:[
+    ['REEL','PRIMA / DOPO COLORE','Problema iniziale, processo e risultato finale senza filtri eccessivi.','SCRIVI COLORE','ACQUISIZIONE'],
+    ['POST','PIEGA DAY','Giorno fisso, slot disponibili e vantaggio chiaro.','PRENOTA LA PIEGA','FREQUENZA'],
+    ['CAROUSEL','CAPELLI SPENTI?','Segnali, soluzione e trattamento consigliato.','PRENOTA IL CHECK','CONSULENZA'],
+    ['REEL','TRASFORMAZIONE COMPLETA','Taglio, colore e styling raccontati come una vera trasformazione.','PRENOTA CONSULENZA','DESIDERIO'],
+    ['POST','BRIDAL HAIR','Acconciature sposa e cerimonia con prove e pacchetto dedicato.','CHIEDI DISPONIBILITÀ','CERIMONIE'],
+    ['REEL','DIETRO LE QUINTE','Tecnica, prodotti e professionalità del team.','SCOPRI IL SALONE','FIDUCIA'],
+    ['POST','PORTA UN\'AMICA','Meccanica semplice e vantaggio per entrambe.','INVITA UN\'AMICA','REFERRAL'],
+    ['CAROUSEL','PACCHETTO 4 PIEGHE','Una proposta pensata per aumentare la frequenza mensile.','ATTIVA IL PACCHETTO','FREQUENZA'],
+    ['REEL','ULTIMI SLOT DELLA SETTIMANA','Agenda reale e urgenza sulle disponibilità.','SCRIVICI ORA','CONVERSIONE']
+  ]},
+  estetista:{label:'CENTRO ESTETICO',accent:'BEAUTY',summary:['Check','Trattamenti','Percorsi','Open Day'],proposal:'Per un centro estetico i social devono portare alla prova, al check e al percorso: diagnosi iniziale, trattamento, risultato, pacchetto e richiamo. La vetrina deve essere rassicurante e orientata alla prenotazione.',frequency:['3 Reel / settimana','2 Post / Carousel','Stories quotidiane'],images:['https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?auto=format&fit=crop&w=900&q=80'],cards:[
+    ['REEL','SKIN CHECK DAY','Analisi iniziale, spiegazione del problema e indicazione del percorso.','PRENOTA IL CHECK','ACQUISIZIONE'],
+    ['CAROUSEL','PERCORSO VISO 4 SEDUTE','Cosa facciamo, per chi è indicato e come si struttura il percorso.','CHIEDI IL PERCORSO','SCONTRINO'],
+    ['REEL','PRIMA / DOPO','Risultato reale raccontato con tempi e trattamento.','PRENOTA UNA VALUTAZIONE','PROVA SOCIALE'],
+    ['POST','OPEN DAY','Data, trattamento prova e numero di posti disponibili.','BLOCCA IL POSTO','EVENTO'],
+    ['REEL','TRATTAMENTO STAGIONALE','Bisogno del periodo, soluzione e risultato atteso.','SCRIVI PROVA','ACQUISIZIONE'],
+    ['POST','BRIDAL BEAUTY','Percorso pelle e corpo prima di matrimonio o cerimonia.','CHIEDI DISPONIBILITÀ','CERIMONIE'],
+    ['CAROUSEL','3 ERRORI NELLA ROUTINE','Educazione semplice che porta al check professionale.','PRENOTA IL CHECK','AUTOREVOLEZZA'],
+    ['POST','BEAUTY MEMBERSHIP','Programma ricorrente con vantaggi e appuntamenti pianificati.','SCOPRI LA MEMBERSHIP','FIDELIZZAZIONE'],
+    ['REEL','ULTIMI SLOT','Disponibilità reali della settimana.','PRENOTA ORA','CONVERSIONE']
+  ]},
+  pizzeria:{label:'PIZZERIA',accent:'PIZZERIA',summary:['Pizza del mese','Famiglie','Eventi','Prenotazioni'],proposal:'Per una pizzeria servono appuntamenti che creino abitudine: pizza del mese, menu famiglia, giro pizza, partite ed edizioni limitate. Il feed deve far venire fame e dare sempre un motivo per scegliere proprio quella sera.',frequency:['3 Reel / settimana','2 Post / Carousel','Stories weekend + eventi'],images:['https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=900&q=80'],cards:[
+    ['REEL','PIZZA DEL MESE','Ingredienti, preparazione e disponibilità limitata nel tempo.','VIENI A PROVARLA','ACQUISIZIONE'],
+    ['POST','MENU FAMIGLIA','Formula semplice per una serata in famiglia.','PRENOTA IL TAVOLO','FREQUENZA'],
+    ['REEL','IMPASTO / FORNO','Processo, qualità e artigianalità.','SCOPRI COME LA FACCIAMO','FIDUCIA'],
+    ['POST','GIRO PIZZA','Data, prezzo, cosa comprende e posti disponibili.','BLOCCA IL POSTO','EVENTO'],
+    ['CAROUSEL','BIRRA + PIZZA','Abbinamenti e proposta serata.','PRENOTA','SCONTRINO'],
+    ['REEL','LIMITED EDITION','Una pizza disponibile solo per pochi giorni.','SOLO QUESTA SETTIMANA','URGENZA'],
+    ['POST','PARTITA + PIZZA','Evento sportivo e prenotazione tavolo.','RISERVA ORA','EVENTO'],
+    ['REEL','CLIENTI / ATMOSFERA','Esperienza reale, gruppo e locale pieno.','VIENI CON GLI AMICI','PROVA SOCIALE'],
+    ['POST','ULTIMI TAVOLI','Disponibilità reale del weekend.','PRENOTA ORA','CONVERSIONE']
+  ]},
+  bar:{label:'BAR / COCKTAIL',accent:'BAR',summary:['Aperitivo','Cocktail','Live','Eventi'],proposal:'Per un bar servono ricorrenze e motivi per uscire: aperitivo fisso, cocktail del mese, live, quiz, brunch e degustazioni. Il social deve trasformarsi in calendario degli appuntamenti.',frequency:['3 Reel / settimana','2 Post / Carousel','Stories quotidiane 17–23'],images:['https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1481833761820-0509d3217039?auto=format&fit=crop&w=900&q=80'],cards:[
+    ['REEL','APERITIVO DEL GIOVEDÌ','Un appuntamento fisso che crea abitudine.','PRENOTA IL TAVOLO','FREQUENZA'],
+    ['POST','COCKTAIL DEL MESE','Drink firma con storia e ingredienti.','VIENI A PROVARLO','ACQUISIZIONE'],
+    ['REEL','LIVE NIGHT','Artista, data, atmosfera e posti.','RISERVA ORA','EVENTO'],
+    ['POST','QUIZ NIGHT','Meccanica, premio e iscrizione squadre.','ISCRIVI IL TEAM','EVENTO'],
+    ['CAROUSEL','DEGUSTAZIONE','Percorso guidato e prezzo.','PRENOTA DEGUSTAZIONE','SCONTRINO'],
+    ['REEL','SUNDAY BRUNCH','Piatti, drink e fascia oraria.','PRENOTA BRUNCH','EVENTO'],
+    ['POST','HAPPY HOUR','Orario chiaro e proposta.','VIENI DALLE 18','FREQUENZA'],
+    ['REEL','DIETRO IL BANCONE','Preparazione e personalità del bartender.','SCOPRI IL LOCALE','FIDUCIA'],
+    ['POST','ULTIMI TAVOLI','Urgenza prima del weekend.','SCRIVICI ORA','CONVERSIONE']
+  ]},
+  palestra:{label:'PALESTRA / FITNESS',accent:'FITNESS',summary:['Prova','Challenge','Corsi','Community'],proposal:'Per palestra e centri sportivi la pagina deve portare alla prima prova e poi alla continuità: open day, challenge, check iniziale, lezioni evento, trasformazioni e porta un amico.',frequency:['3 Reel / settimana','2 Post / Carousel','Stories quotidiane'],images:['https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=900&q=80'],cards:[
+    ['REEL','PROVA GRATUITA','Ambiente, istruttore e prima esperienza.','PRENOTA LA PROVA','ACQUISIZIONE'],
+    ['POST','OPEN DAY','Data, corsi disponibili e prenotazione.','ISCRIVITI','EVENTO'],
+    ['REEL','CHALLENGE 30 GIORNI','Obiettivo, regole e community.','PARTECIPA','FREQUENZA'],
+    ['CAROUSEL','CHECK INIZIALE','Cosa misuriamo e perché serve per partire bene.','PRENOTA IL CHECK','LEAD'],
+    ['REEL','TRASFORMAZIONE CLIENTE','Percorso, costanza e risultato.','INIZIA IL TUO PERCORSO','PROVA SOCIALE'],
+    ['POST','LEZIONE EVENTO','Classe speciale con posti limitati.','PRENOTA IL POSTO','EVENTO'],
+    ['REEL','COACH TIPS','Consiglio pratico e autorevolezza.','CHIEDI INFO','FIDUCIA'],
+    ['POST','PORTA UN AMICO','Referral semplice e misurabile.','INVITA UN AMICO','FIDELIZZAZIONE'],
+    ['REEL','ULTIMI POSTI CORSO','Disponibilità e urgenza.','PRENOTA ORA','CONVERSIONE']
+  ]},
+  negozio:{label:'NEGOZIO',accent:'RETAIL',summary:['Prodotti','Novità','Demo','In-store'],proposal:'Per un negozio i social devono creare traffico fisico: nuovi arrivi, prodotto della settimana, demo, bundle, weekend promo e giornate prova. Il feed deve far pensare “passo a vederlo”.',frequency:['3 Reel / settimana','2 Post / Carousel','Stories nuovi arrivi'],images:['https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1472851294608-062f824d29cc?auto=format&fit=crop&w=900&q=80'],cards:[
+    ['REEL','NUOVI ARRIVI','Anteprima veloce dei prodotti appena entrati.','PASSA IN NEGOZIO','ACQUISIZIONE'],
+    ['POST','PRODOTTO DELLA SETTIMANA','Un focus chiaro con beneficio e disponibilità.','VIENI A VEDERLO','TRAFFICO'],
+    ['REEL','DEMO DAY','Prodotto in uso e data della dimostrazione.','PRENOTA LA DEMO','EVENTO'],
+    ['CAROUSEL','BUNDLE','Tre prodotti insieme con vantaggio percepito.','SCOPRI IL BUNDLE','SCONTRINO'],
+    ['POST','WEEKEND PROMO','Durata breve e CTA negozio.','SOLO FINO A DOMENICA','URGENZA'],
+    ['REEL','COME SI USA','Dimostrazione pratica che riduce dubbi.','PASSA A PROVARLO','FIDUCIA'],
+    ['POST','GIORNATA PROVA','Appuntamento in-store.','PRENOTA LA PROVA','EVENTO'],
+    ['CAROUSEL','SCELTI PER TE','Selezione tematica / stagionale.','SCOPRILI IN NEGOZIO','CURATION'],
+    ['REEL','CLIENTE REALE','Utilizzo e prova sociale.','VIENI A TROVARCI','FIDELIZZAZIONE']
+  ]}
+};
+let current='immobiliare';
+const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+function card(c,i,s){const img=s.images[i%s.images.length];return `<article class="card"><div class="media"><img loading="lazy" src="${img}" alt="${esc(c[1])}"><span class="format">${esc(c[0])}</span><span class="goal">${esc(c[4])}</span></div><div class="body"><div class="brand">${esc(s.accent)} · CONTENUTO DEMO</div><div class="title">${esc(c[1])}</div><div class="caption-label">COSA RACCONTIAMO</div><div class="caption">${esc(c[2])}</div><div class="cta"><b>CTA</b> · ${esc(c[3])}</div></div></article>`}
+function story(title,img,cta){return `<div class="story"><img loading="lazy" src="${img}"><b>${esc(title)}</b><span class="meta">${esc(cta)}</span></div>`}
+function render(){const s=SECTORS[current];document.querySelectorAll('.sector').forEach(b=>b.classList.toggle('active',b.dataset.key===current));document.getElementById('status').innerHTML=`Stai mostrando al cliente una proposta per <b>${s.label}</b>. Scorri: ogni card contiene immagine, formato, obiettivo commerciale, messaggio e CTA.`;document.getElementById('summary').innerHTML=s.summary.map((x,i)=>`<div class="kpi"><div class="n">0${i+1}</div><b>${esc(x)}</b><br><small>pilastro contenuti</small></div>`).join('');document.getElementById('grid').innerHTML=s.cards.map((c,i)=>card(c,i,s)).join('');document.getElementById('stories').innerHTML=s.cards.slice(0,7).map((c,i)=>story(c[1],s.images[(i+1)%s.images.length],c[3])).join('');document.getElementById('frequency').innerHTML=s.frequency.map((x,i)=>`<div class="freq"><strong>${esc(x)}</strong><span class="meta">${i===0?'attenzione e scoperta':i===1?'fiducia e approfondimento':'presenza e conversione'}</span></div>`).join('');document.getElementById('proposalText').innerHTML=s.proposal+' <strong>Ogni settimana alterniamo contenuti di acquisizione, prova sociale, frequenza, evento e conversione.</strong>';}
+function choose(k){current=k;render();document.getElementById('contenuti').scrollIntoView({behavior:'smooth',block:'start'})}
+function scrollToContent(){document.getElementById('contenuti').scrollIntoView({behavior:'smooth',block:'start'})}
+function init(){document.getElementById('sectors').innerHTML=Object.entries(SECTORS).map(([k,v])=>`<button class="sector" data-key="${k}" onclick="choose('${k}')">${esc(v.label)}</button>`).join('');render()}
+init();
+</script>
+</body>
+</html>
