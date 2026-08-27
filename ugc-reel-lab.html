@@ -3,71 +3,91 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Real Media Pro · Social & AI Reel Showcase</title>
+<meta name="theme-color" content="#070907">
+<title>Real Media Pro · Social & Reel Avatar IA</title>
 <style>
-:root{--bg:#050706;--panel:#0d120f;--panel2:#111814;--line:#26352b;--text:#f7faf7;--muted:#9fac9f;--green:#39f28a;--green2:#20ce70;--paper:#f5f4ef;--blue:#50c9e8}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 15% 0,#16321f 0,#07100b 30%,#050706 60%);color:var(--text);font:15px/1.5 Arial,sans-serif}.wrap{width:min(1180px,calc(100% - 24px));margin:auto;padding:24px 0 70px}.top{display:flex;justify-content:space-between;align-items:center;gap:12px}.brand{font-weight:950;letter-spacing:.04em}.brand i{display:inline-block;width:12px;height:12px;border-radius:50%;background:var(--green);box-shadow:0 0 20px var(--green);margin-right:8px}.tag{border:1px solid #31503a;background:#0a150e;color:#cde8d4;border-radius:999px;padding:7px 10px;font-size:11px;font-weight:900}.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:22px;align-items:center;padding:46px 0 26px}.hero h1{font-size:clamp(42px,7vw,78px);line-height:.92;letter-spacing:-.055em;margin:0}.hero h1 span{color:var(--green)}.hero p{color:var(--muted);font-size:18px;max-width:760px}.visual{aspect-ratio:9/14;border:1px solid #31513a;border-radius:28px;background:linear-gradient(145deg,#102017,#07100b);padding:16px;display:flex;flex-direction:column;justify-content:flex-end;box-shadow:0 30px 80px rgba(0,0,0,.35);position:relative;overflow:hidden}.visual:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 30%,rgba(57,242,138,.18),transparent 42%)}.visual .mock{position:relative;background:#080b09;border:1px solid #2b3b30;border-radius:22px;padding:16px;min-height:180px}.mock b{display:block;font-size:23px}.mock small{color:var(--muted)}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}.card{border:1px solid var(--line);background:linear-gradient(145deg,#0a100c,#101711);border-radius:18px;padding:16px}.card strong{display:block;color:var(--green);font-size:23px;margin-bottom:5px}.card p{margin:0;color:var(--muted)}.cta{margin-top:24px;border:1px solid #3e684a;background:linear-gradient(135deg,#0b1a11,#102718);border-radius:24px;padding:22px;display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center}.cta h2{font-size:clamp(28px,4vw,46px);line-height:1;margin:0 0 8px}.cta h2 span{color:var(--green)}.cta p{margin:0;color:#b7c5bb;max-width:760px}.btn{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 18px;border-radius:13px;text-decoration:none;font-weight:950;border:0;cursor:pointer}.btnPrimary{background:var(--green);color:#061009}.btnGhost{background:#151d17;color:white;border:1px solid #34453a}.premium{display:none}.premium .hero{padding-top:40px}.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:18px}.step{border:1px solid #2d4033;background:#08100b;border-radius:13px;padding:12px}.step b{display:block;color:var(--green);font-size:18px}.priceNote{border-left:4px solid var(--green);padding:12px 14px;background:#0b140e;border-radius:0 12px 12px 0;color:#c7d2ca;margin-top:18px}.back{display:inline-block;margin-top:18px;color:#d7e1d9;text-decoration:none}.foot{text-align:center;color:#748078;font-size:11px;margin-top:38px}@media(max-width:900px){.hero{grid-template-columns:1fr}.visual{width:min(430px,100%);margin:auto}.cards{grid-template-columns:1fr}.cta{grid-template-columns:1fr}.steps{grid-template-columns:1fr 1fr}}@media(max-width:560px){.steps{grid-template-columns:1fr}.top{align-items:flex-start}.tag{display:none}.hero{padding-top:32px}}
+:root{--black:#070907;--dark:#0e120f;--dark2:#151a16;--white:#fff;--paper:#f5f4ef;--green:#39f28a;--green2:#20ce70;--muted:#aeb7b0;--line:rgba(255,255,255,.12);--blue:#50c9e8}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 15% 0,#16351f 0,#0a110c 28%,var(--black) 62%);color:var(--white);font:15px/1.5 Arial,Helvetica,sans-serif}.wrap{width:min(1180px,calc(100% - 24px));margin:auto;padding:22px 0 60px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px}.brand{font-weight:950;letter-spacing:.04em}.brand i{display:inline-block;width:11px;height:11px;border-radius:50%;background:var(--green);box-shadow:0 0 20px var(--green);margin-right:8px}.badge{border:1px solid #31503a;background:#0b150e;color:#d7e7db;border-radius:999px;padding:7px 10px;font-size:11px;font-weight:900}.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:center;padding:48px 0 24px}.eyebrow{color:var(--green);font-size:12px;font-weight:950;letter-spacing:.11em;text-transform:uppercase}.hero h1{font-size:clamp(42px,7vw,80px);line-height:.9;letter-spacing:-.055em;margin:8px 0 16px}.hero h1 span{color:var(--green)}.hero p{color:#b7c2ba;font-size:18px;max-width:760px;margin:0 0 20px}.actions{display:flex;gap:10px;flex-wrap:wrap}.btn{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 18px;border-radius:13px;text-decoration:none;font-weight:950}.btn.primary{background:var(--green);color:#061009}.btn.ghost{background:#151d17;color:#fff;border:1px solid #34453a}.phone{width:min(390px,100%);margin:auto;border:8px solid #1d211e;border-radius:36px;background:#020302;padding:8px;box-shadow:0 30px 90px rgba(0,0,0,.4)}.screen{aspect-ratio:9/16;border-radius:25px;overflow:hidden;position:relative;background:linear-gradient(155deg,#112118,#07100b 55%,#050705);padding:18px;display:flex;flex-direction:column;justify-content:space-between}.screen:before{content:"";position:absolute;inset:-20%;background:radial-gradient(circle at 50% 28%,rgba(57,242,138,.24),transparent 32%);pointer-events:none}.screenTop,.screenBottom{position:relative}.screenTop{font-size:11px;font-weight:950;letter-spacing:.09em}.screenCenter{position:relative;text-align:center}.avatar{width:154px;height:154px;border-radius:50%;margin:0 auto 16px;background:radial-gradient(circle at 50% 28%,#415046 0 12%,#1b2a20 13% 34%,#0c130f 35% 100%);border:1px solid rgba(255,255,255,.14);box-shadow:0 0 0 8px rgba(57,242,138,.06),0 20px 60px rgba(0,0,0,.35)}.play{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;margin:-48px auto 20px;background:var(--green);color:#07100a;font-size:23px;font-weight:950;box-shadow:0 12px 35px rgba(57,242,138,.22)}.screenCenter b{display:block;font-size:27px;line-height:1.02}.screenCenter small{display:block;color:#b4beb6;margin-top:8px}.screenBottom{border:1px solid rgba(255,255,255,.12);background:rgba(0,0,0,.45);border-radius:14px;padding:10px;font-weight:900}.section{padding:34px 0}.sectionHead{max-width:780px;margin-bottom:18px}.sectionHead h2{font-size:clamp(30px,5vw,52px);line-height:1;margin:0 0 10px;letter-spacing:-.035em}.sectionHead h2 span{color:var(--green)}.sectionHead p{color:#aeb9b0;margin:0;font-size:17px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.card{border:1px solid var(--line);background:linear-gradient(145deg,#0a100c,#111813);border-radius:18px;padding:17px}.card .num{color:var(--green);font-size:11px;font-weight:950;letter-spacing:.1em}.card h3{font-size:22px;line-height:1.05;margin:8px 0}.card p{color:#aeb9b0;margin:0}.showcase{border:1px solid #31523b;background:linear-gradient(135deg,#0a160e,#102418);border-radius:24px;padding:22px;display:grid;grid-template-columns:1fr auto;gap:18px;align-items:center}.showcase h2{font-size:clamp(28px,4vw,45px);line-height:1;margin:0 0 8px}.showcase p{color:#b8c4bb;margin:0;max-width:760px}.premiumBanner{margin-top:28px;border:1px solid #497957;background:linear-gradient(135deg,#0a150e,#13331e);border-radius:26px;padding:24px;display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center;box-shadow:0 18px 50px rgba(0,0,0,.25)}.premiumBanner .mini{color:var(--green);font-size:11px;font-weight:950;letter-spacing:.11em}.premiumBanner h2{font-size:clamp(30px,4.5vw,54px);line-height:.96;margin:6px 0 10px}.premiumBanner p{color:#c0cbc2;margin:0;max-width:760px}.premiumPage{display:none}.extraNote{border-left:4px solid var(--green);background:#0c160f;border-radius:0 14px 14px 0;padding:13px 15px;color:#c4cec6;margin-top:16px}.formatGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.format{border:1px solid var(--line);border-radius:22px;background:#0b100c;overflow:hidden}.formatVisual{aspect-ratio:9/16;position:relative;background:linear-gradient(160deg,#17251b,#080d09 55%,#101a12);display:flex;align-items:center;justify-content:center;text-align:center;padding:18px}.formatVisual:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 25%,rgba(57,242,138,.18),transparent 34%)}.formatVisual .inner{position:relative}.formatVisual .circle{width:116px;height:116px;border-radius:50%;margin:0 auto 16px;background:radial-gradient(circle at 50% 30%,#506158 0 12%,#24372a 13% 35%,#0c130f 36%);border:1px solid rgba(255,255,255,.13)}.formatVisual .fakePlay{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:var(--green);color:#061009;font-size:20px;font-weight:950;margin:-35px auto 16px}.formatVisual b{font-size:23px;line-height:1.04;display:block}.formatVisual small{display:block;color:#aeb9b0;margin-top:7px}.formatText{padding:15px}.formatText b{display:block;color:var(--green);margin-bottom:5px}.formatText p{color:#aeb9b0;margin:0}.demoInfo{font-size:12px;color:#839087;margin-top:12px}.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}.step{border:1px solid #2e4034;background:#08100b;border-radius:14px;padding:12px}.step strong{display:block;color:var(--green);font-size:18px}.step small{color:#aeb9b0}.contact{border:1px solid #4a7958;background:linear-gradient(135deg,#0b180f,#15351f);border-radius:26px;padding:26px;display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center}.contact h2{font-size:clamp(30px,5vw,54px);line-height:.97;margin:0 0 8px}.contact p{color:#bdc9c0;margin:0;max-width:720px}.back{display:inline-flex;margin-top:15px;color:#d7e1d9;text-decoration:none}.foot{text-align:center;color:#748078;font-size:11px;margin-top:34px}@media(max-width:900px){.hero{grid-template-columns:1fr}.grid3,.formatGrid{grid-template-columns:1fr}.showcase,.premiumBanner,.contact{grid-template-columns:1fr}.steps{grid-template-columns:1fr 1fr}.phone{margin-top:10px}}@media(max-width:560px){.steps{grid-template-columns:1fr}.badge{display:none}.hero{padding-top:34px}.actions{display:grid}.btn{width:100%}}
 </style>
 </head>
 <body>
 <main class="wrap">
-<div class="top"><div class="brand"><i></i>REAL MEDIA PRO</div><div class="tag" id="modeTag">GESTIONE SOCIAL</div></div>
-<section id="standard" class="standard">
+<header class="top"><div class="brand"><i></i>REAL MEDIA PRO</div><div class="badge" id="modeBadge">GESTIONE SOCIAL</div></header>
+
+<section id="standardPage">
   <div class="hero">
     <div>
-      <h1>CONTENUTI CHE FANNO <span>CRESCERE IL BRAND.</span></h1>
-      <p>Non pubblichiamo contenuti casuali. Costruiamo una presenza social con format, offerte, eventi, Reel, campagne e CTA pensati per trasformare attenzione in richieste reali.</p>
+      <div class="eyebrow">Strategia · Contenuti · Crescita</div>
+      <h1>NON SOLO POST.<br><span>UNA PRESENZA CHE LAVORA.</span></h1>
+      <p>Studiamo cosa deve ottenere la tua attività e costruiamo contenuti, Reel, offerte, eventi e campagne intorno a quell'obiettivo. Il cliente deve capire chi sei, perché sceglierti e cosa fare dopo.</p>
+      <div class="actions">
+        <a class="btn primary" href="client-showcase.html?v=dbcbd286&utm_source=ugc_social_showcase">GUARDA I RISULTATI SOCIAL DEI NOSTRI CLIENTI</a>
+      </div>
     </div>
-    <div class="visual"><div class="mock"><b>IL TUO BRAND, OGNI SETTIMANA.</b><small>Reel · post · caroselli · offerte · eventi · campagne · monitoraggio</small></div></div>
+    <div class="phone"><div class="screen"><div class="screenTop">REAL MEDIA PRO · CONTENT SYSTEM</div><div class="screenCenter"><div class="avatar"></div><div class="play">▶</div><b>IL TUO BRAND<br>DEVE FARSI RICORDARE.</b><small>Reel · caroselli · offerte · eventi · campagne</small></div><div class="screenBottom">CONTENUTI PENSATI PER PORTARE PERSONE VERSO L'AZIENDA</div></div></div>
   </div>
-  <div class="cards">
-    <div class="card"><strong>FORMAT</strong><p>Rubriche riconoscibili, hook chiari e contenuti progettati per non sembrare tutti uguali.</p></div>
-    <div class="card"><strong>PRESENZA</strong><p>Una comunicazione continua che spiega cosa fai, perché sceglierti e cosa deve fare il cliente.</p></div>
-    <div class="card"><strong>RISULTATI</strong><p>Contenuti collegati a richieste, appuntamenti, offerte, eventi e campagne.</p></div>
-  </div>
-  <div class="cta">
-    <div>
-      <h2>VUOI DI PIÙ? <span>REEL CON AVATAR IA.</span></h2>
-      <p>Possiamo aggiungere creator e modelle IA che parlano della tua azienda in modo naturale, spiegano servizi, offerte e vantaggi e aumentano la frequenza della tua presenza video. È un servizio premium aggiuntivo, attivabile su richiesta.</p>
+
+  <section class="section">
+    <div class="sectionHead"><h2>COME <span>LAVORIAMO</span> SUI TUOI SOCIAL</h2><p>Non riempiamo una griglia. Costruiamo un sistema editoriale che può cambiare in base a settore, periodo, offerte e obiettivi commerciali.</p></div>
+    <div class="grid3">
+      <div class="card"><div class="num">01 · STRATEGIA</div><h3>Partiamo dall'obiettivo reale</h3><p>Prenotazioni, appuntamenti, richieste, notorietà locale, immobili da acquisire o prodotti da vendere.</p></div>
+      <div class="card"><div class="num">02 · CONTENUTI</div><h3>Creiamo format riconoscibili</h3><p>Reel, caroselli, post, FAQ, offerte, eventi, backstage e contenuti utili che non sembrano tutti uguali.</p></div>
+      <div class="card"><div class="num">03 · CRESCITA</div><h3>Colleghiamo contenuto e azione</h3><p>CTA, campagne, pagine, WhatsApp, moduli e follow-up per trasformare attenzione in opportunità.</p></div>
     </div>
-    <a class="btn btnPrimary" href="?v=local-free-v2&utm_source=client_showcase">SCOPRI I REEL CON AVATAR IA →</a>
+  </section>
+
+  <div class="showcase">
+    <div><h2>VUOI VEDERE COME POTREBBE ESSERE GESTITA LA TUA PAGINA?</h2><p>Apri la vetrina clienti e guarda la logica dei contenuti, la frequenza e il tipo di presenza che possiamo costruire.</p></div>
+    <a class="btn ghost" href="client-showcase.html?v=dbcbd286&utm_source=ugc_social_showcase">APRI LA VETRINA CLIENTI</a>
+  </div>
+
+  <div class="premiumBanner">
+    <div><div class="mini">SERVIZIO EXTRA · ATTIVABILE SU RICHIESTA</div><h2>VUOI DI PIÙ?<br><span style="color:var(--green)">REEL CON AVATAR IA.</span></h2><p>Possiamo aggiungere creator e modelle IA che parlano della tua azienda, spiegano servizi e offerte, rispondono alle domande dei clienti e aumentano la tua presenza video. I costi di generazione IA sono separati dal piano social standard.</p></div>
+    <a class="btn primary" href="?v=local-free-v2&utm_source=client_showcase">SCOPRI I REEL CON AVATAR IA →</a>
   </div>
 </section>
-<section id="premium" class="premium">
+
+<section id="premiumPage" class="premiumPage">
   <div class="hero">
     <div>
+      <div class="eyebrow">Servizio Premium · Reel Avatar IA</div>
       <h1>UN CREATOR IA CHE <span>PARLA DELLA TUA AZIENDA.</span></h1>
-      <p>Reel verticali con avatar o modella IA, voce naturale, lip-sync e montaggio UGC. Il creator non recita uno spot: racconta problemi reali del cliente, spiega il metodo dell'azienda e porta verso una CTA precisa.</p>
-      <div class="priceNote"><b>Servizio premium.</b> I Reel con avatar IA richiedono una quota dedicata per i servizi di generazione video/voce e vengono aggiunti al piano contenuti solo se il cliente li desidera.</div>
-      <a class="back" href="?v=148b6cb0">← Torna alla gestione social</a>
+      <p>Possiamo integrare nella normale gestione social Reel verticali con modella o avatar IA, voce naturale e montaggio UGC. Non deve sembrare una pubblicità artificiale: il creator deve parlare dei problemi reali del cliente, spiegare il metodo dell'azienda e portare verso una CTA precisa.</p>
+      <div class="extraNote"><strong>È un servizio aggiuntivo.</strong> La quota per la generazione video e voce IA viene attivata solo per i clienti che desiderano questo livello di produzione.</div>
+      <div class="actions" style="margin-top:18px"><a class="btn primary" href="#attivazione">VOGLIO AGGIUNGERLI AL MIO PIANO</a><a class="btn ghost" href="?v=148b6cb0">TORNA ALLA GESTIONE SOCIAL</a></div>
     </div>
-    <div class="visual"><div class="mock"><b>CREATOR IA + BRAND REALE</b><small>Talking head · problema/soluzione · 3 errori · FAQ · backstage · offerta · CTA</small></div></div>
+    <div class="phone"><div class="screen"><div class="screenTop">REEL AVATAR IA · 9:16</div><div class="screenCenter"><div class="avatar"></div><div class="play">▶</div><b>UNA PERSONA CHE<br>SPIEGA IL TUO BRAND.</b><small>Voce naturale · lip-sync · B-roll · sottotitoli · CTA</small></div><div class="screenBottom">FORMAT PENSATO PER SEMBRARE NATIVO DEL FEED, NON UNO SPOT TV</div></div></div>
   </div>
-  <div class="cards">
-    <div class="card"><strong>1. SCRIPT</strong><p>Testi guidati dalla strategia del brand, non frasi pubblicitarie generiche.</p></div>
-    <div class="card"><strong>2. CREATOR</strong><p>Avatar o modella IA coerente con target, settore e tono dell'azienda.</p></div>
-    <div class="card"><strong>3. REEL</strong><p>Voce, lip-sync, B-roll, sottotitoli e CTA in formato verticale 9:16.</p></div>
-  </div>
-  <div class="steps">
-    <div class="step"><b>HOOK</b><small>Primi 2 secondi</small></div>
-    <div class="step"><b>PROBLEMA</b><small>Situazione reale</small></div>
-    <div class="step"><b>METODO</b><small>Come lavora l'azienda</small></div>
-    <div class="step"><b>PROVA</b><small>B-roll e contenuti reali</small></div>
-    <div class="step"><b>CTA</b><small>Richiesta o appuntamento</small></div>
-  </div>
-  <div class="cta">
-    <div><h2>AGGIUNGILI AL TUO <span>PIANO SOCIAL.</span></h2><p>Possiamo integrare i Reel con avatar IA dentro la normale programmazione dei contenuti, mantenendo strategia, brand e calendario editoriale coordinati.</p></div>
-    <a class="btn btnPrimary" href="mailto:agenzia.realmediapro@gmail.com?subject=Reel%20con%20avatar%20IA">RICHIEDI ATTIVAZIONE</a>
-  </div>
+
+  <section class="section">
+    <div class="sectionHead"><h2>ESEMPI DI <span>FORMAT</span> CHE POSSIAMO PRODURRE</h2><p>Questi sono i tre format base della vetrina. Gli MP4 dimostrativi vengono inseriti negli stessi slot quando vengono prodotti con la quota IA dedicata: non mostriamo al cliente demo finte o stock spacciati per risultati reali.</p></div>
+    <div class="formatGrid">
+      <article class="format"><div class="formatVisual"><div class="inner"><div class="circle"></div><div class="fakePlay">▶</div><b>“SE STAI PENSANDO DI…”</b><small>Creator diretto in camera</small></div></div><div class="formatText"><b>TALKING HEAD</b><p>Una modella/avatar introduce il problema, spiega l'azienda e chiude con una CTA.</p></div></article>
+      <article class="format"><div class="formatVisual"><div class="inner"><div class="circle"></div><div class="fakePlay">▶</div><b>“TRE ERRORI CHE VEDIAMO SPESSO…”</b><small>Hook + B-roll + ritorno al creator</small></div></div><div class="formatText"><b>PROBLEMA → SOLUZIONE</b><p>Il creator intercetta un dubbio reale e mostra visivamente come l'azienda lo affronta.</p></div></article>
+      <article class="format"><div class="formatVisual"><div class="inner"><div class="circle"></div><div class="fakePlay">▶</div><b>“ECCO COSA SUCCEDE DIETRO…”</b><small>Storytelling e backstage</small></div></div><div class="formatText"><b>METODO / DIETRO LE QUINTE</b><p>Fa percepire il lavoro che il cliente normalmente non vede e aumenta fiducia nel brand.</p></div></article>
+    </div>
+    <div class="demoInfo">Gli esempi video reali verranno caricati qui appena prodotti: la pagina è già predisposta per sostituire questi poster con MP4 verticali senza cambiare il percorso cliente.</div>
+  </section>
+
+  <section class="section">
+    <div class="sectionHead"><h2>DAL MESSAGGIO AL <span>REEL FINITO</span></h2><p>Il Reel IA viene costruito dentro la strategia social, non come contenuto separato.</p></div>
+    <div class="steps"><div class="step"><strong>HOOK</strong><small>Primi 2 secondi</small></div><div class="step"><strong>PROBLEMA</strong><small>Situazione reale</small></div><div class="step"><strong>METODO</strong><small>Come lavora l'azienda</small></div><div class="step"><strong>B-ROLL</strong><small>Prodotti, luoghi, risultati</small></div><div class="step"><strong>CTA</strong><small>Richiesta, visita o contatto</small></div></div>
+  </section>
+
+  <section class="section"><div class="grid3"><div class="card"><div class="num">COERENZA</div><h3>Stesso creator, più contenuti</h3><p>Possiamo mantenere un'identità visiva riconoscibile tra i Reel, variando script, ambienti e argomenti.</p></div><div class="card"><div class="num">FREQUENZA</div><h3>Più presenza senza nuove riprese</h3><p>Il cliente può aumentare la frequenza video senza organizzare ogni volta una sessione di registrazione.</p></div><div class="card"><div class="num">INTEGRAZIONE</div><h3>Dentro il piano editoriale</h3><p>Avatar IA, foto reali, B-roll, offerte ed eventi lavorano insieme nella stessa programmazione.</p></div></div></section>
+
+  <section id="attivazione" class="contact"><div><h2>VUOI AGGIUNGERE I <span style="color:var(--green)">REEL AVATAR IA</span> AL TUO PIANO?</h2><p>Li integriamo nella tua gestione social con una quota dedicata alla produzione IA. Prima definiamo frequenza, tipo di creator e obiettivi; poi li inseriamo nel calendario contenuti.</p></div><a class="btn primary" href="mailto:agenzia.realmediapro@gmail.com?subject=Richiesta%20Reel%20Avatar%20IA&body=Vorrei%20informazioni%20per%20aggiungere%20i%20Reel%20con%20Avatar%20IA%20al%20mio%20piano%20social.">RICHIEDI ATTIVAZIONE</a></section>
+  <a class="back" href="?v=148b6cb0">← Torna alla gestione social standard</a>
 </section>
-<div class="foot">Real Media Pro · gestione social e contenuti premium con avatar IA</div>
+
+<footer class="foot">Real Media Pro · Strategia social · Contenuti · Reel · Produzione premium con Avatar IA</footer>
 </main>
 <script>
-const params=new URLSearchParams(location.search);const v=params.get('v')||'148b6cb0';
-const premium=v==='local-free-v2';
-document.getElementById('standard').style.display=premium?'none':'block';
-document.getElementById('premium').style.display=premium?'block':'none';
-document.getElementById('modeTag').textContent=premium?'REEL CON AVATAR IA · PREMIUM':'GESTIONE SOCIAL';
+const p=new URLSearchParams(location.search);const premium=p.get('v')==='local-free-v2';
+document.getElementById('standardPage').style.display=premium?'none':'block';
+document.getElementById('premiumPage').style.display=premium?'block':'none';
+document.getElementById('modeBadge').textContent=premium?'REEL AVATAR IA · SERVIZIO EXTRA':'GESTIONE SOCIAL';
+document.title=premium?'Real Media Pro · Reel Avatar IA':'Real Media Pro · Gestione Social';
 </script>
 </body>
 </html>
