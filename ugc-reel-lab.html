@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Real Media Pro · AI UGC Reel Lab</title>
+<style>body{margin:0;background:#050706;color:#fff;font-family:Arial,sans-serif;display:grid;place-items:center;min-height:100vh}.box{text-align:center;padding:30px}.spin{width:42px;height:42px;border:4px solid #26352b;border-top-color:#39f28a;border-radius:50%;margin:0 auto 18px;animation:s 1s linear infinite}@keyframes s{to{transform:rotate(360deg)}}p{color:#aeb7b0}</style>
+</head>
+<body><div class="box"><div class="spin"></div><h2>AI UGC REEL LAB</h2><p>Caricamento demo…</p></div>
+<script>
+fetch('https://raw.githubusercontent.com/josephsocialmedia2-spec/open-social-scheduler/main/ugc-reel-lab.html?v=9392a497')
+.then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);return r.text()})
+.then(html=>{document.open();document.write(html);document.close()})
+.catch(e=>{document.body.innerHTML='<div class="box"><h2>Demo temporaneamente non disponibile</h2><p>'+e.message+'</p></div>'})
+</script></body></html>
