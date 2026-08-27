@@ -3,60 +3,71 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Real Media Pro · AI UGC Reel Lab</title>
+<title>Real Media Pro · Social & AI Reel Showcase</title>
 <style>
-:root{--bg:#050706;--panel:#0b110d;--panel2:#101713;--line:#28382d;--text:#f6faf7;--muted:#9eaaa1;--green:#39f28a;--green2:#20ce70;--red:#ff625c;--amber:#ffc857}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 12% 0,#173522 0,#07100b 28%,#050706 58%);color:var(--text);font:15px/1.45 Arial,sans-serif}.wrap{width:min(1360px,calc(100% - 24px));margin:auto;padding:22px 0 70px}.top{display:flex;align-items:center;justify-content:space-between;gap:10px}.brand{font-weight:950;letter-spacing:.04em}.brand i{display:inline-block;width:12px;height:12px;border-radius:50%;background:var(--green);box-shadow:0 0 20px var(--green);margin-right:8px}.engine{display:flex;align-items:center;gap:7px;border:1px solid var(--line);border-radius:999px;padding:7px 10px;font-size:11px;font-weight:900}.led{width:8px;height:8px;border-radius:50%;background:var(--amber)}.engine.ok .led{background:var(--green)}.engine.bad .led{background:var(--red)}h1{font-size:clamp(38px,6vw,72px);line-height:.92;letter-spacing:-.055em;margin:30px 0 8px}h1 span{color:var(--green)}.lead{max-width:850px;color:var(--muted);font-size:17px}.notice{margin:18px 0;border:1px solid #31513a;background:#0b1710;border-radius:15px;padding:13px}.notice b{color:var(--green)}.grid{display:grid;grid-template-columns:minmax(310px,430px) 1fr;gap:18px;align-items:start}.phone{background:#020202;border:8px solid #1a1d1b;border-radius:38px;padding:8px;position:sticky;top:12px}.screen{aspect-ratio:9/16;border-radius:26px;overflow:hidden;position:relative;background:linear-gradient(145deg,#101812,#050705);display:grid;place-items:center}.screen video{width:100%;height:100%;object-fit:cover;display:none}.placeholder{text-align:center;padding:30px;color:#9aa69c}.placeholder strong{display:block;color:white;font-size:23px;margin-bottom:8px}.reelTag{position:absolute;top:14px;left:14px;background:rgba(0,0,0,.67);border:1px solid rgba(255,255,255,.15);border-radius:999px;padding:6px 9px;font-size:10px;font-weight:900}.captionDemo{position:absolute;left:16px;right:16px;bottom:38px;text-align:center;font-weight:950;font-size:20px;text-shadow:0 2px 12px #000;display:none}.captionDemo span{background:rgba(0,0,0,.68);padding:3px 6px;border-radius:5px}.panel{display:flex;flex-direction:column;gap:12px}.card{border:1px solid var(--line);background:linear-gradient(145deg,#0a100c,#0e1510);border-radius:18px;padding:15px}.card h2,.card h3{margin:0 0 10px}.formGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.field label{display:block;color:#a9b5ab;font-size:10px;font-weight:950;letter-spacing:.07em;margin-bottom:5px}.field input,.field select,.field textarea{width:100%;border:1px solid #304238;background:#050805;color:white;border-radius:11px;padding:11px;font:inherit;outline:none}.field textarea{min-height:175px;resize:vertical;line-height:1.5}.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--green)}.wide{grid-column:1/-1}.upload{border:1px dashed #405548;background:#07100a;border-radius:13px;padding:12px}.upload small{display:block;color:var(--muted);margin-top:5px}.actions{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:12px}button{border:0;border-radius:11px;padding:12px;font-weight:950;cursor:pointer}.primary{background:var(--green);color:#061009}.secondary{background:#172019;color:white;border:1px solid #33453a}.danger{background:#29100f;color:#ffaaa6;border:1px solid #63302d}button:disabled{opacity:.45;cursor:not-allowed}.health{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:10px}.healthItem{background:#060a07;border:1px solid #27342b;border-radius:11px;padding:9px}.healthItem b{display:block;font-size:11px}.healthItem small{color:var(--muted)}.good{color:var(--green)!important}.badText{color:#ff8c86!important}.progressBox{display:none}.progressTrack{height:9px;background:#050705;border-radius:999px;overflow:hidden;border:1px solid #29372d}.progressBar{height:100%;width:0;background:var(--green);transition:width .25s}.statusLine{display:flex;justify-content:space-between;gap:10px;margin:9px 0;font-weight:900}.logs{max-height:170px;overflow:auto;background:#040604;border:1px solid #243128;border-radius:10px;padding:9px;color:#aeb9b0;font:11px/1.45 Consolas,monospace;white-space:pre-wrap}.result{display:none}.result video{width:min(420px,100%);aspect-ratio:9/16;background:black;border-radius:17px}.downloads{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.downloads a{color:#061009;background:var(--green);padding:8px 10px;border-radius:9px;text-decoration:none;font-size:11px;font-weight:950}.examples{display:flex;gap:7px;flex-wrap:wrap}.chip{background:#101a13;border:1px solid #314438;border-radius:999px;padding:7px 9px;font-size:11px;cursor:pointer;color:#d9e2db}.foot{color:#738077;text-align:center;font-size:11px;margin-top:30px}@media(max-width:980px){.grid{grid-template-columns:1fr}.phone{position:relative;width:min(410px,100%);margin:auto}.health{grid-template-columns:1fr 1fr}}@media(max-width:650px){.formGrid,.actions{grid-template-columns:1fr}.wide{grid-column:auto}.top{align-items:flex-start}.health{grid-template-columns:1fr 1fr}h1{margin-top:22px}}
+:root{--bg:#050706;--panel:#0d120f;--panel2:#111814;--line:#26352b;--text:#f7faf7;--muted:#9fac9f;--green:#39f28a;--green2:#20ce70;--paper:#f5f4ef;--blue:#50c9e8}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 15% 0,#16321f 0,#07100b 30%,#050706 60%);color:var(--text);font:15px/1.5 Arial,sans-serif}.wrap{width:min(1180px,calc(100% - 24px));margin:auto;padding:24px 0 70px}.top{display:flex;justify-content:space-between;align-items:center;gap:12px}.brand{font-weight:950;letter-spacing:.04em}.brand i{display:inline-block;width:12px;height:12px;border-radius:50%;background:var(--green);box-shadow:0 0 20px var(--green);margin-right:8px}.tag{border:1px solid #31503a;background:#0a150e;color:#cde8d4;border-radius:999px;padding:7px 10px;font-size:11px;font-weight:900}.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:22px;align-items:center;padding:46px 0 26px}.hero h1{font-size:clamp(42px,7vw,78px);line-height:.92;letter-spacing:-.055em;margin:0}.hero h1 span{color:var(--green)}.hero p{color:var(--muted);font-size:18px;max-width:760px}.visual{aspect-ratio:9/14;border:1px solid #31513a;border-radius:28px;background:linear-gradient(145deg,#102017,#07100b);padding:16px;display:flex;flex-direction:column;justify-content:flex-end;box-shadow:0 30px 80px rgba(0,0,0,.35);position:relative;overflow:hidden}.visual:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 30%,rgba(57,242,138,.18),transparent 42%)}.visual .mock{position:relative;background:#080b09;border:1px solid #2b3b30;border-radius:22px;padding:16px;min-height:180px}.mock b{display:block;font-size:23px}.mock small{color:var(--muted)}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}.card{border:1px solid var(--line);background:linear-gradient(145deg,#0a100c,#101711);border-radius:18px;padding:16px}.card strong{display:block;color:var(--green);font-size:23px;margin-bottom:5px}.card p{margin:0;color:var(--muted)}.cta{margin-top:24px;border:1px solid #3e684a;background:linear-gradient(135deg,#0b1a11,#102718);border-radius:24px;padding:22px;display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center}.cta h2{font-size:clamp(28px,4vw,46px);line-height:1;margin:0 0 8px}.cta h2 span{color:var(--green)}.cta p{margin:0;color:#b7c5bb;max-width:760px}.btn{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 18px;border-radius:13px;text-decoration:none;font-weight:950;border:0;cursor:pointer}.btnPrimary{background:var(--green);color:#061009}.btnGhost{background:#151d17;color:white;border:1px solid #34453a}.premium{display:none}.premium .hero{padding-top:40px}.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:18px}.step{border:1px solid #2d4033;background:#08100b;border-radius:13px;padding:12px}.step b{display:block;color:var(--green);font-size:18px}.priceNote{border-left:4px solid var(--green);padding:12px 14px;background:#0b140e;border-radius:0 12px 12px 0;color:#c7d2ca;margin-top:18px}.back{display:inline-block;margin-top:18px;color:#d7e1d9;text-decoration:none}.foot{text-align:center;color:#748078;font-size:11px;margin-top:38px}@media(max-width:900px){.hero{grid-template-columns:1fr}.visual{width:min(430px,100%);margin:auto}.cards{grid-template-columns:1fr}.cta{grid-template-columns:1fr}.steps{grid-template-columns:1fr 1fr}}@media(max-width:560px){.steps{grid-template-columns:1fr}.top{align-items:flex-start}.tag{display:none}.hero{padding-top:32px}}
 </style>
 </head>
 <body>
 <main class="wrap">
-<div class="top"><div class="brand"><i></i>REAL MEDIA PRO · AI UGC REEL LAB</div><div class="engine" id="engine"><span class="led"></span><span id="engineText">CONTROLLO MOTORE...</span></div></div>
-<h1>PERSONE REALI.<br><span>REEL UGC GENERATI SUL TUO PC.</span></h1>
-<p class="lead">Usa i tuoi ragazzi/modelli come base video. Il sistema crea lo script, genera una voce italiana dal riferimento che fornisci, sincronizza il parlato sul volto e inserisce B-roll reali. Nessun avatar stock, nessuna voce del browser, nessuna API a pagamento.</p>
-<div class="notice"><b>Prima volta?</b> Sul PC esegui <b>local-media-lab/INSTALLA_UGC_GRATIS.bat</b>, poi usa l'icona Desktop <b>AI UGC Reel Lab</b>. Questa pagina comanda il motore locale su 127.0.0.1:8770.</div>
-<div class="grid">
-<section class="phone"><div class="screen"><video id="preview" playsinline controls></video><div class="placeholder" id="placeholder"><strong>CARICA IL MODELLO</strong>Video verticale reale 10–30 secondi.<br>Guarda in camera, piccoli gesti naturali, niente audio necessario.</div><div class="reelTag" id="reelTag">F1 · UGC</div><div class="captionDemo" id="captionDemo"><span>PARLA COME UNA PERSONA, NON COME UNO SPOT.</span></div></div></section>
-<section class="panel">
-<div class="card"><h2>1. Strategia del Reel</h2><div class="formGrid">
-<div class="field"><label>BRAND</label><select id="brand"><option value="f1">F1 Immobiliare</option><option value="rmp">Real Media Pro</option></select></div>
-<div class="field"><label>OBIETTIVO</label><select id="objective"><option value="crescita">Crescita brand + richieste</option><option value="lead">Generare contatti</option><option value="fiducia">Aumentare fiducia</option><option value="spiegazione">Spiegare come lavoriamo</option><option value="offerta">Promuovere offerta/servizio</option></select></div>
-<div class="field"><label>FORMAT UGC</label><select id="format"><option value="talking">Talking head naturale</option><option value="problema">Problema → soluzione</option><option value="tre-errori">3 errori</option><option value="storia">Mini storia</option><option value="domanda">Domanda diretta</option><option value="dietro-le-quinte">Dietro le quinte</option></select></div>
-<div class="field"><label>TEMA / OFFERTA</label><input id="topic" placeholder="Es. Perché non basta mettere casa sui portali"></div>
-<div class="wide"><div class="examples" id="examples"></div></div>
-</div></div>
-<div class="card"><h2>2. Modello, voce e B-roll</h2><div class="formGrid">
-<div class="upload field"><label>VIDEO DEL MODELLO *</label><input id="presenter" type="file" accept="video/mp4,video/quicktime,video/webm"><small>Meglio 9:16, 10–30 s. Persona reale, camera frontale, movimento naturale.</small></div>
-<div class="upload field"><label>VOCE FEMMINILE ITALIANA *</label><input id="voice" type="file" accept="audio/*"><small>8–20 s, voce pulita di una persona consenziente. Serve per mantenere un timbro femminile naturale.</small></div>
-<div class="upload field wide"><label>B-ROLL REALI</label><input id="broll" type="file" accept="video/*,image/*" multiple><small>Case, esterni, schermate, backstage, clienti/attività. Il motore usa file differenti come cutaway durante il parlato.</small></div>
-</div></div>
-<div class="card"><h2>3. Script UGC</h2><div class="field"><textarea id="script" placeholder="Premi GENERA SCRIPT oppure scrivi/modifica qui il testo che il modello deve dire."></textarea></div><div class="actions"><button class="secondary" id="genScript">GENERA SCRIPT</button><button class="primary" id="create">CREA REEL</button><button class="danger" id="stop" disabled>STOP</button></div></div>
-<div class="card"><h3>Motori gratuiti locali</h3><div class="health" id="health"></div></div>
-<div class="card progressBox" id="progressBox"><h3>Generazione in corso</h3><div class="progressTrack"><div class="progressBar" id="progressBar"></div></div><div class="statusLine"><span id="statusText">In attesa</span><span id="progressText">0%</span></div><div class="logs" id="logs"></div></div>
-<div class="card result" id="result"><h2>Reel pronto</h2><video id="resultVideo" controls playsinline></video><div class="downloads" id="downloads"></div></div>
+<div class="top"><div class="brand"><i></i>REAL MEDIA PRO</div><div class="tag" id="modeTag">GESTIONE SOCIAL</div></div>
+<section id="standard" class="standard">
+  <div class="hero">
+    <div>
+      <h1>CONTENUTI CHE FANNO <span>CRESCERE IL BRAND.</span></h1>
+      <p>Non pubblichiamo contenuti casuali. Costruiamo una presenza social con format, offerte, eventi, Reel, campagne e CTA pensati per trasformare attenzione in richieste reali.</p>
+    </div>
+    <div class="visual"><div class="mock"><b>IL TUO BRAND, OGNI SETTIMANA.</b><small>Reel · post · caroselli · offerte · eventi · campagne · monitoraggio</small></div></div>
+  </div>
+  <div class="cards">
+    <div class="card"><strong>FORMAT</strong><p>Rubriche riconoscibili, hook chiari e contenuti progettati per non sembrare tutti uguali.</p></div>
+    <div class="card"><strong>PRESENZA</strong><p>Una comunicazione continua che spiega cosa fai, perché sceglierti e cosa deve fare il cliente.</p></div>
+    <div class="card"><strong>RISULTATI</strong><p>Contenuti collegati a richieste, appuntamenti, offerte, eventi e campagne.</p></div>
+  </div>
+  <div class="cta">
+    <div>
+      <h2>VUOI DI PIÙ? <span>REEL CON AVATAR IA.</span></h2>
+      <p>Possiamo aggiungere creator e modelle IA che parlano della tua azienda in modo naturale, spiegano servizi, offerte e vantaggi e aumentano la frequenza della tua presenza video. È un servizio premium aggiuntivo, attivabile su richiesta.</p>
+    </div>
+    <a class="btn btnPrimary" href="?v=local-free-v2&utm_source=client_showcase">SCOPRI I REEL CON AVATAR IA →</a>
+  </div>
 </section>
-</div>
-<div class="foot">Real Media Pro · motore locale gratuito · F1 Immobiliare / Real Media Pro · nessuna pubblicazione automatica</div>
+<section id="premium" class="premium">
+  <div class="hero">
+    <div>
+      <h1>UN CREATOR IA CHE <span>PARLA DELLA TUA AZIENDA.</span></h1>
+      <p>Reel verticali con avatar o modella IA, voce naturale, lip-sync e montaggio UGC. Il creator non recita uno spot: racconta problemi reali del cliente, spiega il metodo dell'azienda e porta verso una CTA precisa.</p>
+      <div class="priceNote"><b>Servizio premium.</b> I Reel con avatar IA richiedono una quota dedicata per i servizi di generazione video/voce e vengono aggiunti al piano contenuti solo se il cliente li desidera.</div>
+      <a class="back" href="?v=148b6cb0">← Torna alla gestione social</a>
+    </div>
+    <div class="visual"><div class="mock"><b>CREATOR IA + BRAND REALE</b><small>Talking head · problema/soluzione · 3 errori · FAQ · backstage · offerta · CTA</small></div></div>
+  </div>
+  <div class="cards">
+    <div class="card"><strong>1. SCRIPT</strong><p>Testi guidati dalla strategia del brand, non frasi pubblicitarie generiche.</p></div>
+    <div class="card"><strong>2. CREATOR</strong><p>Avatar o modella IA coerente con target, settore e tono dell'azienda.</p></div>
+    <div class="card"><strong>3. REEL</strong><p>Voce, lip-sync, B-roll, sottotitoli e CTA in formato verticale 9:16.</p></div>
+  </div>
+  <div class="steps">
+    <div class="step"><b>HOOK</b><small>Primi 2 secondi</small></div>
+    <div class="step"><b>PROBLEMA</b><small>Situazione reale</small></div>
+    <div class="step"><b>METODO</b><small>Come lavora l'azienda</small></div>
+    <div class="step"><b>PROVA</b><small>B-roll e contenuti reali</small></div>
+    <div class="step"><b>CTA</b><small>Richiesta o appuntamento</small></div>
+  </div>
+  <div class="cta">
+    <div><h2>AGGIUNGILI AL TUO <span>PIANO SOCIAL.</span></h2><p>Possiamo integrare i Reel con avatar IA dentro la normale programmazione dei contenuti, mantenendo strategia, brand e calendario editoriale coordinati.</p></div>
+    <a class="btn btnPrimary" href="mailto:agenzia.realmediapro@gmail.com?subject=Reel%20con%20avatar%20IA">RICHIEDI ATTIVAZIONE</a>
+  </div>
+</section>
+<div class="foot">Real Media Pro · gestione social e contenuti premium con avatar IA</div>
 </main>
 <script>
-const API='http://127.0.0.1:8770';
-let currentJob=null, pollTimer=null, previewUrl=null;
-const $=id=>document.getElementById(id);
-const examples={
-f1:['Perché un annuncio non basta','Prima di abbassare il prezzo','Cosa facciamo prima di pubblicare','Come prepariamo una valutazione','Dietro una visita qualificata'],
-rmp:['Perché i post non portano clienti','Cosa manca alla tua pagina social','Come trasformiamo eventi in contenuti','Perché serve una strategia','Dietro un mese di contenuti']};
-function renderExamples(){ $('examples').innerHTML=examples[$('brand').value].map(x=>`<button type="button" class="chip">${x}</button>`).join(''); document.querySelectorAll('.chip').forEach(b=>b.onclick=()=>{$('topic').value=b.textContent}); $('reelTag').textContent=($('brand').value==='f1'?'F1':'RMP')+' · UGC'; }
-$('brand').onchange=renderExamples; renderExamples();
-$('presenter').onchange=()=>{const f=$('presenter').files[0]; if(!f)return; if(previewUrl)URL.revokeObjectURL(previewUrl); previewUrl=URL.createObjectURL(f); $('preview').src=previewUrl; $('preview').style.display='block'; $('placeholder').style.display='none'; $('captionDemo').style.display='block';};
-function healthItem(name,ok,detail){return `<div class="healthItem"><b>${name}</b><small class="${ok?'good':'badText'}">${ok?'PRONTO':'NON PRONTO'}</small><small>${detail||''}</small></div>`}
-async function checkHealth(){try{const r=await fetch(API+'/api/health',{cache:'no-store'}); if(!r.ok)throw 0; const h=await r.json(); $('engine').className='engine ok'; $('engineText').textContent='MOTORE LOCALE CONNESSO'; $('health').innerHTML=healthItem('OLLAMA',h.ollama,'script')+healthItem('CHATTERBOX',h.tts_chatterbox,'voce italiana')+healthItem('MUSETALK',h.musetalk,'lip-sync')+healthItem('FFMPEG',h.ffmpeg,'montaggio'); return h;}catch(e){$('engine').className='engine bad'; $('engineText').textContent='MOTORE LOCALE SPENTO'; $('health').innerHTML='<div class="healthItem wide"><b>Avvia AI UGC Reel Lab dal Desktop</b><small class="badText">Il server locale 127.0.0.1:8770 non risponde.</small></div>'; return null;}}
-$('genScript').onclick=async()=>{const h=await checkHealth(); if(!h){alert('Avvia prima AI UGC Reel Lab dal Desktop.');return;} $('genScript').disabled=true; $('genScript').textContent='SCRIVO...'; try{const r=await fetch(API+'/api/script',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({brand:$('brand').value,objective:$('objective').value,format:$('format').value,topic:$('topic').value})}); const d=await r.json(); if(!r.ok)throw new Error(d.detail||'Errore script'); $('script').value=d.script;}catch(e){alert(e.message)}finally{$('genScript').disabled=false;$('genScript').textContent='GENERA SCRIPT'}};
-$('create').onclick=async()=>{const presenter=$('presenter').files[0], voice=$('voice').files[0]; if(!presenter){alert('Carica il video del modello.');return;} if(!voice){alert('Carica una breve voce femminile italiana di riferimento.');return;} const h=await checkHealth(); if(!h){alert('Avvia prima AI UGC Reel Lab dal Desktop.');return;} if(!h.tts_chatterbox||!h.musetalk||!h.ffmpeg){alert('Installazione UGC incompleta. Esegui INSTALLA_UGC_GRATIS.bat sul PC.');return;} const fd=new FormData(); fd.append('presenter_video',presenter); fd.append('voice_reference',voice); fd.append('brand',$('brand').value); fd.append('objective',$('objective').value); fd.append('format',$('format').value); fd.append('topic',$('topic').value); fd.append('script',$('script').value.trim()); [...$('broll').files].forEach(f=>fd.append('broll',f)); $('create').disabled=true; $('stop').disabled=false; $('progressBox').style.display='block'; $('result').style.display='none'; $('progressBar').style.width='0%'; $('logs').textContent='Invio materiali al motore locale...'; try{const r=await fetch(API+'/api/jobs',{method:'POST',body:fd}); const d=await r.json(); if(!r.ok)throw new Error(d.detail||'Errore creazione Reel'); currentJob=d.job_id; if(d.script)$('script').value=d.script; pollJob();}catch(e){alert(e.message);resetButtons();}};
-function resetButtons(){$('create').disabled=false;$('stop').disabled=true;}
-async function pollJob(){if(!currentJob)return; try{const r=await fetch(API+'/api/jobs/'+currentJob,{cache:'no-store'}); const j=await r.json(); if(!r.ok)throw new Error(j.detail||'Job non trovato'); $('progressBar').style.width=(j.progress||0)+'%'; $('progressText').textContent=(j.progress||0)+'%'; $('statusText').textContent=j.message||j.status; $('logs').textContent=(j.logs||[]).join('\n'); $('logs').scrollTop=$('logs').scrollHeight; if(j.status==='completed'){clearTimeout(pollTimer); resetButtons(); showResult(j); return;} if(j.status==='failed'){clearTimeout(pollTimer); resetButtons(); alert('Generazione non riuscita: '+(j.error||'errore sconosciuto')); return;} if(j.status==='stopped'){clearTimeout(pollTimer); resetButtons(); $('statusText').textContent='FERMATO'; return;} pollTimer=setTimeout(pollJob,1200);}catch(e){$('statusText').textContent='Connessione persa: '+e.message; pollTimer=setTimeout(pollJob,2500);}}
-$('stop').onclick=async()=>{if(!currentJob)return; $('stop').disabled=true; try{await fetch(API+'/api/jobs/'+currentJob+'/stop',{method:'POST'}); $('statusText').textContent='Arresto in corso...';}catch(e){alert(e.message)}};
-function showResult(j){const videoUrl=API+j.video_url+'?t='+Date.now(); $('resultVideo').src=videoUrl; $('result').style.display='block'; $('downloads').innerHTML=(j.artifacts||[]).map(a=>`<a href="${API+a.url}" target="_blank">${a.label}</a>`).join(''); $('result').scrollIntoView({behavior:'smooth',block:'start'});}
-window.addEventListener('beforeunload',()=>{if(previewUrl)URL.revokeObjectURL(previewUrl)});
-checkHealth(); setInterval(checkHealth,15000);
+const params=new URLSearchParams(location.search);const v=params.get('v')||'148b6cb0';
+const premium=v==='local-free-v2';
+document.getElementById('standard').style.display=premium?'none':'block';
+document.getElementById('premium').style.display=premium?'block':'none';
+document.getElementById('modeTag').textContent=premium?'REEL CON AVATAR IA · PREMIUM':'GESTIONE SOCIAL';
 </script>
 </body>
 </html>
