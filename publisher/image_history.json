@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-08-26T14:55:56Z",
+  "updated_at": "2026-08-29T14:19:02Z",
   "brands": {
     "f1-immobiliare": {
       "recent": [
@@ -2962,6 +2962,30 @@
           "url": "manual://publisher/manual_images/f1-immobiliare/RIC LAVORO F1/image-gen-2(20260816-073209).png",
           "used_at": "2026-08-26T14:55:56Z",
           "job_id": "f1-immobiliare-2026-08-26-c16-01-03-g6-controllare-concorrenza",
+          "output_type": "static-photo",
+          "source_type": "manual-upload"
+        },
+        {
+          "key": "manual://publisher/manual_images/f1-immobiliare/RIC LAVORO F1/image-gen-2(20260817-093600) (1).png",
+          "url": "manual://publisher/manual_images/f1-immobiliare/RIC LAVORO F1/image-gen-2(20260817-093600) (1).png",
+          "used_at": "2026-08-29T14:19:02Z",
+          "job_id": "f1-immobiliare-2026-08-29-c16-03-05-g4-ribasso-senza-diagnosi",
+          "output_type": "static-photo",
+          "source_type": "manual-upload"
+        },
+        {
+          "key": "manual://publisher/manual_images/f1-immobiliare/RIC LAVORO F1/image-gen-2(20260817-093600).png",
+          "url": "manual://publisher/manual_images/f1-immobiliare/RIC LAVORO F1/image-gen-2(20260817-093600).png",
+          "used_at": "2026-08-29T14:19:02Z",
+          "job_id": "f1-immobiliare-2026-08-29-c16-02-04-g3-media-torino",
+          "output_type": "static-photo",
+          "source_type": "manual-upload"
+        },
+        {
+          "key": "manual://publisher/manual_images/f1-immobiliare/RIC LAVORO F1/image-gen-2(20260817-111810) (1).png",
+          "url": "manual://publisher/manual_images/f1-immobiliare/RIC LAVORO F1/image-gen-2(20260817-111810) (1).png",
+          "used_at": "2026-08-29T14:19:02Z",
+          "job_id": "f1-immobiliare-2026-08-29-c16-01-03-g2-come-costruiamo-prezzo",
           "output_type": "static-photo",
           "source_type": "manual-upload"
         }
@@ -5927,6 +5951,30 @@
           "url": "https://cdn.pixabay.com/photo/2015/01/27/20/40/laptop-614213_960_720.jpg",
           "used_at": "2026-08-26T14:55:55Z",
           "job_id": "real-media-pro-2026-08-26-c16-01-03-analisi-gratuita",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2015/11/09/14/43/laptop-1035345.jpg",
+          "url": "https://cdn.pixabay.com/photo/2015/11/09/14/43/laptop-1035345_1280.jpg",
+          "used_at": "2026-08-29T14:18:58Z",
+          "job_id": "real-media-pro-2026-08-29-c16-03-05-shopify-product-page",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2015/05/20/08/57/laptop-775002.jpg",
+          "url": "https://cdn.pixabay.com/photo/2015/05/20/08/57/laptop-775002_1280.jpg",
+          "used_at": "2026-08-29T14:19:00Z",
+          "job_id": "real-media-pro-2026-08-29-c16-02-04-shopify-che-converte",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2023/02/06/21/21/office-7772783_960_720.jpg",
+          "url": "https://cdn.pixabay.com/photo/2023/02/06/21/21/office-7772783_960_720.jpg",
+          "used_at": "2026-08-29T14:19:01Z",
+          "job_id": "real-media-pro-2026-08-29-c16-01-03-seo-servizio",
           "output_type": "static-photo",
           "source_type": "pixabay-fresh-static-photo"
         }
