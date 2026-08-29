@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-08-29T14:19:02Z",
+  "updated_at": "2026-08-29T18:20:20Z",
   "brands": {
     "f1-immobiliare": {
       "recent": [
@@ -2986,6 +2986,30 @@
           "url": "manual://publisher/manual_images/f1-immobiliare/RIC LAVORO F1/image-gen-2(20260817-111810) (1).png",
           "used_at": "2026-08-29T14:19:02Z",
           "job_id": "f1-immobiliare-2026-08-29-c16-01-03-g2-come-costruiamo-prezzo",
+          "output_type": "static-photo",
+          "source_type": "manual-upload"
+        },
+        {
+          "key": "manual://publisher/manual_images/f1-immobiliare/RIC LAVORO F1/image-gen-2(20260817-111810).png",
+          "url": "manual://publisher/manual_images/f1-immobiliare/RIC LAVORO F1/image-gen-2(20260817-111810).png",
+          "used_at": "2026-08-29T18:20:19Z",
+          "job_id": "f1-immobiliare-2026-08-29-c20-03-08-g7-comparabile-escluso",
+          "output_type": "static-photo",
+          "source_type": "manual-upload"
+        },
+        {
+          "key": "manual://publisher/manual_images/f1-immobiliare/RIC LAVORO F1/image-gen-2(20260817-170158).png",
+          "url": "manual://publisher/manual_images/f1-immobiliare/RIC LAVORO F1/image-gen-2(20260817-170158).png",
+          "used_at": "2026-08-29T18:20:20Z",
+          "job_id": "f1-immobiliare-2026-08-29-c20-02-07-g6-vendita-privata-verifiche",
+          "output_type": "static-photo",
+          "source_type": "manual-upload"
+        },
+        {
+          "key": "manual://publisher/manual_images/f1-immobiliare/RIC LAVORO F1/image-gen-2(20260818-024455).png",
+          "url": "manual://publisher/manual_images/f1-immobiliare/RIC LAVORO F1/image-gen-2(20260818-024455).png",
+          "used_at": "2026-08-29T18:20:20Z",
+          "job_id": "f1-immobiliare-2026-08-29-c20-01-06-g5-dopo-pubblicazione",
           "output_type": "static-photo",
           "source_type": "manual-upload"
         }
@@ -5975,6 +5999,30 @@
           "url": "https://cdn.pixabay.com/photo/2023/02/06/21/21/office-7772783_960_720.jpg",
           "used_at": "2026-08-29T14:19:01Z",
           "job_id": "real-media-pro-2026-08-29-c16-01-03-seo-servizio",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2022/08/12/21/44/laptop-7382501_960_720.png",
+          "url": "https://cdn.pixabay.com/photo/2022/08/12/21/44/laptop-7382501_960_720.png",
+          "used_at": "2026-08-29T18:18:56Z",
+          "job_id": "real-media-pro-2026-08-29-c20-03-08-audit-digitale",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2025/05/26/17/01/laptop-9623736.png",
+          "url": "https://cdn.pixabay.com/photo/2025/05/26/17/01/laptop-9623736_1280.png",
+          "used_at": "2026-08-29T18:19:13Z",
+          "job_id": "real-media-pro-2026-08-29-c20-02-07-seo-ai-search",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2015/09/28/16/20/business-962315.jpg",
+          "url": "https://cdn.pixabay.com/photo/2015/09/28/16/20/business-962315_1280.jpg",
+          "used_at": "2026-08-29T18:20:19Z",
+          "job_id": "real-media-pro-2026-08-29-c20-01-06-advertising-sistema",
           "output_type": "static-photo",
           "source_type": "pixabay-fresh-static-photo"
         }
