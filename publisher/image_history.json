@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-08-29T18:20:20Z",
+  "updated_at": "2026-08-30T22:41:30Z",
   "brands": {
     "f1-immobiliare": {
       "recent": [
@@ -3010,6 +3010,30 @@
           "url": "manual://publisher/manual_images/f1-immobiliare/RIC LAVORO F1/image-gen-2(20260818-024455).png",
           "used_at": "2026-08-29T18:20:20Z",
           "job_id": "f1-immobiliare-2026-08-29-c20-01-06-g5-dopo-pubblicazione",
+          "output_type": "static-photo",
+          "source_type": "manual-upload"
+        },
+        {
+          "key": "manual://publisher/manual_images/f1-immobiliare/RIC LAVORO F1/image-gen-2(20260818-030337) (1).png",
+          "url": "manual://publisher/manual_images/f1-immobiliare/RIC LAVORO F1/image-gen-2(20260818-030337) (1).png",
+          "used_at": "2026-08-30T22:41:30Z",
+          "job_id": "f1-immobiliare-2026-08-31-c00-03-03-g4-quattro-controlli-fermo",
+          "output_type": "static-photo",
+          "source_type": "manual-upload"
+        },
+        {
+          "key": "manual://publisher/manual_images/f1-immobiliare/RIC LAVORO F1/image-gen-2(20260818-030337).png",
+          "url": "manual://publisher/manual_images/f1-immobiliare/RIC LAVORO F1/image-gen-2(20260818-030337).png",
+          "used_at": "2026-08-30T22:41:30Z",
+          "job_id": "f1-immobiliare-2026-08-31-c00-02-02-g3-cinquecento-metri",
+          "output_type": "static-photo",
+          "source_type": "manual-upload"
+        },
+        {
+          "key": "manual://publisher/manual_images/f1-immobiliare/RIC LAVORO F1/image-gen-2(20260818-031254).png",
+          "url": "manual://publisher/manual_images/f1-immobiliare/RIC LAVORO F1/image-gen-2(20260818-031254).png",
+          "used_at": "2026-08-30T22:41:30Z",
+          "job_id": "f1-immobiliare-2026-08-31-c00-01-01-g2-tre-prezzi",
           "output_type": "static-photo",
           "source_type": "manual-upload"
         }
@@ -6023,6 +6047,30 @@
           "url": "https://cdn.pixabay.com/photo/2015/09/28/16/20/business-962315_1280.jpg",
           "used_at": "2026-08-29T18:20:19Z",
           "job_id": "real-media-pro-2026-08-29-c20-01-06-advertising-sistema",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2020/08/25/18/28/workplace-5517746.jpg",
+          "url": "https://cdn.pixabay.com/photo/2020/08/25/18/28/workplace-5517746_1280.jpg",
+          "used_at": "2026-08-30T22:36:03Z",
+          "job_id": "real-media-pro-2026-08-31-c00-03-03-shopify-servizio",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2014/12/29/15/36/business-582912_960_720.jpg",
+          "url": "https://cdn.pixabay.com/photo/2014/12/29/15/36/business-582912_960_720.jpg",
+          "used_at": "2026-08-30T22:39:03Z",
+          "job_id": "real-media-pro-2026-08-31-c00-02-02-audit-digitale",
+          "output_type": "static-photo",
+          "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://cdn.pixabay.com/photo/2018/09/05/04/20/shopping-3655449.png",
+          "url": "https://cdn.pixabay.com/photo/2018/09/05/04/20/shopping-3655449_1280.png",
+          "used_at": "2026-08-30T22:41:30Z",
+          "job_id": "real-media-pro-2026-08-31-c00-01-01-sito-che-perde-lead",
           "output_type": "static-photo",
           "source_type": "pixabay-fresh-static-photo"
         }
