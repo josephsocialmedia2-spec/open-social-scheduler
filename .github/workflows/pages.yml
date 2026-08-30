@@ -12,6 +12,7 @@ on:
       - 'ugc-reel-lab.html'
       - 'growth/groups.json'
       - 'ai-call-copilot-demo/**'
+      - 'roleplay-immobiliare/**'
       - '.github/workflows/pages.yml'
   workflow_dispatch:
 
@@ -42,6 +43,7 @@ jobs:
           done
           if [ -f growth/groups.json ]; then cp growth/groups.json /tmp/open-social-pages/growth/groups.json; fi
           if [ -d ai-call-copilot-demo ]; then cp -R ai-call-copilot-demo /tmp/open-social-pages/ai-call-copilot-demo; fi
+          if [ -d roleplay-immobiliare ]; then cp -R roleplay-immobiliare /tmp/open-social-pages/roleplay-immobiliare; fi
 
       - name: Sync to gh-pages
         shell: bash
@@ -57,10 +59,14 @@ jobs:
             rm -rf ai-call-copilot-demo
             cp -R /tmp/open-social-pages/ai-call-copilot-demo ./ai-call-copilot-demo
           fi
+          if [ -d /tmp/open-social-pages/roleplay-immobiliare ]; then
+            rm -rf roleplay-immobiliare
+            cp -R /tmp/open-social-pages/roleplay-immobiliare ./roleplay-immobiliare
+          fi
           touch .nojekyll
           git config user.name 'open-social-pages'
           git config user.email 'open-social-pages@users.noreply.github.com'
-          git add index.html content-center.html monday-control.html meta-setup.html groups.html ugc-reel-lab.html growth/groups.json ai-call-copilot-demo .nojekyll
+          git add index.html content-center.html monday-control.html meta-setup.html groups.html ugc-reel-lab.html growth/groups.json ai-call-copilot-demo roleplay-immobiliare .nojekyll
           if git diff --cached --quiet; then
             echo 'Public pages already synchronized.'
             exit 0
