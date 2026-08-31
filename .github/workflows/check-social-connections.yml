@@ -5,6 +5,12 @@ on:
   push:
     paths:
       - '.github/workflows/check-social-connections.yml'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'publisher/pilot_validate_social.py'
+      - '.github/workflows/check-social-connections.yml'
 
 permissions:
   contents: write
@@ -73,6 +79,7 @@ jobs:
           retention-days: 7
 
       - name: Persist sanitized report to main
+        if: github.event_name != 'pull_request'
         shell: bash
         run: |
           if git diff --quiet -- publisher/pilot_social_report.json; then exit 0; fi
