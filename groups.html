@@ -13,9 +13,9 @@
   <section class="hero">
     <div class="brand">F1 IMMOBILIARE · REAL MEDIA PRO</div>
     <h1>Facebook Groups Visibility Engine</h1>
-    <p class="muted">Qui compaiono solo i candidati che sembrano realmente gruppi Facebook. I risultati che sembrano post o richieste immobiliari vengono separati e passati al Facebook Network Radar.</p>
+    <p class="muted">Gestisci tutto direttamente qui: scegli i gruppi, chiedi l'iscrizione, segna quando sei stato accettato e passa al Network Radar.</p>
     <div id="stats" class="stats"></div>
-    <p class="notice">Flusso: <b>GRUPPO</b> → decisione → iscrizione → <b>ISCRITTO</b> → <b>CERCA PERSONE</b>. I post immobiliari non vengono più confusi con i gruppi: li trovi in <b>SEGNALI DA ANALIZZARE</b>.</p>
+    <p class="notice"><b>DA DECIDERE</b> → <b>DA ISCRIVERSI</b> → <b>ISCRIZIONE RICHIESTA</b> → <b>ISCRITTO</b> → <b>CERCA PERSONE</b>. Nessun passaggio su GitHub Issues.</p>
   </section>
 
   <div id="filters" class="toolbar"></div>
@@ -24,7 +24,7 @@
   <section class="signals" id="signalsSection">
     <div class="brand">NETWORK RADAR · INGRESSO SEGNALI</div>
     <h2>Segnali da analizzare</h2>
-    <p class="small">Post o risultati che parlano di casa, vendita, affitto, garage, valutazione o altri bisogni immobiliari. Non sono gruppi: qui diventano materiale per cercare la persona realmente interessata.</p>
+    <p class="small">Post o risultati con un bisogno immobiliare concreto vengono separati dai gruppi e passati al Facebook Network Radar.</p>
     <div id="signalsList" class="signalGrid"></div>
   </section>
 </main>
@@ -32,6 +32,7 @@
 const ORDER=['PENDING_APPROVAL','APPROVED','JOIN_REQUESTED','MEMBER','POST_READY','PAUSED','REJECTED'];
 const LABELS={ALL:'TUTTI',PENDING_APPROVAL:'DA DECIDERE',APPROVED:'DA ISCRIVERSI',JOIN_REQUESTED:'ISCRIZIONE RICHIESTA',MEMBER:'ISCRITTO',POST_READY:'PRONTO A PUBBLICARE',PAUSED:'IN PAUSA',REJECTED:'NON MI ISCRIVO'};
 const NETWORK='https://josephsocialmedia2-spec.github.io/launcher-dashboard/facebook-network-radar.html';
+const STATUS_KEY='f1FacebookGroupStatusV1';
 const POST_PREFIXES=['cerco urgentemente ','cerco casa ','cerco appartamento ','cerco garage ','renting apartment ','apartment for rent ','house for rent ','avigliana apartment for rent ','vi aspettiamo ','buongiorno ','ciao a tutti ','vendo casa ','vendo appartamento ','affitto appartamento ','scarpe da '];
 const PROPERTY_WORDS=['immobile','casa','appartamento','vendita','vendo','affitto','valutazione','garage','box','magazzino','terreno','capannone','agenzia','immobiliare','proprietario','proprietaria'];
 let all=[],signals=[],current='ALL';
@@ -42,17 +43,29 @@ function cleanName(raw){let t=String(raw||'').trim().replace(/\s*[-|]\s*Facebook
 function isLegacyPost(g){const raw=String(g.name||''),n=norm(raw);if(POST_PREFIXES.some(x=>n.startsWith(norm(x))))return true;if(raw.length>115&&!raw.includes(' | '))return true;return false}
 function hasPropertySignal(x){const n=norm(`${x.title||x.name||''} ${x.snippet||''}`);return PROPERTY_WORDS.some(w=>n.includes(norm(w)))}
 function normalizeGroup(g){return {...g,name:cleanName(g.name)}}
-function copyCommand(command){if(navigator.clipboard){navigator.clipboard.writeText(command).then(()=>alert('Comando copiato: '+command+'\nOra incollalo nella issue GitHub dei gruppi.'));}else{prompt('Copia questo comando:',command)}}
+function loadStatus(){try{return JSON.parse(localStorage.getItem(STATUS_KEY)||'{}')}catch(e){return{}}}
+function saveStatus(map){localStorage.setItem(STATUS_KEY,JSON.stringify(map))}
+function applySavedStatus(rows){const m=loadStatus();return rows.map(g=>m[g.id]?{...g,status:m[g.id]}:g)}
+function setStatus(id,status){const m=loadStatus();m[id]=status;saveStatus(m);const i=all.findIndex(g=>g.id===id);if(i>=0)all[i].status=status;render()}
 function networkUrl(g){const u=new URL(NETWORK);u.searchParams.set('group',g.name||'');u.searchParams.set('group_url',g.url||'');u.searchParams.set('territory',g.territory||'');u.searchParams.set('group_id',g.id||'');u.searchParams.set('source','groups_visibility_engine');return u.toString()}
 function signalNetworkUrl(s){const u=new URL(NETWORK);u.searchParams.set('group',s.group_name||s.group||'Facebook');u.searchParams.set('group_url',s.group_url||s.url||'');u.searchParams.set('territory',s.territory||'');u.searchParams.set('source','groups_post_signal');u.searchParams.set('prefill_note',`${s.title||s.name||''}${s.snippet?' — '+s.snippet:''}`.slice(0,900));u.searchParams.set('prefill_signal',guessSignal(s));if(s.source_url)u.searchParams.set('post_url',s.source_url);return u.toString()}
 function guessSignal(s){const n=norm(`${s.title||s.name||''} ${s.snippet||''}`);if(n.includes('valutazione'))return 'CHIEDE VALUTAZIONE';if(n.includes('vend')||n.includes('proprietar'))return 'VUOLE VENDERE';if(n.includes('cerca')||n.includes('cerco')||n.includes('affitto'))return 'CERCA CASA';return 'ALTRO SEGNALE'}
-function actions(g){const open=`<a class="btn" target="_blank" rel="noopener" href="${esc(g.url)}">APRI GRUPPO</a>`;const network=`<a class="btn network" href="${esc(networkUrl(g))}">CERCA PERSONE</a>`;if(g.status==='PENDING_APPROVAL')return `${open}<a class="btn secondary" target="_blank" rel="noopener" href="https://github.com/josephsocialmedia2-spec/open-social-scheduler/issues">GESTISCI DECISIONE</a>`;if(g.status==='APPROVED')return `${open}<button class="btn danger" onclick="copyCommand('/reject ${esc(g.id)}')">NON MI ISCRIVO</button><button class="btn secondary" onclick="copyCommand('/joined ${esc(g.id)}')">HO CHIESTO L'ISCRIZIONE</button><button class="btn secondary" onclick="copyCommand('/member ${esc(g.id)}')">SONO GIÀ ISCRITTO</button>`;if(g.status==='JOIN_REQUESTED')return `${open}<button class="btn secondary" onclick="copyCommand('/member ${esc(g.id)}')">SONO STATO ACCETTATO</button>`;if(g.status==='MEMBER'||g.status==='POST_READY')return `${open}${network}<span class="state-note">${g.status==='MEMBER'?'ISCRITTO':'PRONTO A PUBBLICARE'}</span>`;if(g.status==='REJECTED')return `${open}<span class="state-note">NON MI ISCRIVO</span>`;return open}
-function render(){const counts=Object.fromEntries(ORDER.map(s=>[s,all.filter(g=>g.status===s).length]));document.getElementById('stats').innerHTML=`<div class="stat"><b>${all.length}</b>gruppi puliti</div><div class="stat"><b>${counts.PENDING_APPROVAL||0}</b>da decidere</div><div class="stat"><b>${counts.APPROVED||0}</b>da iscriversi</div><div class="stat"><b>${counts.JOIN_REQUESTED||0}</b>richieste inviate</div><div class="stat"><b>${counts.MEMBER||0}</b>iscritto</div><div class="stat"><b>${signals.length}</b>segnali separati</div>`;const f=['ALL',...ORDER];document.getElementById('filters').innerHTML=f.map(x=>`<button class="${x===current?'active':''}" onclick="current='${x}';render()">${label(x)}</button>`).join('');const rows=current==='ALL'?all:all.filter(g=>g.status===current);document.getElementById('cards').innerHTML=rows.length?rows.map(g=>`<article class="card"><div class="row"><div><span class="badge">${esc(label(g.status))}</span><div class="name">${esc(g.name)}</div><div class="meta">${esc(g.brand)} · ${esc(g.territory)} · <span class="code">${esc(g.id)}</span></div></div></div><p class="muted">${esc(g.snippet||'')}</p><div class="actions">${actions(g)}</div></article>`).join(''):'<div class="empty card">Nessun gruppo in questo stato.</div>';renderSignals()}
+function actions(g){
+  const open=`<a class="btn" target="_blank" rel="noopener" href="${esc(g.url)}">APRI GRUPPO</a>`;
+  const network=`<a class="btn network" href="${esc(networkUrl(g))}">CERCA PERSONE</a>`;
+  if(g.status==='PENDING_APPROVAL')return `${open}<button class="btn secondary" onclick="setStatus('${g.id}','APPROVED')">VOGLIO ISCRIVERMI</button><button class="btn danger" onclick="setStatus('${g.id}','REJECTED')">NON MI ISCRIVO</button>`;
+  if(g.status==='APPROVED')return `${open}<button class="btn secondary" onclick="setStatus('${g.id}','JOIN_REQUESTED')">HO CHIESTO L'ISCRIZIONE</button><button class="btn network" onclick="setStatus('${g.id}','MEMBER')">SONO GIÀ ISCRITTO</button><button class="btn danger" onclick="setStatus('${g.id}','REJECTED')">NON MI ISCRIVO</button>`;
+  if(g.status==='JOIN_REQUESTED')return `${open}<button class="btn network" onclick="setStatus('${g.id}','MEMBER')">SONO STATO ACCETTATO</button><button class="btn danger" onclick="setStatus('${g.id}','REJECTED')">NON MI ISCRIVO</button>`;
+  if(g.status==='MEMBER'||g.status==='POST_READY')return `${open}${network}<span class="state-note">ISCRITTO</span>`;
+  if(g.status==='REJECTED')return `${open}<span class="state-note">NON MI ISCRIVO</span><button class="btn secondary" onclick="setStatus('${g.id}','PENDING_APPROVAL')">RIPRISTINA</button>`;
+  return open;
+}
+function render(){const counts=Object.fromEntries(ORDER.map(s=>[s,all.filter(g=>g.status===s).length]));document.getElementById('stats').innerHTML=`<div class="stat"><b>${all.length}</b>gruppi</div><div class="stat"><b>${counts.PENDING_APPROVAL||0}</b>da decidere</div><div class="stat"><b>${counts.APPROVED||0}</b>da iscriversi</div><div class="stat"><b>${counts.JOIN_REQUESTED||0}</b>richieste inviate</div><div class="stat"><b>${(counts.MEMBER||0)+(counts.POST_READY||0)}</b>iscritto</div><div class="stat"><b>${signals.length}</b>segnali</div>`;const f=['ALL',...ORDER];document.getElementById('filters').innerHTML=f.map(x=>`<button class="${x===current?'active':''}" onclick="current='${x}';render()">${label(x)}</button>`).join('');const rows=current==='ALL'?all:all.filter(g=>g.status===current);document.getElementById('cards').innerHTML=rows.length?rows.map(g=>`<article class="card"><div class="row"><div><span class="badge">${esc(label(g.status))}</span><div class="name">${esc(g.name)}</div><div class="meta">${esc(g.brand)} · ${esc(g.territory)} · <span class="code">${esc(g.id)}</span></div></div></div><p class="muted">${esc(g.snippet||'')}</p><div class="actions">${actions(g)}</div></article>`).join(''):'<div class="empty card">Nessun gruppo in questo stato.</div>';renderSignals()}
 function renderSignals(){const unique=[];const seen=new Set();for(const s of signals){const k=norm(`${s.source_url||s.group_url||s.url||''}|${s.title||s.name||''}`);if(!k||seen.has(k))continue;seen.add(k);unique.push(s)}signals=unique;signalsList.innerHTML=signals.length?signals.map(s=>`<article class="signalCard"><span class="badge signal">SEGNALE</span><div class="name">${esc(s.title||s.name||'Segnale Facebook')}</div><div class="meta">${esc(s.brand||'f1-immobiliare')} · ${esc(s.territory||'zona da verificare')}</div><p class="small">${esc(s.snippet||'')}</p><div class="actions">${(s.source_url||s.group_url||s.url)?`<a class="btn secondary" target="_blank" rel="noopener" href="${esc(s.source_url||s.group_url||s.url)}">APRI FONTE</a>`:''}<a class="btn signal" href="${esc(signalNetworkUrl(s))}">PORTA AL NETWORK RADAR</a></div></article>`).join(''):'<div class="empty">Nessun segnale immobiliare separato in questo momento.</div>'}
 Promise.all([
  fetch('./growth/groups.json',{cache:'no-store'}).then(r=>r.json()),
  fetch('./growth/signals.json',{cache:'no-store'}).then(r=>r.ok?r.json():{signals:[]}).catch(()=>({signals:[]}))
-]).then(([gdata,sdata])=>{const legacySignals=[];all=(gdata.groups||[]).map(normalizeGroup).filter(g=>{if(isLegacyPost(g)){if(hasPropertySignal(g))legacySignals.push({name:g.name,title:g.name,snippet:g.snippet,brand:g.brand,territory:g.territory,group_url:g.url,url:g.url});return false}return Boolean(g.name&&g.url)}).slice().reverse();signals=[...(sdata.signals||[]).slice().reverse(),...legacySignals];render()}).catch(()=>{document.getElementById('cards').innerHTML='<div class="empty card">Dati non disponibili.</div>'});
+]).then(([gdata,sdata])=>{const legacySignals=[];let rows=(gdata.groups||[]).map(normalizeGroup).filter(g=>{if(isLegacyPost(g)){if(hasPropertySignal(g))legacySignals.push({name:g.name,title:g.name,snippet:g.snippet,brand:g.brand,territory:g.territory,group_url:g.url,url:g.url});return false}return Boolean(g.name&&g.url)});all=applySavedStatus(rows).slice().reverse();signals=[...(sdata.signals||[]).slice().reverse(),...legacySignals];render()}).catch(()=>{document.getElementById('cards').innerHTML='<div class="empty card">Dati non disponibili.</div>'});
 </script>
 </body>
 </html>
