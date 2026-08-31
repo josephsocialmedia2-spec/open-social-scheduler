@@ -5,7 +5,7 @@ import hashlib
 import json
 import re
 import unicodedata
-from datetime import datetime, timezone
+from datetime import datetime, timezone, date
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -23,14 +23,26 @@ POST_PREFIXES = (
     "avigliana apartment for rent ", "vi aspettiamo ", "buongiorno ",
     "ciao a tutti ", "vendo casa ", "vendo appartamento ", "affitto appartamento ",
 )
-PROPERTY_NOUNS = ("casa", "appartamento", "immobile", "garage", "box", "magazzino", "terreno", "capannone", "villa", "rustico")
-INTENT_WORDS = ("cerco", "cerca", "cerchiamo", "vendo", "vendesi", "vendere", "vendita", "affitto", "affittasi", "affittare", "valutazione", "quanto vale")
-PROFESSIONAL_ONLY = ("agente immobiliare", "agenzia immobiliare", "mediatore immobiliare", "corso immobiliare")
+PROPERTY_NOUNS = (
+    "casa", "appartamento", "immobile", "garage", "box", "magazzino", "terreno",
+    "capannone", "villa", "rustico", "bilocale", "trilocale", "quadrilocale"
+)
+INTENT_WORDS = (
+    "cerco", "cerca", "cerchiamo", "vendo", "vendesi", "vendere", "vendita",
+    "affitto", "affittasi", "affittare", "valutazione", "quanto vale", "stima"
+)
+PROFESSIONAL_ONLY = (
+    "agente immobiliare", "agenzia immobiliare", "mediatore immobiliare",
+    "corso immobiliare", "recruiting immobiliare"
+)
 SPECIAL_ALIASES = {
     "valle di susa": ["valle di susa", "val di susa", "valsusa"],
     "sant antonino di susa": ["sant antonino di susa", "sant antonino"],
+    "sant ambrogio di torino": ["sant ambrogio di torino", "sant ambrogio", "s. ambrogio"],
     "borgone susa": ["borgone susa", "borgone"],
     "chiusa di san michele": ["chiusa di san michele", "chiusa san michele"],
+    "san giorio di susa": ["san giorio di susa", "san giorio"],
+    "sauze d oulx": ["sauze d oulx", "sauze"],
     "torino ovest": ["torino ovest", "torino"],
 }
 
@@ -91,17 +103,25 @@ def actionable_property_signal(title: str, snippet: str, territory: str) -> bool
     text = normalize(f"{title} {snippet}")
     if not text_mentions_territory(text, territory):
         return False
+
     if any(term in text for term in PROFESSIONAL_ONLY):
-        consumer_intent = any(word in text for word in ("cerco", "cerchiamo", "vendo casa", "vendesi", "affitto", "quanto vale"))
+        consumer_intent = any(
+            word in text
+            for word in ("cerco", "cerchiamo", "vendo casa", "vendesi", "affitto", "quanto vale", "valutazione casa")
+        )
         if not consumer_intent:
             return False
+
     has_intent = any(word in text for word in INTENT_WORDS)
     has_property = any(noun in text for noun in PROPERTY_NOUNS)
+
     if has_intent and has_property:
         return True
     if ("cerco" in text or "cerchiamo" in text) and "affitto" in text:
         return True
-    if "valutazione" in text and any(noun in text for noun in ("casa", "appartamento", "immobile", "villa")):
+    if ("valutazione" in text or "quanto vale" in text or "stima" in text) and any(
+        noun in text for noun in ("casa", "appartamento", "immobile", "villa")
+    ):
         return True
     return False
 
@@ -131,12 +151,33 @@ def short_id(prefix: str, value: str) -> str:
     return prefix + hashlib.sha1(value.encode("utf-8")).hexdigest()[:10].upper()
 
 
-def make_queries(config: dict) -> list[tuple[str, str, str]]:
-    rows: list[tuple[str, str, str]] = []
+def rotating_territories(bcfg: dict, per_run: int) -> list[str]:
+    territories = list(dict.fromkeys(bcfg.get("territories", [])))
+    priority = [t for t in bcfg.get("priority_territories", []) if t in territories]
+    remaining = [t for t in territories if t not in priority]
+    if not remaining or per_run <= 0:
+        return priority or territories
+
+    count = min(per_run, len(remaining))
+    start = (date.today().toordinal() * count) % len(remaining)
+    rotated = [remaining[(start + i) % len(remaining)] for i in range(count)]
+    return list(dict.fromkeys(priority + rotated))
+
+
+def make_queries(config: dict) -> list[tuple[str, str, str, str]]:
+    rows: list[tuple[str, str, str, str]] = []
+    per_run = int(config.get("territories_per_run", 7))
+
     for brand, bcfg in config.get("brands", {}).items():
-        for territory in bcfg.get("territories", []):
-            for topic in bcfg.get("topics", []):
-                rows.append((brand, territory, f'site:facebook.com/groups "{territory}" "{topic}"'))
+        territories = rotating_territories(bcfg, per_run)
+        group_topics = bcfg.get("group_topics") or bcfg.get("topics", [])
+        signal_topics = bcfg.get("signal_topics", [])
+
+        for territory in territories:
+            for topic in group_topics:
+                rows.append((brand, territory, f'site:facebook.com/groups "{territory}" "{topic}"', "GROUP"))
+            for topic in signal_topics:
+                rows.append((brand, territory, f'site:facebook.com/groups "{territory}" "{topic}"', "SIGNAL"))
     return rows
 
 
@@ -153,6 +194,7 @@ def search_public_web(query: str, max_results: int = 8) -> list[dict]:
             group_url = canonical_group_url(href)
             if not group_url:
                 continue
+
             raw_title = (item.get("title") or "Gruppo Facebook").strip()
             snippet = (item.get("body") or item.get("snippet") or "").strip()
             results.append({
@@ -174,16 +216,21 @@ def main() -> int:
     config = load_json(CONFIG_PATH, {})
     data = load_json(GROUPS_PATH, {"version": 2, "groups": []})
     signals = load_json(SIGNALS_PATH, {"version": 1, "signals": []})
+
     existing = {canonical_group_url(g.get("url", "")): g for g in data.get("groups", [])}
     existing_signals = {s.get("id") for s in signals.get("signals", [])}
-    limit = args.limit or int(config.get("daily_candidate_limit", 40))
+
+    group_limit = args.limit or int(config.get("daily_candidate_limit", 60))
+    signal_limit = int(config.get("daily_signal_limit", 80))
     batch_id = datetime.now(timezone.utc).strftime("%Y%m%d-%H%M%S")
+
     added: list[dict] = []
     added_signals: list[dict] = []
 
-    for brand, territory, query in make_queries(config):
-        if len(added) >= limit:
+    for brand, territory, query, mode in make_queries(config):
+        if len(added) >= group_limit and len(added_signals) >= signal_limit:
             break
+
         try:
             found = search_public_web(query)
         except Exception as exc:
@@ -192,7 +239,10 @@ def main() -> int:
 
         for item in found:
             url = item["url"]
+
             if item["kind"] == "POST":
+                if len(added_signals) >= signal_limit:
+                    continue
                 if actionable_property_signal(item["raw_title"], item["snippet"], territory):
                     sid = short_id("FBS-", f"{item['source_url']}|{item['raw_title']}")
                     if sid not in existing_signals:
@@ -213,10 +263,13 @@ def main() -> int:
                         added_signals.append(signal)
                 continue
 
+            if mode != "GROUP" or len(added) >= group_limit:
+                continue
             if url in existing:
                 continue
             if not item["title"] or not territory_matches(item, territory):
                 continue
+
             record = {
                 "id": short_id("FBG-", url),
                 "brand": brand,
@@ -232,21 +285,33 @@ def main() -> int:
                 "join_requested_at": None,
                 "member_at": None,
                 "last_post_at": None,
-                "notes": ""
+                "notes": "",
             }
             data.setdefault("groups", []).append(record)
             existing[url] = record
             added.append(record)
-            if len(added) >= limit:
-                break
 
     data["updated_at"] = now_iso()
     data["last_batch_id"] = batch_id if added else data.get("last_batch_id")
     signals["updated_at"] = now_iso()
+
     save_json(GROUPS_PATH, data)
     save_json(SIGNALS_PATH, signals)
-    save_json(NEW_BATCH_PATH, {"batch_id": batch_id, "created_at": now_iso(), "groups": added, "signals": added_signals})
-    print(json.dumps({"batch_id": batch_id, "new_groups": len(added), "new_signals": len(added_signals)}, ensure_ascii=False))
+    save_json(
+        NEW_BATCH_PATH,
+        {
+            "batch_id": batch_id,
+            "created_at": now_iso(),
+            "groups": added,
+            "signals": added_signals,
+        },
+    )
+
+    print(json.dumps({
+        "batch_id": batch_id,
+        "new_groups": len(added),
+        "new_signals": len(added_signals),
+    }, ensure_ascii=False))
     return 0
 
 
