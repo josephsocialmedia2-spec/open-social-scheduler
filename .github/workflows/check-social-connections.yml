@@ -1,4 +1,4 @@
-name: Check Social Connections
+name: Check Social Connections - F1 + RMP
 
 on:
   workflow_dispatch:
@@ -7,52 +7,79 @@ on:
       - '.github/workflows/check-social-connections.yml'
 
 permissions:
-  contents: read
+  contents: write
+
+env:
+  META_GRAPH_VERSION: ${{ vars.META_GRAPH_VERSION || 'v23.0' }}
+  F1_FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.F1_FACEBOOK_PAGE_ACCESS_TOKEN }}
+  F1_INSTAGRAM_ACCESS_TOKEN: ${{ secrets.F1_INSTAGRAM_ACCESS_TOKEN }}
+  F1_INSTAGRAM_USER_ID: ${{ secrets.F1_INSTAGRAM_USER_ID }}
+  RMP_FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.RMP_FACEBOOK_PAGE_ACCESS_TOKEN }}
+  RMP_INSTAGRAM_ACCESS_TOKEN: ${{ secrets.RMP_INSTAGRAM_ACCESS_TOKEN }}
+  RMP_INSTAGRAM_USER_ID: ${{ secrets.RMP_INSTAGRAM_USER_ID }}
 
 jobs:
   check:
     runs-on: ubuntu-latest
-    env:
-      F1_FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.F1_FACEBOOK_PAGE_ACCESS_TOKEN }}
-      F1_INSTAGRAM_ACCESS_TOKEN: ${{ secrets.F1_INSTAGRAM_ACCESS_TOKEN }}
-      F1_INSTAGRAM_USER_ID: ${{ secrets.F1_INSTAGRAM_USER_ID }}
-      F1_TIKTOK_ACCESS_TOKEN: ${{ secrets.F1_TIKTOK_ACCESS_TOKEN }}
-      F1_LINKEDIN_ACCESS_TOKEN: ${{ secrets.F1_LINKEDIN_ACCESS_TOKEN }}
-      F1_LINKEDIN_AUTHOR_URN: ${{ secrets.F1_LINKEDIN_AUTHOR_URN }}
-      F1_YOUTUBE_CLIENT_ID: ${{ secrets.F1_YOUTUBE_CLIENT_ID }}
-      F1_YOUTUBE_CLIENT_SECRET: ${{ secrets.F1_YOUTUBE_CLIENT_SECRET }}
-      F1_YOUTUBE_REFRESH_TOKEN: ${{ secrets.F1_YOUTUBE_REFRESH_TOKEN }}
-      F1_PINTEREST_ACCESS_TOKEN: ${{ secrets.F1_PINTEREST_ACCESS_TOKEN }}
-      F1_PINTEREST_BOARD_ID: ${{ secrets.F1_PINTEREST_BOARD_ID }}
+    timeout-minutes: 5
     steps:
-      - name: Report connection readiness without exposing secrets
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Read-only Meta connectivity check
+        run: python publisher/pilot_validate_social.py
+
+      - name: Render safe summary
         shell: bash
         run: |
-          set -euo pipefail
-          check() {
-            local label="$1"; shift
-            local ok=true
-            local missing=()
-            for name in "$@"; do
-              if [ -z "${!name:-}" ]; then
-                ok=false
-                missing+=("$name")
-              fi
-            done
-            if [ "$ok" = true ]; then
-              echo "✅ $label: PRONTO" >> "$GITHUB_STEP_SUMMARY"
-            else
-              echo "❌ $label: MANCANO ${missing[*]}" >> "$GITHUB_STEP_SUMMARY"
-            fi
-          }
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          data = json.loads(Path('publisher/pilot_social_report.json').read_text(encoding='utf-8'))
+          lines = [
+              '# Stato collegamenti social — F1 + Real Media Pro',
+              '',
+              '**Test in sola lettura:** nessuna pubblicazione, nessun container media, nessuna modifica alla coda.',
+              '',
+              '| Brand | Facebook | Instagram | Blocco pubblicazione | Pronto test live |',
+              '|---|---|---|---|---|',
+          ]
+          for item in data['clients']:
+              fb = item['facebook']
+              ig = item['instagram']
+              fb_text = 'OK' if (fb.get('read_only_check') or {}).get('ok') else ('SECRET MANCANTE' if not fb.get('configured') else 'ERRORE CONNESSIONE')
+              ig_text = 'OK' if (ig.get('read_only_check') or {}).get('ok') else ('SECRET MANCANTE' if not ig.get('configured') else 'ERRORE CONNESSIONE')
+              s = item['safety']
+              safety = 'ATTIVO' if s['approval_required'] and s['no_week_currently_approved'] and s['manual_publish_only'] and s['secret_prefix_matches'] else 'DA CONTROLLARE'
+              ready = 'SI' if item['pilot_ready'] else 'NO'
+              lines.append(f"| {item['name']} | {fb_text} | {ig_text} | {safety} | {ready} |")
+          lines += ['', f"**Esito complessivo:** {'PRONTO' if data['all_ready'] else 'CONFIGURAZIONE DA COMPLETARE'}"]
+          Path(os.environ['GITHUB_STEP_SUMMARY']).write_text('\n'.join(lines) + '\n', encoding='utf-8')
+          PY
 
-          echo '# Stato collegamenti social F1' >> "$GITHUB_STEP_SUMMARY"
-          echo '' >> "$GITHUB_STEP_SUMMARY"
-          check 'Facebook' F1_FACEBOOK_PAGE_ACCESS_TOKEN
-          check 'Instagram' F1_INSTAGRAM_ACCESS_TOKEN F1_INSTAGRAM_USER_ID
-          check 'TikTok' F1_TIKTOK_ACCESS_TOKEN
-          check 'LinkedIn' F1_LINKEDIN_ACCESS_TOKEN F1_LINKEDIN_AUTHOR_URN
-          check 'YouTube' F1_YOUTUBE_CLIENT_ID F1_YOUTUBE_CLIENT_SECRET F1_YOUTUBE_REFRESH_TOKEN
-          check 'Pinterest' F1_PINTEREST_ACCESS_TOKEN F1_PINTEREST_BOARD_ID
-          echo '' >> "$GITHUB_STEP_SUMMARY"
-          echo 'I valori dei secret non vengono mai stampati.' >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload sanitized report
+        uses: actions/upload-artifact@v4
+        with:
+          name: f1-rmp-social-connection-report
+          path: publisher/pilot_social_report.json
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Persist sanitized report to main
+        shell: bash
+        run: |
+          if git diff --quiet -- publisher/pilot_social_report.json; then exit 0; fi
+          git config user.name 'f1-rmp-social-check'
+          git config user.email 'f1-rmp-social-check@users.noreply.github.com'
+          git add publisher/pilot_social_report.json
+          git commit -m 'Update sanitized social connection report'
+          git fetch origin main
+          git rebase origin/main
+          git push origin HEAD:main
