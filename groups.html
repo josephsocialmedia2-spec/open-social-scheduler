@@ -1,2 +1,73 @@
 <!doctype html>
-<html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Visibility Engine — Facebook Groups</title><style>:root{color-scheme:dark}*{box-sizing:border-box}body{margin:0;background:#07111f;color:#f5f8fc;font-family:Arial,sans-serif}.wrap{width:min(1180px,calc(100% - 28px));margin:28px auto}.hero,.card{background:#0d1b2d;border:1px solid #29415e;border-radius:18px}.hero{padding:24px;margin-bottom:18px}.hero h1{margin:6px 0 8px}.muted{color:#afc0d5}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:18px 0}.stat{padding:14px;background:#101f33;border-radius:12px}.stat b{font-size:24px;display:block}.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}.toolbar button{border:1px solid #29415e;background:#0d1b2d;color:#fff;border-radius:999px;padding:9px 12px;cursor:pointer}.toolbar button.active{background:#2d7ff9}.grid{display:grid;gap:12px}.card{padding:16px}.row{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.badge{font-size:12px;font-weight:700;padding:6px 9px;border-radius:999px;background:#17304d}.brand{color:#6ee7a8}.name{font-size:18px;font-weight:700;margin:10px 0 6px}.meta{font-size:13px;color:#afc0d5}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.btn{display:inline-block;text-decoration:none;background:#2d7ff9;color:white;padding:10px 12px;border-radius:9px;font-weight:700}.btn.secondary{background:#17304d}.empty{padding:28px;text-align:center;color:#afc0d5}.code{font-family:monospace;color:#b9d5ff}.notice{border-left:3px solid #2d7ff9;padding-left:12px;line-height:1.5}</style></head><body><main class="wrap"><section class="hero"><div class="brand">F1 IMMOBILIARE · REAL MEDIA PRO</div><h1>Facebook Groups Visibility Engine</h1><p class="muted">GitHub aggiorna automaticamente il radar. Tu approvi i gruppi e completi su Facebook soltanto le azioni che richiedono il tuo account.</p><div id="stats" class="stats"></div><p class="notice">Comandi nell'issue GitHub: <span class="code">/approve all</span> o <span class="code">/approve FBG-...</span>. Dopo aver chiesto l'ingresso: <span class="code">/joined FBG-...</span>. Quando sei accettato: <span class="code">/member FBG-...</span>.</p></section><div id="filters" class="toolbar"></div><section id="cards" class="grid"></section></main><script>const ORDER=['PENDING_APPROVAL','APPROVED','JOIN_REQUESTED','MEMBER','POST_READY','PAUSED','REJECTED'];let all=[];let current='ALL';function esc(v){return String(v??'').replace(/[&<>"']/g,s=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]))}function render(){const counts=Object.fromEntries(ORDER.map(s=>[s,all.filter(g=>g.status===s).length]));document.getElementById('stats').innerHTML=`<div class="stat"><b>${all.length}</b>gruppi totali</div><div class="stat"><b>${counts.PENDING_APPROVAL||0}</b>da approvare</div><div class="stat"><b>${counts.JOIN_REQUESTED||0}</b>richieste inviate</div><div class="stat"><b>${counts.MEMBER||0}</b>membro</div>`;const f=['ALL',...ORDER];document.getElementById('filters').innerHTML=f.map(x=>`<button class="${x===current?'active':''}" onclick="current='${x}';render()">${x}</button>`).join('');const rows=current==='ALL'?all:all.filter(g=>g.status===current);document.getElementById('cards').innerHTML=rows.length?rows.map(g=>`<article class="card"><div class="row"><div><span class="badge">${esc(g.status)}</span><div class="name">${esc(g.name)}</div><div class="meta">${esc(g.brand)} · ${esc(g.territory)} · <span class="code">${esc(g.id)}</span></div></div></div><p class="muted">${esc(g.snippet||'')}</p><div class="actions"><a class="btn" target="_blank" rel="noopener" href="${esc(g.url)}">APRI GRUPPO</a><a class="btn secondary" target="_blank" rel="noopener" href="https://github.com/josephsocialmedia2-spec/open-social-scheduler/issues">APPROVA SU GITHUB</a></div></article>`).join(''):'<div class="empty card">Nessun gruppo in questo stato.</div>'}fetch('./growth/groups.json',{cache:'no-store'}).then(r=>r.json()).then(d=>{all=(d.groups||[]).slice().reverse();render()}).catch(()=>{document.getElementById('cards').innerHTML='<div class="empty card">Dati non disponibili.</div>'});</script></body></html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Visibility Engine — Facebook Groups</title>
+  <style>
+    :root{color-scheme:dark}*{box-sizing:border-box}body{margin:0;background:#07111f;color:#f5f8fc;font-family:Arial,sans-serif}.wrap{width:min(1180px,calc(100% - 28px));margin:28px auto}.hero,.card{background:#0d1b2d;border:1px solid #29415e;border-radius:18px}.hero{padding:24px;margin-bottom:18px}.hero h1{margin:6px 0 8px}.muted{color:#afc0d5}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:18px 0}.stat{padding:14px;background:#101f33;border-radius:12px}.stat b{font-size:24px;display:block}.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}.toolbar button{border:1px solid #29415e;background:#0d1b2d;color:#fff;border-radius:999px;padding:9px 12px;cursor:pointer}.toolbar button.active{background:#2d7ff9}.grid{display:grid;gap:12px}.card{padding:16px}.row{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.badge{font-size:12px;font-weight:700;padding:6px 9px;border-radius:999px;background:#17304d}.brand{color:#6ee7a8}.name{font-size:18px;font-weight:700;margin:10px 0 6px}.meta{font-size:13px;color:#afc0d5}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.btn{display:inline-block;text-decoration:none;background:#2d7ff9;color:white;padding:10px 12px;border-radius:9px;font-weight:700;border:0;cursor:pointer}.btn.secondary{background:#17304d}.btn.danger{background:#7f1d1d}.state-note{display:inline-flex;align-items:center;padding:10px 12px;border-radius:9px;background:#17304d;font-weight:700}.empty{padding:28px;text-align:center;color:#afc0d5}.code{font-family:monospace;color:#b9d5ff}.notice{border-left:3px solid #2d7ff9;padding-left:12px;line-height:1.5}
+  </style>
+</head>
+<body>
+<main class="wrap">
+  <section class="hero">
+    <div class="brand">F1 IMMOBILIARE · REAL MEDIA PRO</div>
+    <h1>Facebook Groups Visibility Engine</h1>
+    <p class="muted">Il radar trova i gruppi. La dashboard mostra chiaramente se devi ancora decidere, se devi iscriverti, se hai già inviato la richiesta oppure se sei già iscritto.</p>
+    <div id="stats" class="stats"></div>
+    <p class="notice">Stati operativi: <b>DA DECIDERE</b> → <b>DA ISCRIVERSI</b> → <b>ISCRIZIONE RICHIESTA</b> → <b>ISCRITTO</b>. Se un gruppo non ti interessa viene mostrato come <b>NON MI ISCRIVO</b>.</p>
+  </section>
+  <div id="filters" class="toolbar"></div>
+  <section id="cards" class="grid"></section>
+</main>
+<script>
+const ORDER=['PENDING_APPROVAL','APPROVED','JOIN_REQUESTED','MEMBER','POST_READY','PAUSED','REJECTED'];
+const LABELS={
+  ALL:'TUTTI',
+  PENDING_APPROVAL:'DA DECIDERE',
+  APPROVED:'DA ISCRIVERSI',
+  JOIN_REQUESTED:'ISCRIZIONE RICHIESTA',
+  MEMBER:'ISCRITTO',
+  POST_READY:'PRONTO A PUBBLICARE',
+  PAUSED:'IN PAUSA',
+  REJECTED:'NON MI ISCRIVO'
+};
+let all=[];
+let current='ALL';
+function esc(v){return String(v??'').replace(/[&<>"']/g,s=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]))}
+function label(status){return LABELS[status]||status}
+function copyCommand(command){
+  if(navigator.clipboard){navigator.clipboard.writeText(command).then(()=>alert('Comando copiato: '+command+'\nOra incollalo nella issue GitHub dei gruppi.'));}
+  else{prompt('Copia questo comando:',command);}
+}
+function actions(g){
+  const open=`<a class="btn" target="_blank" rel="noopener" href="${esc(g.url)}">APRI GRUPPO</a>`;
+  if(g.status==='PENDING_APPROVAL'){
+    return `${open}<a class="btn secondary" target="_blank" rel="noopener" href="https://github.com/josephsocialmedia2-spec/open-social-scheduler/issues">GESTISCI DECISIONE</a>`;
+  }
+  if(g.status==='APPROVED'){
+    return `${open}<button class="btn danger" onclick="copyCommand('/reject ${esc(g.id)}')">NON MI ISCRIVO</button><button class="btn secondary" onclick="copyCommand('/joined ${esc(g.id)}')">HO CHIESTO L'ISCRIZIONE</button>`;
+  }
+  if(g.status==='JOIN_REQUESTED'){
+    return `${open}<button class="btn secondary" onclick="copyCommand('/member ${esc(g.id)}')">SONO STATO ACCETTATO</button>`;
+  }
+  if(g.status==='MEMBER'){
+    return `${open}<span class="state-note">ISCRITTO</span>`;
+  }
+  if(g.status==='REJECTED'){
+    return `${open}<span class="state-note">NON MI ISCRIVO</span>`;
+  }
+  return open;
+}
+function render(){
+  const counts=Object.fromEntries(ORDER.map(s=>[s,all.filter(g=>g.status===s).length]));
+  document.getElementById('stats').innerHTML=`<div class="stat"><b>${all.length}</b>gruppi totali</div><div class="stat"><b>${counts.PENDING_APPROVAL||0}</b>da decidere</div><div class="stat"><b>${counts.APPROVED||0}</b>da iscriversi</div><div class="stat"><b>${counts.JOIN_REQUESTED||0}</b>richieste inviate</div><div class="stat"><b>${counts.MEMBER||0}</b>iscritto</div>`;
+  const f=['ALL',...ORDER];
+  document.getElementById('filters').innerHTML=f.map(x=>`<button class="${x===current?'active':''}" onclick="current='${x}';render()">${label(x)}</button>`).join('');
+  const rows=current==='ALL'?all:all.filter(g=>g.status===current);
+  document.getElementById('cards').innerHTML=rows.length?rows.map(g=>`<article class="card"><div class="row"><div><span class="badge">${esc(label(g.status))}</span><div class="name">${esc(g.name)}</div><div class="meta">${esc(g.brand)} · ${esc(g.territory)} · <span class="code">${esc(g.id)}</span></div></div></div><p class="muted">${esc(g.snippet||'')}</p><div class="actions">${actions(g)}</div></article>`).join(''):'<div class="empty card">Nessun gruppo in questo stato.</div>';
+}
+fetch('./growth/groups.json',{cache:'no-store'}).then(r=>r.json()).then(d=>{all=(d.groups||[]).slice().reverse();render()}).catch(()=>{document.getElementById('cards').innerHTML='<div class="empty card">Dati non disponibili.</div>'});
+</script>
+</body>
+</html>
