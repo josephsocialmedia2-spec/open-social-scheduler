@@ -1,0 +1,92 @@
+name: PILOT F1 + RMP Social - Read Only
+
+on:
+  push:
+    branches:
+      - 'pilot/f1-rmp-social-dry-run'
+      - 'main'
+    paths:
+      - 'publisher/pilot_validate_social.py'
+      - 'publisher/clients/f1-immobiliare.json'
+      - 'publisher/clients/real-media-pro.json'
+      - 'publisher/approvals/f1-immobiliare.json'
+      - 'publisher/approvals/real-media-pro.json'
+      - '.github/workflows/pilot-f1-rmp-social.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  META_GRAPH_VERSION: ${{ vars.META_GRAPH_VERSION || 'v23.0' }}
+  F1_FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.F1_FACEBOOK_PAGE_ACCESS_TOKEN }}
+  F1_INSTAGRAM_ACCESS_TOKEN: ${{ secrets.F1_INSTAGRAM_ACCESS_TOKEN }}
+  F1_INSTAGRAM_USER_ID: ${{ secrets.F1_INSTAGRAM_USER_ID }}
+  RMP_FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.RMP_FACEBOOK_PAGE_ACCESS_TOKEN }}
+  RMP_INSTAGRAM_ACCESS_TOKEN: ${{ secrets.RMP_INSTAGRAM_ACCESS_TOKEN }}
+  RMP_INSTAGRAM_USER_ID: ${{ secrets.RMP_INSTAGRAM_USER_ID }}
+
+jobs:
+  read-only-connectivity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout current branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+
+      - name: Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Validate F1 and RMP without publishing
+        run: python publisher/pilot_validate_social.py
+
+      - name: Write readable summary
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          data = json.loads(Path('publisher/pilot_social_report.json').read_text(encoding='utf-8'))
+          out = Path(os.environ['GITHUB_STEP_SUMMARY'])
+          lines = [
+              '# F1 + Real Media Pro — Social Pilot',
+              '',
+              '**Mode:** READ ONLY — no publication, no media container, no queue mutation.',
+              '',
+              '| Brand | Facebook | Instagram | Safety gate | Pilot ready |',
+              '|---|---|---|---|---|',
+          ]
+          for item in data['clients']:
+              fb = item['facebook']
+              ig = item['instagram']
+              fb_text = 'OK' if (fb.get('read_only_check') or {}).get('ok') else ('SECRET MISSING' if not fb.get('configured') else 'CHECK FAILED')
+              ig_text = 'OK' if (ig.get('read_only_check') or {}).get('ok') else ('SECRET MISSING' if not ig.get('configured') else 'CHECK FAILED')
+              s = item['safety']
+              safety = 'OK' if s['approval_required'] and s['no_week_currently_approved'] and s['manual_publish_only'] and s['secret_prefix_matches'] else 'CHECK'
+              ready = 'YES' if item['pilot_ready'] else 'NO'
+              lines.append(f"| {item['name']} | {fb_text} | {ig_text} | {safety} | {ready} |")
+          lines += ['', f"**Overall:** {'READY' if data['all_ready'] else 'SETUP REQUIRED'}"]
+          out.write_text('\n'.join(lines) + '\n', encoding='utf-8')
+          PY
+
+      - name: Upload pilot report
+        uses: actions/upload-artifact@v4
+        with:
+          name: f1-rmp-social-pilot-report
+          path: publisher/pilot_social_report.json
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Persist sanitized pilot report
+        shell: bash
+        run: |
+          if git diff --quiet -- publisher/pilot_social_report.json; then exit 0; fi
+          git config user.name 'f1-rmp-social-pilot'
+          git config user.email 'f1-rmp-social-pilot@users.noreply.github.com'
+          git add publisher/pilot_social_report.json
+          git commit -m 'Update sanitized F1 RMP social pilot report'
+          git push origin HEAD:${GITHUB_REF_NAME}
