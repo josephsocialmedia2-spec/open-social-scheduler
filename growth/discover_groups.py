@@ -23,11 +23,9 @@ POST_PREFIXES = (
     "avigliana apartment for rent ", "vi aspettiamo ", "buongiorno ",
     "ciao a tutti ", "vendo casa ", "vendo appartamento ", "affitto appartamento ",
 )
-PROPERTY_WORDS = (
-    "immobile", "casa", "appartamento", "vendita", "vendo", "affitto", "affitt",
-    "valutazione", "garage", "box", "magazzino", "terreno", "capannone",
-    "agenzia", "immobiliare", "proprietario", "proprietaria"
-)
+PROPERTY_NOUNS = ("casa", "appartamento", "immobile", "garage", "box", "magazzino", "terreno", "capannone", "villa", "rustico")
+INTENT_WORDS = ("cerco", "cerca", "cerchiamo", "vendo", "vendesi", "vendere", "vendita", "affitto", "affittasi", "affittare", "valutazione", "quanto vale")
+PROFESSIONAL_ONLY = ("agente immobiliare", "agenzia immobiliare", "mediatore immobiliare", "corso immobiliare")
 SPECIAL_ALIASES = {
     "valle di susa": ["valle di susa", "val di susa", "valsusa"],
     "sant antonino di susa": ["sant antonino di susa", "sant antonino"],
@@ -79,14 +77,33 @@ def looks_like_post(raw_title: str, source_url: str) -> bool:
     return False
 
 
-def has_property_signal(title: str, snippet: str) -> bool:
-    text = normalize(f"{title} {snippet}")
-    return any(word in text for word in PROPERTY_WORDS)
-
-
 def territory_aliases(territory: str) -> list[str]:
     key = normalize(territory)
     return SPECIAL_ALIASES.get(key, [key])
+
+
+def text_mentions_territory(text: str, territory: str) -> bool:
+    n = normalize(text)
+    return any(alias and alias in n for alias in territory_aliases(territory))
+
+
+def actionable_property_signal(title: str, snippet: str, territory: str) -> bool:
+    text = normalize(f"{title} {snippet}")
+    if not text_mentions_territory(text, territory):
+        return False
+    if any(term in text for term in PROFESSIONAL_ONLY):
+        consumer_intent = any(word in text for word in ("cerco", "cerchiamo", "vendo casa", "vendesi", "affitto", "quanto vale"))
+        if not consumer_intent:
+            return False
+    has_intent = any(word in text for word in INTENT_WORDS)
+    has_property = any(noun in text for noun in PROPERTY_NOUNS)
+    if has_intent and has_property:
+        return True
+    if ("cerco" in text or "cerchiamo" in text) and "affitto" in text:
+        return True
+    if "valutazione" in text and any(noun in text for noun in ("casa", "appartamento", "immobile", "villa")):
+        return True
+    return False
 
 
 def territory_matches(item: dict, territory: str) -> bool:
@@ -176,8 +193,8 @@ def main() -> int:
         for item in found:
             url = item["url"]
             if item["kind"] == "POST":
-                if has_property_signal(item["raw_title"], item["snippet"]):
-                    sid = short_id("FBS-", item["source_url"] or f"{url}|{item['raw_title']}")
+                if actionable_property_signal(item["raw_title"], item["snippet"], territory):
+                    sid = short_id("FBS-", f"{item['source_url']}|{item['raw_title']}")
                     if sid not in existing_signals:
                         signal = {
                             "id": sid,
@@ -228,17 +245,8 @@ def main() -> int:
     signals["updated_at"] = now_iso()
     save_json(GROUPS_PATH, data)
     save_json(SIGNALS_PATH, signals)
-    save_json(NEW_BATCH_PATH, {
-        "batch_id": batch_id,
-        "created_at": now_iso(),
-        "groups": added,
-        "signals": added_signals,
-    })
-    print(json.dumps({
-        "batch_id": batch_id,
-        "new_groups": len(added),
-        "new_signals": len(added_signals),
-    }, ensure_ascii=False))
+    save_json(NEW_BATCH_PATH, {"batch_id": batch_id, "created_at": now_iso(), "groups": added, "signals": added_signals})
+    print(json.dumps({"batch_id": batch_id, "new_groups": len(added), "new_signals": len(added_signals)}, ensure_ascii=False))
     return 0
 
 
