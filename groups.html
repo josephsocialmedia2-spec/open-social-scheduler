@@ -46,7 +46,7 @@ function actions(g){
     return `${open}<a class="btn secondary" target="_blank" rel="noopener" href="https://github.com/josephsocialmedia2-spec/open-social-scheduler/issues">GESTISCI DECISIONE</a>`;
   }
   if(g.status==='APPROVED'){
-    return `${open}<button class="btn danger" onclick="copyCommand('/reject ${esc(g.id)}')">NON MI ISCRIVO</button><button class="btn secondary" onclick="copyCommand('/joined ${esc(g.id)}')">HO CHIESTO L'ISCRIZIONE</button>`;
+    return `${open}<button class="btn danger" onclick="copyCommand('/reject ${esc(g.id)}')">NON MI ISCRIVO</button><button class="btn secondary" onclick="copyCommand('/joined ${esc(g.id)}')">HO CHIESTO L'ISCRIZIONE</button><button class="btn secondary" onclick="copyCommand('/member ${esc(g.id)}')">SONO GIÀ ISCRITTO</button>`;
   }
   if(g.status==='JOIN_REQUESTED'){
     return `${open}<button class="btn secondary" onclick="copyCommand('/member ${esc(g.id)}')">SONO STATO ACCETTATO</button>`;
