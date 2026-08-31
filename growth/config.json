@@ -1,23 +1,113 @@
 {
-  "version": 2,
-  "daily_candidate_limit": 40,
+  "version": 3,
+  "daily_candidate_limit": 60,
+  "daily_signal_limit": 80,
+  "territories_per_run": 7,
   "brands": {
     "f1-immobiliare": {
       "label": "F1 Immobiliare",
-      "territories": [
-        "Avigliana", "Almese", "Villar Dora", "Caprie", "Condove", "Chiusa di San Michele",
-        "Vaie", "Sant'Antonino di Susa", "Borgone Susa", "Villar Focchiardo", "Bussoleno",
-        "Susa", "Rivoli", "Valle di Susa", "Torino ovest"
+      "priority_territories": [
+        "Susa",
+        "Avigliana",
+        "Almese",
+        "Valle di Susa"
       ],
-      "topics": ["cittadini", "mercatino", "immobiliare"]
+      "territories": [
+        "Avigliana",
+        "Almese",
+        "Rubiana",
+        "Villar Dora",
+        "Caprie",
+        "Condove",
+        "Sant'Ambrogio di Torino",
+        "Chiusa di San Michele",
+        "Vaie",
+        "Sant'Antonino di Susa",
+        "San Didero",
+        "Borgone Susa",
+        "Villar Focchiardo",
+        "San Giorio di Susa",
+        "Bussoleno",
+        "Chianocco",
+        "Susa",
+        "Mompantero",
+        "Venaus",
+        "Giaglione",
+        "Gravere",
+        "Chiomonte",
+        "Exilles",
+        "Salbertrand",
+        "Oulx",
+        "Sauze d'Oulx",
+        "Cesana Torinese",
+        "Claviere",
+        "Bardonecchia",
+        "Novalesa",
+        "Moncenisio",
+        "Rivoli",
+        "Caselette",
+        "Alpignano",
+        "Pianezza",
+        "Collegno",
+        "Grugliasco",
+        "Giaveno",
+        "Trana",
+        "Bruino",
+        "Valle di Susa",
+        "Torino ovest"
+      ],
+      "group_topics": [
+        "sei di",
+        "mercatino",
+        "vendo compro",
+        "bacheca annunci",
+        "cittadini"
+      ],
+      "signal_topics": [
+        "cerco casa",
+        "cerco affitto",
+        "vendo casa",
+        "vendesi casa",
+        "quanto vale casa",
+        "valutazione immobile"
+      ]
     },
     "real-media-pro": {
       "label": "Real Media Pro",
-      "territories": ["Torino", "Rivoli", "Avigliana", "Valle di Susa"],
-      "topics": ["imprenditori", "attività locali"]
+      "priority_territories": [
+        "Torino",
+        "Rivoli",
+        "Avigliana",
+        "Valle di Susa"
+      ],
+      "territories": [
+        "Torino",
+        "Rivoli",
+        "Collegno",
+        "Grugliasco",
+        "Pianezza",
+        "Alpignano",
+        "Avigliana",
+        "Giaveno",
+        "Valle di Susa"
+      ],
+      "group_topics": [
+        "imprenditori",
+        "attività locali",
+        "commercianti",
+        "professionisti",
+        "networking"
+      ],
+      "signal_topics": []
     }
   },
   "status_flow": [
-    "PENDING_APPROVAL", "APPROVED", "JOIN_REQUESTED", "MEMBER", "POST_READY", "PAUSED", "REJECTED"
+    "PENDING_APPROVAL",
+    "APPROVED",
+    "JOIN_REQUESTED",
+    "MEMBER",
+    "POST_READY",
+    "PAUSED",
+    "REJECTED"
   ]
 }
