@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-08-31T19:22:52+00:00",
+  "updated_at": "2026-08-31T19:26:01+00:00",
   "signals": [
     {
       "id": "FBS-A04CD854BB",
@@ -13,6 +13,18 @@
       "source_query": "site:facebook.com/groups \"Almese\" \"cittadini\"",
       "status": "NEW",
       "discovered_at": "2026-08-31T19:21:34+00:00"
+    },
+    {
+      "id": "FBS-A04CD854BB",
+      "brand": "f1-immobiliare",
+      "territory": "Almese",
+      "group_url": "https://www.facebook.com/groups/1612274875481626/",
+      "source_url": "https://www.facebook.com/groups/1612274875481626/posts/28054219437527143/",
+      "title": "Salve, cerco in affitto per una coppia ad Almese dintorni",
+      "snippet": "January 7, 2025 - Popular groups · Find communities for you · Over 1 billion people across the globe are using Facebook Groups to explore their favorite topics · Log in · Categories · Science & tech · Travel · Animals · Sports & fitness · Entertainment",
+      "source_query": "site:facebook.com/groups \"Almese\" \"cittadini\"",
+      "status": "NEW",
+      "discovered_at": "2026-08-31T19:24:32+00:00"
     }
   ]
 }
