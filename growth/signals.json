@@ -1,5 +1,66 @@
 {
   "version": 1,
-  "updated_at": null,
-  "signals": []
+  "updated_at": "2026-08-31T19:22:52+00:00",
+  "signals": [
+    {
+      "id": "FBS-AA2AE8421F",
+      "brand": "f1-immobiliare",
+      "territory": "Avigliana",
+      "group_url": "https://www.facebook.com/groups/968085819967688/",
+      "source_url": "https://www.facebook.com/groups/968085819967688/posts/25833366953012897/",
+      "title": "Avigliana: cittadini a confronto | Facebook",
+      "snippet": "Avigliana: cittadini a confronto Sonia CarellaMar 6 Radio Dora Mar 6 Questa mattina il sindaco al Comune di Avigliana Andrea Archinà, è intervenuto ai nostri microfoni per darci aggiornamenti riguardo le considerazioni emerse dalla valutazione tecnica del progetto di Rfi, TAV tratta Avigliana - Orbassano e la conseguente posizione dell'amministrazione .",
+      "source_query": "site:facebook.com/groups \"Avigliana\" \"cittadini\"",
+      "status": "NEW",
+      "discovered_at": "2026-08-31T19:21:29+00:00"
+    },
+    {
+      "id": "FBS-64274D1F03",
+      "brand": "f1-immobiliare",
+      "territory": "Avigliana",
+      "group_url": "https://www.facebook.com/groups/casebrianza/",
+      "source_url": "https://www.facebook.com/groups/casebrianza/posts/28781472041497775/",
+      "title": "L' agenzia immobiliare che vende l'immobile al prezzo che ...",
+      "snippet": "Popular groups · Find communities for you · Over 1 billion people across the globe are using Facebook Groups to explore their favorite topics · Log in · Categories · Science & tech · Travel · Animals · Sports & fitness · Entertainment",
+      "source_query": "site:facebook.com/groups \"Avigliana\" \"immobiliare\"",
+      "status": "NEW",
+      "discovered_at": "2026-08-31T19:21:32+00:00"
+    },
+    {
+      "id": "FBS-69E5571FAD",
+      "brand": "f1-immobiliare",
+      "territory": "Avigliana",
+      "group_url": "https://www.facebook.com/groups/chivuolessermediatore/",
+      "source_url": "https://www.facebook.com/groups/chivuolessermediatore/posts/1778609939738602/",
+      "title": "Ma un agente immobiliare può ' essere assunto come ...",
+      "snippet": "Popular groups · Find communities for you · Over 1 billion people across the globe are using Facebook Groups to explore their favorite topics · Log in · Categories · Science & tech · Travel · Animals · Sports & fitness · Entertainment",
+      "source_query": "site:facebook.com/groups \"Avigliana\" \"immobiliare\"",
+      "status": "NEW",
+      "discovered_at": "2026-08-31T19:21:32+00:00"
+    },
+    {
+      "id": "FBS-8D743662D7",
+      "brand": "f1-immobiliare",
+      "territory": "Avigliana",
+      "group_url": "https://www.facebook.com/groups/372889939396167/",
+      "source_url": "https://www.facebook.com/groups/372889939396167/posts/27127689210156210/",
+      "title": "QUANDO UN AGENTE IMMOBILIARE RISPONDE AD ...",
+      "snippet": "April 30, 2026 - Popular groups · Find communities for you · Over 1 billion people across the globe are using Facebook Groups to explore their favorite topics · Log in · Categories · Science & tech · Travel · Animals · Sports & fitness · Entertainment",
+      "source_query": "site:facebook.com/groups \"Avigliana\" \"immobiliare\"",
+      "status": "NEW",
+      "discovered_at": "2026-08-31T19:21:32+00:00"
+    },
+    {
+      "id": "FBS-FB05B898DD",
+      "brand": "f1-immobiliare",
+      "territory": "Almese",
+      "group_url": "https://www.facebook.com/groups/1612274875481626/",
+      "source_url": "https://www.facebook.com/groups/1612274875481626/posts/28054219437527143/",
+      "title": "Salve, cerco in affitto per una coppia ad Almese dintorni",
+      "snippet": "January 7, 2025 - Popular groups · Find communities for you · Over 1 billion people across the globe are using Facebook Groups to explore their favorite topics · Log in · Categories · Science & tech · Travel · Animals · Sports & fitness · Entertainment",
+      "source_query": "site:facebook.com/groups \"Almese\" \"cittadini\"",
+      "status": "NEW",
+      "discovered_at": "2026-08-31T19:21:34+00:00"
+    }
+  ]
 }
