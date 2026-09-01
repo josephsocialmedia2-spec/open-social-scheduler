@@ -1,27 +1,177 @@
 <!doctype html>
-<html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#111827"><link rel="manifest" href="manifest.webmanifest"><title>Role Play Immobiliare</title><style>
-:root{--bg:#0b1020;--card:#151c2f;--card2:#1d263d;--text:#f7f8fb;--muted:#aeb8cb;--accent:#75a7ff;--ok:#7dd3a6;--warn:#f5c76b;--line:#2c3855}*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}button,select,input{font:inherit}button{min-height:46px;border:0;border-radius:12px;padding:10px 12px;font-weight:800;cursor:pointer}.app{max-width:760px;margin:auto;padding:14px 12px 42px}.top{display:flex;justify-content:space-between;gap:10px;align-items:center}.top h1{font-size:1.35rem;margin:0}.small{font-size:.84rem;color:var(--muted)}.panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px;margin:12px 0}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.primary{background:var(--accent);color:#081126}.secondary{background:#26324d;color:var(--text)}.warn{background:var(--warn);color:#2a1d05}.ok{background:var(--ok);color:#092218}label{display:block;color:var(--muted);font-size:.8rem;margin-bottom:5px}select,input[type=range]{width:100%;min-height:44px;border:1px solid var(--line);border-radius:11px;background:#0f1628;color:var(--text);padding:8px}.audio-actions,.actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:10px}.hero,.wide{grid-column:1/-1}.audio-status,.client,.reply{margin-top:10px;padding:13px;border-radius:13px;background:#0f1628;border:1px solid var(--line);line-height:1.45}.client{background:var(--card2)}.reply.hidden{filter:blur(7px);user-select:none}.script-grid{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:7px;margin-top:12px}.script-cell{min-height:44px;padding:5px 2px;background:#222d47;color:var(--text);border:1px solid var(--line);border-radius:10px}.script-cell.active{background:var(--accent);color:#081126;outline:2px solid #fff;outline-offset:1px}.progress{height:8px;background:#232d45;border-radius:99px;overflow:hidden;margin-top:10px}.bar{height:100%;background:var(--accent);width:0}.row{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin-top:10px}.row input{width:20px;height:20px}.badge{background:#222d47;border:1px solid var(--line);padding:6px 9px;border-radius:999px;font-size:.78rem}.err{display:none;background:#4a1e29;color:#ffd9d9;padding:12px;border-radius:12px}@media(max-width:540px){.grid2{grid-template-columns:1fr}.script-grid{grid-template-columns:repeat(6,minmax(0,1fr));gap:6px}.script-cell{min-height:46px}}
-</style></head><body><main class="app">
-<div class="top"><div><h1>Role Play Immobiliare</h1><div class="small">122 esercizi · ascolto continuo</div></div><span class="badge" id="count">…</span></div><div class="err" id="err"></div>
-<section class="panel"><div class="grid2"><div><label>Scenario</label><select id="cat"></select></div><div><label>Voce cliente</label><select id="voice"><option value="__best__">⭐ Migliore voce italiana</option><option value="__rotate__">🎭 Alterna voci naturali</option></select></div><div><label>Velocità <span id="rateVal">1.10×</span></label><input id="rate" type="range" min="0.85" max="1.40" step="0.01" value="1.10"></div><div><label>Tono <span id="pitchVal">0.98</span></label><input id="pitch" type="range" min="0.85" max="1.15" step="0.01" value="0.98"></div></div></section>
-<section class="panel" id="audioStudio"><div class="small">MEMORIZZAZIONE AUDIO</div><h2 style="font-size:1.08rem;margin:6px 0">🎧 Ascolta senza toccare il telefono</h2><div><label>Volume script <strong id="scriptVolVal" style="color:var(--text)">90%</strong></label><input id="scriptVol" type="range" min="0.20" max="1.00" step="0.05" value="0.90"><div class="small">Regola solo la voce del Role Play. Spotify resta separato.</div></div><div class="audio-actions"><button class="primary hero" id="listenAll">▶ ASCOLTA TUTTI GLI SCRIPT</button><button class="secondary" id="listenCategory">▶ Scenario selezionato</button><button class="secondary" id="pauseAudio">⏸ Pausa</button><button class="warn" id="stopAudio">■ Stop</button></div><div class="row"><input type="checkbox" id="loopAudio" checked><label for="loopAudio" style="margin:0">Ripeti automaticamente da capo</label></div><div class="audio-status" id="audioStatus">Pronto. Premi una casella qui sotto oppure “Ascolta tutti gli script”.</div><div class="progress"><div class="bar" id="audioBar"></div></div></section>
-<section class="panel" id="scriptGridPanel"><div class="small">SELEZIONA IL PUNTO DI PARTENZA</div><h2 style="font-size:1.08rem;margin:6px 0">🔢 122 script</h2><div class="small">Tocca una casella: parte da quello script, continua fino al 122, riparte dall’1 e prosegue in loop infinito.</div><div class="script-grid" id="scriptGrid"></div></section>
-<section class="panel"><div class="small" id="meta">Caricamento esercizi…</div><div class="client" id="client">Il cliente parlerà qui.</div><div class="small" style="margin-top:12px">LA TUA BATTUTA</div><div class="reply" id="reply">La tua risposta comparirà qui.</div><div class="actions"><button class="secondary" id="repeat">🔊 Ripeti cliente</button><button class="secondary" id="reveal">👁 Nascondi battuta</button><button class="warn" id="again">Da ripetere</button><button class="ok" id="good">Detta bene</button><button class="secondary wide" id="next">Avanti →</button></div></section>
-</main><script src="pack1.js"></script><script src="pack2.js"></script><script src="pack3.js"></script><script src="pack4.js"></script><script>
-let PACK=window.PACK||'',DRILLS=[],voices=[],ranked=[],current=null,pool=[],idx=0,audioList=[],audioPos=0,audioActive=false,audioPaused=false,infinite=false,speechToken=0,wakeLock=null;const $=id=>document.getElementById(id);
-const profiles=[{name:'Neutra',r:.94,p:.98,v:.94,pa:100},{name:'Cordiale',r:.91,p:1.04,v:.95,pa:120},{name:'Frettolosa',r:1.09,p:1,v:.98,pa:45},{name:'Diffidente',r:.87,p:.94,v:.90,pa:170},{name:'Irritata',r:1.03,p:.91,v:1,pa:65},{name:'Esitante',r:.84,p:1.01,v:.88,pa:220},{name:'Sicura',r:.96,p:.92,v:1,pa:80}];
-function esc(s){return String(s).replace(/[&<>\"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c]||c))}function score(v){let n=(v.name||'').toLowerCase(),l=(v.lang||'').toLowerCase(),s=0;if(l==='it-it')s+=35;else if(l.startsWith('it'))s+=25;if(/natural|neural|online|premium|enhanced/.test(n))s+=70;if(/google.*ital/.test(n))s+=60;if(v.default)s+=8;return s}function loadVoices(){if(!('speechSynthesis'in window))return;voices=speechSynthesis.getVoices().filter(v=>v.lang&&v.lang.toLowerCase().startsWith('it'));ranked=[...voices].sort((a,b)=>score(b)-score(a));let old=$('voice').value;$('voice').innerHTML='<option value="__best__">⭐ Migliore voce italiana</option><option value="__rotate__">🎭 Alterna voci naturali</option>'+ranked.map((v,i)=>'<option value="v'+i+'">'+esc(v.name)+' — '+esc(v.lang)+'</option>').join('');if([...$('voice').options].some(o=>o.value===old))$('voice').value=old}function chooseVoice(exclude){let val=$('voice').value;if(val.startsWith('v'))return ranked[+val.slice(1)]||ranked[0];let top=ranked.slice(0,Math.min(5,ranked.length));if(exclude)top=top.filter(v=>v.voiceURI!==exclude.voiceURI);return top.length?top[Math.floor(Math.random()*top.length)]:ranked[0]||null}
-function clean(t){return String(t).replace(/\[[^\]]*\]/g,' ').replace(/\s+/g,' ').trim()}function chunks(t){return (clean(t).match(/[^,;:.!?…]+[,;:.!?…]?/g)||[clean(t)]).map(x=>x.trim()).filter(Boolean)}
-function speak(text,opt={}){if(!('speechSynthesis'in window)){opt.onend&&opt.onend();return}speechToken++;let tok=speechToken;speechSynthesis.cancel();let pr=opt.profile||profiles[Math.floor(Math.random()*profiles.length)],voice=opt.voice||chooseVoice(),parts=chunks(text),baseR=+$('rate').value||1.10,baseP=+$('pitch').value||.98,vol=+$('scriptVol').value||.9;function run(i){if(tok!==speechToken)return;if(i>=parts.length){opt.onend&&opt.onend();return}let u=new SpeechSynthesisUtterance(parts[i]);u.lang='it-IT';u.rate=Math.max(.75,Math.min(1.55,baseR*(pr.r/.92)));u.pitch=Math.max(.7,Math.min(1.3,baseP*(pr.p/.98)));u.volume=Math.max(.05,Math.min(1,pr.v*vol));if(voice)u.voice=voice;u.onend=()=>{if(tok!==speechToken)return;let ms=/[.!?…]$/.test(parts[i])?pr.pa*1.25:/[,;:]$/.test(parts[i])?pr.pa:pr.pa*.45;setTimeout(()=>run(i+1),ms)};u.onerror=()=>setTimeout(()=>run(i+1),60);speechSynthesis.speak(u)}run(0)}
-async function keepAwake(){try{if('wakeLock'in navigator&&!wakeLock)wakeLock=await navigator.wakeLock.request('screen')}catch(e){}}function releaseWake(){if(wakeLock){try{wakeLock.release()}catch(e){}wakeLock=null}}
-function allSorted(){return [...DRILLS].sort((a,b)=>(+a.id||0)-(+b.id||0))}function setActive(id){document.querySelectorAll('.script-cell').forEach(b=>b.classList.toggle('active',String(b.dataset.id)===String(id)))}function render(d){current=d;setActive(d.id);$('meta').textContent=d.category+' · script '+d.id+'/122';$('client').textContent=d.client;$('reply').textContent=d.reply;$('reply').classList.remove('hidden');$('reveal').textContent='🙈 Nascondi battuta'}
-function removeLegacyDuplicateGrid(){const keep=$('scriptGridPanel');document.querySelectorAll('section.panel').forEach(p=>{if(p!==keep&&p.querySelector('.script-grid'))p.remove()})}
-function buildGrid(){removeLegacyDuplicateGrid();let g=$('scriptGrid');g.innerHTML='';allSorted().forEach((d,i)=>{let b=document.createElement('button');b.type='button';b.className='script-cell';b.textContent=d.id;b.dataset.id=d.id;b.setAttribute('aria-label','Ascolta dal copione '+d.id);b.addEventListener('click',()=>startAt(i));g.appendChild(b)})}
-function startAt(i){stop(false);audioList=allSorted();audioPos=Math.max(0,Math.min(audioList.length-1,i));infinite=true;$('loopAudio').checked=true;audioActive=true;audioPaused=false;keepAwake();playCurrent()}
-function start(scope){stop(false);let c=$('cat').value;audioList=scope==='category'&&c!=='__all__'?DRILLS.filter(d=>d.category===c):allSorted();audioList=[...audioList].sort((a,b)=>(+a.id||0)-(+b.id||0));audioPos=0;infinite=false;if(!audioList.length)return;audioActive=true;audioPaused=false;keepAwake();playCurrent()}
-function playCurrent(){if(!audioActive||audioPaused)return;if(audioPos>=audioList.length){if((infinite||$('loopAudio').checked)&&audioList.length){audioPos=0;setTimeout(playCurrent,250)}else stop(true);return}let d=audioList[audioPos];render(d);$('audioBar').style.width=((audioPos+1)/audioList.length*100)+'%';let pr=profiles[Math.floor(Math.random()*profiles.length)],cv=chooseVoice();$('audioStatus').textContent=(audioPos+1)+'/'+audioList.length+' · '+d.category+' · CLIENTE';speak(d.client,{profile:pr,voice:cv,onend:()=>{if(!audioActive)return;$('audioStatus').textContent=(audioPos+1)+'/'+audioList.length+' · '+d.category+' · LA TUA BATTUTA';setTimeout(()=>speak(d.reply,{profile:{name:'Operatore',r:1.0,p:.98,v:.96,pa:110},voice:chooseVoice(cv),onend:()=>{if(!audioActive)return;audioPos++;setTimeout(playCurrent,300)}}),180)}})}
-function stop(show){audioActive=false;audioPaused=false;infinite=false;speechToken++;if('speechSynthesis'in window)speechSynthesis.cancel();releaseWake();$('pauseAudio').textContent='⏸ Pausa';if(show){$('audioStatus').textContent='Ascolto fermato.';setActive(null)}}function togglePause(){if(!audioActive)return;if(!audioPaused){audioPaused=true;speechSynthesis.pause();$('pauseAudio').textContent='▶ Riprendi';$('audioStatus').textContent='In pausa.'}else{audioPaused=false;speechSynthesis.resume();$('pauseAudio').textContent='⏸ Pausa';if(!speechSynthesis.speaking)setTimeout(playCurrent,50)}}
-function makePool(){let c=$('cat').value;pool=DRILLS.filter(d=>c==='__all__'||d.category===c).sort(()=>Math.random()-.5);idx=0}function next(){stop(false);if(!pool.length||idx>=pool.length)makePool();if(pool.length){let d=pool[idx++];render(d);setTimeout(()=>speak(d.client),60)}}
-async function boot(){try{removeLegacyDuplicateGrid();setTimeout(removeLegacyDuplicateGrid,800);let saved=parseFloat(localStorage.getItem('roleplayScriptVolume')||'.9');$('scriptVol').value=Math.max(.2,Math.min(1,saved));$('scriptVolVal').textContent=Math.round(+$('scriptVol').value*100)+'%';if(!('DecompressionStream'in window))throw new Error('Usa Chrome o Edge aggiornato.');let bin=Uint8Array.from(atob(PACK),c=>c.charCodeAt(0)),stream=new Blob([bin]).stream().pipeThrough(new DecompressionStream('gzip'));DRILLS=JSON.parse(await new Response(stream).text());let cats=[...new Set(DRILLS.map(d=>d.category))];$('cat').innerHTML='<option value="__all__">Tutti gli scenari</option>'+cats.map(c=>'<option>'+esc(c)+'</option>').join('');$('count').textContent=DRILLS.length+' esercizi';buildGrid();$('meta').textContent='Tocca una casella oppure usa i comandi audio.';loadVoices();setTimeout(loadVoices,500)}catch(e){$('err').style.display='block';$('err').textContent=e.message}}
-$('listenAll').onclick=()=>start('all');$('listenCategory').onclick=()=>start('category');$('pauseAudio').onclick=togglePause;$('stopAudio').onclick=()=>stop(true);$('scriptVol').oninput=()=>{let v=Math.max(.2,Math.min(1,+$('scriptVol').value||.9));$('scriptVolVal').textContent=Math.round(v*100)+'%';localStorage.setItem('roleplayScriptVolume',String(v))};$('rate').oninput=()=>$('rateVal').textContent=(+$('rate').value).toFixed(2)+'×';$('pitch').oninput=()=>$('pitchVal').textContent=(+$('pitch').value).toFixed(2);$('repeat').onclick=()=>{if(current){stop(false);speak(current.client)}};$('reveal').onclick=()=>{let h=$('reply').classList.toggle('hidden');$('reveal').textContent=h?'👁 Mostra battuta':'🙈 Nascondi battuta'};$('next').onclick=next;$('good').onclick=next;$('again').onclick=next;if('speechSynthesis'in window)speechSynthesis.onvoiceschanged=loadVoices;if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});boot();
-</script></body></html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#111827">
+<link rel="manifest" href="manifest.webmanifest">
+<title>Role Play Immobiliare — 5 Aperture</title>
+<style>
+:root{--bg:#0b1020;--card:#151c2f;--card2:#1d263d;--text:#f7f8fb;--muted:#aeb8cb;--accent:#75a7ff;--warn:#f5c76b;--line:#2c3855}*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}button,select,input{font:inherit}.app{max-width:760px;margin:auto;padding:14px 12px 44px}.top{display:flex;align-items:center;justify-content:space-between;gap:10px}.top h1{font-size:1.35rem;margin:0}.small{font-size:.84rem;color:var(--muted)}.badge{background:#222d47;border:1px solid var(--line);padding:6px 9px;border-radius:999px;font-size:.78rem}.panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px;margin:12px 0}.controls{display:grid;grid-template-columns:1fr 1fr;gap:10px}label{display:block;color:var(--muted);font-size:.8rem;margin-bottom:5px}select,input[type=range]{width:100%;min-height:44px;border:1px solid var(--line);border-radius:11px;background:#0f1628;color:var(--text);padding:8px}.script-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin-top:12px}.script-cell{min-height:64px;border:1px solid var(--line);border-radius:12px;background:#222d47;color:var(--text);font-weight:800;padding:7px 5px;cursor:pointer}.script-cell span{display:block;font-size:.72rem;color:var(--muted);font-weight:600;margin-top:3px}.script-cell.active{background:var(--accent);color:#081126;outline:2px solid #fff;outline-offset:1px}.script-cell.active span{color:#24314d}.title{font-size:1.05rem;font-weight:800;margin-bottom:7px}.script-text{white-space:pre-wrap;line-height:1.55;background:var(--card2);border-radius:14px;padding:15px;border:1px solid var(--line)}.actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:11px}.hero{grid-column:1/-1}.primary,.secondary,.warn{min-height:48px;border:0;border-radius:12px;padding:10px 12px;font-weight:800;cursor:pointer}.primary{background:var(--accent);color:#081126}.secondary{background:#26324d;color:var(--text)}.warn{background:var(--warn);color:#2a1d05}.row{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin-top:10px}.row input{width:20px;height:20px}.status{margin-top:10px;padding:11px 12px;background:#0f1628;border:1px solid var(--line);border-radius:12px;color:var(--muted)}.progress{height:8px;background:#232d45;border-radius:99px;overflow:hidden;margin-top:10px}.bar{height:100%;background:var(--accent);width:0}.principle{font-size:.95rem;line-height:1.45;background:#10192d;border:1px solid #344264;border-radius:14px;padding:13px}@media(max-width:540px){.controls{grid-template-columns:1fr}.script-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.script-cell{min-height:58px}}
+</style>
+</head>
+<body>
+<main class="app">
+<div class="top"><div><h1>Role Play Immobiliare</h1><div class="small">Reset operativo · 5 script di apertura</div></div><span class="badge">5 script</span></div>
+
+<section class="panel">
+<div class="principle"><strong>OBIETTIVO:</strong> farmi conoscere con umiltà e cortesia. Telefono, incontro sul territorio, volantino e numero di telefono. Nessun cliente inventato e nessuna pressione. Il metodo distintivo è la comunicazione sistematica dell’immobile, non la sola pubblicazione sui portali.</div>
+</section>
+
+<section class="panel">
+<div class="controls">
+<div><label>Voce italiana</label><select id="voice"><option value="__best__">Migliore voce italiana</option></select></div>
+<div><label>Velocità <strong id="rateVal">1.10×</strong></label><input id="rate" type="range" min="0.85" max="1.40" step="0.01" value="1.10"></div>
+<div><label>Volume script <strong id="volVal">90%</strong></label><input id="volume" type="range" min="0.20" max="1.00" step="0.05" value="0.90"></div>
+</div>
+</section>
+
+<section class="panel">
+<div class="small">SELEZIONA IL PUNTO DI PARTENZA</div>
+<div class="script-grid" id="scriptGrid"></div>
+<div class="small" style="margin-top:9px">Tocca uno script: parte da lì, continua con i successivi e dopo il 5 riparte dall’1.</div>
+</section>
+
+<section class="panel">
+<div class="small" id="meta">SCRIPT 1 DI 5</div>
+<div class="title" id="scriptTitle"></div>
+<div class="script-text" id="scriptText"></div>
+<div class="actions">
+<button class="primary hero" id="listenSelected">▶ ASCOLTA QUESTO SCRIPT</button>
+<button class="secondary" id="listenAll">▶ Ascolta da 1</button>
+<button class="secondary" id="pause">⏸ Pausa</button>
+<button class="warn" id="stop">■ Stop</button>
+</div>
+<div class="row"><input id="loop" type="checkbox" checked><label for="loop" style="margin:0">Loop continuo 1 → 5 → 1</label></div>
+<div class="status" id="status">Pronto.</div>
+<div class="progress"><div class="bar" id="bar"></div></div>
+</section>
+</main>
+<script>
+const SCRIPTS=[
+{id:1,title:'Telefono — farmi conoscere',short:'Telefono',text:`Buongiorno, parlo con il signor/la signora [Nome]?
+
+Piacere, sono Joseph.
+
+La tranquillizzo subito: non la sto chiamando perché deve vendere casa e non voglio portarle via tempo.
+
+Sto lavorando molto su questa zona e una parte del mio lavoro consiste proprio nel conoscere le persone che ci abitano e farmi conoscere a mia volta.
+
+Preferisco che, se un domani lei o qualcuno vicino a lei avesse bisogno di parlare di una casa, sappia già chi sono invece di ricevere la telefonata di uno sconosciuto.
+
+Le rubo veramente due minuti: lei vive in questa zona da molto tempo?`},
+{id:2,title:'Incontro sul territorio — presentazione',short:'Di persona',text:`Buongiorno, mi scusi se la disturbo.
+
+Sono Joseph, sto facendo un lavoro di conoscenza del territorio qui in zona.
+
+Non sono qui per chiederle di vendere casa.
+
+Sto semplicemente cercando di presentarmi alle persone del quartiere perché credo molto di più nei rapporti reali che nel limitarsi a mettere annunci su Internet.
+
+Le lascio questo piccolo volantino con il mio numero.
+
+Se un giorno lei, un vicino o una persona che conosce avesse bisogno di capire qualcosa riguardo a una casa, almeno sa chi sono e come trovarmi.
+
+Io intanto continuo a conoscere la zona e le persone che ci vivono.`},
+{id:3,title:'Il nostro metodo è diverso',short:'Metodo diverso',text:`Buongiorno, sono Joseph.
+
+Mi sto facendo conoscere qui in zona perché stiamo portando avanti un modo un po’ diverso di comunicare gli immobili.
+
+Normalmente cosa succede quando una casa viene messa in vendita?
+
+Si fanno le fotografie, si pubblica sui principali portali immobiliari e poi, sostanzialmente, si aspetta che qualcuno trovi l’annuncio.
+
+Noi vogliamo lavorare diversamente.
+
+I portali rimangono importanti, ma per noi sono soltanto una parte del lavoro.
+
+Prima cerchiamo di capire a chi può realmente interessare quella casa.
+
+Poi costruiamo una comunicazione specifica intorno all’immobile: fotografie, video, contenuti e messaggi pensati per quel tipo di persona.
+
+E successivamente la comunichiamo in maniera sistematica, non soltanto sui portali, ma anche attraverso i social e soprattutto cercando le comunità online realmente collegate alla zona.
+
+Per esempio, su Facebook non pubblichiamo semplicemente in decine di gruppi a caso.
+
+Cerchiamo e selezioniamo progressivamente i gruppi realmente pertinenti: quelli del comune, dei paesi vicini, delle comunità locali e quelli dove potrebbe trovarsi una persona interessata proprio a quella zona.
+
+In pratica, non mettiamo semplicemente una casa online sperando che qualcuno la trovi.
+
+Cerchiamo di portare quella casa davanti alle persone che potrebbero avere un motivo reale per interessarsene.
+
+Io oggi non sono qui per chiederle di vendere casa.
+
+Mi interessa semplicemente farmi conoscere e spiegarle come lavoriamo.
+
+Le lascio volentieri il mio numero.
+
+Se un giorno dovesse servire a lei, oppure sentisse qualcuno parlare di una casa da vendere, almeno sa chi sono e cosa facciamo di diverso.`},
+{id:4,title:'Affidati a noi — senza pressione',short:'Affidati a noi',text:`Buongiorno, sono Joseph.
+
+Le dico subito perché mi sto presentando.
+
+Vorrei che, quando una persona della zona pensa: “Un giorno dovrò vendere casa”, prima ancora di pubblicare un annuncio sappia che esiste anche un altro modo di affrontare la vendita.
+
+Non soltanto mettere la casa sui portali e aspettare.
+
+Prima capire a chi può interessare quella casa.
+
+Poi capire dove si trovano quelle persone.
+
+Poi costruire fotografie, video e comunicazione adatti.
+
+Poi distribuirla sistematicamente nei canali corretti, anche nelle comunità e nei gruppi locali pertinenti.
+
+E continuare a comunicarla, invece di pubblicarla una volta e dimenticarla.
+
+Questo è il sistema che vogliamo far conoscere.
+
+Non le sto chiedendo di affidarmi niente oggi.
+
+Le lascio semplicemente il mio contatto.
+
+Se un domani dovesse servire a lei o a qualcuno che conosce, ne parleremo con calma.`},
+{id:5,title:'Passaparola — diventare il riferimento',short:'Passaparola',text:`Buongiorno, sono Joseph.
+
+Sto conoscendo personalmente le persone di questa zona e quindi mi presento anche a lei.
+
+La ragione è molto semplice: nel settore immobiliare moltissime informazioni non nascono da un portale.
+
+Nascono da una conversazione.
+
+Un vicino che pensa di cambiare casa.
+
+Un figlio che deve sistemare la casa dei genitori.
+
+Una persona che ha ereditato un immobile.
+
+Qualcuno che vorrebbe vendere ma non sa da dove cominciare.
+
+Io voglio essere una persona che qui in zona si può chiamare anche solo per fare una domanda.
+
+Quindi le lascio il mio numero.
+
+Non deve ricordarsi tutto quello che le ho detto.
+
+Mi basta che, se un giorno sente qualcuno parlare di una casa, le venga in mente: “Aspetta, conosco Joseph, possiamo sentire lui.”
+
+Poi saremo noi a spiegare con calma come lavoriamo.`}
+];
+const $=id=>document.getElementById(id);let voices=[],ranked=[],selected=0,playing=false,paused=false,pos=0,token=0,wakeLock=null;
+function score(v){const n=(v.name||'').toLowerCase(),l=(v.lang||'').toLowerCase();let s=l==='it-it'?35:l.startsWith('it')?25:0;if(/natural|neural|online|premium|enhanced/.test(n))s+=70;if(/google.*ital/.test(n))s+=60;if(v.default)s+=8;return s}
+function loadVoices(){if(!('speechSynthesis'in window))return;voices=speechSynthesis.getVoices().filter(v=>v.lang&&v.lang.toLowerCase().startsWith('it'));ranked=[...voices].sort((a,b)=>score(b)-score(a));$('voice').innerHTML='<option value="__best__">Migliore voce italiana</option>'+ranked.map((v,i)=>`<option value="${i}">${v.name} — ${v.lang}</option>`).join('')}
+function voice(){const v=$('voice').value;return v==='__best__'?ranked[0]||null:ranked[+v]||ranked[0]||null}
+function render(i){selected=i;const s=SCRIPTS[i];$('meta').textContent=`SCRIPT ${s.id} DI 5`;$('scriptTitle').textContent=s.title;$('scriptText').textContent=s.text;document.querySelectorAll('.script-cell').forEach((b,j)=>b.classList.toggle('active',j===i));$('bar').style.width=((i+1)/5*100)+'%'}
+function build(){SCRIPTS.forEach((s,i)=>{const b=document.createElement('button');b.type='button';b.className='script-cell';b.innerHTML=`${s.id}<span>${s.short}</span>`;b.addEventListener('click',()=>{render(i);startFrom(i)});$('scriptGrid').appendChild(b)});render(0)}
+function speak(text,onend){if(!('speechSynthesis'in window)){onend&&onend();return}token++;const t=token;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang='it-IT';u.rate=+$('rate').value||1.10;u.pitch=.98;u.volume=+$('volume').value||.9;const v=voice();if(v)u.voice=v;u.onend=()=>{if(t===token&&onend)onend()};u.onerror=()=>{if(t===token&&onend)onend()};speechSynthesis.speak(u)}
+async function keepAwake(){try{if('wakeLock'in navigator&&!wakeLock)wakeLock=await navigator.wakeLock.request('screen')}catch(e){}}
+function releaseWake(){if(wakeLock){try{wakeLock.release()}catch(e){}wakeLock=null}}
+function playCurrent(){if(!playing||paused)return;render(pos);$('status').textContent=`In ascolto: script ${SCRIPTS[pos].id} — ${SCRIPTS[pos].title}`;speak(SCRIPTS[pos].text,()=>{if(!playing)return;pos++;if(pos>=SCRIPTS.length){if($('loop').checked)pos=0;else{return stop(true)}}setTimeout(playCurrent,350)})}
+function startFrom(i){stop(false);pos=i;playing=true;paused=false;keepAwake();playCurrent()}
+function stop(show){playing=false;paused=false;token++;if('speechSynthesis'in window)speechSynthesis.cancel();releaseWake();$('pause').textContent='⏸ Pausa';if(show)$('status').textContent='Ascolto fermato.'}
+$('listenSelected').addEventListener('click',()=>startFrom(selected));$('listenAll').addEventListener('click',()=>startFrom(0));$('stop').addEventListener('click',()=>stop(true));$('pause').addEventListener('click',()=>{if(!playing)return;if(!paused){paused=true;speechSynthesis.pause();$('pause').textContent='▶ Riprendi';$('status').textContent='In pausa.'}else{paused=false;speechSynthesis.resume();$('pause').textContent='⏸ Pausa';$('status').textContent=`Ripresa: script ${SCRIPTS[pos].id}`}});$('rate').addEventListener('input',()=>{$('rateVal').textContent=(+$('rate').value).toFixed(2)+'×'});$('volume').addEventListener('input',()=>{const v=+$('volume').value;$('volVal').textContent=Math.round(v*100)+'%';localStorage.setItem('roleplayScriptVolume',String(v))});
+const saved=parseFloat(localStorage.getItem('roleplayScriptVolume')||'.9');if(Number.isFinite(saved)){$('volume').value=Math.max(.2,Math.min(1,saved));$('volVal').textContent=Math.round(+$('volume').value*100)+'%'}
+if('speechSynthesis'in window)speechSynthesis.onvoiceschanged=loadVoices;loadVoices();build();if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
+</script>
+</body>
+</html>
