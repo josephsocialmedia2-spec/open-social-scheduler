@@ -15,6 +15,7 @@ on:
       - 'publisher/build_cycle_queue.py'
       - 'publisher/apply_photo_only.py'
       - 'publisher/render_photos_only.py'
+      - 'publisher/run_publication_renderer.py'
       - 'publisher/requirements.txt'
       - 'publisher/image_history.json'
       - 'publisher/clients/**'
@@ -84,7 +85,7 @@ jobs:
 
       - name: Validate publication scripts
         run: |
-          python -m py_compile publisher/build_cycle_queue.py publisher/apply_photo_only.py publisher/render_photos_only.py
+          python -m py_compile publisher/build_cycle_queue.py publisher/apply_photo_only.py publisher/render_photos_only.py publisher/run_publication_renderer.py
 
       - name: Clear old generated media
         shell: bash
@@ -99,7 +100,7 @@ jobs:
         run: python publisher/apply_photo_only.py
 
       - name: Render 10 JPG publications
-        run: python publisher/render_photos_only.py
+        run: python publisher/run_publication_renderer.py
 
       - name: Reconcile 14-day queue
         run: python publisher/build_cycle_queue.py --reconcile-only
