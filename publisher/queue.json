@@ -5433,7 +5433,7 @@
         "Bardonecchia abitazioni Piemonte"
       ],
       "visual_asset_urls": [
-        "https://commons.wikimedia.org/wiki/Special:Redirect/file/Villa_Cantamerlo_Avigliana02.JPG"
+        "https://commons.wikimedia.org/wiki/Special:Redirect/file/Centro_Storico_Avigliana.JPG"
       ],
       "visual_source": "f1-approved-local-valle-susa",
       "visual_transform": "local-photo-crop",
@@ -5560,7 +5560,7 @@
         "Bardonecchia abitazioni Piemonte"
       ],
       "visual_asset_urls": [
-        "https://commons.wikimedia.org/wiki/Special:Redirect/file/Avigliana%2C_Italy_%28Unsplash%29.jpg"
+        "https://commons.wikimedia.org/wiki/Special:Redirect/file/Avigliana_Centro_Storico.JPG"
       ],
       "visual_source": "f1-approved-local-valle-susa",
       "visual_transform": "local-photo-crop",
@@ -5687,7 +5687,7 @@
         "Bardonecchia abitazioni Piemonte"
       ],
       "visual_asset_urls": [
-        "https://commons.wikimedia.org/wiki/Special:Redirect/file/Avigliana%2C_Italy_%28Unsplash_yhnOTbw9SPY%29.jpg"
+        "https://commons.wikimedia.org/wiki/Special:Redirect/file/Avigliana_Centro_Storico_Tramonto.JPG"
       ],
       "visual_source": "f1-approved-local-valle-susa",
       "visual_transform": "local-photo-crop",
@@ -5782,7 +5782,7 @@
       "search_query_override": "",
       "search_queries": [],
       "visual_asset_urls": [
-        "https://f1immobiliare.com/cdn/shop/files/ChatGPT_Image_17_lug_2026_12_07_30.png?height=36&v=1784282885"
+        "https://f1immobiliare.com/cdn/shop/files/ChatGPTImage2ago2026_11_56_05_4.png?v=1785664626&width=500"
       ],
       "visual_source": "shopify-storefront-authorised",
       "visual_transform": "rmp-branded-shopify-transform",
@@ -5877,7 +5877,7 @@
       "search_query_override": "",
       "search_queries": [],
       "visual_asset_urls": [
-        "https://f1immobiliare.com/cdn/shop/files/Certificato_Valutazione_Professionale_Aurigemma_Francesca_1.png?v=1787591171&width=3840"
+        "https://f1immobiliare.com/cdn/shop/files/ChatGPTImage2ago2026_11_56_04_1.png?v=1785664626&width=500"
       ],
       "visual_source": "shopify-storefront-authorised",
       "visual_transform": "rmp-branded-shopify-transform",
@@ -5972,7 +5972,7 @@
       "search_query_override": "",
       "search_queries": [],
       "visual_asset_urls": [
-        "https://images.pexels.com/videos/8048249/pexels-photo-8048249.jpeg?auto=compress&dpr=1&h=900&w=720"
+        "https://images.pexels.com/videos/7677015/adolescent-adult-beautiful-brunette-7677015.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=700"
       ],
       "visual_source": "shopify-storefront-authorised",
       "visual_transform": "rmp-branded-shopify-transform",
@@ -5981,7 +5981,7 @@
       "reused_visual_count": 0
     }
   ],
-  "updated_at": "2026-09-02T06:15:50+00:00",
+  "updated_at": "2026-09-02T06:17:37+00:00",
   "current_cycle": "2026-09-02T08:00",
   "visual_policy": "10 different images per content; F1 priority reels change image every 2 seconds; prefer unseen history",
   "f1_reel_policy": {
