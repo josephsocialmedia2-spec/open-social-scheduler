@@ -9,6 +9,7 @@ F1 Immobiliare:
 Real Media Pro:
 - extract media directly from the authorised public Shopify storefront URLs configured
   for Real Media Pro;
+- recover original/full-resolution Shopify CDN images instead of thumbnail transforms;
 - transform the selected storefront asset into an original branded RMP composition;
 - use generic stock only if the job does not explicitly require Shopify assets.
 """
@@ -17,9 +18,12 @@ from __future__ import annotations
 import json
 import textwrap
 from datetime import datetime, timezone
+from io import BytesIO
 from pathlib import Path
-from typing import Iterable
+from typing import Callable, Iterable
+from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
+import requests
 from PIL import Image, ImageDraw, ImageFont, ImageOps
 
 import render_fresh_visuals as fv
@@ -121,6 +125,49 @@ def shopify_candidates() -> list[str]:
     return list(_SHOPIFY_CACHE)
 
 
+def shopify_original_url(url: str) -> str:
+    """Remove Shopify thumbnail transforms so the renderer asks for the original asset."""
+    parts = urlsplit(str(url or "").strip())
+    host = parts.netloc.lower()
+    path = parts.path.lower()
+    if "cdn.shopify.com" not in host and not ("f1immobiliare.com" in host and "/cdn/shop/" in path):
+        return url
+    blocked = {"width", "height", "crop", "pad_color"}
+    query = [(k, v) for k, v in parse_qsl(parts.query, keep_blank_values=True) if k.lower() not in blocked]
+    return urlunsplit((parts.scheme, parts.netloc, parts.path, urlencode(query), parts.fragment))
+
+
+def get_shopify_image(url: str) -> Image.Image:
+    """Download a storefront image, preferring the original Shopify CDN resolution.
+
+    RMP compositions can safely upscale normal storefront/video-poster assets. We only
+    reject truly tiny technical thumbnails/icons.
+    """
+    candidates = unique([shopify_original_url(url), url])
+    headers = {
+        "User-Agent": "Mozilla/5.0 Open-Social-Scheduler/ShopifyVisuals",
+        "Accept": "image/avif,image/webp,image/apng,image/*,*/*;q=0.8",
+        "Referer": "https://f1immobiliare.com/",
+    }
+    last: Exception | None = None
+    for candidate in candidates:
+        for attempt in range(2):
+            try:
+                response = requests.get(candidate, headers=headers, timeout=20)
+                response.raise_for_status()
+                image = Image.open(BytesIO(response.content)).convert("RGB")
+                if image.width < 400 or image.height < 240:
+                    raise RuntimeError(f"Shopify image too small: {image.size}")
+                if candidate != url:
+                    print(f"SHOPIFY ORIGINAL: {url} -> {candidate} = {image.size}")
+                return image
+            except Exception as exc:
+                last = exc
+                if attempt == 0:
+                    continue
+    raise RuntimeError(f"Shopify image download failed: {url}: {last}")
+
+
 def manual_candidates(cid: str) -> list[tuple[str, Path]]:
     folder = MANUAL_ROOT / cid
     if not folder.exists():
@@ -142,10 +189,12 @@ def open_manual(path: Path) -> Image.Image:
 
 
 def choose_remote(
-    urls: list[str], recent: set[str], session: set[str], source_type: str
+    urls: list[str], recent: set[str], session: set[str], source_type: str,
+    loader: Callable[[str], Image.Image] | None = None,
 ) -> tuple[str, Image.Image, bool, str] | None:
     fresh: list[str] = []
     reused: list[str] = []
+    image_loader = loader or fv.direct_get_image
     for url in unique(urls):
         key = source_key(url)
         if key in session:
@@ -155,7 +204,7 @@ def choose_remote(
     for is_fresh, bucket in ((True, fresh), (False, reused)):
         for url in bucket:
             try:
-                return url, fv.direct_get_image(url), is_fresh, source_type
+                return url, image_loader(url), is_fresh, source_type
             except Exception as exc:
                 print(f"WARN remote visual rejected {url}: {exc}")
     return None
@@ -178,7 +227,9 @@ def choose_one(job: dict, history: dict, session: set[str]) -> tuple[str, Image.
 
     # RMP: Shopify storefront media is the primary and required source for the current policy.
     if cid == "real-media-pro" and bool(job.get("shopify_asset_required", False)):
-        picked = choose_remote(shopify_candidates(), recent, session, "shopify-storefront-authorised")
+        picked = choose_remote(
+            shopify_candidates(), recent, session, "shopify-storefront-authorised", loader=get_shopify_image
+        )
         if picked:
             return picked
         raise RuntimeError(
