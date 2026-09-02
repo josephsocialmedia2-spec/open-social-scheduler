@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-02T06:15:50Z",
+  "updated_at": "2026-09-02T06:17:37Z",
   "brands": {
     "f1-immobiliare": {
       "recent": [
@@ -3057,6 +3057,30 @@
           "key": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Avigliana%2C_Italy_%28Unsplash_yhnOTbw9SPY%29.jpg",
           "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Avigliana%2C_Italy_%28Unsplash_yhnOTbw9SPY%29.jpg",
           "used_at": "2026-09-02T06:15:45Z",
+          "job_id": "f1-immobiliare-2026-09-02-c08-03-09-g5-dopo-pubblicazione",
+          "output_type": "static-photo",
+          "source_type": "f1-approved-local-valle-susa"
+        },
+        {
+          "key": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Centro_Storico_Avigliana.JPG",
+          "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Centro_Storico_Avigliana.JPG",
+          "used_at": "2026-09-02T06:17:23Z",
+          "job_id": "f1-immobiliare-2026-09-02-c08-01-07-g3-media-torino",
+          "output_type": "static-photo",
+          "source_type": "f1-approved-local-valle-susa"
+        },
+        {
+          "key": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Avigliana_Centro_Storico.JPG",
+          "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Avigliana_Centro_Storico.JPG",
+          "used_at": "2026-09-02T06:17:24Z",
+          "job_id": "f1-immobiliare-2026-09-02-c08-02-08-g4-ribasso-senza-diagnosi",
+          "output_type": "static-photo",
+          "source_type": "f1-approved-local-valle-susa"
+        },
+        {
+          "key": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Avigliana_Centro_Storico_Tramonto.JPG",
+          "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Avigliana_Centro_Storico_Tramonto.JPG",
+          "used_at": "2026-09-02T06:17:34Z",
           "job_id": "f1-immobiliare-2026-09-02-c08-03-09-g5-dopo-pubblicazione",
           "output_type": "static-photo",
           "source_type": "f1-approved-local-valle-susa"
@@ -6118,6 +6142,30 @@
           "key": "https://images.pexels.com/videos/8048249/pexels-photo-8048249.jpeg",
           "url": "https://images.pexels.com/videos/8048249/pexels-photo-8048249.jpeg?auto=compress&dpr=1&h=900&w=720",
           "used_at": "2026-09-02T06:15:50Z",
+          "job_id": "real-media-pro-2026-09-02-c08-03-09-shopify-servizio",
+          "output_type": "static-photo",
+          "source_type": "shopify-storefront-authorised"
+        },
+        {
+          "key": "https://f1immobiliare.com/cdn/shop/files/ChatGPTImage2ago2026_11_56_05_4.png",
+          "url": "https://f1immobiliare.com/cdn/shop/files/ChatGPTImage2ago2026_11_56_05_4.png?v=1785664626&width=500",
+          "used_at": "2026-09-02T06:17:36Z",
+          "job_id": "real-media-pro-2026-09-02-c08-01-07-google-ads-intento",
+          "output_type": "static-photo",
+          "source_type": "shopify-storefront-authorised"
+        },
+        {
+          "key": "https://f1immobiliare.com/cdn/shop/files/ChatGPTImage2ago2026_11_56_04_1.png",
+          "url": "https://f1immobiliare.com/cdn/shop/files/ChatGPTImage2ago2026_11_56_04_1.png?v=1785664626&width=500",
+          "used_at": "2026-09-02T06:17:37Z",
+          "job_id": "real-media-pro-2026-09-02-c08-02-08-audit-digitale",
+          "output_type": "static-photo",
+          "source_type": "shopify-storefront-authorised"
+        },
+        {
+          "key": "https://images.pexels.com/videos/7677015/adolescent-adult-beautiful-brunette-7677015.jpeg",
+          "url": "https://images.pexels.com/videos/7677015/adolescent-adult-beautiful-brunette-7677015.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=700",
+          "used_at": "2026-09-02T06:17:37Z",
           "job_id": "real-media-pro-2026-09-02-c08-03-09-shopify-servizio",
           "output_type": "static-photo",
           "source_type": "shopify-storefront-authorised"
