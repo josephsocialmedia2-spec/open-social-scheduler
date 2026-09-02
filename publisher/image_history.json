@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-08-30T22:41:30Z",
+  "updated_at": "2026-09-02T06:15:50Z",
   "brands": {
     "f1-immobiliare": {
       "recent": [
@@ -3036,6 +3036,30 @@
           "job_id": "f1-immobiliare-2026-08-31-c00-01-01-g2-tre-prezzi",
           "output_type": "static-photo",
           "source_type": "manual-upload"
+        },
+        {
+          "key": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Villa_Cantamerlo_Avigliana02.JPG",
+          "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Villa_Cantamerlo_Avigliana02.JPG",
+          "used_at": "2026-09-02T06:15:34Z",
+          "job_id": "f1-immobiliare-2026-09-02-c08-01-07-g3-media-torino",
+          "output_type": "static-photo",
+          "source_type": "f1-approved-local-valle-susa"
+        },
+        {
+          "key": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Avigliana%2C_Italy_%28Unsplash%29.jpg",
+          "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Avigliana%2C_Italy_%28Unsplash%29.jpg",
+          "used_at": "2026-09-02T06:15:35Z",
+          "job_id": "f1-immobiliare-2026-09-02-c08-02-08-g4-ribasso-senza-diagnosi",
+          "output_type": "static-photo",
+          "source_type": "f1-approved-local-valle-susa"
+        },
+        {
+          "key": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Avigliana%2C_Italy_%28Unsplash_yhnOTbw9SPY%29.jpg",
+          "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Avigliana%2C_Italy_%28Unsplash_yhnOTbw9SPY%29.jpg",
+          "used_at": "2026-09-02T06:15:45Z",
+          "job_id": "f1-immobiliare-2026-09-02-c08-03-09-g5-dopo-pubblicazione",
+          "output_type": "static-photo",
+          "source_type": "f1-approved-local-valle-susa"
         }
       ]
     },
@@ -6073,6 +6097,30 @@
           "job_id": "real-media-pro-2026-08-31-c00-01-01-sito-che-perde-lead",
           "output_type": "static-photo",
           "source_type": "pixabay-fresh-static-photo"
+        },
+        {
+          "key": "https://f1immobiliare.com/cdn/shop/files/ChatGPT_Image_17_lug_2026_12_07_30.png",
+          "url": "https://f1immobiliare.com/cdn/shop/files/ChatGPT_Image_17_lug_2026_12_07_30.png?height=36&v=1784282885",
+          "used_at": "2026-09-02T06:15:47Z",
+          "job_id": "real-media-pro-2026-09-02-c08-01-07-google-ads-intento",
+          "output_type": "static-photo",
+          "source_type": "shopify-storefront-authorised"
+        },
+        {
+          "key": "https://f1immobiliare.com/cdn/shop/files/Certificato_Valutazione_Professionale_Aurigemma_Francesca_1.png",
+          "url": "https://f1immobiliare.com/cdn/shop/files/Certificato_Valutazione_Professionale_Aurigemma_Francesca_1.png?v=1787591171&width=3840",
+          "used_at": "2026-09-02T06:15:50Z",
+          "job_id": "real-media-pro-2026-09-02-c08-02-08-audit-digitale",
+          "output_type": "static-photo",
+          "source_type": "shopify-storefront-authorised"
+        },
+        {
+          "key": "https://images.pexels.com/videos/8048249/pexels-photo-8048249.jpeg",
+          "url": "https://images.pexels.com/videos/8048249/pexels-photo-8048249.jpeg?auto=compress&dpr=1&h=900&w=720",
+          "used_at": "2026-09-02T06:15:50Z",
+          "job_id": "real-media-pro-2026-09-02-c08-03-09-shopify-servizio",
+          "output_type": "static-photo",
+          "source_type": "shopify-storefront-authorised"
         }
       ]
     }
