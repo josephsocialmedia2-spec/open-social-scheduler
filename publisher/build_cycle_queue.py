@@ -2,7 +2,7 @@
 """Build exactly 6 static-photo contents per 4-hour cycle: 3 per brand.
 
 NO REELS / NO MP4. Every current-cycle job is a publication-ready photo post
-with a caption. Queue history is preserved up to the existing 48-item cap.
+with a caption. Queue history is preserved for roughly 14 days by default.
 """
 from __future__ import annotations
 
@@ -21,6 +21,9 @@ QUEUE = ROOT / "publisher" / "queue.json"
 ROME = ZoneInfo("Europe/Rome")
 CYCLE_HOURS = (0, 4, 8, 12, 16, 20)
 BRANDS = ("f1-immobiliare", "real-media-pro")
+HISTORY_DAYS = max(1, int(os.getenv("SOCIAL_HISTORY_DAYS", "14") or 14))
+# 6 posts/cycle * 6 cycles/day * 14 days = 504 jobs.
+QUEUE_HISTORY_LIMIT = max(48, int(os.getenv("SOCIAL_HISTORY_LIMIT", str(6 * len(CYCLE_HOURS) * HISTORY_DAYS)) or 504))
 
 
 def load(path: Path) -> dict:
@@ -111,13 +114,15 @@ def build_current_cycle() -> int:
 
     queue["jobs"] = jobs + added
     base.reconcile(queue, client_map)
-    base.cap_queue(queue, base.MAX_QUEUE_ITEMS)
+    removed = base.cap_queue(queue, QUEUE_HISTORY_LIMIT)
     queue["updated_at"] = datetime.now().astimezone().isoformat(timespec="seconds")
-    queue["updated_by"] = "Photo-only 4-hour cycle builder"
+    queue["updated_by"] = "Photo-only 4-hour cycle builder · 14-day history"
     queue["current_cycle"] = cycle_key
+    queue["history_days"] = HISTORY_DAYS
+    queue["history_limit"] = QUEUE_HISTORY_LIMIT
     queue["output_policy"] = "STATIC PHOTOS ONLY - JPG/PNG - NO REELS - NO MP4"
     save(QUEUE, queue)
-    print(f"Built cycle {cycle_key}: 6 static photo posts, 3 F1 + 3 RMP")
+    print(f"Built cycle {cycle_key}: 6 static photo posts, 3 F1 + 3 RMP; history={len(queue['jobs'])}/{QUEUE_HISTORY_LIMIT}, removed={removed}")
     return 0
 
 
@@ -125,11 +130,13 @@ def reconcile_only() -> int:
     queue = load(QUEUE)
     client_map = {c["id"]: c for c in base.clients()}
     base.reconcile(queue, client_map)
-    base.cap_queue(queue, base.MAX_QUEUE_ITEMS)
+    removed = base.cap_queue(queue, QUEUE_HISTORY_LIMIT)
     queue["updated_at"] = datetime.now().astimezone().isoformat(timespec="seconds")
+    queue["history_days"] = HISTORY_DAYS
+    queue["history_limit"] = QUEUE_HISTORY_LIMIT
     queue["output_policy"] = "STATIC PHOTOS ONLY - JPG/PNG - NO REELS - NO MP4"
     save(QUEUE, queue)
-    print("Photo-only cycle queue reconciled")
+    print(f"Photo-only cycle queue reconciled; history={len(queue.get('jobs', []))}/{QUEUE_HISTORY_LIMIT}, removed={removed}")
     return 0
 
 
