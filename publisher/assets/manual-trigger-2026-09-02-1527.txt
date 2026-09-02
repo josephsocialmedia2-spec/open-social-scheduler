@@ -1,0 +1,10 @@
+MANUAL PUBLICATION TRIGGER
+Date: 2026-09-02
+Requested at: 15:27 Europe/Rome
+Output: 10 static publications
+- 5 F1 Immobiliare
+- 5 Real Media Pro
+Rules:
+- F1: Valle di Susa local visuals, Francesca + Joseph footer, territorial hashtags only.
+- RMP: official Shopify Theme Store inspiration only; original mockups; never copy/reuse Shopify theme images; no hashtags.
+- JPG/PNG only; no reels, no MP4, no audio.
