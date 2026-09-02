@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-02T06:17:37Z",
+  "updated_at": "2026-09-02T08:01:30Z",
   "brands": {
     "f1-immobiliare": {
       "recent": [
@@ -3082,6 +3082,46 @@
           "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Avigliana_Centro_Storico_Tramonto.JPG",
           "used_at": "2026-09-02T06:17:34Z",
           "job_id": "f1-immobiliare-2026-09-02-c08-03-09-g5-dopo-pubblicazione",
+          "output_type": "static-photo",
+          "source_type": "f1-approved-local-valle-susa"
+        },
+        {
+          "key": "https://commons.wikimedia.org/wiki/special:redirect/file/villa_cantamerlo_avigliana02.jpg",
+          "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Villa_Cantamerlo_Avigliana02.JPG",
+          "used_at": "2026-09-02T08:01:05Z",
+          "job_id": "f1-immobiliare-2026-09-02-c08-01-01-g4-novanta-giorni",
+          "output_type": "static-photo",
+          "source_type": "f1-approved-local-valle-susa"
+        },
+        {
+          "key": "https://commons.wikimedia.org/wiki/special:redirect/file/avigliana%2c_italy_%28unsplash%29.jpg",
+          "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Avigliana%2C_Italy_%28Unsplash%29.jpg",
+          "used_at": "2026-09-02T08:01:12Z",
+          "job_id": "f1-immobiliare-2026-09-02-c08-02-02-g5-non-solo-quanto-vale",
+          "output_type": "static-photo",
+          "source_type": "f1-approved-local-valle-susa"
+        },
+        {
+          "key": "https://commons.wikimedia.org/wiki/special:redirect/file/avigliana%2c_italy_%28unsplash_yhnotbw9spy%29.jpg",
+          "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Avigliana%2C_Italy_%28Unsplash_yhnOTbw9SPY%29.jpg",
+          "used_at": "2026-09-02T08:01:18Z",
+          "job_id": "f1-immobiliare-2026-09-02-c08-03-03-g6-controllare-concorrenza",
+          "output_type": "static-photo",
+          "source_type": "f1-approved-local-valle-susa"
+        },
+        {
+          "key": "https://commons.wikimedia.org/wiki/special:redirect/file/centro_storico_avigliana.jpg",
+          "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Centro_Storico_Avigliana.JPG",
+          "used_at": "2026-09-02T08:01:24Z",
+          "job_id": "f1-immobiliare-2026-09-02-c08-04-04-g7-cosa-guardiamo",
+          "output_type": "static-photo",
+          "source_type": "f1-approved-local-valle-susa"
+        },
+        {
+          "key": "https://commons.wikimedia.org/wiki/special:redirect/file/avigliana_centro_storico.jpg",
+          "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Avigliana_Centro_Storico.JPG",
+          "used_at": "2026-09-02T08:01:29Z",
+          "job_id": "f1-immobiliare-2026-09-02-c08-05-05-g1-il-vicino",
           "output_type": "static-photo",
           "source_type": "f1-approved-local-valle-susa"
         }
@@ -6169,6 +6209,46 @@
           "job_id": "real-media-pro-2026-09-02-c08-03-09-shopify-servizio",
           "output_type": "static-photo",
           "source_type": "shopify-storefront-authorised"
+        },
+        {
+          "key": "https://themes.shopify.com/themes/shapes/presets/shapes?locale=it",
+          "url": "https://themes.shopify.com/themes/shapes/presets/shapes?locale=it",
+          "used_at": "2026-09-02T08:01:29Z",
+          "job_id": "real-media-pro-2026-09-02-c08-01-01-meta-ads-creative",
+          "output_type": "static-photo",
+          "source_type": "shopify-theme-store-description-only"
+        },
+        {
+          "key": "https://themes.shopify.com/themes/broadcast/presets/broadcast?locale=it",
+          "url": "https://themes.shopify.com/themes/broadcast/presets/broadcast?locale=it",
+          "used_at": "2026-09-02T08:01:29Z",
+          "job_id": "real-media-pro-2026-09-02-c08-02-02-creative-testing",
+          "output_type": "static-photo",
+          "source_type": "shopify-theme-store-description-only"
+        },
+        {
+          "key": "https://themes.shopify.com/themes/prestige/presets/prestige?locale=it",
+          "url": "https://themes.shopify.com/themes/prestige/presets/prestige?locale=it",
+          "used_at": "2026-09-02T08:01:30Z",
+          "job_id": "real-media-pro-2026-09-02-c08-03-03-seo-servizio",
+          "output_type": "static-photo",
+          "source_type": "shopify-theme-store-description-only"
+        },
+        {
+          "key": "https://themes.shopify.com/themes/allure/presets/allure?locale=it",
+          "url": "https://themes.shopify.com/themes/allure/presets/allure?locale=it",
+          "used_at": "2026-09-02T08:01:30Z",
+          "job_id": "real-media-pro-2026-09-02-c08-04-04-sito-che-perde-lead",
+          "output_type": "static-photo",
+          "source_type": "shopify-theme-store-description-only"
+        },
+        {
+          "key": "https://themes.shopify.com/themes/vivid/presets/vivid?locale=it",
+          "url": "https://themes.shopify.com/themes/vivid/presets/vivid?locale=it",
+          "used_at": "2026-09-02T08:01:30Z",
+          "job_id": "real-media-pro-2026-09-02-c08-05-05-shopify-product-page",
+          "output_type": "static-photo",
+          "source_type": "shopify-theme-store-description-only"
         }
       ]
     }
