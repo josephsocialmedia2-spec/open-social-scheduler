@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-01T10:17:24+00:00",
+  "updated_at": "2026-09-02T09:49:16+00:00",
   "signals": [
     {
       "id": "FBS-A04CD854BB",
@@ -1093,6 +1093,90 @@
       "source_query": "site:facebook.com/groups \"Condove\" \"cerco affitto\"",
       "status": "NEW",
       "discovered_at": "2026-09-01T10:11:08+00:00"
+    },
+    {
+      "id": "FBS-4CB3C12783",
+      "brand": "f1-immobiliare",
+      "territory": "Avigliana",
+      "group_url": "https://www.facebook.com/groups/307179086293602/",
+      "source_url": "https://www.facebook.com/groups/307179086293602/permalink/2891329204545231/",
+      "title": "Vendo, compro, Val di Susa ( Avigliana/ Almese / Ferriera ...",
+      "snippet": "Cerco piccolo appartamento arredato in affitto zona Avigliana e limitrofe. Look del Giorno: Eleganza Boho -Chic in Cioccolato! Tuffati nell'estate con questa splendida tuta intera plissettata color cioccolato! 🤎 La texture ricca e il design sofisticato a portafoglio catturano lo sguardo, valorizzati dalla fibbia ad anello coordinata in vita.",
+      "source_query": "site:facebook.com/groups \"Avigliana\" \"vendo compro\"",
+      "status": "NEW",
+      "discovered_at": "2026-09-02T09:39:50+00:00"
+    },
+    {
+      "id": "FBS-0EE1B368E9",
+      "brand": "f1-immobiliare",
+      "territory": "Almese",
+      "group_url": "https://www.facebook.com/groups/307179086293602/",
+      "source_url": "https://www.facebook.com/groups/307179086293602/permalink/2788167261528093/",
+      "title": "Vendo, compro, Val di Susa ( Avigliana/ Almese / Ferriera ...",
+      "snippet": "🏡SEI ALLA RICERCA DI UNA SOLUZIONE PRONTA DA VIVERE?? ABBIAMO QUELLO CHE FA PER TE!! 📍 GIVOLETTO Incantevole appartamento bi livello, impeccabile e dotato di ogni confort frutto di una completa ristrutturazione di alto livello, caratterizzato da uno stile moderno e ricercato con cura maniacale del dettaglio, pronto per essere abitato! 🏠 costruzione recente 📐 130 mq 🍽️ cucina ...",
+      "source_query": "site:facebook.com/groups \"Almese\" \"vendo compro\"",
+      "status": "NEW",
+      "discovered_at": "2026-09-02T09:40:17+00:00"
+    },
+    {
+      "id": "FBS-24F799A92E",
+      "brand": "f1-immobiliare",
+      "territory": "Almese",
+      "group_url": "https://www.facebook.com/groups/307179086293602/",
+      "source_url": "https://www.facebook.com/groups/307179086293602/permalink/2883844155293736/",
+      "title": "Vendo, compro, Val di Susa ( Avigliana/ Almese / Ferriera ...",
+      "snippet": "NUOVA ACQUISIZIONE APPARTAMENTO IN CASA INDIPENDENTE AL PRIMO PIANO 75 Mq. La Rent Host Valsusa propone. Una soluzione abitativa stabile, generosa negli spazi e pensata per garantire il massimo comfort a una famiglia vicina alla stazione del treno. 📍 Location: Bussoleno (TO) 🔑 Locazione residenziale 4+4 | Solo referenziati Perché è la soluzione ideale: 📐 75 mq ben distribuiti: Ampio ...",
+      "source_query": "site:facebook.com/groups \"Almese\" \"vendo compro\"",
+      "status": "NEW",
+      "discovered_at": "2026-09-02T09:40:17+00:00"
+    },
+    {
+      "id": "FBS-81016325E8",
+      "brand": "f1-immobiliare",
+      "territory": "Sant'Antonino di Susa",
+      "group_url": "https://www.facebook.com/groups/425994818000004/",
+      "source_url": "https://www.facebook.com/groups/425994818000004/posts/1413556779243798/",
+      "title": "Affitto Valsusa | Buongiorno, cerco una sala per eventi ...",
+      "snippet": "Feb 7, 2024 · Buongiorno, cerco una sala per eventi (battesimo) zona da Sant’Antonino ad avigliana. Grazie 😊",
+      "source_query": "site:facebook.com/groups \"Sant'Antonino di Susa\" \"cerco affitto\"",
+      "status": "NEW",
+      "discovered_at": "2026-09-02T09:41:21+00:00"
+    },
+    {
+      "id": "FBS-7B7C7B46EA",
+      "brand": "f1-immobiliare",
+      "territory": "Villar Focchiardo",
+      "group_url": "https://www.facebook.com/groups/1457576671120972/",
+      "source_url": "https://www.facebook.com/groups/1457576671120972/posts/4298340393711238/",
+      "title": "Sei di Villar focchiardo se... | 𝐈𝐥 ... - Facebook",
+      "snippet": "Mar 19, 2026 · COMUNE VILLAR FOCCHIARDO CITTA' 'METROPOLITANA TORINO Via Conte Carroccio, telefono 0119645025 CERCHIAMO TE! Unisciti α noi e fai la differenza, partecipa al servizio civile! REQUISITI CIVILE Età: tra 18 ei 28 compiuti Patente guida categoria Voglia di mettersi in gioco aiutare gli anziani α rimanere attivi OBIETTIVO DEL PROGETTO \"RITROVIAMO ...",
+      "source_query": "site:facebook.com/groups \"Villar Focchiardo\" \"sei di\"",
+      "status": "NEW",
+      "discovered_at": "2026-09-02T09:42:30+00:00"
+    },
+    {
+      "id": "FBS-1A190CFF61",
+      "brand": "f1-immobiliare",
+      "territory": "Bussoleno",
+      "group_url": "https://www.facebook.com/groups/731018753583769/",
+      "source_url": "https://www.facebook.com/groups/731018753583769/posts/9591886610830228/",
+      "title": "sei di Bussoleno (TO) se... | HA TROVATO UNA FAMIGLIA ️ ...",
+      "snippet": "Jan 23, 2025 · HA TROVATO UNA FAMIGLIA ️ Il proprietario non lo vuole più tenere, adesso è a casa mia, cerchiamo adozione, è dolcissimo, ha 8 mesi, pesa 9 kg, è senza un'occhietto ma è sano e va d'accordo con gli altri cani, io purtroppo non lo posso tenere 🥺",
+      "source_query": "site:facebook.com/groups \"Bussoleno\" \"vendesi casa\"",
+      "status": "NEW",
+      "discovered_at": "2026-09-02T09:43:43+00:00"
+    },
+    {
+      "id": "FBS-5F4AF3B920",
+      "brand": "f1-immobiliare",
+      "territory": "Chianocco",
+      "group_url": "https://www.facebook.com/groups/1498748277018187/",
+      "source_url": "https://www.facebook.com/groups/1498748277018187/permalink/4835507143342267/",
+      "title": "Sei di Chianocco se ..... (ricordi , avvenimenti , detti ...",
+      "snippet": "Apr 7, 2026 · Ieri sera mia sorella, essendo preoccupata per la nostra micina che non era a casa come di solito, ha iniziato a cercarla, dapprima qui a casa e poi in giro per borgata Crotte e alla fine ha visto...",
+      "source_query": "site:facebook.com/groups \"Chianocco\" \"sei di\"",
+      "status": "NEW",
+      "discovered_at": "2026-09-02T09:43:52+00:00"
     }
   ]
 }
