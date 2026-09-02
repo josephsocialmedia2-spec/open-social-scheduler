@@ -2,90 +2,42 @@
 <html lang="it">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Approvazione contenuti · ultimi 3 giorni</title>
+<title>Approvazione contenuti · ultimi 14 giorni</title>
 <style>
 :root{--panel:#0a110b;--line:#2d3b2e;--text:#f6f8f4;--muted:#aab4aa;--f1:#9fe000;--rmp:#67e8c4}
-*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#020402,#071008);color:var(--text);font:15px/1.45 Arial,sans-serif}.wrap{width:min(1400px,calc(100% - 24px));margin:auto;padding:22px 0 60px}h1{margin:0 0 4px;font-size:clamp(27px,8vw,46px)}.sub,.meta{color:var(--muted)}.toolbar,.actions{display:flex;gap:8px;flex-wrap:wrap}.toolbar{margin:18px 0}.btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border:0;border-radius:10px;padding:11px 13px;font-weight:900;cursor:pointer;background:var(--f1);color:#061005}.btn.alt{background:transparent;color:#fff;border:1px solid #465448}.btn.rmp{background:var(--rmp);color:#05120e}.status{padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#09100a;color:#cbd3cb;margin-bottom:18px}.status.error{border-color:#6d3333;color:#ffc1c1}.day{margin:28px 0}.day h2{font-size:23px;margin:0 0 12px;padding-bottom:8px;border-bottom:1px solid #314132}.cycle{margin:14px 0 22px}.cycle summary{cursor:pointer;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#09100a;font-weight:900}.cycle[open] summary{border-radius:12px 12px 0 0}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;padding-top:14px}.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden}.card.f1{border-color:#3c551d}.card.rmp{border-color:#22594e}.media{background:#000;min-height:170px;display:grid;place-items:center}.media img{width:100%;display:block;aspect-ratio:4/5;object-fit:cover}.missing{padding:34px 18px;text-align:center;color:#aab4aa}.body{padding:12px}.brand{font-size:10px;font-weight:900;letter-spacing:.08em;color:var(--f1)}.rmp .brand{color:var(--rmp)}.title{font-size:17px;font-weight:900;margin:5px 0 8px}.caption-label{font-size:10px;font-weight:900;color:var(--muted);margin:12px 0 6px}.caption{white-space:pre-wrap;background:#050805;border:1px solid #334235;border-radius:10px;padding:10px;max-height:240px;overflow:auto;font-size:12px}.actions{margin-top:10px}.actions .btn{font-size:11px;padding:8px 9px}.empty{padding:28px;border:1px dashed #3f4d40;border-radius:12px;color:#98a299;text-align:center}.footer{text-align:center;color:#778179;font-size:11px;margin-top:28px}@media(max-width:1050px){.grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:700px){.grid{grid-template-columns:1fr}.toolbar .btn{flex:1 1 46%}}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#020402,#071008);color:var(--text);font:15px/1.45 Arial,sans-serif}.wrap{width:min(1450px,calc(100% - 24px));margin:auto;padding:22px 0 60px}h1{margin:0 0 4px;font-size:clamp(27px,8vw,46px)}.sub,.meta{color:var(--muted)}.toolbar,.actions{display:flex;gap:8px;flex-wrap:wrap}.toolbar{margin:18px 0}.btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border:0;border-radius:10px;padding:11px 13px;font-weight:900;cursor:pointer;background:var(--f1);color:#061005}.btn.alt{background:transparent;color:#fff;border:1px solid #465448}.btn.rmp{background:var(--rmp);color:#05120e}.status{padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#09100a;color:#cbd3cb;margin-bottom:18px}.status.error{border-color:#6d3333;color:#ffc1c1}.day{margin:28px 0}.day h2{font-size:23px;margin:0 0 12px;padding-bottom:8px;border-bottom:1px solid #314132}.cycle{margin:14px 0 22px}.cycle summary{cursor:pointer;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#09100a;font-weight:900}.cycle[open] summary{border-radius:12px 12px 0 0}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;padding-top:14px}.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden}.card.f1{border-color:#3c551d}.card.rmp{border-color:#22594e}.media{background:#000;min-height:170px;display:grid;place-items:center}.media img{width:100%;display:block;aspect-ratio:4/5;object-fit:cover}.missing{padding:34px 18px;text-align:center;color:#aab4aa}.body{padding:12px}.brand{font-size:10px;font-weight:900;letter-spacing:.08em;color:var(--f1)}.rmp .brand{color:var(--rmp)}.title{font-size:17px;font-weight:900;margin:5px 0 8px}.source{font-size:10px;color:#809087;margin-top:5px}.caption-label{font-size:10px;font-weight:900;color:var(--muted);margin:12px 0 6px}.caption{white-space:pre-wrap;background:#050805;border:1px solid #334235;border-radius:10px;padding:10px;max-height:240px;overflow:auto;font-size:12px}.actions{margin-top:10px}.actions .btn{font-size:11px;padding:8px 9px}.empty{padding:28px;border:1px dashed #3f4d40;border-radius:12px;color:#98a299;text-align:center}.footer{text-align:center;color:#778179;font-size:11px;margin-top:28px}@media(max-width:1050px){.grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:700px){.grid{grid-template-columns:1fr}.toolbar .btn{flex:1 1 46%}}
 </style></head>
 <body><main class="wrap">
-<h1>CONTENUTI · ULTIMI 3 GIORNI</h1>
-<div class="sub">F1 Immobiliare + Real Media Pro · foto, caption e download raggruppati per giorno e ciclo.</div>
+<h1>CONTENUTI · ULTIMI 14 GIORNI</h1>
+<div class="sub">F1 Immobiliare + Real Media Pro · storico operativo di 14 giorni, raggruppato per giorno e ciclo.</div>
 <div class="toolbar"><button class="btn" onclick="location.reload()">AGGIORNA ORA</button><a class="btn alt" href="https://github.com/josephsocialmedia2-spec/open-social-scheduler/releases" target="_blank">ARCHIVIO RELEASE</a><a class="btn alt" href="https://github.com/josephsocialmedia2-spec/open-social-scheduler/actions/workflows/social-engine-daily.yml" target="_blank">STATO PRODUZIONE</a></div>
-<div id="status" class="status">Caricamento degli ultimi 3 giorni…</div>
+<div id="status" class="status">Caricamento storico 14 giorni…</div>
 <div id="history"></div>
-<div class="footer">Open Social Scheduler · storico mobile di 3 giorni</div>
+<div class="footer">Open Social Scheduler · storico mobile di 14 giorni</div>
 </main>
 <script>
-const OWNER='josephsocialmedia2-spec',REPO='open-social-scheduler';
+const OWNER='josephsocialmedia2-spec',REPO='open-social-scheduler',HISTORY_DAYS=14;
 const API='https://api.github.com/repos/'+OWNER+'/'+REPO;
 const RAW='https://raw.githubusercontent.com/'+OWNER+'/'+REPO+'/';
-const LATEST_RELEASE='https://github.com/'+OWNER+'/'+REPO+'/releases/download/social-preview-latest/';
 let allJobs=[];
 const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
-const cutoff=()=>{const d=new Date();d.setHours(0,0,0,0);d.setDate(d.getDate()-2);return d};
+const cutoff=()=>{const d=new Date();d.setHours(0,0,0,0);d.setDate(d.getDate()-(HISTORY_DAYS-1));return d};
 const dateOf=v=>{const d=new Date(v);return isNaN(d)?null:d};
 const itDay=v=>new Date(v).toLocaleDateString('it-IT',{weekday:'long',day:'2-digit',month:'2-digit',year:'numeric'});
 const itTime=v=>new Date(v).toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2-digit'});
 const brandClass=id=>id==='real-media-pro'?'rmp':'f1';
 const brandName=id=>id==='real-media-pro'?'REAL MEDIA PRO':'F1 IMMOBILIARE';
-function key(path){return String(path||'').replace(/^publisher\/media\/generated\//,'').replaceAll('/','__')}
-function assetFor(job,assets,source){const k=key(job.media),releaseAsset=(assets||[]).find(a=>a.name===k);if(releaseAsset)return releaseAsset;if(source==='latest'&&k)return{browser_download_url:LATEST_RELEASE+encodeURIComponent(k),name:k};const fallback=(job.visual_asset_urls||[]).find(u=>/^https?:\/\//i.test(String(u||'')));return fallback?{browser_download_url:fallback,name:'foto-originale'}:null}
-function cycleDate(cycle,jobs){const d=dateOf(cycle);if(d)return d;return dateOf(jobs?.[0]?.scheduled_at)||new Date()}
+function sourcePhoto(job){return (job.visual_asset_urls||[]).find(u=>/^https?:\/\//i.test(String(u||'')))||''}
+function assetKey(path){return String(path||'').replace(/^publisher\/media\/generated\//,'').replaceAll('/','__')}
 function copyCaption(uid){const j=allJobs.find(x=>x._uid===uid);if(!j?.caption)return;navigator.clipboard.writeText(j.caption).then(()=>{const b=document.getElementById('copy-'+uid);if(b){b.textContent='COPIATA ✓';setTimeout(()=>b.textContent='COPIA CAPTION',1400)}})}
-function card(job,assets,source){
- const a=assetFor(job,assets,source),uid=job._uid;
- const media=a?'<div class="media"><a href="'+esc(a.browser_download_url)+'" target="_blank"><img loading="lazy" src="'+esc(a.browser_download_url)+'" alt="'+esc(job.title)+'"></a></div>':'<div class="media"><div class="missing">FOTO NON PIÙ PRESENTE NELLA VECCHIA RELEASE<br><small>Caption recuperata dalla cronologia Git</small></div></div>';
- return '<article class="card '+brandClass(job.client_id)+'">'+media+'<div class="body"><div class="brand">'+brandName(job.client_id)+' · FOTO</div><div class="title">'+esc(job.title||'Contenuto')+'</div><div class="meta">'+esc(job.scheduled_at?itTime(job.scheduled_at):'')+(source==='git'?' · RECUPERATO':'')+'</div><div class="caption-label">CAPTION PRONTA</div><div class="caption">'+esc(job.caption||'')+'</div><div class="actions">'+(a?'<a class="btn '+(job.client_id==='real-media-pro'?'rmp':'')+'" href="'+esc(a.browser_download_url)+'">SCARICA FOTO</a>':'')+'<button id="copy-'+uid+'" class="btn alt" onclick="copyCaption(\''+uid+'\')">COPIA CAPTION</button></div></div></article>'
-}
-function render(cycles){
- const unique=new Map();
- cycles.sort((a,b)=>cycleDate(b.key,b.jobs)-cycleDate(a.key,a.jobs)).forEach(c=>{if(!unique.has(c.key))unique.set(c.key,c)});
- const list=[...unique.values()].filter(c=>cycleDate(c.key,c.jobs)>=cutoff());
- const days={};allJobs=[];
- list.forEach((c,ci)=>{const day=cycleDate(c.key,c.jobs).toISOString().slice(0,10);(days[day]??=[]).push(c);c.jobs.forEach((j,ji)=>{j._uid='j'+ci+'-'+ji;allJobs.push(j)})});
- const keys=Object.keys(days).sort().reverse();
- document.getElementById('history').innerHTML=keys.length?keys.map((day,di)=>'<section class="day"><h2>'+esc(itDay(day+'T12:00:00'))+'</h2>'+days[day].map((c,i)=>'<details class="cycle" '+(di===0&&i===0?'open':'')+'><summary>CICLO '+esc(itTime(cycleDate(c.key,c.jobs)))+' · '+c.jobs.length+' CONTENUTI'+(c.source==='git'?' · RECUPERATO':'')+'</summary><div class="grid">'+c.jobs.map(j=>card(j,c.assets,c.source)).join('')+'</div></details>').join('')+'</section>').join(''):'<div class="empty">Nessun contenuto trovato negli ultimi 3 giorni.</div>';
- return list.length
-}
+function imageFor(job,assets){const k=assetKey(job.media);const a=(assets||[]).find(x=>x.name===k);return a?.browser_download_url||sourcePhoto(job)||''}
+function card(job,assets){const src=imageFor(job,assets),uid=job._uid;const media=src?'<div class="media"><a href="'+esc(src)+'" target="_blank"><img loading="lazy" src="'+esc(src)+'" alt="'+esc(job.title)+'"></a></div>':'<div class="media"><div class="missing">ANTEPRIMA NON DISPONIBILE</div></div>';return '<article class="card '+brandClass(job.client_id)+'">'+media+'<div class="body"><div class="brand">'+brandName(job.client_id)+' · FOTO</div><div class="title">'+esc(job.title||'Contenuto')+'</div><div class="meta">'+esc(job.scheduled_at?itTime(job.scheduled_at):'')+'</div><div class="source">SORGENTE: '+esc(job.visual_source||'storico')+'</div><div class="caption-label">CAPTION PRONTA</div><div class="caption">'+esc(job.caption||'')+'</div><div class="actions">'+(src?'<a class="btn '+(job.client_id==='real-media-pro'?'rmp':'')+'" href="'+esc(src)+'" target="_blank">APRI FOTO</a>':'')+'<button id="copy-'+uid+'" class="btn alt" onclick="copyCaption(\''+uid+'\')">COPIA CAPTION</button></div></div></article>'}
+function cycleDate(c){return dateOf(c.key)||dateOf(c.jobs?.[0]?.scheduled_at)||new Date(0)}
+function render(cycles){const unique=new Map();cycles.sort((a,b)=>cycleDate(b)-cycleDate(a)).forEach(c=>{if(c.key&&!unique.has(c.key)&&cycleDate(c)>=cutoff())unique.set(c.key,c)});const list=[...unique.values()];const days={};allJobs=[];list.forEach((c,ci)=>{const day=cycleDate(c).toISOString().slice(0,10);(days[day]??=[]).push(c);c.jobs.forEach((j,ji)=>{j._uid='j'+ci+'-'+ji;allJobs.push(j)})});const keys=Object.keys(days).sort().reverse();document.getElementById('history').innerHTML=keys.length?keys.map((day,di)=>'<section class="day"><h2>'+esc(itDay(day+'T12:00:00'))+'</h2>'+days[day].map((c,i)=>'<details class="cycle" '+(di===0&&i===0?'open':'')+'><summary>CICLO '+esc(itTime(cycleDate(c)))+' · '+c.jobs.length+' CONTENUTI</summary><div class="grid">'+c.jobs.map(j=>card(j,c.assets)).join('')+'</div></details>').join('')+'</section>').join(''):'<div class="empty">Nessun contenuto trovato negli ultimi 14 giorni.</div>';return {cycles:list.length,jobs:allJobs.length,days:keys.length}}
 async function json(url){const r=await fetch(url,{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);return r.json()}
-async function releaseCycles(){
- const releases=await json(API+'/releases?per_page=100&t='+Date.now());
- const out=[];
- for(const rel of releases.filter(r=>r.tag_name==='social-preview-latest'||String(r.tag_name).startsWith('social-preview-archive-'))){
-  if(dateOf(rel.created_at)<cutoff())continue;
-  const qa=(rel.assets||[]).find(a=>a.name==='queue.json');if(!qa)continue;
-  try{const q=await json(qa.browser_download_url+'?t='+Date.now());const jobs=(q.jobs||[]).filter(j=>j.cycle_key===q.current_cycle&&j.format==='photo'&&['f1-immobiliare','real-media-pro'].includes(j.client_id));if(jobs.length)out.push({key:q.current_cycle||rel.created_at,jobs,assets:rel.assets||[],source:'release'})}catch(_){}
- }
- return out
-}
-async function recoveredCycles(known){
- const since=cutoff().toISOString(), commits=await json(API+'/commits?path=publisher/queue.json&since='+encodeURIComponent(since)+'&per_page=30');
- const out=[],seen=new Set(known.map(x=>x.key));
- for(const cm of commits){
-  try{const q=await json(RAW+cm.sha+'/publisher/queue.json');const k=q.current_cycle||'';if(!k||seen.has(k)||cycleDate(k,[])<cutoff())continue;const jobs=(q.jobs||[]).filter(j=>j.cycle_key===k&&j.format==='photo'&&['f1-immobiliare','real-media-pro'].includes(j.client_id));if(jobs.length){seen.add(k);out.push({key:k,jobs,assets:[],source:'git'})}}catch(_){}
- }
- return out
-}
-async function latestCycle(){
- const q=await json(RAW+'main/publisher/queue.json?t='+Date.now());
- const jobs=(q.jobs||[]).filter(j=>j.cycle_key===q.current_cycle&&j.format==='photo'&&['f1-immobiliare','real-media-pro'].includes(j.client_id));
- return jobs.length?{key:q.current_cycle||new Date().toISOString(),jobs,assets:[],source:'latest'}:null
-}
-async function archiveInBackground(latest){
- try{
-  const result=await Promise.race([
-   Promise.all([releaseCycles(),recoveredCycles(latest?[latest]:[])]),
-   new Promise(resolve=>setTimeout(()=>resolve(null),7000))
-  ]);
-  if(!result)return;
-  const cycles=[latest,...result.flat()].filter(Boolean);
-  const n=render(cycles);const st=document.getElementById('status');st.className='status';st.textContent='ULTIMI 3 GIORNI · '+n+' CICLI VISIBILI · archivio aggiornato '+new Date().toLocaleString('it-IT')+'.';
- }catch(_){}
-}
-async function load(){
- const st=document.getElementById('status');
- try{const latest=await latestCycle();const n=render(latest?[latest]:[]);st.className='status';st.textContent='CONTENUTI DI OGGI PRONTI · '+n+' CICLO VISIBILE.';archiveInBackground(latest)}
- catch(e){st.className='status error';st.textContent='ERRORE NEL CARICAMENTO: '+e.message}
-}
+function jobsByCycle(q){const map=new Map();for(const j of q.jobs||[]){if(j.format!=='photo'||!['f1-immobiliare','real-media-pro'].includes(j.client_id)||!j.cycle_key)continue;if(dateOf(j.cycle_key)<cutoff())continue;if(!map.has(j.cycle_key))map.set(j.cycle_key,[]);map.get(j.cycle_key).push(j)}return [...map].map(([key,jobs])=>({key,jobs,assets:[],source:'main'}))}
+async function latestReleaseAssets(){try{const rel=await json(API+'/releases/tags/social-preview-latest?t='+Date.now());return rel.assets||[]}catch(_){return[]}}
+async function recoveredCycles(known){const since=cutoff().toISOString();const commits=await json(API+'/commits?path=publisher/queue.json&since='+encodeURIComponent(since)+'&per_page=100');const seen=new Set(known.map(x=>x.key)),out=[];for(const cm of commits){try{const q=await json(RAW+cm.sha+'/publisher/queue.json');const k=q.current_cycle||'';if(!k||seen.has(k)||dateOf(k)<cutoff())continue;const jobs=(q.jobs||[]).filter(j=>j.cycle_key===k&&j.format==='photo'&&['f1-immobiliare','real-media-pro'].includes(j.client_id));if(jobs.length){seen.add(k);out.push({key:k,jobs,assets:[],source:'git'})}}catch(_){}}return out}
+async function load(){const st=document.getElementById('status');try{const [q,assets]=await Promise.all([json(RAW+'main/publisher/queue.json?t='+Date.now()),latestReleaseAssets()]);let cycles=jobsByCycle(q);const current=q.current_cycle;cycles=cycles.map(c=>c.key===current?{...c,assets}:c);render(cycles);st.textContent='STORICO PRINCIPALE CARICATO · recupero cicli precedenti…';try{const old=await recoveredCycles(cycles);const stats=render([...cycles,...old]);st.className='status';st.textContent='ULTIMI 14 GIORNI · '+stats.days+' GIORNI · '+stats.cycles+' CICLI · '+stats.jobs+' CONTENUTI VISIBILI · aggiornato '+new Date().toLocaleString('it-IT')+'.'}catch(_){const stats=render(cycles);st.textContent='ULTIMI 14 GIORNI · '+stats.cycles+' CICLI DISPONIBILI NELLA CODA PRINCIPALE.'}}catch(e){st.className='status error';st.textContent='ERRORE NEL CARICAMENTO: '+e.message}}
 load();
 </script></body></html>
