@@ -1,7 +1,31 @@
 {
-  "generated_at": "2026-09-01T09:28:57+00:00",
+  "generated_at": "2026-09-02T06:17:02+00:00",
   "client_id": "real-media-pro",
   "pages": [
+    {
+      "page_url": "https://f1immobiliare.com/pages/strategia-digitale-1",
+      "title": "SITI-SHOPIFY – F1_IMMOBILIARE",
+      "images": [
+        "https://f1immobiliare.com/cdn/shop/files/ChatGPT_Image_17_lug_2026_12_07_30.png?height=36&v=1784282885",
+        "https://f1immobiliare.com/cdn/shop/files/Certificato_Valutazione_Professionale_Aurigemma_Francesca_1.png?v=1787591171&width=3840",
+        "https://f1immobiliare.com/cdn/shop/files/ChatGPTImage2ago2026_11_56_05_4.png?v=1785664626&width=500",
+        "https://f1immobiliare.com/cdn/shop/files/ChatGPTImage2ago2026_11_56_04_1.png?v=1785664626&width=500"
+      ],
+      "videos": [],
+      "status": "ok"
+    },
+    {
+      "page_url": "https://f1immobiliare.com/pages/f1-immobiliare-real-media-pro",
+      "title": "F1 IMMOBILIARE - REAL MEDIA PRO – F1_IMMOBILIARE",
+      "images": [
+        "https://f1immobiliare.com/cdn/shop/files/ChatGPT_Image_17_lug_2026_12_07_30.png?height=36&v=1784282885",
+        "https://f1immobiliare.com/cdn/shop/files/Certificato_Valutazione_Professionale_Aurigemma_Francesca_1.png?v=1787591171&width=3840",
+        "https://f1immobiliare.com/cdn/shop/files/ChatGPTImage2ago2026_11_56_05_4.png?v=1785664626&width=500",
+        "https://f1immobiliare.com/cdn/shop/files/ChatGPTImage2ago2026_11_56_04_1.png?v=1785664626&width=500"
+      ],
+      "videos": [],
+      "status": "ok"
+    },
     {
       "page_url": "https://f1immobiliare.com/pages/partner-pubblicitario-e-tecnologico",
       "title": "WEB AGENCY – F1_IMMOBILIARE",
@@ -28,50 +52,6 @@
       ],
       "videos": [],
       "status": "ok"
-    },
-    {
-      "page_url": "https://f1immobiliare.com/pages/strategia-digitale-1",
-      "title": "SITI-SHOPIFY – F1_IMMOBILIARE",
-      "images": [
-        "https://f1immobiliare.com/cdn/shop/files/ChatGPT_Image_17_lug_2026_12_07_30.png?height=36&v=1784282885",
-        "https://f1immobiliare.com/cdn/shop/files/Certificato_Valutazione_Professionale_Aurigemma_Francesca_1.png?v=1787591171&width=3840",
-        "https://f1immobiliare.com/cdn/shop/files/ChatGPTImage2ago2026_11_56_05_4.png?v=1785664626&width=500",
-        "https://f1immobiliare.com/cdn/shop/files/ChatGPTImage2ago2026_11_56_04_1.png?v=1785664626&width=500"
-      ],
-      "videos": [],
-      "status": "ok"
-    },
-    {
-      "page_url": "https://f1immobiliare.com/products/gestione-social-standard?variant=54321158521171",
-      "title": "https://f1immobiliare.com/products/gestione-social-standard?variant=54321158521171",
-      "images": [],
-      "videos": [],
-      "status": "error",
-      "error": "404 Client Error: Not Found for url: https://f1immobiliare.com/products/gestione-social-standard?variant=54321158521171"
-    },
-    {
-      "page_url": "https://f1immobiliare.com/products/gestione-social-pro?variant=54321158553939",
-      "title": "https://f1immobiliare.com/products/gestione-social-pro?variant=54321158553939",
-      "images": [],
-      "videos": [],
-      "status": "error",
-      "error": "404 Client Error: Not Found for url: https://f1immobiliare.com/products/gestione-social-pro?variant=54321158553939"
-    },
-    {
-      "page_url": "https://f1immobiliare.com/products/volantino-digitale?variant=54321156817235",
-      "title": "https://f1immobiliare.com/products/volantino-digitale?variant=54321156817235",
-      "images": [],
-      "videos": [],
-      "status": "error",
-      "error": "404 Client Error: Not Found for url: https://f1immobiliare.com/products/volantino-digitale?variant=54321156817235"
-    },
-    {
-      "page_url": "https://f1immobiliare.com/products/presentazione-aziendale?variant=54321157603667",
-      "title": "https://f1immobiliare.com/products/presentazione-aziendale?variant=54321157603667",
-      "images": [],
-      "videos": [],
-      "status": "error",
-      "error": "404 Client Error: Not Found for url: https://f1immobiliare.com/products/presentazione-aziendale?variant=54321157603667"
     }
   ]
 }
