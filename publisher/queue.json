@@ -6428,10 +6428,1125 @@
       "visual_count": 1,
       "fresh_visual_count": 1,
       "reused_visual_count": 0
+    },
+    {
+      "id": "f1-immobiliare-2026-09-02-c12-01-06-g2-come-costruiamo-prezzo",
+      "client_id": "f1-immobiliare",
+      "client_name": "F1 Immobiliare",
+      "category": "proof",
+      "editorial_role": "proof",
+      "campaign": "F1 · Non a sensazione. Con i dati.",
+      "format": "photo",
+      "title": "CERCASI APPARTAMENTI IN VALLE DI SUSA",
+      "caption": "CERCASI APPARTAMENTI IN VALLE DI SUSA\n\nStiamo cercando appartamenti e abitazioni per persone interessate ad acquistare nella nostra zona.\n\nHai una casa o un appartamento che stai pensando di vendere? Prima di scegliere prezzo e strategia verifichiamo microzona, immobili comparabili, concorrenza e domanda reale.\n\nPrima valutazione gratuita e senza impegno:\nhttps://www.agentpricing.com/j.malafronte\n\n371 370 8294 · 371 424 6300\n\n#ValleDiSusa #Avigliana #Susa #Condove #Almese #Bussoleno",
+      "hashtags": [
+        "#ValleDiSusa",
+        "#Avigliana",
+        "#Susa",
+        "#Condove",
+        "#Almese",
+        "#Bussoleno"
+      ],
+      "voiceover": "Il prezzo è la conclusione di un processo: microzona, comparabili, concorrenza, domanda e posizionamento. Scrivi VALUTAZIONE in privato.",
+      "slides": [
+        "IL PREZZO|DI PARTENZA",
+        "1. MICROZONA",
+        "2. COMPARABILI",
+        "3. CONCORRENZA",
+        "4. DOMANDA",
+        "5. POSIZIONAMENTO",
+        "F1 IMMOBILIARE|IL PREZZO SI VERIFICA|371 370 8294"
+      ],
+      "visuals": [],
+      "cta": "Scrivi VALUTAZIONE in privato",
+      "media": "publisher/media/generated/f1-immobiliare/2026-09-02/cycle-12/01-02-c12-01-06-g2-come-costruiamo-prezzo.jpg",
+      "scheduled_at": "2026-09-02T12:00:00+02:00",
+      "territory": "Almese",
+      "property_focus": {
+        "transaction": "vendita",
+        "min_price_eur": 100000,
+        "exclude": [
+          "affitto",
+          "locazione",
+          "garage",
+          "box",
+          "posto auto",
+          "rustico",
+          "rudere",
+          "terreno"
+        ],
+        "preferred": [
+          "appartamento",
+          "casa",
+          "villa",
+          "villetta",
+          "attico",
+          "bifamiliare",
+          "trifamiliare"
+        ],
+        "cash_subito": {
+          "enabled": true,
+          "label": "F1 CASH SUBITO",
+          "meaning": "acquisto diretto per opportunità immobiliari fortemente scontate e coerenti con i criteri F1",
+          "rule": "non presentarlo come garanzia di acquisto; prima verifica economica, tecnica e documentale"
+        }
+      },
+      "approval_key": "2026-W36",
+      "platforms": [
+        {
+          "platform": "facebook",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "tiktok",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "linkedin",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "youtube",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "pinterest",
+          "integration_id": "direct-api"
+        }
+      ],
+      "enabled": true,
+      "status": "awaiting_approval",
+      "published_platforms": [],
+      "postiz_results": [],
+      "video_made_with_ai": false,
+      "created_by": "open-social-scheduler",
+      "blocked_reason": "approval required for 2026-W36",
+      "cycle_key": "2026-09-02T12:00",
+      "cycle_hour": 12,
+      "cycle_index": 3,
+      "cycle_position": 1,
+      "production_mode": "photos-only-10-every-4h",
+      "production_status": "PHOTO READY",
+      "publication_ready": true,
+      "output_type": "static-photo",
+      "no_video": true,
+      "no_audio": true,
+      "no_reel": true,
+      "people_footer_required": true,
+      "visual_mode": "valle-di-susa-local-property-plus-presenters",
+      "local_visual_required": true,
+      "reject_generic_foreign_property_visuals": true,
+      "search_query_override": "appartamenti Valle di Susa Piemonte",
+      "search_queries": [
+        "Avigliana abitazioni Piemonte",
+        "Valle di Susa case Piemonte",
+        "Susa centro abitazioni Piemonte",
+        "Oulx appartamenti Piemonte",
+        "Bardonecchia abitazioni Piemonte"
+      ],
+      "visual_asset_urls": [
+        "https://commons.wikimedia.org/wiki/Special:Redirect/file/Villa_Cantamerlo_Avigliana02.JPG"
+      ],
+      "visual_source": "f1-approved-local-valle-susa",
+      "visual_transform": "f1-local-photo-plus-presenter-footer",
+      "visual_count": 1,
+      "fresh_visual_count": 1,
+      "reused_visual_count": 0
+    },
+    {
+      "id": "f1-immobiliare-2026-09-02-c12-02-07-g3-media-torino",
+      "client_id": "f1-immobiliare",
+      "client_name": "F1 Immobiliare",
+      "category": "data",
+      "editorial_role": "data",
+      "campaign": "F1 · Non a sensazione. Con i dati.",
+      "format": "photo",
+      "title": "HAI UN APPARTAMENTO DA VALUTARE?",
+      "caption": "HAI UN APPARTAMENTO DA VALUTARE?\n\nIl prezzo non si sceglie a sensazione. Si verifica con dati, immobili comparabili, caratteristiche reali, microzona e domanda.\n\nSe possiedi un appartamento in Valle di Susa e vuoi capire quanto può valere oggi, richiedi una prima analisi gratuita.\n\nhttps://www.agentpricing.com/j.malafronte\n\n371 370 8294 · 371 424 6300\n\n#ValleDiSusa #Avigliana #Almese #SantAmbrogioDiTorino #VillarDora #Caprie",
+      "hashtags": [
+        "#ValleDiSusa",
+        "#Avigliana",
+        "#Almese",
+        "#SantAmbrogioDiTorino",
+        "#VillarDora",
+        "#Caprie"
+      ],
+      "voiceover": "La media di Torino, o perfino quella del tuo comune, non basta per valutare casa tua. Due immobili vicini possono ricevere risposte molto diverse. Bisogna scendere alla microzona, alla via e alle caratteristiche reali dell'immobile.",
+      "slides": [
+        "LA MEDIA|DI TORINO|NON VALUTA CASA TUA",
+        "IL COMUNE|NON BASTA",
+        "CONTA LA|MICROZONA",
+        "CONTANO VIA|PIANO|ESPOSIZIONE",
+        "CONTA LA|DOMANDA LOCALE",
+        "IL VALORE|VA LOCALIZZATO",
+        "F1 IMMOBILIARE|CON I DATI|371 370 8294"
+      ],
+      "visuals": [],
+      "cta": "Scrivi VALUTAZIONE in privato",
+      "media": "publisher/media/generated/f1-immobiliare/2026-09-02/cycle-12/02-02-c12-02-07-g3-media-torino.jpg",
+      "scheduled_at": "2026-09-02T12:06:00+02:00",
+      "territory": "Almese",
+      "property_focus": {
+        "transaction": "vendita",
+        "min_price_eur": 100000,
+        "exclude": [
+          "affitto",
+          "locazione",
+          "garage",
+          "box",
+          "posto auto",
+          "rustico",
+          "rudere",
+          "terreno"
+        ],
+        "preferred": [
+          "appartamento",
+          "casa",
+          "villa",
+          "villetta",
+          "attico",
+          "bifamiliare",
+          "trifamiliare"
+        ],
+        "cash_subito": {
+          "enabled": true,
+          "label": "F1 CASH SUBITO",
+          "meaning": "acquisto diretto per opportunità immobiliari fortemente scontate e coerenti con i criteri F1",
+          "rule": "non presentarlo come garanzia di acquisto; prima verifica economica, tecnica e documentale"
+        }
+      },
+      "approval_key": "2026-W36",
+      "platforms": [
+        {
+          "platform": "facebook",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "tiktok",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "linkedin",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "youtube",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "pinterest",
+          "integration_id": "direct-api"
+        }
+      ],
+      "enabled": true,
+      "status": "awaiting_approval",
+      "published_platforms": [],
+      "postiz_results": [],
+      "video_made_with_ai": false,
+      "created_by": "open-social-scheduler",
+      "blocked_reason": "approval required for 2026-W36",
+      "cycle_key": "2026-09-02T12:00",
+      "cycle_hour": 12,
+      "cycle_index": 3,
+      "cycle_position": 2,
+      "production_mode": "photos-only-10-every-4h",
+      "production_status": "PHOTO READY",
+      "publication_ready": true,
+      "output_type": "static-photo",
+      "no_video": true,
+      "no_audio": true,
+      "no_reel": true,
+      "people_footer_required": true,
+      "visual_mode": "valle-di-susa-local-property-plus-presenters",
+      "local_visual_required": true,
+      "reject_generic_foreign_property_visuals": true,
+      "search_query_override": "abitazioni Avigliana Piemonte",
+      "search_queries": [
+        "Avigliana abitazioni Piemonte",
+        "Valle di Susa case Piemonte",
+        "Susa centro abitazioni Piemonte",
+        "Oulx appartamenti Piemonte",
+        "Bardonecchia abitazioni Piemonte"
+      ],
+      "visual_asset_urls": [
+        "https://commons.wikimedia.org/wiki/Special:Redirect/file/Avigliana%2C_Italy_%28Unsplash%29.jpg"
+      ],
+      "visual_source": "f1-approved-local-valle-susa",
+      "visual_transform": "f1-local-photo-plus-presenter-footer",
+      "visual_count": 1,
+      "fresh_visual_count": 1,
+      "reused_visual_count": 0
+    },
+    {
+      "id": "f1-immobiliare-2026-09-02-c12-03-08-g4-ribasso-senza-diagnosi",
+      "client_id": "f1-immobiliare",
+      "client_name": "F1 Immobiliare",
+      "category": "error",
+      "editorial_role": "error",
+      "campaign": "F1 · Non a sensazione. Con i dati.",
+      "format": "photo",
+      "title": "STAI PENSANDO DI VENDERE CASA?",
+      "caption": "STAI PENSANDO DI VENDERE CASA?\n\nVendere bene comincia prima dell'annuncio. Prima analizziamo valore, concorrenza, domanda e posizionamento dell'immobile; poi costruiamo la strategia di vendita.\n\nSe hai una casa o un appartamento in Valle di Susa possiamo partire da una valutazione gratuita, chiara e basata sui dati.\n\nhttps://www.agentpricing.com/j.malafronte\n\n371 370 8294 · 371 424 6300\n\n#ValleDiSusa #Susa #BorgoneSusa #Bussoleno #SanGiorio #VillarFocchiardo",
+      "hashtags": [
+        "#ValleDiSusa",
+        "#Susa",
+        "#BorgoneSusa",
+        "#Bussoleno",
+        "#SanGiorio",
+        "#VillarFocchiardo"
+      ],
+      "voiceover": "Abbassare il prezzo senza capire il problema non è una strategia. Potrebbe essere pricing, ma anche presentazione, target, visibilità o concorrenza. Prima della riduzione serve una diagnosi.",
+      "slides": [
+        "NON SI VENDE?|ABBASSIAMO?",
+        "ASPETTA",
+        "IL PROBLEMA|POTREBBE NON ESSERE|SOLO IL PREZZO",
+        "FOTO?|TARGET?",
+        "VISIBILITÀ?|CONCORRENZA?",
+        "DIAGNOSI|PRIMA DEL RIBASSO",
+        "F1 IMMOBILIARE|PRIMA I DATI|371 370 8294"
+      ],
+      "visuals": [],
+      "cta": "Scrivi VALUTAZIONE in privato",
+      "media": "publisher/media/generated/f1-immobiliare/2026-09-02/cycle-12/03-02-c12-03-08-g4-ribasso-senza-diagnosi.jpg",
+      "scheduled_at": "2026-09-02T12:12:00+02:00",
+      "territory": "Almese",
+      "property_focus": {
+        "transaction": "vendita",
+        "min_price_eur": 100000,
+        "exclude": [
+          "affitto",
+          "locazione",
+          "garage",
+          "box",
+          "posto auto",
+          "rustico",
+          "rudere",
+          "terreno"
+        ],
+        "preferred": [
+          "appartamento",
+          "casa",
+          "villa",
+          "villetta",
+          "attico",
+          "bifamiliare",
+          "trifamiliare"
+        ],
+        "cash_subito": {
+          "enabled": true,
+          "label": "F1 CASH SUBITO",
+          "meaning": "acquisto diretto per opportunità immobiliari fortemente scontate e coerenti con i criteri F1",
+          "rule": "non presentarlo come garanzia di acquisto; prima verifica economica, tecnica e documentale"
+        }
+      },
+      "approval_key": "2026-W36",
+      "platforms": [
+        {
+          "platform": "facebook",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "tiktok",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "linkedin",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "youtube",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "pinterest",
+          "integration_id": "direct-api"
+        }
+      ],
+      "enabled": true,
+      "status": "awaiting_approval",
+      "published_platforms": [],
+      "postiz_results": [],
+      "video_made_with_ai": false,
+      "created_by": "open-social-scheduler",
+      "blocked_reason": "approval required for 2026-W36",
+      "cycle_key": "2026-09-02T12:00",
+      "cycle_hour": 12,
+      "cycle_index": 3,
+      "cycle_position": 3,
+      "production_mode": "photos-only-10-every-4h",
+      "production_status": "PHOTO READY",
+      "publication_ready": true,
+      "output_type": "static-photo",
+      "no_video": true,
+      "no_audio": true,
+      "no_reel": true,
+      "people_footer_required": true,
+      "visual_mode": "valle-di-susa-local-property-plus-presenters",
+      "local_visual_required": true,
+      "reject_generic_foreign_property_visuals": true,
+      "search_query_override": "case Susa Piemonte Italia",
+      "search_queries": [
+        "Avigliana abitazioni Piemonte",
+        "Valle di Susa case Piemonte",
+        "Susa centro abitazioni Piemonte",
+        "Oulx appartamenti Piemonte",
+        "Bardonecchia abitazioni Piemonte"
+      ],
+      "visual_asset_urls": [
+        "https://commons.wikimedia.org/wiki/Special:Redirect/file/Avigliana%2C_Italy_%28Unsplash_yhnOTbw9SPY%29.jpg"
+      ],
+      "visual_source": "f1-approved-local-valle-susa",
+      "visual_transform": "f1-local-photo-plus-presenter-footer",
+      "visual_count": 1,
+      "fresh_visual_count": 1,
+      "reused_visual_count": 0
+    },
+    {
+      "id": "f1-immobiliare-2026-09-02-c12-04-09-g5-dopo-pubblicazione",
+      "client_id": "f1-immobiliare",
+      "client_name": "F1 Immobiliare",
+      "category": "proof",
+      "editorial_role": "proof",
+      "campaign": "F1 · Non a sensazione. Con i dati.",
+      "format": "photo",
+      "title": "LA MICROZONA CAMBIA IL VALORE",
+      "caption": "LA MICROZONA CAMBIA IL VALORE.\n\nStesso comune non significa stesso prezzo. Via, piano, esposizione, servizi, accessibilità e domanda possono cambiare il posizionamento di un immobile anche a poche centinaia di metri di distanza.\n\nPer questo una valutazione seria parte dal territorio reale, non da una media generica.\n\nhttps://www.agentpricing.com/j.malafronte\n\n371 370 8294 · 371 424 6300\n\n#ValleDiSusa #Oulx #Bardonecchia #SauzeDOulx #CesanaTorinese #Chiomonte",
+      "hashtags": [
+        "#ValleDiSusa",
+        "#Oulx",
+        "#Bardonecchia",
+        "#SauzeDOulx",
+        "#CesanaTorinese",
+        "#Chiomonte"
+      ],
+      "voiceover": "Pubblicare è l'inizio, non la fine. La risposta del mercato deve essere letta e gestita. Scrivi VALUTAZIONE in privato.",
+      "slides": [
+        "DOPO|L'ANNUNCIO",
+        "MISURIAMO|VISIBILITÀ",
+        "LEGGIAMO|LE RICHIESTE",
+        "CONFRONTIAMO|LE REAZIONI",
+        "CORREGGIAMO|SE SERVE",
+        "LA STRATEGIA|CONTINUA",
+        "F1 IMMOBILIARE|NON SOLO PORTALI|371 370 8294"
+      ],
+      "visuals": [],
+      "cta": "Scrivi VALUTAZIONE in privato",
+      "media": "publisher/media/generated/f1-immobiliare/2026-09-02/cycle-12/04-02-c12-04-09-g5-dopo-pubblicazione.jpg",
+      "scheduled_at": "2026-09-02T12:18:00+02:00",
+      "territory": "Almese",
+      "property_focus": {
+        "transaction": "vendita",
+        "min_price_eur": 100000,
+        "exclude": [
+          "affitto",
+          "locazione",
+          "garage",
+          "box",
+          "posto auto",
+          "rustico",
+          "rudere",
+          "terreno"
+        ],
+        "preferred": [
+          "appartamento",
+          "casa",
+          "villa",
+          "villetta",
+          "attico",
+          "bifamiliare",
+          "trifamiliare"
+        ],
+        "cash_subito": {
+          "enabled": true,
+          "label": "F1 CASH SUBITO",
+          "meaning": "acquisto diretto per opportunità immobiliari fortemente scontate e coerenti con i criteri F1",
+          "rule": "non presentarlo come garanzia di acquisto; prima verifica economica, tecnica e documentale"
+        }
+      },
+      "approval_key": "2026-W36",
+      "platforms": [
+        {
+          "platform": "facebook",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "tiktok",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "linkedin",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "youtube",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "pinterest",
+          "integration_id": "direct-api"
+        }
+      ],
+      "enabled": true,
+      "status": "awaiting_approval",
+      "published_platforms": [],
+      "postiz_results": [],
+      "video_made_with_ai": false,
+      "created_by": "open-social-scheduler",
+      "blocked_reason": "approval required for 2026-W36",
+      "cycle_key": "2026-09-02T12:00",
+      "cycle_hour": 12,
+      "cycle_index": 3,
+      "cycle_position": 4,
+      "production_mode": "photos-only-10-every-4h",
+      "production_status": "PHOTO READY",
+      "publication_ready": true,
+      "output_type": "static-photo",
+      "no_video": true,
+      "no_audio": true,
+      "no_reel": true,
+      "people_footer_required": true,
+      "visual_mode": "valle-di-susa-local-property-plus-presenters",
+      "local_visual_required": true,
+      "reject_generic_foreign_property_visuals": true,
+      "search_query_override": "Oulx abitazioni Piemonte",
+      "search_queries": [
+        "Avigliana abitazioni Piemonte",
+        "Valle di Susa case Piemonte",
+        "Susa centro abitazioni Piemonte",
+        "Oulx appartamenti Piemonte",
+        "Bardonecchia abitazioni Piemonte"
+      ],
+      "visual_asset_urls": [
+        "https://commons.wikimedia.org/wiki/Special:Redirect/file/Centro_Storico_Avigliana.JPG"
+      ],
+      "visual_source": "f1-approved-local-valle-susa",
+      "visual_transform": "f1-local-photo-plus-presenter-footer",
+      "visual_count": 1,
+      "fresh_visual_count": 1,
+      "reused_visual_count": 0
+    },
+    {
+      "id": "f1-immobiliare-2026-09-02-c12-05-10-g6-vendita-privata-verifiche",
+      "client_id": "f1-immobiliare",
+      "client_name": "F1 Immobiliare",
+      "category": "data",
+      "editorial_role": "data",
+      "campaign": "F1 · Non a sensazione. Con i dati.",
+      "format": "photo",
+      "title": "VALUTAZIONE IMMOBILIARE CON I DATI",
+      "caption": "VALUTAZIONE IMMOBILIARE CON I DATI.\n\nComparabili, mercato, microzona e strategia: il valore non è un numero inventato per convincere il proprietario. Deve essere una conclusione che puoi capire.\n\nRichiedi una prima analisi gratuita del tuo immobile.\n\nhttps://www.agentpricing.com/j.malafronte\n\n371 370 8294 · 371 424 6300\n\n#ValleDiSusa #Condove #Vaie #ChiusaDiSanMichele #SantAmbrogioDiTorino #Avigliana",
+      "hashtags": [
+        "#ValleDiSusa",
+        "#Condove",
+        "#Vaie",
+        "#ChiusaDiSanMichele",
+        "#SantAmbrogioDiTorino",
+        "#Avigliana"
+      ],
+      "voiceover": "Se vuoi vendere senza agenzia, nessun problema. Ma prima verifica documenti, comparabili, concorrenza, prezzo e acquirente probabile. Vendere bene comincia prima dell'annuncio.",
+      "slides": [
+        "VUOI VENDERE|DA PRIVATO?",
+        "1. DOCUMENTI",
+        "2. COMPARABILI",
+        "3. CONCORRENZA",
+        "4. PREZZO|5. TARGET",
+        "PRIMA CAPISCI|POI PUBBLICHI",
+        "F1 IMMOBILIARE|SECONDO PARERE|371 370 8294"
+      ],
+      "visuals": [],
+      "cta": "Scrivi VALUTAZIONE in privato",
+      "media": "publisher/media/generated/f1-immobiliare/2026-09-02/cycle-12/05-02-c12-05-10-g6-vendita-privata-verifiche.jpg",
+      "scheduled_at": "2026-09-02T12:24:00+02:00",
+      "territory": "Almese",
+      "property_focus": {
+        "transaction": "vendita",
+        "min_price_eur": 100000,
+        "exclude": [
+          "affitto",
+          "locazione",
+          "garage",
+          "box",
+          "posto auto",
+          "rustico",
+          "rudere",
+          "terreno"
+        ],
+        "preferred": [
+          "appartamento",
+          "casa",
+          "villa",
+          "villetta",
+          "attico",
+          "bifamiliare",
+          "trifamiliare"
+        ],
+        "cash_subito": {
+          "enabled": true,
+          "label": "F1 CASH SUBITO",
+          "meaning": "acquisto diretto per opportunità immobiliari fortemente scontate e coerenti con i criteri F1",
+          "rule": "non presentarlo come garanzia di acquisto; prima verifica economica, tecnica e documentale"
+        }
+      },
+      "approval_key": "2026-W36",
+      "platforms": [
+        {
+          "platform": "facebook",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "tiktok",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "linkedin",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "youtube",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "pinterest",
+          "integration_id": "direct-api"
+        }
+      ],
+      "enabled": true,
+      "status": "awaiting_approval",
+      "published_platforms": [],
+      "postiz_results": [],
+      "video_made_with_ai": false,
+      "created_by": "open-social-scheduler",
+      "blocked_reason": "approval required for 2026-W36",
+      "cycle_key": "2026-09-02T12:00",
+      "cycle_hour": 12,
+      "cycle_index": 3,
+      "cycle_position": 5,
+      "production_mode": "photos-only-10-every-4h",
+      "production_status": "PHOTO READY",
+      "publication_ready": true,
+      "output_type": "static-photo",
+      "no_video": true,
+      "no_audio": true,
+      "no_reel": true,
+      "people_footer_required": true,
+      "visual_mode": "valle-di-susa-local-property-plus-presenters",
+      "local_visual_required": true,
+      "reject_generic_foreign_property_visuals": true,
+      "search_query_override": "Valle di Susa case Piemonte",
+      "search_queries": [
+        "Avigliana abitazioni Piemonte",
+        "Valle di Susa case Piemonte",
+        "Susa centro abitazioni Piemonte",
+        "Oulx appartamenti Piemonte",
+        "Bardonecchia abitazioni Piemonte"
+      ],
+      "visual_asset_urls": [
+        "https://commons.wikimedia.org/wiki/Special:Redirect/file/Avigliana_Centro_Storico.JPG"
+      ],
+      "visual_source": "f1-approved-local-valle-susa",
+      "visual_transform": "f1-local-photo-plus-presenter-footer",
+      "visual_count": 1,
+      "fresh_visual_count": 1,
+      "reused_visual_count": 0
+    },
+    {
+      "id": "real-media-pro-2026-09-02-c12-01-06-advertising-sistema",
+      "client_id": "real-media-pro",
+      "client_name": "Real Media Pro",
+      "category": "convert",
+      "editorial_role": "convert",
+      "campaign": "Real Media Pro · Dalla visibilità alla crescita",
+      "format": "photo",
+      "title": "SHOPIFY: DAL PRODOTTO ALLA CONVERSIONE",
+      "caption": "SHOPIFY: DAL PRODOTTO ALLA CONVERSIONE.\n\nUn e-commerce deve rendere semplice capire il prodotto, confrontare le alternative e arrivare all'azione. Prendiamo ispirazione dalle logiche del tema Shopify Shapes: struttura creativa, sezioni modulari, quick buy e percorso di scoperta chiaro.\n\nLa grafica che mostriamo è originale: non copiamo immagini o creatività del tema.\n\nReal Media Pro progetta siti Shopify orientati a navigazione, prodotto e conversione.\n\nAnalisi strategica gratuita: 371 370 8294",
+      "hashtags": [],
+      "voiceover": "La pubblicità funziona meglio quando Meta, Google, landing page, CRM e misurazione sono progettati come un unico sistema. Richiedi un'analisi strategica gratuita.",
+      "slides": [
+        "ADV SENZA LANDING?",
+        "RISCHI DI PAGARE TRAFFICO",
+        "META CREA DOMANDA",
+        "GOOGLE INTERCETTA INTENTO",
+        "LANDING CONVERTE",
+        "CRM SEGUE",
+        "DATI OTTIMIZZANO",
+        "RICHIEDI ANALISI"
+      ],
+      "visuals": [],
+      "cta": "Richiedi un'analisi strategica gratuita",
+      "media": "publisher/media/generated/real-media-pro/2026-09-02/cycle-12/01-09-02-c12-01-06-advertising-sistema.jpg",
+      "scheduled_at": "2026-09-02T12:30:00+02:00",
+      "territory": "Rivoli",
+      "property_focus": {},
+      "approval_key": "2026-W36",
+      "platforms": [
+        {
+          "platform": "facebook",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "tiktok",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "linkedin",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "youtube",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "pinterest",
+          "integration_id": "direct-api"
+        }
+      ],
+      "enabled": true,
+      "status": "awaiting_approval",
+      "published_platforms": [],
+      "postiz_results": [],
+      "video_made_with_ai": false,
+      "created_by": "open-social-scheduler",
+      "blocked_reason": "approval required for 2026-W36",
+      "cycle_key": "2026-09-02T12:00",
+      "cycle_hour": 12,
+      "cycle_index": 3,
+      "cycle_position": 1,
+      "production_mode": "photos-only-10-every-4h",
+      "production_status": "PHOTO READY",
+      "publication_ready": true,
+      "output_type": "static-photo",
+      "no_video": true,
+      "no_audio": true,
+      "no_reel": true,
+      "people_footer_required": true,
+      "visual_mode": "rmp-original-shopify-theme-inspired-mockup",
+      "shopify_theme_required": true,
+      "shopify_theme_store_only": true,
+      "copy_shopify_images": false,
+      "generated_original_mockup": true,
+      "theme_name": "Shapes",
+      "theme_source_url": "https://themes.shopify.com/themes/shapes/presets/shapes?locale=it",
+      "theme_description_it": "Shapes punta su una presentazione creativa e molto flessibile, con elementi grafici modulari, acquisto rapido, comparazione prodotto e strumenti pensati per rendere la scoperta del catalogo più immediata.",
+      "layout_profile": "creative_modular",
+      "design_reference_rule": "Use only the official Shopify Theme Store as inspiration. Never download, copy, crop, trace or republish theme screenshots or theme imagery. Generate an original ecommerce mockup from the described design principles.",
+      "search_query_override": "",
+      "search_queries": [],
+      "visual_asset_urls": [
+        "https://themes.shopify.com/themes/shapes/presets/shapes?locale=it"
+      ],
+      "visual_source": "shopify-theme-store-description-only",
+      "visual_transform": "original-generated-ecommerce-mockup-plus-presenter-footer",
+      "visual_count": 1,
+      "fresh_visual_count": 1,
+      "reused_visual_count": 0
+    },
+    {
+      "id": "real-media-pro-2026-09-02-c12-02-07-google-ads-intento",
+      "client_id": "real-media-pro",
+      "client_name": "Real Media Pro",
+      "category": "attract",
+      "editorial_role": "attract",
+      "campaign": "Real Media Pro · Dalla visibilità alla crescita",
+      "format": "photo",
+      "title": "MOBILE FIRST, PERCORSO CHIARO",
+      "caption": "MOBILE FIRST, PERCORSO CHIARO.\n\nIl tema Shopify Broadcast mette al centro sezioni personalizzabili, velocità, mobile, acquisto rapido e strumenti che accompagnano il cliente verso la vendita.\n\nDa questa logica costruiamo un concept Real Media Pro completamente originale: gerarchia chiara, CTA visibili, navigazione veloce e meno attrito da smartphone.\n\nNessuna immagine del tema viene copiata o ripubblicata.\n\nAnalisi strategica gratuita: 371 370 8294",
+      "hashtags": [],
+      "voiceover": "Google Ads funziona quando keyword, feed, annuncio e pagina di destinazione rispondono allo stesso intento. Richiedi un'analisi strategica gratuita.",
+      "slides": [
+        "CHI CERCA È GIÀ PIÙ VICINO",
+        "MA DEVI ESSERCI",
+        "SEARCH",
+        "SHOPPING",
+        "PERFORMANCE MAX",
+        "FEED PRODOTTI",
+        "LANDING COERENTE",
+        "RICHIEDI ANALISI"
+      ],
+      "visuals": [],
+      "cta": "Richiedi un'analisi strategica gratuita",
+      "media": "publisher/media/generated/real-media-pro/2026-09-02/cycle-12/02-09-02-c12-02-07-google-ads-intento.jpg",
+      "scheduled_at": "2026-09-02T12:36:00+02:00",
+      "territory": "Rivoli",
+      "property_focus": {},
+      "approval_key": "2026-W36",
+      "platforms": [
+        {
+          "platform": "facebook",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "tiktok",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "linkedin",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "youtube",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "pinterest",
+          "integration_id": "direct-api"
+        }
+      ],
+      "enabled": true,
+      "status": "awaiting_approval",
+      "published_platforms": [],
+      "postiz_results": [],
+      "video_made_with_ai": false,
+      "created_by": "open-social-scheduler",
+      "blocked_reason": "approval required for 2026-W36",
+      "cycle_key": "2026-09-02T12:00",
+      "cycle_hour": 12,
+      "cycle_index": 3,
+      "cycle_position": 2,
+      "production_mode": "photos-only-10-every-4h",
+      "production_status": "PHOTO READY",
+      "publication_ready": true,
+      "output_type": "static-photo",
+      "no_video": true,
+      "no_audio": true,
+      "no_reel": true,
+      "people_footer_required": true,
+      "visual_mode": "rmp-original-shopify-theme-inspired-mockup",
+      "shopify_theme_required": true,
+      "shopify_theme_store_only": true,
+      "copy_shopify_images": false,
+      "generated_original_mockup": true,
+      "theme_name": "Broadcast",
+      "theme_source_url": "https://themes.shopify.com/themes/broadcast/presets/broadcast?locale=it",
+      "theme_description_it": "Broadcast è un tema ricco di funzionalità con oltre 30 sezioni personalizzabili, strumenti di upsell, acquisto rapido e una struttura ottimizzata per dispositivi mobili e velocità.",
+      "layout_profile": "mobile_speed",
+      "design_reference_rule": "Use only the official Shopify Theme Store as inspiration. Never download, copy, crop, trace or republish theme screenshots or theme imagery. Generate an original ecommerce mockup from the described design principles.",
+      "search_query_override": "",
+      "search_queries": [],
+      "visual_asset_urls": [
+        "https://themes.shopify.com/themes/broadcast/presets/broadcast?locale=it"
+      ],
+      "visual_source": "shopify-theme-store-description-only",
+      "visual_transform": "original-generated-ecommerce-mockup-plus-presenter-footer",
+      "visual_count": 1,
+      "fresh_visual_count": 1,
+      "reused_visual_count": 0
+    },
+    {
+      "id": "real-media-pro-2026-09-02-c12-03-08-audit-digitale",
+      "client_id": "real-media-pro",
+      "client_name": "Real Media Pro",
+      "category": "nurture",
+      "editorial_role": "nurture",
+      "campaign": "Real Media Pro · Dalla visibilità alla crescita",
+      "format": "photo",
+      "title": "DESIGN PREMIUM, PRESTAZIONI VELOCI",
+      "caption": "DESIGN PREMIUM, PRESTAZIONI VELOCI.\n\nPrestige mostra come un e-commerce premium possa combinare immagine di marca, prodotto, sezioni configurabili, velocità e accessibilità.\n\nReal Media Pro traduce questi principi in un progetto originale costruito sull'identità del cliente: nessuna copia del tema, ma una struttura pensata per far percepire valore e facilitare l'acquisto.\n\nAnalisi strategica gratuita: 371 370 8294",
+      "hashtags": [],
+      "voiceover": "L'analisi strategica collega posizionamento, sito, SEO, advertising, contenuti e gestione dei lead. Non guardiamo un singolo canale isolato. Richiedi un'analisi strategica gratuita.",
+      "slides": [
+        "AUDIT DIGITALE",
+        "POSIZIONAMENTO",
+        "SITO / SHOPIFY",
+        "SEO / AEO",
+        "META ADS",
+        "GOOGLE ADS",
+        "CRM / FOLLOW-UP",
+        "PIANO OPERATIVO"
+      ],
+      "visuals": [],
+      "cta": "Richiedi un'analisi strategica gratuita",
+      "media": "publisher/media/generated/real-media-pro/2026-09-02/cycle-12/03-09-02-c12-03-08-audit-digitale.jpg",
+      "scheduled_at": "2026-09-02T12:42:00+02:00",
+      "territory": "Rivoli",
+      "property_focus": {},
+      "approval_key": "2026-W36",
+      "platforms": [
+        {
+          "platform": "facebook",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "tiktok",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "linkedin",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "youtube",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "pinterest",
+          "integration_id": "direct-api"
+        }
+      ],
+      "enabled": true,
+      "status": "awaiting_approval",
+      "published_platforms": [],
+      "postiz_results": [],
+      "video_made_with_ai": false,
+      "created_by": "open-social-scheduler",
+      "blocked_reason": "approval required for 2026-W36",
+      "cycle_key": "2026-09-02T12:00",
+      "cycle_hour": 12,
+      "cycle_index": 3,
+      "cycle_position": 3,
+      "production_mode": "photos-only-10-every-4h",
+      "production_status": "PHOTO READY",
+      "publication_ready": true,
+      "output_type": "static-photo",
+      "no_video": true,
+      "no_audio": true,
+      "no_reel": true,
+      "people_footer_required": true,
+      "visual_mode": "rmp-original-shopify-theme-inspired-mockup",
+      "shopify_theme_required": true,
+      "shopify_theme_store_only": true,
+      "copy_shopify_images": false,
+      "generated_original_mockup": true,
+      "theme_name": "Prestige",
+      "theme_source_url": "https://themes.shopify.com/themes/prestige/presets/prestige?locale=it",
+      "theme_description_it": "Prestige è progettato per brand premium e di fascia alta, con oltre 30 sezioni configurabili, forte valorizzazione del prodotto, prestazioni rapide e attenzione all'accessibilità.",
+      "layout_profile": "premium",
+      "design_reference_rule": "Use only the official Shopify Theme Store as inspiration. Never download, copy, crop, trace or republish theme screenshots or theme imagery. Generate an original ecommerce mockup from the described design principles.",
+      "search_query_override": "",
+      "search_queries": [],
+      "visual_asset_urls": [
+        "https://themes.shopify.com/themes/prestige/presets/prestige?locale=it"
+      ],
+      "visual_source": "shopify-theme-store-description-only",
+      "visual_transform": "original-generated-ecommerce-mockup-plus-presenter-footer",
+      "visual_count": 1,
+      "fresh_visual_count": 1,
+      "reused_visual_count": 0
+    },
+    {
+      "id": "real-media-pro-2026-09-02-c12-04-09-shopify-servizio",
+      "client_id": "real-media-pro",
+      "client_name": "Real Media Pro",
+      "category": "convert",
+      "editorial_role": "convert",
+      "campaign": "Real Media Pro · Dalla visibilità alla crescita",
+      "format": "photo",
+      "title": "SITI WEB CHE VALORIZZANO IL BRAND",
+      "caption": "SITI WEB CHE VALORIZZANO IL BRAND.\n\nAllure unisce semplicità, impatto visivo, scoperta dei prodotti e una struttura pensata per sostenere la vendita. È un riferimento utile per capire quanto design e percorso commerciale debbano lavorare insieme.\n\nNoi partiamo da questi principi per creare un sito originale, coerente con il brand e costruito attorno ai suoi prodotti e clienti.\n\nNessuna immagine Shopify viene copiata.\n\nAnalisi strategica gratuita: 371 370 8294",
+      "hashtags": [],
+      "voiceover": "Real Media Pro realizza siti e-commerce e siti aziendali in Shopify collegati a campagne, WhatsApp, moduli e tracciamento. Richiedi un'analisi strategica gratuita.",
+      "slides": [
+        "SHOPIFY",
+        "MOBILE FIRST",
+        "PAGINE CHIARE",
+        "WHATSAPP / FORM",
+        "LANDING ADV",
+        "E-COMMERCE",
+        "TRACKING",
+        "PARLIAMONE"
+      ],
+      "visuals": [],
+      "cta": "Richiedi un'analisi strategica gratuita",
+      "media": "publisher/media/generated/real-media-pro/2026-09-02/cycle-12/04-09-02-c12-04-09-shopify-servizio.jpg",
+      "scheduled_at": "2026-09-02T12:48:00+02:00",
+      "territory": "Rivoli",
+      "property_focus": {},
+      "approval_key": "2026-W36",
+      "platforms": [
+        {
+          "platform": "facebook",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "tiktok",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "linkedin",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "youtube",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "pinterest",
+          "integration_id": "direct-api"
+        }
+      ],
+      "enabled": true,
+      "status": "awaiting_approval",
+      "published_platforms": [],
+      "postiz_results": [],
+      "video_made_with_ai": false,
+      "created_by": "open-social-scheduler",
+      "blocked_reason": "approval required for 2026-W36",
+      "cycle_key": "2026-09-02T12:00",
+      "cycle_hour": 12,
+      "cycle_index": 3,
+      "cycle_position": 4,
+      "production_mode": "photos-only-10-every-4h",
+      "production_status": "PHOTO READY",
+      "publication_ready": true,
+      "output_type": "static-photo",
+      "no_video": true,
+      "no_audio": true,
+      "no_reel": true,
+      "people_footer_required": true,
+      "visual_mode": "rmp-original-shopify-theme-inspired-mockup",
+      "shopify_theme_required": true,
+      "shopify_theme_store_only": true,
+      "copy_shopify_images": false,
+      "generated_original_mockup": true,
+      "theme_name": "Allure",
+      "theme_source_url": "https://themes.shopify.com/themes/allure/presets/allure?locale=it",
+      "theme_description_it": "Allure combina raffinatezza e semplicità con una vetrina moderna, dinamica e orientata alla scoperta dei prodotti, alla visibilità del catalogo e a pagine progettate per sostenere la vendita.",
+      "layout_profile": "brand_story",
+      "design_reference_rule": "Use only the official Shopify Theme Store as inspiration. Never download, copy, crop, trace or republish theme screenshots or theme imagery. Generate an original ecommerce mockup from the described design principles.",
+      "search_query_override": "",
+      "search_queries": [],
+      "visual_asset_urls": [
+        "https://themes.shopify.com/themes/allure/presets/allure?locale=it"
+      ],
+      "visual_source": "shopify-theme-store-description-only",
+      "visual_transform": "original-generated-ecommerce-mockup-plus-presenter-footer",
+      "visual_count": 1,
+      "fresh_visual_count": 1,
+      "reused_visual_count": 0
+    },
+    {
+      "id": "real-media-pro-2026-09-02-c12-05-10-shopify-che-converte",
+      "client_id": "real-media-pro",
+      "client_name": "Real Media Pro",
+      "category": "attract",
+      "editorial_role": "attract",
+      "campaign": "Real Media Pro · Dalla visibilità alla crescita",
+      "format": "photo",
+      "title": "SEZIONI MODULARI PER VENDERE MEGLIO",
+      "caption": "SEZIONI MODULARI PER VENDERE MEGLIO.\n\nVivid mette insieme struttura pulita, personalizzazione, ricerca, filtri e sezioni dedicate alla scoperta dei prodotti.\n\nPer Real Media Pro il punto non è replicare il tema: è utilizzare queste logiche per progettare un'esperienza originale che aiuti l'utente a trovare, capire e scegliere più facilmente.\n\nNessuna immagine del Theme Store viene riutilizzata.\n\nAnalisi strategica gratuita: 371 370 8294",
+      "hashtags": [],
+      "voiceover": "Un e-commerce che performa collega prodotto, offerta, pagina, fiducia, checkout e traffico. Real Media Pro parte dal percorso di acquisto, non dal solo layout. Richiedi un'analisi strategica gratuita.",
+      "slides": [
+        "IL TUO E-COMMERCE È BELLO?",
+        "MA CONVERTE?",
+        "PRODOTTO + OFFERTA",
+        "PAGINA PRODOTTO",
+        "PROVA SOCIALE",
+        "CHECKOUT SENZA ATTRITO",
+        "TRAFFICO QUALIFICATO",
+        "RICHIEDI ANALISI"
+      ],
+      "visuals": [],
+      "cta": "Richiedi un'analisi strategica gratuita",
+      "media": "publisher/media/generated/real-media-pro/2026-09-02/cycle-12/05-09-02-c12-05-10-shopify-che-converte.jpg",
+      "scheduled_at": "2026-09-02T12:54:00+02:00",
+      "territory": "Rivoli",
+      "property_focus": {},
+      "approval_key": "2026-W36",
+      "platforms": [
+        {
+          "platform": "facebook",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "tiktok",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "linkedin",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "youtube",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "pinterest",
+          "integration_id": "direct-api"
+        }
+      ],
+      "enabled": true,
+      "status": "awaiting_approval",
+      "published_platforms": [],
+      "postiz_results": [],
+      "video_made_with_ai": false,
+      "created_by": "open-social-scheduler",
+      "blocked_reason": "approval required for 2026-W36",
+      "cycle_key": "2026-09-02T12:00",
+      "cycle_hour": 12,
+      "cycle_index": 3,
+      "cycle_position": 5,
+      "production_mode": "photos-only-10-every-4h",
+      "production_status": "PHOTO READY",
+      "publication_ready": true,
+      "output_type": "static-photo",
+      "no_video": true,
+      "no_audio": true,
+      "no_reel": true,
+      "people_footer_required": true,
+      "visual_mode": "rmp-original-shopify-theme-inspired-mockup",
+      "shopify_theme_required": true,
+      "shopify_theme_store_only": true,
+      "copy_shopify_images": false,
+      "generated_original_mockup": true,
+      "theme_name": "Vivid",
+      "theme_source_url": "https://themes.shopify.com/themes/vivid/presets/vivid?locale=it",
+      "theme_description_it": "Vivid combina design moderno, personalizzazione, funzioni avanzate per merchandising e scoperta del prodotto, ricerca e filtri, con una struttura pulita pensata per adattarsi al brand.",
+      "layout_profile": "catalog_discovery",
+      "design_reference_rule": "Use only the official Shopify Theme Store as inspiration. Never download, copy, crop, trace or republish theme screenshots or theme imagery. Generate an original ecommerce mockup from the described design principles.",
+      "search_query_override": "",
+      "search_queries": [],
+      "visual_asset_urls": [
+        "https://themes.shopify.com/themes/vivid/presets/vivid?locale=it"
+      ],
+      "visual_source": "shopify-theme-store-description-only",
+      "visual_transform": "original-generated-ecommerce-mockup-plus-presenter-footer",
+      "visual_count": 1,
+      "fresh_visual_count": 1,
+      "reused_visual_count": 0
     }
   ],
-  "updated_at": "2026-09-02T08:01:30+00:00",
-  "current_cycle": "2026-09-02T08:00",
+  "updated_at": "2026-09-02T13:31:53+00:00",
+  "current_cycle": "2026-09-02T12:00",
   "visual_policy": "10 different images per content; F1 priority reels change image every 2 seconds; prefer unseen history",
   "f1_reel_policy": {
     "reels_per_cycle": 2,
