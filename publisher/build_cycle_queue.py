@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build exactly 6 static-photo contents per 4-hour cycle: 3 per brand.
+"""Build exactly 10 static-photo publications per 4-hour cycle: 5 per brand.
 
 NO REELS / NO MP4. Every current-cycle job is a publication-ready photo post
 with a caption. Queue history is preserved for roughly 14 days by default.
@@ -21,13 +21,15 @@ QUEUE = ROOT / "publisher" / "queue.json"
 ROME = ZoneInfo("Europe/Rome")
 CYCLE_HOURS = (0, 4, 8, 12, 16, 20)
 BRANDS = ("f1-immobiliare", "real-media-pro")
+POSTS_PER_BRAND = 5
+TOTAL_POSTS = POSTS_PER_BRAND * len(BRANDS)
 HISTORY_DAYS = max(1, int(os.getenv("SOCIAL_HISTORY_DAYS", "14") or 14))
-# 6 posts/cycle * 6 cycles/day * 14 days = 504 jobs.
-QUEUE_HISTORY_LIMIT = max(48, int(os.getenv("SOCIAL_HISTORY_LIMIT", str(6 * len(CYCLE_HOURS) * HISTORY_DAYS)) or 504))
+# 10 posts/cycle * 6 cycles/day * 14 days = 840 jobs.
+QUEUE_HISTORY_LIMIT = max(120, int(os.getenv("SOCIAL_HISTORY_LIMIT", str(TOTAL_POSTS * len(CYCLE_HOURS) * HISTORY_DAYS)) or 840))
 
 
 def load(path: Path) -> dict:
-    return json.loads(path.read_text(encoding="utf-8")) if path.exists() else {"version": 8, "jobs": []}
+    return json.loads(path.read_text(encoding="utf-8")) if path.exists() else {"version": 10, "jobs": []}
 
 
 def save(path: Path, data: dict) -> None:
@@ -57,11 +59,11 @@ def photo_media(job: dict, target: date, hour: int, position: int) -> str:
     return f"{base_dir}/{position:02d}-{safe}.jpg"
 
 
-def pick_three(candidates: list[dict], idx: int) -> list[dict]:
-    if len(candidates) < 3:
-        raise RuntimeError("Daily bank must expose at least 3 contents per brand")
-    start = (idx * 3) % len(candidates)
-    selected = [candidates[(start + n) % len(candidates)] for n in range(3)]
+def pick_five(candidates: list[dict], idx: int) -> list[dict]:
+    if len(candidates) < POSTS_PER_BRAND:
+        raise RuntimeError(f"Daily bank must expose at least {POSTS_PER_BRAND} contents per brand")
+    start = (idx * POSTS_PER_BRAND) % len(candidates)
+    selected = [candidates[(start + n) % len(candidates)] for n in range(POSTS_PER_BRAND)]
     return [copy.deepcopy(j) for j in selected]
 
 
@@ -73,7 +75,7 @@ def build_current_cycle() -> int:
     cycle_key = f"{target.isoformat()}T{hour:02d}:00"
 
     queue = load(QUEUE)
-    queue["version"] = max(int(queue.get("version", 1)), 8)
+    queue["version"] = max(int(queue.get("version", 1)), 10)
     jobs = [j for j in list(queue.get("jobs", [])) if str(j.get("cycle_key") or "") != cycle_key]
 
     if os.getenv("SOCIAL_RESET_LEGACY", "0").strip() == "1":
@@ -86,9 +88,9 @@ def build_current_cycle() -> int:
         client = client_map.get(cid)
         if not client or not client.get("active", False):
             raise RuntimeError(f"Required brand is not active: {cid}")
-        selected = pick_three(base.build_for_client(client, target), cycle_idx)
+        selected = pick_five(base.build_for_client(client, target), cycle_idx)
         for local_pos, job in enumerate(selected, start=1):
-            minute = (0 if cid == "f1-immobiliare" else 30) + (local_pos - 1) * 8
+            minute = (0 if cid == "f1-immobiliare" else 30) + (local_pos - 1) * 6
             scheduled = datetime(target.year, target.month, target.day, hour, min(minute, 59), tzinfo=ROME)
             old_id = str(job.get("id") or f"content-{local_pos}")
             tail = old_id.split(f"{target.isoformat()}-", 1)[-1]
@@ -98,7 +100,7 @@ def build_current_cycle() -> int:
             job["cycle_hour"] = hour
             job["cycle_index"] = cycle_idx
             job["cycle_position"] = local_pos
-            job["production_mode"] = "photos-only-6-every-4h"
+            job["production_mode"] = "photos-only-10-every-4h"
             job["production_status"] = "PHOTO ONLY"
             job["format"] = "photo"
             job["media"] = photo_media(job, target, hour, local_pos)
@@ -107,8 +109,8 @@ def build_current_cycle() -> int:
                 job.pop(key, None)
             added.append(job)
 
-    if len(added) != 6:
-        raise RuntimeError(f"Cycle must contain exactly 6 photo posts, got {len(added)}")
+    if len(added) != TOTAL_POSTS:
+        raise RuntimeError(f"Cycle must contain exactly {TOTAL_POSTS} photo posts, got {len(added)}")
     if any(str(j.get("format")) != "photo" for j in added):
         raise RuntimeError("PHOTO-ONLY policy violation")
 
@@ -116,13 +118,13 @@ def build_current_cycle() -> int:
     base.reconcile(queue, client_map)
     removed = base.cap_queue(queue, QUEUE_HISTORY_LIMIT)
     queue["updated_at"] = datetime.now().astimezone().isoformat(timespec="seconds")
-    queue["updated_by"] = "Photo-only 4-hour cycle builder · 14-day history"
+    queue["updated_by"] = "10-photo 4-hour cycle builder · 14-day history"
     queue["current_cycle"] = cycle_key
     queue["history_days"] = HISTORY_DAYS
     queue["history_limit"] = QUEUE_HISTORY_LIMIT
-    queue["output_policy"] = "STATIC PHOTOS ONLY - JPG/PNG - NO REELS - NO MP4"
+    queue["output_policy"] = "10 STATIC PHOTOS - 5 F1 + 5 RMP - JPG/PNG - NO REELS - NO MP4"
     save(QUEUE, queue)
-    print(f"Built cycle {cycle_key}: 6 static photo posts, 3 F1 + 3 RMP; history={len(queue['jobs'])}/{QUEUE_HISTORY_LIMIT}, removed={removed}")
+    print(f"Built cycle {cycle_key}: {TOTAL_POSTS} static photo posts, 5 F1 + 5 RMP; history={len(queue['jobs'])}/{QUEUE_HISTORY_LIMIT}, removed={removed}")
     return 0
 
 
@@ -134,7 +136,7 @@ def reconcile_only() -> int:
     queue["updated_at"] = datetime.now().astimezone().isoformat(timespec="seconds")
     queue["history_days"] = HISTORY_DAYS
     queue["history_limit"] = QUEUE_HISTORY_LIMIT
-    queue["output_policy"] = "STATIC PHOTOS ONLY - JPG/PNG - NO REELS - NO MP4"
+    queue["output_policy"] = "10 STATIC PHOTOS - 5 F1 + 5 RMP - JPG/PNG - NO REELS - NO MP4"
     save(QUEUE, queue)
     print(f"Photo-only cycle queue reconciled; history={len(queue.get('jobs', []))}/{QUEUE_HISTORY_LIMIT}, removed={removed}")
     return 0
