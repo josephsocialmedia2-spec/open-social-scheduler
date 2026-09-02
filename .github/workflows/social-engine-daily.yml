@@ -1,13 +1,231 @@
-name: Open Social Engine - MAINTENANCE
+name: Open Social Engine - 10 STATIC PUBLICATIONS - 5 F1 + 5 RMP
 
 on:
   workflow_dispatch:
+    inputs:
+      date:
+        description: 'Optional local date YYYY-MM-DD for controlled test/backfill'
+        required: false
+        type: string
+  schedule:
+    - cron: '0 * * * *'
+  push:
+    paths:
+      - '.github/workflows/social-engine-daily.yml'
+      - 'publisher/build_cycle_queue.py'
+      - 'publisher/apply_photo_only.py'
+      - 'publisher/render_photos_only.py'
+      - 'publisher/requirements.txt'
+      - 'publisher/image_history.json'
+      - 'publisher/clients/**'
+      - 'publisher/assets/**'
+      - 'publisher/manual_images/**'
 
 permissions:
-  contents: read
+  contents: write
+  issues: write
+
+concurrency:
+  group: open-social-engine-10-static-publications
+  cancel-in-progress: true
 
 jobs:
-  maintenance:
+  rome-gate:
     runs-on: ubuntu-latest
+    outputs:
+      run: ${{ steps.check.outputs.run }}
+      cycle_hour: ${{ steps.check.outputs.cycle_hour }}
     steps:
-      - run: echo "Publication engine temporarily paused while the new 5 F1 + 5 RMP policy is installed."
+      - id: check
+        shell: bash
+        run: |
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import os
+          from datetime import datetime
+          from zoneinfo import ZoneInfo
+          now = datetime.now(ZoneInfo('Europe/Rome'))
+          event = os.environ.get('GITHUB_EVENT_NAME', '')
+          hours = (0, 4, 8, 12, 16, 20)
+          run = event != 'schedule' or now.hour in hours
+          hour = now.hour if now.hour in hours else max(h for h in hours if h <= now.hour)
+          print(f"run={'true' if run else 'false'}")
+          print(f"cycle_hour={hour}")
+          PY
+
+  build-publications:
+    needs: rome-gate
+    if: needs.rome-gate.outputs.run == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    env:
+      SOCIAL_DATE: ${{ inputs.date }}
+      SOCIAL_CYCLE_HOUR: ${{ needs.rome-gate.outputs.cycle_hour }}
+      SOCIAL_RESET_LEGACY: '1'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          ref: main
+
+      - name: Python 3.12
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: publisher/requirements.txt
+
+      - name: Install dependencies
+        run: |
+          set -euxo pipefail
+          sudo apt-get update
+          sudo apt-get install -y fonts-dejavu-core zip
+          python -m pip install --disable-pip-version-check -r publisher/requirements.txt
+
+      - name: Validate publication scripts
+        run: |
+          python -m py_compile publisher/build_cycle_queue.py publisher/apply_photo_only.py publisher/render_photos_only.py
+
+      - name: Clear old generated media
+        shell: bash
+        run: |
+          rm -rf publisher/media/generated
+          mkdir -p publisher/media/generated
+
+      - name: Build exactly 10 static publications
+        run: python publisher/build_cycle_queue.py
+
+      - name: Apply approved 5 F1 + 5 RMP policy
+        run: python publisher/apply_photo_only.py
+
+      - name: Render 10 JPG publications
+        run: python publisher/render_photos_only.py
+
+      - name: Reconcile 14-day queue
+        run: python publisher/build_cycle_queue.py --reconcile-only
+
+      - name: Verify publication policy
+        shell: bash
+        run: |
+          set -euxo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from urllib.parse import urlsplit
+
+          q=json.load(open('publisher/queue.json',encoding='utf-8'))
+          key=q.get('current_cycle')
+          jobs=[j for j in q.get('jobs',[]) if j.get('cycle_key')==key]
+          assert len(jobs)==10, len(jobs)
+          f1=[j for j in jobs if j.get('client_id')=='f1-immobiliare']
+          rmp=[j for j in jobs if j.get('client_id')=='real-media-pro']
+          assert len(f1)==5, len(f1)
+          assert len(rmp)==5, len(rmp)
+          assert all(j.get('format')=='photo' for j in jobs)
+          assert all(j.get('no_video') is True for j in jobs)
+          assert all(j.get('no_audio') is True for j in jobs)
+          assert all(j.get('people_footer_required') is True for j in jobs)
+          assert all(str(j.get('caption') or '').strip() for j in jobs)
+
+          allowed_territorial={
+              '#ValleDiSusa','#Avigliana','#Susa','#Condove','#Almese','#Bussoleno',
+              '#SantAmbrogioDiTorino','#VillarDora','#Caprie','#BorgoneSusa','#SanGiorio',
+              '#VillarFocchiardo','#Oulx','#Bardonecchia','#SauzeDOulx','#CesanaTorinese',
+              '#Chiomonte','#Vaie','#ChiusaDiSanMichele'
+          }
+          for j in f1:
+              tags=list(j.get('hashtags') or [])
+              assert tags, j.get('id')
+              assert set(tags) <= allowed_territorial, (j.get('id'), tags)
+              assert j.get('local_visual_required') is True
+              assert j.get('reject_generic_foreign_property_visuals') is True
+
+          for j in rmp:
+              assert list(j.get('hashtags') or []) == [], j.get('id')
+              assert '#' not in str(j.get('caption') or ''), j.get('id')
+              assert j.get('shopify_theme_store_only') is True
+              assert j.get('copy_shopify_images') is False
+              assert j.get('generated_original_mockup') is True
+              assert urlsplit(str(j.get('theme_source_url') or '')).netloc.lower() == 'themes.shopify.com'
+              assert j.get('visual_source') == 'shopify-theme-store-description-only'
+
+          for j in jobs:
+              rel=str(j.get('media') or '')
+              assert rel.lower().endswith(('.jpg','.jpeg','.png')), rel
+              p=Path(rel)
+              assert p.exists() and p.stat().st_size>20000, rel
+          assert not list(Path('publisher/media/generated').rglob('*.mp4'))
+          assert not list(Path('publisher/media/generated').rglob('*.mp3'))
+          print('VERIFIED: 10 STATIC PUBLICATIONS. 5 F1 + 5 RMP. TERRITORIAL F1 HASHTAGS ONLY. RMP ZERO HASHTAGS. ZERO COPIED SHOPIFY IMAGES.')
+          PY
+
+      - name: Upload publication package
+        uses: actions/upload-artifact@v4
+        with:
+          name: social-publications-${{ github.run_id }}
+          path: publisher/media/generated
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Persist queue and image memory
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          for FILE in publisher/queue.json publisher/image_history.json; do
+            SHA=$(gh api "repos/${GITHUB_REPOSITORY}/contents/${FILE}?ref=main" --jq '.sha' 2>/dev/null || true)
+            python - "$FILE" "$SHA" <<'PY'
+          import base64, json, sys
+          file, sha = sys.argv[1], sys.argv[2]
+          payload={'message':f'Persist 10-publication state: {file}','content':base64.b64encode(open(file,'rb').read()).decode(),'branch':'main'}
+          if sha: payload['sha']=sha
+          json.dump(payload,open('/tmp/payload.json','w'))
+          PY
+            gh api "repos/${GITHUB_REPOSITORY}/contents/${FILE}" --method PUT --input /tmp/payload.json >/dev/null
+          done
+
+      - name: Replace latest release with ready-to-publish JPGs
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euxo pipefail
+          rm -rf /tmp/social-release
+          mkdir -p /tmp/social-release
+          find publisher/media/generated -type f \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' \) -print0 | while IFS= read -r -d '' file; do
+            rel="${file#publisher/media/generated/}"
+            safe="${rel//\//__}"
+            cp "$file" "/tmp/social-release/$safe"
+          done
+          for client in f1-immobiliare real-media-pro; do
+            if [ -d "publisher/media/generated/$client" ]; then
+              (cd "publisher/media/generated/$client" && zip -qr "/tmp/social-release/${client}__5_PUBBLICAZIONI.zip" . -i '*.jpg' '*.jpeg' '*.png')
+            fi
+          done
+          cp publisher/queue.json /tmp/social-release/queue.json
+          gh release delete social-preview-latest --yes --cleanup-tag >/dev/null 2>&1 || true
+          gh release create social-preview-latest /tmp/social-release/* \
+            --title "10 PUBBLICAZIONI PRONTE - 5 F1 + 5 REAL MEDIA PRO" \
+            --notes "10 grafiche statiche pronte: 5 F1 Immobiliare + 5 Real Media Pro. F1: fonti locali Valle di Susa e soli hashtag territoriali. RMP: ispirazione esclusiva Shopify Theme Store, mockup originali, nessuna immagine Shopify copiata, nessun hashtag. Tutte le grafiche includono la fascia Francesca + Joseph. Run ${GITHUB_RUN_ID}."
+
+      - name: Notify publication results
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const title='[PUBBLICAZIONI] - 5 F1 + 5 RMP';
+            const body=[
+              '@josephsocialmedia2-spec pacchetto completato.',
+              '',
+              '**10 PUBBLICAZIONI PRONTE:** 5 F1 Immobiliare + 5 Real Media Pro.',
+              '**F1:** immagini locali Valle di Susa + soli hashtag territoriali + fascia Francesca/Joseph.',
+              '**RMP:** solo Shopify Theme Store come riferimento; mockup originali; nessuna immagine del tema copiata; zero hashtag + fascia Francesca/Joseph.',
+              '',
+              'Controllo + caption: https://josephsocialmedia2-spec.github.io/open-social-scheduler/monday-control.html',
+              'Download rapido: https://github.com/josephsocialmedia2-spec/open-social-scheduler/releases/tag/social-preview-latest',
+              'Run: https://github.com/' + context.repo.owner + '/' + context.repo.repo + '/actions/runs/' + context.runId
+            ].join('\n');
+            const issues=await github.paginate(github.rest.issues.listForRepo,{owner:context.repo.owner,repo:context.repo.repo,state:'all',per_page:100});
+            let issue=issues.find(i=>i.title===title);
+            if(!issue) issue=(await github.rest.issues.create({owner:context.repo.owner,repo:context.repo.repo,title,body,assignees:['josephsocialmedia2-spec']})).data;
+            else await github.rest.issues.createComment({owner:context.repo.owner,repo:context.repo.repo,issue_number:issue.number,body});
