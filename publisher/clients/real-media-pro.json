@@ -4,7 +4,7 @@
   "active": true,
   "timezone": "Europe/Rome",
   "brand": {
-    "status": "performance-agency-v5-canva",
+    "status": "performance-agency-v5-shopify-direct",
     "background": "#07111F",
     "background_alt": "#0D1B2D",
     "primary": "#F5F8FC",
@@ -20,8 +20,8 @@
     "carousel": {"width": 1080, "height": 1350}
   },
   "visual_pipeline": {
-    "preferred_provider": "canva",
-    "asset_provider": "pixabay",
+    "preferred_provider": "shopify_storefront_transform",
+    "asset_provider": "shopify_public_sources",
     "client_assets_first": true,
     "legacy_python_renderer": "technical_fallback_only",
     "legacy_python_output_publishable": false,
@@ -45,13 +45,12 @@
       "https://pixabay.com/images/search/laptop%20e-commerce/"
     ],
     "rules": [
-      "final_visuals_must_use_canva_or_client_supplied_assets",
-      "pixabay_assets_must_be_relevant_to_the_content",
+      "real_media_pro_public_posts_must_prefer_configured_shopify_storefront_assets",
+      "shopify_assets_must_be_transformed_into_original_real_media_pro_compositions",
+      "do_not_silently_replace_required_shopify_assets_with_stock_photos",
       "no_fake_metrics",
-      "no_generic_powerpoint_layout",
       "mobile_readable_typography",
-      "keep_reel_lower_safe_area_clear",
-      "github_handles_queue_voice_approval_and_distribution_not_final_art_direction"
+      "github_handles_queue_voice_approval_and_distribution"
     ]
   },
   "campaign": {
@@ -74,13 +73,10 @@
       "https://www.shopify.com/it/editions/spring2026"
     ],
     "shopify_public_sources": [
-      "https://f1immobiliare.com/pages/partner-pubblicitario-e-tecnologico",
-      "https://f1immobiliare.com/pages/strategia-digitale",
       "https://f1immobiliare.com/pages/strategia-digitale-1",
-      "https://f1immobiliare.com/products/gestione-social-standard?variant=54321158521171",
-      "https://f1immobiliare.com/products/gestione-social-pro?variant=54321158553939",
-      "https://f1immobiliare.com/products/volantino-digitale?variant=54321156817235",
-      "https://f1immobiliare.com/products/presentazione-aziendale?variant=54321157603667"
+      "https://f1immobiliare.com/pages/f1-immobiliare-real-media-pro",
+      "https://f1immobiliare.com/pages/partner-pubblicitario-e-tecnologico",
+      "https://f1immobiliare.com/pages/strategia-digitale"
     ],
     "creative_rules": {
       "simple_first": true,
@@ -97,8 +93,8 @@
       "subtitles": false,
       "single_hook_title_only": true,
       "manual_publish_only": true,
-      "final_visual_provider": "canva",
-      "pixabay_for_reusable_broll_and_photos": true,
+      "final_visual_provider": "shopify_storefront_transform",
+      "pixabay_for_reusable_broll_and_photos": false,
       "reject_legacy_python_visuals_for_publication": true
     }
   },
