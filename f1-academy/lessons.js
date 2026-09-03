@@ -1,86 +1,281 @@
 window.F1_LESSONS = [
 {
- id:'start-shift',code:'F1-OG-000',stage:'INIZIO TURNO',title:'Avvia la giornata',role:'F1 Territory Scout',trigger:'Quando inizi il turno.',doneWhen:'Sei pronto a uscire con missione, zona e strumenti assegnati.',next:'prepare-zone',
- commands:['Apri TODAY’S MISSION.','Leggi: COMUNE, MICROZONA, VIA, CIVICI, OBIETTIVO.','Controlla i follow-up assegnati per oggi.','Apri lo storico della microzona.','Prendi scheda A5, penna, telefono e materiale F1 previsto.','Premi AVVIA MISSIONE.'],
- branches:[['Missione incompleta','NON USCIRE. Chiedi al responsabile di completarla.'],['Follow-up urgente assegnato','Eseguilo prima dell’uscita se la dashboard lo mette in priorità.']],
- record:['Ora inizio turno','Missione aperta','Operatore'],stop:['Non scegliere una zona diversa da quella assegnata.'],
- script:'Apri Today’s Mission. Leggi comune, microzona, via, civici e obiettivo. Controlla i follow-up assegnati. Apri lo storico della microzona. Prendi scheda A5, penna, telefono e materiale F1. Quando tutto è pronto, avvia la missione.'
+ id:'start-shift',code:'F1-OG-000',stage:'INIZIO GIORNATA',title:'Inizia il lavoro',
+ role:'Tu, stagista o funzionario F1 che oggi lavora sul territorio.',
+ trigger:'Quando arrivi in agenzia e inizi la giornata.',
+ doneWhen:'Hai letto dove devi andare, cosa devi fare e cosa devi portare.',next:'prepare-zone',
+ commands:[
+  {text:'Apri MISSIONE DI OGGI.',action:'mission'},
+  {text:'Leggi il PAESE assegnato.'},
+  {text:'Leggi la ZONA PRECISA assegnata. È la piccola parte di paese che devi lavorare oggi.'},
+  {text:'Leggi la VIA e i NUMERI DEI PALAZZI da controllare.'},
+  {text:'Leggi l’OBIETTIVO. Ti dice che cosa devi fare in quella zona.'},
+  {text:'Guarda se ci sono PERSONE DA RICHIAMARE OGGI. Sono persone con cui F1 ha già parlato e che hanno accettato un nuovo contatto.'},
+  {text:'Prendi scheda A5, penna, telefono e il materiale F1 indicato nella missione.'},
+  {text:'Quando hai tutto, premi AVVIA MISSIONE.',action:'start-mission'}
+ ],
+ branches:[
+  ['Manca il paese, la via, i numeri dei palazzi o l’obiettivo','NON USCIRE. Chiama il responsabile e chiedi di completare la missione.'],
+  ['C’è una persona da richiamare prima dell’uscita','Apri la sua scheda e segui la procedura PROGRAMMA O ESEGUI UN RICHIAMO.']
+ ],
+ record:['Ora in cui inizi','Tuo nome','Missione aperta: SÌ'],
+ stop:['Non scegliere da solo un’altra zona.','Non inventare un obiettivo diverso da quello scritto.'],
+ script:'Apri la missione di oggi. Leggi paese, zona, via, numeri dei palazzi e obiettivo. Controlla se devi richiamare qualcuno. Prendi il materiale indicato. Quando hai tutto, avvia la missione.'
 },
 {
- id:'prepare-zone',code:'F1-OG-010',stage:'PREPARAZIONE',title:'Prepara la zona',role:'F1 Territory Scout',trigger:'Hai aperto la missione del giorno.',doneWhen:'Sai esattamente da quale civico partire e quali informazioni sono già note.',next:'work-civic',
- commands:['Apri la mappa della microzona.','Individua il primo civico assegnato.','Leggi SOLO le informazioni già registrate su via/civico/palazzo.','Segna eventuali follow-up o immobili già noti presenti lungo il percorso.','Vai fisicamente al primo civico.'],
- branches:[['Civico già completato oggi','Passa al civico successivo.'],['Indirizzo errato o inesistente','Segna ANOMALIA INDIRIZZO e passa al successivo.']],
- record:['Via','Civici da lavorare','Ora ingresso zona'],stop:['Non dedurre proprietari, vendite o intenzioni da dati incompleti.'],
- script:'Apri la mappa. Individua il primo civico assegnato. Leggi solo ciò che F1 conosce già. Segna eventuali follow-up presenti sulla via. Vai al primo civico.'
+ id:'prepare-zone',code:'F1-OG-010',stage:'PRIMA DI USCIRE',title:'Prepara la zona',
+ role:'Tu, prima di andare sul posto.',
+ trigger:'Hai aperto la missione di oggi.',
+ doneWhen:'Sai da quale palazzo iniziare e che cosa F1 sa già di quella via.',next:'work-civic',
+ commands:[
+  {text:'Apri la MAPPA della zona assegnata.'},
+  {text:'Trova la VIA scritta nella missione.'},
+  {text:'Trova il PRIMO NUMERO DEL PALAZZO da cui devi iniziare.'},
+  {text:'Apri lo STORICO DELLA ZONA. È l’elenco di ciò che F1 ha già registrato su quella via e sui palazzi.'},
+  {text:'Leggi solo ciò che è già scritto. Non aggiungere supposizioni.'},
+  {text:'Vai fisicamente al primo numero del palazzo indicato.'}
+ ],
+ branches:[
+  ['Quel numero del palazzo è già stato lavorato oggi','Vai al numero successivo scritto nella missione.'],
+  ['Il numero non esiste','Scrivi INDIRIZZO NON TROVATO e passa al numero successivo.']
+ ],
+ record:['Via','Numeri dei palazzi da lavorare','Ora in cui arrivi in zona'],
+ stop:['Non decidere che una casa è vuota, in vendita o abitata solo perché ti sembra così.'],
+ script:'Apri la mappa. Trova la via e il primo numero. Leggi quello che F1 sa già. Poi vai al primo palazzo.'
 },
 {
- id:'work-civic',code:'F1-OG-020',stage:'TERRITORIO',title:'Lavora un civico',role:'F1 Territory Scout',trigger:'Sei davanti a un civico assegnato.',doneWhen:'Il civico è lavorato e ogni informazione utile è stata classificata.',next:'work-civic',
- commands:['Conferma VIA e CIVICO.','Osserva SOLO elementi immobiliari visibili e pertinenti.','Se vedi un cartello VENDESI/AFFITTASI → apri F1-OG-100.','Se devi fare contatto al citofono → apri F1-OG-021.','Se avviene un contatto alla porta → apri F1-OG-022.','Se ricevi un’informazione → apri F1-OG-030.','Quando il civico è chiuso, passa al civico successivo.'],
- branches:[['Nessuno risponde','Segna NESSUN CONTATTO e continua.'],['Persona chiede di non essere disturbata','Chiudi immediatamente la conversazione.'],['Emergenza / situazione anomala','Interrompi la procedura e avvisa il responsabile.']],
- record:['Via','Civico','Tipo attività','Esito'],stop:['Non fotografare persone.','Non trasformare un’osservazione in una vendita presunta.'],
- script:'Conferma via e civico. Osserva gli elementi immobiliari pertinenti. Se trovi un cartello usa la procedura cartello. Se fai citofono usa la procedura citofono. Se ricevi un’informazione usa la procedura notizia. Chiudi il civico e passa al successivo.'
+ id:'work-civic',code:'F1-OG-020',stage:'SUL TERRITORIO',title:'Lavora un palazzo',
+ role:'Tu, mentre sei davanti a un numero della via assegnata.',
+ trigger:'Sei arrivato davanti a un palazzo scritto nella missione.',
+ doneWhen:'Hai fatto quello che era previsto e hai scritto l’esito.',next:'work-civic',
+ commands:[
+  {text:'Controlla che VIA e NUMERO DEL PALAZZO siano quelli scritti nella missione.'},
+  {text:'Guarda solo elementi immobiliari visibili: cartelli, numero del palazzo, ingresso, informazioni pubbliche.'},
+  {text:'Se vedi un cartello VENDESI o AFFITTASI, apri la procedura CARTELLO O ANNUNCIO.',target:'sign'},
+  {text:'Se la missione ti dice di usare il citofono, apri la procedura CITOFONO.',target:'intercom'},
+  {text:'Se parli con una persona alla porta, apri la procedura PORTA A PORTA.',target:'door'},
+  {text:'Se qualcuno ti dice qualcosa di utile su una casa o su una possibile vendita, apri la procedura SCRIVI UNA INFORMAZIONE.',target:'news'},
+  {text:'Quando hai finito, passa al numero del palazzo successivo.'}
+ ],
+ branches:[
+  ['Nessuno risponde','Scrivi NESSUN CONTATTO e continua.'],
+  ['Una persona dice che non vuole essere disturbata','Ringrazia. Chiudi subito. Non insistere.'],
+  ['Succede qualcosa che non è previsto','Fermati e chiama il responsabile.']
+ ],
+ record:['Via','Numero del palazzo','Cosa hai fatto','Risultato'],
+ stop:['Non fotografare persone.','Non scrivere che qualcuno vende se nessuno lo ha detto.'],
+ script:'Controlla via e numero. Guarda solo ciò che è visibile. Se trovi un cartello, usa la procedura cartello. Se usi il citofono, usa la procedura citofono. Se ricevi un’informazione, registrala. Poi passa al numero successivo.'
 },
 {
- id:'intercom',code:'F1-OG-021',stage:'TERRITORIO',title:'Citofono',role:'F1 Territory Scout',trigger:'La missione prevede contatto citofonico.',doneWhen:'Hai ottenuto una risposta oppure hai registrato nessun contatto.',next:'work-civic',
- commands:['Suona UNA volta al nominativo/campanello previsto dalla missione.','Quando rispondono dì: “Buongiorno, sono [NOME] di F1 Immobiliare.”','Dichiara SOLO il motivo reale indicato nella missione.','Chiedi: “Posso farle una domanda velocissima?”','Se dice SÌ, fai UNA domanda territoriale prevista.','Ascolta. Non interrompere.','Ringrazia e chiudi.','Registra l’esito.'],
- branches:[['Dice NO','Rispondi “Grazie, buona giornata.” STOP.'],['Dice “io sto pensando di vendere”','Classifica CONTATTO DIRETTO e apri F1-OG-030.'],['Indica un’altra persona','NON chiedere numeri privati. Chiedi solo di lasciare il riferimento F1 alla persona interessata.']],
- record:['Civico','Ora','Risposta sì/no','Informazione ricevuta','Fonte'],stop:['Non insistere dopo un NO.','Non dire di avere un acquirente se non è vero.','Non chiedere dati personali di terzi.'],
- script:'Suona una volta. Presentati con nome e F1 Immobiliare. Dichiara il motivo reale. Chiedi il permesso per una domanda velocissima. Fai una sola domanda. Ascolta. Ringrazia. Chiudi. Registra.'
+ id:'intercom',code:'F1-OG-021',stage:'SUL TERRITORIO',title:'Usa il citofono',
+ role:'Tu, quando la missione ti dice di suonare.',
+ trigger:'Sei davanti al palazzo e la missione prevede il citofono.',
+ doneWhen:'Hai parlato con qualcuno oppure hai scritto che nessuno ha risposto.',next:'work-civic',
+ commands:[
+  {text:'Suona UNA SOLA VOLTA al campanello indicato nella missione.'},
+  {text:'Se rispondono, dì: “Buongiorno, sono [TUO NOME] di F1 Immobiliare.”'},
+  {text:'Dì il motivo vero per cui stai lavorando in quella zona. Usa il motivo scritto nella missione.'},
+  {text:'Chiedi: “Posso farle una domanda velocissima?”'},
+  {text:'Se dice SÌ, fai UNA SOLA domanda scritta nella missione.'},
+  {text:'Ascolta la risposta senza interrompere.'},
+  {text:'Dì: “Grazie, buona giornata.”'},
+  {text:'Scrivi subito che cosa è successo.'}
+ ],
+ branches:[
+  ['Dice NO','Dì “Grazie, buona giornata.” e chiudi.'],
+  ['Dice direttamente che sta pensando di vendere','Apri SCRIVI UNA INFORMAZIONE.',target:'news'},
+  ['Ti parla di un’altra persona','Non chiedere il suo numero. Lascia solo il contatto F1 da riferire alla persona interessata.']
+ ],
+ record:['Via e numero','Ora','Ha risposto: SÌ/NO','Che cosa ha detto','Chi te lo ha detto'],
+ stop:['Non insistere dopo un NO.','Non dire che hai un acquirente se non è vero.','Non chiedere numeri privati di altre persone.'],
+ script:'Suona una volta. Presentati. Dì il motivo vero. Chiedi se puoi fare una domanda. Fai una sola domanda. Ascolta. Ringrazia. Scrivi l’esito.'
 },
 {
- id:'door',code:'F1-OG-022',stage:'TERRITORIO',title:'Porta a porta',role:'F1 Territory Scout',trigger:'La missione prevede porta a porta oppure una persona apre la porta durante il lavoro di zona.',doneWhen:'La conversazione è chiusa e l’esito registrato.',next:'work-civic',
- commands:['Mantieni distanza dalla porta.','Presentati: “[NOME], F1 Immobiliare.”','Dichiara il motivo reale della presenza in zona.','Fai UNA domanda prevista dalla missione.','Ascolta la risposta.','Se emerge interesse diretto, chiedi il permesso di far ricontattare la persona dal consulente F1.','Ringrazia e chiudi.','Registra subito dopo.'],
- branches:[['Non interessato','Ringrazia e chiudi.'],['Non ora','Chiedi SOLO se desidera essere ricontattato in futuro.'],['Interessato a valore/vendita','Apri F1-OG-030 e poi F1-OG-050.'],['Invito ad entrare','Non entrare salvo attività formalmente autorizzata e prevista.']],
- record:['Fonte diretta/indiretta','Nome se fornito volontariamente','Contatto se fornito volontariamente','Esito','Prossima azione'],stop:['Non fingere di essere un cliente.','Non raccogliere dati non necessari.','Non forzare una conversazione.'],
- script:'Mantieni distanza. Presentati. Dichiara il motivo reale. Fai una domanda. Ascolta. Se emerge interesse chiedi il permesso per il contatto del consulente. Ringrazia. Chiudi. Registra.'
+ id:'door',code:'F1-OG-022',stage:'SUL TERRITORIO',title:'Parla alla porta',
+ role:'Tu, quando una persona apre la porta mentre lavori nella zona.',
+ trigger:'La missione prevede porta a porta oppure una persona apre mentre sei sul posto.',
+ doneWhen:'La conversazione è finita e hai scritto l’esito.',next:'work-civic',
+ commands:[
+  {text:'Resta a una distanza normale dalla porta.'},
+  {text:'Dì: “Buongiorno, sono [TUO NOME] di F1 Immobiliare.”'},
+  {text:'Spiega in una frase il motivo vero per cui sei in quella zona.'},
+  {text:'Fai UNA SOLA domanda prevista dalla missione.'},
+  {text:'Ascolta la risposta.'},
+  {text:'Se la persona dice che potrebbe vendere o vuole sapere quanto vale casa, chiedi: “Posso farla ricontattare dal consulente F1 che si occupa di valutazioni e appuntamenti?”'},
+  {text:'Ringrazia e chiudi la conversazione.'},
+  {text:'Scrivi subito che cosa è successo.'}
+ ],
+ branches:[
+  ['Dice che non è interessata','Ringrazia e vai via.'],
+  ['Dice “non adesso”','Chiedi solo se vuole essere richiamata in futuro.'],
+  ['Dice che vuole vendere o conoscere il valore della casa','Prima scrivi l’informazione, poi passa la persona al consulente.',target:'news'},
+  ['Ti invita a entrare','Non entrare se la missione non prevede un appuntamento autorizzato.']
+ ],
+ record:['Chi ti ha parlato','Nome solo se lo dice volontariamente','Telefono solo se lo dà volontariamente','Che cosa ha detto','Cosa bisogna fare dopo'],
+ stop:['Non fingere di essere un cliente.','Non chiedere dati che non servono.','Non continuare se la persona vuole chiudere.'],
+ script:'Presentati. Spiega perché sei lì. Fai una domanda. Ascolta. Se la persona mostra interesse, chiedi il permesso per farla ricontattare. Ringrazia e scrivi tutto.'
 },
 {
- id:'news',code:'F1-OG-030',stage:'DATA CAPTURE',title:'Registra una notizia',role:'F1 Territory Scout',trigger:'Hai ricevuto o osservato un’informazione immobiliare utile.',doneWhen:'La notizia ha fonte, livello, attendibilità e prossima azione.',next:'work-civic',
- commands:['Scrivi COSA è stato detto/osservato senza interpretazioni.','Seleziona FONTE: osservazione / indiretta / diretta / documentata.','Assegna livello: N0 informazione; N1 segnale; N2 prospect; N3 prospect qualificato; N4 valutazione; N5 opportunità; N6 incarico.','Scrivi VIA e CIVICO se pertinenti.','Scrivi DATA e OPERATORE.','Definisci PROSSIMA AZIONE oppure NESSUNA AZIONE.','Salva.'],
- branches:[['Voce non verificata','Classifica N1.'],['Proprietario parla direttamente di possibile esigenza','Classifica almeno N2 e valuta F1-OG-050.'],['Chiede esplicitamente una valutazione','Classifica N4 e apri F1-OG-050.']],
- record:['Testo esatto informazione','Fonte','N0-N6','Attendibilità','Next action','Data'],stop:['Non scrivere “vende” se nessuno lo ha confermato.','Non trasformare un rumor in fatto.'],
- script:'Scrivi esattamente cosa sai. Seleziona la fonte. Assegna N0-N6. Inserisci via, civico, data e operatore. Definisci la prossima azione. Salva.'
+ id:'news',code:'F1-OG-030',stage:'SCRIVI QUELLO CHE HAI SAPUTO',title:'Scrivi una informazione',
+ role:'Tu, subito dopo aver visto o sentito qualcosa di utile.',
+ trigger:'Hai ricevuto una informazione su una casa, un proprietario o una possibile vendita.',
+ doneWhen:'Hai scritto cosa sai, chi te lo ha detto, dove e cosa bisogna fare dopo.',next:'work-civic',
+ commands:[
+  {text:'Scrivi con parole semplici ESATTAMENTE che cosa hai visto o che cosa ti è stato detto.'},
+  {text:'Scegli CHI TE LO HA DETTO: l’hai visto tu / te lo ha detto un’altra persona / te lo ha detto direttamente il proprietario / lo hai letto in un documento o annuncio pubblico.'},
+  {text:'Scegli il livello: N0 = semplice informazione; N1 = voce non confermata; N2 = hai individuato una persona che potrebbe avere bisogno; N3 = la persona ha parlato direttamente con F1; N4 = chiede quanto vale la casa; N5 = sta valutando concretamente di vendere; N6 = F1 ha già ricevuto l’incarico di vendita.'},
+  {text:'Scrivi VIA e NUMERO DEL PALAZZO, se li conosci.'},
+  {text:'Scrivi la DATA e il TUO NOME.'},
+  {text:'Scrivi COSA BISOGNA FARE DOPO. Se non bisogna fare niente, scrivi NESSUNA AZIONE.'},
+  {text:'Premi SALVA.'}
+ ],
+ branches:[
+  ['È solo una voce detta da qualcuno e non è confermata','Scegli N1 = VOCE NON CONFERMATA.'],
+  ['Il proprietario ti dice direttamente che potrebbe vendere','Scegli almeno N3 e poi passa la persona al consulente.',target:'handoff'},
+  ['Il proprietario chiede quanto vale la casa','Scegli N4 e passa la persona al consulente.',target:'handoff'}
+ ],
+ record:['Che cosa sai','Chi te lo ha detto','Livello N0-N6','Via e numero','Cosa fare dopo','Data','Tuo nome'],
+ stop:['Non scrivere “vende” se nessuno lo ha confermato.','Non trasformare una voce in un fatto.'],
+ script:'Scrivi esattamente cosa sai. Scrivi da dove arriva l’informazione. Scegli il livello. Inserisci indirizzo, data e nome. Scrivi cosa bisogna fare dopo. Salva.'
 },
 {
- id:'call',code:'F1-OG-040',stage:'TELEFONO',title:'Esegui una chiamata',role:'F1 Territory Scout / Consulente secondo abilitazioni',trigger:'Il contatto compare nella coda chiamate con stato ABILITATO.',doneWhen:'La chiamata ha un esito e una prossima azione.',next:'followup',
- commands:['Apri il contatto dalla coda.','Verifica che STATO CONTATTO sia ABILITATO.','Leggi ultima interazione e motivo della chiamata.','Chiama dal numero operativo previsto.','Presentati con nome e F1 Immobiliare.','Dichiara il motivo reale della chiamata.','Fai la domanda prevista dalla scheda.','Chiudi concordando la prossima azione oppure nessuna azione.','Registra immediatamente.'],
- branches:[['Non risponde','Segna NON RISPONDE. Non inventare esito.'],['Chiede richiamo','Apri F1-OG-041.'],['Non vuole più contatti','Apri F1-OG-060.'],['Chiede valutazione/appuntamento','Apri F1-OG-050.']],
- record:['Data/ora','Esito','Note essenziali','Next action'],stop:['Non chiamare contatti NON ABILITATI.','Non richiamare chi ha espresso un divieto di contatto.'],
- script:'Apri il contatto dalla coda. Verifica che sia abilitato. Leggi ultima interazione e motivo. Chiama. Presentati. Dichiara il motivo reale. Fai la domanda prevista. Concorda la prossima azione. Registra.'
+ id:'call',code:'F1-OG-040',stage:'TELEFONO',title:'Fai una telefonata',
+ role:'Tu, solo quando il sistema ti mostra una persona che puoi chiamare.',
+ trigger:'Il nome compare nella lista CHIAMATE DI OGGI e la scheda dice CHIAMABILE.',
+ doneWhen:'Hai scritto come è andata la telefonata e cosa bisogna fare dopo.',next:'followup',
+ commands:[
+  {text:'Apri la persona dalla lista CHIAMATE DI OGGI.'},
+  {text:'Controlla che nella scheda ci sia scritto CHIAMABILE. Se non c’è scritto, NON chiamare.'},
+  {text:'Leggi l’ultima cosa successa con quella persona.'},
+  {text:'Leggi perché devi chiamarla oggi.'},
+  {text:'Premi CHIAMA.'},
+  {text:'Quando risponde, dì il tuo nome e “F1 Immobiliare”.'},
+  {text:'Spiega in una frase perché la stai chiamando.'},
+  {text:'Fai la domanda scritta nella scheda.'},
+  {text:'Prima di chiudere, chiarisci se bisogna richiamare, fissare un appuntamento oppure non fare altro.'},
+  {text:'Scrivi subito l’esito.'}
+ ],
+ branches:[
+  ['Non risponde','Scrivi NON RISPONDE.'],
+  ['Chiede di essere richiamata','Apri PROGRAMMA UN RICHIAMO.',target:'followup'},
+  ['Dice di non voler più essere contattata','Apri NON CHIAMARE PIÙ.',target:'do-not-contact'},
+  ['Chiede quanto vale casa o vuole un appuntamento','Apri PASSA LA PERSONA AL CONSULENTE.',target:'handoff'}
+ ],
+ record:['Data e ora','Come è andata','Cosa ha detto di importante','Cosa bisogna fare dopo'],
+ stop:['Non chiamare se la scheda non dice CHIAMABILE.','Non richiamare una persona che ha chiesto di non essere contattata.'],
+ script:'Apri il nome dalla lista. Controlla che sia chiamabile. Leggi perché devi chiamare. Telefona. Presentati. Fai la domanda prevista. Scrivi come è andata e cosa fare dopo.'
 },
 {
- id:'followup',code:'F1-OG-041',stage:'FOLLOW-UP',title:'Imposta un follow-up',role:'F1 Territory Scout / Consulente',trigger:'La persona ha autorizzato o concordato un contatto futuro.',doneWhen:'Esistono data, motivo, responsabile e azione.',next:'end-shift',
- commands:['Seleziona stato RICONTATTO AUTORIZZATO.','Inserisci DATA precisa o periodo concordato.','Scrivi il MOTIVO del richiamo.','Assegna RESPONSABILE.','Scrivi COSA fare al prossimo contatto.','Salva.'],
- branches:[['Dice “non ora” senza autorizzare richiamo','NON creare follow-up commerciale automatico.'],['Fornisce una data','Usa la data indicata.'],['Chiede di non essere contattato','Apri F1-OG-060.']],
- record:['Data follow-up','Motivo','Responsabile','Azione'],stop:['Mai scrivere solo “RICHIAMARE”.'],
- script:'Seleziona ricontatto autorizzato. Inserisci data. Scrivi il motivo. Assegna il responsabile. Scrivi l’azione del prossimo contatto. Salva.'
+ id:'followup',code:'F1-OG-041',stage:'RICHIAMO',title:'Programma un richiamo',
+ role:'Tu, quando una persona accetta di essere ricontattata.',
+ trigger:'La persona dice chiaramente che puoi chiamarla di nuovo.',
+ doneWhen:'Hai scritto quando richiamarla, perché e chi deve farlo.',next:'end-shift',
+ commands:[
+  {text:'Apri la scheda della persona.'},
+  {text:'Seleziona RICHIAMO AUTORIZZATO. Significa che la persona ha accettato un nuovo contatto.'},
+  {text:'Scrivi la DATA precisa del richiamo. Se ha detto “la prossima settimana”, scrivi il periodo indicato.'},
+  {text:'Scrivi PERCHÉ devi richiamarla.'},
+  {text:'Scrivi CHI deve fare la chiamata.'},
+  {text:'Scrivi la PRIMA COSA da chiedere quando la richiamerai.'},
+  {text:'Premi SALVA.'}
+ ],
+ branches:[
+  ['Dice solo “non ora” ma non ti autorizza a richiamare','Non programmare una nuova chiamata.'],
+  ['Ti dà una data precisa','Usa quella data.'],
+  ['Dice che non vuole più chiamate','Apri NON CHIAMARE PIÙ.',target:'do-not-contact'}
+ ],
+ record:['Data del richiamo','Motivo','Nome di chi deve chiamare','Prima domanda da fare'],
+ stop:['Non scrivere solo “RICHIAMARE”. Devi sempre scrivere quando e perché.'],
+ script:'Apri la scheda. Segna che il richiamo è autorizzato. Scrivi quando, perché, chi deve chiamare e cosa deve chiedere. Salva.'
 },
 {
- id:'handoff',code:'F1-OG-050',stage:'HANDOFF',title:'Passa il prospect al consulente',role:'F1 Territory Scout',trigger:'Emergono interesse diretto, valutazione, appuntamento o opportunità concreta.',doneWhen:'Il consulente riceve una scheda completa e può agire senza richiedere chiarimenti di base.',next:'work-civic',
- commands:['Apri PASSAGGIO CONSULENTE.','Inserisci NOME/CONTATTO disponibili legittimamente.','Inserisci IMMOBILE o zona collegata.','Inserisci FONTE.','Inserisci COSA HA DETTO il prospect.','Inserisci ORIZZONTE TEMPORALE se dichiarato.','Inserisci richiesta: valore / vendita / appuntamento / altra esigenza.','Inserisci prossima azione concordata.','Invia al consulente assegnato.'],
- branches:[['Informazione solo indiretta','NON passare come prospect qualificato.'],['Richiesta valutazione','Priorità ALTA.'],['Appuntamento già concordato','Inserisci data e ora esatte.']],
- record:['Prospect ID','Fonte','Esigenza','Tempo','Next action','Consulente'],stop:['Non aggiungere motivazioni non dichiarate.'],
- script:'Apri passaggio consulente. Inserisci contatto, immobile, fonte, parole del prospect, orizzonte, richiesta e prossima azione. Invia al consulente.'
+ id:'handoff',code:'F1-OG-050',stage:'PASSA IL CONTATTO',title:'Passa la persona al consulente',
+ role:'Tu, quando una persona mostra un interesse reale.',
+ trigger:'La persona dice direttamente che potrebbe vendere, vuole sapere il valore della casa o vuole un appuntamento.',
+ doneWhen:'Il consulente F1 riceve tutte le informazioni necessarie per continuare.',next:'work-civic',
+ commands:[
+  {text:'Apri PASSA AL CONSULENTE.'},
+  {text:'Scrivi NOME e TELEFONO solo se la persona li ha forniti.'},
+  {text:'Scrivi quale CASA o quale ZONA riguarda.'},
+  {text:'Scrivi CHI ti ha dato l’informazione.'},
+  {text:'Scrivi con parole semplici CHE COSA HA DETTO la persona.'},
+  {text:'Se ha detto quando pensa di muoversi, scrivi il periodo.'},
+  {text:'Scegli cosa chiede: SAPERE IL VALORE / VENDERE / APPUNTAMENTO / ALTRO.'},
+  {text:'Scrivi che cosa avete concordato come prossimo passo.'},
+  {text:'Premi INVIA AL CONSULENTE.'}
+ ],
+ branches:[
+  ['Hai sentito solo una voce da un’altra persona','Non presentarla come persona interessata. Prima registra la voce come informazione.'],
+  ['Chiede quanto vale la casa','Segna PRIORITÀ ALTA.'],
+  ['Avete già fissato un appuntamento','Scrivi giorno e ora esatti.']
+ ],
+ record:['Nome','Telefono se fornito','Casa o zona','Che cosa ha detto','Quando','Che cosa chiede','Prossimo passo'],
+ stop:['Non aggiungere motivi o intenzioni che la persona non ha detto.'],
+ script:'Apri passa al consulente. Scrivi contatto, casa, fonte, parole dette, periodo, richiesta e prossimo passo. Invia.'
 },
 {
- id:'do-not-contact',code:'F1-OG-060',stage:'COMPLIANCE',title:'Non contattare',role:'Tutti',trigger:'La persona chiede chiaramente di non ricevere ulteriori contatti.',doneWhen:'Il contatto resta nello storico ma non compare più nelle code operative.',next:'end-shift',
- commands:['Interrompi la conversazione commerciale.','Seleziona NON CONTATTARE / NON CHIAMARE.','Inserisci data e canale della richiesta.','Salva.','Verifica che il contatto non compaia più nella coda.'],
- branches:[['Contatto noto/conoscente ma non pertinente','Usa NON CHIAMARE OPERATIVO senza cancellare lo storico.']],
- record:['Data richiesta','Canale','Operatore'],stop:['Non cancellare lo storico salvo procedura autorizzata.','Non reinserire manualmente il contatto in coda.'],
- script:'Interrompi la conversazione. Seleziona non contattare o non chiamare. Inserisci data e canale. Salva. Verifica che il contatto sia fuori dalla coda.'
+ id:'do-not-contact',code:'F1-OG-060',stage:'NON CHIAMARE',title:'Non chiamare più questa persona',
+ role:'Chiunque stia parlando con la persona.',
+ trigger:'La persona dice chiaramente che non vuole più essere chiamata o contattata.',
+ doneWhen:'La persona resta nello storico ma non appare più nelle liste di chiamata.',next:'end-shift',
+ commands:[
+  {text:'Chiudi subito la conversazione commerciale.'},
+  {text:'Apri la scheda della persona.'},
+  {text:'Premi NON CONTATTARE / NON CHIAMARE.'},
+  {text:'Scrivi la DATA.'},
+  {text:'Scrivi dove lo ha chiesto: telefono / WhatsApp / email / di persona.'},
+  {text:'Premi SALVA.'},
+  {text:'Controlla che il nome non compaia più nella lista CHIAMATE DI OGGI.'}
+ ],
+ branches:[
+  ['È un conoscente o una persona che non deve essere chiamata per motivi operativi','Usa NON CHIAMARE OPERATIVO senza cancellare lo storico.']
+ ],
+ record:['Data','Come ha chiesto di non essere contattata','Tuo nome'],
+ stop:['Non cancellare lo storico solo per togliere il nome dalla lista.','Non rimettere manualmente la persona nella lista chiamate.'],
+ script:'Chiudi la conversazione. Apri la scheda. Premi non contattare. Scrivi data e come lo ha chiesto. Salva. Controlla che sia fuori dalla lista chiamate.'
 },
 {
- id:'sign',code:'F1-OG-100',stage:'MARKET INTELLIGENCE',title:'Cartello o annuncio osservato',role:'F1 Territory Scout',trigger:'Osservi un cartello pubblico o un immobile pubblicamente commercializzato.',doneWhen:'L’elemento è registrato come market intelligence senza conclusioni non verificate.',next:'work-civic',
- commands:['Registra VIA e CIVICO.','Registra tipo: PRIVATO / AGENZIA / NON DETERMINATO.','Registra DATA prima osservazione.','Se disponibile pubblicamente, registra prezzo e link annuncio.','Se agenzia, registra nome agenzia visibile.','Salva come MARKET INTELLIGENCE.'],
- branches:[['Annuncio scompare in futuro','Segna ANNUNCIO NON PIÙ OSSERVATO.'],['Prezzo cambia','Registra data e nuovo prezzo.']],
- record:['Indirizzo','Tipo','Prezzo pubblico','Fonte/link','Data'],stop:['Non scrivere “incarico scaduto” senza prova.','Non concludere che il proprietario sia acquisibile.'],
- script:'Registra indirizzo, tipo di cartello, data, prezzo e link se pubblici, agenzia se visibile. Salva come market intelligence. Non fare conclusioni sull’incarico.'
+ id:'sign',code:'F1-OG-100',stage:'CARTELLO O ANNUNCIO',title:'Registra un cartello o un annuncio',
+ role:'Tu, quando vedi pubblicamente che una casa è proposta in vendita o affitto.',
+ trigger:'Vedi un cartello oppure trovi un annuncio pubblico collegato alla zona.',
+ doneWhen:'Hai scritto i dati visibili senza inventare informazioni mancanti.',next:'work-civic',
+ commands:[
+  {text:'Scrivi VIA e NUMERO DEL PALAZZO.'},
+  {text:'Scegli chi sembra pubblicizzare l’immobile: PRIVATO / AGENZIA / NON SI CAPISCE.'},
+  {text:'Scrivi la DATA in cui lo hai visto per la prima volta.'},
+  {text:'Se il prezzo è pubblico, scrivilo.'},
+  {text:'Se hai trovato l’annuncio online, incolla il LINK.'},
+  {text:'Se sul cartello compare il nome di un’agenzia, scrivi quel nome.'},
+  {text:'Premi SALVA.'}
+ ],
+ branches:[
+  ['In futuro l’annuncio non si trova più','Scrivi ANNUNCIO NON PIÙ VISTO. Non scrivere che l’incarico è scaduto.'],
+  ['Il prezzo cambia','Scrivi la nuova cifra e la data del cambiamento.']
+ ],
+ record:['Via e numero','Privato/Agenzia/Non si capisce','Prezzo se pubblico','Link se esiste','Data'],
+ stop:['Non scrivere “incarico scaduto” senza una prova.','Non concludere che il proprietario voglia cambiare agenzia.'],
+ script:'Scrivi indirizzo, chi pubblicizza, data, prezzo se pubblico, link se disponibile e nome agenzia se visibile. Salva. Non inventare altro.'
 },
 {
- id:'end-shift',code:'F1-OG-090',stage:'FINE TURNO',title:'Chiudi la giornata',role:'F1 Territory Scout',trigger:'Termina il turno o la missione assegnata.',doneWhen:'Ogni attività del giorno è registrata e non esistono follow-up senza data/motivo.',next:'start-shift',
- commands:['Apri F1 CLOSE.','Controlla civici lavorati.','Controlla conversazioni registrate.','Controlla notizie N0-N6.','Controlla prospect e handoff.','Controlla follow-up: devono avere data e motivo.','Controlla NON CHIAMARE / NON CONTATTARE.','Scrivi eventuali anomalie per il responsabile.','Chiudi la missione.'],
- branches:[['Manca una registrazione','NON chiudere. Completa il dato.'],['Dato dubbio','Segna DA VERIFICARE, non inventare.']],
- record:['Ora fine','Civici lavorati','Conversazioni','Notizie','Prospect','Follow-up','Anomalie'],stop:['Non chiudere la giornata con attività non registrate.'],
- script:'Apri F1 Close. Controlla civici, conversazioni, notizie, prospect, handoff e follow-up. Se manca un dato completalo. Se è dubbio segna da verificare. Chiudi la missione.'
+ id:'end-shift',code:'F1-OG-090',stage:'FINE GIORNATA',title:'Chiudi il lavoro di oggi',
+ role:'Tu, prima di finire la giornata.',
+ trigger:'Hai terminato il tempo di lavoro o hai completato la missione assegnata.',
+ doneWhen:'Tutto quello che hai fatto oggi è scritto e ogni richiamo ha una data e un motivo.',next:'start-shift',
+ commands:[
+  {text:'Apri il RIEPILOGO DI OGGI.'},
+  {text:'Controlla che ogni palazzo lavorato abbia un risultato scritto.'},
+  {text:'Controlla che ogni informazione ricevuta sia stata salvata.'},
+  {text:'Controlla le PERSONE DA RICHIAMARE. Ognuna deve avere una data e un motivo.'},
+  {text:'Controlla che le persone che hanno chiesto di non essere chiamate siano fuori dalla lista chiamate.'},
+  {text:'Scrivi eventuali problemi che il responsabile deve vedere domani.'},
+  {text:'Premi CHIUDI GIORNATA.'}
+ ],
+ branches:[
+  ['Trovi un richiamo senza data o senza motivo','Apri la persona e completa i dati prima di chiudere.'],
+  ['Trovi una attività fatta ma non registrata','Scrivila prima di chiudere la giornata.']
+ ],
+ record:['Ora fine lavoro','Numero di palazzi lavorati','Numero di conversazioni','Informazioni raccolte','Richiami programmati','Problemi da segnalare'],
+ stop:['Non chiudere la giornata lasciando attività senza esito scritto.'],
+ script:'Apri il riepilogo. Controlla palazzi, informazioni, richiami e persone da non chiamare. Scrivi i problemi. Poi chiudi la giornata.'
 }
 ];
