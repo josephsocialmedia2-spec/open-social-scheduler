@@ -6,7 +6,7 @@ Stato finale: **RELEASE NON CERTIFICATA / errori e blocchi residui**
 |---|---|---|---|---|---|
 | Repository GitHub | accesso repository e branch main | PASS | repository raggiungibile | — | PASS |
 | GitHub Actions | ultimo run Social Engine visibile | PASS | ultimo run osservato concluso `success` | — | PASS |
-| GitHub Pages sync | presenza `f1-os-cloud` e `f1-os-companion` nel workflow | FAIL -> PASS | il workflow pubblicava `f1-os-mobile` ma ignorava cloud e companion | aggiornato `.github/workflows/pages.yml` | PASS: run 33812410247 concluso `success`; cartelle presenti su `gh-pages` |
+| GitHub Pages sync | presenza `f1-os-cloud` e `f1-os-companion` nel workflow | FAIL -> PASS | il workflow pubblicava `f1-os-mobile` ma ignorava cloud e companion | aggiornato `.github/workflows/pages.yml` | PASS: sync run 33812410247 `success`; Pages build 33812598101 `success`; cartelle presenti su `gh-pages` |
 | F1 OS Companion PWA | icona manifest | FAIL -> PASS | `icons: []` | aggiunto `f1-os-companion/icons/icon.svg` e manifest aggiornato | PASS strutturale: icona presente su `gh-pages` |
 | F1 OS Companion PWA | installazione reale / offline | BLOCCATO | richiede browser/dispositivo reale | nessuna correzione inventata | NON TESTATO |
 | F1 OS Cloud | pubblicazione su `gh-pages` | FAIL -> PASS | cartella non veniva distribuita | inclusa nel workflow Pages | PASS strutturale |
@@ -32,7 +32,7 @@ Stato finale: **RELEASE NON CERTIFICATA / errori e blocchi residui**
 ## Correzioni applicate in questa esecuzione
 
 1. GitHub Pages ora sincronizza anche `f1-os-cloud/**` e `f1-os-companion/**`.
-2. Il deployment correttivo ha superato il workflow di sync.
+2. Sync e build GitHub Pages correttivi hanno entrambi conclusione `success`.
 3. Aggiunta icona PWA al Companion e pubblicata su `gh-pages`.
 
 ## Blocchi / errori da non nascondere
