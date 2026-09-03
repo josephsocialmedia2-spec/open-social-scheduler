@@ -1,14 +1,14 @@
 {
   "name": "F1 OS Immobiliare",
   "short_name": "F1 OS",
-  "description": "CRM, farming, radar proattivo e call engine per attività immobiliare",
+  "description": "Unica applicazione F1 Immobiliare per PC e telefono: OGGI, CRM, pratiche, AI Governor, Radar e procedure operative.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "background_color": "#0E120F",
   "theme_color": "#0E120F",
   "lang": "it",
-  "orientation": "portrait-primary",
+  "orientation": "any",
   "icons": [
     {"src":"icons/icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}
   ]
