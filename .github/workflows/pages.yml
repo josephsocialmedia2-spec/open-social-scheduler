@@ -15,6 +15,7 @@ on:
       - 'roleplay-immobiliare/**'
       - 'clienti/la-sacra/**'
       - 'f1-academy/**'
+      - 'f1-os-mobile/**'
       - '.github/workflows/pages.yml'
   workflow_dispatch:
 
@@ -51,6 +52,7 @@ jobs:
             cp -R clienti/la-sacra /tmp/open-social-pages/clienti/la-sacra
           fi
           if [ -d f1-academy ]; then cp -R f1-academy /tmp/open-social-pages/f1-academy; fi
+          if [ -d f1-os-mobile ]; then cp -R f1-os-mobile /tmp/open-social-pages/f1-os-mobile; fi
 
       - name: Sync to gh-pages
         shell: bash
@@ -79,10 +81,14 @@ jobs:
             rm -rf f1-academy
             cp -R /tmp/open-social-pages/f1-academy ./f1-academy
           fi
+          if [ -d /tmp/open-social-pages/f1-os-mobile ]; then
+            rm -rf f1-os-mobile
+            cp -R /tmp/open-social-pages/f1-os-mobile ./f1-os-mobile
+          fi
           touch .nojekyll
           git config user.name 'open-social-pages'
           git config user.email 'open-social-pages@users.noreply.github.com'
-          git add index.html content-center.html monday-control.html meta-setup.html groups.html ugc-reel-lab.html growth/groups.json ai-call-copilot-demo roleplay-immobiliare clienti/la-sacra f1-academy .nojekyll
+          git add index.html content-center.html monday-control.html meta-setup.html groups.html ugc-reel-lab.html growth/groups.json ai-call-copilot-demo roleplay-immobiliare clienti/la-sacra f1-academy f1-os-mobile .nojekyll
           if git diff --cached --quiet; then
             echo 'Public pages already synchronized.'
             exit 0
