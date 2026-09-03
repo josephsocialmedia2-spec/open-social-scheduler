@@ -1,5 +1,9 @@
 (()=>{
-  const RADAR_URL='https://josephsocialmedia2-spec.github.io/immobili-in-zona/seller_radar_auto/data/giro_acquisizione.csv';
+  const INTEL_BASE='https://josephsocialmedia2-spec.github.io/immobili-in-zona/';
+  const SELLER_RADAR_URL=INTEL_BASE;
+  const MARKET_INTELLIGENCE_URL=INTEL_BASE+'seller_radar_auto/market_intelligence.html';
+  const APPOINTMENT_BRIEF_URL=INTEL_BASE+'seller_radar_auto/appointment_brief.html';
+  const RADAR_URL=INTEL_BASE+'seller_radar_auto/data/giro_acquisizione.csv';
   const LAUNCHER='https://josephsocialmedia2-spec.github.io/launcher-dashboard/';
   const ROUTE=['susa','bussoleno','chianocco','san giorio di susa','bruzolo','san didero','borgone susa','villar focchiardo','sant antonino di susa'];
   const RANK=new Map(ROUTE.map((x,i)=>[x,i]));
@@ -52,13 +56,17 @@
   const coreExecute=execute;
   execute=function(){
     const a=currentAction||aiLocal();
+    if(['APPOINTMENTS','APPOINTMENT','VALUATION'].includes(String(a?.type||'').toUpperCase())){
+      location.href=APPOINTMENT_BRIEF_URL;
+      return;
+    }
     if(a?.type==='CALL'){
       location.href=callCampaignUrl(a);
       return;
     }
     if(a?.type==='RADAR'&&a.radar){
       const r=a.radar;
-      openModal('VAI IN ZONA',`<h3>${esc(r.COMUNE||'')} · ${esc(r.DOVE_ANDRE||'')}</h3><p>${esc(r.COSA_CERCO||'Lavora questo indirizzo secondo la procedura assegnata.')}</p><p class="muted">Vai sul posto. Osserva solo fatti reali. Se parli con qualcuno, registra esclusivamente ciò che ti viene detto. Non inventare conclusioni.</p><div class="row"><a class="btn primary linkbtn" target="_blank" rel="noopener" href="${maps(r)}">APRI MAPPA</a>${r.URL?`<a class="btn linkbtn" target="_blank" rel="noopener" href="${esc(r.URL)}">APRI FONTE</a>`:''}<button class="btn" id="radarDone">FATTO → AVANTI</button></div>`);
+      openModal('VAI IN ZONA',`<h3>${esc(r.COMUNE||'')} · ${esc(r.DOVE_ANDRE||'')}</h3><p>${esc(r.COSA_CERCO||'Lavora questo indirizzo secondo la procedura assegnata.')}</p><p class="muted">Vai sul posto. Osserva solo fatti reali. Se parli con qualcuno, registra esclusivamente ciò che ti viene detto. Non inventare conclusioni.</p><div class="row"><a class="btn primary linkbtn" target="_blank" rel="noopener" href="${maps(r)}">APRI MAPPA</a>${r.URL?`<a class="btn linkbtn" target="_blank" rel="noopener" href="${esc(r.URL)}">APRI FONTE</a>`:''}<a class="btn linkbtn" target="_blank" rel="noopener" href="${MARKET_INTELLIGENCE_URL}">MARKET INTELLIGENCE</a><button class="btn" id="radarDone">FATTO → AVANTI</button></div>`);
       setTimeout(()=>{const b=document.querySelector('#radarDone');if(b)b.onclick=()=>{document.querySelector('#modal').close();toast('Attività terminata. Registra eventuali informazioni nel CRM.');}},0);
       return;
     }
@@ -74,7 +82,7 @@
       const box=document.createElement('div');
       box.innerHTML='<hr style="border:0;border-top:1px solid #d9ded9;margin:16px 0"><button class="btn" id="f1SystemMap">FUNZIONI DEL SISTEMA</button>';
       body.appendChild(box);
-      document.querySelector('#f1SystemMap').onclick=()=>openModal('COSA FA F1 OS',`<p><b>Tu parti sempre da OGGI.</b> Il sistema apre gli strumenti quando servono.</p><div class="stack"><a class="item" href="${LAUNCHER}telefonate-oggi.html"><b>Campagne telefoniche guidate</b><small>Coda, script dinamico, ascolto/trascrizione, INTERVENGO IO, esito, CRM e prossimo numero.</small></a><a class="item" href="${LAUNCHER}seller-radar-unico.html"><b>Seller Radar</b><small>Segnali territoriali e priorità.</small></a><a class="item" href="${LAUNCHER}market-intelligence.html"><b>Market Intelligence</b><small>Dati da usare prima di appuntamenti e valutazioni.</small></a><a class="item" href="${LAUNCHER}radar-edilizio.html"><b>Radar edilizio</b><small>Permessi, cantieri e segnali pubblici.</small></a><a class="item" href="${LAUNCHER}giro-acquisizione.html"><b>Giro acquisizione</b><small>Percorso operativo sul territorio.</small></a><button class="item" id="goPractices"><b>Pratiche</b><small>Incarichi, documenti, Open House e piano marketing.</small></button></div><p class="muted">Queste funzioni non sono un secondo software: sono strumenti interni di F1 OS. L’AI decide quando usarli.</p>`);
+      document.querySelector('#f1SystemMap').onclick=()=>openModal('COSA FA F1 OS',`<p><b>Tu parti sempre da OGGI.</b> Il sistema apre gli strumenti quando servono.</p><div class="stack"><a class="item" href="${LAUNCHER}telefonate-oggi.html"><b>Campagne telefoniche guidate</b><small>Coda, script dinamico, ascolto/trascrizione, INTERVENGO IO, esito, CRM e prossimo numero.</small></a><a class="item" href="${SELLER_RADAR_URL}"><b>Seller Radar · fonte principale</b><small>Repository operativo immobili-in-zona: segnali territoriali, priorità e memoria mercato.</small></a><a class="item" href="${MARKET_INTELLIGENCE_URL}"><b>Market Intelligence</b><small>Dati storici per Comune, via, tipologia e agenzia da usare prima di appuntamenti e valutazioni.</small></a><a class="item" href="${APPOINTMENT_BRIEF_URL}"><b>Brief Appuntamento</b><small>Preparazione operativa da aprire prima dell'incontro con proprietario o valutazione.</small></a><a class="item" href="${LAUNCHER}radar-edilizio.html"><b>Radar edilizio</b><small>Permessi, cantieri e segnali pubblici.</small></a><a class="item" href="${LAUNCHER}giro-acquisizione.html"><b>Giro acquisizione</b><small>Percorso operativo sul territorio.</small></a><button class="item" id="goPractices"><b>Pratiche</b><small>Incarichi, documenti, Open House e piano marketing.</small></button></div><p class="muted">Seller Radar, Market Intelligence e Brief Appuntamento hanno come fonte canonica il repository immobili-in-zona. Non sono software separati: F1 OS li apre nel momento operativo corretto.</p>`);
       setTimeout(()=>{const g=document.querySelector('#goPractices');if(g)g.onclick=()=>{document.querySelector('#modal').close();nav('pratiche');}},0);
     },0);
   };
@@ -100,10 +108,16 @@
     const errors=[];
     ['actionTitle','actionBody','executeBtn','cloudState','priority','contacts','practices'].forEach(id=>{if(!document.getElementById(id))errors.push('interfaccia:'+id)});
     ['sync','renderToday','nav','openModal','pushAction'].forEach(fn=>{try{if(typeof globalThis[fn]!=='function'&&typeof eval(fn)!=='function')errors.push('funzione:'+fn)}catch(e){errors.push('funzione:'+fn)}});
-    const checks=['telefonate-oggi.html','seller-radar-unico.html','market-intelligence.html','giro-acquisizione.html'];
-    const results=await Promise.all(checks.map(async p=>{try{const r=await fetch(LAUNCHER+p+'?diag='+Date.now(),{cache:'no-store'});return r.ok}catch(e){return false}}));
-    results.forEach((ok,i)=>{if(!ok)errors.push('modulo:'+checks[i])});
-    if(!radarRows.length){const r=await loadRadar();if(!r.length)errors.push('radar')}
+    const checks=[
+      {name:'campagne telefoniche',url:LAUNCHER+'telefonate-oggi.html'},
+      {name:'seller radar',url:SELLER_RADAR_URL},
+      {name:'market intelligence',url:MARKET_INTELLIGENCE_URL},
+      {name:'brief appuntamento',url:APPOINTMENT_BRIEF_URL},
+      {name:'giro acquisizione',url:LAUNCHER+'giro-acquisizione.html'}
+    ];
+    const results=await Promise.all(checks.map(async x=>{try{const r=await fetch(x.url+(x.url.includes('?')?'&':'?')+'diag='+Date.now(),{cache:'no-store'});return r.ok}catch(e){return false}}));
+    results.forEach((ok,i)=>{if(!ok)errors.push('modulo:'+checks[i].name)});
+    if(!radarRows.length){const r=await loadRadar();if(!r.length)errors.push('radar dati')}
     if(errors.length){box.textContent='AUTODIAGNOSI · ATTENZIONE: '+errors.join(', ');box.style.color='#a32626'}else{box.textContent='AUTODIAGNOSI · SISTEMA OK';box.style.color='#16814a'}
   }
 
