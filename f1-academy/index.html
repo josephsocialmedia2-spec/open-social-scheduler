@@ -1,0 +1,24 @@
+<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>F1 Immobiliare Academy</title><link rel="stylesheet" href="styles.css"></head>
+<body><div class="shell"><aside class="sidebar"><div class="brand">F1 IMMOBILIARE<span>ACADEMY</span></div><div class="tag">Territory Acquisition System<br>Formazione operativa 12 mesi</div><div class="progressWrap"><div class="progressTrack"><div class="progressBar" id="progressBar"></div></div><div class="progressText" id="progressText">0% completato</div></div><div class="lessonNav" id="lessonNav"></div></aside>
+<main class="content"><div class="topbar"><div><div class="eyebrow" id="stage">START HERE</div><h1 id="title">Inizia da qui</h1><div class="objective" id="objective"></div></div><div class="statusPill" id="lessonStatus">NON COMPLETATO</div></div>
+
+<section class="academyVisual card">
+  <div class="visualHead"><div><div class="eyebrow">METODO F1</div><h2>Non chiederti cosa fare. Segui il ciclo.</h2></div><div class="visualBadge">12 MESI · PROCEDURA RIPETIBILE</div></div>
+  <div class="cycleGrid">
+    <div class="cycleNode"><span>01</span><strong>TERRITORIO</strong><small>Missione, microzona, vie, civici.</small></div>
+    <div class="cycleArrow">→</div>
+    <div class="cycleNode"><span>02</span><strong>SEGNALE</strong><small>Osserva senza inventare.</small></div>
+    <div class="cycleArrow">→</div>
+    <div class="cycleNode"><span>03</span><strong>NOTIZIA</strong><small>Fonte, data, attendibilità.</small></div>
+    <div class="cycleArrow">→</div>
+    <div class="cycleNode"><span>04</span><strong>FOLLOW-UP</strong><small>Prossima azione e data.</small></div>
+    <div class="cycleArrow">→</div>
+    <div class="cycleNode"><span>05</span><strong>VALUTAZIONE</strong><small>Passaggio al consulente.</small></div>
+  </div>
+</section>
+<section class="heroGrid"><div class="card"><h2>Procedura esatta</h2><div class="steps" id="steps"></div><div class="actions"><button class="btn btnGold" id="completeBtn">SEGNA COME COMPLETATO</button><button class="btn btnSoft" onclick="window.print()">STAMPA LEZIONE</button></div></div><div class="card goldCard"><h3>Video istruttivo</h3><div class="videoBox"><div><strong>AI UGC F1</strong><span id="videoHint">Genera la spiegazione della lezione con il motore locale.</span></div></div><div class="actions"><button class="btn btnGold" id="ugcBtn">GENERA VIDEO UGC</button><button class="btn btnSoft" id="speakBtn">ASCOLTA ORA</button></div><div class="health" id="healthBox">Diagnostica motore non eseguita.</div><div class="actions"><button class="btn btnSoft" id="healthBtn">CONTROLLA MOTORE</button></div></div></section>
+<section class="card"><h2>Spiegazione</h2><div class="script" id="script"></div><div class="notice">Regola F1: non imparare a memoria una frase senza capirne lo scopo. Prima comprendi il passaggio, poi ripetilo in role play e infine sul campo.</div></section>
+<section class="card" id="quizCard"><h2>Verifica</h2><div id="quiz"></div><div class="actions"><button class="btn btnDark" id="quizBtn">CORREGGI TEST</button></div><div id="quizResult"></div></section>
+<section class="card"><h2>Diagnostica e continuità</h2><table class="diagnosticTable"><thead><tr><th>Problema</th><th>Cosa significa</th><th>Soluzione</th></tr></thead><tbody><tr><td>HeyGen quota/crediti finiti</td><td>Servizio esterno non disponibile</td><td>Usa UGC locale o audio: la formazione continua.</td></tr><tr><td>MuseTalk / GPU non pronto</td><td>Lip-sync locale indisponibile</td><td>Academy passa al video narrato: presenter/B-roll + voce + sottotitoli. Nessun blocco della formazione.</td></tr><tr><td>Ollama fermo</td><td>Generazione script automatica non disponibile</td><td>La lezione contiene già lo script pronto.</td></tr><tr><td>Server locale non raggiungibile</td><td>Motore Academy non avviato</td><td>Esegui local-media-lab/AVVIA_ACADEMY_UGC.bat e ripeti il controllo.</td></tr></tbody></table></section></main></div>
+<div class="modal" id="ugcModal"><div class="modalCard"><h2>Genera video UGC della lezione</h2><p>Il portale invia lo script della lezione al motore locale sul tuo PC. Nessuna API a consumo è necessaria.</p><div class="field"><label>Video presenter reale (MP4/MOV/WebM)</label><input id="presenter" type="file" accept="video/*"></div><div class="field"><label>Voce di riferimento consenziente (WAV/MP3/M4A)</label><input id="voice" type="file" accept="audio/*"></div><div class="field"><label>B-roll opzionali</label><input id="broll" type="file" accept="video/*,image/*" multiple></div><div class="actions"><button class="btn btnGreen" id="createUgcBtn">CREA VIDEO</button><button class="btn btnSoft" id="closeModalBtn">CHIUDI</button></div><div class="job" id="jobBox">Nessuna generazione avviata.</div></div></div>
+<script src="lessons.js"></script><script src="app.js"></script></body></html>
