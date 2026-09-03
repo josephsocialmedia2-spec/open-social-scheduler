@@ -65,8 +65,7 @@
   function applyEntryMode(){
     const p=new URLSearchParams(location.search),screen=p.get('screen');
     if(['oggi','crm','pratiche'].includes(screen))nav(screen);
-    const source=p.get('source');
-    if(source==='pc')document.body.dataset.device='pc';
+    if(p.get('source')==='pc'||location.pathname.includes('/launcher-dashboard/'))document.body.dataset.device='pc';
     const topSmall=document.querySelector('.top small');
     if(topSmall)topSmall.textContent='F1 OS IMMOBILIARE · UNICA APP PC + TELEFONO';
   }
@@ -77,7 +76,21 @@
     const b=document.createElement('div');b.id='f1UnifiedBadge';b.className='state';b.textContent='STESSO F1 OS · STESSO CRM · PC E TELEFONO';hero.appendChild(b);
   }
 
-  Promise.resolve(loadRadar()).then(()=>{try{renderToday()}catch(e){}});
+  async function runSelfDiagnosis(){
+    const hero=document.querySelector('.hero');if(!hero)return;
+    let box=document.querySelector('#f1Diag');
+    if(!box){box=document.createElement('div');box.id='f1Diag';box.className='state';hero.appendChild(box)}
+    const errors=[];
+    ['actionTitle','actionBody','executeBtn','cloudState','priority','contacts','practices'].forEach(id=>{if(!document.getElementById(id))errors.push('interfaccia:'+id)});
+    ['sync','renderToday','nav','openModal','pushAction'].forEach(fn=>{try{if(typeof globalThis[fn]!=='function'&&typeof eval(fn)!=='function')errors.push('funzione:'+fn)}catch(e){errors.push('funzione:'+fn)}});
+    const checks=['telefonate-oggi.html','seller-radar-unico.html','market-intelligence.html','giro-acquisizione.html'];
+    const results=await Promise.all(checks.map(async p=>{try{const r=await fetch(LAUNCHER+p+'?diag='+Date.now(),{cache:'no-store'});return r.ok}catch(e){return false}}));
+    results.forEach((ok,i)=>{if(!ok)errors.push('modulo:'+checks[i])});
+    if(!radarRows.length){const r=await loadRadar();if(!r.length)errors.push('radar')}
+    if(errors.length){box.textContent='AUTODIAGNOSI · ATTENZIONE: '+errors.join(', ');box.style.color='#a32626'}else{box.textContent='AUTODIAGNOSI · SISTEMA OK';box.style.color='#16814a'}
+  }
+
+  Promise.resolve(loadRadar()).then(()=>{try{renderToday()}catch(e){};runSelfDiagnosis()});
   applyEntryMode();
   addDesktopGuide();
 })();
