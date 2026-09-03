@@ -4,9 +4,14 @@ import os
 from pathlib import Path
 
 import uvicorn
+from fastapi.responses import RedirectResponse
+from fastapi.staticfiles import StaticFiles
+
 import ugc_server as base
 
 ORIGINAL_RUN_UGC_JOB = base.run_ugc_job
+ROOT = Path(__file__).resolve().parent
+ACADEMY_DIR = ROOT.parent / "f1-academy"
 
 
 def run_academy_job(job_id: str, job_dir: Path, presenter: Path, voice_ref: Path, brolls: list[Path], script: str) -> None:
@@ -72,6 +77,30 @@ def run_academy_job(job_id: str, job_dir: Path, presenter: Path, voice_ref: Path
 
 
 base.run_ugc_job = run_academy_job
+
+
+@base.app.get("/api/academy/diagnostic")
+def academy_diagnostic() -> dict[str, object]:
+    return {
+        "status": "ok",
+        "academy_dir": str(ACADEMY_DIR),
+        "academy_exists": ACADEMY_DIR.exists(),
+        "index_exists": (ACADEMY_DIR / "index.html").exists(),
+        "local_url": "http://127.0.0.1:8770/academy/",
+        "tts_chatterbox": base.tts_ready(),
+        "musetalk": base.muse_ready(),
+        "ffmpeg": bool(base.ffmpeg()),
+        "gpu_nvidia": bool(__import__("shutil").which("nvidia-smi")),
+    }
+
+
+@base.app.get("/academy-local")
+def academy_local_redirect() -> RedirectResponse:
+    return RedirectResponse(url="/academy/")
+
+
+if ACADEMY_DIR.exists():
+    base.app.mount("/academy", StaticFiles(directory=str(ACADEMY_DIR), html=True), name="f1-academy")
 
 
 if __name__ == "__main__":
