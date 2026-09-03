@@ -4,22 +4,17 @@ import os
 from pathlib import Path
 
 import uvicorn
-from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
-
+from fastapi.responses import RedirectResponse
 import ugc_server as base
 
 ORIGINAL_RUN_UGC_JOB = base.run_ugc_job
 ROOT = Path(__file__).resolve().parent
-ACADEMY_DIR = ROOT.parent / "f1-academy"
+ACADEMY_ROOT = ROOT.parent / "f1-academy"
 
 
 def run_academy_job(job_id: str, job_dir: Path, presenter: Path, voice_ref: Path, brolls: list[Path], script: str) -> None:
-    """Use full MuseTalk UGC when available; otherwise create a narrated continuity video.
-
-    Continuity mode keeps the Academy usable without a NVIDIA GPU or external paid credits:
-    presenter loop + optional B-roll + local Italian voice + subtitles.
-    """
+    """Use full MuseTalk UGC when available; otherwise create a narrated continuity video."""
     if base.muse_ready():
         ORIGINAL_RUN_UGC_JOB(job_id, job_dir, presenter, voice_ref, brolls, script)
         return
@@ -78,35 +73,19 @@ def run_academy_job(job_id: str, job_dir: Path, presenter: Path, voice_ref: Path
 
 base.run_ugc_job = run_academy_job
 
+if ACADEMY_ROOT.exists():
+    base.app.mount("/academy", StaticFiles(directory=str(ACADEMY_ROOT), html=True), name="academy")
 
-@base.app.get("/api/academy/diagnostic")
-def academy_diagnostic() -> dict[str, object]:
-    return {
-        "status": "ok",
-        "academy_dir": str(ACADEMY_DIR),
-        "academy_exists": ACADEMY_DIR.exists(),
-        "index_exists": (ACADEMY_DIR / "index.html").exists(),
-        "local_url": "http://127.0.0.1:8770/academy/",
-        "tts_chatterbox": base.tts_ready(),
-        "musetalk": base.muse_ready(),
-        "ffmpeg": bool(base.ffmpeg()),
-        "gpu_nvidia": bool(__import__("shutil").which("nvidia-smi")),
-    }
-
-
-@base.app.get("/academy-local")
-def academy_local_redirect() -> RedirectResponse:
-    return RedirectResponse(url="/academy/")
-
-
-if ACADEMY_DIR.exists():
-    base.app.mount("/academy", StaticFiles(directory=str(ACADEMY_DIR), html=True), name="f1-academy")
+    @base.app.get("/")
+    def academy_root() -> RedirectResponse:
+        return RedirectResponse(url="/academy/")
 
 
 if __name__ == "__main__":
     base.ensure_dirs()
     base.PID_FILE.write_text(str(os.getpid()), encoding="ascii")
     try:
-        uvicorn.run(base.app, host=base.HOST, port=base.PORT, log_level="info")
+        # Accessible from the office PC and phones/tablets on the same private Wi-Fi/LAN.
+        uvicorn.run(base.app, host="0.0.0.0", port=base.PORT, log_level="info")
     finally:
         base.PID_FILE.unlink(missing_ok=True)
