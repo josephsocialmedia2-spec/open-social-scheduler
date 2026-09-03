@@ -24,9 +24,28 @@ if exist "ugc_server.pid" (
 
 echo Avvio motore Academy sulla porta 8770...
 echo - con GPU NVIDIA/MuseTalk: lip-sync UGC completo
- echo - senza MuseTalk: presenter/B-roll + voce + sottotitoli
+echo - senza MuseTalk: presenter/B-roll + voce + sottotitoli
 start "F1 Academy UGC Engine" /min ".venv_ugc\Scripts\python.exe" "ugc_training_server.py"
-timeout /t 3 /nobreak >nul
 
-start "" "https://josephsocialmedia2-spec.github.io/open-social-scheduler/f1-academy/"
-exit /b 0
+set READY=0
+for /L %%I in (1,1,15) do (
+  powershell -NoProfile -Command "try { $r=Invoke-WebRequest -UseBasicParsing -TimeoutSec 1 http://127.0.0.1:8770/api/health; if($r.StatusCode -eq 200){exit 0}else{exit 1} } catch { exit 1 }" >nul 2>&1
+  if not errorlevel 1 (
+    set READY=1
+    goto :ready
+  )
+  timeout /t 1 /nobreak >nul
+)
+
+:ready
+if "%READY%"=="1" (
+  start "" "http://127.0.0.1:8770/academy/"
+  exit /b 0
+)
+
+echo.
+echo ERRORE: il motore Academy non ha risposto sulla porta 8770.
+echo Avvio diagnostica nel browser...
+start "" "http://127.0.0.1:8770/api/health"
+pause
+exit /b 1
