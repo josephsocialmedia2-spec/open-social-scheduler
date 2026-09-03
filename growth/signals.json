@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-02T09:49:16+00:00",
+  "updated_at": "2026-09-03T10:03:50+00:00",
   "signals": [
     {
       "id": "FBS-A04CD854BB",
@@ -1177,6 +1177,42 @@
       "source_query": "site:facebook.com/groups \"Chianocco\" \"sei di\"",
       "status": "NEW",
       "discovered_at": "2026-09-02T09:43:52+00:00"
+    },
+    {
+      "id": "FBS-1616770BEC",
+      "brand": "f1-immobiliare",
+      "territory": "Susa",
+      "group_url": "https://www.facebook.com/groups/926952708679868/",
+      "source_url": "https://www.facebook.com/groups/926952708679868/posts/1864119418296521/",
+      "title": "Sono uno studente di 20 anni, cerco appartamento a partire da ...",
+      "snippet": "Aug 22, 2026 · Scott Fialo ▻ CERCO CASA - AFFITTO ALLOGGI & STANZE X STUDENTI - TORINO ... Susa lol. Im sociable and I think im a good roommate. In NYC I am a ...",
+      "source_query": "site:facebook.com/groups \"Susa\" \"cerco casa\"",
+      "status": "NEW",
+      "discovered_at": "2026-09-03T09:52:46+00:00"
+    },
+    {
+      "id": "FBS-3BE8157AAA",
+      "brand": "f1-immobiliare",
+      "territory": "Susa",
+      "group_url": "https://www.facebook.com/groups/807252879297146/",
+      "source_url": "https://www.facebook.com/groups/807252879297146/posts/24042831451979294/",
+      "title": "LGBT friendly room in Torino for September - Facebook",
+      "snippet": "Jun 6, 2025 · Cerco casa a Torino. Scott Fialo ... I'd prefer september but I dont mind for august if my other option becomes sleeping at Porta Susa lol.",
+      "source_query": "site:facebook.com/groups \"Susa\" \"cerco casa\"",
+      "status": "NEW",
+      "discovered_at": "2026-09-03T09:52:46+00:00"
+    },
+    {
+      "id": "FBS-100204AEDB",
+      "brand": "f1-immobiliare",
+      "territory": "Susa",
+      "group_url": "https://www.facebook.com/groups/affittiprivati/",
+      "source_url": "https://www.facebook.com/groups/affittiprivati/posts/3925072047795120/",
+      "title": "A single room in Trilocale apartment is available from 15 of May",
+      "snippet": "May 12, 2026 · ... susa, with Residenza** +393792978373 (**whatsapp**) There are 2 ... Paola Cassiano ▻ Cerco casa in affitto a Bologna. 1y · Public ...",
+      "source_query": "site:facebook.com/groups \"Susa\" \"cerco casa\"",
+      "status": "NEW",
+      "discovered_at": "2026-09-03T09:52:46+00:00"
     }
   ]
 }
