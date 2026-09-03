@@ -19,6 +19,19 @@
       return radarRows;
     }catch(e){radarRows=[];return[]}
   }
+  function callCampaignUrl(a){
+    const c=contacts.find(x=>String(x.id)===String(a?.contact_id));
+    const p=new URLSearchParams();
+    if(c){
+      p.set('name',([c.first_name,c.last_name].filter(Boolean).join(' ')||c.company||'').trim());
+      p.set('phone',c.phone||'');
+      p.set('city',c.city||c.property_city||'');
+      p.set('source',c.source||'CRM F1');
+      p.set('reason','Richiamo CRM');
+      p.set('contact_id',c.id||'');
+    }
+    return LAUNCHER+'telefonate-oggi.html'+(p.toString()?'?'+p.toString():'');
+  }
 
   const coreAiLocal=aiLocal;
   aiLocal=function(){
@@ -39,6 +52,10 @@
   const coreExecute=execute;
   execute=function(){
     const a=currentAction||aiLocal();
+    if(a?.type==='CALL'){
+      location.href=callCampaignUrl(a);
+      return;
+    }
     if(a?.type==='RADAR'&&a.radar){
       const r=a.radar;
       openModal('VAI IN ZONA',`<h3>${esc(r.COMUNE||'')} · ${esc(r.DOVE_ANDRE||'')}</h3><p>${esc(r.COSA_CERCO||'Lavora questo indirizzo secondo la procedura assegnata.')}</p><p class="muted">Vai sul posto. Osserva solo fatti reali. Se parli con qualcuno, registra esclusivamente ciò che ti viene detto. Non inventare conclusioni.</p><div class="row"><a class="btn primary linkbtn" target="_blank" rel="noopener" href="${maps(r)}">APRI MAPPA</a>${r.URL?`<a class="btn linkbtn" target="_blank" rel="noopener" href="${esc(r.URL)}">APRI FONTE</a>`:''}<button class="btn" id="radarDone">FATTO → AVANTI</button></div>`);
@@ -57,7 +74,7 @@
       const box=document.createElement('div');
       box.innerHTML='<hr style="border:0;border-top:1px solid #d9ded9;margin:16px 0"><button class="btn" id="f1SystemMap">FUNZIONI DEL SISTEMA</button>';
       body.appendChild(box);
-      document.querySelector('#f1SystemMap').onclick=()=>openModal('COSA FA F1 OS',`<p><b>Tu parti sempre da OGGI.</b> Il sistema apre gli strumenti quando servono.</p><div class="stack"><a class="item" href="${LAUNCHER}telefonate-oggi.html"><b>Centrale telefonate</b><small>Chiamate guidate e registrazione esiti.</small></a><a class="item" href="${LAUNCHER}seller-radar-unico.html"><b>Seller Radar</b><small>Segnali territoriali e priorità.</small></a><a class="item" href="${LAUNCHER}market-intelligence.html"><b>Market Intelligence</b><small>Dati da usare prima di appuntamenti e valutazioni.</small></a><a class="item" href="${LAUNCHER}radar-edilizio.html"><b>Radar edilizio</b><small>Permessi, cantieri e segnali pubblici.</small></a><a class="item" href="${LAUNCHER}giro-acquisizione.html"><b>Giro acquisizione</b><small>Percorso operativo sul territorio.</small></a><button class="item" id="goPractices"><b>Pratiche</b><small>Incarichi, documenti, Open House e piano marketing.</small></button></div><p class="muted">Queste funzioni non sono un secondo software: sono strumenti interni di F1 OS. L’AI decide quando usarli.</p>`);
+      document.querySelector('#f1SystemMap').onclick=()=>openModal('COSA FA F1 OS',`<p><b>Tu parti sempre da OGGI.</b> Il sistema apre gli strumenti quando servono.</p><div class="stack"><a class="item" href="${LAUNCHER}telefonate-oggi.html"><b>Campagne telefoniche guidate</b><small>Coda, script dinamico, ascolto/trascrizione, INTERVENGO IO, esito, CRM e prossimo numero.</small></a><a class="item" href="${LAUNCHER}seller-radar-unico.html"><b>Seller Radar</b><small>Segnali territoriali e priorità.</small></a><a class="item" href="${LAUNCHER}market-intelligence.html"><b>Market Intelligence</b><small>Dati da usare prima di appuntamenti e valutazioni.</small></a><a class="item" href="${LAUNCHER}radar-edilizio.html"><b>Radar edilizio</b><small>Permessi, cantieri e segnali pubblici.</small></a><a class="item" href="${LAUNCHER}giro-acquisizione.html"><b>Giro acquisizione</b><small>Percorso operativo sul territorio.</small></a><button class="item" id="goPractices"><b>Pratiche</b><small>Incarichi, documenti, Open House e piano marketing.</small></button></div><p class="muted">Queste funzioni non sono un secondo software: sono strumenti interni di F1 OS. L’AI decide quando usarli.</p>`);
       setTimeout(()=>{const g=document.querySelector('#goPractices');if(g)g.onclick=()=>{document.querySelector('#modal').close();nav('pratiche');}},0);
     },0);
   };
