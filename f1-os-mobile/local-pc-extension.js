@@ -10,7 +10,6 @@
     try{return JSON.parse(localStorage.getItem('f1_session')||'null')}catch(e){return null}
   }
   function practiceHref(contactId=''){
-    const s=currentSession();
     let u=base+'/incarico';
     if(contactId)u+='?contact_id='+encodeURIComponent(contactId);
     return u;
@@ -42,14 +41,9 @@
     document.getElementById('localPracticeInfo').onclick=()=>openModal('MOTORE PRATICHE PC',`<p><b>Perché esiste:</b> la compilazione completa dell’incarico e i documenti locali richiedono il motore installato sul PC.</p><p><b>Fai così:</b> apri il cliente nel CRM e premi COMPILA INCARICO. Il modulo precompila ciò che conosce, controlla i documenti e prepara la stampa in due copie.</p><p>La pratica viene poi sincronizzata nello stesso CRM centrale che vedi sul telefono.</p>`);
   }
 
-  function addContactPracticeButton(){
+  function addContactPracticeButton(cid){
     const dlg=document.getElementById('modal');
-    if(!dlg?.open||document.getElementById('f1ContactPractice'))return;
-    const title=document.getElementById('modalTitle')?.textContent||'';
-    const buttons=[...document.querySelectorAll('[data-contact]')];
-    const selected=buttons.find(b=>(b.querySelector('b')?.textContent||'').trim()===title.trim());
-    const cid=selected?.dataset.contact;
-    if(!cid)return;
+    if(!cid||!dlg?.open||document.getElementById('f1ContactPractice'))return;
     const row=document.querySelector('#modalBody .row');
     if(!row)return;
     const a=document.createElement('a');a.id='f1ContactPractice';a.className='btn primary linkbtn';a.href=practiceHref(cid);a.textContent='▤ COMPILA INCARICO';row.appendChild(a);
@@ -63,6 +57,6 @@
   function boot(){addLocalPracticeTools();markLocalEngine();linkCloudSession()}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
   document.querySelectorAll('.nav').forEach(b=>b.addEventListener('click',()=>setTimeout(()=>{addLocalPracticeTools();linkCloudSession()},0)));
-  document.addEventListener('click',e=>{if(e.target.closest('[data-contact]'))setTimeout(addContactPracticeButton,20)});
+  document.addEventListener('click',e=>{const item=e.target.closest('[data-contact]');if(item)setTimeout(()=>addContactPracticeButton(item.dataset.contact),20)});
   setInterval(linkCloudSession,4000);
 })();
