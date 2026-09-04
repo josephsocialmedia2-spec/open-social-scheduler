@@ -1,23 +1,66 @@
 {
-  "version": 1,
-  "name": "Instagram Feed + Reels Content Production Policy",
-  "source_basis": "User-supplied Meta Instagram Feed ranking directives + Meta Reels creative guidance",
+  "version": 2,
+  "name": "Instagram Feed + Reels Full Ranking and Production Policy",
+  "source_basis": "User-supplied Meta Instagram Feed ranking directives, preserved as operational rules without reducing them to a generic summary",
+  "scope_note": {
+    "feed": "This policy covers the Instagram Feed ranking system described in the supplied directives.",
+    "suggested_content": "Suggested content can be governed by a separate recommendation system and must not be falsely treated as identical to the followed-account Feed ranking system.",
+    "ads": "Ads are separate from the organic Feed ranking system described here and are measured through Meta Ads/Insights rather than assumed to share the same organic ranking behavior."
+  },
   "feed_system": {
+    "relationship_context": {
+      "rule": "Feed predictions depend in part on the content and people a viewer follows, likes and interacts with.",
+      "production_implication": "Build repeated relevance with a defined audience; do not treat each post as isolated from prior audience-account interaction history."
+    },
     "inventory": {
-      "rule": "The feed starts from eligible posts from followed accounts, then integrity systems remove content that violates platform rules.",
-      "production_implication": "Every asset must be policy-safe, clear, original/reusable as permitted, and designed for an identifiable audience."
+      "rule": "The system first gathers potential posts from accounts the viewer follows and applies integrity filtering.",
+      "production_implication": "Every asset must be policy-safe, truthful, coherent and designed for an identifiable audience."
     },
     "signals": {
-      "rule": "Ranking uses multiple input signals about the creator, the media type, prior interactions and the current post.",
-      "production_implication": "Do not optimize for one vanity metric. Build content around audience relevance, media fit, prior comparable performance and meaningful actions."
+      "rule": "The ranking system considers multiple input signals about the creator, media type, viewer relationship and current post.",
+      "production_implication": "Do not optimize for a single vanity metric. Evaluate audience relevance, media fit, prior comparable performance and meaningful actions together."
     },
     "predictions": {
-      "rule": "The system predicts which posts a person may find useful and relevant.",
-      "production_implication": "Before creation define one audience, one objective and one message that gives that audience a clear reason to stop, consume and act."
+      "rule": "Models predict which content a person may find most useful and relevant.",
+      "production_implication": "Before creation define one precise audience, one objective and one main message with a clear reason to stop, consume and act."
     },
     "ranking_score": {
-      "rule": "Eligible posts are scored for relevance and ordered; the feed also seeks a useful mix of content types.",
-      "production_implication": "Score each draft against predicted useful actions and avoid repetitive creative patterns."
+      "rule": "The system scores eligible posts for relevance and orders them; it also seeks a useful mix of content types.",
+      "production_implication": "Score drafts against the full prediction set and maintain creative/format variety instead of repeating one pattern."
+    }
+  },
+  "viewer_controls_and_feedback": {
+    "mute": {
+      "platform_action": "A viewer can mute an account to stop seeing its posts in Feed.",
+      "production_implication": "Avoid repetitive, irrelevant or excessive content that creates a reason to mute the account."
+    },
+    "favorites": {
+      "platform_action": "A viewer can add an account to Favorites; posts from Favorites are shown higher in the main Feed.",
+      "production_implication": "Create recurring utility and trust strong enough that a relevant follower may voluntarily add the account to Favorites. Never fabricate or force this action."
+    },
+    "share": {
+      "platform_action": "A viewer can share a post to a chat, Story, app or website.",
+      "production_implication": "Design naturally share-worthy information where appropriate, especially useful local information, instructions, comparisons and timely updates."
+    },
+    "report": {
+      "platform_action": "A viewer can report content, including spam or false information.",
+      "production_implication": "Reject misleading claims, spam-like tactics and unverified assertions before publication."
+    },
+    "save": {
+      "platform_action": "A viewer can save a post to a collection or collaborative collection.",
+      "production_implication": "Where appropriate, create reference value worth keeping: checklists, procedures, local market data, comparisons, step-by-step guidance and reusable information."
+    },
+    "following_recent": {
+      "platform_action": "Viewers can use Following/Recent views to see followed accounts in reverse chronological order and can use Favorites for prioritized accounts.",
+      "production_implication": "Recency matters operationally, but publication time must come from real Insights when available and must not be invented."
+    },
+    "unfollow": {
+      "platform_action": "A viewer can unfollow an account.",
+      "production_implication": "Monitor repeated low-value content and creative fatigue; do not increase volume at the cost of audience relevance."
+    },
+    "hide": {
+      "platform_action": "A viewer can hide a post, which can influence seeing less similar content.",
+      "production_implication": "Treat hiding/negative feedback as a quality warning where such data is available; reduce confusing, repetitive or irrelevant creative patterns."
     }
   },
   "significant_predictions": {
@@ -26,23 +69,21 @@
       "signals": [
         "how often the viewer advances to the next card",
         "number of carousel units viewed",
-        "whether the carousel was reordered",
+        "whether the carousel was reordered in Feed",
         "whether the post is recommended",
         "number of units in the carousel"
       ],
       "creative_rules": [
         "Card 1 must create a precise reason to continue.",
-        "Each card must add new information and create a logical reason to swipe.",
+        "Every card must add new information and create a logical reason to swipe.",
         "Do not pad the carousel with redundant slides.",
-        "The last card must close the information loop or present the single coherent action."
+        "The final card must close the information loop or present one coherent next action."
       ]
     },
     "positive_action_probability": {
       "applicable_to": ["photo", "carousel", "reel", "video"],
       "signals": [
-        "likes",
-        "comments",
-        "reshares",
+        "positive actions such as like, comment or reshare",
         "time spent on the post",
         "media type used to estimate expected viewing time"
       ],
@@ -68,27 +109,27 @@
     "profile_time_after_post": {
       "applicable_to": ["photo", "carousel", "reel", "video"],
       "signals": [
-        "time spent on creator profile",
+        "time spent on the creator profile",
         "whether the post is recommended",
         "profile visit after viewing the post"
       ],
       "creative_rules": [
         "Make brand identity visible without overwhelming the content.",
         "Create enough credibility or curiosity that the target has a reason to inspect the profile.",
-        "Keep the post coherent with the profile positioning so the transition to the profile makes sense."
+        "Keep the post coherent with profile positioning so the transition to the profile makes sense."
       ]
     },
     "direct_share_probability": {
       "applicable_to": ["photo", "carousel", "reel", "video"],
       "signals": [
-        "whether content is informational such as news, product reviews, tutorials or instructions",
+        "whether content is informational such as news, reviews, tutorials or instructions",
         "recency of the post within 90 days",
-        "whether it is a repost",
+        "whether it is a repost or organic repost",
         "opening the share sheet and selecting a recipient",
         "whether the post is recommended"
       ],
       "creative_rules": [
-        "Where appropriate, prefer useful information people may naturally send to another person.",
+        "Prefer useful information people may naturally send to another person when appropriate.",
         "Do not ask for meaningless shares; make the information itself share-worthy.",
         "Use current, relevant and specific information when the subject is time-sensitive."
       ]
@@ -100,12 +141,12 @@
         "viewer Reels watch-time group",
         "whether the post is recommended",
         "time spent on the post",
-        "recent reshare-button use"
+        "recent reshare-button use in the previous 28 days"
       ],
       "creative_rules": [
         "For photos, do not overload the image with text.",
         "Use one primary visual message and move explanation to the caption when necessary.",
-        "Design the content so understanding requires useful attention, not confusion."
+        "Design content so useful attention is rewarded rather than created through confusion."
       ]
     },
     "first_post_skip_probability": {
@@ -114,7 +155,7 @@
         "whether the first post was actually viewed",
         "time spent on the first post",
         "whether an action occurred",
-        "whether the post is first in feed"
+        "whether the post is first in Feed"
       ],
       "creative_rules": [
         "Assume every post may be the first item a follower sees.",
@@ -127,7 +168,7 @@
       "signals": [
         "whether the post is recommended",
         "whether viewing time reaches 10 seconds",
-        "total viewing time including Reels shown in feed"
+        "total viewing time including Reels shown in Feed"
       ],
       "creative_rules": [
         "Create a strong first 1-3 seconds and a reason to continue beyond the hook.",
@@ -151,7 +192,7 @@
     "session_continuation_after_first_post": {
       "applicable_to": ["photo", "carousel", "reel", "video"],
       "signals": [
-        "whether the post is first in feed",
+        "whether the post is first in Feed",
         "whether it was viewed for at least 3 seconds",
         "time spent in the rest of the session after the first post"
       ],
@@ -163,20 +204,22 @@
     }
   },
   "gallery_suggestion_metadata": {
+    "permission_required": true,
     "signals": [
       "recency of photo/video capture",
       "capture location",
       "whether media was favorited",
       "presence of people or animals"
     ],
-    "production_implication": "When owned gallery metadata is available, it may be used to organize candidate media, but presence of people/animals is not itself a quality signal and must still be checked against the content brief."
+    "production_implication": "When the user has granted Instagram access to owned gallery metadata, these fields may help organize candidate media for Stories, posts or Reels. They are selection metadata, not proof that an asset will rank well.",
+    "privacy_rule": "Do not infer private or sensitive traits from people present in media."
   },
   "reels_creative_essentials": {
     "format": "9:16 vertical full-screen",
-    "audio": "Use intentional audio when rights permit; Meta guidance identifies audio as a key Reels creative element.",
+    "audio": "Use intentional audio when rights permit; keep the message understandable without audio.",
     "safe_area": "Keep the bottom 35% free of essential creative elements, text and logos so interface overlays do not obscure the message.",
     "message": "Keep primary messages inside the safe area.",
-    "first_frame": "The first frame/first seconds must make the subject and value understandable immediately.",
+    "first_frame": "The first frame/first 1-3 seconds must make the subject and value understandable immediately.",
     "captions": "Use captions/subtitles when they improve context, clarity and accessibility.",
     "brand": "Show the brand clearly and coherently, especially for conversion-oriented Reels.",
     "harmony": "Use visually coherent clips/assets; avoid mixing unrelated styles and shooting conditions without a reason.",
@@ -186,7 +229,7 @@
     "do": [
       "highlight the product/service clearly",
       "keep the brand visible",
-      "show special offers when genuinely relevant",
+      "show special offers only when genuine and relevant",
       "create harmonious content",
       "use a clear purchase/action CTA when the objective is conversion"
     ],
@@ -219,15 +262,20 @@
   "reels_editing": {
     "animate_static_images": "Use movement/transitions when turning static images into Reels, but movement must improve viewing rather than distract.",
     "subtitles": "Add subtitles/captions to contextualize, clarify and improve accessibility.",
-    "audio": "Use rights-cleared/royalty-free audio; Meta Audio Collection is one supported source in the supplied guidance.",
+    "audio": "Use rights-cleared/royalty-free audio.",
     "cutout": "Background removal/cutout may be used to emphasize subjects, text or alternate backgrounds when coherent.",
-    "metrics_to_review": [
+    "metrics_to_review_when_available": [
       "skip rate",
       "average watch time",
+      "3-second view signal",
+      "10-second view signal",
       "like rate",
       "share rate",
+      "direct share/send rate",
       "comment rate",
-      "save rate"
+      "save rate",
+      "profile visits",
+      "audio activation signal"
     ]
   },
   "ai_assisted_reels": {
@@ -241,12 +289,19 @@
     ],
     "rules": [
       "Use AI to scale what already works, renew creative faster and reuse existing assets.",
-      "Generated text variants must be based on the brand tone and prior high-performing ads/content when such data exists.",
+      "Generated text variants must be based on brand tone and prior high-performing comparable content when such data exists.",
       "Convert existing video to 9:16 without damaging the subject or brand coherence.",
-      "AI output remains subject to the same quality, truthfulness, brand and rights checks as manually produced media."
+      "AI output remains subject to the same quality, truthfulness, brand, integrity and rights checks as manually produced media."
     ]
   },
+  "measurement_policy": {
+    "principle": "Record only metrics actually exposed by Instagram/Meta or manually verifiable. Never invent unavailable ranking probabilities.",
+    "core_business_metrics": ["profile visits", "website/contact clicks", "DMs", "qualified replies", "leads", "appointments", "valuations", "mandates"],
+    "content_metrics_when_available": ["reach", "impressions", "likes", "comments", "reshares", "saves", "average watch time", "skip rate", "carousel progression/completion", "3-second views", "10-second views", "profile visits after content", "direct shares/sends"],
+    "comparison_rule": "Compare like-for-like formats, objectives, audience and time windows. Do not claim causal ranking effects from one post."
+  },
   "mandatory_prepublication_checks": [
+    "integrity_and_truthfulness_passed",
     "audience_is_precise",
     "single_objective",
     "single_main_message",
@@ -260,10 +315,18 @@
     "cta_matches_objective_or_is_omitted",
     "question_is_relevant_if_used",
     "content_is_distinct_enough_from_recent_posts",
+    "creative_fatigue_reviewed",
     "skip_risk_reviewed",
     "dwell_time_value_reviewed",
     "direct_share_value_reviewed",
+    "save_value_reviewed",
     "profile_visit_value_reviewed",
-    "format_specific_rules_passed"
+    "negative_feedback_risk_reviewed",
+    "format_specific_rules_passed",
+    "carousel_completion_logic_passed_if_carousel",
+    "first_3_seconds_passed_if_video",
+    "reason_to_continue_beyond_10_seconds_passed_if_video_or_carousel",
+    "audio_intent_and_silent_comprehension_passed_if_video",
+    "gallery_metadata_used_only_with_permission_if_used"
   ]
 }
