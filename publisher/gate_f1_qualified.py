@@ -2,8 +2,8 @@
 """Automated producer-side gate for F1 qualified-seller content.
 
 The browser Ranking Gate is a human audit UI. This script is the GitHub-side
-counterpart: it rejects duplicate, incoherent or weakly-qualified assets before
-rendering. It never predicts Instagram's internal score.
+counterpart: it rejects duplicate, incoherent, weakly-qualified or unsupported
+claims before rendering. It never predicts Instagram's internal score.
 """
 from __future__ import annotations
 
@@ -16,11 +16,25 @@ ROOT = Path(__file__).resolve().parents[1]
 QUEUE = ROOT / "publisher" / "qualified_14d_queue.json"
 FEEDBACK = ROOT / "publisher" / "gate_feedback.json"
 
-SELLER_TERMS = {"vendere", "vendita", "proprietari", "proprietario", "casa", "immobile", "valutazione"}
+SELLER_TERMS = {"vendere", "vendita", "proprietari", "proprietario", "casa", "immobile", "immobili", "valutazione"}
 BUYER_ONLY = {"cerco casa", "cerco affitto", "affitto cercasi", "inquilino"}
 BAIT = {
     "metti like", "lascia un like", "tagga un amico", "tagga 3 amici",
     "condividi se sei d'accordo", "commenta sì", "scrivi sì nei commenti",
+}
+UNVERIFIED_DEMAND_CLAIMS = {
+    "abbiamo clienti",
+    "abbiamo già clienti",
+    "clienti interessati",
+    "clienti pronti",
+    "acquirenti pronti",
+    "acquirenti interessati",
+    "richieste attive",
+    "richiesta attiva",
+    "cliente cerca",
+    "clienti cercano",
+    "abbiamo un acquirente",
+    "abbiamo acquirenti",
 }
 REQUIRED_QUALIFICATION = {"comune", "tipologia", "mq", "tempistica_vendita"}
 
@@ -87,6 +101,17 @@ def check_job(job: dict) -> list[str]:
     if not REQUIRED_QUALIFICATION.issubset(required_fields):
         reasons.append("qualification_fields_incomplete")
 
+    # Buyer-demand claims are allowed only when a real source has been explicitly verified.
+    demand_claims = [x for x in UNVERIFIED_DEMAND_CLAIMS if x in text]
+    if demand_claims:
+        if not job.get("demand_evidence_verified") or not str(job.get("demand_evidence_source") or "").strip():
+            reasons.append("unverified_buyer_demand_claim")
+
+    # The acquisition campaign must start from the truthful property-search message.
+    if str(job.get("source_item_id") or "").upper() == "R01":
+        if "siamo alla ricerca di immobili" not in text:
+            reasons.append("first_message_not_property_search")
+
     # The qualifying CTA must actually be visible in the caption.
     cap = norm(job.get("caption"))
     for needle in ("valutazione", "comune", "tipologia", "mq", "quando"):
@@ -142,12 +167,10 @@ def main() -> int:
     jobs = list(data.get("jobs") or [])
     rows = []
 
-    # First run content-level checks.
     for job in jobs:
         reasons = check_job(job)
         rows.append({"job_id": job["id"], "format": job.get("format"), "reasons": reasons})
 
-    # Then detect creative fatigue across the batch. CTA boilerplate is excluded by comparing title + main message only.
     signatures = {j["id"]: tokens(str(j.get("title") or "") + " " + str(j.get("main_message") or "")) for j in jobs}
     for i, a in enumerate(jobs):
         for b in jobs[i + 1:]:
@@ -170,12 +193,13 @@ def main() -> int:
     save(QUEUE, data)
 
     feedback = {
-        "version": 1,
+        "version": 2,
         "source": "producer_side_instagram_gate",
         "purpose": "qualified_seller_leads",
         "summary": data["gate_summary"],
         "blocked": [{"job_id": j["id"], "reasons": j["gate_reasons"]} for j in blocked],
         "passed": [j["id"] for j in passed],
+        "claim_policy": "Buyer-demand claims require verified evidence source; acquisition search does not imply existing buyers.",
         "note": "This gate checks policy compliance and content coherence; it does not estimate Instagram's internal ranking score.",
     }
     save(FEEDBACK, feedback)
