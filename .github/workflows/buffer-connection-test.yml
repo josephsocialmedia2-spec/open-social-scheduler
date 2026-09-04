@@ -46,17 +46,26 @@ jobs:
           import buffer_twice_daily as b
 
           api_key = os.getenv('BUFFER_API_KEY', '').strip()
-          cloudinary_url = os.getenv('CLOUDINARY_URL', '').strip()
+          cloudinary_raw = os.getenv('CLOUDINARY_URL', '').strip()
           missing = [name for name, value in (
               ('BUFFER_API_KEY', api_key),
-              ('CLOUDINARY_URL', cloudinary_url),
+              ('CLOUDINARY_URL', cloudinary_raw),
           ) if not value]
           if missing:
               raise SystemExit('MISSING_SECRETS: ' + ', '.join(missing))
 
+          # Cloudinary may display the credential as CLOUDINARY_URL=cloudinary://...
+          cloudinary_url = cloudinary_raw
+          if cloudinary_url.startswith('CLOUDINARY_URL='):
+              cloudinary_url = cloudinary_url.split('=', 1)[1].strip()
+          cloudinary_url = cloudinary_url.strip('"\'')
+
           organization_id, channels = b.discover_buffer_channels(api_key)
           if set(channels) != {'facebook', 'instagram', 'linkedin'}:
               raise SystemExit('BUFFER_CHANNELS_INVALID: ' + json.dumps(channels, ensure_ascii=False))
+
+          if not cloudinary_url.startswith('cloudinary://'):
+              raise SystemExit('CLOUDINARY_URL_FORMAT_INVALID: expected full cloudinary://API_KEY:API_SECRET@CLOUD_NAME value')
 
           # Valid 1x1 transparent PNG; verifies Cloudinary credentials and public delivery.
           png = base64.b64decode(
