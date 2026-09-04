@@ -80,6 +80,18 @@ jobs:
           api_key = unquote(parsed.username)
           api_secret = unquote(parsed.password)
 
+          diagnostic = {
+              'api_key_matches_cloudinary_screen': api_key == '259571764125926',
+              'cloud_name_matches_cloudinary_screen': cloud_name == 'xqrptpae',
+              'api_secret_looks_masked': bool(api_secret) and set(api_secret) == {'*'},
+              'api_secret_looks_placeholder': api_secret.lower() in {'<your_api_secret>', 'your_api_secret', 'api_secret'},
+          }
+          print('CLOUDINARY_SAFE_DIAGNOSTIC: ' + json.dumps(diagnostic))
+          if diagnostic['api_secret_looks_masked']:
+              raise SystemExit('CLOUDINARY_SECRET_IS_MASKED: GitHub contains asterisks instead of the real API secret')
+          if diagnostic['api_secret_looks_placeholder']:
+              raise SystemExit('CLOUDINARY_SECRET_IS_PLACEHOLDER')
+
           png = base64.b64decode(
               'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII='
           )
