@@ -1,0 +1,261 @@
+{
+  "version": 1,
+  "generated_at": "2026-09-04T15:10:31Z",
+  "policy": "ANALISI PRIMA DELLA CREAZIONE DEL POST",
+  "clients": {
+    "f1-immobiliare": {
+      "client_id": "f1-immobiliare",
+      "analysis_status": "PARTIAL_INSIGHTS_MISSING",
+      "insights": {
+        "status": "NOT_AVAILABLE",
+        "source_file": null,
+        "audience": {
+          "provenance": null,
+          "age": null,
+          "interests": null,
+          "page_actions": null,
+          "cta_clicks": null
+        },
+        "top_posts": []
+      },
+      "comparable_previous_posts": [
+        {
+          "title": "VALUTAZIONE IMMOBILIARE CON I DATI",
+          "format": "photo",
+          "category": "error",
+          "visual_source": "f1-approved-local-valle-susa",
+          "caption": "VALUTAZIONE IMMOBILIARE CON I DATI.\n\nComparabili, mercato, microzona e strategia: il valore non è un numero inventato per convincere il proprietario. Deve essere una conclusione che puoi capire.\n\nRichiedi una prima analisi gratuita del tuo immobile.\n\nhttps://www.agentpricing.com/j.malafronte\n\n371 370 8294 · 371 424 6300\n\n#ValleDiSusa #Condove #Vaie #ChiusaDiSanMichele #SantAmbrogioDiTorino #Avigliana",
+          "likes": null,
+          "comments": null,
+          "shares": null,
+          "cta_clicks": null,
+          "metrics_status": "NOT_AVAILABLE_IN_QUEUE"
+        },
+        {
+          "title": "LA MICROZONA CAMBIA IL VALORE",
+          "format": "photo",
+          "category": "data",
+          "visual_source": "f1-approved-local-valle-susa",
+          "caption": "LA MICROZONA CAMBIA IL VALORE.\n\nStesso comune non significa stesso prezzo. Via, piano, esposizione, servizi, accessibilità e domanda possono cambiare il posizionamento di un immobile anche a poche centinaia di metri di distanza.\n\nPer questo una valutazione seria parte dal territorio reale, non da una media generica.\n\nhttps://www.agentpricing.com/j.malafronte\n\n371 370 8294 · 371 424 6300\n\n#ValleDiSusa #Oulx #Bardonecchia #SauzeDOulx #CesanaTorinese #Chiomonte",
+          "likes": null,
+          "comments": null,
+          "shares": null,
+          "cta_clicks": null,
+          "metrics_status": "NOT_AVAILABLE_IN_QUEUE"
+        },
+        {
+          "title": "STAI PENSANDO DI VENDERE CASA?",
+          "format": "photo",
+          "category": "proof",
+          "visual_source": "f1-approved-local-valle-susa",
+          "caption": "STAI PENSANDO DI VENDERE CASA?\n\nVendere bene comincia prima dell'annuncio. Prima analizziamo valore, concorrenza, domanda e posizionamento dell'immobile; poi costruiamo la strategia di vendita.\n\nSe hai una casa o un appartamento in Valle di Susa possiamo partire da una valutazione gratuita, chiara e basata sui dati.\n\nhttps://www.agentpricing.com/j.malafronte\n\n371 370 8294 · 371 424 6300\n\n#ValleDiSusa #Susa #BorgoneSusa #Bussoleno #SanGiorio #VillarFocchiardo",
+          "likes": null,
+          "comments": null,
+          "shares": null,
+          "cta_clicks": null,
+          "metrics_status": "NOT_AVAILABLE_IN_QUEUE"
+        },
+        {
+          "title": "HAI UN APPARTAMENTO DA VALUTARE?",
+          "format": "photo",
+          "category": "error",
+          "visual_source": "f1-approved-local-valle-susa",
+          "caption": "HAI UN APPARTAMENTO DA VALUTARE?\n\nIl prezzo non si sceglie a sensazione. Si verifica con dati, immobili comparabili, caratteristiche reali, microzona e domanda.\n\nSe possiedi un appartamento in Valle di Susa e vuoi capire quanto può valere oggi, richiedi una prima analisi gratuita.\n\nhttps://www.agentpricing.com/j.malafronte\n\n371 370 8294 · 371 424 6300\n\n#ValleDiSusa #Avigliana #Almese #SantAmbrogioDiTorino #VillarDora #Caprie",
+          "likes": null,
+          "comments": null,
+          "shares": null,
+          "cta_clicks": null,
+          "metrics_status": "NOT_AVAILABLE_IN_QUEUE"
+        },
+        {
+          "title": "CERCASI APPARTAMENTI IN VALLE DI SUSA",
+          "format": "photo",
+          "category": "data",
+          "visual_source": "f1-approved-local-valle-susa",
+          "caption": "CERCASI APPARTAMENTI IN VALLE DI SUSA\n\nStiamo cercando appartamenti e abitazioni per persone interessate ad acquistare nella nostra zona.\n\nHai una casa o un appartamento che stai pensando di vendere? Prima di scegliere prezzo e strategia verifichiamo microzona, immobili comparabili, concorrenza e domanda reale.\n\nPrima valutazione gratuita e senza impegno:\nhttps://www.agentpricing.com/j.malafronte\n\n371 370 8294 · 371 424 6300\n\n#ValleDiSusa #Avigliana #Susa #Condove #Almese #Bussoleno",
+          "likes": null,
+          "comments": null,
+          "shares": null,
+          "cta_clicks": null,
+          "metrics_status": "NOT_AVAILABLE_IN_QUEUE"
+        },
+        {
+          "title": "CASE IN VALLE DI SUSA · VALUTAZIONE IMMOBILIARE",
+          "format": "photo",
+          "category": "proof",
+          "visual_source": "manual-upload",
+          "caption": "RICHIEDI UNA VALUTAZIONE GRATUITA DEL TUO IMMOBILE\nhttps://www.agentpricing.com/j.malafronte\n\nVUOI VENDERE CASA IN VALLE DI SUSA?\n\nPrima di pubblicare un annuncio, parti da una valutazione immobiliare costruita su dati, caratteristiche reali dell'immobile, microzona e confronto con il mercato.\n\nF1 Immobiliare organizza la vendita partendo dall'analisi, non da un prezzo scelto a sensazione.\n\nRichiedi una valutazione gratuita del tuo immobile.\n371 370 8294 · 371 424 6300\n\n#F1Immobiliare #ValleDiSu",
+          "likes": null,
+          "comments": null,
+          "shares": null,
+          "cta_clicks": null,
+          "metrics_status": "NOT_AVAILABLE_IN_QUEUE"
+        },
+        {
+          "title": "LAVORA CON F1 IMMOBILIARE",
+          "format": "photo",
+          "category": "error",
+          "visual_source": "manual-upload",
+          "caption": "RICHIEDI UNA VALUTAZIONE GRATUITA DEL TUO IMMOBILE\nhttps://www.agentpricing.com/j.malafronte\n\nLAVORA CON F1 IMMOBILIARE.\n\nCerchiamo collaboratori e collaboratrici da formare e affiancare, oltre ad agenti immobiliari già abilitati.\n\nPer chi non è ancora abilitato, il percorso iniziale riguarda presidio della zona, contatto con residenti e proprietari, ricerca immobili, appuntamenti e raccolta delle informazioni iniziali, sempre con affiancamento. Le attività riservate alla mediazione e alla negoz",
+          "likes": null,
+          "comments": null,
+          "shares": null,
+          "cta_clicks": null,
+          "metrics_status": "NOT_AVAILABLE_IN_QUEUE"
+        }
+      ],
+      "public": "Proprietari di immobili residenziali in Valle di Susa che stanno valutando la vendita o vogliono conoscere il valore reale dell'immobile",
+      "objective": "richiesta informazioni",
+      "main_message": "Prima di vendere casa, il valore va verificato con dati, comparabili, microzona e domanda reale.",
+      "cta_policy": "ONE_OR_NONE",
+      "quality_gate": {
+        "sharp_media_required": true,
+        "brand_coherence_required": true,
+        "recognizable_subject_required": true,
+        "short_visual_text_required": true,
+        "single_main_idea_required": true,
+        "relevant_question_only": true
+      },
+      "publication_timing": {
+        "status": "UNVERIFIED_NO_INSIGHTS",
+        "day": null,
+        "time_window": null,
+        "rule": "Use Page Insights audience-online data. Never invent a best time."
+      },
+      "manual_approval_required": true
+    },
+    "real-media-pro": {
+      "client_id": "real-media-pro",
+      "analysis_status": "PARTIAL_INSIGHTS_MISSING",
+      "insights": {
+        "status": "NOT_AVAILABLE",
+        "source_file": null,
+        "audience": {
+          "provenance": null,
+          "age": null,
+          "interests": null,
+          "page_actions": null,
+          "cta_clicks": null
+        },
+        "top_posts": []
+      },
+      "comparable_previous_posts": [
+        {
+          "title": "SEZIONI MODULARI PER VENDERE MEGLIO",
+          "format": "photo",
+          "category": "nurture",
+          "visual_source": "shopify-theme-store-description-only",
+          "caption": "SEZIONI MODULARI PER VENDERE MEGLIO.\n\nVivid mette insieme struttura pulita, personalizzazione, ricerca, filtri e sezioni dedicate alla scoperta dei prodotti.\n\nPer Real Media Pro il punto non è replicare il tema: è utilizzare queste logiche per progettare un'esperienza originale che aiuti l'utente a trovare, capire e scegliere più facilmente.\n\nNessuna immagine del Theme Store viene riutilizzata.\n\nAnalisi strategica gratuita: 371 370 8294",
+          "likes": null,
+          "comments": null,
+          "shares": null,
+          "cta_clicks": null,
+          "metrics_status": "NOT_AVAILABLE_IN_QUEUE"
+        },
+        {
+          "title": "SITI WEB CHE VALORIZZANO IL BRAND",
+          "format": "photo",
+          "category": "attract",
+          "visual_source": "shopify-theme-store-description-only",
+          "caption": "SITI WEB CHE VALORIZZANO IL BRAND.\n\nAllure unisce semplicità, impatto visivo, scoperta dei prodotti e una struttura pensata per sostenere la vendita. È un riferimento utile per capire quanto design e percorso commerciale debbano lavorare insieme.\n\nNoi partiamo da questi principi per creare un sito originale, coerente con il brand e costruito attorno ai suoi prodotti e clienti.\n\nNessuna immagine Shopify viene copiata.\n\nAnalisi strategica gratuita: 371 370 8294",
+          "likes": null,
+          "comments": null,
+          "shares": null,
+          "cta_clicks": null,
+          "metrics_status": "NOT_AVAILABLE_IN_QUEUE"
+        },
+        {
+          "title": "DESIGN PREMIUM, PRESTAZIONI VELOCI",
+          "format": "photo",
+          "category": "convert",
+          "visual_source": "shopify-theme-store-description-only",
+          "caption": "DESIGN PREMIUM, PRESTAZIONI VELOCI.\n\nPrestige mostra come un e-commerce premium possa combinare immagine di marca, prodotto, sezioni configurabili, velocità e accessibilità.\n\nReal Media Pro traduce questi principi in un progetto originale costruito sull'identità del cliente: nessuna copia del tema, ma una struttura pensata per far percepire valore e facilitare l'acquisto.\n\nAnalisi strategica gratuita: 371 370 8294",
+          "likes": null,
+          "comments": null,
+          "shares": null,
+          "cta_clicks": null,
+          "metrics_status": "NOT_AVAILABLE_IN_QUEUE"
+        },
+        {
+          "title": "MOBILE FIRST, PERCORSO CHIARO",
+          "format": "photo",
+          "category": "nurture",
+          "visual_source": "shopify-theme-store-description-only",
+          "caption": "MOBILE FIRST, PERCORSO CHIARO.\n\nIl tema Shopify Broadcast mette al centro sezioni personalizzabili, velocità, mobile, acquisto rapido e strumenti che accompagnano il cliente verso la vendita.\n\nDa questa logica costruiamo un concept Real Media Pro completamente originale: gerarchia chiara, CTA visibili, navigazione veloce e meno attrito da smartphone.\n\nNessuna immagine del tema viene copiata o ripubblicata.\n\nAnalisi strategica gratuita: 371 370 8294",
+          "likes": null,
+          "comments": null,
+          "shares": null,
+          "cta_clicks": null,
+          "metrics_status": "NOT_AVAILABLE_IN_QUEUE"
+        },
+        {
+          "title": "SHOPIFY: DAL PRODOTTO ALLA CONVERSIONE",
+          "format": "photo",
+          "category": "attract",
+          "visual_source": "shopify-theme-store-description-only",
+          "caption": "SHOPIFY: DAL PRODOTTO ALLA CONVERSIONE.\n\nUn e-commerce deve rendere semplice capire il prodotto, confrontare le alternative e arrivare all'azione. Prendiamo ispirazione dalle logiche del tema Shopify Shapes: struttura creativa, sezioni modulari, quick buy e percorso di scoperta chiaro.\n\nLa grafica che mostriamo è originale: non copiamo immagini o creatività del tema.\n\nReal Media Pro progetta siti Shopify orientati a navigazione, prodotto e conversione.\n\nAnalisi strategica gratuita: 371 370 8294",
+          "likes": null,
+          "comments": null,
+          "shares": null,
+          "cta_clicks": null,
+          "metrics_status": "NOT_AVAILABLE_IN_QUEUE"
+        },
+        {
+          "title": "SOCIAL + SITO + VENDITE",
+          "format": "photo",
+          "category": "convert",
+          "visual_source": "pixabay-fresh-static-photo",
+          "caption": "SOCIAL, SITO E VENDITE: UN UNICO PERCORSO.\n\nI social attirano attenzione. Il sito deve trasformarla in interesse, richiesta o acquisto. Se i due sistemi sono scollegati, si perdono opportunità. Real Media Pro costruisce un percorso digitale misurabile.\n\nRichiedi un'analisi strategica gratuita.\n371 370 8294\n\n#RealMediaPro #SocialMediaMarketing #Ecommerce #SitiWeb #LeadGeneration #Torino",
+          "likes": null,
+          "comments": null,
+          "shares": null,
+          "cta_clicks": null,
+          "metrics_status": "NOT_AVAILABLE_IN_QUEUE"
+        },
+        {
+          "title": "ECOMMERCE CHE CONVERTE",
+          "format": "photo",
+          "category": "nurture",
+          "visual_source": "pixabay-fresh-static-photo",
+          "caption": "ECOMMERCE: DESIGN E CONVERSIONE DEVONO LAVORARE INSIEME.\n\nUna vetrina digitale moderna deve essere leggibile da smartphone, veloce e costruita per accompagnare il cliente dal prodotto al checkout. Real Media Pro progetta strategie digitali orientate a contatti e vendite.\n\nRichiedi un'analisi strategica gratuita.\n371 370 8294\n\n#RealMediaPro #Ecommerce #Shopify #SitiWeb #MarketingDigitale #AziendeLocali",
+          "likes": null,
+          "comments": null,
+          "shares": null,
+          "cta_clicks": null,
+          "metrics_status": "NOT_AVAILABLE_IN_QUEUE"
+        },
+        {
+          "title": "SITO CHE VENDE",
+          "format": "photo",
+          "category": "attract",
+          "visual_source": "pixabay-fresh-static-photo",
+          "caption": "IL TUO SITO AIUTA DAVVERO A VENDERE?\n\nUn sito efficace non è solo bello: deve rendere chiara l'offerta, guidare la persona e facilitare il contatto o l'acquisto. Real Media Pro analizza presenza digitale, sito, social e percorso commerciale per individuare cosa migliorare.\n\nRichiedi un'analisi strategica gratuita.\n371 370 8294\n\n#RealMediaPro #SitiWeb #Ecommerce #Shopify #DigitalMarketing #Torino #ValleDiSusa",
+          "likes": null,
+          "comments": null,
+          "shares": null,
+          "cta_clicks": null,
+          "metrics_status": "NOT_AVAILABLE_IN_QUEUE"
+        }
+      ],
+      "public": "Imprese e commercianti che vogliono migliorare sito, ecommerce e conversione digitale",
+      "objective": "richiesta informazioni",
+      "main_message": "Un sito efficace deve rendere più semplice capire l'offerta e arrivare all'azione.",
+      "cta_policy": "ONE_OR_NONE",
+      "quality_gate": {
+        "sharp_media_required": true,
+        "brand_coherence_required": true,
+        "recognizable_subject_required": true,
+        "short_visual_text_required": true,
+        "single_main_idea_required": true,
+        "relevant_question_only": true
+      },
+      "publication_timing": {
+        "status": "UNVERIFIED_NO_INSIGHTS",
+        "day": null,
+        "time_window": null,
+        "rule": "Use Page Insights audience-online data. Never invent a best time."
+      },
+      "manual_approval_required": true
+    }
+  }
+}
