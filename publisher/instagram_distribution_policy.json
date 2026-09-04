@@ -1,0 +1,269 @@
+{
+  "version": 1,
+  "name": "Instagram Feed + Reels Content Production Policy",
+  "source_basis": "User-supplied Meta Instagram Feed ranking directives + Meta Reels creative guidance",
+  "feed_system": {
+    "inventory": {
+      "rule": "The feed starts from eligible posts from followed accounts, then integrity systems remove content that violates platform rules.",
+      "production_implication": "Every asset must be policy-safe, clear, original/reusable as permitted, and designed for an identifiable audience."
+    },
+    "signals": {
+      "rule": "Ranking uses multiple input signals about the creator, the media type, prior interactions and the current post.",
+      "production_implication": "Do not optimize for one vanity metric. Build content around audience relevance, media fit, prior comparable performance and meaningful actions."
+    },
+    "predictions": {
+      "rule": "The system predicts which posts a person may find useful and relevant.",
+      "production_implication": "Before creation define one audience, one objective and one message that gives that audience a clear reason to stop, consume and act."
+    },
+    "ranking_score": {
+      "rule": "Eligible posts are scored for relevance and ordered; the feed also seeks a useful mix of content types.",
+      "production_implication": "Score each draft against predicted useful actions and avoid repetitive creative patterns."
+    }
+  },
+  "significant_predictions": {
+    "carousel_completion": {
+      "applicable_to": ["carousel"],
+      "signals": [
+        "how often the viewer advances to the next card",
+        "number of carousel units viewed",
+        "whether the carousel was reordered",
+        "whether the post is recommended",
+        "number of units in the carousel"
+      ],
+      "creative_rules": [
+        "Card 1 must create a precise reason to continue.",
+        "Each card must add new information and create a logical reason to swipe.",
+        "Do not pad the carousel with redundant slides.",
+        "The last card must close the information loop or present the single coherent action."
+      ]
+    },
+    "positive_action_probability": {
+      "applicable_to": ["photo", "carousel", "reel", "video"],
+      "signals": [
+        "likes",
+        "comments",
+        "reshares",
+        "time spent on the post",
+        "media type used to estimate expected viewing time"
+      ],
+      "creative_rules": [
+        "Create something meaningful for the selected audience, not generic engagement bait.",
+        "Make the subject immediately recognizable.",
+        "Use the media format that best serves the message rather than forcing every idea into one format."
+      ]
+    },
+    "skip_probability": {
+      "applicable_to": ["photo", "carousel", "reel", "video"],
+      "signals": [
+        "whether the post is photo, video or carousel",
+        "relative probability of skipping this post versus adjacent posts"
+      ],
+      "creative_rules": [
+        "Remove weak introductions.",
+        "Put the relevant subject, problem, desire, result or information in the first visible unit.",
+        "Avoid generic stock-like, confusing, blurred or visually unrelated assets.",
+        "Keep visual text short and immediately readable."
+      ]
+    },
+    "profile_time_after_post": {
+      "applicable_to": ["photo", "carousel", "reel", "video"],
+      "signals": [
+        "time spent on creator profile",
+        "whether the post is recommended",
+        "profile visit after viewing the post"
+      ],
+      "creative_rules": [
+        "Make brand identity visible without overwhelming the content.",
+        "Create enough credibility or curiosity that the target has a reason to inspect the profile.",
+        "Keep the post coherent with the profile positioning so the transition to the profile makes sense."
+      ]
+    },
+    "direct_share_probability": {
+      "applicable_to": ["photo", "carousel", "reel", "video"],
+      "signals": [
+        "whether content is informational such as news, product reviews, tutorials or instructions",
+        "recency of the post within 90 days",
+        "whether it is a repost",
+        "opening the share sheet and selecting a recipient",
+        "whether the post is recommended"
+      ],
+      "creative_rules": [
+        "Where appropriate, prefer useful information people may naturally send to another person.",
+        "Do not ask for meaningless shares; make the information itself share-worthy.",
+        "Use current, relevant and specific information when the subject is time-sensitive."
+      ]
+    },
+    "predicted_time_on_post": {
+      "applicable_to": ["photo", "carousel", "reel", "video"],
+      "signals": [
+        "for photos, amount of overlaid text",
+        "viewer Reels watch-time group",
+        "whether the post is recommended",
+        "time spent on the post",
+        "recent reshare-button use"
+      ],
+      "creative_rules": [
+        "For photos, do not overload the image with text.",
+        "Use one primary visual message and move explanation to the caption when necessary.",
+        "Design the content so understanding requires useful attention, not confusion."
+      ]
+    },
+    "first_post_skip_probability": {
+      "applicable_to": ["photo", "carousel", "reel", "video"],
+      "signals": [
+        "whether the first post was actually viewed",
+        "time spent on the first post",
+        "whether an action occurred",
+        "whether the post is first in feed"
+      ],
+      "creative_rules": [
+        "Assume every post may be the first item a follower sees.",
+        "The first visible unit must work without prior context.",
+        "Do not rely on a slow setup to explain why the content matters."
+      ]
+    },
+    "first_post_over_10_seconds": {
+      "applicable_to": ["reel", "video", "carousel"],
+      "signals": [
+        "whether the post is recommended",
+        "whether viewing time reaches 10 seconds",
+        "total viewing time including Reels shown in feed"
+      ],
+      "creative_rules": [
+        "Create a strong first 1-3 seconds and a reason to continue beyond the hook.",
+        "Do not reveal only the hook and then repeat it; add progressive value.",
+        "For video, structure the middle so the viewer has a reason to stay beyond 10 seconds."
+      ]
+    },
+    "audio_activation_probability": {
+      "applicable_to": ["reel", "video"],
+      "signals": [
+        "whether the post is recommended",
+        "whether the viewer enables audio",
+        "whether the post is video/Reel"
+      ],
+      "creative_rules": [
+        "Design audio intentionally with music, voiceover or sound effects when rights permit.",
+        "The content must remain understandable with captions/context even if audio is not activated.",
+        "Audio should support the message rather than exist as decoration."
+      ]
+    },
+    "session_continuation_after_first_post": {
+      "applicable_to": ["photo", "carousel", "reel", "video"],
+      "signals": [
+        "whether the post is first in feed",
+        "whether it was viewed for at least 3 seconds",
+        "time spent in the rest of the session after the first post"
+      ],
+      "creative_rules": [
+        "Optimize the first impression for immediate relevance and low confusion.",
+        "Avoid clickbait that disappoints after the first seconds.",
+        "Deliver value quickly enough that the post contributes positively to the viewing session."
+      ]
+    }
+  },
+  "gallery_suggestion_metadata": {
+    "signals": [
+      "recency of photo/video capture",
+      "capture location",
+      "whether media was favorited",
+      "presence of people or animals"
+    ],
+    "production_implication": "When owned gallery metadata is available, it may be used to organize candidate media, but presence of people/animals is not itself a quality signal and must still be checked against the content brief."
+  },
+  "reels_creative_essentials": {
+    "format": "9:16 vertical full-screen",
+    "audio": "Use intentional audio when rights permit; Meta guidance identifies audio as a key Reels creative element.",
+    "safe_area": "Keep the bottom 35% free of essential creative elements, text and logos so interface overlays do not obscure the message.",
+    "message": "Keep primary messages inside the safe area.",
+    "first_frame": "The first frame/first seconds must make the subject and value understandable immediately.",
+    "captions": "Use captions/subtitles when they improve context, clarity and accessibility.",
+    "brand": "Show the brand clearly and coherently, especially for conversion-oriented Reels.",
+    "harmony": "Use visually coherent clips/assets; avoid mixing unrelated styles and shooting conditions without a reason.",
+    "production_quality": "Professional-only footage is not required; phone footage is acceptable when clear, coherent and useful."
+  },
+  "reels_for_sales": {
+    "do": [
+      "highlight the product/service clearly",
+      "keep the brand visible",
+      "show special offers when genuinely relevant",
+      "create harmonious content",
+      "use a clear purchase/action CTA when the objective is conversion"
+    ],
+    "dont": [
+      "mix footage created at very different times/styles without coherence",
+      "assume only professionally shot footage can work"
+    ],
+    "storyboard_patterns": {
+      "uniform_background": ["introduction", "product/subject movement", "closer", "clear CTA"],
+      "customer_interaction": ["wide shot", "close-up", "detail", "clear CTA"],
+      "photo_service_reuse": ["intro close-up/text", "action shot", "group shot", "single shot"]
+    }
+  },
+  "reels_for_results": {
+    "do": [
+      "show one clear CTA",
+      "show the value of taking the action immediately",
+      "keep brand visible",
+      "build the Reel toward the final action"
+    ],
+    "dont": [
+      "focus only on lifestyle or atmosphere when the objective is a measurable action"
+    ],
+    "storyboard_patterns": {
+      "unboxing_or_reveal": ["whole package/result", "details one by one", "group/result together"],
+      "demo": ["start from finished result", "keep product/service visible during demonstration", "return to initial result"],
+      "team_expertise": ["introduce expert and role", "share three relevant expertise/details", "close with a clear next step"]
+    }
+  },
+  "reels_editing": {
+    "animate_static_images": "Use movement/transitions when turning static images into Reels, but movement must improve viewing rather than distract.",
+    "subtitles": "Add subtitles/captions to contextualize, clarify and improve accessibility.",
+    "audio": "Use rights-cleared/royalty-free audio; Meta Audio Collection is one supported source in the supplied guidance.",
+    "cutout": "Background removal/cutout may be used to emphasize subjects, text or alternate backgrounds when coherent.",
+    "metrics_to_review": [
+      "skip rate",
+      "average watch time",
+      "like rate",
+      "share rate",
+      "comment rate",
+      "save rate"
+    ]
+  },
+  "ai_assisted_reels": {
+    "allowed_uses": [
+      "image expansion",
+      "video expansion",
+      "text generation/variants",
+      "background generation for catalog assets",
+      "image animation",
+      "full image generation"
+    ],
+    "rules": [
+      "Use AI to scale what already works, renew creative faster and reuse existing assets.",
+      "Generated text variants must be based on the brand tone and prior high-performing ads/content when such data exists.",
+      "Convert existing video to 9:16 without damaging the subject or brand coherence.",
+      "AI output remains subject to the same quality, truthfulness, brand and rights checks as manually produced media."
+    ]
+  },
+  "mandatory_prepublication_checks": [
+    "audience_is_precise",
+    "single_objective",
+    "single_main_message",
+    "creative_is_sharp",
+    "creative_is_brand_coherent",
+    "subject_is_immediately_recognizable",
+    "visual_text_is_short",
+    "opening_is_immediately_relevant",
+    "caption_has_no_unnecessary_elements",
+    "content_is_meaningful_for_target",
+    "cta_matches_objective_or_is_omitted",
+    "question_is_relevant_if_used",
+    "content_is_distinct_enough_from_recent_posts",
+    "skip_risk_reviewed",
+    "dwell_time_value_reviewed",
+    "direct_share_value_reviewed",
+    "profile_visit_value_reviewed",
+    "format_specific_rules_passed"
+  ]
+}
