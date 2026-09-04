@@ -4,17 +4,21 @@
 This is intentionally separate from the legacy static-photo queue. It creates
 14 Reels + 14 carousels from the canonical qualified-seller plan and never
 invents a best publication time when Instagram Insights are unavailable.
+Content overrides are applied deterministically so acquisition messages can be
+updated without mutating the entire canonical bank.
 """
 from __future__ import annotations
 
 import argparse
 import json
+from copy import deepcopy
 from datetime import date, datetime, timedelta
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
 ROOT = Path(__file__).resolve().parents[1]
 PLAN = ROOT / "publisher" / "content_bank" / "f1-qualified-14d.json"
+OVERRIDES = ROOT / "publisher" / "content_overrides" / "f1-qualified-14d-overrides.json"
 OUT = ROOT / "publisher" / "qualified_14d_queue.json"
 POLICY = ROOT / "publisher" / "instagram_distribution_policy.json"
 CREATORS = ROOT / "publisher" / "instagram_creators_best_practices.json"
@@ -29,6 +33,21 @@ def save(path: Path, data: dict) -> None:
     path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
+def apply_overrides(plan: dict) -> dict:
+    out = deepcopy(plan)
+    if not OVERRIDES.exists():
+        return out
+    data = load(OVERRIDES)
+    by_id = {str(k): dict(v) for k, v in (data.get("items") or {}).items()}
+    for item in out.get("items") or []:
+        patch = by_id.get(str(item.get("id")))
+        if patch:
+            item.update(patch)
+            item["content_override_source"] = "publisher/content_overrides/f1-qualified-14d-overrides.json"
+    out["content_rules"] = dict(data.get("rules") or {})
+    return out
+
+
 def media_for(item: dict, day: date) -> str | list[str]:
     base = f"publisher/media/generated/f1-qualified-14d/{day.isoformat()}"
     safe = item["id"].lower()
@@ -38,7 +57,7 @@ def media_for(item: dict, day: date) -> str | list[str]:
 
 
 def build(end_date: date) -> dict:
-    plan = load(PLAN)
+    plan = apply_overrides(load(PLAN))
     policy = load(POLICY)
     creators = load(CREATORS)
     items = list(plan.get("items") or [])
@@ -104,11 +123,14 @@ def build(end_date: date) -> dict:
                 "first_hook_seconds": 3 if fmt == "reel" else None,
                 "audio_rights": "generated_original_bed_plus_tts" if fmt == "reel" else None,
                 "business_kpi_priority": ["qualified_seller_dm", "valuation_request", "appointment", "mandate"],
+                "demand_evidence_verified": bool(item.get("demand_evidence_verified", False)),
+                "demand_evidence_source": item.get("demand_evidence_source"),
+                "content_override_source": item.get("content_override_source"),
             }
             jobs.append(job)
 
     out = {
-        "version": 1,
+        "version": 2,
         "name": "F1 Qualified Seller 14-Day Queue",
         "generated_at": datetime.now(ROME).isoformat(timespec="seconds"),
         "window_start": start.isoformat(),
@@ -118,6 +140,8 @@ def build(end_date: date) -> dict:
         "formats": {"reel": 14, "carousel": 14},
         "publication_time_policy": "NO_BEST_TIME_WITHOUT_REAL_INSIGHTS",
         "manual_approval_required": True,
+        "buyer_demand_claim_policy": "NO_UNVERIFIED_BUYER_DEMAND_CLAIMS",
+        "content_rules": plan.get("content_rules") or {},
         "jobs": jobs,
     }
     return out
