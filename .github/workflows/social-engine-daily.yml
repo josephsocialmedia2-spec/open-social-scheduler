@@ -15,6 +15,7 @@ on:
       - 'publisher/pre_content_analysis.py'
       - 'publisher/enforce_content_analysis.py'
       - 'publisher/instagram_distribution_policy.json'
+      - 'publisher/instagram_creators_best_practices.json'
       - 'publisher/insights/**'
       - 'publisher/build_cycle_queue.py'
       - 'publisher/apply_photo_only.py'
@@ -87,12 +88,13 @@ jobs:
           sudo apt-get install -y fonts-dejavu-core zip
           python -m pip install --disable-pip-version-check -r publisher/requirements.txt
 
-      - name: Validate publication scripts and Instagram policy
+      - name: Validate publication scripts and Instagram policies
         run: |
           python -m py_compile publisher/pre_content_analysis.py publisher/enforce_content_analysis.py publisher/build_cycle_queue.py publisher/apply_photo_only.py publisher/render_photos_only.py publisher/run_publication_renderer.py
           python - <<'PY'
           import json
           p=json.load(open('publisher/instagram_distribution_policy.json',encoding='utf-8'))
+          c=json.load(open('publisher/instagram_creators_best_practices.json',encoding='utf-8'))
           assert p.get('version')
           required={
             'carousel_completion','positive_action_probability','skip_probability',
@@ -104,7 +106,18 @@ jobs:
           reels=p.get('reels_creative_essentials') or {}
           assert reels.get('format') == '9:16 vertical full-screen'
           assert '35%' in str(reels.get('safe_area') or '')
-          print('INSTAGRAM POLICY VALIDATED')
+          assert c.get('version')
+          cbp=c.get('reels_best_practices') or {}
+          assert cbp.get('hook_first_seconds') == 3
+          assert cbp.get('highest_resolution_possible') is True
+          assert cbp.get('muted_view_optimization') is True
+          assert cbp.get('recommended_non_follower_max_duration_seconds') == 180
+          trial=(c.get('experimentation') or {}).get('trial_reels') or {}
+          assert trial.get('review_after_hours') == 24
+          assert trial.get('auto_share_window_hours') == 72
+          assert 'photo' in (c.get('format_diversification') or {}).get('allowed_mix', [])
+          assert 'reel' in (c.get('format_diversification') or {}).get('allowed_mix', [])
+          print('INSTAGRAM FEED/REELS + CREATORS POLICIES VALIDATED')
           PY
 
       - name: Analyze BEFORE content creation
@@ -122,7 +135,7 @@ jobs:
       - name: Apply approved 5 F1 + 5 RMP policy
         run: python publisher/apply_photo_only.py
 
-      - name: Enforce audience objective message Insights and Instagram policy
+      - name: Enforce audience objective message Insights and Instagram policies
         run: python publisher/enforce_content_analysis.py
 
       - name: Render 10 JPG publications
@@ -154,7 +167,6 @@ jobs:
           assert all(j.get('people_footer_required') is True for j in jobs)
           assert all(str(j.get('caption') or '').strip() for j in jobs)
 
-          # Mandatory analysis-before-creation policy.
           assert all(j.get('analysis_required') is True for j in jobs)
           assert all(str(j.get('target_public') or '').strip() for j in jobs)
           assert all(str(j.get('target_public') or '').strip().lower() != 'tutti' for j in jobs)
@@ -162,7 +174,6 @@ jobs:
           assert all(str(j.get('main_message') or '').strip() for j in jobs)
           assert all(j.get('manual_approval_required') is True for j in jobs)
 
-          # Full Instagram Feed/Reels policy must be attached to every job.
           required_predictions={
               'positive_action_probability','skip_probability','profile_time_after_post',
               'direct_share_probability','predicted_time_on_post','first_post_skip_probability',
@@ -171,6 +182,8 @@ jobs:
           for j in jobs:
               assert j.get('instagram_policy_required') is True
               assert j.get('instagram_policy_version')
+              assert j.get('instagram_creators_policy_version')
+              assert j.get('instagram_creators_best_practices')
               targets=j.get('instagram_prediction_targets') or {}
               assert required_predictions <= set(targets.keys()), (j.get('id'), targets.keys())
               constraints=j.get('instagram_creative_constraints') or {}
@@ -184,6 +197,11 @@ jobs:
               assert constraints.get('share_value_should_be_natural_not_forced') is True
               assert constraints.get('profile_transition_must_match_brand_positioning') is True
               assert constraints.get('deliver_value_after_hook') is True
+              assert constraints.get('format_selected_for_message_not_habit') is True
+              assert constraints.get('format_diversification_considered') is True
+              assert constraints.get('new_idea_test_or_trial_reel_considered') is True
+              assert constraints.get('share_worthiness_reviewed') is True
+              assert constraints.get('highest_available_resolution_required') is True
               assert j.get('instagram_reels_policy')
               assert (j.get('instagram_reels_constraints') or {}).get('applicable') is False
 
@@ -222,7 +240,7 @@ jobs:
               assert p.exists() and p.stat().st_size>20000, rel
           assert not list(Path('publisher/media/generated').rglob('*.mp4'))
           assert not list(Path('publisher/media/generated').rglob('*.mp3'))
-          print('VERIFIED: pre-analysis + Instagram Feed/Reels directives + 10 STATIC PUBLICATIONS. 5 F1 + 5 RMP.')
+          print('VERIFIED: pre-analysis + Instagram Feed/Reels + Creators directives + 10 STATIC PUBLICATIONS. 5 F1 + 5 RMP.')
           PY
 
       - name: Upload publication package
@@ -272,10 +290,11 @@ jobs:
           cp publisher/queue.json /tmp/social-release/queue.json
           cp publisher/content_analysis.json /tmp/social-release/content_analysis.json
           cp publisher/instagram_distribution_policy.json /tmp/social-release/instagram_distribution_policy.json
+          cp publisher/instagram_creators_best_practices.json /tmp/social-release/instagram_creators_best_practices.json
           gh release delete social-preview-latest --yes --cleanup-tag >/dev/null 2>&1 || true
           gh release create social-preview-latest /tmp/social-release/* \
             --title "10 PUBBLICAZIONI PRONTE - 5 F1 + 5 REAL MEDIA PRO" \
-            --notes "10 grafiche statiche pronte con analisi pre-creazione e policy completa Instagram Feed/Reels. Il sistema considera rischio di salto, tempo sul post, condivisioni Direct, visite profilo, azioni positive e regole specifiche di formato; non inventa Insights o orari. Le regole Reels 9:16/audio/safe area restano registrate anche se il workflow corrente produce foto statiche. Run ${GITHUB_RUN_ID}."
+            --notes "10 grafiche statiche pronte con analisi pre-creazione, policy completa Instagram Feed/Reels e best practice Instagram Creators. Il sistema considera rischio di salto, tempo sul post, condivisioni Direct, visite profilo, azioni positive, diversificazione formati, trial Reels, primi 3 secondi, massima risoluzione, comprensione senza audio, diritti audio e follow-up commenti; non inventa Insights o orari. Run ${GITHUB_RUN_ID}."
 
       - name: Notify publication results
         uses: actions/github-script@v8
@@ -287,7 +306,8 @@ jobs:
               '',
               '**10 PUBBLICAZIONI PRONTE:** 5 F1 Immobiliare + 5 Real Media Pro.',
               '**ANALISI PRE-CREAZIONE:** target, obiettivo, messaggio, comparabili e dati disponibili.',
-              '**INSTAGRAM:** applicate le previsioni Feed su skip, tempo, azioni positive, Direct share, visite profilo e continuità di sessione.',
+              '**INSTAGRAM FEED:** applicate previsioni su skip, tempo, azioni positive, Direct share, visite profilo e continuità di sessione.',
+              '**INSTAGRAM CREATORS:** applicate diversificazione formati, trial Reels, share-worthiness, hook entro 3 secondi, massima risoluzione, fruizione senza audio, diritti audio e risposta ai commenti.',
               '**REELS:** policy completa 9:16, audio, area sicura, hook, sottotitoli, armonia e CTA registrata per i formati video futuri.',
               '**INSIGHTS:** se assenti, il sistema non inventa metriche o orari.',
               '',
