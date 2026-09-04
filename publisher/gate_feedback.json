@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "source": "producer_side_instagram_gate",
+  "purpose": "qualified_seller_leads",
+  "summary": {
+    "passed": 28,
+    "blocked": 0,
+    "total": 28
+  },
+  "blocked": [],
+  "passed": [
+    "f1-qualified-2026-08-22-r01",
+    "f1-qualified-2026-08-22-c01",
+    "f1-qualified-2026-08-23-r02",
+    "f1-qualified-2026-08-23-c02",
+    "f1-qualified-2026-08-24-r03",
+    "f1-qualified-2026-08-24-c03",
+    "f1-qualified-2026-08-25-r04",
+    "f1-qualified-2026-08-25-c04",
+    "f1-qualified-2026-08-26-r05",
+    "f1-qualified-2026-08-26-c05",
+    "f1-qualified-2026-08-27-r06",
+    "f1-qualified-2026-08-27-c06",
+    "f1-qualified-2026-08-28-r07",
+    "f1-qualified-2026-08-28-c07",
+    "f1-qualified-2026-08-29-r08",
+    "f1-qualified-2026-08-29-c08",
+    "f1-qualified-2026-08-30-r09",
+    "f1-qualified-2026-08-30-c09",
+    "f1-qualified-2026-08-31-r10",
+    "f1-qualified-2026-08-31-c10",
+    "f1-qualified-2026-09-01-r11",
+    "f1-qualified-2026-09-01-c11",
+    "f1-qualified-2026-09-02-r12",
+    "f1-qualified-2026-09-02-c12",
+    "f1-qualified-2026-09-03-r13",
+    "f1-qualified-2026-09-03-c13",
+    "f1-qualified-2026-09-04-r14",
+    "f1-qualified-2026-09-04-c14"
+  ],
+  "note": "This gate checks policy compliance and content coherence; it does not estimate Instagram's internal ranking score."
+}
