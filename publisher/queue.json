@@ -13535,6 +13535,8 @@
       "instagram_policy_required": true,
       "instagram_policy_version": 2,
       "instagram_policy_source": "publisher/instagram_distribution_policy.json",
+      "instagram_creators_policy_version": 1,
+      "instagram_creators_policy_source": "publisher/instagram_creators_best_practices.json",
       "instagram_full_policy_attached": true,
       "instagram_scope_note": {
         "feed": "This policy covers the Instagram Feed ranking system described in the supplied directives.",
@@ -13788,6 +13790,108 @@
         "audio_intent_and_silent_comprehension_passed_if_video",
         "gallery_metadata_used_only_with_permission_if_used"
       ],
+      "instagram_creators_best_practices": {
+        "version": 1,
+        "name": "Instagram Creators Engaging Content Best Practices",
+        "source_basis": "User-supplied Instagram Creators guidance",
+        "engagement_definition": {
+          "interactions": [
+            "likes",
+            "comments",
+            "saves",
+            "shares"
+          ],
+          "rule": "Create content that earns meaningful interactions rather than generic engagement bait."
+        },
+        "experimentation": {
+          "trial_reels": {
+            "enabled_when_available": true,
+            "audience": "non-followers first",
+            "profile_visibility": "not shown on profile or to followers during trial",
+            "review_after_hours": 24,
+            "metrics": [
+              "views",
+              "likes",
+              "comments",
+              "shares"
+            ],
+            "auto_share_window_hours": 72,
+            "rule": "Use trial Reels to test new concepts, characters and styles before wider distribution when the account is eligible."
+          }
+        },
+        "format_diversification": {
+          "allowed_mix": [
+            "photo",
+            "carousel",
+            "reel",
+            "story",
+            "live"
+          ],
+          "rule": "Use a mix of formats instead of repeating one format automatically; choose format based on the message, target and objective."
+        },
+        "creative_effects": {
+          "allowed": [
+            "interactive stickers",
+            "custom cutouts",
+            "text overlays",
+            "media overlays",
+            "creative effects"
+          ],
+          "rule": "Use creative effects only when they improve storytelling, clarity or interaction."
+        },
+        "audio": {
+          "multiple_tracks_max": 20,
+          "allowed_types": [
+            "popular audio",
+            "original audio",
+            "voiceover",
+            "licensed audio",
+            "Meta Audio Collection"
+          ],
+          "rights_rule": "Use only audio you are licensed or otherwise permitted to use.",
+          "purpose": "Use music and sound to create atmosphere, meaning or pacing; never as decoration only."
+        },
+        "reels_best_practices": {
+          "share_worthy": true,
+          "hook_first_seconds": 3,
+          "highest_resolution_possible": true,
+          "popular_or_original_audio": true,
+          "muted_view_optimization": true,
+          "muted_view_methods": [
+            "on-screen text",
+            "captions",
+            "subtitles"
+          ],
+          "comment_response_early_days": true,
+          "recommended_non_follower_max_duration_seconds": 180,
+          "rule": "Reels must capture attention immediately, remain understandable without sound, and be built to create natural sharing and conversation."
+        },
+        "post_publish": {
+          "early_comment_interaction_required": true,
+          "trial_reel_review_required": true,
+          "metrics_to_review": [
+            "views",
+            "likes",
+            "comments",
+            "shares",
+            "saves",
+            "skip_rate",
+            "average_watch_time",
+            "three_second_view_rate"
+          ]
+        },
+        "mandatory_checks": [
+          "format_selected_for_message_not_habit",
+          "new_idea_test_considered",
+          "share_worthiness_reviewed",
+          "first_3_seconds_or_first_visible_unit_clear",
+          "highest_available_resolution_used",
+          "muted_view_understandable_if_video",
+          "audio_rights_verified_if_audio_used",
+          "comment_followup_plan_present_if_reel",
+          "reel_duration_within_recommendation_if_non_follower_distribution_is_objective"
+        ]
+      },
       "instagram_performance_data_status": "NOT_AVAILABLE",
       "instagram_performance_metrics_expected": [
         "likes",
@@ -13817,7 +13921,7 @@
         "privacy_rule": "Do not infer private or sensitive traits from people present in media."
       },
       "instagram_format": "photo",
-      "instagram_format_mix_note": "Current production workflow is constrained to static photo jobs; carousel/Reels rules remain mandatory in the master policy for future matching formats.",
+      "instagram_format_mix_note": "Current production workflow is constrained to static photo jobs; format diversification must still be considered in planning and future cycles.",
       "instagram_creative_constraints": {
         "integrity_truthfulness_required": true,
         "first_visible_unit_must_work_without_context": true,
@@ -13834,7 +13938,12 @@
         "creative_fatigue_must_be_reviewed": true,
         "deliver_value_after_hook": true,
         "no_slow_generic_intro": true,
-        "publication_time_must_not_be_invented": true
+        "publication_time_must_not_be_invented": true,
+        "format_selected_for_message_not_habit": true,
+        "format_diversification_considered": true,
+        "new_idea_test_or_trial_reel_considered": true,
+        "share_worthiness_reviewed": true,
+        "highest_available_resolution_required": true
       },
       "instagram_carousel_constraints": null,
       "instagram_reels_policy": {
@@ -13944,6 +14053,108 @@
             "Convert existing video to 9:16 without damaging the subject or brand coherence.",
             "AI output remains subject to the same quality, truthfulness, brand, integrity and rights checks as manually produced media."
           ]
+        },
+        "creators_best_practices": {
+          "version": 1,
+          "name": "Instagram Creators Engaging Content Best Practices",
+          "source_basis": "User-supplied Instagram Creators guidance",
+          "engagement_definition": {
+            "interactions": [
+              "likes",
+              "comments",
+              "saves",
+              "shares"
+            ],
+            "rule": "Create content that earns meaningful interactions rather than generic engagement bait."
+          },
+          "experimentation": {
+            "trial_reels": {
+              "enabled_when_available": true,
+              "audience": "non-followers first",
+              "profile_visibility": "not shown on profile or to followers during trial",
+              "review_after_hours": 24,
+              "metrics": [
+                "views",
+                "likes",
+                "comments",
+                "shares"
+              ],
+              "auto_share_window_hours": 72,
+              "rule": "Use trial Reels to test new concepts, characters and styles before wider distribution when the account is eligible."
+            }
+          },
+          "format_diversification": {
+            "allowed_mix": [
+              "photo",
+              "carousel",
+              "reel",
+              "story",
+              "live"
+            ],
+            "rule": "Use a mix of formats instead of repeating one format automatically; choose format based on the message, target and objective."
+          },
+          "creative_effects": {
+            "allowed": [
+              "interactive stickers",
+              "custom cutouts",
+              "text overlays",
+              "media overlays",
+              "creative effects"
+            ],
+            "rule": "Use creative effects only when they improve storytelling, clarity or interaction."
+          },
+          "audio": {
+            "multiple_tracks_max": 20,
+            "allowed_types": [
+              "popular audio",
+              "original audio",
+              "voiceover",
+              "licensed audio",
+              "Meta Audio Collection"
+            ],
+            "rights_rule": "Use only audio you are licensed or otherwise permitted to use.",
+            "purpose": "Use music and sound to create atmosphere, meaning or pacing; never as decoration only."
+          },
+          "reels_best_practices": {
+            "share_worthy": true,
+            "hook_first_seconds": 3,
+            "highest_resolution_possible": true,
+            "popular_or_original_audio": true,
+            "muted_view_optimization": true,
+            "muted_view_methods": [
+              "on-screen text",
+              "captions",
+              "subtitles"
+            ],
+            "comment_response_early_days": true,
+            "recommended_non_follower_max_duration_seconds": 180,
+            "rule": "Reels must capture attention immediately, remain understandable without sound, and be built to create natural sharing and conversation."
+          },
+          "post_publish": {
+            "early_comment_interaction_required": true,
+            "trial_reel_review_required": true,
+            "metrics_to_review": [
+              "views",
+              "likes",
+              "comments",
+              "shares",
+              "saves",
+              "skip_rate",
+              "average_watch_time",
+              "three_second_view_rate"
+            ]
+          },
+          "mandatory_checks": [
+            "format_selected_for_message_not_habit",
+            "new_idea_test_considered",
+            "share_worthiness_reviewed",
+            "first_3_seconds_or_first_visible_unit_clear",
+            "highest_available_resolution_used",
+            "muted_view_understandable_if_video",
+            "audio_rights_verified_if_audio_used",
+            "comment_followup_plan_present_if_reel",
+            "reel_duration_within_recommendation_if_non_follower_distribution_is_objective"
+          ]
         }
       },
       "instagram_reels_constraints": {
@@ -13979,10 +14190,18 @@
         "profile_visit_value_reviewed": null,
         "negative_feedback_risk_reviewed": null,
         "format_specific_rules_passed": null,
+        "format_diversification_considered": true,
+        "new_idea_test_considered": true,
+        "share_worthiness_reviewed": true,
+        "highest_available_resolution_used": null,
         "carousel_completion_logic_passed": null,
         "first_3_seconds_passed": null,
         "reason_beyond_10_seconds_passed": null,
+        "reel_muted_view_passed": null,
+        "reel_audio_rights_verified": null,
         "reel_9_16_safe_area_audio_passed": null,
+        "reel_comment_followup_plan_present": null,
+        "reel_duration_recommendation_passed": null,
         "gallery_metadata_permission_passed": null
       },
       "visual_asset_urls": [
@@ -14410,6 +14629,8 @@
       "instagram_policy_required": true,
       "instagram_policy_version": 2,
       "instagram_policy_source": "publisher/instagram_distribution_policy.json",
+      "instagram_creators_policy_version": 1,
+      "instagram_creators_policy_source": "publisher/instagram_creators_best_practices.json",
       "instagram_full_policy_attached": true,
       "instagram_scope_note": {
         "feed": "This policy covers the Instagram Feed ranking system described in the supplied directives.",
@@ -14663,6 +14884,108 @@
         "audio_intent_and_silent_comprehension_passed_if_video",
         "gallery_metadata_used_only_with_permission_if_used"
       ],
+      "instagram_creators_best_practices": {
+        "version": 1,
+        "name": "Instagram Creators Engaging Content Best Practices",
+        "source_basis": "User-supplied Instagram Creators guidance",
+        "engagement_definition": {
+          "interactions": [
+            "likes",
+            "comments",
+            "saves",
+            "shares"
+          ],
+          "rule": "Create content that earns meaningful interactions rather than generic engagement bait."
+        },
+        "experimentation": {
+          "trial_reels": {
+            "enabled_when_available": true,
+            "audience": "non-followers first",
+            "profile_visibility": "not shown on profile or to followers during trial",
+            "review_after_hours": 24,
+            "metrics": [
+              "views",
+              "likes",
+              "comments",
+              "shares"
+            ],
+            "auto_share_window_hours": 72,
+            "rule": "Use trial Reels to test new concepts, characters and styles before wider distribution when the account is eligible."
+          }
+        },
+        "format_diversification": {
+          "allowed_mix": [
+            "photo",
+            "carousel",
+            "reel",
+            "story",
+            "live"
+          ],
+          "rule": "Use a mix of formats instead of repeating one format automatically; choose format based on the message, target and objective."
+        },
+        "creative_effects": {
+          "allowed": [
+            "interactive stickers",
+            "custom cutouts",
+            "text overlays",
+            "media overlays",
+            "creative effects"
+          ],
+          "rule": "Use creative effects only when they improve storytelling, clarity or interaction."
+        },
+        "audio": {
+          "multiple_tracks_max": 20,
+          "allowed_types": [
+            "popular audio",
+            "original audio",
+            "voiceover",
+            "licensed audio",
+            "Meta Audio Collection"
+          ],
+          "rights_rule": "Use only audio you are licensed or otherwise permitted to use.",
+          "purpose": "Use music and sound to create atmosphere, meaning or pacing; never as decoration only."
+        },
+        "reels_best_practices": {
+          "share_worthy": true,
+          "hook_first_seconds": 3,
+          "highest_resolution_possible": true,
+          "popular_or_original_audio": true,
+          "muted_view_optimization": true,
+          "muted_view_methods": [
+            "on-screen text",
+            "captions",
+            "subtitles"
+          ],
+          "comment_response_early_days": true,
+          "recommended_non_follower_max_duration_seconds": 180,
+          "rule": "Reels must capture attention immediately, remain understandable without sound, and be built to create natural sharing and conversation."
+        },
+        "post_publish": {
+          "early_comment_interaction_required": true,
+          "trial_reel_review_required": true,
+          "metrics_to_review": [
+            "views",
+            "likes",
+            "comments",
+            "shares",
+            "saves",
+            "skip_rate",
+            "average_watch_time",
+            "three_second_view_rate"
+          ]
+        },
+        "mandatory_checks": [
+          "format_selected_for_message_not_habit",
+          "new_idea_test_considered",
+          "share_worthiness_reviewed",
+          "first_3_seconds_or_first_visible_unit_clear",
+          "highest_available_resolution_used",
+          "muted_view_understandable_if_video",
+          "audio_rights_verified_if_audio_used",
+          "comment_followup_plan_present_if_reel",
+          "reel_duration_within_recommendation_if_non_follower_distribution_is_objective"
+        ]
+      },
       "instagram_performance_data_status": "NOT_AVAILABLE",
       "instagram_performance_metrics_expected": [
         "likes",
@@ -14692,7 +15015,7 @@
         "privacy_rule": "Do not infer private or sensitive traits from people present in media."
       },
       "instagram_format": "photo",
-      "instagram_format_mix_note": "Current production workflow is constrained to static photo jobs; carousel/Reels rules remain mandatory in the master policy for future matching formats.",
+      "instagram_format_mix_note": "Current production workflow is constrained to static photo jobs; format diversification must still be considered in planning and future cycles.",
       "instagram_creative_constraints": {
         "integrity_truthfulness_required": true,
         "first_visible_unit_must_work_without_context": true,
@@ -14709,7 +15032,12 @@
         "creative_fatigue_must_be_reviewed": true,
         "deliver_value_after_hook": true,
         "no_slow_generic_intro": true,
-        "publication_time_must_not_be_invented": true
+        "publication_time_must_not_be_invented": true,
+        "format_selected_for_message_not_habit": true,
+        "format_diversification_considered": true,
+        "new_idea_test_or_trial_reel_considered": true,
+        "share_worthiness_reviewed": true,
+        "highest_available_resolution_required": true
       },
       "instagram_carousel_constraints": null,
       "instagram_reels_policy": {
@@ -14819,6 +15147,108 @@
             "Convert existing video to 9:16 without damaging the subject or brand coherence.",
             "AI output remains subject to the same quality, truthfulness, brand, integrity and rights checks as manually produced media."
           ]
+        },
+        "creators_best_practices": {
+          "version": 1,
+          "name": "Instagram Creators Engaging Content Best Practices",
+          "source_basis": "User-supplied Instagram Creators guidance",
+          "engagement_definition": {
+            "interactions": [
+              "likes",
+              "comments",
+              "saves",
+              "shares"
+            ],
+            "rule": "Create content that earns meaningful interactions rather than generic engagement bait."
+          },
+          "experimentation": {
+            "trial_reels": {
+              "enabled_when_available": true,
+              "audience": "non-followers first",
+              "profile_visibility": "not shown on profile or to followers during trial",
+              "review_after_hours": 24,
+              "metrics": [
+                "views",
+                "likes",
+                "comments",
+                "shares"
+              ],
+              "auto_share_window_hours": 72,
+              "rule": "Use trial Reels to test new concepts, characters and styles before wider distribution when the account is eligible."
+            }
+          },
+          "format_diversification": {
+            "allowed_mix": [
+              "photo",
+              "carousel",
+              "reel",
+              "story",
+              "live"
+            ],
+            "rule": "Use a mix of formats instead of repeating one format automatically; choose format based on the message, target and objective."
+          },
+          "creative_effects": {
+            "allowed": [
+              "interactive stickers",
+              "custom cutouts",
+              "text overlays",
+              "media overlays",
+              "creative effects"
+            ],
+            "rule": "Use creative effects only when they improve storytelling, clarity or interaction."
+          },
+          "audio": {
+            "multiple_tracks_max": 20,
+            "allowed_types": [
+              "popular audio",
+              "original audio",
+              "voiceover",
+              "licensed audio",
+              "Meta Audio Collection"
+            ],
+            "rights_rule": "Use only audio you are licensed or otherwise permitted to use.",
+            "purpose": "Use music and sound to create atmosphere, meaning or pacing; never as decoration only."
+          },
+          "reels_best_practices": {
+            "share_worthy": true,
+            "hook_first_seconds": 3,
+            "highest_resolution_possible": true,
+            "popular_or_original_audio": true,
+            "muted_view_optimization": true,
+            "muted_view_methods": [
+              "on-screen text",
+              "captions",
+              "subtitles"
+            ],
+            "comment_response_early_days": true,
+            "recommended_non_follower_max_duration_seconds": 180,
+            "rule": "Reels must capture attention immediately, remain understandable without sound, and be built to create natural sharing and conversation."
+          },
+          "post_publish": {
+            "early_comment_interaction_required": true,
+            "trial_reel_review_required": true,
+            "metrics_to_review": [
+              "views",
+              "likes",
+              "comments",
+              "shares",
+              "saves",
+              "skip_rate",
+              "average_watch_time",
+              "three_second_view_rate"
+            ]
+          },
+          "mandatory_checks": [
+            "format_selected_for_message_not_habit",
+            "new_idea_test_considered",
+            "share_worthiness_reviewed",
+            "first_3_seconds_or_first_visible_unit_clear",
+            "highest_available_resolution_used",
+            "muted_view_understandable_if_video",
+            "audio_rights_verified_if_audio_used",
+            "comment_followup_plan_present_if_reel",
+            "reel_duration_within_recommendation_if_non_follower_distribution_is_objective"
+          ]
         }
       },
       "instagram_reels_constraints": {
@@ -14854,10 +15284,18 @@
         "profile_visit_value_reviewed": null,
         "negative_feedback_risk_reviewed": null,
         "format_specific_rules_passed": null,
+        "format_diversification_considered": true,
+        "new_idea_test_considered": true,
+        "share_worthiness_reviewed": true,
+        "highest_available_resolution_used": null,
         "carousel_completion_logic_passed": null,
         "first_3_seconds_passed": null,
         "reason_beyond_10_seconds_passed": null,
+        "reel_muted_view_passed": null,
+        "reel_audio_rights_verified": null,
         "reel_9_16_safe_area_audio_passed": null,
+        "reel_comment_followup_plan_present": null,
+        "reel_duration_recommendation_passed": null,
         "gallery_metadata_permission_passed": null
       },
       "visual_asset_urls": [
@@ -15285,6 +15723,8 @@
       "instagram_policy_required": true,
       "instagram_policy_version": 2,
       "instagram_policy_source": "publisher/instagram_distribution_policy.json",
+      "instagram_creators_policy_version": 1,
+      "instagram_creators_policy_source": "publisher/instagram_creators_best_practices.json",
       "instagram_full_policy_attached": true,
       "instagram_scope_note": {
         "feed": "This policy covers the Instagram Feed ranking system described in the supplied directives.",
@@ -15538,6 +15978,108 @@
         "audio_intent_and_silent_comprehension_passed_if_video",
         "gallery_metadata_used_only_with_permission_if_used"
       ],
+      "instagram_creators_best_practices": {
+        "version": 1,
+        "name": "Instagram Creators Engaging Content Best Practices",
+        "source_basis": "User-supplied Instagram Creators guidance",
+        "engagement_definition": {
+          "interactions": [
+            "likes",
+            "comments",
+            "saves",
+            "shares"
+          ],
+          "rule": "Create content that earns meaningful interactions rather than generic engagement bait."
+        },
+        "experimentation": {
+          "trial_reels": {
+            "enabled_when_available": true,
+            "audience": "non-followers first",
+            "profile_visibility": "not shown on profile or to followers during trial",
+            "review_after_hours": 24,
+            "metrics": [
+              "views",
+              "likes",
+              "comments",
+              "shares"
+            ],
+            "auto_share_window_hours": 72,
+            "rule": "Use trial Reels to test new concepts, characters and styles before wider distribution when the account is eligible."
+          }
+        },
+        "format_diversification": {
+          "allowed_mix": [
+            "photo",
+            "carousel",
+            "reel",
+            "story",
+            "live"
+          ],
+          "rule": "Use a mix of formats instead of repeating one format automatically; choose format based on the message, target and objective."
+        },
+        "creative_effects": {
+          "allowed": [
+            "interactive stickers",
+            "custom cutouts",
+            "text overlays",
+            "media overlays",
+            "creative effects"
+          ],
+          "rule": "Use creative effects only when they improve storytelling, clarity or interaction."
+        },
+        "audio": {
+          "multiple_tracks_max": 20,
+          "allowed_types": [
+            "popular audio",
+            "original audio",
+            "voiceover",
+            "licensed audio",
+            "Meta Audio Collection"
+          ],
+          "rights_rule": "Use only audio you are licensed or otherwise permitted to use.",
+          "purpose": "Use music and sound to create atmosphere, meaning or pacing; never as decoration only."
+        },
+        "reels_best_practices": {
+          "share_worthy": true,
+          "hook_first_seconds": 3,
+          "highest_resolution_possible": true,
+          "popular_or_original_audio": true,
+          "muted_view_optimization": true,
+          "muted_view_methods": [
+            "on-screen text",
+            "captions",
+            "subtitles"
+          ],
+          "comment_response_early_days": true,
+          "recommended_non_follower_max_duration_seconds": 180,
+          "rule": "Reels must capture attention immediately, remain understandable without sound, and be built to create natural sharing and conversation."
+        },
+        "post_publish": {
+          "early_comment_interaction_required": true,
+          "trial_reel_review_required": true,
+          "metrics_to_review": [
+            "views",
+            "likes",
+            "comments",
+            "shares",
+            "saves",
+            "skip_rate",
+            "average_watch_time",
+            "three_second_view_rate"
+          ]
+        },
+        "mandatory_checks": [
+          "format_selected_for_message_not_habit",
+          "new_idea_test_considered",
+          "share_worthiness_reviewed",
+          "first_3_seconds_or_first_visible_unit_clear",
+          "highest_available_resolution_used",
+          "muted_view_understandable_if_video",
+          "audio_rights_verified_if_audio_used",
+          "comment_followup_plan_present_if_reel",
+          "reel_duration_within_recommendation_if_non_follower_distribution_is_objective"
+        ]
+      },
       "instagram_performance_data_status": "NOT_AVAILABLE",
       "instagram_performance_metrics_expected": [
         "likes",
@@ -15567,7 +16109,7 @@
         "privacy_rule": "Do not infer private or sensitive traits from people present in media."
       },
       "instagram_format": "photo",
-      "instagram_format_mix_note": "Current production workflow is constrained to static photo jobs; carousel/Reels rules remain mandatory in the master policy for future matching formats.",
+      "instagram_format_mix_note": "Current production workflow is constrained to static photo jobs; format diversification must still be considered in planning and future cycles.",
       "instagram_creative_constraints": {
         "integrity_truthfulness_required": true,
         "first_visible_unit_must_work_without_context": true,
@@ -15584,7 +16126,12 @@
         "creative_fatigue_must_be_reviewed": true,
         "deliver_value_after_hook": true,
         "no_slow_generic_intro": true,
-        "publication_time_must_not_be_invented": true
+        "publication_time_must_not_be_invented": true,
+        "format_selected_for_message_not_habit": true,
+        "format_diversification_considered": true,
+        "new_idea_test_or_trial_reel_considered": true,
+        "share_worthiness_reviewed": true,
+        "highest_available_resolution_required": true
       },
       "instagram_carousel_constraints": null,
       "instagram_reels_policy": {
@@ -15694,6 +16241,108 @@
             "Convert existing video to 9:16 without damaging the subject or brand coherence.",
             "AI output remains subject to the same quality, truthfulness, brand, integrity and rights checks as manually produced media."
           ]
+        },
+        "creators_best_practices": {
+          "version": 1,
+          "name": "Instagram Creators Engaging Content Best Practices",
+          "source_basis": "User-supplied Instagram Creators guidance",
+          "engagement_definition": {
+            "interactions": [
+              "likes",
+              "comments",
+              "saves",
+              "shares"
+            ],
+            "rule": "Create content that earns meaningful interactions rather than generic engagement bait."
+          },
+          "experimentation": {
+            "trial_reels": {
+              "enabled_when_available": true,
+              "audience": "non-followers first",
+              "profile_visibility": "not shown on profile or to followers during trial",
+              "review_after_hours": 24,
+              "metrics": [
+                "views",
+                "likes",
+                "comments",
+                "shares"
+              ],
+              "auto_share_window_hours": 72,
+              "rule": "Use trial Reels to test new concepts, characters and styles before wider distribution when the account is eligible."
+            }
+          },
+          "format_diversification": {
+            "allowed_mix": [
+              "photo",
+              "carousel",
+              "reel",
+              "story",
+              "live"
+            ],
+            "rule": "Use a mix of formats instead of repeating one format automatically; choose format based on the message, target and objective."
+          },
+          "creative_effects": {
+            "allowed": [
+              "interactive stickers",
+              "custom cutouts",
+              "text overlays",
+              "media overlays",
+              "creative effects"
+            ],
+            "rule": "Use creative effects only when they improve storytelling, clarity or interaction."
+          },
+          "audio": {
+            "multiple_tracks_max": 20,
+            "allowed_types": [
+              "popular audio",
+              "original audio",
+              "voiceover",
+              "licensed audio",
+              "Meta Audio Collection"
+            ],
+            "rights_rule": "Use only audio you are licensed or otherwise permitted to use.",
+            "purpose": "Use music and sound to create atmosphere, meaning or pacing; never as decoration only."
+          },
+          "reels_best_practices": {
+            "share_worthy": true,
+            "hook_first_seconds": 3,
+            "highest_resolution_possible": true,
+            "popular_or_original_audio": true,
+            "muted_view_optimization": true,
+            "muted_view_methods": [
+              "on-screen text",
+              "captions",
+              "subtitles"
+            ],
+            "comment_response_early_days": true,
+            "recommended_non_follower_max_duration_seconds": 180,
+            "rule": "Reels must capture attention immediately, remain understandable without sound, and be built to create natural sharing and conversation."
+          },
+          "post_publish": {
+            "early_comment_interaction_required": true,
+            "trial_reel_review_required": true,
+            "metrics_to_review": [
+              "views",
+              "likes",
+              "comments",
+              "shares",
+              "saves",
+              "skip_rate",
+              "average_watch_time",
+              "three_second_view_rate"
+            ]
+          },
+          "mandatory_checks": [
+            "format_selected_for_message_not_habit",
+            "new_idea_test_considered",
+            "share_worthiness_reviewed",
+            "first_3_seconds_or_first_visible_unit_clear",
+            "highest_available_resolution_used",
+            "muted_view_understandable_if_video",
+            "audio_rights_verified_if_audio_used",
+            "comment_followup_plan_present_if_reel",
+            "reel_duration_within_recommendation_if_non_follower_distribution_is_objective"
+          ]
         }
       },
       "instagram_reels_constraints": {
@@ -15729,10 +16378,18 @@
         "profile_visit_value_reviewed": null,
         "negative_feedback_risk_reviewed": null,
         "format_specific_rules_passed": null,
+        "format_diversification_considered": true,
+        "new_idea_test_considered": true,
+        "share_worthiness_reviewed": true,
+        "highest_available_resolution_used": null,
         "carousel_completion_logic_passed": null,
         "first_3_seconds_passed": null,
         "reason_beyond_10_seconds_passed": null,
+        "reel_muted_view_passed": null,
+        "reel_audio_rights_verified": null,
         "reel_9_16_safe_area_audio_passed": null,
+        "reel_comment_followup_plan_present": null,
+        "reel_duration_recommendation_passed": null,
         "gallery_metadata_permission_passed": null
       },
       "visual_asset_urls": [
@@ -16160,6 +16817,8 @@
       "instagram_policy_required": true,
       "instagram_policy_version": 2,
       "instagram_policy_source": "publisher/instagram_distribution_policy.json",
+      "instagram_creators_policy_version": 1,
+      "instagram_creators_policy_source": "publisher/instagram_creators_best_practices.json",
       "instagram_full_policy_attached": true,
       "instagram_scope_note": {
         "feed": "This policy covers the Instagram Feed ranking system described in the supplied directives.",
@@ -16413,6 +17072,108 @@
         "audio_intent_and_silent_comprehension_passed_if_video",
         "gallery_metadata_used_only_with_permission_if_used"
       ],
+      "instagram_creators_best_practices": {
+        "version": 1,
+        "name": "Instagram Creators Engaging Content Best Practices",
+        "source_basis": "User-supplied Instagram Creators guidance",
+        "engagement_definition": {
+          "interactions": [
+            "likes",
+            "comments",
+            "saves",
+            "shares"
+          ],
+          "rule": "Create content that earns meaningful interactions rather than generic engagement bait."
+        },
+        "experimentation": {
+          "trial_reels": {
+            "enabled_when_available": true,
+            "audience": "non-followers first",
+            "profile_visibility": "not shown on profile or to followers during trial",
+            "review_after_hours": 24,
+            "metrics": [
+              "views",
+              "likes",
+              "comments",
+              "shares"
+            ],
+            "auto_share_window_hours": 72,
+            "rule": "Use trial Reels to test new concepts, characters and styles before wider distribution when the account is eligible."
+          }
+        },
+        "format_diversification": {
+          "allowed_mix": [
+            "photo",
+            "carousel",
+            "reel",
+            "story",
+            "live"
+          ],
+          "rule": "Use a mix of formats instead of repeating one format automatically; choose format based on the message, target and objective."
+        },
+        "creative_effects": {
+          "allowed": [
+            "interactive stickers",
+            "custom cutouts",
+            "text overlays",
+            "media overlays",
+            "creative effects"
+          ],
+          "rule": "Use creative effects only when they improve storytelling, clarity or interaction."
+        },
+        "audio": {
+          "multiple_tracks_max": 20,
+          "allowed_types": [
+            "popular audio",
+            "original audio",
+            "voiceover",
+            "licensed audio",
+            "Meta Audio Collection"
+          ],
+          "rights_rule": "Use only audio you are licensed or otherwise permitted to use.",
+          "purpose": "Use music and sound to create atmosphere, meaning or pacing; never as decoration only."
+        },
+        "reels_best_practices": {
+          "share_worthy": true,
+          "hook_first_seconds": 3,
+          "highest_resolution_possible": true,
+          "popular_or_original_audio": true,
+          "muted_view_optimization": true,
+          "muted_view_methods": [
+            "on-screen text",
+            "captions",
+            "subtitles"
+          ],
+          "comment_response_early_days": true,
+          "recommended_non_follower_max_duration_seconds": 180,
+          "rule": "Reels must capture attention immediately, remain understandable without sound, and be built to create natural sharing and conversation."
+        },
+        "post_publish": {
+          "early_comment_interaction_required": true,
+          "trial_reel_review_required": true,
+          "metrics_to_review": [
+            "views",
+            "likes",
+            "comments",
+            "shares",
+            "saves",
+            "skip_rate",
+            "average_watch_time",
+            "three_second_view_rate"
+          ]
+        },
+        "mandatory_checks": [
+          "format_selected_for_message_not_habit",
+          "new_idea_test_considered",
+          "share_worthiness_reviewed",
+          "first_3_seconds_or_first_visible_unit_clear",
+          "highest_available_resolution_used",
+          "muted_view_understandable_if_video",
+          "audio_rights_verified_if_audio_used",
+          "comment_followup_plan_present_if_reel",
+          "reel_duration_within_recommendation_if_non_follower_distribution_is_objective"
+        ]
+      },
       "instagram_performance_data_status": "NOT_AVAILABLE",
       "instagram_performance_metrics_expected": [
         "likes",
@@ -16442,7 +17203,7 @@
         "privacy_rule": "Do not infer private or sensitive traits from people present in media."
       },
       "instagram_format": "photo",
-      "instagram_format_mix_note": "Current production workflow is constrained to static photo jobs; carousel/Reels rules remain mandatory in the master policy for future matching formats.",
+      "instagram_format_mix_note": "Current production workflow is constrained to static photo jobs; format diversification must still be considered in planning and future cycles.",
       "instagram_creative_constraints": {
         "integrity_truthfulness_required": true,
         "first_visible_unit_must_work_without_context": true,
@@ -16459,7 +17220,12 @@
         "creative_fatigue_must_be_reviewed": true,
         "deliver_value_after_hook": true,
         "no_slow_generic_intro": true,
-        "publication_time_must_not_be_invented": true
+        "publication_time_must_not_be_invented": true,
+        "format_selected_for_message_not_habit": true,
+        "format_diversification_considered": true,
+        "new_idea_test_or_trial_reel_considered": true,
+        "share_worthiness_reviewed": true,
+        "highest_available_resolution_required": true
       },
       "instagram_carousel_constraints": null,
       "instagram_reels_policy": {
@@ -16569,6 +17335,108 @@
             "Convert existing video to 9:16 without damaging the subject or brand coherence.",
             "AI output remains subject to the same quality, truthfulness, brand, integrity and rights checks as manually produced media."
           ]
+        },
+        "creators_best_practices": {
+          "version": 1,
+          "name": "Instagram Creators Engaging Content Best Practices",
+          "source_basis": "User-supplied Instagram Creators guidance",
+          "engagement_definition": {
+            "interactions": [
+              "likes",
+              "comments",
+              "saves",
+              "shares"
+            ],
+            "rule": "Create content that earns meaningful interactions rather than generic engagement bait."
+          },
+          "experimentation": {
+            "trial_reels": {
+              "enabled_when_available": true,
+              "audience": "non-followers first",
+              "profile_visibility": "not shown on profile or to followers during trial",
+              "review_after_hours": 24,
+              "metrics": [
+                "views",
+                "likes",
+                "comments",
+                "shares"
+              ],
+              "auto_share_window_hours": 72,
+              "rule": "Use trial Reels to test new concepts, characters and styles before wider distribution when the account is eligible."
+            }
+          },
+          "format_diversification": {
+            "allowed_mix": [
+              "photo",
+              "carousel",
+              "reel",
+              "story",
+              "live"
+            ],
+            "rule": "Use a mix of formats instead of repeating one format automatically; choose format based on the message, target and objective."
+          },
+          "creative_effects": {
+            "allowed": [
+              "interactive stickers",
+              "custom cutouts",
+              "text overlays",
+              "media overlays",
+              "creative effects"
+            ],
+            "rule": "Use creative effects only when they improve storytelling, clarity or interaction."
+          },
+          "audio": {
+            "multiple_tracks_max": 20,
+            "allowed_types": [
+              "popular audio",
+              "original audio",
+              "voiceover",
+              "licensed audio",
+              "Meta Audio Collection"
+            ],
+            "rights_rule": "Use only audio you are licensed or otherwise permitted to use.",
+            "purpose": "Use music and sound to create atmosphere, meaning or pacing; never as decoration only."
+          },
+          "reels_best_practices": {
+            "share_worthy": true,
+            "hook_first_seconds": 3,
+            "highest_resolution_possible": true,
+            "popular_or_original_audio": true,
+            "muted_view_optimization": true,
+            "muted_view_methods": [
+              "on-screen text",
+              "captions",
+              "subtitles"
+            ],
+            "comment_response_early_days": true,
+            "recommended_non_follower_max_duration_seconds": 180,
+            "rule": "Reels must capture attention immediately, remain understandable without sound, and be built to create natural sharing and conversation."
+          },
+          "post_publish": {
+            "early_comment_interaction_required": true,
+            "trial_reel_review_required": true,
+            "metrics_to_review": [
+              "views",
+              "likes",
+              "comments",
+              "shares",
+              "saves",
+              "skip_rate",
+              "average_watch_time",
+              "three_second_view_rate"
+            ]
+          },
+          "mandatory_checks": [
+            "format_selected_for_message_not_habit",
+            "new_idea_test_considered",
+            "share_worthiness_reviewed",
+            "first_3_seconds_or_first_visible_unit_clear",
+            "highest_available_resolution_used",
+            "muted_view_understandable_if_video",
+            "audio_rights_verified_if_audio_used",
+            "comment_followup_plan_present_if_reel",
+            "reel_duration_within_recommendation_if_non_follower_distribution_is_objective"
+          ]
         }
       },
       "instagram_reels_constraints": {
@@ -16604,10 +17472,18 @@
         "profile_visit_value_reviewed": null,
         "negative_feedback_risk_reviewed": null,
         "format_specific_rules_passed": null,
+        "format_diversification_considered": true,
+        "new_idea_test_considered": true,
+        "share_worthiness_reviewed": true,
+        "highest_available_resolution_used": null,
         "carousel_completion_logic_passed": null,
         "first_3_seconds_passed": null,
         "reason_beyond_10_seconds_passed": null,
+        "reel_muted_view_passed": null,
+        "reel_audio_rights_verified": null,
         "reel_9_16_safe_area_audio_passed": null,
+        "reel_comment_followup_plan_present": null,
+        "reel_duration_recommendation_passed": null,
         "gallery_metadata_permission_passed": null
       },
       "visual_asset_urls": [
@@ -17035,6 +17911,8 @@
       "instagram_policy_required": true,
       "instagram_policy_version": 2,
       "instagram_policy_source": "publisher/instagram_distribution_policy.json",
+      "instagram_creators_policy_version": 1,
+      "instagram_creators_policy_source": "publisher/instagram_creators_best_practices.json",
       "instagram_full_policy_attached": true,
       "instagram_scope_note": {
         "feed": "This policy covers the Instagram Feed ranking system described in the supplied directives.",
@@ -17288,6 +18166,108 @@
         "audio_intent_and_silent_comprehension_passed_if_video",
         "gallery_metadata_used_only_with_permission_if_used"
       ],
+      "instagram_creators_best_practices": {
+        "version": 1,
+        "name": "Instagram Creators Engaging Content Best Practices",
+        "source_basis": "User-supplied Instagram Creators guidance",
+        "engagement_definition": {
+          "interactions": [
+            "likes",
+            "comments",
+            "saves",
+            "shares"
+          ],
+          "rule": "Create content that earns meaningful interactions rather than generic engagement bait."
+        },
+        "experimentation": {
+          "trial_reels": {
+            "enabled_when_available": true,
+            "audience": "non-followers first",
+            "profile_visibility": "not shown on profile or to followers during trial",
+            "review_after_hours": 24,
+            "metrics": [
+              "views",
+              "likes",
+              "comments",
+              "shares"
+            ],
+            "auto_share_window_hours": 72,
+            "rule": "Use trial Reels to test new concepts, characters and styles before wider distribution when the account is eligible."
+          }
+        },
+        "format_diversification": {
+          "allowed_mix": [
+            "photo",
+            "carousel",
+            "reel",
+            "story",
+            "live"
+          ],
+          "rule": "Use a mix of formats instead of repeating one format automatically; choose format based on the message, target and objective."
+        },
+        "creative_effects": {
+          "allowed": [
+            "interactive stickers",
+            "custom cutouts",
+            "text overlays",
+            "media overlays",
+            "creative effects"
+          ],
+          "rule": "Use creative effects only when they improve storytelling, clarity or interaction."
+        },
+        "audio": {
+          "multiple_tracks_max": 20,
+          "allowed_types": [
+            "popular audio",
+            "original audio",
+            "voiceover",
+            "licensed audio",
+            "Meta Audio Collection"
+          ],
+          "rights_rule": "Use only audio you are licensed or otherwise permitted to use.",
+          "purpose": "Use music and sound to create atmosphere, meaning or pacing; never as decoration only."
+        },
+        "reels_best_practices": {
+          "share_worthy": true,
+          "hook_first_seconds": 3,
+          "highest_resolution_possible": true,
+          "popular_or_original_audio": true,
+          "muted_view_optimization": true,
+          "muted_view_methods": [
+            "on-screen text",
+            "captions",
+            "subtitles"
+          ],
+          "comment_response_early_days": true,
+          "recommended_non_follower_max_duration_seconds": 180,
+          "rule": "Reels must capture attention immediately, remain understandable without sound, and be built to create natural sharing and conversation."
+        },
+        "post_publish": {
+          "early_comment_interaction_required": true,
+          "trial_reel_review_required": true,
+          "metrics_to_review": [
+            "views",
+            "likes",
+            "comments",
+            "shares",
+            "saves",
+            "skip_rate",
+            "average_watch_time",
+            "three_second_view_rate"
+          ]
+        },
+        "mandatory_checks": [
+          "format_selected_for_message_not_habit",
+          "new_idea_test_considered",
+          "share_worthiness_reviewed",
+          "first_3_seconds_or_first_visible_unit_clear",
+          "highest_available_resolution_used",
+          "muted_view_understandable_if_video",
+          "audio_rights_verified_if_audio_used",
+          "comment_followup_plan_present_if_reel",
+          "reel_duration_within_recommendation_if_non_follower_distribution_is_objective"
+        ]
+      },
       "instagram_performance_data_status": "NOT_AVAILABLE",
       "instagram_performance_metrics_expected": [
         "likes",
@@ -17317,7 +18297,7 @@
         "privacy_rule": "Do not infer private or sensitive traits from people present in media."
       },
       "instagram_format": "photo",
-      "instagram_format_mix_note": "Current production workflow is constrained to static photo jobs; carousel/Reels rules remain mandatory in the master policy for future matching formats.",
+      "instagram_format_mix_note": "Current production workflow is constrained to static photo jobs; format diversification must still be considered in planning and future cycles.",
       "instagram_creative_constraints": {
         "integrity_truthfulness_required": true,
         "first_visible_unit_must_work_without_context": true,
@@ -17334,7 +18314,12 @@
         "creative_fatigue_must_be_reviewed": true,
         "deliver_value_after_hook": true,
         "no_slow_generic_intro": true,
-        "publication_time_must_not_be_invented": true
+        "publication_time_must_not_be_invented": true,
+        "format_selected_for_message_not_habit": true,
+        "format_diversification_considered": true,
+        "new_idea_test_or_trial_reel_considered": true,
+        "share_worthiness_reviewed": true,
+        "highest_available_resolution_required": true
       },
       "instagram_carousel_constraints": null,
       "instagram_reels_policy": {
@@ -17444,6 +18429,108 @@
             "Convert existing video to 9:16 without damaging the subject or brand coherence.",
             "AI output remains subject to the same quality, truthfulness, brand, integrity and rights checks as manually produced media."
           ]
+        },
+        "creators_best_practices": {
+          "version": 1,
+          "name": "Instagram Creators Engaging Content Best Practices",
+          "source_basis": "User-supplied Instagram Creators guidance",
+          "engagement_definition": {
+            "interactions": [
+              "likes",
+              "comments",
+              "saves",
+              "shares"
+            ],
+            "rule": "Create content that earns meaningful interactions rather than generic engagement bait."
+          },
+          "experimentation": {
+            "trial_reels": {
+              "enabled_when_available": true,
+              "audience": "non-followers first",
+              "profile_visibility": "not shown on profile or to followers during trial",
+              "review_after_hours": 24,
+              "metrics": [
+                "views",
+                "likes",
+                "comments",
+                "shares"
+              ],
+              "auto_share_window_hours": 72,
+              "rule": "Use trial Reels to test new concepts, characters and styles before wider distribution when the account is eligible."
+            }
+          },
+          "format_diversification": {
+            "allowed_mix": [
+              "photo",
+              "carousel",
+              "reel",
+              "story",
+              "live"
+            ],
+            "rule": "Use a mix of formats instead of repeating one format automatically; choose format based on the message, target and objective."
+          },
+          "creative_effects": {
+            "allowed": [
+              "interactive stickers",
+              "custom cutouts",
+              "text overlays",
+              "media overlays",
+              "creative effects"
+            ],
+            "rule": "Use creative effects only when they improve storytelling, clarity or interaction."
+          },
+          "audio": {
+            "multiple_tracks_max": 20,
+            "allowed_types": [
+              "popular audio",
+              "original audio",
+              "voiceover",
+              "licensed audio",
+              "Meta Audio Collection"
+            ],
+            "rights_rule": "Use only audio you are licensed or otherwise permitted to use.",
+            "purpose": "Use music and sound to create atmosphere, meaning or pacing; never as decoration only."
+          },
+          "reels_best_practices": {
+            "share_worthy": true,
+            "hook_first_seconds": 3,
+            "highest_resolution_possible": true,
+            "popular_or_original_audio": true,
+            "muted_view_optimization": true,
+            "muted_view_methods": [
+              "on-screen text",
+              "captions",
+              "subtitles"
+            ],
+            "comment_response_early_days": true,
+            "recommended_non_follower_max_duration_seconds": 180,
+            "rule": "Reels must capture attention immediately, remain understandable without sound, and be built to create natural sharing and conversation."
+          },
+          "post_publish": {
+            "early_comment_interaction_required": true,
+            "trial_reel_review_required": true,
+            "metrics_to_review": [
+              "views",
+              "likes",
+              "comments",
+              "shares",
+              "saves",
+              "skip_rate",
+              "average_watch_time",
+              "three_second_view_rate"
+            ]
+          },
+          "mandatory_checks": [
+            "format_selected_for_message_not_habit",
+            "new_idea_test_considered",
+            "share_worthiness_reviewed",
+            "first_3_seconds_or_first_visible_unit_clear",
+            "highest_available_resolution_used",
+            "muted_view_understandable_if_video",
+            "audio_rights_verified_if_audio_used",
+            "comment_followup_plan_present_if_reel",
+            "reel_duration_within_recommendation_if_non_follower_distribution_is_objective"
+          ]
         }
       },
       "instagram_reels_constraints": {
@@ -17479,10 +18566,18 @@
         "profile_visit_value_reviewed": null,
         "negative_feedback_risk_reviewed": null,
         "format_specific_rules_passed": null,
+        "format_diversification_considered": true,
+        "new_idea_test_considered": true,
+        "share_worthiness_reviewed": true,
+        "highest_available_resolution_used": null,
         "carousel_completion_logic_passed": null,
         "first_3_seconds_passed": null,
         "reason_beyond_10_seconds_passed": null,
+        "reel_muted_view_passed": null,
+        "reel_audio_rights_verified": null,
         "reel_9_16_safe_area_audio_passed": null,
+        "reel_comment_followup_plan_present": null,
+        "reel_duration_recommendation_passed": null,
         "gallery_metadata_permission_passed": null
       },
       "visual_asset_urls": [
@@ -17881,6 +18976,8 @@
       "instagram_policy_required": true,
       "instagram_policy_version": 2,
       "instagram_policy_source": "publisher/instagram_distribution_policy.json",
+      "instagram_creators_policy_version": 1,
+      "instagram_creators_policy_source": "publisher/instagram_creators_best_practices.json",
       "instagram_full_policy_attached": true,
       "instagram_scope_note": {
         "feed": "This policy covers the Instagram Feed ranking system described in the supplied directives.",
@@ -18134,6 +19231,108 @@
         "audio_intent_and_silent_comprehension_passed_if_video",
         "gallery_metadata_used_only_with_permission_if_used"
       ],
+      "instagram_creators_best_practices": {
+        "version": 1,
+        "name": "Instagram Creators Engaging Content Best Practices",
+        "source_basis": "User-supplied Instagram Creators guidance",
+        "engagement_definition": {
+          "interactions": [
+            "likes",
+            "comments",
+            "saves",
+            "shares"
+          ],
+          "rule": "Create content that earns meaningful interactions rather than generic engagement bait."
+        },
+        "experimentation": {
+          "trial_reels": {
+            "enabled_when_available": true,
+            "audience": "non-followers first",
+            "profile_visibility": "not shown on profile or to followers during trial",
+            "review_after_hours": 24,
+            "metrics": [
+              "views",
+              "likes",
+              "comments",
+              "shares"
+            ],
+            "auto_share_window_hours": 72,
+            "rule": "Use trial Reels to test new concepts, characters and styles before wider distribution when the account is eligible."
+          }
+        },
+        "format_diversification": {
+          "allowed_mix": [
+            "photo",
+            "carousel",
+            "reel",
+            "story",
+            "live"
+          ],
+          "rule": "Use a mix of formats instead of repeating one format automatically; choose format based on the message, target and objective."
+        },
+        "creative_effects": {
+          "allowed": [
+            "interactive stickers",
+            "custom cutouts",
+            "text overlays",
+            "media overlays",
+            "creative effects"
+          ],
+          "rule": "Use creative effects only when they improve storytelling, clarity or interaction."
+        },
+        "audio": {
+          "multiple_tracks_max": 20,
+          "allowed_types": [
+            "popular audio",
+            "original audio",
+            "voiceover",
+            "licensed audio",
+            "Meta Audio Collection"
+          ],
+          "rights_rule": "Use only audio you are licensed or otherwise permitted to use.",
+          "purpose": "Use music and sound to create atmosphere, meaning or pacing; never as decoration only."
+        },
+        "reels_best_practices": {
+          "share_worthy": true,
+          "hook_first_seconds": 3,
+          "highest_resolution_possible": true,
+          "popular_or_original_audio": true,
+          "muted_view_optimization": true,
+          "muted_view_methods": [
+            "on-screen text",
+            "captions",
+            "subtitles"
+          ],
+          "comment_response_early_days": true,
+          "recommended_non_follower_max_duration_seconds": 180,
+          "rule": "Reels must capture attention immediately, remain understandable without sound, and be built to create natural sharing and conversation."
+        },
+        "post_publish": {
+          "early_comment_interaction_required": true,
+          "trial_reel_review_required": true,
+          "metrics_to_review": [
+            "views",
+            "likes",
+            "comments",
+            "shares",
+            "saves",
+            "skip_rate",
+            "average_watch_time",
+            "three_second_view_rate"
+          ]
+        },
+        "mandatory_checks": [
+          "format_selected_for_message_not_habit",
+          "new_idea_test_considered",
+          "share_worthiness_reviewed",
+          "first_3_seconds_or_first_visible_unit_clear",
+          "highest_available_resolution_used",
+          "muted_view_understandable_if_video",
+          "audio_rights_verified_if_audio_used",
+          "comment_followup_plan_present_if_reel",
+          "reel_duration_within_recommendation_if_non_follower_distribution_is_objective"
+        ]
+      },
       "instagram_performance_data_status": "NOT_AVAILABLE",
       "instagram_performance_metrics_expected": [
         "likes",
@@ -18163,7 +19362,7 @@
         "privacy_rule": "Do not infer private or sensitive traits from people present in media."
       },
       "instagram_format": "photo",
-      "instagram_format_mix_note": "Current production workflow is constrained to static photo jobs; carousel/Reels rules remain mandatory in the master policy for future matching formats.",
+      "instagram_format_mix_note": "Current production workflow is constrained to static photo jobs; format diversification must still be considered in planning and future cycles.",
       "instagram_creative_constraints": {
         "integrity_truthfulness_required": true,
         "first_visible_unit_must_work_without_context": true,
@@ -18180,7 +19379,12 @@
         "creative_fatigue_must_be_reviewed": true,
         "deliver_value_after_hook": true,
         "no_slow_generic_intro": true,
-        "publication_time_must_not_be_invented": true
+        "publication_time_must_not_be_invented": true,
+        "format_selected_for_message_not_habit": true,
+        "format_diversification_considered": true,
+        "new_idea_test_or_trial_reel_considered": true,
+        "share_worthiness_reviewed": true,
+        "highest_available_resolution_required": true
       },
       "instagram_carousel_constraints": null,
       "instagram_reels_policy": {
@@ -18290,6 +19494,108 @@
             "Convert existing video to 9:16 without damaging the subject or brand coherence.",
             "AI output remains subject to the same quality, truthfulness, brand, integrity and rights checks as manually produced media."
           ]
+        },
+        "creators_best_practices": {
+          "version": 1,
+          "name": "Instagram Creators Engaging Content Best Practices",
+          "source_basis": "User-supplied Instagram Creators guidance",
+          "engagement_definition": {
+            "interactions": [
+              "likes",
+              "comments",
+              "saves",
+              "shares"
+            ],
+            "rule": "Create content that earns meaningful interactions rather than generic engagement bait."
+          },
+          "experimentation": {
+            "trial_reels": {
+              "enabled_when_available": true,
+              "audience": "non-followers first",
+              "profile_visibility": "not shown on profile or to followers during trial",
+              "review_after_hours": 24,
+              "metrics": [
+                "views",
+                "likes",
+                "comments",
+                "shares"
+              ],
+              "auto_share_window_hours": 72,
+              "rule": "Use trial Reels to test new concepts, characters and styles before wider distribution when the account is eligible."
+            }
+          },
+          "format_diversification": {
+            "allowed_mix": [
+              "photo",
+              "carousel",
+              "reel",
+              "story",
+              "live"
+            ],
+            "rule": "Use a mix of formats instead of repeating one format automatically; choose format based on the message, target and objective."
+          },
+          "creative_effects": {
+            "allowed": [
+              "interactive stickers",
+              "custom cutouts",
+              "text overlays",
+              "media overlays",
+              "creative effects"
+            ],
+            "rule": "Use creative effects only when they improve storytelling, clarity or interaction."
+          },
+          "audio": {
+            "multiple_tracks_max": 20,
+            "allowed_types": [
+              "popular audio",
+              "original audio",
+              "voiceover",
+              "licensed audio",
+              "Meta Audio Collection"
+            ],
+            "rights_rule": "Use only audio you are licensed or otherwise permitted to use.",
+            "purpose": "Use music and sound to create atmosphere, meaning or pacing; never as decoration only."
+          },
+          "reels_best_practices": {
+            "share_worthy": true,
+            "hook_first_seconds": 3,
+            "highest_resolution_possible": true,
+            "popular_or_original_audio": true,
+            "muted_view_optimization": true,
+            "muted_view_methods": [
+              "on-screen text",
+              "captions",
+              "subtitles"
+            ],
+            "comment_response_early_days": true,
+            "recommended_non_follower_max_duration_seconds": 180,
+            "rule": "Reels must capture attention immediately, remain understandable without sound, and be built to create natural sharing and conversation."
+          },
+          "post_publish": {
+            "early_comment_interaction_required": true,
+            "trial_reel_review_required": true,
+            "metrics_to_review": [
+              "views",
+              "likes",
+              "comments",
+              "shares",
+              "saves",
+              "skip_rate",
+              "average_watch_time",
+              "three_second_view_rate"
+            ]
+          },
+          "mandatory_checks": [
+            "format_selected_for_message_not_habit",
+            "new_idea_test_considered",
+            "share_worthiness_reviewed",
+            "first_3_seconds_or_first_visible_unit_clear",
+            "highest_available_resolution_used",
+            "muted_view_understandable_if_video",
+            "audio_rights_verified_if_audio_used",
+            "comment_followup_plan_present_if_reel",
+            "reel_duration_within_recommendation_if_non_follower_distribution_is_objective"
+          ]
         }
       },
       "instagram_reels_constraints": {
@@ -18325,10 +19631,18 @@
         "profile_visit_value_reviewed": null,
         "negative_feedback_risk_reviewed": null,
         "format_specific_rules_passed": null,
+        "format_diversification_considered": true,
+        "new_idea_test_considered": true,
+        "share_worthiness_reviewed": true,
+        "highest_available_resolution_used": null,
         "carousel_completion_logic_passed": null,
         "first_3_seconds_passed": null,
         "reason_beyond_10_seconds_passed": null,
+        "reel_muted_view_passed": null,
+        "reel_audio_rights_verified": null,
         "reel_9_16_safe_area_audio_passed": null,
+        "reel_comment_followup_plan_present": null,
+        "reel_duration_recommendation_passed": null,
         "gallery_metadata_permission_passed": null
       },
       "visual_transform": "original-generated-ecommerce-mockup-plus-presenter-footer",
@@ -18723,6 +20037,8 @@
       "instagram_policy_required": true,
       "instagram_policy_version": 2,
       "instagram_policy_source": "publisher/instagram_distribution_policy.json",
+      "instagram_creators_policy_version": 1,
+      "instagram_creators_policy_source": "publisher/instagram_creators_best_practices.json",
       "instagram_full_policy_attached": true,
       "instagram_scope_note": {
         "feed": "This policy covers the Instagram Feed ranking system described in the supplied directives.",
@@ -18976,6 +20292,108 @@
         "audio_intent_and_silent_comprehension_passed_if_video",
         "gallery_metadata_used_only_with_permission_if_used"
       ],
+      "instagram_creators_best_practices": {
+        "version": 1,
+        "name": "Instagram Creators Engaging Content Best Practices",
+        "source_basis": "User-supplied Instagram Creators guidance",
+        "engagement_definition": {
+          "interactions": [
+            "likes",
+            "comments",
+            "saves",
+            "shares"
+          ],
+          "rule": "Create content that earns meaningful interactions rather than generic engagement bait."
+        },
+        "experimentation": {
+          "trial_reels": {
+            "enabled_when_available": true,
+            "audience": "non-followers first",
+            "profile_visibility": "not shown on profile or to followers during trial",
+            "review_after_hours": 24,
+            "metrics": [
+              "views",
+              "likes",
+              "comments",
+              "shares"
+            ],
+            "auto_share_window_hours": 72,
+            "rule": "Use trial Reels to test new concepts, characters and styles before wider distribution when the account is eligible."
+          }
+        },
+        "format_diversification": {
+          "allowed_mix": [
+            "photo",
+            "carousel",
+            "reel",
+            "story",
+            "live"
+          ],
+          "rule": "Use a mix of formats instead of repeating one format automatically; choose format based on the message, target and objective."
+        },
+        "creative_effects": {
+          "allowed": [
+            "interactive stickers",
+            "custom cutouts",
+            "text overlays",
+            "media overlays",
+            "creative effects"
+          ],
+          "rule": "Use creative effects only when they improve storytelling, clarity or interaction."
+        },
+        "audio": {
+          "multiple_tracks_max": 20,
+          "allowed_types": [
+            "popular audio",
+            "original audio",
+            "voiceover",
+            "licensed audio",
+            "Meta Audio Collection"
+          ],
+          "rights_rule": "Use only audio you are licensed or otherwise permitted to use.",
+          "purpose": "Use music and sound to create atmosphere, meaning or pacing; never as decoration only."
+        },
+        "reels_best_practices": {
+          "share_worthy": true,
+          "hook_first_seconds": 3,
+          "highest_resolution_possible": true,
+          "popular_or_original_audio": true,
+          "muted_view_optimization": true,
+          "muted_view_methods": [
+            "on-screen text",
+            "captions",
+            "subtitles"
+          ],
+          "comment_response_early_days": true,
+          "recommended_non_follower_max_duration_seconds": 180,
+          "rule": "Reels must capture attention immediately, remain understandable without sound, and be built to create natural sharing and conversation."
+        },
+        "post_publish": {
+          "early_comment_interaction_required": true,
+          "trial_reel_review_required": true,
+          "metrics_to_review": [
+            "views",
+            "likes",
+            "comments",
+            "shares",
+            "saves",
+            "skip_rate",
+            "average_watch_time",
+            "three_second_view_rate"
+          ]
+        },
+        "mandatory_checks": [
+          "format_selected_for_message_not_habit",
+          "new_idea_test_considered",
+          "share_worthiness_reviewed",
+          "first_3_seconds_or_first_visible_unit_clear",
+          "highest_available_resolution_used",
+          "muted_view_understandable_if_video",
+          "audio_rights_verified_if_audio_used",
+          "comment_followup_plan_present_if_reel",
+          "reel_duration_within_recommendation_if_non_follower_distribution_is_objective"
+        ]
+      },
       "instagram_performance_data_status": "NOT_AVAILABLE",
       "instagram_performance_metrics_expected": [
         "likes",
@@ -19005,7 +20423,7 @@
         "privacy_rule": "Do not infer private or sensitive traits from people present in media."
       },
       "instagram_format": "photo",
-      "instagram_format_mix_note": "Current production workflow is constrained to static photo jobs; carousel/Reels rules remain mandatory in the master policy for future matching formats.",
+      "instagram_format_mix_note": "Current production workflow is constrained to static photo jobs; format diversification must still be considered in planning and future cycles.",
       "instagram_creative_constraints": {
         "integrity_truthfulness_required": true,
         "first_visible_unit_must_work_without_context": true,
@@ -19022,7 +20440,12 @@
         "creative_fatigue_must_be_reviewed": true,
         "deliver_value_after_hook": true,
         "no_slow_generic_intro": true,
-        "publication_time_must_not_be_invented": true
+        "publication_time_must_not_be_invented": true,
+        "format_selected_for_message_not_habit": true,
+        "format_diversification_considered": true,
+        "new_idea_test_or_trial_reel_considered": true,
+        "share_worthiness_reviewed": true,
+        "highest_available_resolution_required": true
       },
       "instagram_carousel_constraints": null,
       "instagram_reels_policy": {
@@ -19132,6 +20555,108 @@
             "Convert existing video to 9:16 without damaging the subject or brand coherence.",
             "AI output remains subject to the same quality, truthfulness, brand, integrity and rights checks as manually produced media."
           ]
+        },
+        "creators_best_practices": {
+          "version": 1,
+          "name": "Instagram Creators Engaging Content Best Practices",
+          "source_basis": "User-supplied Instagram Creators guidance",
+          "engagement_definition": {
+            "interactions": [
+              "likes",
+              "comments",
+              "saves",
+              "shares"
+            ],
+            "rule": "Create content that earns meaningful interactions rather than generic engagement bait."
+          },
+          "experimentation": {
+            "trial_reels": {
+              "enabled_when_available": true,
+              "audience": "non-followers first",
+              "profile_visibility": "not shown on profile or to followers during trial",
+              "review_after_hours": 24,
+              "metrics": [
+                "views",
+                "likes",
+                "comments",
+                "shares"
+              ],
+              "auto_share_window_hours": 72,
+              "rule": "Use trial Reels to test new concepts, characters and styles before wider distribution when the account is eligible."
+            }
+          },
+          "format_diversification": {
+            "allowed_mix": [
+              "photo",
+              "carousel",
+              "reel",
+              "story",
+              "live"
+            ],
+            "rule": "Use a mix of formats instead of repeating one format automatically; choose format based on the message, target and objective."
+          },
+          "creative_effects": {
+            "allowed": [
+              "interactive stickers",
+              "custom cutouts",
+              "text overlays",
+              "media overlays",
+              "creative effects"
+            ],
+            "rule": "Use creative effects only when they improve storytelling, clarity or interaction."
+          },
+          "audio": {
+            "multiple_tracks_max": 20,
+            "allowed_types": [
+              "popular audio",
+              "original audio",
+              "voiceover",
+              "licensed audio",
+              "Meta Audio Collection"
+            ],
+            "rights_rule": "Use only audio you are licensed or otherwise permitted to use.",
+            "purpose": "Use music and sound to create atmosphere, meaning or pacing; never as decoration only."
+          },
+          "reels_best_practices": {
+            "share_worthy": true,
+            "hook_first_seconds": 3,
+            "highest_resolution_possible": true,
+            "popular_or_original_audio": true,
+            "muted_view_optimization": true,
+            "muted_view_methods": [
+              "on-screen text",
+              "captions",
+              "subtitles"
+            ],
+            "comment_response_early_days": true,
+            "recommended_non_follower_max_duration_seconds": 180,
+            "rule": "Reels must capture attention immediately, remain understandable without sound, and be built to create natural sharing and conversation."
+          },
+          "post_publish": {
+            "early_comment_interaction_required": true,
+            "trial_reel_review_required": true,
+            "metrics_to_review": [
+              "views",
+              "likes",
+              "comments",
+              "shares",
+              "saves",
+              "skip_rate",
+              "average_watch_time",
+              "three_second_view_rate"
+            ]
+          },
+          "mandatory_checks": [
+            "format_selected_for_message_not_habit",
+            "new_idea_test_considered",
+            "share_worthiness_reviewed",
+            "first_3_seconds_or_first_visible_unit_clear",
+            "highest_available_resolution_used",
+            "muted_view_understandable_if_video",
+            "audio_rights_verified_if_audio_used",
+            "comment_followup_plan_present_if_reel",
+            "reel_duration_within_recommendation_if_non_follower_distribution_is_objective"
+          ]
         }
       },
       "instagram_reels_constraints": {
@@ -19167,10 +20692,18 @@
         "profile_visit_value_reviewed": null,
         "negative_feedback_risk_reviewed": null,
         "format_specific_rules_passed": null,
+        "format_diversification_considered": true,
+        "new_idea_test_considered": true,
+        "share_worthiness_reviewed": true,
+        "highest_available_resolution_used": null,
         "carousel_completion_logic_passed": null,
         "first_3_seconds_passed": null,
         "reason_beyond_10_seconds_passed": null,
+        "reel_muted_view_passed": null,
+        "reel_audio_rights_verified": null,
         "reel_9_16_safe_area_audio_passed": null,
+        "reel_comment_followup_plan_present": null,
+        "reel_duration_recommendation_passed": null,
         "gallery_metadata_permission_passed": null
       },
       "visual_transform": "original-generated-ecommerce-mockup-plus-presenter-footer",
@@ -19565,6 +21098,8 @@
       "instagram_policy_required": true,
       "instagram_policy_version": 2,
       "instagram_policy_source": "publisher/instagram_distribution_policy.json",
+      "instagram_creators_policy_version": 1,
+      "instagram_creators_policy_source": "publisher/instagram_creators_best_practices.json",
       "instagram_full_policy_attached": true,
       "instagram_scope_note": {
         "feed": "This policy covers the Instagram Feed ranking system described in the supplied directives.",
@@ -19818,6 +21353,108 @@
         "audio_intent_and_silent_comprehension_passed_if_video",
         "gallery_metadata_used_only_with_permission_if_used"
       ],
+      "instagram_creators_best_practices": {
+        "version": 1,
+        "name": "Instagram Creators Engaging Content Best Practices",
+        "source_basis": "User-supplied Instagram Creators guidance",
+        "engagement_definition": {
+          "interactions": [
+            "likes",
+            "comments",
+            "saves",
+            "shares"
+          ],
+          "rule": "Create content that earns meaningful interactions rather than generic engagement bait."
+        },
+        "experimentation": {
+          "trial_reels": {
+            "enabled_when_available": true,
+            "audience": "non-followers first",
+            "profile_visibility": "not shown on profile or to followers during trial",
+            "review_after_hours": 24,
+            "metrics": [
+              "views",
+              "likes",
+              "comments",
+              "shares"
+            ],
+            "auto_share_window_hours": 72,
+            "rule": "Use trial Reels to test new concepts, characters and styles before wider distribution when the account is eligible."
+          }
+        },
+        "format_diversification": {
+          "allowed_mix": [
+            "photo",
+            "carousel",
+            "reel",
+            "story",
+            "live"
+          ],
+          "rule": "Use a mix of formats instead of repeating one format automatically; choose format based on the message, target and objective."
+        },
+        "creative_effects": {
+          "allowed": [
+            "interactive stickers",
+            "custom cutouts",
+            "text overlays",
+            "media overlays",
+            "creative effects"
+          ],
+          "rule": "Use creative effects only when they improve storytelling, clarity or interaction."
+        },
+        "audio": {
+          "multiple_tracks_max": 20,
+          "allowed_types": [
+            "popular audio",
+            "original audio",
+            "voiceover",
+            "licensed audio",
+            "Meta Audio Collection"
+          ],
+          "rights_rule": "Use only audio you are licensed or otherwise permitted to use.",
+          "purpose": "Use music and sound to create atmosphere, meaning or pacing; never as decoration only."
+        },
+        "reels_best_practices": {
+          "share_worthy": true,
+          "hook_first_seconds": 3,
+          "highest_resolution_possible": true,
+          "popular_or_original_audio": true,
+          "muted_view_optimization": true,
+          "muted_view_methods": [
+            "on-screen text",
+            "captions",
+            "subtitles"
+          ],
+          "comment_response_early_days": true,
+          "recommended_non_follower_max_duration_seconds": 180,
+          "rule": "Reels must capture attention immediately, remain understandable without sound, and be built to create natural sharing and conversation."
+        },
+        "post_publish": {
+          "early_comment_interaction_required": true,
+          "trial_reel_review_required": true,
+          "metrics_to_review": [
+            "views",
+            "likes",
+            "comments",
+            "shares",
+            "saves",
+            "skip_rate",
+            "average_watch_time",
+            "three_second_view_rate"
+          ]
+        },
+        "mandatory_checks": [
+          "format_selected_for_message_not_habit",
+          "new_idea_test_considered",
+          "share_worthiness_reviewed",
+          "first_3_seconds_or_first_visible_unit_clear",
+          "highest_available_resolution_used",
+          "muted_view_understandable_if_video",
+          "audio_rights_verified_if_audio_used",
+          "comment_followup_plan_present_if_reel",
+          "reel_duration_within_recommendation_if_non_follower_distribution_is_objective"
+        ]
+      },
       "instagram_performance_data_status": "NOT_AVAILABLE",
       "instagram_performance_metrics_expected": [
         "likes",
@@ -19847,7 +21484,7 @@
         "privacy_rule": "Do not infer private or sensitive traits from people present in media."
       },
       "instagram_format": "photo",
-      "instagram_format_mix_note": "Current production workflow is constrained to static photo jobs; carousel/Reels rules remain mandatory in the master policy for future matching formats.",
+      "instagram_format_mix_note": "Current production workflow is constrained to static photo jobs; format diversification must still be considered in planning and future cycles.",
       "instagram_creative_constraints": {
         "integrity_truthfulness_required": true,
         "first_visible_unit_must_work_without_context": true,
@@ -19864,7 +21501,12 @@
         "creative_fatigue_must_be_reviewed": true,
         "deliver_value_after_hook": true,
         "no_slow_generic_intro": true,
-        "publication_time_must_not_be_invented": true
+        "publication_time_must_not_be_invented": true,
+        "format_selected_for_message_not_habit": true,
+        "format_diversification_considered": true,
+        "new_idea_test_or_trial_reel_considered": true,
+        "share_worthiness_reviewed": true,
+        "highest_available_resolution_required": true
       },
       "instagram_carousel_constraints": null,
       "instagram_reels_policy": {
@@ -19974,6 +21616,108 @@
             "Convert existing video to 9:16 without damaging the subject or brand coherence.",
             "AI output remains subject to the same quality, truthfulness, brand, integrity and rights checks as manually produced media."
           ]
+        },
+        "creators_best_practices": {
+          "version": 1,
+          "name": "Instagram Creators Engaging Content Best Practices",
+          "source_basis": "User-supplied Instagram Creators guidance",
+          "engagement_definition": {
+            "interactions": [
+              "likes",
+              "comments",
+              "saves",
+              "shares"
+            ],
+            "rule": "Create content that earns meaningful interactions rather than generic engagement bait."
+          },
+          "experimentation": {
+            "trial_reels": {
+              "enabled_when_available": true,
+              "audience": "non-followers first",
+              "profile_visibility": "not shown on profile or to followers during trial",
+              "review_after_hours": 24,
+              "metrics": [
+                "views",
+                "likes",
+                "comments",
+                "shares"
+              ],
+              "auto_share_window_hours": 72,
+              "rule": "Use trial Reels to test new concepts, characters and styles before wider distribution when the account is eligible."
+            }
+          },
+          "format_diversification": {
+            "allowed_mix": [
+              "photo",
+              "carousel",
+              "reel",
+              "story",
+              "live"
+            ],
+            "rule": "Use a mix of formats instead of repeating one format automatically; choose format based on the message, target and objective."
+          },
+          "creative_effects": {
+            "allowed": [
+              "interactive stickers",
+              "custom cutouts",
+              "text overlays",
+              "media overlays",
+              "creative effects"
+            ],
+            "rule": "Use creative effects only when they improve storytelling, clarity or interaction."
+          },
+          "audio": {
+            "multiple_tracks_max": 20,
+            "allowed_types": [
+              "popular audio",
+              "original audio",
+              "voiceover",
+              "licensed audio",
+              "Meta Audio Collection"
+            ],
+            "rights_rule": "Use only audio you are licensed or otherwise permitted to use.",
+            "purpose": "Use music and sound to create atmosphere, meaning or pacing; never as decoration only."
+          },
+          "reels_best_practices": {
+            "share_worthy": true,
+            "hook_first_seconds": 3,
+            "highest_resolution_possible": true,
+            "popular_or_original_audio": true,
+            "muted_view_optimization": true,
+            "muted_view_methods": [
+              "on-screen text",
+              "captions",
+              "subtitles"
+            ],
+            "comment_response_early_days": true,
+            "recommended_non_follower_max_duration_seconds": 180,
+            "rule": "Reels must capture attention immediately, remain understandable without sound, and be built to create natural sharing and conversation."
+          },
+          "post_publish": {
+            "early_comment_interaction_required": true,
+            "trial_reel_review_required": true,
+            "metrics_to_review": [
+              "views",
+              "likes",
+              "comments",
+              "shares",
+              "saves",
+              "skip_rate",
+              "average_watch_time",
+              "three_second_view_rate"
+            ]
+          },
+          "mandatory_checks": [
+            "format_selected_for_message_not_habit",
+            "new_idea_test_considered",
+            "share_worthiness_reviewed",
+            "first_3_seconds_or_first_visible_unit_clear",
+            "highest_available_resolution_used",
+            "muted_view_understandable_if_video",
+            "audio_rights_verified_if_audio_used",
+            "comment_followup_plan_present_if_reel",
+            "reel_duration_within_recommendation_if_non_follower_distribution_is_objective"
+          ]
         }
       },
       "instagram_reels_constraints": {
@@ -20009,10 +21753,18 @@
         "profile_visit_value_reviewed": null,
         "negative_feedback_risk_reviewed": null,
         "format_specific_rules_passed": null,
+        "format_diversification_considered": true,
+        "new_idea_test_considered": true,
+        "share_worthiness_reviewed": true,
+        "highest_available_resolution_used": null,
         "carousel_completion_logic_passed": null,
         "first_3_seconds_passed": null,
         "reason_beyond_10_seconds_passed": null,
+        "reel_muted_view_passed": null,
+        "reel_audio_rights_verified": null,
         "reel_9_16_safe_area_audio_passed": null,
+        "reel_comment_followup_plan_present": null,
+        "reel_duration_recommendation_passed": null,
         "gallery_metadata_permission_passed": null
       },
       "visual_transform": "original-generated-ecommerce-mockup-plus-presenter-footer",
@@ -20407,6 +22159,8 @@
       "instagram_policy_required": true,
       "instagram_policy_version": 2,
       "instagram_policy_source": "publisher/instagram_distribution_policy.json",
+      "instagram_creators_policy_version": 1,
+      "instagram_creators_policy_source": "publisher/instagram_creators_best_practices.json",
       "instagram_full_policy_attached": true,
       "instagram_scope_note": {
         "feed": "This policy covers the Instagram Feed ranking system described in the supplied directives.",
@@ -20660,6 +22414,108 @@
         "audio_intent_and_silent_comprehension_passed_if_video",
         "gallery_metadata_used_only_with_permission_if_used"
       ],
+      "instagram_creators_best_practices": {
+        "version": 1,
+        "name": "Instagram Creators Engaging Content Best Practices",
+        "source_basis": "User-supplied Instagram Creators guidance",
+        "engagement_definition": {
+          "interactions": [
+            "likes",
+            "comments",
+            "saves",
+            "shares"
+          ],
+          "rule": "Create content that earns meaningful interactions rather than generic engagement bait."
+        },
+        "experimentation": {
+          "trial_reels": {
+            "enabled_when_available": true,
+            "audience": "non-followers first",
+            "profile_visibility": "not shown on profile or to followers during trial",
+            "review_after_hours": 24,
+            "metrics": [
+              "views",
+              "likes",
+              "comments",
+              "shares"
+            ],
+            "auto_share_window_hours": 72,
+            "rule": "Use trial Reels to test new concepts, characters and styles before wider distribution when the account is eligible."
+          }
+        },
+        "format_diversification": {
+          "allowed_mix": [
+            "photo",
+            "carousel",
+            "reel",
+            "story",
+            "live"
+          ],
+          "rule": "Use a mix of formats instead of repeating one format automatically; choose format based on the message, target and objective."
+        },
+        "creative_effects": {
+          "allowed": [
+            "interactive stickers",
+            "custom cutouts",
+            "text overlays",
+            "media overlays",
+            "creative effects"
+          ],
+          "rule": "Use creative effects only when they improve storytelling, clarity or interaction."
+        },
+        "audio": {
+          "multiple_tracks_max": 20,
+          "allowed_types": [
+            "popular audio",
+            "original audio",
+            "voiceover",
+            "licensed audio",
+            "Meta Audio Collection"
+          ],
+          "rights_rule": "Use only audio you are licensed or otherwise permitted to use.",
+          "purpose": "Use music and sound to create atmosphere, meaning or pacing; never as decoration only."
+        },
+        "reels_best_practices": {
+          "share_worthy": true,
+          "hook_first_seconds": 3,
+          "highest_resolution_possible": true,
+          "popular_or_original_audio": true,
+          "muted_view_optimization": true,
+          "muted_view_methods": [
+            "on-screen text",
+            "captions",
+            "subtitles"
+          ],
+          "comment_response_early_days": true,
+          "recommended_non_follower_max_duration_seconds": 180,
+          "rule": "Reels must capture attention immediately, remain understandable without sound, and be built to create natural sharing and conversation."
+        },
+        "post_publish": {
+          "early_comment_interaction_required": true,
+          "trial_reel_review_required": true,
+          "metrics_to_review": [
+            "views",
+            "likes",
+            "comments",
+            "shares",
+            "saves",
+            "skip_rate",
+            "average_watch_time",
+            "three_second_view_rate"
+          ]
+        },
+        "mandatory_checks": [
+          "format_selected_for_message_not_habit",
+          "new_idea_test_considered",
+          "share_worthiness_reviewed",
+          "first_3_seconds_or_first_visible_unit_clear",
+          "highest_available_resolution_used",
+          "muted_view_understandable_if_video",
+          "audio_rights_verified_if_audio_used",
+          "comment_followup_plan_present_if_reel",
+          "reel_duration_within_recommendation_if_non_follower_distribution_is_objective"
+        ]
+      },
       "instagram_performance_data_status": "NOT_AVAILABLE",
       "instagram_performance_metrics_expected": [
         "likes",
@@ -20689,7 +22545,7 @@
         "privacy_rule": "Do not infer private or sensitive traits from people present in media."
       },
       "instagram_format": "photo",
-      "instagram_format_mix_note": "Current production workflow is constrained to static photo jobs; carousel/Reels rules remain mandatory in the master policy for future matching formats.",
+      "instagram_format_mix_note": "Current production workflow is constrained to static photo jobs; format diversification must still be considered in planning and future cycles.",
       "instagram_creative_constraints": {
         "integrity_truthfulness_required": true,
         "first_visible_unit_must_work_without_context": true,
@@ -20706,7 +22562,12 @@
         "creative_fatigue_must_be_reviewed": true,
         "deliver_value_after_hook": true,
         "no_slow_generic_intro": true,
-        "publication_time_must_not_be_invented": true
+        "publication_time_must_not_be_invented": true,
+        "format_selected_for_message_not_habit": true,
+        "format_diversification_considered": true,
+        "new_idea_test_or_trial_reel_considered": true,
+        "share_worthiness_reviewed": true,
+        "highest_available_resolution_required": true
       },
       "instagram_carousel_constraints": null,
       "instagram_reels_policy": {
@@ -20816,6 +22677,108 @@
             "Convert existing video to 9:16 without damaging the subject or brand coherence.",
             "AI output remains subject to the same quality, truthfulness, brand, integrity and rights checks as manually produced media."
           ]
+        },
+        "creators_best_practices": {
+          "version": 1,
+          "name": "Instagram Creators Engaging Content Best Practices",
+          "source_basis": "User-supplied Instagram Creators guidance",
+          "engagement_definition": {
+            "interactions": [
+              "likes",
+              "comments",
+              "saves",
+              "shares"
+            ],
+            "rule": "Create content that earns meaningful interactions rather than generic engagement bait."
+          },
+          "experimentation": {
+            "trial_reels": {
+              "enabled_when_available": true,
+              "audience": "non-followers first",
+              "profile_visibility": "not shown on profile or to followers during trial",
+              "review_after_hours": 24,
+              "metrics": [
+                "views",
+                "likes",
+                "comments",
+                "shares"
+              ],
+              "auto_share_window_hours": 72,
+              "rule": "Use trial Reels to test new concepts, characters and styles before wider distribution when the account is eligible."
+            }
+          },
+          "format_diversification": {
+            "allowed_mix": [
+              "photo",
+              "carousel",
+              "reel",
+              "story",
+              "live"
+            ],
+            "rule": "Use a mix of formats instead of repeating one format automatically; choose format based on the message, target and objective."
+          },
+          "creative_effects": {
+            "allowed": [
+              "interactive stickers",
+              "custom cutouts",
+              "text overlays",
+              "media overlays",
+              "creative effects"
+            ],
+            "rule": "Use creative effects only when they improve storytelling, clarity or interaction."
+          },
+          "audio": {
+            "multiple_tracks_max": 20,
+            "allowed_types": [
+              "popular audio",
+              "original audio",
+              "voiceover",
+              "licensed audio",
+              "Meta Audio Collection"
+            ],
+            "rights_rule": "Use only audio you are licensed or otherwise permitted to use.",
+            "purpose": "Use music and sound to create atmosphere, meaning or pacing; never as decoration only."
+          },
+          "reels_best_practices": {
+            "share_worthy": true,
+            "hook_first_seconds": 3,
+            "highest_resolution_possible": true,
+            "popular_or_original_audio": true,
+            "muted_view_optimization": true,
+            "muted_view_methods": [
+              "on-screen text",
+              "captions",
+              "subtitles"
+            ],
+            "comment_response_early_days": true,
+            "recommended_non_follower_max_duration_seconds": 180,
+            "rule": "Reels must capture attention immediately, remain understandable without sound, and be built to create natural sharing and conversation."
+          },
+          "post_publish": {
+            "early_comment_interaction_required": true,
+            "trial_reel_review_required": true,
+            "metrics_to_review": [
+              "views",
+              "likes",
+              "comments",
+              "shares",
+              "saves",
+              "skip_rate",
+              "average_watch_time",
+              "three_second_view_rate"
+            ]
+          },
+          "mandatory_checks": [
+            "format_selected_for_message_not_habit",
+            "new_idea_test_considered",
+            "share_worthiness_reviewed",
+            "first_3_seconds_or_first_visible_unit_clear",
+            "highest_available_resolution_used",
+            "muted_view_understandable_if_video",
+            "audio_rights_verified_if_audio_used",
+            "comment_followup_plan_present_if_reel",
+            "reel_duration_within_recommendation_if_non_follower_distribution_is_objective"
+          ]
         }
       },
       "instagram_reels_constraints": {
@@ -20851,10 +22814,18 @@
         "profile_visit_value_reviewed": null,
         "negative_feedback_risk_reviewed": null,
         "format_specific_rules_passed": null,
+        "format_diversification_considered": true,
+        "new_idea_test_considered": true,
+        "share_worthiness_reviewed": true,
+        "highest_available_resolution_used": null,
         "carousel_completion_logic_passed": null,
         "first_3_seconds_passed": null,
         "reason_beyond_10_seconds_passed": null,
+        "reel_muted_view_passed": null,
+        "reel_audio_rights_verified": null,
         "reel_9_16_safe_area_audio_passed": null,
+        "reel_comment_followup_plan_present": null,
+        "reel_duration_recommendation_passed": null,
         "gallery_metadata_permission_passed": null
       },
       "visual_transform": "original-generated-ecommerce-mockup-plus-presenter-footer",
@@ -21249,6 +23220,8 @@
       "instagram_policy_required": true,
       "instagram_policy_version": 2,
       "instagram_policy_source": "publisher/instagram_distribution_policy.json",
+      "instagram_creators_policy_version": 1,
+      "instagram_creators_policy_source": "publisher/instagram_creators_best_practices.json",
       "instagram_full_policy_attached": true,
       "instagram_scope_note": {
         "feed": "This policy covers the Instagram Feed ranking system described in the supplied directives.",
@@ -21502,6 +23475,108 @@
         "audio_intent_and_silent_comprehension_passed_if_video",
         "gallery_metadata_used_only_with_permission_if_used"
       ],
+      "instagram_creators_best_practices": {
+        "version": 1,
+        "name": "Instagram Creators Engaging Content Best Practices",
+        "source_basis": "User-supplied Instagram Creators guidance",
+        "engagement_definition": {
+          "interactions": [
+            "likes",
+            "comments",
+            "saves",
+            "shares"
+          ],
+          "rule": "Create content that earns meaningful interactions rather than generic engagement bait."
+        },
+        "experimentation": {
+          "trial_reels": {
+            "enabled_when_available": true,
+            "audience": "non-followers first",
+            "profile_visibility": "not shown on profile or to followers during trial",
+            "review_after_hours": 24,
+            "metrics": [
+              "views",
+              "likes",
+              "comments",
+              "shares"
+            ],
+            "auto_share_window_hours": 72,
+            "rule": "Use trial Reels to test new concepts, characters and styles before wider distribution when the account is eligible."
+          }
+        },
+        "format_diversification": {
+          "allowed_mix": [
+            "photo",
+            "carousel",
+            "reel",
+            "story",
+            "live"
+          ],
+          "rule": "Use a mix of formats instead of repeating one format automatically; choose format based on the message, target and objective."
+        },
+        "creative_effects": {
+          "allowed": [
+            "interactive stickers",
+            "custom cutouts",
+            "text overlays",
+            "media overlays",
+            "creative effects"
+          ],
+          "rule": "Use creative effects only when they improve storytelling, clarity or interaction."
+        },
+        "audio": {
+          "multiple_tracks_max": 20,
+          "allowed_types": [
+            "popular audio",
+            "original audio",
+            "voiceover",
+            "licensed audio",
+            "Meta Audio Collection"
+          ],
+          "rights_rule": "Use only audio you are licensed or otherwise permitted to use.",
+          "purpose": "Use music and sound to create atmosphere, meaning or pacing; never as decoration only."
+        },
+        "reels_best_practices": {
+          "share_worthy": true,
+          "hook_first_seconds": 3,
+          "highest_resolution_possible": true,
+          "popular_or_original_audio": true,
+          "muted_view_optimization": true,
+          "muted_view_methods": [
+            "on-screen text",
+            "captions",
+            "subtitles"
+          ],
+          "comment_response_early_days": true,
+          "recommended_non_follower_max_duration_seconds": 180,
+          "rule": "Reels must capture attention immediately, remain understandable without sound, and be built to create natural sharing and conversation."
+        },
+        "post_publish": {
+          "early_comment_interaction_required": true,
+          "trial_reel_review_required": true,
+          "metrics_to_review": [
+            "views",
+            "likes",
+            "comments",
+            "shares",
+            "saves",
+            "skip_rate",
+            "average_watch_time",
+            "three_second_view_rate"
+          ]
+        },
+        "mandatory_checks": [
+          "format_selected_for_message_not_habit",
+          "new_idea_test_considered",
+          "share_worthiness_reviewed",
+          "first_3_seconds_or_first_visible_unit_clear",
+          "highest_available_resolution_used",
+          "muted_view_understandable_if_video",
+          "audio_rights_verified_if_audio_used",
+          "comment_followup_plan_present_if_reel",
+          "reel_duration_within_recommendation_if_non_follower_distribution_is_objective"
+        ]
+      },
       "instagram_performance_data_status": "NOT_AVAILABLE",
       "instagram_performance_metrics_expected": [
         "likes",
@@ -21531,7 +23606,7 @@
         "privacy_rule": "Do not infer private or sensitive traits from people present in media."
       },
       "instagram_format": "photo",
-      "instagram_format_mix_note": "Current production workflow is constrained to static photo jobs; carousel/Reels rules remain mandatory in the master policy for future matching formats.",
+      "instagram_format_mix_note": "Current production workflow is constrained to static photo jobs; format diversification must still be considered in planning and future cycles.",
       "instagram_creative_constraints": {
         "integrity_truthfulness_required": true,
         "first_visible_unit_must_work_without_context": true,
@@ -21548,7 +23623,12 @@
         "creative_fatigue_must_be_reviewed": true,
         "deliver_value_after_hook": true,
         "no_slow_generic_intro": true,
-        "publication_time_must_not_be_invented": true
+        "publication_time_must_not_be_invented": true,
+        "format_selected_for_message_not_habit": true,
+        "format_diversification_considered": true,
+        "new_idea_test_or_trial_reel_considered": true,
+        "share_worthiness_reviewed": true,
+        "highest_available_resolution_required": true
       },
       "instagram_carousel_constraints": null,
       "instagram_reels_policy": {
@@ -21658,6 +23738,108 @@
             "Convert existing video to 9:16 without damaging the subject or brand coherence.",
             "AI output remains subject to the same quality, truthfulness, brand, integrity and rights checks as manually produced media."
           ]
+        },
+        "creators_best_practices": {
+          "version": 1,
+          "name": "Instagram Creators Engaging Content Best Practices",
+          "source_basis": "User-supplied Instagram Creators guidance",
+          "engagement_definition": {
+            "interactions": [
+              "likes",
+              "comments",
+              "saves",
+              "shares"
+            ],
+            "rule": "Create content that earns meaningful interactions rather than generic engagement bait."
+          },
+          "experimentation": {
+            "trial_reels": {
+              "enabled_when_available": true,
+              "audience": "non-followers first",
+              "profile_visibility": "not shown on profile or to followers during trial",
+              "review_after_hours": 24,
+              "metrics": [
+                "views",
+                "likes",
+                "comments",
+                "shares"
+              ],
+              "auto_share_window_hours": 72,
+              "rule": "Use trial Reels to test new concepts, characters and styles before wider distribution when the account is eligible."
+            }
+          },
+          "format_diversification": {
+            "allowed_mix": [
+              "photo",
+              "carousel",
+              "reel",
+              "story",
+              "live"
+            ],
+            "rule": "Use a mix of formats instead of repeating one format automatically; choose format based on the message, target and objective."
+          },
+          "creative_effects": {
+            "allowed": [
+              "interactive stickers",
+              "custom cutouts",
+              "text overlays",
+              "media overlays",
+              "creative effects"
+            ],
+            "rule": "Use creative effects only when they improve storytelling, clarity or interaction."
+          },
+          "audio": {
+            "multiple_tracks_max": 20,
+            "allowed_types": [
+              "popular audio",
+              "original audio",
+              "voiceover",
+              "licensed audio",
+              "Meta Audio Collection"
+            ],
+            "rights_rule": "Use only audio you are licensed or otherwise permitted to use.",
+            "purpose": "Use music and sound to create atmosphere, meaning or pacing; never as decoration only."
+          },
+          "reels_best_practices": {
+            "share_worthy": true,
+            "hook_first_seconds": 3,
+            "highest_resolution_possible": true,
+            "popular_or_original_audio": true,
+            "muted_view_optimization": true,
+            "muted_view_methods": [
+              "on-screen text",
+              "captions",
+              "subtitles"
+            ],
+            "comment_response_early_days": true,
+            "recommended_non_follower_max_duration_seconds": 180,
+            "rule": "Reels must capture attention immediately, remain understandable without sound, and be built to create natural sharing and conversation."
+          },
+          "post_publish": {
+            "early_comment_interaction_required": true,
+            "trial_reel_review_required": true,
+            "metrics_to_review": [
+              "views",
+              "likes",
+              "comments",
+              "shares",
+              "saves",
+              "skip_rate",
+              "average_watch_time",
+              "three_second_view_rate"
+            ]
+          },
+          "mandatory_checks": [
+            "format_selected_for_message_not_habit",
+            "new_idea_test_considered",
+            "share_worthiness_reviewed",
+            "first_3_seconds_or_first_visible_unit_clear",
+            "highest_available_resolution_used",
+            "muted_view_understandable_if_video",
+            "audio_rights_verified_if_audio_used",
+            "comment_followup_plan_present_if_reel",
+            "reel_duration_within_recommendation_if_non_follower_distribution_is_objective"
+          ]
         }
       },
       "instagram_reels_constraints": {
@@ -21693,10 +23875,18 @@
         "profile_visit_value_reviewed": null,
         "negative_feedback_risk_reviewed": null,
         "format_specific_rules_passed": null,
+        "format_diversification_considered": true,
+        "new_idea_test_considered": true,
+        "share_worthiness_reviewed": true,
+        "highest_available_resolution_used": null,
         "carousel_completion_logic_passed": null,
         "first_3_seconds_passed": null,
         "reason_beyond_10_seconds_passed": null,
+        "reel_muted_view_passed": null,
+        "reel_audio_rights_verified": null,
         "reel_9_16_safe_area_audio_passed": null,
+        "reel_comment_followup_plan_present": null,
+        "reel_duration_recommendation_passed": null,
         "gallery_metadata_permission_passed": null
       },
       "visual_transform": "original-generated-ecommerce-mockup-plus-presenter-footer",
@@ -21705,7 +23895,7 @@
       "reused_visual_count": 0
     }
   ],
-  "updated_at": "2026-09-04T15:43:16+00:00",
+  "updated_at": "2026-09-04T15:44:25+00:00",
   "current_cycle": "2026-09-04T16:00",
   "visual_policy": "10 different images per content; F1 priority reels change image every 2 seconds; prefer unseen history",
   "f1_reel_policy": {
@@ -21740,8 +23930,10 @@
   },
   "history_days": 14,
   "history_limit": 840,
-  "analysis_policy": "ANALISI PRIMA DELLA CREAZIONE + FULL INSTAGRAM FEED/REELS MASTER POLICY V2",
+  "analysis_policy": "ANALISI PRIMA DELLA CREAZIONE + FULL INSTAGRAM FEED/REELS MASTER POLICY + CREATORS BEST PRACTICES",
   "instagram_distribution_policy": "publisher/instagram_distribution_policy.json",
   "instagram_distribution_policy_version": 2,
-  "instagram_policy_loaded_directly": true
+  "instagram_policy_loaded_directly": true,
+  "instagram_creators_best_practices": "publisher/instagram_creators_best_practices.json",
+  "instagram_creators_best_practices_version": 1
 }
