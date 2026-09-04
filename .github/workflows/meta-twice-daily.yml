@@ -5,6 +5,13 @@ on:
     # Four UTC companion runs cover Europe/Rome DST safely.
     # The Python gate publishes only the due local slot and retries once.
     - cron: '45 8,9,16,17 * * *'
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/meta-twice-daily.yml'
+      - 'publisher/meta_twice_daily.py'
+      - 'publisher/content_bank/f1-immobiliare.json'
   workflow_dispatch:
     inputs:
       slot:
