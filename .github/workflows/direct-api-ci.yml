@@ -9,7 +9,7 @@ on:
       - 'publisher/*.py'
       - 'publisher/clients/*.json'
       - 'publisher/content_bank/*.json'
-      - '.github/workflows/meta-twice-daily.yml'
+      - '.github/workflows/buffer-twice-daily.yml'
       - '.github/workflows/direct-api-ci.yml'
   pull_request:
     branches:
@@ -50,29 +50,45 @@ jobs:
         env:
           SOCIAL_START_OFFSET_DAYS: '0'
         run: python publisher/build_daily_queue.py --date 2026-08-17
-      - name: Validate autonomous Meta publisher contract
+      - name: Validate autonomous Buffer publisher contract
         run: |
           python - <<'PY'
-          from datetime import date
+          from datetime import date, datetime
           import json
           import sys
+          from zoneinfo import ZoneInfo
           sys.path.insert(0, 'publisher')
-          import meta_twice_daily as m
+          import buffer_twice_daily as b
 
           client=json.load(open('publisher/clients/f1-immobiliare.json',encoding='utf-8'))
           bank=json.load(open('publisher/content_bank/f1-immobiliare.json',encoding='utf-8'))
           day=date(2026,9,4)
-          morning=m.build_job(client,bank,day,'morning')
-          evening=m.build_job(client,bank,day,'evening')
-          assert morning['id']=='f1-immobiliare-meta-2026-09-04-morning'
-          assert evening['id']=='f1-immobiliare-meta-2026-09-04-evening'
+          morning=b.make_buffer_job(client,bank,day,'morning')
+          evening=b.make_buffer_job(client,bank,day,'evening')
+
+          assert morning['id']=='f1-immobiliare-buffer-2026-09-04-morning'
+          assert evening['id']=='f1-immobiliare-buffer-2026-09-04-evening'
           assert morning['format']=='carousel'
           assert evening['format']=='reel'
           assert morning['approval_required'] is False
           assert evening['manual_approval_required'] is False
           for job in (morning,evening):
-              assert [x['platform'] for x in job['platforms']]==['facebook','instagram']
+              assert [x['platform'] for x in job['platforms']]==['facebook','instagram','linkedin']
               assert job['autonomous_publish'] is True
-              assert job['status']=='ready'
-          print('AUTONOMOUS META CONTRACT OK')
+              assert job['status']=='buffer_pending'
+
+          assert 'type: post' in b.gql_metadata('facebook', morning)
+          assert 'type: carousel' in b.gql_metadata('instagram', morning)
+          assert 'type: reel' in b.gql_metadata('facebook', evening)
+          assert 'type: reel' in b.gql_metadata('instagram', evening)
+          assert b.gql_metadata('linkedin', evening)==''
+
+          rome=ZoneInfo('Europe/Rome')
+          due=datetime(2026,9,4,18,30,tzinfo=rome)
+          mode,due_at=b.schedule_mode(datetime(2026,9,4,18,0,tzinfo=rome),due)
+          assert mode=='customScheduled' and due_at.endswith('Z')
+          mode,due_at=b.schedule_mode(datetime(2026,9,4,18,31,tzinfo=rome),due)
+          assert mode=='shareNow' and due_at is None
+
+          print('AUTONOMOUS BUFFER CONTRACT OK')
           PY
