@@ -70,12 +70,17 @@ jobs:
           sources=m.get('visual_sources') or []
           assert len(sources)==28
           assert len({x['source_item_id'] for x in sources})==28
-          assert len({x['landing_url'] for x in sources})==28
+          assert len({x['image_url'] for x in sources})==28
+          assert all(str(x['image_url']).startswith('https://images.pexels.com/photos/') for x in sources)
           assert m['rules']['no_primary_visual_reuse_within_14d'] is True
+          assert m['rules']['binary_hash_uniqueness_required'] is True
+          assert m['rules']['minimum_unique_binary_hashes_per_14d'] == 28
           r01=(o.get('items') or {}).get('R01') or {}
           assert r01.get('title')=='Siamo alla ricerca di immobili in Valle di Susa'
-          assert 'abbiamo clienti interessati' not in r01.get('caption','').lower()
-          print('POLICIES + TRUTHFUL COPY + 28 UNIQUE VISUALS OK')
+          public=(r01.get('caption','')+' '+r01.get('voiceover','')).lower()
+          for bad in ('abbiamo clienti','clienti interessati','acquirenti pronti','richieste attive'):
+              assert bad not in public
+          print('POLICIES + TRUTHFUL COPY + 28 DIRECT VISUAL URLS OK')
           PY
 
       - name: Build the last 14 days
@@ -92,7 +97,7 @@ jobs:
       - name: Producer-side Instagram and claim gate
         run: python publisher/gate_f1_qualified.py --fail-on-blocked
 
-      - name: Resolve and assign 28 unique themed visuals
+      - name: Download, hash and assign 28 unique themed visuals
         run: python publisher/apply_canva_visual_manifest.py
 
       - name: Render without visual reuse
@@ -120,7 +125,12 @@ jobs:
           assert all(j.get('legacy_visuals_allowed') is False for j in jobs)
           assert len({j['visual_asset_urls'][0] for j in jobs})==28
           assert len({j['resolved_visual_url'] for j in jobs})==28
-          assert q.get('unique_visual_summary')=={'contents':28,'unique_primary_visuals':28,'reuse':0}
+          assert len({j['visual_content_sha256'] for j in jobs})==28
+          u=q.get('unique_visual_summary') or {}
+          assert u.get('contents')==28
+          assert u.get('unique_primary_visuals')==28
+          assert u.get('unique_content_hashes')==28
+          assert u.get('reuse')==0
           r01=next(j for j in jobs if j['source_item_id']=='R01')
           assert r01['title']=='Siamo alla ricerca di immobili in Valle di Susa'
           assert 'siamo alla ricerca di immobili' in (r01['caption']+' '+r01['voiceover']).lower()
@@ -138,7 +148,7 @@ jobs:
             assert 7<=len(paths)<=10 and all(p.exists() and p.stat().st_size>15000 for p in paths)
           assert Path('publisher/canva_generated/reels-latest.html').exists()
           assert Path('publisher/canva_generated/carousels-latest.html').exists()
-          print('VERIFIED: 28 CONTENTS / 28 DISTINCT VISUALS / 0 REUSE / TRUTHFUL ACQUISITION COPY')
+          print('VERIFIED: 28 CONTENTS / 28 URLS / 28 DISTINCT PIXEL HASHES / 0 REUSE / TRUTHFUL COPY')
           PY
 
       - name: Build downloadable package
@@ -191,18 +201,18 @@ jobs:
           set -euxo pipefail
           gh release delete f1-qualified-14d-latest --yes --cleanup-tag >/dev/null 2>&1 || true
           gh release create f1-qualified-14d-latest /tmp/F1_QUALIFIED_SELLER_14_GIORNI.zip \
-            --title "F1 · 14 GIORNI · 28 VISUALI UNICI · VENDITORI QUALIFICATI" \
-            --notes "28 contenuti: 14 Reel + 14 caroselli. Regola verificata: 28 contenuti = 28 immagini primarie diverse, zero riuso nel ciclo. Primo messaggio: SIAMO ALLA RICERCA DI IMMOBILI IN VALLE DI SUSA. Nessuna dichiarazione su clienti/acquirenti senza evidenza verificata. CTA: VALUTAZIONE con COMUNE, TIPOLOGIA, MQ e TEMPISTICA. Run ${GITHUB_RUN_ID}."
+            --title "F1 · 14 GIORNI · 28 VISUALI REALMENTE UNICI · VENDITORI QUALIFICATI" \
+            --notes "28 contenuti: 14 Reel + 14 caroselli. Verifica forte: 28 URL immagine diversi + 28 hash pixel diversi = zero riuso reale nel ciclo. Primo messaggio: SIAMO ALLA RICERCA DI IMMOBILI IN VALLE DI SUSA. Nessuna dichiarazione su clienti/acquirenti senza evidenza verificata. CTA: VALUTAZIONE con COMUNE, TIPOLOGIA, MQ e TEMPISTICA. Run ${GITHUB_RUN_ID}."
 
       - name: Notify completion
         uses: actions/github-script@v8
         with:
           script: |
-            const title='[F1 QUALIFIED] 14 giorni · 28 visuali unici';
+            const title='[F1 QUALIFIED] 14 giorni · 28 visuali realmente unici';
             const body=[
               '@josephsocialmedia2-spec batch rigenerato e verificato.',
               '',
-              '**28 contenuti = 28 visuali primari diversi. Riutilizzo: 0.**',
+              '**28 contenuti = 28 URL + 28 hash immagine distinti. Riutilizzo: 0.**',
               '**Primo messaggio:** SIAMO ALLA RICERCA DI IMMOBILI IN VALLE DI SUSA.',
               '**Claim policy:** niente clienti/acquirenti inventati; serve evidenza verificata.',
               '**Lead goal:** valutazione professionale → proprietario qualificato → appuntamento → incarico.',
