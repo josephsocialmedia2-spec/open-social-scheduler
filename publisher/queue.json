@@ -13521,13 +13521,31 @@
         "dwell_time_value_review_required": true,
         "direct_share_value_review_required": true,
         "profile_visit_value_review_required": true,
-        "format_specific_rules_required": true
+        "format_specific_rules_required": true,
+        "share_worthiness_review_required": true,
+        "format_diversification_review_required": true,
+        "first_three_seconds_or_first_unit_review_required": true,
+        "highest_resolution_required": true,
+        "muted_view_comprehension_required_for_video": true,
+        "audio_rights_review_required_if_audio": true,
+        "early_comment_response_plan_required_for_reels": true
       },
       "cta_policy": "ONE_OR_NONE_AND_ONLY_IF_OBJECTIVE_REQUIRES_IT",
       "manual_approval_required": true,
       "instagram_policy_required": true,
       "instagram_policy_version": 2,
+      "instagram_policy_source": "publisher/instagram_distribution_policy.json",
+      "instagram_full_policy_attached": true,
+      "instagram_scope_note": {
+        "feed": "This policy covers the Instagram Feed ranking system described in the supplied directives.",
+        "suggested_content": "Suggested content can be governed by a separate recommendation system and must not be falsely treated as identical to the followed-account Feed ranking system.",
+        "ads": "Ads are separate from the organic Feed ranking system described here and are measured through Meta Ads/Insights rather than assumed to share the same organic ranking behavior."
+      },
       "instagram_ranking_model": {
+        "relationship_context": {
+          "rule": "Feed predictions depend in part on the content and people a viewer follows, likes and interacts with.",
+          "production_implication": "Build repeated relevance with a defined audience; do not treat each post as isolated from prior audience-account interaction history."
+        },
         "inventory": {
           "rule": "The system first gathers potential posts from accounts the viewer follows and applies integrity filtering.",
           "production_implication": "Every asset must be policy-safe, truthful, coherent and designed for an identifiable audience."
@@ -13543,6 +13561,40 @@
         "ranking_score": {
           "rule": "The system scores eligible posts for relevance and orders them; it also seeks a useful mix of content types.",
           "production_implication": "Score drafts against the full prediction set and maintain creative/format variety instead of repeating one pattern."
+        }
+      },
+      "instagram_viewer_controls_and_feedback": {
+        "mute": {
+          "platform_action": "A viewer can mute an account to stop seeing its posts in Feed.",
+          "production_implication": "Avoid repetitive, irrelevant or excessive content that creates a reason to mute the account."
+        },
+        "favorites": {
+          "platform_action": "A viewer can add an account to Favorites; posts from Favorites are shown higher in the main Feed.",
+          "production_implication": "Create recurring utility and trust strong enough that a relevant follower may voluntarily add the account to Favorites. Never fabricate or force this action."
+        },
+        "share": {
+          "platform_action": "A viewer can share a post to a chat, Story, app or website.",
+          "production_implication": "Design naturally share-worthy information where appropriate, especially useful local information, instructions, comparisons and timely updates."
+        },
+        "report": {
+          "platform_action": "A viewer can report content, including spam or false information.",
+          "production_implication": "Reject misleading claims, spam-like tactics and unverified assertions before publication."
+        },
+        "save": {
+          "platform_action": "A viewer can save a post to a collection or collaborative collection.",
+          "production_implication": "Where appropriate, create reference value worth keeping: checklists, procedures, local market data, comparisons, step-by-step guidance and reusable information."
+        },
+        "following_recent": {
+          "platform_action": "Viewers can use Following/Recent views to see followed accounts in reverse chronological order and can use Favorites for prioritized accounts.",
+          "production_implication": "Recency matters operationally, but publication time must come from real Insights when available and must not be invented."
+        },
+        "unfollow": {
+          "platform_action": "A viewer can unfollow an account.",
+          "production_implication": "Monitor repeated low-value content and creative fatigue; do not increase volume at the cost of audience relevance."
+        },
+        "hide": {
+          "platform_action": "A viewer can hide a post, which can influence seeing less similar content.",
+          "production_implication": "Treat hiding/negative feedback as a quality warning where such data is available; reduce confusing, repetitive or irrelevant creative patterns."
         }
       },
       "instagram_prediction_targets": {
@@ -13678,6 +13730,64 @@
           ]
         }
       },
+      "instagram_measurement_policy": {
+        "principle": "Record only metrics actually exposed by Instagram/Meta or manually verifiable. Never invent unavailable ranking probabilities.",
+        "core_business_metrics": [
+          "profile visits",
+          "website/contact clicks",
+          "DMs",
+          "qualified replies",
+          "leads",
+          "appointments",
+          "valuations",
+          "mandates"
+        ],
+        "content_metrics_when_available": [
+          "reach",
+          "impressions",
+          "likes",
+          "comments",
+          "reshares",
+          "saves",
+          "average watch time",
+          "skip rate",
+          "carousel progression/completion",
+          "3-second views",
+          "10-second views",
+          "profile visits after content",
+          "direct shares/sends"
+        ],
+        "comparison_rule": "Compare like-for-like formats, objectives, audience and time windows. Do not claim causal ranking effects from one post."
+      },
+      "instagram_mandatory_prepublication_checks": [
+        "integrity_and_truthfulness_passed",
+        "audience_is_precise",
+        "single_objective",
+        "single_main_message",
+        "creative_is_sharp",
+        "creative_is_brand_coherent",
+        "subject_is_immediately_recognizable",
+        "visual_text_is_short",
+        "opening_is_immediately_relevant",
+        "caption_has_no_unnecessary_elements",
+        "content_is_meaningful_for_target",
+        "cta_matches_objective_or_is_omitted",
+        "question_is_relevant_if_used",
+        "content_is_distinct_enough_from_recent_posts",
+        "creative_fatigue_reviewed",
+        "skip_risk_reviewed",
+        "dwell_time_value_reviewed",
+        "direct_share_value_reviewed",
+        "save_value_reviewed",
+        "profile_visit_value_reviewed",
+        "negative_feedback_risk_reviewed",
+        "format_specific_rules_passed",
+        "carousel_completion_logic_passed_if_carousel",
+        "first_3_seconds_passed_if_video",
+        "reason_to_continue_beyond_10_seconds_passed_if_video_or_carousel",
+        "audio_intent_and_silent_comprehension_passed_if_video",
+        "gallery_metadata_used_only_with_permission_if_used"
+      ],
       "instagram_performance_data_status": "NOT_AVAILABLE",
       "instagram_performance_metrics_expected": [
         "likes",
@@ -13707,8 +13817,9 @@
         "privacy_rule": "Do not infer private or sensitive traits from people present in media."
       },
       "instagram_format": "photo",
-      "instagram_format_mix_note": "Current production workflow is constrained to static photo jobs; this does not remove carousel/Reels rules from the master policy.",
+      "instagram_format_mix_note": "Current production workflow is constrained to static photo jobs; carousel/Reels rules remain mandatory in the master policy for future matching formats.",
       "instagram_creative_constraints": {
+        "integrity_truthfulness_required": true,
         "first_visible_unit_must_work_without_context": true,
         "immediate_target_relevance": true,
         "skip_risk_must_be_reviewed": true,
@@ -13717,9 +13828,13 @@
         "photo_overlay_text_not_overloaded": true,
         "meaningful_positive_action_not_engagement_bait": true,
         "share_value_should_be_natural_not_forced": true,
+        "save_value_should_be_considered_when_relevant": true,
         "profile_transition_must_match_brand_positioning": true,
+        "negative_feedback_risk_must_be_reviewed": true,
+        "creative_fatigue_must_be_reviewed": true,
         "deliver_value_after_hook": true,
-        "no_slow_generic_intro": true
+        "no_slow_generic_intro": true,
+        "publication_time_must_not_be_invented": true
       },
       "instagram_carousel_constraints": null,
       "instagram_reels_policy": {
@@ -13842,6 +13957,7 @@
       "publication_time_verified": false,
       "approval_note": "INSIGHTS NON DISPONIBILI — ANALISI NON COMPLETA. Non usare un orario di pubblicazione inventato.",
       "prepublish_checklist": {
+        "integrity_and_truthfulness_passed": null,
         "public_clear": true,
         "single_objective": true,
         "main_message_clear": true,
@@ -13855,13 +13971,19 @@
         "cta_connected_to_objective_or_omitted": true,
         "question_is_relevant_if_present": true,
         "sufficiently_distinct_from_recent_posts": null,
+        "creative_fatigue_reviewed": null,
         "skip_risk_reviewed": null,
         "dwell_time_value_reviewed": null,
         "direct_share_value_reviewed": null,
+        "save_value_reviewed": null,
         "profile_visit_value_reviewed": null,
+        "negative_feedback_risk_reviewed": null,
         "format_specific_rules_passed": null,
         "carousel_completion_logic_passed": null,
-        "reel_9_16_safe_area_audio_passed": null
+        "first_3_seconds_passed": null,
+        "reason_beyond_10_seconds_passed": null,
+        "reel_9_16_safe_area_audio_passed": null,
+        "gallery_metadata_permission_passed": null
       },
       "visual_asset_urls": [
         "https://commons.wikimedia.org/wiki/Special:Redirect/file/Villa_Cantamerlo_Avigliana02.JPG"
@@ -14274,13 +14396,31 @@
         "dwell_time_value_review_required": true,
         "direct_share_value_review_required": true,
         "profile_visit_value_review_required": true,
-        "format_specific_rules_required": true
+        "format_specific_rules_required": true,
+        "share_worthiness_review_required": true,
+        "format_diversification_review_required": true,
+        "first_three_seconds_or_first_unit_review_required": true,
+        "highest_resolution_required": true,
+        "muted_view_comprehension_required_for_video": true,
+        "audio_rights_review_required_if_audio": true,
+        "early_comment_response_plan_required_for_reels": true
       },
       "cta_policy": "ONE_OR_NONE_AND_ONLY_IF_OBJECTIVE_REQUIRES_IT",
       "manual_approval_required": true,
       "instagram_policy_required": true,
       "instagram_policy_version": 2,
+      "instagram_policy_source": "publisher/instagram_distribution_policy.json",
+      "instagram_full_policy_attached": true,
+      "instagram_scope_note": {
+        "feed": "This policy covers the Instagram Feed ranking system described in the supplied directives.",
+        "suggested_content": "Suggested content can be governed by a separate recommendation system and must not be falsely treated as identical to the followed-account Feed ranking system.",
+        "ads": "Ads are separate from the organic Feed ranking system described here and are measured through Meta Ads/Insights rather than assumed to share the same organic ranking behavior."
+      },
       "instagram_ranking_model": {
+        "relationship_context": {
+          "rule": "Feed predictions depend in part on the content and people a viewer follows, likes and interacts with.",
+          "production_implication": "Build repeated relevance with a defined audience; do not treat each post as isolated from prior audience-account interaction history."
+        },
         "inventory": {
           "rule": "The system first gathers potential posts from accounts the viewer follows and applies integrity filtering.",
           "production_implication": "Every asset must be policy-safe, truthful, coherent and designed for an identifiable audience."
@@ -14296,6 +14436,40 @@
         "ranking_score": {
           "rule": "The system scores eligible posts for relevance and orders them; it also seeks a useful mix of content types.",
           "production_implication": "Score drafts against the full prediction set and maintain creative/format variety instead of repeating one pattern."
+        }
+      },
+      "instagram_viewer_controls_and_feedback": {
+        "mute": {
+          "platform_action": "A viewer can mute an account to stop seeing its posts in Feed.",
+          "production_implication": "Avoid repetitive, irrelevant or excessive content that creates a reason to mute the account."
+        },
+        "favorites": {
+          "platform_action": "A viewer can add an account to Favorites; posts from Favorites are shown higher in the main Feed.",
+          "production_implication": "Create recurring utility and trust strong enough that a relevant follower may voluntarily add the account to Favorites. Never fabricate or force this action."
+        },
+        "share": {
+          "platform_action": "A viewer can share a post to a chat, Story, app or website.",
+          "production_implication": "Design naturally share-worthy information where appropriate, especially useful local information, instructions, comparisons and timely updates."
+        },
+        "report": {
+          "platform_action": "A viewer can report content, including spam or false information.",
+          "production_implication": "Reject misleading claims, spam-like tactics and unverified assertions before publication."
+        },
+        "save": {
+          "platform_action": "A viewer can save a post to a collection or collaborative collection.",
+          "production_implication": "Where appropriate, create reference value worth keeping: checklists, procedures, local market data, comparisons, step-by-step guidance and reusable information."
+        },
+        "following_recent": {
+          "platform_action": "Viewers can use Following/Recent views to see followed accounts in reverse chronological order and can use Favorites for prioritized accounts.",
+          "production_implication": "Recency matters operationally, but publication time must come from real Insights when available and must not be invented."
+        },
+        "unfollow": {
+          "platform_action": "A viewer can unfollow an account.",
+          "production_implication": "Monitor repeated low-value content and creative fatigue; do not increase volume at the cost of audience relevance."
+        },
+        "hide": {
+          "platform_action": "A viewer can hide a post, which can influence seeing less similar content.",
+          "production_implication": "Treat hiding/negative feedback as a quality warning where such data is available; reduce confusing, repetitive or irrelevant creative patterns."
         }
       },
       "instagram_prediction_targets": {
@@ -14431,6 +14605,64 @@
           ]
         }
       },
+      "instagram_measurement_policy": {
+        "principle": "Record only metrics actually exposed by Instagram/Meta or manually verifiable. Never invent unavailable ranking probabilities.",
+        "core_business_metrics": [
+          "profile visits",
+          "website/contact clicks",
+          "DMs",
+          "qualified replies",
+          "leads",
+          "appointments",
+          "valuations",
+          "mandates"
+        ],
+        "content_metrics_when_available": [
+          "reach",
+          "impressions",
+          "likes",
+          "comments",
+          "reshares",
+          "saves",
+          "average watch time",
+          "skip rate",
+          "carousel progression/completion",
+          "3-second views",
+          "10-second views",
+          "profile visits after content",
+          "direct shares/sends"
+        ],
+        "comparison_rule": "Compare like-for-like formats, objectives, audience and time windows. Do not claim causal ranking effects from one post."
+      },
+      "instagram_mandatory_prepublication_checks": [
+        "integrity_and_truthfulness_passed",
+        "audience_is_precise",
+        "single_objective",
+        "single_main_message",
+        "creative_is_sharp",
+        "creative_is_brand_coherent",
+        "subject_is_immediately_recognizable",
+        "visual_text_is_short",
+        "opening_is_immediately_relevant",
+        "caption_has_no_unnecessary_elements",
+        "content_is_meaningful_for_target",
+        "cta_matches_objective_or_is_omitted",
+        "question_is_relevant_if_used",
+        "content_is_distinct_enough_from_recent_posts",
+        "creative_fatigue_reviewed",
+        "skip_risk_reviewed",
+        "dwell_time_value_reviewed",
+        "direct_share_value_reviewed",
+        "save_value_reviewed",
+        "profile_visit_value_reviewed",
+        "negative_feedback_risk_reviewed",
+        "format_specific_rules_passed",
+        "carousel_completion_logic_passed_if_carousel",
+        "first_3_seconds_passed_if_video",
+        "reason_to_continue_beyond_10_seconds_passed_if_video_or_carousel",
+        "audio_intent_and_silent_comprehension_passed_if_video",
+        "gallery_metadata_used_only_with_permission_if_used"
+      ],
       "instagram_performance_data_status": "NOT_AVAILABLE",
       "instagram_performance_metrics_expected": [
         "likes",
@@ -14460,8 +14692,9 @@
         "privacy_rule": "Do not infer private or sensitive traits from people present in media."
       },
       "instagram_format": "photo",
-      "instagram_format_mix_note": "Current production workflow is constrained to static photo jobs; this does not remove carousel/Reels rules from the master policy.",
+      "instagram_format_mix_note": "Current production workflow is constrained to static photo jobs; carousel/Reels rules remain mandatory in the master policy for future matching formats.",
       "instagram_creative_constraints": {
+        "integrity_truthfulness_required": true,
         "first_visible_unit_must_work_without_context": true,
         "immediate_target_relevance": true,
         "skip_risk_must_be_reviewed": true,
@@ -14470,9 +14703,13 @@
         "photo_overlay_text_not_overloaded": true,
         "meaningful_positive_action_not_engagement_bait": true,
         "share_value_should_be_natural_not_forced": true,
+        "save_value_should_be_considered_when_relevant": true,
         "profile_transition_must_match_brand_positioning": true,
+        "negative_feedback_risk_must_be_reviewed": true,
+        "creative_fatigue_must_be_reviewed": true,
         "deliver_value_after_hook": true,
-        "no_slow_generic_intro": true
+        "no_slow_generic_intro": true,
+        "publication_time_must_not_be_invented": true
       },
       "instagram_carousel_constraints": null,
       "instagram_reels_policy": {
@@ -14595,6 +14832,7 @@
       "publication_time_verified": false,
       "approval_note": "INSIGHTS NON DISPONIBILI — ANALISI NON COMPLETA. Non usare un orario di pubblicazione inventato.",
       "prepublish_checklist": {
+        "integrity_and_truthfulness_passed": null,
         "public_clear": true,
         "single_objective": true,
         "main_message_clear": true,
@@ -14608,13 +14846,19 @@
         "cta_connected_to_objective_or_omitted": true,
         "question_is_relevant_if_present": true,
         "sufficiently_distinct_from_recent_posts": null,
+        "creative_fatigue_reviewed": null,
         "skip_risk_reviewed": null,
         "dwell_time_value_reviewed": null,
         "direct_share_value_reviewed": null,
+        "save_value_reviewed": null,
         "profile_visit_value_reviewed": null,
+        "negative_feedback_risk_reviewed": null,
         "format_specific_rules_passed": null,
         "carousel_completion_logic_passed": null,
-        "reel_9_16_safe_area_audio_passed": null
+        "first_3_seconds_passed": null,
+        "reason_beyond_10_seconds_passed": null,
+        "reel_9_16_safe_area_audio_passed": null,
+        "gallery_metadata_permission_passed": null
       },
       "visual_asset_urls": [
         "https://commons.wikimedia.org/wiki/Special:Redirect/file/Avigliana_Centro_Storico.JPG"
@@ -15027,13 +15271,31 @@
         "dwell_time_value_review_required": true,
         "direct_share_value_review_required": true,
         "profile_visit_value_review_required": true,
-        "format_specific_rules_required": true
+        "format_specific_rules_required": true,
+        "share_worthiness_review_required": true,
+        "format_diversification_review_required": true,
+        "first_three_seconds_or_first_unit_review_required": true,
+        "highest_resolution_required": true,
+        "muted_view_comprehension_required_for_video": true,
+        "audio_rights_review_required_if_audio": true,
+        "early_comment_response_plan_required_for_reels": true
       },
       "cta_policy": "ONE_OR_NONE_AND_ONLY_IF_OBJECTIVE_REQUIRES_IT",
       "manual_approval_required": true,
       "instagram_policy_required": true,
       "instagram_policy_version": 2,
+      "instagram_policy_source": "publisher/instagram_distribution_policy.json",
+      "instagram_full_policy_attached": true,
+      "instagram_scope_note": {
+        "feed": "This policy covers the Instagram Feed ranking system described in the supplied directives.",
+        "suggested_content": "Suggested content can be governed by a separate recommendation system and must not be falsely treated as identical to the followed-account Feed ranking system.",
+        "ads": "Ads are separate from the organic Feed ranking system described here and are measured through Meta Ads/Insights rather than assumed to share the same organic ranking behavior."
+      },
       "instagram_ranking_model": {
+        "relationship_context": {
+          "rule": "Feed predictions depend in part on the content and people a viewer follows, likes and interacts with.",
+          "production_implication": "Build repeated relevance with a defined audience; do not treat each post as isolated from prior audience-account interaction history."
+        },
         "inventory": {
           "rule": "The system first gathers potential posts from accounts the viewer follows and applies integrity filtering.",
           "production_implication": "Every asset must be policy-safe, truthful, coherent and designed for an identifiable audience."
@@ -15049,6 +15311,40 @@
         "ranking_score": {
           "rule": "The system scores eligible posts for relevance and orders them; it also seeks a useful mix of content types.",
           "production_implication": "Score drafts against the full prediction set and maintain creative/format variety instead of repeating one pattern."
+        }
+      },
+      "instagram_viewer_controls_and_feedback": {
+        "mute": {
+          "platform_action": "A viewer can mute an account to stop seeing its posts in Feed.",
+          "production_implication": "Avoid repetitive, irrelevant or excessive content that creates a reason to mute the account."
+        },
+        "favorites": {
+          "platform_action": "A viewer can add an account to Favorites; posts from Favorites are shown higher in the main Feed.",
+          "production_implication": "Create recurring utility and trust strong enough that a relevant follower may voluntarily add the account to Favorites. Never fabricate or force this action."
+        },
+        "share": {
+          "platform_action": "A viewer can share a post to a chat, Story, app or website.",
+          "production_implication": "Design naturally share-worthy information where appropriate, especially useful local information, instructions, comparisons and timely updates."
+        },
+        "report": {
+          "platform_action": "A viewer can report content, including spam or false information.",
+          "production_implication": "Reject misleading claims, spam-like tactics and unverified assertions before publication."
+        },
+        "save": {
+          "platform_action": "A viewer can save a post to a collection or collaborative collection.",
+          "production_implication": "Where appropriate, create reference value worth keeping: checklists, procedures, local market data, comparisons, step-by-step guidance and reusable information."
+        },
+        "following_recent": {
+          "platform_action": "Viewers can use Following/Recent views to see followed accounts in reverse chronological order and can use Favorites for prioritized accounts.",
+          "production_implication": "Recency matters operationally, but publication time must come from real Insights when available and must not be invented."
+        },
+        "unfollow": {
+          "platform_action": "A viewer can unfollow an account.",
+          "production_implication": "Monitor repeated low-value content and creative fatigue; do not increase volume at the cost of audience relevance."
+        },
+        "hide": {
+          "platform_action": "A viewer can hide a post, which can influence seeing less similar content.",
+          "production_implication": "Treat hiding/negative feedback as a quality warning where such data is available; reduce confusing, repetitive or irrelevant creative patterns."
         }
       },
       "instagram_prediction_targets": {
@@ -15184,6 +15480,64 @@
           ]
         }
       },
+      "instagram_measurement_policy": {
+        "principle": "Record only metrics actually exposed by Instagram/Meta or manually verifiable. Never invent unavailable ranking probabilities.",
+        "core_business_metrics": [
+          "profile visits",
+          "website/contact clicks",
+          "DMs",
+          "qualified replies",
+          "leads",
+          "appointments",
+          "valuations",
+          "mandates"
+        ],
+        "content_metrics_when_available": [
+          "reach",
+          "impressions",
+          "likes",
+          "comments",
+          "reshares",
+          "saves",
+          "average watch time",
+          "skip rate",
+          "carousel progression/completion",
+          "3-second views",
+          "10-second views",
+          "profile visits after content",
+          "direct shares/sends"
+        ],
+        "comparison_rule": "Compare like-for-like formats, objectives, audience and time windows. Do not claim causal ranking effects from one post."
+      },
+      "instagram_mandatory_prepublication_checks": [
+        "integrity_and_truthfulness_passed",
+        "audience_is_precise",
+        "single_objective",
+        "single_main_message",
+        "creative_is_sharp",
+        "creative_is_brand_coherent",
+        "subject_is_immediately_recognizable",
+        "visual_text_is_short",
+        "opening_is_immediately_relevant",
+        "caption_has_no_unnecessary_elements",
+        "content_is_meaningful_for_target",
+        "cta_matches_objective_or_is_omitted",
+        "question_is_relevant_if_used",
+        "content_is_distinct_enough_from_recent_posts",
+        "creative_fatigue_reviewed",
+        "skip_risk_reviewed",
+        "dwell_time_value_reviewed",
+        "direct_share_value_reviewed",
+        "save_value_reviewed",
+        "profile_visit_value_reviewed",
+        "negative_feedback_risk_reviewed",
+        "format_specific_rules_passed",
+        "carousel_completion_logic_passed_if_carousel",
+        "first_3_seconds_passed_if_video",
+        "reason_to_continue_beyond_10_seconds_passed_if_video_or_carousel",
+        "audio_intent_and_silent_comprehension_passed_if_video",
+        "gallery_metadata_used_only_with_permission_if_used"
+      ],
       "instagram_performance_data_status": "NOT_AVAILABLE",
       "instagram_performance_metrics_expected": [
         "likes",
@@ -15213,8 +15567,9 @@
         "privacy_rule": "Do not infer private or sensitive traits from people present in media."
       },
       "instagram_format": "photo",
-      "instagram_format_mix_note": "Current production workflow is constrained to static photo jobs; this does not remove carousel/Reels rules from the master policy.",
+      "instagram_format_mix_note": "Current production workflow is constrained to static photo jobs; carousel/Reels rules remain mandatory in the master policy for future matching formats.",
       "instagram_creative_constraints": {
+        "integrity_truthfulness_required": true,
         "first_visible_unit_must_work_without_context": true,
         "immediate_target_relevance": true,
         "skip_risk_must_be_reviewed": true,
@@ -15223,9 +15578,13 @@
         "photo_overlay_text_not_overloaded": true,
         "meaningful_positive_action_not_engagement_bait": true,
         "share_value_should_be_natural_not_forced": true,
+        "save_value_should_be_considered_when_relevant": true,
         "profile_transition_must_match_brand_positioning": true,
+        "negative_feedback_risk_must_be_reviewed": true,
+        "creative_fatigue_must_be_reviewed": true,
         "deliver_value_after_hook": true,
-        "no_slow_generic_intro": true
+        "no_slow_generic_intro": true,
+        "publication_time_must_not_be_invented": true
       },
       "instagram_carousel_constraints": null,
       "instagram_reels_policy": {
@@ -15348,6 +15707,7 @@
       "publication_time_verified": false,
       "approval_note": "INSIGHTS NON DISPONIBILI — ANALISI NON COMPLETA. Non usare un orario di pubblicazione inventato.",
       "prepublish_checklist": {
+        "integrity_and_truthfulness_passed": null,
         "public_clear": true,
         "single_objective": true,
         "main_message_clear": true,
@@ -15361,13 +15721,19 @@
         "cta_connected_to_objective_or_omitted": true,
         "question_is_relevant_if_present": true,
         "sufficiently_distinct_from_recent_posts": null,
+        "creative_fatigue_reviewed": null,
         "skip_risk_reviewed": null,
         "dwell_time_value_reviewed": null,
         "direct_share_value_reviewed": null,
+        "save_value_reviewed": null,
         "profile_visit_value_reviewed": null,
+        "negative_feedback_risk_reviewed": null,
         "format_specific_rules_passed": null,
         "carousel_completion_logic_passed": null,
-        "reel_9_16_safe_area_audio_passed": null
+        "first_3_seconds_passed": null,
+        "reason_beyond_10_seconds_passed": null,
+        "reel_9_16_safe_area_audio_passed": null,
+        "gallery_metadata_permission_passed": null
       },
       "visual_asset_urls": [
         "https://commons.wikimedia.org/wiki/Special:Redirect/file/Architecture-villa-house-building-home-construction-542165.jpg"
@@ -15780,13 +16146,31 @@
         "dwell_time_value_review_required": true,
         "direct_share_value_review_required": true,
         "profile_visit_value_review_required": true,
-        "format_specific_rules_required": true
+        "format_specific_rules_required": true,
+        "share_worthiness_review_required": true,
+        "format_diversification_review_required": true,
+        "first_three_seconds_or_first_unit_review_required": true,
+        "highest_resolution_required": true,
+        "muted_view_comprehension_required_for_video": true,
+        "audio_rights_review_required_if_audio": true,
+        "early_comment_response_plan_required_for_reels": true
       },
       "cta_policy": "ONE_OR_NONE_AND_ONLY_IF_OBJECTIVE_REQUIRES_IT",
       "manual_approval_required": true,
       "instagram_policy_required": true,
       "instagram_policy_version": 2,
+      "instagram_policy_source": "publisher/instagram_distribution_policy.json",
+      "instagram_full_policy_attached": true,
+      "instagram_scope_note": {
+        "feed": "This policy covers the Instagram Feed ranking system described in the supplied directives.",
+        "suggested_content": "Suggested content can be governed by a separate recommendation system and must not be falsely treated as identical to the followed-account Feed ranking system.",
+        "ads": "Ads are separate from the organic Feed ranking system described here and are measured through Meta Ads/Insights rather than assumed to share the same organic ranking behavior."
+      },
       "instagram_ranking_model": {
+        "relationship_context": {
+          "rule": "Feed predictions depend in part on the content and people a viewer follows, likes and interacts with.",
+          "production_implication": "Build repeated relevance with a defined audience; do not treat each post as isolated from prior audience-account interaction history."
+        },
         "inventory": {
           "rule": "The system first gathers potential posts from accounts the viewer follows and applies integrity filtering.",
           "production_implication": "Every asset must be policy-safe, truthful, coherent and designed for an identifiable audience."
@@ -15802,6 +16186,40 @@
         "ranking_score": {
           "rule": "The system scores eligible posts for relevance and orders them; it also seeks a useful mix of content types.",
           "production_implication": "Score drafts against the full prediction set and maintain creative/format variety instead of repeating one pattern."
+        }
+      },
+      "instagram_viewer_controls_and_feedback": {
+        "mute": {
+          "platform_action": "A viewer can mute an account to stop seeing its posts in Feed.",
+          "production_implication": "Avoid repetitive, irrelevant or excessive content that creates a reason to mute the account."
+        },
+        "favorites": {
+          "platform_action": "A viewer can add an account to Favorites; posts from Favorites are shown higher in the main Feed.",
+          "production_implication": "Create recurring utility and trust strong enough that a relevant follower may voluntarily add the account to Favorites. Never fabricate or force this action."
+        },
+        "share": {
+          "platform_action": "A viewer can share a post to a chat, Story, app or website.",
+          "production_implication": "Design naturally share-worthy information where appropriate, especially useful local information, instructions, comparisons and timely updates."
+        },
+        "report": {
+          "platform_action": "A viewer can report content, including spam or false information.",
+          "production_implication": "Reject misleading claims, spam-like tactics and unverified assertions before publication."
+        },
+        "save": {
+          "platform_action": "A viewer can save a post to a collection or collaborative collection.",
+          "production_implication": "Where appropriate, create reference value worth keeping: checklists, procedures, local market data, comparisons, step-by-step guidance and reusable information."
+        },
+        "following_recent": {
+          "platform_action": "Viewers can use Following/Recent views to see followed accounts in reverse chronological order and can use Favorites for prioritized accounts.",
+          "production_implication": "Recency matters operationally, but publication time must come from real Insights when available and must not be invented."
+        },
+        "unfollow": {
+          "platform_action": "A viewer can unfollow an account.",
+          "production_implication": "Monitor repeated low-value content and creative fatigue; do not increase volume at the cost of audience relevance."
+        },
+        "hide": {
+          "platform_action": "A viewer can hide a post, which can influence seeing less similar content.",
+          "production_implication": "Treat hiding/negative feedback as a quality warning where such data is available; reduce confusing, repetitive or irrelevant creative patterns."
         }
       },
       "instagram_prediction_targets": {
@@ -15937,6 +16355,64 @@
           ]
         }
       },
+      "instagram_measurement_policy": {
+        "principle": "Record only metrics actually exposed by Instagram/Meta or manually verifiable. Never invent unavailable ranking probabilities.",
+        "core_business_metrics": [
+          "profile visits",
+          "website/contact clicks",
+          "DMs",
+          "qualified replies",
+          "leads",
+          "appointments",
+          "valuations",
+          "mandates"
+        ],
+        "content_metrics_when_available": [
+          "reach",
+          "impressions",
+          "likes",
+          "comments",
+          "reshares",
+          "saves",
+          "average watch time",
+          "skip rate",
+          "carousel progression/completion",
+          "3-second views",
+          "10-second views",
+          "profile visits after content",
+          "direct shares/sends"
+        ],
+        "comparison_rule": "Compare like-for-like formats, objectives, audience and time windows. Do not claim causal ranking effects from one post."
+      },
+      "instagram_mandatory_prepublication_checks": [
+        "integrity_and_truthfulness_passed",
+        "audience_is_precise",
+        "single_objective",
+        "single_main_message",
+        "creative_is_sharp",
+        "creative_is_brand_coherent",
+        "subject_is_immediately_recognizable",
+        "visual_text_is_short",
+        "opening_is_immediately_relevant",
+        "caption_has_no_unnecessary_elements",
+        "content_is_meaningful_for_target",
+        "cta_matches_objective_or_is_omitted",
+        "question_is_relevant_if_used",
+        "content_is_distinct_enough_from_recent_posts",
+        "creative_fatigue_reviewed",
+        "skip_risk_reviewed",
+        "dwell_time_value_reviewed",
+        "direct_share_value_reviewed",
+        "save_value_reviewed",
+        "profile_visit_value_reviewed",
+        "negative_feedback_risk_reviewed",
+        "format_specific_rules_passed",
+        "carousel_completion_logic_passed_if_carousel",
+        "first_3_seconds_passed_if_video",
+        "reason_to_continue_beyond_10_seconds_passed_if_video_or_carousel",
+        "audio_intent_and_silent_comprehension_passed_if_video",
+        "gallery_metadata_used_only_with_permission_if_used"
+      ],
       "instagram_performance_data_status": "NOT_AVAILABLE",
       "instagram_performance_metrics_expected": [
         "likes",
@@ -15966,8 +16442,9 @@
         "privacy_rule": "Do not infer private or sensitive traits from people present in media."
       },
       "instagram_format": "photo",
-      "instagram_format_mix_note": "Current production workflow is constrained to static photo jobs; this does not remove carousel/Reels rules from the master policy.",
+      "instagram_format_mix_note": "Current production workflow is constrained to static photo jobs; carousel/Reels rules remain mandatory in the master policy for future matching formats.",
       "instagram_creative_constraints": {
+        "integrity_truthfulness_required": true,
         "first_visible_unit_must_work_without_context": true,
         "immediate_target_relevance": true,
         "skip_risk_must_be_reviewed": true,
@@ -15976,9 +16453,13 @@
         "photo_overlay_text_not_overloaded": true,
         "meaningful_positive_action_not_engagement_bait": true,
         "share_value_should_be_natural_not_forced": true,
+        "save_value_should_be_considered_when_relevant": true,
         "profile_transition_must_match_brand_positioning": true,
+        "negative_feedback_risk_must_be_reviewed": true,
+        "creative_fatigue_must_be_reviewed": true,
         "deliver_value_after_hook": true,
-        "no_slow_generic_intro": true
+        "no_slow_generic_intro": true,
+        "publication_time_must_not_be_invented": true
       },
       "instagram_carousel_constraints": null,
       "instagram_reels_policy": {
@@ -16101,6 +16582,7 @@
       "publication_time_verified": false,
       "approval_note": "INSIGHTS NON DISPONIBILI — ANALISI NON COMPLETA. Non usare un orario di pubblicazione inventato.",
       "prepublish_checklist": {
+        "integrity_and_truthfulness_passed": null,
         "public_clear": true,
         "single_objective": true,
         "main_message_clear": true,
@@ -16114,13 +16596,19 @@
         "cta_connected_to_objective_or_omitted": true,
         "question_is_relevant_if_present": true,
         "sufficiently_distinct_from_recent_posts": null,
+        "creative_fatigue_reviewed": null,
         "skip_risk_reviewed": null,
         "dwell_time_value_reviewed": null,
         "direct_share_value_reviewed": null,
+        "save_value_reviewed": null,
         "profile_visit_value_reviewed": null,
+        "negative_feedback_risk_reviewed": null,
         "format_specific_rules_passed": null,
         "carousel_completion_logic_passed": null,
-        "reel_9_16_safe_area_audio_passed": null
+        "first_3_seconds_passed": null,
+        "reason_beyond_10_seconds_passed": null,
+        "reel_9_16_safe_area_audio_passed": null,
+        "gallery_metadata_permission_passed": null
       },
       "visual_asset_urls": [
         "https://commons.wikimedia.org/wiki/Special:Redirect/file/Centro_Storico_Avigliana.JPG"
@@ -16533,13 +17021,31 @@
         "dwell_time_value_review_required": true,
         "direct_share_value_review_required": true,
         "profile_visit_value_review_required": true,
-        "format_specific_rules_required": true
+        "format_specific_rules_required": true,
+        "share_worthiness_review_required": true,
+        "format_diversification_review_required": true,
+        "first_three_seconds_or_first_unit_review_required": true,
+        "highest_resolution_required": true,
+        "muted_view_comprehension_required_for_video": true,
+        "audio_rights_review_required_if_audio": true,
+        "early_comment_response_plan_required_for_reels": true
       },
       "cta_policy": "ONE_OR_NONE_AND_ONLY_IF_OBJECTIVE_REQUIRES_IT",
       "manual_approval_required": true,
       "instagram_policy_required": true,
       "instagram_policy_version": 2,
+      "instagram_policy_source": "publisher/instagram_distribution_policy.json",
+      "instagram_full_policy_attached": true,
+      "instagram_scope_note": {
+        "feed": "This policy covers the Instagram Feed ranking system described in the supplied directives.",
+        "suggested_content": "Suggested content can be governed by a separate recommendation system and must not be falsely treated as identical to the followed-account Feed ranking system.",
+        "ads": "Ads are separate from the organic Feed ranking system described here and are measured through Meta Ads/Insights rather than assumed to share the same organic ranking behavior."
+      },
       "instagram_ranking_model": {
+        "relationship_context": {
+          "rule": "Feed predictions depend in part on the content and people a viewer follows, likes and interacts with.",
+          "production_implication": "Build repeated relevance with a defined audience; do not treat each post as isolated from prior audience-account interaction history."
+        },
         "inventory": {
           "rule": "The system first gathers potential posts from accounts the viewer follows and applies integrity filtering.",
           "production_implication": "Every asset must be policy-safe, truthful, coherent and designed for an identifiable audience."
@@ -16555,6 +17061,40 @@
         "ranking_score": {
           "rule": "The system scores eligible posts for relevance and orders them; it also seeks a useful mix of content types.",
           "production_implication": "Score drafts against the full prediction set and maintain creative/format variety instead of repeating one pattern."
+        }
+      },
+      "instagram_viewer_controls_and_feedback": {
+        "mute": {
+          "platform_action": "A viewer can mute an account to stop seeing its posts in Feed.",
+          "production_implication": "Avoid repetitive, irrelevant or excessive content that creates a reason to mute the account."
+        },
+        "favorites": {
+          "platform_action": "A viewer can add an account to Favorites; posts from Favorites are shown higher in the main Feed.",
+          "production_implication": "Create recurring utility and trust strong enough that a relevant follower may voluntarily add the account to Favorites. Never fabricate or force this action."
+        },
+        "share": {
+          "platform_action": "A viewer can share a post to a chat, Story, app or website.",
+          "production_implication": "Design naturally share-worthy information where appropriate, especially useful local information, instructions, comparisons and timely updates."
+        },
+        "report": {
+          "platform_action": "A viewer can report content, including spam or false information.",
+          "production_implication": "Reject misleading claims, spam-like tactics and unverified assertions before publication."
+        },
+        "save": {
+          "platform_action": "A viewer can save a post to a collection or collaborative collection.",
+          "production_implication": "Where appropriate, create reference value worth keeping: checklists, procedures, local market data, comparisons, step-by-step guidance and reusable information."
+        },
+        "following_recent": {
+          "platform_action": "Viewers can use Following/Recent views to see followed accounts in reverse chronological order and can use Favorites for prioritized accounts.",
+          "production_implication": "Recency matters operationally, but publication time must come from real Insights when available and must not be invented."
+        },
+        "unfollow": {
+          "platform_action": "A viewer can unfollow an account.",
+          "production_implication": "Monitor repeated low-value content and creative fatigue; do not increase volume at the cost of audience relevance."
+        },
+        "hide": {
+          "platform_action": "A viewer can hide a post, which can influence seeing less similar content.",
+          "production_implication": "Treat hiding/negative feedback as a quality warning where such data is available; reduce confusing, repetitive or irrelevant creative patterns."
         }
       },
       "instagram_prediction_targets": {
@@ -16690,6 +17230,64 @@
           ]
         }
       },
+      "instagram_measurement_policy": {
+        "principle": "Record only metrics actually exposed by Instagram/Meta or manually verifiable. Never invent unavailable ranking probabilities.",
+        "core_business_metrics": [
+          "profile visits",
+          "website/contact clicks",
+          "DMs",
+          "qualified replies",
+          "leads",
+          "appointments",
+          "valuations",
+          "mandates"
+        ],
+        "content_metrics_when_available": [
+          "reach",
+          "impressions",
+          "likes",
+          "comments",
+          "reshares",
+          "saves",
+          "average watch time",
+          "skip rate",
+          "carousel progression/completion",
+          "3-second views",
+          "10-second views",
+          "profile visits after content",
+          "direct shares/sends"
+        ],
+        "comparison_rule": "Compare like-for-like formats, objectives, audience and time windows. Do not claim causal ranking effects from one post."
+      },
+      "instagram_mandatory_prepublication_checks": [
+        "integrity_and_truthfulness_passed",
+        "audience_is_precise",
+        "single_objective",
+        "single_main_message",
+        "creative_is_sharp",
+        "creative_is_brand_coherent",
+        "subject_is_immediately_recognizable",
+        "visual_text_is_short",
+        "opening_is_immediately_relevant",
+        "caption_has_no_unnecessary_elements",
+        "content_is_meaningful_for_target",
+        "cta_matches_objective_or_is_omitted",
+        "question_is_relevant_if_used",
+        "content_is_distinct_enough_from_recent_posts",
+        "creative_fatigue_reviewed",
+        "skip_risk_reviewed",
+        "dwell_time_value_reviewed",
+        "direct_share_value_reviewed",
+        "save_value_reviewed",
+        "profile_visit_value_reviewed",
+        "negative_feedback_risk_reviewed",
+        "format_specific_rules_passed",
+        "carousel_completion_logic_passed_if_carousel",
+        "first_3_seconds_passed_if_video",
+        "reason_to_continue_beyond_10_seconds_passed_if_video_or_carousel",
+        "audio_intent_and_silent_comprehension_passed_if_video",
+        "gallery_metadata_used_only_with_permission_if_used"
+      ],
       "instagram_performance_data_status": "NOT_AVAILABLE",
       "instagram_performance_metrics_expected": [
         "likes",
@@ -16719,8 +17317,9 @@
         "privacy_rule": "Do not infer private or sensitive traits from people present in media."
       },
       "instagram_format": "photo",
-      "instagram_format_mix_note": "Current production workflow is constrained to static photo jobs; this does not remove carousel/Reels rules from the master policy.",
+      "instagram_format_mix_note": "Current production workflow is constrained to static photo jobs; carousel/Reels rules remain mandatory in the master policy for future matching formats.",
       "instagram_creative_constraints": {
+        "integrity_truthfulness_required": true,
         "first_visible_unit_must_work_without_context": true,
         "immediate_target_relevance": true,
         "skip_risk_must_be_reviewed": true,
@@ -16729,9 +17328,13 @@
         "photo_overlay_text_not_overloaded": true,
         "meaningful_positive_action_not_engagement_bait": true,
         "share_value_should_be_natural_not_forced": true,
+        "save_value_should_be_considered_when_relevant": true,
         "profile_transition_must_match_brand_positioning": true,
+        "negative_feedback_risk_must_be_reviewed": true,
+        "creative_fatigue_must_be_reviewed": true,
         "deliver_value_after_hook": true,
-        "no_slow_generic_intro": true
+        "no_slow_generic_intro": true,
+        "publication_time_must_not_be_invented": true
       },
       "instagram_carousel_constraints": null,
       "instagram_reels_policy": {
@@ -16854,6 +17457,7 @@
       "publication_time_verified": false,
       "approval_note": "INSIGHTS NON DISPONIBILI — ANALISI NON COMPLETA. Non usare un orario di pubblicazione inventato.",
       "prepublish_checklist": {
+        "integrity_and_truthfulness_passed": null,
         "public_clear": true,
         "single_objective": true,
         "main_message_clear": true,
@@ -16867,13 +17471,19 @@
         "cta_connected_to_objective_or_omitted": true,
         "question_is_relevant_if_present": true,
         "sufficiently_distinct_from_recent_posts": null,
+        "creative_fatigue_reviewed": null,
         "skip_risk_reviewed": null,
         "dwell_time_value_reviewed": null,
         "direct_share_value_reviewed": null,
+        "save_value_reviewed": null,
         "profile_visit_value_reviewed": null,
+        "negative_feedback_risk_reviewed": null,
         "format_specific_rules_passed": null,
         "carousel_completion_logic_passed": null,
-        "reel_9_16_safe_area_audio_passed": null
+        "first_3_seconds_passed": null,
+        "reason_beyond_10_seconds_passed": null,
+        "reel_9_16_safe_area_audio_passed": null,
+        "gallery_metadata_permission_passed": null
       },
       "visual_asset_urls": [
         "https://commons.wikimedia.org/wiki/Special:Redirect/file/Avigliana_Centro_Storico_Tramonto.JPG"
@@ -17257,13 +17867,31 @@
         "dwell_time_value_review_required": true,
         "direct_share_value_review_required": true,
         "profile_visit_value_review_required": true,
-        "format_specific_rules_required": true
+        "format_specific_rules_required": true,
+        "share_worthiness_review_required": true,
+        "format_diversification_review_required": true,
+        "first_three_seconds_or_first_unit_review_required": true,
+        "highest_resolution_required": true,
+        "muted_view_comprehension_required_for_video": true,
+        "audio_rights_review_required_if_audio": true,
+        "early_comment_response_plan_required_for_reels": true
       },
       "cta_policy": "ONE_OR_NONE_AND_ONLY_IF_OBJECTIVE_REQUIRES_IT",
       "manual_approval_required": true,
       "instagram_policy_required": true,
       "instagram_policy_version": 2,
+      "instagram_policy_source": "publisher/instagram_distribution_policy.json",
+      "instagram_full_policy_attached": true,
+      "instagram_scope_note": {
+        "feed": "This policy covers the Instagram Feed ranking system described in the supplied directives.",
+        "suggested_content": "Suggested content can be governed by a separate recommendation system and must not be falsely treated as identical to the followed-account Feed ranking system.",
+        "ads": "Ads are separate from the organic Feed ranking system described here and are measured through Meta Ads/Insights rather than assumed to share the same organic ranking behavior."
+      },
       "instagram_ranking_model": {
+        "relationship_context": {
+          "rule": "Feed predictions depend in part on the content and people a viewer follows, likes and interacts with.",
+          "production_implication": "Build repeated relevance with a defined audience; do not treat each post as isolated from prior audience-account interaction history."
+        },
         "inventory": {
           "rule": "The system first gathers potential posts from accounts the viewer follows and applies integrity filtering.",
           "production_implication": "Every asset must be policy-safe, truthful, coherent and designed for an identifiable audience."
@@ -17279,6 +17907,40 @@
         "ranking_score": {
           "rule": "The system scores eligible posts for relevance and orders them; it also seeks a useful mix of content types.",
           "production_implication": "Score drafts against the full prediction set and maintain creative/format variety instead of repeating one pattern."
+        }
+      },
+      "instagram_viewer_controls_and_feedback": {
+        "mute": {
+          "platform_action": "A viewer can mute an account to stop seeing its posts in Feed.",
+          "production_implication": "Avoid repetitive, irrelevant or excessive content that creates a reason to mute the account."
+        },
+        "favorites": {
+          "platform_action": "A viewer can add an account to Favorites; posts from Favorites are shown higher in the main Feed.",
+          "production_implication": "Create recurring utility and trust strong enough that a relevant follower may voluntarily add the account to Favorites. Never fabricate or force this action."
+        },
+        "share": {
+          "platform_action": "A viewer can share a post to a chat, Story, app or website.",
+          "production_implication": "Design naturally share-worthy information where appropriate, especially useful local information, instructions, comparisons and timely updates."
+        },
+        "report": {
+          "platform_action": "A viewer can report content, including spam or false information.",
+          "production_implication": "Reject misleading claims, spam-like tactics and unverified assertions before publication."
+        },
+        "save": {
+          "platform_action": "A viewer can save a post to a collection or collaborative collection.",
+          "production_implication": "Where appropriate, create reference value worth keeping: checklists, procedures, local market data, comparisons, step-by-step guidance and reusable information."
+        },
+        "following_recent": {
+          "platform_action": "Viewers can use Following/Recent views to see followed accounts in reverse chronological order and can use Favorites for prioritized accounts.",
+          "production_implication": "Recency matters operationally, but publication time must come from real Insights when available and must not be invented."
+        },
+        "unfollow": {
+          "platform_action": "A viewer can unfollow an account.",
+          "production_implication": "Monitor repeated low-value content and creative fatigue; do not increase volume at the cost of audience relevance."
+        },
+        "hide": {
+          "platform_action": "A viewer can hide a post, which can influence seeing less similar content.",
+          "production_implication": "Treat hiding/negative feedback as a quality warning where such data is available; reduce confusing, repetitive or irrelevant creative patterns."
         }
       },
       "instagram_prediction_targets": {
@@ -17414,6 +18076,64 @@
           ]
         }
       },
+      "instagram_measurement_policy": {
+        "principle": "Record only metrics actually exposed by Instagram/Meta or manually verifiable. Never invent unavailable ranking probabilities.",
+        "core_business_metrics": [
+          "profile visits",
+          "website/contact clicks",
+          "DMs",
+          "qualified replies",
+          "leads",
+          "appointments",
+          "valuations",
+          "mandates"
+        ],
+        "content_metrics_when_available": [
+          "reach",
+          "impressions",
+          "likes",
+          "comments",
+          "reshares",
+          "saves",
+          "average watch time",
+          "skip rate",
+          "carousel progression/completion",
+          "3-second views",
+          "10-second views",
+          "profile visits after content",
+          "direct shares/sends"
+        ],
+        "comparison_rule": "Compare like-for-like formats, objectives, audience and time windows. Do not claim causal ranking effects from one post."
+      },
+      "instagram_mandatory_prepublication_checks": [
+        "integrity_and_truthfulness_passed",
+        "audience_is_precise",
+        "single_objective",
+        "single_main_message",
+        "creative_is_sharp",
+        "creative_is_brand_coherent",
+        "subject_is_immediately_recognizable",
+        "visual_text_is_short",
+        "opening_is_immediately_relevant",
+        "caption_has_no_unnecessary_elements",
+        "content_is_meaningful_for_target",
+        "cta_matches_objective_or_is_omitted",
+        "question_is_relevant_if_used",
+        "content_is_distinct_enough_from_recent_posts",
+        "creative_fatigue_reviewed",
+        "skip_risk_reviewed",
+        "dwell_time_value_reviewed",
+        "direct_share_value_reviewed",
+        "save_value_reviewed",
+        "profile_visit_value_reviewed",
+        "negative_feedback_risk_reviewed",
+        "format_specific_rules_passed",
+        "carousel_completion_logic_passed_if_carousel",
+        "first_3_seconds_passed_if_video",
+        "reason_to_continue_beyond_10_seconds_passed_if_video_or_carousel",
+        "audio_intent_and_silent_comprehension_passed_if_video",
+        "gallery_metadata_used_only_with_permission_if_used"
+      ],
       "instagram_performance_data_status": "NOT_AVAILABLE",
       "instagram_performance_metrics_expected": [
         "likes",
@@ -17443,8 +18163,9 @@
         "privacy_rule": "Do not infer private or sensitive traits from people present in media."
       },
       "instagram_format": "photo",
-      "instagram_format_mix_note": "Current production workflow is constrained to static photo jobs; this does not remove carousel/Reels rules from the master policy.",
+      "instagram_format_mix_note": "Current production workflow is constrained to static photo jobs; carousel/Reels rules remain mandatory in the master policy for future matching formats.",
       "instagram_creative_constraints": {
+        "integrity_truthfulness_required": true,
         "first_visible_unit_must_work_without_context": true,
         "immediate_target_relevance": true,
         "skip_risk_must_be_reviewed": true,
@@ -17453,9 +18174,13 @@
         "photo_overlay_text_not_overloaded": true,
         "meaningful_positive_action_not_engagement_bait": true,
         "share_value_should_be_natural_not_forced": true,
+        "save_value_should_be_considered_when_relevant": true,
         "profile_transition_must_match_brand_positioning": true,
+        "negative_feedback_risk_must_be_reviewed": true,
+        "creative_fatigue_must_be_reviewed": true,
         "deliver_value_after_hook": true,
-        "no_slow_generic_intro": true
+        "no_slow_generic_intro": true,
+        "publication_time_must_not_be_invented": true
       },
       "instagram_carousel_constraints": null,
       "instagram_reels_policy": {
@@ -17578,6 +18303,7 @@
       "publication_time_verified": false,
       "approval_note": "INSIGHTS NON DISPONIBILI — ANALISI NON COMPLETA. Non usare un orario di pubblicazione inventato.",
       "prepublish_checklist": {
+        "integrity_and_truthfulness_passed": null,
         "public_clear": true,
         "single_objective": true,
         "main_message_clear": true,
@@ -17591,13 +18317,19 @@
         "cta_connected_to_objective_or_omitted": true,
         "question_is_relevant_if_present": true,
         "sufficiently_distinct_from_recent_posts": null,
+        "creative_fatigue_reviewed": null,
         "skip_risk_reviewed": null,
         "dwell_time_value_reviewed": null,
         "direct_share_value_reviewed": null,
+        "save_value_reviewed": null,
         "profile_visit_value_reviewed": null,
+        "negative_feedback_risk_reviewed": null,
         "format_specific_rules_passed": null,
         "carousel_completion_logic_passed": null,
-        "reel_9_16_safe_area_audio_passed": null
+        "first_3_seconds_passed": null,
+        "reason_beyond_10_seconds_passed": null,
+        "reel_9_16_safe_area_audio_passed": null,
+        "gallery_metadata_permission_passed": null
       },
       "visual_transform": "original-generated-ecommerce-mockup-plus-presenter-footer",
       "visual_count": 1,
@@ -17977,13 +18709,31 @@
         "dwell_time_value_review_required": true,
         "direct_share_value_review_required": true,
         "profile_visit_value_review_required": true,
-        "format_specific_rules_required": true
+        "format_specific_rules_required": true,
+        "share_worthiness_review_required": true,
+        "format_diversification_review_required": true,
+        "first_three_seconds_or_first_unit_review_required": true,
+        "highest_resolution_required": true,
+        "muted_view_comprehension_required_for_video": true,
+        "audio_rights_review_required_if_audio": true,
+        "early_comment_response_plan_required_for_reels": true
       },
       "cta_policy": "ONE_OR_NONE_AND_ONLY_IF_OBJECTIVE_REQUIRES_IT",
       "manual_approval_required": true,
       "instagram_policy_required": true,
       "instagram_policy_version": 2,
+      "instagram_policy_source": "publisher/instagram_distribution_policy.json",
+      "instagram_full_policy_attached": true,
+      "instagram_scope_note": {
+        "feed": "This policy covers the Instagram Feed ranking system described in the supplied directives.",
+        "suggested_content": "Suggested content can be governed by a separate recommendation system and must not be falsely treated as identical to the followed-account Feed ranking system.",
+        "ads": "Ads are separate from the organic Feed ranking system described here and are measured through Meta Ads/Insights rather than assumed to share the same organic ranking behavior."
+      },
       "instagram_ranking_model": {
+        "relationship_context": {
+          "rule": "Feed predictions depend in part on the content and people a viewer follows, likes and interacts with.",
+          "production_implication": "Build repeated relevance with a defined audience; do not treat each post as isolated from prior audience-account interaction history."
+        },
         "inventory": {
           "rule": "The system first gathers potential posts from accounts the viewer follows and applies integrity filtering.",
           "production_implication": "Every asset must be policy-safe, truthful, coherent and designed for an identifiable audience."
@@ -17999,6 +18749,40 @@
         "ranking_score": {
           "rule": "The system scores eligible posts for relevance and orders them; it also seeks a useful mix of content types.",
           "production_implication": "Score drafts against the full prediction set and maintain creative/format variety instead of repeating one pattern."
+        }
+      },
+      "instagram_viewer_controls_and_feedback": {
+        "mute": {
+          "platform_action": "A viewer can mute an account to stop seeing its posts in Feed.",
+          "production_implication": "Avoid repetitive, irrelevant or excessive content that creates a reason to mute the account."
+        },
+        "favorites": {
+          "platform_action": "A viewer can add an account to Favorites; posts from Favorites are shown higher in the main Feed.",
+          "production_implication": "Create recurring utility and trust strong enough that a relevant follower may voluntarily add the account to Favorites. Never fabricate or force this action."
+        },
+        "share": {
+          "platform_action": "A viewer can share a post to a chat, Story, app or website.",
+          "production_implication": "Design naturally share-worthy information where appropriate, especially useful local information, instructions, comparisons and timely updates."
+        },
+        "report": {
+          "platform_action": "A viewer can report content, including spam or false information.",
+          "production_implication": "Reject misleading claims, spam-like tactics and unverified assertions before publication."
+        },
+        "save": {
+          "platform_action": "A viewer can save a post to a collection or collaborative collection.",
+          "production_implication": "Where appropriate, create reference value worth keeping: checklists, procedures, local market data, comparisons, step-by-step guidance and reusable information."
+        },
+        "following_recent": {
+          "platform_action": "Viewers can use Following/Recent views to see followed accounts in reverse chronological order and can use Favorites for prioritized accounts.",
+          "production_implication": "Recency matters operationally, but publication time must come from real Insights when available and must not be invented."
+        },
+        "unfollow": {
+          "platform_action": "A viewer can unfollow an account.",
+          "production_implication": "Monitor repeated low-value content and creative fatigue; do not increase volume at the cost of audience relevance."
+        },
+        "hide": {
+          "platform_action": "A viewer can hide a post, which can influence seeing less similar content.",
+          "production_implication": "Treat hiding/negative feedback as a quality warning where such data is available; reduce confusing, repetitive or irrelevant creative patterns."
         }
       },
       "instagram_prediction_targets": {
@@ -18134,6 +18918,64 @@
           ]
         }
       },
+      "instagram_measurement_policy": {
+        "principle": "Record only metrics actually exposed by Instagram/Meta or manually verifiable. Never invent unavailable ranking probabilities.",
+        "core_business_metrics": [
+          "profile visits",
+          "website/contact clicks",
+          "DMs",
+          "qualified replies",
+          "leads",
+          "appointments",
+          "valuations",
+          "mandates"
+        ],
+        "content_metrics_when_available": [
+          "reach",
+          "impressions",
+          "likes",
+          "comments",
+          "reshares",
+          "saves",
+          "average watch time",
+          "skip rate",
+          "carousel progression/completion",
+          "3-second views",
+          "10-second views",
+          "profile visits after content",
+          "direct shares/sends"
+        ],
+        "comparison_rule": "Compare like-for-like formats, objectives, audience and time windows. Do not claim causal ranking effects from one post."
+      },
+      "instagram_mandatory_prepublication_checks": [
+        "integrity_and_truthfulness_passed",
+        "audience_is_precise",
+        "single_objective",
+        "single_main_message",
+        "creative_is_sharp",
+        "creative_is_brand_coherent",
+        "subject_is_immediately_recognizable",
+        "visual_text_is_short",
+        "opening_is_immediately_relevant",
+        "caption_has_no_unnecessary_elements",
+        "content_is_meaningful_for_target",
+        "cta_matches_objective_or_is_omitted",
+        "question_is_relevant_if_used",
+        "content_is_distinct_enough_from_recent_posts",
+        "creative_fatigue_reviewed",
+        "skip_risk_reviewed",
+        "dwell_time_value_reviewed",
+        "direct_share_value_reviewed",
+        "save_value_reviewed",
+        "profile_visit_value_reviewed",
+        "negative_feedback_risk_reviewed",
+        "format_specific_rules_passed",
+        "carousel_completion_logic_passed_if_carousel",
+        "first_3_seconds_passed_if_video",
+        "reason_to_continue_beyond_10_seconds_passed_if_video_or_carousel",
+        "audio_intent_and_silent_comprehension_passed_if_video",
+        "gallery_metadata_used_only_with_permission_if_used"
+      ],
       "instagram_performance_data_status": "NOT_AVAILABLE",
       "instagram_performance_metrics_expected": [
         "likes",
@@ -18163,8 +19005,9 @@
         "privacy_rule": "Do not infer private or sensitive traits from people present in media."
       },
       "instagram_format": "photo",
-      "instagram_format_mix_note": "Current production workflow is constrained to static photo jobs; this does not remove carousel/Reels rules from the master policy.",
+      "instagram_format_mix_note": "Current production workflow is constrained to static photo jobs; carousel/Reels rules remain mandatory in the master policy for future matching formats.",
       "instagram_creative_constraints": {
+        "integrity_truthfulness_required": true,
         "first_visible_unit_must_work_without_context": true,
         "immediate_target_relevance": true,
         "skip_risk_must_be_reviewed": true,
@@ -18173,9 +19016,13 @@
         "photo_overlay_text_not_overloaded": true,
         "meaningful_positive_action_not_engagement_bait": true,
         "share_value_should_be_natural_not_forced": true,
+        "save_value_should_be_considered_when_relevant": true,
         "profile_transition_must_match_brand_positioning": true,
+        "negative_feedback_risk_must_be_reviewed": true,
+        "creative_fatigue_must_be_reviewed": true,
         "deliver_value_after_hook": true,
-        "no_slow_generic_intro": true
+        "no_slow_generic_intro": true,
+        "publication_time_must_not_be_invented": true
       },
       "instagram_carousel_constraints": null,
       "instagram_reels_policy": {
@@ -18298,6 +19145,7 @@
       "publication_time_verified": false,
       "approval_note": "INSIGHTS NON DISPONIBILI — ANALISI NON COMPLETA. Non usare un orario di pubblicazione inventato.",
       "prepublish_checklist": {
+        "integrity_and_truthfulness_passed": null,
         "public_clear": true,
         "single_objective": true,
         "main_message_clear": true,
@@ -18311,13 +19159,19 @@
         "cta_connected_to_objective_or_omitted": true,
         "question_is_relevant_if_present": true,
         "sufficiently_distinct_from_recent_posts": null,
+        "creative_fatigue_reviewed": null,
         "skip_risk_reviewed": null,
         "dwell_time_value_reviewed": null,
         "direct_share_value_reviewed": null,
+        "save_value_reviewed": null,
         "profile_visit_value_reviewed": null,
+        "negative_feedback_risk_reviewed": null,
         "format_specific_rules_passed": null,
         "carousel_completion_logic_passed": null,
-        "reel_9_16_safe_area_audio_passed": null
+        "first_3_seconds_passed": null,
+        "reason_beyond_10_seconds_passed": null,
+        "reel_9_16_safe_area_audio_passed": null,
+        "gallery_metadata_permission_passed": null
       },
       "visual_transform": "original-generated-ecommerce-mockup-plus-presenter-footer",
       "visual_count": 1,
@@ -18697,13 +19551,31 @@
         "dwell_time_value_review_required": true,
         "direct_share_value_review_required": true,
         "profile_visit_value_review_required": true,
-        "format_specific_rules_required": true
+        "format_specific_rules_required": true,
+        "share_worthiness_review_required": true,
+        "format_diversification_review_required": true,
+        "first_three_seconds_or_first_unit_review_required": true,
+        "highest_resolution_required": true,
+        "muted_view_comprehension_required_for_video": true,
+        "audio_rights_review_required_if_audio": true,
+        "early_comment_response_plan_required_for_reels": true
       },
       "cta_policy": "ONE_OR_NONE_AND_ONLY_IF_OBJECTIVE_REQUIRES_IT",
       "manual_approval_required": true,
       "instagram_policy_required": true,
       "instagram_policy_version": 2,
+      "instagram_policy_source": "publisher/instagram_distribution_policy.json",
+      "instagram_full_policy_attached": true,
+      "instagram_scope_note": {
+        "feed": "This policy covers the Instagram Feed ranking system described in the supplied directives.",
+        "suggested_content": "Suggested content can be governed by a separate recommendation system and must not be falsely treated as identical to the followed-account Feed ranking system.",
+        "ads": "Ads are separate from the organic Feed ranking system described here and are measured through Meta Ads/Insights rather than assumed to share the same organic ranking behavior."
+      },
       "instagram_ranking_model": {
+        "relationship_context": {
+          "rule": "Feed predictions depend in part on the content and people a viewer follows, likes and interacts with.",
+          "production_implication": "Build repeated relevance with a defined audience; do not treat each post as isolated from prior audience-account interaction history."
+        },
         "inventory": {
           "rule": "The system first gathers potential posts from accounts the viewer follows and applies integrity filtering.",
           "production_implication": "Every asset must be policy-safe, truthful, coherent and designed for an identifiable audience."
@@ -18719,6 +19591,40 @@
         "ranking_score": {
           "rule": "The system scores eligible posts for relevance and orders them; it also seeks a useful mix of content types.",
           "production_implication": "Score drafts against the full prediction set and maintain creative/format variety instead of repeating one pattern."
+        }
+      },
+      "instagram_viewer_controls_and_feedback": {
+        "mute": {
+          "platform_action": "A viewer can mute an account to stop seeing its posts in Feed.",
+          "production_implication": "Avoid repetitive, irrelevant or excessive content that creates a reason to mute the account."
+        },
+        "favorites": {
+          "platform_action": "A viewer can add an account to Favorites; posts from Favorites are shown higher in the main Feed.",
+          "production_implication": "Create recurring utility and trust strong enough that a relevant follower may voluntarily add the account to Favorites. Never fabricate or force this action."
+        },
+        "share": {
+          "platform_action": "A viewer can share a post to a chat, Story, app or website.",
+          "production_implication": "Design naturally share-worthy information where appropriate, especially useful local information, instructions, comparisons and timely updates."
+        },
+        "report": {
+          "platform_action": "A viewer can report content, including spam or false information.",
+          "production_implication": "Reject misleading claims, spam-like tactics and unverified assertions before publication."
+        },
+        "save": {
+          "platform_action": "A viewer can save a post to a collection or collaborative collection.",
+          "production_implication": "Where appropriate, create reference value worth keeping: checklists, procedures, local market data, comparisons, step-by-step guidance and reusable information."
+        },
+        "following_recent": {
+          "platform_action": "Viewers can use Following/Recent views to see followed accounts in reverse chronological order and can use Favorites for prioritized accounts.",
+          "production_implication": "Recency matters operationally, but publication time must come from real Insights when available and must not be invented."
+        },
+        "unfollow": {
+          "platform_action": "A viewer can unfollow an account.",
+          "production_implication": "Monitor repeated low-value content and creative fatigue; do not increase volume at the cost of audience relevance."
+        },
+        "hide": {
+          "platform_action": "A viewer can hide a post, which can influence seeing less similar content.",
+          "production_implication": "Treat hiding/negative feedback as a quality warning where such data is available; reduce confusing, repetitive or irrelevant creative patterns."
         }
       },
       "instagram_prediction_targets": {
@@ -18854,6 +19760,64 @@
           ]
         }
       },
+      "instagram_measurement_policy": {
+        "principle": "Record only metrics actually exposed by Instagram/Meta or manually verifiable. Never invent unavailable ranking probabilities.",
+        "core_business_metrics": [
+          "profile visits",
+          "website/contact clicks",
+          "DMs",
+          "qualified replies",
+          "leads",
+          "appointments",
+          "valuations",
+          "mandates"
+        ],
+        "content_metrics_when_available": [
+          "reach",
+          "impressions",
+          "likes",
+          "comments",
+          "reshares",
+          "saves",
+          "average watch time",
+          "skip rate",
+          "carousel progression/completion",
+          "3-second views",
+          "10-second views",
+          "profile visits after content",
+          "direct shares/sends"
+        ],
+        "comparison_rule": "Compare like-for-like formats, objectives, audience and time windows. Do not claim causal ranking effects from one post."
+      },
+      "instagram_mandatory_prepublication_checks": [
+        "integrity_and_truthfulness_passed",
+        "audience_is_precise",
+        "single_objective",
+        "single_main_message",
+        "creative_is_sharp",
+        "creative_is_brand_coherent",
+        "subject_is_immediately_recognizable",
+        "visual_text_is_short",
+        "opening_is_immediately_relevant",
+        "caption_has_no_unnecessary_elements",
+        "content_is_meaningful_for_target",
+        "cta_matches_objective_or_is_omitted",
+        "question_is_relevant_if_used",
+        "content_is_distinct_enough_from_recent_posts",
+        "creative_fatigue_reviewed",
+        "skip_risk_reviewed",
+        "dwell_time_value_reviewed",
+        "direct_share_value_reviewed",
+        "save_value_reviewed",
+        "profile_visit_value_reviewed",
+        "negative_feedback_risk_reviewed",
+        "format_specific_rules_passed",
+        "carousel_completion_logic_passed_if_carousel",
+        "first_3_seconds_passed_if_video",
+        "reason_to_continue_beyond_10_seconds_passed_if_video_or_carousel",
+        "audio_intent_and_silent_comprehension_passed_if_video",
+        "gallery_metadata_used_only_with_permission_if_used"
+      ],
       "instagram_performance_data_status": "NOT_AVAILABLE",
       "instagram_performance_metrics_expected": [
         "likes",
@@ -18883,8 +19847,9 @@
         "privacy_rule": "Do not infer private or sensitive traits from people present in media."
       },
       "instagram_format": "photo",
-      "instagram_format_mix_note": "Current production workflow is constrained to static photo jobs; this does not remove carousel/Reels rules from the master policy.",
+      "instagram_format_mix_note": "Current production workflow is constrained to static photo jobs; carousel/Reels rules remain mandatory in the master policy for future matching formats.",
       "instagram_creative_constraints": {
+        "integrity_truthfulness_required": true,
         "first_visible_unit_must_work_without_context": true,
         "immediate_target_relevance": true,
         "skip_risk_must_be_reviewed": true,
@@ -18893,9 +19858,13 @@
         "photo_overlay_text_not_overloaded": true,
         "meaningful_positive_action_not_engagement_bait": true,
         "share_value_should_be_natural_not_forced": true,
+        "save_value_should_be_considered_when_relevant": true,
         "profile_transition_must_match_brand_positioning": true,
+        "negative_feedback_risk_must_be_reviewed": true,
+        "creative_fatigue_must_be_reviewed": true,
         "deliver_value_after_hook": true,
-        "no_slow_generic_intro": true
+        "no_slow_generic_intro": true,
+        "publication_time_must_not_be_invented": true
       },
       "instagram_carousel_constraints": null,
       "instagram_reels_policy": {
@@ -19018,6 +19987,7 @@
       "publication_time_verified": false,
       "approval_note": "INSIGHTS NON DISPONIBILI — ANALISI NON COMPLETA. Non usare un orario di pubblicazione inventato.",
       "prepublish_checklist": {
+        "integrity_and_truthfulness_passed": null,
         "public_clear": true,
         "single_objective": true,
         "main_message_clear": true,
@@ -19031,13 +20001,19 @@
         "cta_connected_to_objective_or_omitted": true,
         "question_is_relevant_if_present": true,
         "sufficiently_distinct_from_recent_posts": null,
+        "creative_fatigue_reviewed": null,
         "skip_risk_reviewed": null,
         "dwell_time_value_reviewed": null,
         "direct_share_value_reviewed": null,
+        "save_value_reviewed": null,
         "profile_visit_value_reviewed": null,
+        "negative_feedback_risk_reviewed": null,
         "format_specific_rules_passed": null,
         "carousel_completion_logic_passed": null,
-        "reel_9_16_safe_area_audio_passed": null
+        "first_3_seconds_passed": null,
+        "reason_beyond_10_seconds_passed": null,
+        "reel_9_16_safe_area_audio_passed": null,
+        "gallery_metadata_permission_passed": null
       },
       "visual_transform": "original-generated-ecommerce-mockup-plus-presenter-footer",
       "visual_count": 1,
@@ -19417,13 +20393,31 @@
         "dwell_time_value_review_required": true,
         "direct_share_value_review_required": true,
         "profile_visit_value_review_required": true,
-        "format_specific_rules_required": true
+        "format_specific_rules_required": true,
+        "share_worthiness_review_required": true,
+        "format_diversification_review_required": true,
+        "first_three_seconds_or_first_unit_review_required": true,
+        "highest_resolution_required": true,
+        "muted_view_comprehension_required_for_video": true,
+        "audio_rights_review_required_if_audio": true,
+        "early_comment_response_plan_required_for_reels": true
       },
       "cta_policy": "ONE_OR_NONE_AND_ONLY_IF_OBJECTIVE_REQUIRES_IT",
       "manual_approval_required": true,
       "instagram_policy_required": true,
       "instagram_policy_version": 2,
+      "instagram_policy_source": "publisher/instagram_distribution_policy.json",
+      "instagram_full_policy_attached": true,
+      "instagram_scope_note": {
+        "feed": "This policy covers the Instagram Feed ranking system described in the supplied directives.",
+        "suggested_content": "Suggested content can be governed by a separate recommendation system and must not be falsely treated as identical to the followed-account Feed ranking system.",
+        "ads": "Ads are separate from the organic Feed ranking system described here and are measured through Meta Ads/Insights rather than assumed to share the same organic ranking behavior."
+      },
       "instagram_ranking_model": {
+        "relationship_context": {
+          "rule": "Feed predictions depend in part on the content and people a viewer follows, likes and interacts with.",
+          "production_implication": "Build repeated relevance with a defined audience; do not treat each post as isolated from prior audience-account interaction history."
+        },
         "inventory": {
           "rule": "The system first gathers potential posts from accounts the viewer follows and applies integrity filtering.",
           "production_implication": "Every asset must be policy-safe, truthful, coherent and designed for an identifiable audience."
@@ -19439,6 +20433,40 @@
         "ranking_score": {
           "rule": "The system scores eligible posts for relevance and orders them; it also seeks a useful mix of content types.",
           "production_implication": "Score drafts against the full prediction set and maintain creative/format variety instead of repeating one pattern."
+        }
+      },
+      "instagram_viewer_controls_and_feedback": {
+        "mute": {
+          "platform_action": "A viewer can mute an account to stop seeing its posts in Feed.",
+          "production_implication": "Avoid repetitive, irrelevant or excessive content that creates a reason to mute the account."
+        },
+        "favorites": {
+          "platform_action": "A viewer can add an account to Favorites; posts from Favorites are shown higher in the main Feed.",
+          "production_implication": "Create recurring utility and trust strong enough that a relevant follower may voluntarily add the account to Favorites. Never fabricate or force this action."
+        },
+        "share": {
+          "platform_action": "A viewer can share a post to a chat, Story, app or website.",
+          "production_implication": "Design naturally share-worthy information where appropriate, especially useful local information, instructions, comparisons and timely updates."
+        },
+        "report": {
+          "platform_action": "A viewer can report content, including spam or false information.",
+          "production_implication": "Reject misleading claims, spam-like tactics and unverified assertions before publication."
+        },
+        "save": {
+          "platform_action": "A viewer can save a post to a collection or collaborative collection.",
+          "production_implication": "Where appropriate, create reference value worth keeping: checklists, procedures, local market data, comparisons, step-by-step guidance and reusable information."
+        },
+        "following_recent": {
+          "platform_action": "Viewers can use Following/Recent views to see followed accounts in reverse chronological order and can use Favorites for prioritized accounts.",
+          "production_implication": "Recency matters operationally, but publication time must come from real Insights when available and must not be invented."
+        },
+        "unfollow": {
+          "platform_action": "A viewer can unfollow an account.",
+          "production_implication": "Monitor repeated low-value content and creative fatigue; do not increase volume at the cost of audience relevance."
+        },
+        "hide": {
+          "platform_action": "A viewer can hide a post, which can influence seeing less similar content.",
+          "production_implication": "Treat hiding/negative feedback as a quality warning where such data is available; reduce confusing, repetitive or irrelevant creative patterns."
         }
       },
       "instagram_prediction_targets": {
@@ -19574,6 +20602,64 @@
           ]
         }
       },
+      "instagram_measurement_policy": {
+        "principle": "Record only metrics actually exposed by Instagram/Meta or manually verifiable. Never invent unavailable ranking probabilities.",
+        "core_business_metrics": [
+          "profile visits",
+          "website/contact clicks",
+          "DMs",
+          "qualified replies",
+          "leads",
+          "appointments",
+          "valuations",
+          "mandates"
+        ],
+        "content_metrics_when_available": [
+          "reach",
+          "impressions",
+          "likes",
+          "comments",
+          "reshares",
+          "saves",
+          "average watch time",
+          "skip rate",
+          "carousel progression/completion",
+          "3-second views",
+          "10-second views",
+          "profile visits after content",
+          "direct shares/sends"
+        ],
+        "comparison_rule": "Compare like-for-like formats, objectives, audience and time windows. Do not claim causal ranking effects from one post."
+      },
+      "instagram_mandatory_prepublication_checks": [
+        "integrity_and_truthfulness_passed",
+        "audience_is_precise",
+        "single_objective",
+        "single_main_message",
+        "creative_is_sharp",
+        "creative_is_brand_coherent",
+        "subject_is_immediately_recognizable",
+        "visual_text_is_short",
+        "opening_is_immediately_relevant",
+        "caption_has_no_unnecessary_elements",
+        "content_is_meaningful_for_target",
+        "cta_matches_objective_or_is_omitted",
+        "question_is_relevant_if_used",
+        "content_is_distinct_enough_from_recent_posts",
+        "creative_fatigue_reviewed",
+        "skip_risk_reviewed",
+        "dwell_time_value_reviewed",
+        "direct_share_value_reviewed",
+        "save_value_reviewed",
+        "profile_visit_value_reviewed",
+        "negative_feedback_risk_reviewed",
+        "format_specific_rules_passed",
+        "carousel_completion_logic_passed_if_carousel",
+        "first_3_seconds_passed_if_video",
+        "reason_to_continue_beyond_10_seconds_passed_if_video_or_carousel",
+        "audio_intent_and_silent_comprehension_passed_if_video",
+        "gallery_metadata_used_only_with_permission_if_used"
+      ],
       "instagram_performance_data_status": "NOT_AVAILABLE",
       "instagram_performance_metrics_expected": [
         "likes",
@@ -19603,8 +20689,9 @@
         "privacy_rule": "Do not infer private or sensitive traits from people present in media."
       },
       "instagram_format": "photo",
-      "instagram_format_mix_note": "Current production workflow is constrained to static photo jobs; this does not remove carousel/Reels rules from the master policy.",
+      "instagram_format_mix_note": "Current production workflow is constrained to static photo jobs; carousel/Reels rules remain mandatory in the master policy for future matching formats.",
       "instagram_creative_constraints": {
+        "integrity_truthfulness_required": true,
         "first_visible_unit_must_work_without_context": true,
         "immediate_target_relevance": true,
         "skip_risk_must_be_reviewed": true,
@@ -19613,9 +20700,13 @@
         "photo_overlay_text_not_overloaded": true,
         "meaningful_positive_action_not_engagement_bait": true,
         "share_value_should_be_natural_not_forced": true,
+        "save_value_should_be_considered_when_relevant": true,
         "profile_transition_must_match_brand_positioning": true,
+        "negative_feedback_risk_must_be_reviewed": true,
+        "creative_fatigue_must_be_reviewed": true,
         "deliver_value_after_hook": true,
-        "no_slow_generic_intro": true
+        "no_slow_generic_intro": true,
+        "publication_time_must_not_be_invented": true
       },
       "instagram_carousel_constraints": null,
       "instagram_reels_policy": {
@@ -19738,6 +20829,7 @@
       "publication_time_verified": false,
       "approval_note": "INSIGHTS NON DISPONIBILI — ANALISI NON COMPLETA. Non usare un orario di pubblicazione inventato.",
       "prepublish_checklist": {
+        "integrity_and_truthfulness_passed": null,
         "public_clear": true,
         "single_objective": true,
         "main_message_clear": true,
@@ -19751,13 +20843,19 @@
         "cta_connected_to_objective_or_omitted": true,
         "question_is_relevant_if_present": true,
         "sufficiently_distinct_from_recent_posts": null,
+        "creative_fatigue_reviewed": null,
         "skip_risk_reviewed": null,
         "dwell_time_value_reviewed": null,
         "direct_share_value_reviewed": null,
+        "save_value_reviewed": null,
         "profile_visit_value_reviewed": null,
+        "negative_feedback_risk_reviewed": null,
         "format_specific_rules_passed": null,
         "carousel_completion_logic_passed": null,
-        "reel_9_16_safe_area_audio_passed": null
+        "first_3_seconds_passed": null,
+        "reason_beyond_10_seconds_passed": null,
+        "reel_9_16_safe_area_audio_passed": null,
+        "gallery_metadata_permission_passed": null
       },
       "visual_transform": "original-generated-ecommerce-mockup-plus-presenter-footer",
       "visual_count": 1,
@@ -20137,13 +21235,31 @@
         "dwell_time_value_review_required": true,
         "direct_share_value_review_required": true,
         "profile_visit_value_review_required": true,
-        "format_specific_rules_required": true
+        "format_specific_rules_required": true,
+        "share_worthiness_review_required": true,
+        "format_diversification_review_required": true,
+        "first_three_seconds_or_first_unit_review_required": true,
+        "highest_resolution_required": true,
+        "muted_view_comprehension_required_for_video": true,
+        "audio_rights_review_required_if_audio": true,
+        "early_comment_response_plan_required_for_reels": true
       },
       "cta_policy": "ONE_OR_NONE_AND_ONLY_IF_OBJECTIVE_REQUIRES_IT",
       "manual_approval_required": true,
       "instagram_policy_required": true,
       "instagram_policy_version": 2,
+      "instagram_policy_source": "publisher/instagram_distribution_policy.json",
+      "instagram_full_policy_attached": true,
+      "instagram_scope_note": {
+        "feed": "This policy covers the Instagram Feed ranking system described in the supplied directives.",
+        "suggested_content": "Suggested content can be governed by a separate recommendation system and must not be falsely treated as identical to the followed-account Feed ranking system.",
+        "ads": "Ads are separate from the organic Feed ranking system described here and are measured through Meta Ads/Insights rather than assumed to share the same organic ranking behavior."
+      },
       "instagram_ranking_model": {
+        "relationship_context": {
+          "rule": "Feed predictions depend in part on the content and people a viewer follows, likes and interacts with.",
+          "production_implication": "Build repeated relevance with a defined audience; do not treat each post as isolated from prior audience-account interaction history."
+        },
         "inventory": {
           "rule": "The system first gathers potential posts from accounts the viewer follows and applies integrity filtering.",
           "production_implication": "Every asset must be policy-safe, truthful, coherent and designed for an identifiable audience."
@@ -20159,6 +21275,40 @@
         "ranking_score": {
           "rule": "The system scores eligible posts for relevance and orders them; it also seeks a useful mix of content types.",
           "production_implication": "Score drafts against the full prediction set and maintain creative/format variety instead of repeating one pattern."
+        }
+      },
+      "instagram_viewer_controls_and_feedback": {
+        "mute": {
+          "platform_action": "A viewer can mute an account to stop seeing its posts in Feed.",
+          "production_implication": "Avoid repetitive, irrelevant or excessive content that creates a reason to mute the account."
+        },
+        "favorites": {
+          "platform_action": "A viewer can add an account to Favorites; posts from Favorites are shown higher in the main Feed.",
+          "production_implication": "Create recurring utility and trust strong enough that a relevant follower may voluntarily add the account to Favorites. Never fabricate or force this action."
+        },
+        "share": {
+          "platform_action": "A viewer can share a post to a chat, Story, app or website.",
+          "production_implication": "Design naturally share-worthy information where appropriate, especially useful local information, instructions, comparisons and timely updates."
+        },
+        "report": {
+          "platform_action": "A viewer can report content, including spam or false information.",
+          "production_implication": "Reject misleading claims, spam-like tactics and unverified assertions before publication."
+        },
+        "save": {
+          "platform_action": "A viewer can save a post to a collection or collaborative collection.",
+          "production_implication": "Where appropriate, create reference value worth keeping: checklists, procedures, local market data, comparisons, step-by-step guidance and reusable information."
+        },
+        "following_recent": {
+          "platform_action": "Viewers can use Following/Recent views to see followed accounts in reverse chronological order and can use Favorites for prioritized accounts.",
+          "production_implication": "Recency matters operationally, but publication time must come from real Insights when available and must not be invented."
+        },
+        "unfollow": {
+          "platform_action": "A viewer can unfollow an account.",
+          "production_implication": "Monitor repeated low-value content and creative fatigue; do not increase volume at the cost of audience relevance."
+        },
+        "hide": {
+          "platform_action": "A viewer can hide a post, which can influence seeing less similar content.",
+          "production_implication": "Treat hiding/negative feedback as a quality warning where such data is available; reduce confusing, repetitive or irrelevant creative patterns."
         }
       },
       "instagram_prediction_targets": {
@@ -20294,6 +21444,64 @@
           ]
         }
       },
+      "instagram_measurement_policy": {
+        "principle": "Record only metrics actually exposed by Instagram/Meta or manually verifiable. Never invent unavailable ranking probabilities.",
+        "core_business_metrics": [
+          "profile visits",
+          "website/contact clicks",
+          "DMs",
+          "qualified replies",
+          "leads",
+          "appointments",
+          "valuations",
+          "mandates"
+        ],
+        "content_metrics_when_available": [
+          "reach",
+          "impressions",
+          "likes",
+          "comments",
+          "reshares",
+          "saves",
+          "average watch time",
+          "skip rate",
+          "carousel progression/completion",
+          "3-second views",
+          "10-second views",
+          "profile visits after content",
+          "direct shares/sends"
+        ],
+        "comparison_rule": "Compare like-for-like formats, objectives, audience and time windows. Do not claim causal ranking effects from one post."
+      },
+      "instagram_mandatory_prepublication_checks": [
+        "integrity_and_truthfulness_passed",
+        "audience_is_precise",
+        "single_objective",
+        "single_main_message",
+        "creative_is_sharp",
+        "creative_is_brand_coherent",
+        "subject_is_immediately_recognizable",
+        "visual_text_is_short",
+        "opening_is_immediately_relevant",
+        "caption_has_no_unnecessary_elements",
+        "content_is_meaningful_for_target",
+        "cta_matches_objective_or_is_omitted",
+        "question_is_relevant_if_used",
+        "content_is_distinct_enough_from_recent_posts",
+        "creative_fatigue_reviewed",
+        "skip_risk_reviewed",
+        "dwell_time_value_reviewed",
+        "direct_share_value_reviewed",
+        "save_value_reviewed",
+        "profile_visit_value_reviewed",
+        "negative_feedback_risk_reviewed",
+        "format_specific_rules_passed",
+        "carousel_completion_logic_passed_if_carousel",
+        "first_3_seconds_passed_if_video",
+        "reason_to_continue_beyond_10_seconds_passed_if_video_or_carousel",
+        "audio_intent_and_silent_comprehension_passed_if_video",
+        "gallery_metadata_used_only_with_permission_if_used"
+      ],
       "instagram_performance_data_status": "NOT_AVAILABLE",
       "instagram_performance_metrics_expected": [
         "likes",
@@ -20323,8 +21531,9 @@
         "privacy_rule": "Do not infer private or sensitive traits from people present in media."
       },
       "instagram_format": "photo",
-      "instagram_format_mix_note": "Current production workflow is constrained to static photo jobs; this does not remove carousel/Reels rules from the master policy.",
+      "instagram_format_mix_note": "Current production workflow is constrained to static photo jobs; carousel/Reels rules remain mandatory in the master policy for future matching formats.",
       "instagram_creative_constraints": {
+        "integrity_truthfulness_required": true,
         "first_visible_unit_must_work_without_context": true,
         "immediate_target_relevance": true,
         "skip_risk_must_be_reviewed": true,
@@ -20333,9 +21542,13 @@
         "photo_overlay_text_not_overloaded": true,
         "meaningful_positive_action_not_engagement_bait": true,
         "share_value_should_be_natural_not_forced": true,
+        "save_value_should_be_considered_when_relevant": true,
         "profile_transition_must_match_brand_positioning": true,
+        "negative_feedback_risk_must_be_reviewed": true,
+        "creative_fatigue_must_be_reviewed": true,
         "deliver_value_after_hook": true,
-        "no_slow_generic_intro": true
+        "no_slow_generic_intro": true,
+        "publication_time_must_not_be_invented": true
       },
       "instagram_carousel_constraints": null,
       "instagram_reels_policy": {
@@ -20458,6 +21671,7 @@
       "publication_time_verified": false,
       "approval_note": "INSIGHTS NON DISPONIBILI — ANALISI NON COMPLETA. Non usare un orario di pubblicazione inventato.",
       "prepublish_checklist": {
+        "integrity_and_truthfulness_passed": null,
         "public_clear": true,
         "single_objective": true,
         "main_message_clear": true,
@@ -20471,13 +21685,19 @@
         "cta_connected_to_objective_or_omitted": true,
         "question_is_relevant_if_present": true,
         "sufficiently_distinct_from_recent_posts": null,
+        "creative_fatigue_reviewed": null,
         "skip_risk_reviewed": null,
         "dwell_time_value_reviewed": null,
         "direct_share_value_reviewed": null,
+        "save_value_reviewed": null,
         "profile_visit_value_reviewed": null,
+        "negative_feedback_risk_reviewed": null,
         "format_specific_rules_passed": null,
         "carousel_completion_logic_passed": null,
-        "reel_9_16_safe_area_audio_passed": null
+        "first_3_seconds_passed": null,
+        "reason_beyond_10_seconds_passed": null,
+        "reel_9_16_safe_area_audio_passed": null,
+        "gallery_metadata_permission_passed": null
       },
       "visual_transform": "original-generated-ecommerce-mockup-plus-presenter-footer",
       "visual_count": 1,
@@ -20485,7 +21705,7 @@
       "reused_visual_count": 0
     }
   ],
-  "updated_at": "2026-09-04T15:42:05+00:00",
+  "updated_at": "2026-09-04T15:43:16+00:00",
   "current_cycle": "2026-09-04T16:00",
   "visual_policy": "10 different images per content; F1 priority reels change image every 2 seconds; prefer unseen history",
   "f1_reel_policy": {
@@ -20520,6 +21740,8 @@
   },
   "history_days": 14,
   "history_limit": 840,
-  "analysis_policy": "ANALISI PRIMA DELLA CREAZIONE DEL POST + full Instagram Feed/Reels prediction policy",
-  "instagram_distribution_policy": "publisher/instagram_distribution_policy.json"
+  "analysis_policy": "ANALISI PRIMA DELLA CREAZIONE + FULL INSTAGRAM FEED/REELS MASTER POLICY V2",
+  "instagram_distribution_policy": "publisher/instagram_distribution_policy.json",
+  "instagram_distribution_policy_version": 2,
+  "instagram_policy_loaded_directly": true
 }
