@@ -1,7 +1,7 @@
 {
   "version": 1,
   "name": "F1 Qualified Seller 14-Day Queue",
-  "generated_at": "2026-09-04T18:06:08+02:00",
+  "generated_at": "2026-09-04T18:17:30+02:00",
   "window_start": "2026-08-22",
   "window_end": "2026-09-04",
   "goal": "qualified_seller_leads",
@@ -95,7 +95,9 @@
         "height": 1920,
         "duration_seconds": 28.0,
         "muted_view": true,
-        "safe_bottom_fraction": 0.35
+        "safe_bottom_fraction": 0.35,
+        "source_text_suppression": true,
+        "source_policy": "approved_f1_photo_sources_then_blurred_legacy_fallback"
       }
     },
     {
@@ -192,7 +194,9 @@
       "render_spec": {
         "width": 1080,
         "height": 1350,
-        "slides": 10
+        "slides": 10,
+        "source_text_suppression": true,
+        "source_policy": "approved_f1_photo_sources_then_blurred_legacy_fallback"
       }
     },
     {
@@ -277,7 +281,9 @@
         "height": 1920,
         "duration_seconds": 28.0,
         "muted_view": true,
-        "safe_bottom_fraction": 0.35
+        "safe_bottom_fraction": 0.35,
+        "source_text_suppression": true,
+        "source_policy": "approved_f1_photo_sources_then_blurred_legacy_fallback"
       }
     },
     {
@@ -374,7 +380,9 @@
       "render_spec": {
         "width": 1080,
         "height": 1350,
-        "slides": 10
+        "slides": 10,
+        "source_text_suppression": true,
+        "source_policy": "approved_f1_photo_sources_then_blurred_legacy_fallback"
       }
     },
     {
@@ -459,7 +467,9 @@
         "height": 1920,
         "duration_seconds": 28.0,
         "muted_view": true,
-        "safe_bottom_fraction": 0.35
+        "safe_bottom_fraction": 0.35,
+        "source_text_suppression": true,
+        "source_policy": "approved_f1_photo_sources_then_blurred_legacy_fallback"
       }
     },
     {
@@ -556,7 +566,9 @@
       "render_spec": {
         "width": 1080,
         "height": 1350,
-        "slides": 10
+        "slides": 10,
+        "source_text_suppression": true,
+        "source_policy": "approved_f1_photo_sources_then_blurred_legacy_fallback"
       }
     },
     {
@@ -641,7 +653,9 @@
         "height": 1920,
         "duration_seconds": 28.0,
         "muted_view": true,
-        "safe_bottom_fraction": 0.35
+        "safe_bottom_fraction": 0.35,
+        "source_text_suppression": true,
+        "source_policy": "approved_f1_photo_sources_then_blurred_legacy_fallback"
       }
     },
     {
@@ -738,7 +752,9 @@
       "render_spec": {
         "width": 1080,
         "height": 1350,
-        "slides": 10
+        "slides": 10,
+        "source_text_suppression": true,
+        "source_policy": "approved_f1_photo_sources_then_blurred_legacy_fallback"
       }
     },
     {
@@ -823,7 +839,9 @@
         "height": 1920,
         "duration_seconds": 28.0,
         "muted_view": true,
-        "safe_bottom_fraction": 0.35
+        "safe_bottom_fraction": 0.35,
+        "source_text_suppression": true,
+        "source_policy": "approved_f1_photo_sources_then_blurred_legacy_fallback"
       }
     },
     {
@@ -920,7 +938,9 @@
       "render_spec": {
         "width": 1080,
         "height": 1350,
-        "slides": 10
+        "slides": 10,
+        "source_text_suppression": true,
+        "source_policy": "approved_f1_photo_sources_then_blurred_legacy_fallback"
       }
     },
     {
@@ -1005,7 +1025,9 @@
         "height": 1920,
         "duration_seconds": 28.0,
         "muted_view": true,
-        "safe_bottom_fraction": 0.35
+        "safe_bottom_fraction": 0.35,
+        "source_text_suppression": true,
+        "source_policy": "approved_f1_photo_sources_then_blurred_legacy_fallback"
       }
     },
     {
@@ -1102,7 +1124,9 @@
       "render_spec": {
         "width": 1080,
         "height": 1350,
-        "slides": 10
+        "slides": 10,
+        "source_text_suppression": true,
+        "source_policy": "approved_f1_photo_sources_then_blurred_legacy_fallback"
       }
     },
     {
@@ -1187,7 +1211,9 @@
         "height": 1920,
         "duration_seconds": 28.0,
         "muted_view": true,
-        "safe_bottom_fraction": 0.35
+        "safe_bottom_fraction": 0.35,
+        "source_text_suppression": true,
+        "source_policy": "approved_f1_photo_sources_then_blurred_legacy_fallback"
       }
     },
     {
@@ -1284,7 +1310,9 @@
       "render_spec": {
         "width": 1080,
         "height": 1350,
-        "slides": 10
+        "slides": 10,
+        "source_text_suppression": true,
+        "source_policy": "approved_f1_photo_sources_then_blurred_legacy_fallback"
       }
     },
     {
@@ -1369,7 +1397,9 @@
         "height": 1920,
         "duration_seconds": 28.0,
         "muted_view": true,
-        "safe_bottom_fraction": 0.35
+        "safe_bottom_fraction": 0.35,
+        "source_text_suppression": true,
+        "source_policy": "approved_f1_photo_sources_then_blurred_legacy_fallback"
       }
     },
     {
@@ -1466,7 +1496,9 @@
       "render_spec": {
         "width": 1080,
         "height": 1350,
-        "slides": 10
+        "slides": 10,
+        "source_text_suppression": true,
+        "source_policy": "approved_f1_photo_sources_then_blurred_legacy_fallback"
       }
     },
     {
@@ -1551,7 +1583,9 @@
         "height": 1920,
         "duration_seconds": 28.0,
         "muted_view": true,
-        "safe_bottom_fraction": 0.35
+        "safe_bottom_fraction": 0.35,
+        "source_text_suppression": true,
+        "source_policy": "approved_f1_photo_sources_then_blurred_legacy_fallback"
       }
     },
     {
@@ -1648,7 +1682,9 @@
       "render_spec": {
         "width": 1080,
         "height": 1350,
-        "slides": 10
+        "slides": 10,
+        "source_text_suppression": true,
+        "source_policy": "approved_f1_photo_sources_then_blurred_legacy_fallback"
       }
     },
     {
@@ -1733,7 +1769,9 @@
         "height": 1920,
         "duration_seconds": 28.0,
         "muted_view": true,
-        "safe_bottom_fraction": 0.35
+        "safe_bottom_fraction": 0.35,
+        "source_text_suppression": true,
+        "source_policy": "approved_f1_photo_sources_then_blurred_legacy_fallback"
       }
     },
     {
@@ -1830,7 +1868,9 @@
       "render_spec": {
         "width": 1080,
         "height": 1350,
-        "slides": 10
+        "slides": 10,
+        "source_text_suppression": true,
+        "source_policy": "approved_f1_photo_sources_then_blurred_legacy_fallback"
       }
     },
     {
@@ -1915,7 +1955,9 @@
         "height": 1920,
         "duration_seconds": 28.0,
         "muted_view": true,
-        "safe_bottom_fraction": 0.35
+        "safe_bottom_fraction": 0.35,
+        "source_text_suppression": true,
+        "source_policy": "approved_f1_photo_sources_then_blurred_legacy_fallback"
       }
     },
     {
@@ -2012,7 +2054,9 @@
       "render_spec": {
         "width": 1080,
         "height": 1350,
-        "slides": 10
+        "slides": 10,
+        "source_text_suppression": true,
+        "source_policy": "approved_f1_photo_sources_then_blurred_legacy_fallback"
       }
     },
     {
@@ -2097,7 +2141,9 @@
         "height": 1920,
         "duration_seconds": 28.0,
         "muted_view": true,
-        "safe_bottom_fraction": 0.35
+        "safe_bottom_fraction": 0.35,
+        "source_text_suppression": true,
+        "source_policy": "approved_f1_photo_sources_then_blurred_legacy_fallback"
       }
     },
     {
@@ -2194,7 +2240,9 @@
       "render_spec": {
         "width": 1080,
         "height": 1350,
-        "slides": 10
+        "slides": 10,
+        "source_text_suppression": true,
+        "source_policy": "approved_f1_photo_sources_then_blurred_legacy_fallback"
       }
     },
     {
@@ -2279,7 +2327,9 @@
         "height": 1920,
         "duration_seconds": 28.0,
         "muted_view": true,
-        "safe_bottom_fraction": 0.35
+        "safe_bottom_fraction": 0.35,
+        "source_text_suppression": true,
+        "source_policy": "approved_f1_photo_sources_then_blurred_legacy_fallback"
       }
     },
     {
@@ -2376,7 +2426,9 @@
       "render_spec": {
         "width": 1080,
         "height": 1350,
-        "slides": 10
+        "slides": 10,
+        "source_text_suppression": true,
+        "source_policy": "approved_f1_photo_sources_then_blurred_legacy_fallback"
       }
     },
     {
@@ -2461,7 +2513,9 @@
         "height": 1920,
         "duration_seconds": 28.0,
         "muted_view": true,
-        "safe_bottom_fraction": 0.35
+        "safe_bottom_fraction": 0.35,
+        "source_text_suppression": true,
+        "source_policy": "approved_f1_photo_sources_then_blurred_legacy_fallback"
       }
     },
     {
@@ -2558,7 +2612,9 @@
       "render_spec": {
         "width": 1080,
         "height": 1350,
-        "slides": 10
+        "slides": 10,
+        "source_text_suppression": true,
+        "source_policy": "approved_f1_photo_sources_then_blurred_legacy_fallback"
       }
     }
   ],
@@ -2571,5 +2627,6 @@
     "reels": 14,
     "carousels": 14,
     "total": 28
-  }
+  },
+  "visual_source_policy": "approved F1 local/residential photo sources; legacy fallback blurred and source copy suppressed"
 }
