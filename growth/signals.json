@@ -1,5 +1,90 @@
 {
   "version": 1,
-  "updated_at": "2026-09-04T14:30:00+00:00",
-  "signals": []
+  "updated_at": "2026-09-04T15:02:38+00:00",
+  "signals": [
+    {
+      "id": "FBS-64D8E3A2C4",
+      "brand": "f1-immobiliare",
+      "territory": "Susa",
+      "group_url": "https://www.facebook.com/groups/307179086293602/",
+      "source_url": "https://www.facebook.com/groups/307179086293602/permalink/2761334974211322/",
+      "title": "Vendo, compro, Val di Susa ( Avigliana/ Almese / Ferriera ...",
+      "snippet": "Cerco casa singola 3 camere giardino Possibilmente Avigliana, Almese o Villardora",
+      "source_query": "site:facebook.com/groups \"Susa\" \"cerco casa\"",
+      "status": "NEW",
+      "discovered_at": "2026-09-04T14:53:41+00:00"
+    },
+    {
+      "id": "FBS-D207F07117",
+      "brand": "f1-immobiliare",
+      "territory": "Susa",
+      "group_url": "https://www.facebook.com/groups/307179086293602/",
+      "source_url": "https://www.facebook.com/groups/307179086293602/permalink/2762232970788189/",
+      "title": "Vendo, compro, Val di Susa ( Avigliana/ Almese / Ferriera ...",
+      "snippet": "Cerco casa indipendente con grande giardino, 100/130 mq, e garage. Val Sangone, Bassa val di Susa",
+      "source_query": "site:facebook.com/groups \"Susa\" \"cerco casa\"",
+      "status": "NEW",
+      "discovered_at": "2026-09-04T14:53:41+00:00"
+    },
+    {
+      "id": "FBS-CA8ADDEB37",
+      "brand": "f1-immobiliare",
+      "territory": "Susa",
+      "group_url": "https://www.facebook.com/groups/307179086293602/",
+      "source_url": "https://www.facebook.com/groups/307179086293602/permalink/2767741730237313/",
+      "title": "Vendo, compro, Val di Susa ( Avigliana/ Almese / Ferriera ...",
+      "snippet": "Buonasera a tutti 👋cerco casa in vendita, indipendente o semi indipendente con almeno un po’ di giardino. Zona bassa Val di Susa, possibilmente in borgata e Val Sangone.",
+      "source_query": "site:facebook.com/groups \"Susa\" \"cerco casa\"",
+      "status": "NEW",
+      "discovered_at": "2026-09-04T14:53:41+00:00"
+    },
+    {
+      "id": "FBS-4CB3C12783",
+      "brand": "f1-immobiliare",
+      "territory": "Avigliana",
+      "group_url": "https://www.facebook.com/groups/307179086293602/",
+      "source_url": "https://www.facebook.com/groups/307179086293602/permalink/2891329204545231/",
+      "title": "Vendo, compro, Val di Susa ( Avigliana/ Almese / Ferriera ...",
+      "snippet": "Cerco piccolo appartamento arredato in affitto zona Avigliana e limitrofe. Look del Giorno: Eleganza Boho -Chic in Cioccolato! Tuffati nell'estate con questa splendida tuta intera plissettata color cioccolato! 🤎 La texture ricca e il design sofisticato a portafoglio catturano lo sguardo, valorizzati dalla fibbia ad anello coordinata in vita.",
+      "source_query": "site:facebook.com/groups \"Avigliana\" \"vendo compro\"",
+      "status": "NEW",
+      "discovered_at": "2026-09-04T14:53:51+00:00"
+    },
+    {
+      "id": "FBS-ADCE07C3B9",
+      "brand": "f1-immobiliare",
+      "territory": "Avigliana",
+      "group_url": "https://www.facebook.com/groups/307179086293602/",
+      "source_url": "https://www.facebook.com/groups/307179086293602/permalink/2780893812255438/",
+      "title": "Vendo, compro, Val di Susa ( Avigliana/ Almese / Ferriera ...",
+      "snippet": "Ciao a tutti cerco casa da acquistare con cortile zona Avigliana Almese e dintorni",
+      "source_query": "site:facebook.com/groups \"Avigliana\" \"cerco casa\"",
+      "status": "NEW",
+      "discovered_at": "2026-09-04T14:53:58+00:00"
+    },
+    {
+      "id": "FBS-4DC9570E45",
+      "brand": "f1-immobiliare",
+      "territory": "Avigliana",
+      "group_url": "https://www.facebook.com/groups/307179086293602/",
+      "source_url": "https://www.facebook.com/groups/307179086293602/permalink/2775539749457511/",
+      "title": "Vendo, compro, Val di Susa ( Avigliana/ Almese / Ferriera ...",
+      "snippet": "Vendo casa semindipendente a Villar Dora così composta: sala, cucina, bagno di servizio e una camera da letto al piano terra. Al primo piano si trova il bagno con doccia una grande camera da letto e una stanza da usare come cabina armadio o lavanderia.",
+      "source_query": "site:facebook.com/groups \"Avigliana\" \"vendo casa\"",
+      "status": "NEW",
+      "discovered_at": "2026-09-04T14:54:02+00:00"
+    },
+    {
+      "id": "FBS-3AA1F85781",
+      "brand": "f1-immobiliare",
+      "territory": "Oulx",
+      "group_url": "https://www.facebook.com/groups/307179086293602/",
+      "source_url": "https://www.facebook.com/groups/307179086293602/permalink/2788007648210721/",
+      "title": "Vendo, compro, Val di Susa ( Avigliana/ Almese / Ferriera ...",
+      "snippet": "Buongiorno per causa Trasferimento lascio box in affitto a oulx con vari attrezzi se interessati vendo Decespugliatore 35 cc come nuovo due cariole e tanti attrezzi per edilizia se interessati contattatemi in privato.",
+      "source_query": "site:facebook.com/groups \"Oulx\" \"vendo compro\"",
+      "status": "NEW",
+      "discovered_at": "2026-09-04T14:55:03+00:00"
+    }
+  ]
 }
