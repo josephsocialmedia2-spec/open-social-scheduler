@@ -12,6 +12,9 @@ on:
   push:
     paths:
       - '.github/workflows/social-engine-daily.yml'
+      - 'publisher/pre_content_analysis.py'
+      - 'publisher/enforce_content_analysis.py'
+      - 'publisher/insights/**'
       - 'publisher/build_cycle_queue.py'
       - 'publisher/apply_photo_only.py'
       - 'publisher/render_photos_only.py'
@@ -85,7 +88,10 @@ jobs:
 
       - name: Validate publication scripts
         run: |
-          python -m py_compile publisher/build_cycle_queue.py publisher/apply_photo_only.py publisher/render_photos_only.py publisher/run_publication_renderer.py
+          python -m py_compile publisher/pre_content_analysis.py publisher/enforce_content_analysis.py publisher/build_cycle_queue.py publisher/apply_photo_only.py publisher/render_photos_only.py publisher/run_publication_renderer.py
+
+      - name: Analyze BEFORE content creation
+        run: python publisher/pre_content_analysis.py
 
       - name: Clear old generated media
         shell: bash
@@ -98,6 +104,9 @@ jobs:
 
       - name: Apply approved 5 F1 + 5 RMP policy
         run: python publisher/apply_photo_only.py
+
+      - name: Enforce audience objective message and Insights policy
+        run: python publisher/enforce_content_analysis.py
 
       - name: Render 10 JPG publications
         run: python publisher/run_publication_renderer.py
@@ -128,6 +137,19 @@ jobs:
           assert all(j.get('people_footer_required') is True for j in jobs)
           assert all(str(j.get('caption') or '').strip() for j in jobs)
 
+          # Mandatory analysis-before-creation policy.
+          assert all(j.get('analysis_required') is True for j in jobs)
+          assert all(str(j.get('target_public') or '').strip() for j in jobs)
+          assert all(str(j.get('target_public') or '').strip().lower() != 'tutti' for j in jobs)
+          assert all(str(j.get('post_objective') or '').strip() for j in jobs)
+          assert all(str(j.get('main_message') or '').strip() for j in jobs)
+          assert all(j.get('manual_approval_required') is True for j in jobs)
+          for j in jobs:
+              if j.get('insights_status') != 'AVAILABLE':
+                  assert j.get('publication_time_verified') is False
+                  assert j.get('recommended_publish_day') is None
+                  assert j.get('recommended_publish_window') is None
+
           allowed_territorial={
               '#ValleDiSusa','#Avigliana','#Susa','#Condove','#Almese','#Bussoleno',
               '#SantAmbrogioDiTorino','#VillarDora','#Caprie','#BorgoneSusa','#SanGiorio',
@@ -157,7 +179,7 @@ jobs:
               assert p.exists() and p.stat().st_size>20000, rel
           assert not list(Path('publisher/media/generated').rglob('*.mp4'))
           assert not list(Path('publisher/media/generated').rglob('*.mp3'))
-          print('VERIFIED: 10 STATIC PUBLICATIONS. 5 F1 + 5 RMP. TERRITORIAL F1 HASHTAGS ONLY. RMP ZERO HASHTAGS. ZERO COPIED SHOPIFY IMAGES.')
+          print('VERIFIED: analysis-before-creation + 10 STATIC PUBLICATIONS. 5 F1 + 5 RMP.')
           PY
 
       - name: Upload publication package
@@ -168,18 +190,18 @@ jobs:
           if-no-files-found: error
           retention-days: 7
 
-      - name: Persist queue and image memory
+      - name: Persist queue image memory and analysis
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          for FILE in publisher/queue.json publisher/image_history.json; do
+          for FILE in publisher/queue.json publisher/image_history.json publisher/content_analysis.json; do
             SHA=$(gh api "repos/${GITHUB_REPOSITORY}/contents/${FILE}?ref=main" --jq '.sha' 2>/dev/null || true)
             python - "$FILE" "$SHA" <<'PY'
           import base64, json, sys
           file, sha = sys.argv[1], sys.argv[2]
-          payload={'message':f'Persist 10-publication state: {file}','content':base64.b64encode(open(file,'rb').read()).decode(),'branch':'main'}
+          payload={'message':f'Persist publication state: {file}','content':base64.b64encode(open(file,'rb').read()).decode(),'branch':'main'}
           if sha: payload['sha']=sha
           json.dump(payload,open('/tmp/payload.json','w'))
           PY
@@ -205,10 +227,11 @@ jobs:
             fi
           done
           cp publisher/queue.json /tmp/social-release/queue.json
+          cp publisher/content_analysis.json /tmp/social-release/content_analysis.json
           gh release delete social-preview-latest --yes --cleanup-tag >/dev/null 2>&1 || true
           gh release create social-preview-latest /tmp/social-release/* \
             --title "10 PUBBLICAZIONI PRONTE - 5 F1 + 5 REAL MEDIA PRO" \
-            --notes "10 grafiche statiche pronte: 5 F1 Immobiliare + 5 Real Media Pro. F1: fonti locali Valle di Susa e soli hashtag territoriali. RMP: ispirazione esclusiva Shopify Theme Store, mockup originali, nessuna immagine Shopify copiata, nessun hashtag. Tutte le grafiche includono la fascia Francesca + Joseph. Run ${GITHUB_RUN_ID}."
+            --notes "10 grafiche statiche pronte con analisi pre-creazione obbligatoria. Se Meta Insights non sono disponibili il sistema non inventa pubblico-online/orari e richiede approvazione manuale. F1: fonti locali Valle di Susa e soli hashtag territoriali. RMP: mockup originali da Shopify Theme Store, zero immagini copiate. Run ${GITHUB_RUN_ID}."
 
       - name: Notify publication results
         uses: actions/github-script@v8
@@ -219,6 +242,8 @@ jobs:
               '@josephsocialmedia2-spec pacchetto completato.',
               '',
               '**10 PUBBLICAZIONI PRONTE:** 5 F1 Immobiliare + 5 Real Media Pro.',
+              '**ANALISI PRE-CREAZIONE:** obbligatoria. Target, obiettivo, messaggio e comparabili registrati.',
+              '**INSIGHTS:** se assenti, il sistema li segnala come non disponibili e non inventa l’orario di pubblicazione.',
               '**F1:** immagini locali Valle di Susa + soli hashtag territoriali + fascia Francesca/Joseph.',
               '**RMP:** solo Shopify Theme Store come riferimento; mockup originali; nessuna immagine del tema copiata; zero hashtag + fascia Francesca/Joseph.',
               '',
