@@ -13929,6 +13929,50 @@
           "early_comment_interaction_plan_present"
         ]
       },
+      "instagram_community_connections": {
+        "reach_audience_directly": {
+          "channels": [
+            "comments",
+            "DM",
+            "stories",
+            "channels",
+            "live",
+            "post_polls"
+          ],
+          "rule": "When useful, ask the audience directly what matters to them using authentic feedback mechanisms such as comments, DMs, Stories, channels, live sessions or polls."
+        },
+        "engagement_bait": {
+          "prohibited": true,
+          "rule": "Do not ask for artificial or meaningless interactions intended only to inflate engagement or reach.",
+          "authentic_cta_allowed": true,
+          "examples_to_avoid": [
+            "Commenta SI senza valore rispetto al contenuto",
+            "Tagga persone senza una ragione utile",
+            "Condividi seguendo formule manipolative o superstiziose",
+            "Inviti a cliccare o condividere che non aggiungono valore al contenuto"
+          ]
+        },
+        "comment_interaction": {
+          "early_days_priority": true,
+          "actions": [
+            "like comments",
+            "reply to comments",
+            "reply to a Reel comment with a Reel when useful"
+          ],
+          "rule": "Keep the conversation alive by liking or replying to comments in the first days after publication; a relevant Reel reply may be used when it adds value."
+        }
+      },
+      "instagram_engagement_bait_prohibited": true,
+      "instagram_authentic_cta_required": true,
+      "instagram_audience_feedback_channels": [
+        "comments",
+        "DM",
+        "stories",
+        "channels",
+        "live",
+        "post_polls"
+      ],
+      "instagram_early_comment_interaction_required": true,
       "instagram_performance_data_status": "NOT_AVAILABLE",
       "instagram_performance_metrics_expected": [
         "likes",
@@ -13968,6 +14012,9 @@
         "visual_text_short": true,
         "photo_overlay_text_not_overloaded": true,
         "meaningful_positive_action_not_engagement_bait": true,
+        "engagement_bait_forbidden": true,
+        "authentic_cta_only": true,
+        "audience_feedback_method_considered": true,
         "share_value_should_be_natural_not_forced": true,
         "save_value_should_be_considered_when_relevant": true,
         "profile_transition_must_match_brand_positioning": true,
@@ -14254,6 +14301,9 @@
         "caption_has_no_unnecessary_elements": null,
         "meaningful_for_target": true,
         "cta_connected_to_objective_or_omitted": true,
+        "authentic_cta_only": true,
+        "engagement_bait_absent": true,
+        "audience_feedback_method_considered": true,
         "question_is_relevant_if_present": true,
         "sufficiently_distinct_from_recent_posts": null,
         "creative_fatigue_reviewed": null,
@@ -14268,6 +14318,7 @@
         "new_idea_test_considered": true,
         "share_worthiness_reviewed": true,
         "highest_available_resolution_used": null,
+        "early_comment_interaction_plan_present": true,
         "carousel_completion_logic_passed": null,
         "first_3_seconds_passed": null,
         "reason_beyond_10_seconds_passed": null,
@@ -15097,6 +15148,50 @@
           "early_comment_interaction_plan_present"
         ]
       },
+      "instagram_community_connections": {
+        "reach_audience_directly": {
+          "channels": [
+            "comments",
+            "DM",
+            "stories",
+            "channels",
+            "live",
+            "post_polls"
+          ],
+          "rule": "When useful, ask the audience directly what matters to them using authentic feedback mechanisms such as comments, DMs, Stories, channels, live sessions or polls."
+        },
+        "engagement_bait": {
+          "prohibited": true,
+          "rule": "Do not ask for artificial or meaningless interactions intended only to inflate engagement or reach.",
+          "authentic_cta_allowed": true,
+          "examples_to_avoid": [
+            "Commenta SI senza valore rispetto al contenuto",
+            "Tagga persone senza una ragione utile",
+            "Condividi seguendo formule manipolative o superstiziose",
+            "Inviti a cliccare o condividere che non aggiungono valore al contenuto"
+          ]
+        },
+        "comment_interaction": {
+          "early_days_priority": true,
+          "actions": [
+            "like comments",
+            "reply to comments",
+            "reply to a Reel comment with a Reel when useful"
+          ],
+          "rule": "Keep the conversation alive by liking or replying to comments in the first days after publication; a relevant Reel reply may be used when it adds value."
+        }
+      },
+      "instagram_engagement_bait_prohibited": true,
+      "instagram_authentic_cta_required": true,
+      "instagram_audience_feedback_channels": [
+        "comments",
+        "DM",
+        "stories",
+        "channels",
+        "live",
+        "post_polls"
+      ],
+      "instagram_early_comment_interaction_required": true,
       "instagram_performance_data_status": "NOT_AVAILABLE",
       "instagram_performance_metrics_expected": [
         "likes",
@@ -15136,6 +15231,9 @@
         "visual_text_short": true,
         "photo_overlay_text_not_overloaded": true,
         "meaningful_positive_action_not_engagement_bait": true,
+        "engagement_bait_forbidden": true,
+        "authentic_cta_only": true,
+        "audience_feedback_method_considered": true,
         "share_value_should_be_natural_not_forced": true,
         "save_value_should_be_considered_when_relevant": true,
         "profile_transition_must_match_brand_positioning": true,
@@ -15422,6 +15520,9 @@
         "caption_has_no_unnecessary_elements": null,
         "meaningful_for_target": true,
         "cta_connected_to_objective_or_omitted": true,
+        "authentic_cta_only": true,
+        "engagement_bait_absent": true,
+        "audience_feedback_method_considered": true,
         "question_is_relevant_if_present": true,
         "sufficiently_distinct_from_recent_posts": null,
         "creative_fatigue_reviewed": null,
@@ -15436,6 +15537,7 @@
         "new_idea_test_considered": true,
         "share_worthiness_reviewed": true,
         "highest_available_resolution_used": null,
+        "early_comment_interaction_plan_present": true,
         "carousel_completion_logic_passed": null,
         "first_3_seconds_passed": null,
         "reason_beyond_10_seconds_passed": null,
@@ -16265,6 +16367,50 @@
           "early_comment_interaction_plan_present"
         ]
       },
+      "instagram_community_connections": {
+        "reach_audience_directly": {
+          "channels": [
+            "comments",
+            "DM",
+            "stories",
+            "channels",
+            "live",
+            "post_polls"
+          ],
+          "rule": "When useful, ask the audience directly what matters to them using authentic feedback mechanisms such as comments, DMs, Stories, channels, live sessions or polls."
+        },
+        "engagement_bait": {
+          "prohibited": true,
+          "rule": "Do not ask for artificial or meaningless interactions intended only to inflate engagement or reach.",
+          "authentic_cta_allowed": true,
+          "examples_to_avoid": [
+            "Commenta SI senza valore rispetto al contenuto",
+            "Tagga persone senza una ragione utile",
+            "Condividi seguendo formule manipolative o superstiziose",
+            "Inviti a cliccare o condividere che non aggiungono valore al contenuto"
+          ]
+        },
+        "comment_interaction": {
+          "early_days_priority": true,
+          "actions": [
+            "like comments",
+            "reply to comments",
+            "reply to a Reel comment with a Reel when useful"
+          ],
+          "rule": "Keep the conversation alive by liking or replying to comments in the first days after publication; a relevant Reel reply may be used when it adds value."
+        }
+      },
+      "instagram_engagement_bait_prohibited": true,
+      "instagram_authentic_cta_required": true,
+      "instagram_audience_feedback_channels": [
+        "comments",
+        "DM",
+        "stories",
+        "channels",
+        "live",
+        "post_polls"
+      ],
+      "instagram_early_comment_interaction_required": true,
       "instagram_performance_data_status": "NOT_AVAILABLE",
       "instagram_performance_metrics_expected": [
         "likes",
@@ -16304,6 +16450,9 @@
         "visual_text_short": true,
         "photo_overlay_text_not_overloaded": true,
         "meaningful_positive_action_not_engagement_bait": true,
+        "engagement_bait_forbidden": true,
+        "authentic_cta_only": true,
+        "audience_feedback_method_considered": true,
         "share_value_should_be_natural_not_forced": true,
         "save_value_should_be_considered_when_relevant": true,
         "profile_transition_must_match_brand_positioning": true,
@@ -16590,6 +16739,9 @@
         "caption_has_no_unnecessary_elements": null,
         "meaningful_for_target": true,
         "cta_connected_to_objective_or_omitted": true,
+        "authentic_cta_only": true,
+        "engagement_bait_absent": true,
+        "audience_feedback_method_considered": true,
         "question_is_relevant_if_present": true,
         "sufficiently_distinct_from_recent_posts": null,
         "creative_fatigue_reviewed": null,
@@ -16604,6 +16756,7 @@
         "new_idea_test_considered": true,
         "share_worthiness_reviewed": true,
         "highest_available_resolution_used": null,
+        "early_comment_interaction_plan_present": true,
         "carousel_completion_logic_passed": null,
         "first_3_seconds_passed": null,
         "reason_beyond_10_seconds_passed": null,
@@ -17433,6 +17586,50 @@
           "early_comment_interaction_plan_present"
         ]
       },
+      "instagram_community_connections": {
+        "reach_audience_directly": {
+          "channels": [
+            "comments",
+            "DM",
+            "stories",
+            "channels",
+            "live",
+            "post_polls"
+          ],
+          "rule": "When useful, ask the audience directly what matters to them using authentic feedback mechanisms such as comments, DMs, Stories, channels, live sessions or polls."
+        },
+        "engagement_bait": {
+          "prohibited": true,
+          "rule": "Do not ask for artificial or meaningless interactions intended only to inflate engagement or reach.",
+          "authentic_cta_allowed": true,
+          "examples_to_avoid": [
+            "Commenta SI senza valore rispetto al contenuto",
+            "Tagga persone senza una ragione utile",
+            "Condividi seguendo formule manipolative o superstiziose",
+            "Inviti a cliccare o condividere che non aggiungono valore al contenuto"
+          ]
+        },
+        "comment_interaction": {
+          "early_days_priority": true,
+          "actions": [
+            "like comments",
+            "reply to comments",
+            "reply to a Reel comment with a Reel when useful"
+          ],
+          "rule": "Keep the conversation alive by liking or replying to comments in the first days after publication; a relevant Reel reply may be used when it adds value."
+        }
+      },
+      "instagram_engagement_bait_prohibited": true,
+      "instagram_authentic_cta_required": true,
+      "instagram_audience_feedback_channels": [
+        "comments",
+        "DM",
+        "stories",
+        "channels",
+        "live",
+        "post_polls"
+      ],
+      "instagram_early_comment_interaction_required": true,
       "instagram_performance_data_status": "NOT_AVAILABLE",
       "instagram_performance_metrics_expected": [
         "likes",
@@ -17472,6 +17669,9 @@
         "visual_text_short": true,
         "photo_overlay_text_not_overloaded": true,
         "meaningful_positive_action_not_engagement_bait": true,
+        "engagement_bait_forbidden": true,
+        "authentic_cta_only": true,
+        "audience_feedback_method_considered": true,
         "share_value_should_be_natural_not_forced": true,
         "save_value_should_be_considered_when_relevant": true,
         "profile_transition_must_match_brand_positioning": true,
@@ -17758,6 +17958,9 @@
         "caption_has_no_unnecessary_elements": null,
         "meaningful_for_target": true,
         "cta_connected_to_objective_or_omitted": true,
+        "authentic_cta_only": true,
+        "engagement_bait_absent": true,
+        "audience_feedback_method_considered": true,
         "question_is_relevant_if_present": true,
         "sufficiently_distinct_from_recent_posts": null,
         "creative_fatigue_reviewed": null,
@@ -17772,6 +17975,7 @@
         "new_idea_test_considered": true,
         "share_worthiness_reviewed": true,
         "highest_available_resolution_used": null,
+        "early_comment_interaction_plan_present": true,
         "carousel_completion_logic_passed": null,
         "first_3_seconds_passed": null,
         "reason_beyond_10_seconds_passed": null,
@@ -18601,6 +18805,50 @@
           "early_comment_interaction_plan_present"
         ]
       },
+      "instagram_community_connections": {
+        "reach_audience_directly": {
+          "channels": [
+            "comments",
+            "DM",
+            "stories",
+            "channels",
+            "live",
+            "post_polls"
+          ],
+          "rule": "When useful, ask the audience directly what matters to them using authentic feedback mechanisms such as comments, DMs, Stories, channels, live sessions or polls."
+        },
+        "engagement_bait": {
+          "prohibited": true,
+          "rule": "Do not ask for artificial or meaningless interactions intended only to inflate engagement or reach.",
+          "authentic_cta_allowed": true,
+          "examples_to_avoid": [
+            "Commenta SI senza valore rispetto al contenuto",
+            "Tagga persone senza una ragione utile",
+            "Condividi seguendo formule manipolative o superstiziose",
+            "Inviti a cliccare o condividere che non aggiungono valore al contenuto"
+          ]
+        },
+        "comment_interaction": {
+          "early_days_priority": true,
+          "actions": [
+            "like comments",
+            "reply to comments",
+            "reply to a Reel comment with a Reel when useful"
+          ],
+          "rule": "Keep the conversation alive by liking or replying to comments in the first days after publication; a relevant Reel reply may be used when it adds value."
+        }
+      },
+      "instagram_engagement_bait_prohibited": true,
+      "instagram_authentic_cta_required": true,
+      "instagram_audience_feedback_channels": [
+        "comments",
+        "DM",
+        "stories",
+        "channels",
+        "live",
+        "post_polls"
+      ],
+      "instagram_early_comment_interaction_required": true,
       "instagram_performance_data_status": "NOT_AVAILABLE",
       "instagram_performance_metrics_expected": [
         "likes",
@@ -18640,6 +18888,9 @@
         "visual_text_short": true,
         "photo_overlay_text_not_overloaded": true,
         "meaningful_positive_action_not_engagement_bait": true,
+        "engagement_bait_forbidden": true,
+        "authentic_cta_only": true,
+        "audience_feedback_method_considered": true,
         "share_value_should_be_natural_not_forced": true,
         "save_value_should_be_considered_when_relevant": true,
         "profile_transition_must_match_brand_positioning": true,
@@ -18926,6 +19177,9 @@
         "caption_has_no_unnecessary_elements": null,
         "meaningful_for_target": true,
         "cta_connected_to_objective_or_omitted": true,
+        "authentic_cta_only": true,
+        "engagement_bait_absent": true,
+        "audience_feedback_method_considered": true,
         "question_is_relevant_if_present": true,
         "sufficiently_distinct_from_recent_posts": null,
         "creative_fatigue_reviewed": null,
@@ -18940,6 +19194,7 @@
         "new_idea_test_considered": true,
         "share_worthiness_reviewed": true,
         "highest_available_resolution_used": null,
+        "early_comment_interaction_plan_present": true,
         "carousel_completion_logic_passed": null,
         "first_3_seconds_passed": null,
         "reason_beyond_10_seconds_passed": null,
@@ -19740,6 +19995,50 @@
           "early_comment_interaction_plan_present"
         ]
       },
+      "instagram_community_connections": {
+        "reach_audience_directly": {
+          "channels": [
+            "comments",
+            "DM",
+            "stories",
+            "channels",
+            "live",
+            "post_polls"
+          ],
+          "rule": "When useful, ask the audience directly what matters to them using authentic feedback mechanisms such as comments, DMs, Stories, channels, live sessions or polls."
+        },
+        "engagement_bait": {
+          "prohibited": true,
+          "rule": "Do not ask for artificial or meaningless interactions intended only to inflate engagement or reach.",
+          "authentic_cta_allowed": true,
+          "examples_to_avoid": [
+            "Commenta SI senza valore rispetto al contenuto",
+            "Tagga persone senza una ragione utile",
+            "Condividi seguendo formule manipolative o superstiziose",
+            "Inviti a cliccare o condividere che non aggiungono valore al contenuto"
+          ]
+        },
+        "comment_interaction": {
+          "early_days_priority": true,
+          "actions": [
+            "like comments",
+            "reply to comments",
+            "reply to a Reel comment with a Reel when useful"
+          ],
+          "rule": "Keep the conversation alive by liking or replying to comments in the first days after publication; a relevant Reel reply may be used when it adds value."
+        }
+      },
+      "instagram_engagement_bait_prohibited": true,
+      "instagram_authentic_cta_required": true,
+      "instagram_audience_feedback_channels": [
+        "comments",
+        "DM",
+        "stories",
+        "channels",
+        "live",
+        "post_polls"
+      ],
+      "instagram_early_comment_interaction_required": true,
       "instagram_performance_data_status": "NOT_AVAILABLE",
       "instagram_performance_metrics_expected": [
         "likes",
@@ -19779,6 +20078,9 @@
         "visual_text_short": true,
         "photo_overlay_text_not_overloaded": true,
         "meaningful_positive_action_not_engagement_bait": true,
+        "engagement_bait_forbidden": true,
+        "authentic_cta_only": true,
+        "audience_feedback_method_considered": true,
         "share_value_should_be_natural_not_forced": true,
         "save_value_should_be_considered_when_relevant": true,
         "profile_transition_must_match_brand_positioning": true,
@@ -20065,6 +20367,9 @@
         "caption_has_no_unnecessary_elements": null,
         "meaningful_for_target": true,
         "cta_connected_to_objective_or_omitted": true,
+        "authentic_cta_only": true,
+        "engagement_bait_absent": true,
+        "audience_feedback_method_considered": true,
         "question_is_relevant_if_present": true,
         "sufficiently_distinct_from_recent_posts": null,
         "creative_fatigue_reviewed": null,
@@ -20079,6 +20384,7 @@
         "new_idea_test_considered": true,
         "share_worthiness_reviewed": true,
         "highest_available_resolution_used": null,
+        "early_comment_interaction_plan_present": true,
         "carousel_completion_logic_passed": null,
         "first_3_seconds_passed": null,
         "reason_beyond_10_seconds_passed": null,
@@ -20875,6 +21181,50 @@
           "early_comment_interaction_plan_present"
         ]
       },
+      "instagram_community_connections": {
+        "reach_audience_directly": {
+          "channels": [
+            "comments",
+            "DM",
+            "stories",
+            "channels",
+            "live",
+            "post_polls"
+          ],
+          "rule": "When useful, ask the audience directly what matters to them using authentic feedback mechanisms such as comments, DMs, Stories, channels, live sessions or polls."
+        },
+        "engagement_bait": {
+          "prohibited": true,
+          "rule": "Do not ask for artificial or meaningless interactions intended only to inflate engagement or reach.",
+          "authentic_cta_allowed": true,
+          "examples_to_avoid": [
+            "Commenta SI senza valore rispetto al contenuto",
+            "Tagga persone senza una ragione utile",
+            "Condividi seguendo formule manipolative o superstiziose",
+            "Inviti a cliccare o condividere che non aggiungono valore al contenuto"
+          ]
+        },
+        "comment_interaction": {
+          "early_days_priority": true,
+          "actions": [
+            "like comments",
+            "reply to comments",
+            "reply to a Reel comment with a Reel when useful"
+          ],
+          "rule": "Keep the conversation alive by liking or replying to comments in the first days after publication; a relevant Reel reply may be used when it adds value."
+        }
+      },
+      "instagram_engagement_bait_prohibited": true,
+      "instagram_authentic_cta_required": true,
+      "instagram_audience_feedback_channels": [
+        "comments",
+        "DM",
+        "stories",
+        "channels",
+        "live",
+        "post_polls"
+      ],
+      "instagram_early_comment_interaction_required": true,
       "instagram_performance_data_status": "NOT_AVAILABLE",
       "instagram_performance_metrics_expected": [
         "likes",
@@ -20914,6 +21264,9 @@
         "visual_text_short": true,
         "photo_overlay_text_not_overloaded": true,
         "meaningful_positive_action_not_engagement_bait": true,
+        "engagement_bait_forbidden": true,
+        "authentic_cta_only": true,
+        "audience_feedback_method_considered": true,
         "share_value_should_be_natural_not_forced": true,
         "save_value_should_be_considered_when_relevant": true,
         "profile_transition_must_match_brand_positioning": true,
@@ -21200,6 +21553,9 @@
         "caption_has_no_unnecessary_elements": null,
         "meaningful_for_target": true,
         "cta_connected_to_objective_or_omitted": true,
+        "authentic_cta_only": true,
+        "engagement_bait_absent": true,
+        "audience_feedback_method_considered": true,
         "question_is_relevant_if_present": true,
         "sufficiently_distinct_from_recent_posts": null,
         "creative_fatigue_reviewed": null,
@@ -21214,6 +21570,7 @@
         "new_idea_test_considered": true,
         "share_worthiness_reviewed": true,
         "highest_available_resolution_used": null,
+        "early_comment_interaction_plan_present": true,
         "carousel_completion_logic_passed": null,
         "first_3_seconds_passed": null,
         "reason_beyond_10_seconds_passed": null,
@@ -22010,6 +22367,50 @@
           "early_comment_interaction_plan_present"
         ]
       },
+      "instagram_community_connections": {
+        "reach_audience_directly": {
+          "channels": [
+            "comments",
+            "DM",
+            "stories",
+            "channels",
+            "live",
+            "post_polls"
+          ],
+          "rule": "When useful, ask the audience directly what matters to them using authentic feedback mechanisms such as comments, DMs, Stories, channels, live sessions or polls."
+        },
+        "engagement_bait": {
+          "prohibited": true,
+          "rule": "Do not ask for artificial or meaningless interactions intended only to inflate engagement or reach.",
+          "authentic_cta_allowed": true,
+          "examples_to_avoid": [
+            "Commenta SI senza valore rispetto al contenuto",
+            "Tagga persone senza una ragione utile",
+            "Condividi seguendo formule manipolative o superstiziose",
+            "Inviti a cliccare o condividere che non aggiungono valore al contenuto"
+          ]
+        },
+        "comment_interaction": {
+          "early_days_priority": true,
+          "actions": [
+            "like comments",
+            "reply to comments",
+            "reply to a Reel comment with a Reel when useful"
+          ],
+          "rule": "Keep the conversation alive by liking or replying to comments in the first days after publication; a relevant Reel reply may be used when it adds value."
+        }
+      },
+      "instagram_engagement_bait_prohibited": true,
+      "instagram_authentic_cta_required": true,
+      "instagram_audience_feedback_channels": [
+        "comments",
+        "DM",
+        "stories",
+        "channels",
+        "live",
+        "post_polls"
+      ],
+      "instagram_early_comment_interaction_required": true,
       "instagram_performance_data_status": "NOT_AVAILABLE",
       "instagram_performance_metrics_expected": [
         "likes",
@@ -22049,6 +22450,9 @@
         "visual_text_short": true,
         "photo_overlay_text_not_overloaded": true,
         "meaningful_positive_action_not_engagement_bait": true,
+        "engagement_bait_forbidden": true,
+        "authentic_cta_only": true,
+        "audience_feedback_method_considered": true,
         "share_value_should_be_natural_not_forced": true,
         "save_value_should_be_considered_when_relevant": true,
         "profile_transition_must_match_brand_positioning": true,
@@ -22335,6 +22739,9 @@
         "caption_has_no_unnecessary_elements": null,
         "meaningful_for_target": true,
         "cta_connected_to_objective_or_omitted": true,
+        "authentic_cta_only": true,
+        "engagement_bait_absent": true,
+        "audience_feedback_method_considered": true,
         "question_is_relevant_if_present": true,
         "sufficiently_distinct_from_recent_posts": null,
         "creative_fatigue_reviewed": null,
@@ -22349,6 +22756,7 @@
         "new_idea_test_considered": true,
         "share_worthiness_reviewed": true,
         "highest_available_resolution_used": null,
+        "early_comment_interaction_plan_present": true,
         "carousel_completion_logic_passed": null,
         "first_3_seconds_passed": null,
         "reason_beyond_10_seconds_passed": null,
@@ -23145,6 +23553,50 @@
           "early_comment_interaction_plan_present"
         ]
       },
+      "instagram_community_connections": {
+        "reach_audience_directly": {
+          "channels": [
+            "comments",
+            "DM",
+            "stories",
+            "channels",
+            "live",
+            "post_polls"
+          ],
+          "rule": "When useful, ask the audience directly what matters to them using authentic feedback mechanisms such as comments, DMs, Stories, channels, live sessions or polls."
+        },
+        "engagement_bait": {
+          "prohibited": true,
+          "rule": "Do not ask for artificial or meaningless interactions intended only to inflate engagement or reach.",
+          "authentic_cta_allowed": true,
+          "examples_to_avoid": [
+            "Commenta SI senza valore rispetto al contenuto",
+            "Tagga persone senza una ragione utile",
+            "Condividi seguendo formule manipolative o superstiziose",
+            "Inviti a cliccare o condividere che non aggiungono valore al contenuto"
+          ]
+        },
+        "comment_interaction": {
+          "early_days_priority": true,
+          "actions": [
+            "like comments",
+            "reply to comments",
+            "reply to a Reel comment with a Reel when useful"
+          ],
+          "rule": "Keep the conversation alive by liking or replying to comments in the first days after publication; a relevant Reel reply may be used when it adds value."
+        }
+      },
+      "instagram_engagement_bait_prohibited": true,
+      "instagram_authentic_cta_required": true,
+      "instagram_audience_feedback_channels": [
+        "comments",
+        "DM",
+        "stories",
+        "channels",
+        "live",
+        "post_polls"
+      ],
+      "instagram_early_comment_interaction_required": true,
       "instagram_performance_data_status": "NOT_AVAILABLE",
       "instagram_performance_metrics_expected": [
         "likes",
@@ -23184,6 +23636,9 @@
         "visual_text_short": true,
         "photo_overlay_text_not_overloaded": true,
         "meaningful_positive_action_not_engagement_bait": true,
+        "engagement_bait_forbidden": true,
+        "authentic_cta_only": true,
+        "audience_feedback_method_considered": true,
         "share_value_should_be_natural_not_forced": true,
         "save_value_should_be_considered_when_relevant": true,
         "profile_transition_must_match_brand_positioning": true,
@@ -23470,6 +23925,9 @@
         "caption_has_no_unnecessary_elements": null,
         "meaningful_for_target": true,
         "cta_connected_to_objective_or_omitted": true,
+        "authentic_cta_only": true,
+        "engagement_bait_absent": true,
+        "audience_feedback_method_considered": true,
         "question_is_relevant_if_present": true,
         "sufficiently_distinct_from_recent_posts": null,
         "creative_fatigue_reviewed": null,
@@ -23484,6 +23942,7 @@
         "new_idea_test_considered": true,
         "share_worthiness_reviewed": true,
         "highest_available_resolution_used": null,
+        "early_comment_interaction_plan_present": true,
         "carousel_completion_logic_passed": null,
         "first_3_seconds_passed": null,
         "reason_beyond_10_seconds_passed": null,
@@ -24280,6 +24739,50 @@
           "early_comment_interaction_plan_present"
         ]
       },
+      "instagram_community_connections": {
+        "reach_audience_directly": {
+          "channels": [
+            "comments",
+            "DM",
+            "stories",
+            "channels",
+            "live",
+            "post_polls"
+          ],
+          "rule": "When useful, ask the audience directly what matters to them using authentic feedback mechanisms such as comments, DMs, Stories, channels, live sessions or polls."
+        },
+        "engagement_bait": {
+          "prohibited": true,
+          "rule": "Do not ask for artificial or meaningless interactions intended only to inflate engagement or reach.",
+          "authentic_cta_allowed": true,
+          "examples_to_avoid": [
+            "Commenta SI senza valore rispetto al contenuto",
+            "Tagga persone senza una ragione utile",
+            "Condividi seguendo formule manipolative o superstiziose",
+            "Inviti a cliccare o condividere che non aggiungono valore al contenuto"
+          ]
+        },
+        "comment_interaction": {
+          "early_days_priority": true,
+          "actions": [
+            "like comments",
+            "reply to comments",
+            "reply to a Reel comment with a Reel when useful"
+          ],
+          "rule": "Keep the conversation alive by liking or replying to comments in the first days after publication; a relevant Reel reply may be used when it adds value."
+        }
+      },
+      "instagram_engagement_bait_prohibited": true,
+      "instagram_authentic_cta_required": true,
+      "instagram_audience_feedback_channels": [
+        "comments",
+        "DM",
+        "stories",
+        "channels",
+        "live",
+        "post_polls"
+      ],
+      "instagram_early_comment_interaction_required": true,
       "instagram_performance_data_status": "NOT_AVAILABLE",
       "instagram_performance_metrics_expected": [
         "likes",
@@ -24319,6 +24822,9 @@
         "visual_text_short": true,
         "photo_overlay_text_not_overloaded": true,
         "meaningful_positive_action_not_engagement_bait": true,
+        "engagement_bait_forbidden": true,
+        "authentic_cta_only": true,
+        "audience_feedback_method_considered": true,
         "share_value_should_be_natural_not_forced": true,
         "save_value_should_be_considered_when_relevant": true,
         "profile_transition_must_match_brand_positioning": true,
@@ -24605,6 +25111,9 @@
         "caption_has_no_unnecessary_elements": null,
         "meaningful_for_target": true,
         "cta_connected_to_objective_or_omitted": true,
+        "authentic_cta_only": true,
+        "engagement_bait_absent": true,
+        "audience_feedback_method_considered": true,
         "question_is_relevant_if_present": true,
         "sufficiently_distinct_from_recent_posts": null,
         "creative_fatigue_reviewed": null,
@@ -24619,6 +25128,7 @@
         "new_idea_test_considered": true,
         "share_worthiness_reviewed": true,
         "highest_available_resolution_used": null,
+        "early_comment_interaction_plan_present": true,
         "carousel_completion_logic_passed": null,
         "first_3_seconds_passed": null,
         "reason_beyond_10_seconds_passed": null,
@@ -24635,7 +25145,7 @@
       "reused_visual_count": 0
     }
   ],
-  "updated_at": "2026-09-04T15:50:30+00:00",
+  "updated_at": "2026-09-04T15:51:39+00:00",
   "current_cycle": "2026-09-04T16:00",
   "visual_policy": "10 different images per content; F1 priority reels change image every 2 seconds; prefer unseen history",
   "f1_reel_policy": {
@@ -24670,7 +25180,7 @@
   },
   "history_days": 14,
   "history_limit": 840,
-  "analysis_policy": "ANALISI PRIMA DELLA CREAZIONE + FULL INSTAGRAM FEED/REELS MASTER POLICY + CREATORS BEST PRACTICES",
+  "analysis_policy": "ANALISI PRIMA DELLA CREAZIONE + FULL INSTAGRAM FEED/REELS MASTER POLICY + CREATORS BEST PRACTICES + COMMUNITY/ANTI-BAIT",
   "instagram_distribution_policy": "publisher/instagram_distribution_policy.json",
   "instagram_distribution_policy_version": 2,
   "instagram_policy_loaded_directly": true,
