@@ -1,7 +1,7 @@
 {
-  "version": 1,
+  "version": 2,
   "name": "F1 Qualified Seller 14-Day Queue",
-  "generated_at": "2026-09-04T18:56:31+02:00",
+  "generated_at": "2026-09-04T19:46:21+02:00",
   "window_start": "2026-08-22",
   "window_end": "2026-09-04",
   "goal": "qualified_seller_leads",
@@ -12,6 +12,12 @@
   },
   "publication_time_policy": "NO_BEST_TIME_WITHOUT_REAL_INSIGHTS",
   "manual_approval_required": true,
+  "buyer_demand_claim_policy": "NO_UNVERIFIED_BUYER_DEMAND_CLAIMS",
+  "content_rules": {
+    "never_invent_buyer_demand": true,
+    "buyer_demand_claims_require_evidence": true,
+    "first_message": "SIAMO ALLA RICERCA DI IMMOBILI IN VALLE DI SUSA"
+  },
   "jobs": [
     {
       "id": "f1-qualified-2026-08-22-r01",
@@ -27,25 +33,25 @@
       "recommended_publish_window": null,
       "insights_status": "NOT_AVAILABLE",
       "format": "reel",
-      "title": "Se pensi di vendere entro 6 mesi, parti da qui",
-      "caption": "SE PENSI DI VENDERE ENTRO 6 MESI, PARTI DA QUI.\n\nVendere nei prossimi mesi richiede una decisione sul prezzo, sui documenti e sul posizionamento prima dell'annuncio.\n\nScrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere. F1 Immobiliare · 371 370 8294.\n\n#F1Immobiliare #ValleDiSusa #VendereCasa #ValutazioneImmobiliare",
-      "voiceover": "Vendere nei prossimi mesi richiede una decisione sul prezzo, sui documenti e sul posizionamento prima dell'annuncio. Se stai valutando la vendita, scrivi VALUTAZIONE con comune, tipologia, metri quadrati e tempistica.",
+      "title": "Siamo alla ricerca di immobili in Valle di Susa",
+      "caption": "SIAMO ALLA RICERCA DI IMMOBILI IN VALLE DI SUSA.\n\nSe stai pensando di vendere casa, il primo passo non è pubblicare un annuncio con un prezzo scelto a sensazione. È capire quanto può valere realmente il tuo immobile e quale strategia può portarlo sul mercato nel modo corretto.\n\nF1 Immobiliare parte da una VALUTAZIONE PROFESSIONALE A 3 LIVELLI: valore minimo, valore centrale e valore massimo sostenibile. Analizziamo microzona, caratteristiche dell'immobile, concorrenza e target potenziale. Solo dopo costruiamo il Piano Marketing F1: valorizzazione degli ambienti, fotografie professionali, Reel e video verticali, copy dell'annuncio, grandi portali, sito F1, campagne Facebook/Instagram/Google e retargeting.\n\nScrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere. F1 Immobiliare · 371 370 8294.\n\n#F1Immobiliare #ValleDiSusa #VendereCasa #ValutazioneImmobiliare",
+      "voiceover": "Siamo alla ricerca di immobili in Valle di Susa. Se stai pensando di vendere casa, non partire da un prezzo scelto a sensazione. F1 Immobiliare parte da una valutazione professionale a tre livelli: valore minimo, valore centrale e valore massimo sostenibile. Poi definiamo target, fotografie, video, annunci, portali e campagne del Piano Marketing F1. Scrivi VALUTAZIONE indicando comune, tipologia, metri quadrati e quando vorresti vendere.",
       "slides": [
-        "PENSI DI VENDERE|ENTRO 6 MESI?",
-        "PRIMA DEL POST|SERVONO DATI",
-        "MICROZONA|E COMPARABILI",
-        "DOCUMENTI|DA VERIFICARE",
-        "TEMPI|E OBIETTIVO",
-        "POI COSTRUIAMO|LA STRATEGIA",
-        "F1 IMMOBILIARE|PRIMA I DATI"
+        "SIAMO ALLA RICERCA|DI IMMOBILI",
+        "IN VALLE|DI SUSA",
+        "STAI PENSANDO|DI VENDERE?",
+        "PRIMA DEL PREZZO|SERVE UNA VALUTAZIONE",
+        "MINIMO · CENTRALE|MASSIMO SOSTENIBILE",
+        "POI COSTRUIAMO|IL PIANO MARKETING",
+        "SCRIVI VALUTAZIONE|COMUNE · TIPOLOGIA · MQ · TEMPI"
       ],
-      "main_message": "Vendere nei prossimi mesi richiede una decisione sul prezzo, sui documenti e sul posizionamento prima dell'annuncio.",
+      "main_message": "F1 Immobiliare è alla ricerca di nuovi immobili da acquisire in Valle di Susa. Se stai pensando di vendere, il primo passo è capire il valore reale e la strategia corretta, senza partire da un prezzo scelto a sensazione.",
       "topic_keywords": [
+        "ricerca immobili",
         "vendere",
-        "6 mesi",
-        "documenti",
-        "microzona",
-        "strategia"
+        "valutazione",
+        "tre livelli",
+        "piano marketing"
       ],
       "target_public": "Proprietari di immobili residenziali in Valle di Susa che stanno valutando concretamente una vendita e vogliono capire valore, tempi e strategia.",
       "post_objective": "richiesta informazioni",
@@ -89,16 +95,28 @@
         "appointment",
         "mandate"
       ],
+      "demand_evidence_verified": false,
+      "demand_evidence_source": null,
+      "content_override_source": "publisher/content_overrides/f1-qualified-14d-overrides.json",
       "canva_visual_source": true,
       "canva_manifest": "publisher/canva_visual_manifest.json",
+      "visual_asset_urls": [
+        "https://images.pexels.com/photos/17191427/pexels-photo-17191427.jpeg"
+      ],
+      "resolved_visual_url": "https://images.pexels.com/photos/17191427/pexels-photo-17191427.jpeg",
+      "visual_theme": "ricerca immobili Valle di Susa",
+      "visual_cache_path": ".cache/f1-qualified-sources/4391b582b00e9b4d5f05c08a.jpg",
+      "visual_content_sha256": "a88cb8838b19446338f609ff6b1fe6dd70a318243c8444b41adff7c1cceefed5",
+      "visual_dimensions": [
+        3438,
+        5157
+      ],
+      "unique_primary_visual": true,
+      "legacy_visuals_allowed": false,
       "canva_design_id": "DAHUQDlbIU0",
       "canva_edit_url": "https://www.canva.com/d/oZ7Dtz_5GqPkx1F",
       "canva_page_start": 1,
       "canva_page_end": 7,
-      "visual_asset_urls": [
-        "https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=1400&q=88"
-      ],
-      "legacy_visuals_allowed": false,
       "render_status": "RENDERED_REEL_MP4",
       "render_spec": {
         "width": 1080,
@@ -107,7 +125,10 @@
         "muted_view": true,
         "safe_bottom_fraction": 0.35,
         "source_text_suppression": true,
-        "source_policy": "approved_f1_photo_sources_then_blurred_legacy_fallback"
+        "source_policy": "one_unique_themed_primary_visual_per_content_no_reuse_14d",
+        "unique_primary_visual_per_content": true,
+        "visual_content_hash_verified": true,
+        "legacy_visuals_allowed": false
       }
     },
     {
@@ -200,23 +221,38 @@
         "appointment",
         "mandate"
       ],
+      "demand_evidence_verified": false,
+      "demand_evidence_source": null,
+      "content_override_source": null,
       "canva_visual_source": true,
       "canva_manifest": "publisher/canva_visual_manifest.json",
+      "visual_asset_urls": [
+        "https://images.pexels.com/photos/31221014/pexels-photo-31221014.jpeg"
+      ],
+      "resolved_visual_url": "https://images.pexels.com/photos/31221014/pexels-photo-31221014.jpeg",
+      "visual_theme": "valutazione e dati",
+      "visual_cache_path": ".cache/f1-qualified-sources/d5e7d29e158b292f991c93f4.jpg",
+      "visual_content_sha256": "8e08531309953dd9ab2aeed887179e743fb5836a1b9fde4ab9becd572572e2fd",
+      "visual_dimensions": [
+        2001,
+        3000
+      ],
+      "unique_primary_visual": true,
+      "legacy_visuals_allowed": false,
       "canva_design_id": "DAHUQDScdJM",
       "canva_edit_url": "https://www.canva.com/d/cIzbB44_mzxEgw-",
       "canva_page_start": 1,
       "canva_page_end": 10,
-      "visual_asset_urls": [
-        "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&w=1400&q=88"
-      ],
-      "legacy_visuals_allowed": false,
       "render_status": "RENDERED_CAROUSEL_JPG",
       "render_spec": {
         "width": 1080,
         "height": 1350,
         "slides": 10,
         "source_text_suppression": true,
-        "source_policy": "approved_f1_photo_sources_then_blurred_legacy_fallback"
+        "source_policy": "one_unique_themed_primary_visual_per_content_no_reuse_14d",
+        "unique_primary_visual_per_content": true,
+        "visual_content_hash_verified": true,
+        "legacy_visuals_allowed": false
       }
     },
     {
@@ -295,16 +331,28 @@
         "appointment",
         "mandate"
       ],
+      "demand_evidence_verified": false,
+      "demand_evidence_source": null,
+      "content_override_source": null,
       "canva_visual_source": true,
       "canva_manifest": "publisher/canva_visual_manifest.json",
+      "visual_asset_urls": [
+        "https://images.pexels.com/photos/34135038/pexels-photo-34135038.jpeg"
+      ],
+      "resolved_visual_url": "https://images.pexels.com/photos/34135038/pexels-photo-34135038.jpeg",
+      "visual_theme": "eredità e documenti",
+      "visual_cache_path": ".cache/f1-qualified-sources/52c0649c8c677bb23f5f7d82.jpg",
+      "visual_content_sha256": "822dee2cdc171aca9c4ca408c6b1308ff182729407584f4add479e8812b82867",
+      "visual_dimensions": [
+        3000,
+        2001
+      ],
+      "unique_primary_visual": true,
+      "legacy_visuals_allowed": false,
       "canva_design_id": "DAHUQDlbIU0",
       "canva_edit_url": "https://www.canva.com/d/oZ7Dtz_5GqPkx1F",
       "canva_page_start": 8,
       "canva_page_end": 14,
-      "visual_asset_urls": [
-        "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1400&q=88"
-      ],
-      "legacy_visuals_allowed": false,
       "render_status": "RENDERED_REEL_MP4",
       "render_spec": {
         "width": 1080,
@@ -313,7 +361,10 @@
         "muted_view": true,
         "safe_bottom_fraction": 0.35,
         "source_text_suppression": true,
-        "source_policy": "approved_f1_photo_sources_then_blurred_legacy_fallback"
+        "source_policy": "one_unique_themed_primary_visual_per_content_no_reuse_14d",
+        "unique_primary_visual_per_content": true,
+        "visual_content_hash_verified": true,
+        "legacy_visuals_allowed": false
       }
     },
     {
@@ -406,23 +457,38 @@
         "appointment",
         "mandate"
       ],
+      "demand_evidence_verified": false,
+      "demand_evidence_source": null,
+      "content_override_source": null,
       "canva_visual_source": true,
       "canva_manifest": "publisher/canva_visual_manifest.json",
+      "visual_asset_urls": [
+        "https://images.pexels.com/photos/30840676/pexels-photo-30840676.jpeg"
+      ],
+      "resolved_visual_url": "https://images.pexels.com/photos/30840676/pexels-photo-30840676.jpeg",
+      "visual_theme": "prezzo e mercato",
+      "visual_cache_path": ".cache/f1-qualified-sources/0d931387d5d1c537ec7c5500.jpg",
+      "visual_content_sha256": "a8e76ff5d8c8f27972b110e95f318386a9435aa4ff67b3ce73149911cd61c145",
+      "visual_dimensions": [
+        3000,
+        2001
+      ],
+      "unique_primary_visual": true,
+      "legacy_visuals_allowed": false,
       "canva_design_id": "DAHUQDScdJM",
       "canva_edit_url": "https://www.canva.com/d/cIzbB44_mzxEgw-",
       "canva_page_start": 11,
       "canva_page_end": 20,
-      "visual_asset_urls": [
-        "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1400&q=88"
-      ],
-      "legacy_visuals_allowed": false,
       "render_status": "RENDERED_CAROUSEL_JPG",
       "render_spec": {
         "width": 1080,
         "height": 1350,
         "slides": 10,
         "source_text_suppression": true,
-        "source_policy": "approved_f1_photo_sources_then_blurred_legacy_fallback"
+        "source_policy": "one_unique_themed_primary_visual_per_content_no_reuse_14d",
+        "unique_primary_visual_per_content": true,
+        "visual_content_hash_verified": true,
+        "legacy_visuals_allowed": false
       }
     },
     {
@@ -501,16 +567,28 @@
         "appointment",
         "mandate"
       ],
+      "demand_evidence_verified": false,
+      "demand_evidence_source": null,
+      "content_override_source": null,
       "canva_visual_source": true,
       "canva_manifest": "publisher/canva_visual_manifest.json",
+      "visual_asset_urls": [
+        "https://images.pexels.com/photos/29899813/pexels-photo-29899813.jpeg"
+      ],
+      "resolved_visual_url": "https://images.pexels.com/photos/29899813/pexels-photo-29899813.jpeg",
+      "visual_theme": "verifica del prezzo",
+      "visual_cache_path": ".cache/f1-qualified-sources/101b8f63624571aa335f8e63.jpg",
+      "visual_content_sha256": "085beeb0376bf444332f02d0e035da4bbc7560ece020761217afbae321b44309",
+      "visual_dimensions": [
+        7952,
+        5304
+      ],
+      "unique_primary_visual": true,
+      "legacy_visuals_allowed": false,
       "canva_design_id": "DAHUQDlbIU0",
       "canva_edit_url": "https://www.canva.com/d/oZ7Dtz_5GqPkx1F",
       "canva_page_start": 15,
       "canva_page_end": 21,
-      "visual_asset_urls": [
-        "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1400&q=88"
-      ],
-      "legacy_visuals_allowed": false,
       "render_status": "RENDERED_REEL_MP4",
       "render_spec": {
         "width": 1080,
@@ -519,7 +597,10 @@
         "muted_view": true,
         "safe_bottom_fraction": 0.35,
         "source_text_suppression": true,
-        "source_policy": "approved_f1_photo_sources_then_blurred_legacy_fallback"
+        "source_policy": "one_unique_themed_primary_visual_per_content_no_reuse_14d",
+        "unique_primary_visual_per_content": true,
+        "visual_content_hash_verified": true,
+        "legacy_visuals_allowed": false
       }
     },
     {
@@ -612,23 +693,38 @@
         "appointment",
         "mandate"
       ],
+      "demand_evidence_verified": false,
+      "demand_evidence_source": null,
+      "content_override_source": null,
       "canva_visual_source": true,
       "canva_manifest": "publisher/canva_visual_manifest.json",
+      "visual_asset_urls": [
+        "https://images.pexels.com/photos/8293777/pexels-photo-8293777.jpeg"
+      ],
+      "resolved_visual_url": "https://images.pexels.com/photos/8293777/pexels-photo-8293777.jpeg",
+      "visual_theme": "checklist proprietario",
+      "visual_cache_path": ".cache/f1-qualified-sources/d9c4d6b5e5778555f5d129eb.jpg",
+      "visual_content_sha256": "c44af58ad4d1bc7ba1daac11db9fa054bde744d861c6b0829809d66301438294",
+      "visual_dimensions": [
+        4500,
+        3000
+      ],
+      "unique_primary_visual": true,
+      "legacy_visuals_allowed": false,
       "canva_design_id": "DAHUQDScdJM",
       "canva_edit_url": "https://www.canva.com/d/cIzbB44_mzxEgw-",
       "canva_page_start": 21,
       "canva_page_end": 30,
-      "visual_asset_urls": [
-        "https://images.unsplash.com/photo-1600607688969-a5bfcd646154?auto=format&fit=crop&w=1400&q=88"
-      ],
-      "legacy_visuals_allowed": false,
       "render_status": "RENDERED_CAROUSEL_JPG",
       "render_spec": {
         "width": 1080,
         "height": 1350,
         "slides": 10,
         "source_text_suppression": true,
-        "source_policy": "approved_f1_photo_sources_then_blurred_legacy_fallback"
+        "source_policy": "one_unique_themed_primary_visual_per_content_no_reuse_14d",
+        "unique_primary_visual_per_content": true,
+        "visual_content_hash_verified": true,
+        "legacy_visuals_allowed": false
       }
     },
     {
@@ -707,16 +803,28 @@
         "appointment",
         "mandate"
       ],
+      "demand_evidence_verified": false,
+      "demand_evidence_source": null,
+      "content_override_source": null,
       "canva_visual_source": true,
       "canva_manifest": "publisher/canva_visual_manifest.json",
+      "visual_asset_urls": [
+        "https://images.pexels.com/photos/20852247/pexels-photo-20852247.jpeg"
+      ],
+      "resolved_visual_url": "https://images.pexels.com/photos/20852247/pexels-photo-20852247.jpeg",
+      "visual_theme": "immobile fermo sul mercato",
+      "visual_cache_path": ".cache/f1-qualified-sources/e80a06264c95fb5e0299bc0d.jpg",
+      "visual_content_sha256": "071a9872deb6fefa64ac47f445ae090713bc3918bdc23ee0ff864821b3d3d658",
+      "visual_dimensions": [
+        3456,
+        4608
+      ],
+      "unique_primary_visual": true,
+      "legacy_visuals_allowed": false,
       "canva_design_id": "DAHUQDlbIU0",
       "canva_edit_url": "https://www.canva.com/d/oZ7Dtz_5GqPkx1F",
       "canva_page_start": 22,
       "canva_page_end": 28,
-      "visual_asset_urls": [
-        "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1400&q=88"
-      ],
-      "legacy_visuals_allowed": false,
       "render_status": "RENDERED_REEL_MP4",
       "render_spec": {
         "width": 1080,
@@ -725,7 +833,10 @@
         "muted_view": true,
         "safe_bottom_fraction": 0.35,
         "source_text_suppression": true,
-        "source_policy": "approved_f1_photo_sources_then_blurred_legacy_fallback"
+        "source_policy": "one_unique_themed_primary_visual_per_content_no_reuse_14d",
+        "unique_primary_visual_per_content": true,
+        "visual_content_hash_verified": true,
+        "legacy_visuals_allowed": false
       }
     },
     {
@@ -818,23 +929,38 @@
         "appointment",
         "mandate"
       ],
+      "demand_evidence_verified": false,
+      "demand_evidence_source": null,
+      "content_override_source": null,
       "canva_visual_source": true,
       "canva_manifest": "publisher/canva_visual_manifest.json",
+      "visual_asset_urls": [
+        "https://images.pexels.com/photos/10936695/pexels-photo-10936695.jpeg"
+      ],
+      "resolved_visual_url": "https://images.pexels.com/photos/10936695/pexels-photo-10936695.jpeg",
+      "visual_theme": "segnali di mercato",
+      "visual_cache_path": ".cache/f1-qualified-sources/c0fdad1ac49b1175f8d27796.jpg",
+      "visual_content_sha256": "c6021c414579ef78a723bcefccde2c0e60ad16cb854b11eab7479a02d74ca44e",
+      "visual_dimensions": [
+        3265,
+        4898
+      ],
+      "unique_primary_visual": true,
+      "legacy_visuals_allowed": false,
       "canva_design_id": "DAHUQDScdJM",
       "canva_edit_url": "https://www.canva.com/d/cIzbB44_mzxEgw-",
       "canva_page_start": 31,
       "canva_page_end": 40,
-      "visual_asset_urls": [
-        "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1400&q=88"
-      ],
-      "legacy_visuals_allowed": false,
       "render_status": "RENDERED_CAROUSEL_JPG",
       "render_spec": {
         "width": 1080,
         "height": 1350,
         "slides": 10,
         "source_text_suppression": true,
-        "source_policy": "approved_f1_photo_sources_then_blurred_legacy_fallback"
+        "source_policy": "one_unique_themed_primary_visual_per_content_no_reuse_14d",
+        "unique_primary_visual_per_content": true,
+        "visual_content_hash_verified": true,
+        "legacy_visuals_allowed": false
       }
     },
     {
@@ -913,16 +1039,28 @@
         "appointment",
         "mandate"
       ],
+      "demand_evidence_verified": false,
+      "demand_evidence_source": null,
+      "content_override_source": null,
       "canva_visual_source": true,
       "canva_manifest": "publisher/canva_visual_manifest.json",
+      "visual_asset_urls": [
+        "https://images.pexels.com/photos/31015267/pexels-photo-31015267.jpeg"
+      ],
+      "resolved_visual_url": "https://images.pexels.com/photos/31015267/pexels-photo-31015267.jpeg",
+      "visual_theme": "confronto agenzie e valutazioni",
+      "visual_cache_path": ".cache/f1-qualified-sources/80ceb0d85465eae27595668b.jpg",
+      "visual_content_sha256": "6cbd8252312a45b17a4062a87344a892705f80ca30e77cbca75b3ca45c1c85d3",
+      "visual_dimensions": [
+        3000,
+        2001
+      ],
+      "unique_primary_visual": true,
+      "legacy_visuals_allowed": false,
       "canva_design_id": "DAHUQDlbIU0",
       "canva_edit_url": "https://www.canva.com/d/oZ7Dtz_5GqPkx1F",
       "canva_page_start": 29,
       "canva_page_end": 35,
-      "visual_asset_urls": [
-        "https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=1400&q=88"
-      ],
-      "legacy_visuals_allowed": false,
       "render_status": "RENDERED_REEL_MP4",
       "render_spec": {
         "width": 1080,
@@ -931,7 +1069,10 @@
         "muted_view": true,
         "safe_bottom_fraction": 0.35,
         "source_text_suppression": true,
-        "source_policy": "approved_f1_photo_sources_then_blurred_legacy_fallback"
+        "source_policy": "one_unique_themed_primary_visual_per_content_no_reuse_14d",
+        "unique_primary_visual_per_content": true,
+        "visual_content_hash_verified": true,
+        "legacy_visuals_allowed": false
       }
     },
     {
@@ -1024,23 +1165,38 @@
         "appointment",
         "mandate"
       ],
+      "demand_evidence_verified": false,
+      "demand_evidence_source": null,
+      "content_override_source": null,
       "canva_visual_source": true,
       "canva_manifest": "publisher/canva_visual_manifest.json",
+      "visual_asset_urls": [
+        "https://images.pexels.com/photos/4890695/pexels-photo-4890695.jpeg"
+      ],
+      "resolved_visual_url": "https://images.pexels.com/photos/4890695/pexels-photo-4890695.jpeg",
+      "visual_theme": "microzona residenziale",
+      "visual_cache_path": ".cache/f1-qualified-sources/584217454486ee313d8a4b3a.jpg",
+      "visual_content_sha256": "d3c804b54c36c02f47b34a7d94a06140f4c5ff3c7b6a3d68ca6ab9f943ec2cdf",
+      "visual_dimensions": [
+        4202,
+        3140
+      ],
+      "unique_primary_visual": true,
+      "legacy_visuals_allowed": false,
       "canva_design_id": "DAHUQDScdJM",
       "canva_edit_url": "https://www.canva.com/d/cIzbB44_mzxEgw-",
       "canva_page_start": 41,
       "canva_page_end": 50,
-      "visual_asset_urls": [
-        "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&w=1400&q=88"
-      ],
-      "legacy_visuals_allowed": false,
       "render_status": "RENDERED_CAROUSEL_JPG",
       "render_spec": {
         "width": 1080,
         "height": 1350,
         "slides": 10,
         "source_text_suppression": true,
-        "source_policy": "approved_f1_photo_sources_then_blurred_legacy_fallback"
+        "source_policy": "one_unique_themed_primary_visual_per_content_no_reuse_14d",
+        "unique_primary_visual_per_content": true,
+        "visual_content_hash_verified": true,
+        "legacy_visuals_allowed": false
       }
     },
     {
@@ -1119,16 +1275,28 @@
         "appointment",
         "mandate"
       ],
+      "demand_evidence_verified": false,
+      "demand_evidence_source": null,
+      "content_override_source": null,
       "canva_visual_source": true,
       "canva_manifest": "publisher/canva_visual_manifest.json",
+      "visual_asset_urls": [
+        "https://images.pexels.com/photos/7599735/pexels-photo-7599735.jpeg"
+      ],
+      "resolved_visual_url": "https://images.pexels.com/photos/7599735/pexels-photo-7599735.jpeg",
+      "visual_theme": "vendita da privato",
+      "visual_cache_path": ".cache/f1-qualified-sources/c778c079ecb9bfd666692b22.jpg",
+      "visual_content_sha256": "0d3f35bfdd36d0a17d7b219c0f15733d9d921e3406ee45d8d8cc5c62b5a0a499",
+      "visual_dimensions": [
+        4000,
+        6000
+      ],
+      "unique_primary_visual": true,
+      "legacy_visuals_allowed": false,
       "canva_design_id": "DAHUQDlbIU0",
       "canva_edit_url": "https://www.canva.com/d/oZ7Dtz_5GqPkx1F",
       "canva_page_start": 36,
       "canva_page_end": 42,
-      "visual_asset_urls": [
-        "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1400&q=88"
-      ],
-      "legacy_visuals_allowed": false,
       "render_status": "RENDERED_REEL_MP4",
       "render_spec": {
         "width": 1080,
@@ -1137,7 +1305,10 @@
         "muted_view": true,
         "safe_bottom_fraction": 0.35,
         "source_text_suppression": true,
-        "source_policy": "approved_f1_photo_sources_then_blurred_legacy_fallback"
+        "source_policy": "one_unique_themed_primary_visual_per_content_no_reuse_14d",
+        "unique_primary_visual_per_content": true,
+        "visual_content_hash_verified": true,
+        "legacy_visuals_allowed": false
       }
     },
     {
@@ -1230,23 +1401,38 @@
         "appointment",
         "mandate"
       ],
+      "demand_evidence_verified": false,
+      "demand_evidence_source": null,
+      "content_override_source": null,
       "canva_visual_source": true,
       "canva_manifest": "publisher/canva_visual_manifest.json",
+      "visual_asset_urls": [
+        "https://images.pexels.com/photos/36355688/pexels-photo-36355688.jpeg"
+      ],
+      "resolved_visual_url": "https://images.pexels.com/photos/36355688/pexels-photo-36355688.jpeg",
+      "visual_theme": "comparabili immobiliari",
+      "visual_cache_path": ".cache/f1-qualified-sources/3c2d1c2087691288f7f99186.jpg",
+      "visual_content_sha256": "9e41ebbdcf3c6994f48813792a7be4951ac462c5516a8edc23c428e925d1769d",
+      "visual_dimensions": [
+        4096,
+        3072
+      ],
+      "unique_primary_visual": true,
+      "legacy_visuals_allowed": false,
       "canva_design_id": "DAHUQDScdJM",
       "canva_edit_url": "https://www.canva.com/d/cIzbB44_mzxEgw-",
       "canva_page_start": 51,
       "canva_page_end": 60,
-      "visual_asset_urls": [
-        "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1400&q=88"
-      ],
-      "legacy_visuals_allowed": false,
       "render_status": "RENDERED_CAROUSEL_JPG",
       "render_spec": {
         "width": 1080,
         "height": 1350,
         "slides": 10,
         "source_text_suppression": true,
-        "source_policy": "approved_f1_photo_sources_then_blurred_legacy_fallback"
+        "source_policy": "one_unique_themed_primary_visual_per_content_no_reuse_14d",
+        "unique_primary_visual_per_content": true,
+        "visual_content_hash_verified": true,
+        "legacy_visuals_allowed": false
       }
     },
     {
@@ -1325,16 +1511,28 @@
         "appointment",
         "mandate"
       ],
+      "demand_evidence_verified": false,
+      "demand_evidence_source": null,
+      "content_override_source": null,
       "canva_visual_source": true,
       "canva_manifest": "publisher/canva_visual_manifest.json",
+      "visual_asset_urls": [
+        "https://images.pexels.com/photos/27522902/pexels-photo-27522902.jpeg"
+      ],
+      "resolved_visual_url": "https://images.pexels.com/photos/27522902/pexels-photo-27522902.jpeg",
+      "visual_theme": "vendere per ricomprare",
+      "visual_cache_path": ".cache/f1-qualified-sources/e3fdad70d1cece4c79e0f46a.jpg",
+      "visual_content_sha256": "633a35f997ccde1e00475ae000a03cb872bf0001c69b8f1232fc1b8d0cbfd103",
+      "visual_dimensions": [
+        3000,
+        2001
+      ],
+      "unique_primary_visual": true,
+      "legacy_visuals_allowed": false,
       "canva_design_id": "DAHUQDlbIU0",
       "canva_edit_url": "https://www.canva.com/d/oZ7Dtz_5GqPkx1F",
       "canva_page_start": 43,
       "canva_page_end": 49,
-      "visual_asset_urls": [
-        "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1400&q=88"
-      ],
-      "legacy_visuals_allowed": false,
       "render_status": "RENDERED_REEL_MP4",
       "render_spec": {
         "width": 1080,
@@ -1343,7 +1541,10 @@
         "muted_view": true,
         "safe_bottom_fraction": 0.35,
         "source_text_suppression": true,
-        "source_policy": "approved_f1_photo_sources_then_blurred_legacy_fallback"
+        "source_policy": "one_unique_themed_primary_visual_per_content_no_reuse_14d",
+        "unique_primary_visual_per_content": true,
+        "visual_content_hash_verified": true,
+        "legacy_visuals_allowed": false
       }
     },
     {
@@ -1436,23 +1637,38 @@
         "appointment",
         "mandate"
       ],
+      "demand_evidence_verified": false,
+      "demand_evidence_source": null,
+      "content_override_source": null,
       "canva_visual_source": true,
       "canva_manifest": "publisher/canva_visual_manifest.json",
+      "visual_asset_urls": [
+        "https://images.pexels.com/photos/13320856/pexels-photo-13320856.jpeg"
+      ],
+      "resolved_visual_url": "https://images.pexels.com/photos/13320856/pexels-photo-13320856.jpeg",
+      "visual_theme": "primi 30 giorni di vendita",
+      "visual_cache_path": ".cache/f1-qualified-sources/af0e5f8331fffd62e0e2493d.jpg",
+      "visual_content_sha256": "17319f289fcfc53f3d5df613fa3580c0c2d64ef27d5e6aba33c9132663850308",
+      "visual_dimensions": [
+        3872,
+        5808
+      ],
+      "unique_primary_visual": true,
+      "legacy_visuals_allowed": false,
       "canva_design_id": "DAHUQDScdJM",
       "canva_edit_url": "https://www.canva.com/d/cIzbB44_mzxEgw-",
       "canva_page_start": 61,
       "canva_page_end": 70,
-      "visual_asset_urls": [
-        "https://images.unsplash.com/photo-1600607688969-a5bfcd646154?auto=format&fit=crop&w=1400&q=88"
-      ],
-      "legacy_visuals_allowed": false,
       "render_status": "RENDERED_CAROUSEL_JPG",
       "render_spec": {
         "width": 1080,
         "height": 1350,
         "slides": 10,
         "source_text_suppression": true,
-        "source_policy": "approved_f1_photo_sources_then_blurred_legacy_fallback"
+        "source_policy": "one_unique_themed_primary_visual_per_content_no_reuse_14d",
+        "unique_primary_visual_per_content": true,
+        "visual_content_hash_verified": true,
+        "legacy_visuals_allowed": false
       }
     },
     {
@@ -1531,16 +1747,28 @@
         "appointment",
         "mandate"
       ],
+      "demand_evidence_verified": false,
+      "demand_evidence_source": null,
+      "content_override_source": null,
       "canva_visual_source": true,
       "canva_manifest": "publisher/canva_visual_manifest.json",
+      "visual_asset_urls": [
+        "https://images.pexels.com/photos/26613908/pexels-photo-26613908.jpeg"
+      ],
+      "resolved_visual_url": "https://images.pexels.com/photos/26613908/pexels-photo-26613908.jpeg",
+      "visual_theme": "microzona e differenze locali",
+      "visual_cache_path": ".cache/f1-qualified-sources/4ef0aab13718c3c5af8366cf.jpg",
+      "visual_content_sha256": "1078db489fc93a5232f2e5b6817886c4b9aa1365da7400f503adaa4702c31042",
+      "visual_dimensions": [
+        6120,
+        8160
+      ],
+      "unique_primary_visual": true,
+      "legacy_visuals_allowed": false,
       "canva_design_id": "DAHUQDlbIU0",
       "canva_edit_url": "https://www.canva.com/d/oZ7Dtz_5GqPkx1F",
       "canva_page_start": 50,
       "canva_page_end": 56,
-      "visual_asset_urls": [
-        "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1400&q=88"
-      ],
-      "legacy_visuals_allowed": false,
       "render_status": "RENDERED_REEL_MP4",
       "render_spec": {
         "width": 1080,
@@ -1549,7 +1777,10 @@
         "muted_view": true,
         "safe_bottom_fraction": 0.35,
         "source_text_suppression": true,
-        "source_policy": "approved_f1_photo_sources_then_blurred_legacy_fallback"
+        "source_policy": "one_unique_themed_primary_visual_per_content_no_reuse_14d",
+        "unique_primary_visual_per_content": true,
+        "visual_content_hash_verified": true,
+        "legacy_visuals_allowed": false
       }
     },
     {
@@ -1642,23 +1873,38 @@
         "appointment",
         "mandate"
       ],
+      "demand_evidence_verified": false,
+      "demand_evidence_source": null,
+      "content_override_source": null,
       "canva_visual_source": true,
       "canva_manifest": "publisher/canva_visual_manifest.json",
+      "visual_asset_urls": [
+        "https://images.pexels.com/photos/19899071/pexels-photo-19899071.jpeg"
+      ],
+      "resolved_visual_url": "https://images.pexels.com/photos/19899071/pexels-photo-19899071.jpeg",
+      "visual_theme": "presentazione e distribuzione",
+      "visual_cache_path": ".cache/f1-qualified-sources/28518f23751290fb1ef2358e.jpg",
+      "visual_content_sha256": "e8640e11fcec4a2c0b1bb0254b795e9b74db4c300664371b7d44573953334246",
+      "visual_dimensions": [
+        5999,
+        4000
+      ],
+      "unique_primary_visual": true,
+      "legacy_visuals_allowed": false,
       "canva_design_id": "DAHUQDScdJM",
       "canva_edit_url": "https://www.canva.com/d/cIzbB44_mzxEgw-",
       "canva_page_start": 71,
       "canva_page_end": 80,
-      "visual_asset_urls": [
-        "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1400&q=88"
-      ],
-      "legacy_visuals_allowed": false,
       "render_status": "RENDERED_CAROUSEL_JPG",
       "render_spec": {
         "width": 1080,
         "height": 1350,
         "slides": 10,
         "source_text_suppression": true,
-        "source_policy": "approved_f1_photo_sources_then_blurred_legacy_fallback"
+        "source_policy": "one_unique_themed_primary_visual_per_content_no_reuse_14d",
+        "unique_primary_visual_per_content": true,
+        "visual_content_hash_verified": true,
+        "legacy_visuals_allowed": false
       }
     },
     {
@@ -1737,16 +1983,28 @@
         "appointment",
         "mandate"
       ],
+      "demand_evidence_verified": false,
+      "demand_evidence_source": null,
+      "content_override_source": null,
       "canva_visual_source": true,
       "canva_manifest": "publisher/canva_visual_manifest.json",
+      "visual_asset_urls": [
+        "https://images.pexels.com/photos/9976124/pexels-photo-9976124.jpeg"
+      ],
+      "resolved_visual_url": "https://images.pexels.com/photos/9976124/pexels-photo-9976124.jpeg",
+      "visual_theme": "stato dell'immobile",
+      "visual_cache_path": ".cache/f1-qualified-sources/4bfaee4119d9646fbbe47e9b.jpg",
+      "visual_content_sha256": "7337713954e336f6f16e59251d66ce289d75c234ac36da71a8e7570630ee35a0",
+      "visual_dimensions": [
+        3628,
+        5442
+      ],
+      "unique_primary_visual": true,
+      "legacy_visuals_allowed": false,
       "canva_design_id": "DAHUQDlbIU0",
       "canva_edit_url": "https://www.canva.com/d/oZ7Dtz_5GqPkx1F",
       "canva_page_start": 57,
       "canva_page_end": 63,
-      "visual_asset_urls": [
-        "https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=1400&q=88"
-      ],
-      "legacy_visuals_allowed": false,
       "render_status": "RENDERED_REEL_MP4",
       "render_spec": {
         "width": 1080,
@@ -1755,7 +2013,10 @@
         "muted_view": true,
         "safe_bottom_fraction": 0.35,
         "source_text_suppression": true,
-        "source_policy": "approved_f1_photo_sources_then_blurred_legacy_fallback"
+        "source_policy": "one_unique_themed_primary_visual_per_content_no_reuse_14d",
+        "unique_primary_visual_per_content": true,
+        "visual_content_hash_verified": true,
+        "legacy_visuals_allowed": false
       }
     },
     {
@@ -1848,23 +2109,38 @@
         "appointment",
         "mandate"
       ],
+      "demand_evidence_verified": false,
+      "demand_evidence_source": null,
+      "content_override_source": null,
       "canva_visual_source": true,
       "canva_manifest": "publisher/canva_visual_manifest.json",
+      "visual_asset_urls": [
+        "https://images.pexels.com/photos/5353892/pexels-photo-5353892.jpeg"
+      ],
+      "resolved_visual_url": "https://images.pexels.com/photos/5353892/pexels-photo-5353892.jpeg",
+      "visual_theme": "casa abitata durante la vendita",
+      "visual_cache_path": ".cache/f1-qualified-sources/0100e8c0cf1a0269529823aa.jpg",
+      "visual_content_sha256": "96e6ff7ba7daa5d28b3ecbb6e34f6ec060f3219592a8aa3eb7f6ea319f6337d8",
+      "visual_dimensions": [
+        4000,
+        2667
+      ],
+      "unique_primary_visual": true,
+      "legacy_visuals_allowed": false,
       "canva_design_id": "DAHUQDScdJM",
       "canva_edit_url": "https://www.canva.com/d/cIzbB44_mzxEgw-",
       "canva_page_start": 81,
       "canva_page_end": 90,
-      "visual_asset_urls": [
-        "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&w=1400&q=88"
-      ],
-      "legacy_visuals_allowed": false,
       "render_status": "RENDERED_CAROUSEL_JPG",
       "render_spec": {
         "width": 1080,
         "height": 1350,
         "slides": 10,
         "source_text_suppression": true,
-        "source_policy": "approved_f1_photo_sources_then_blurred_legacy_fallback"
+        "source_policy": "one_unique_themed_primary_visual_per_content_no_reuse_14d",
+        "unique_primary_visual_per_content": true,
+        "visual_content_hash_verified": true,
+        "legacy_visuals_allowed": false
       }
     },
     {
@@ -1943,16 +2219,28 @@
         "appointment",
         "mandate"
       ],
+      "demand_evidence_verified": false,
+      "demand_evidence_source": null,
+      "content_override_source": null,
       "canva_visual_source": true,
       "canva_manifest": "publisher/canva_visual_manifest.json",
+      "visual_asset_urls": [
+        "https://images.pexels.com/photos/7647390/pexels-photo-7647390.jpeg"
+      ],
+      "resolved_visual_url": "https://images.pexels.com/photos/7647390/pexels-photo-7647390.jpeg",
+      "visual_theme": "verifiche prima della proposta",
+      "visual_cache_path": ".cache/f1-qualified-sources/c48ba95f02621cbfe17539ee.jpg",
+      "visual_content_sha256": "6b15ba3cfcb337d07399e2b55554e84e6f50fdd8665c12e7eebbfe1ce77bd7a9",
+      "visual_dimensions": [
+        3919,
+        5878
+      ],
+      "unique_primary_visual": true,
+      "legacy_visuals_allowed": false,
       "canva_design_id": "DAHUQDlbIU0",
       "canva_edit_url": "https://www.canva.com/d/oZ7Dtz_5GqPkx1F",
       "canva_page_start": 64,
       "canva_page_end": 70,
-      "visual_asset_urls": [
-        "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1400&q=88"
-      ],
-      "legacy_visuals_allowed": false,
       "render_status": "RENDERED_REEL_MP4",
       "render_spec": {
         "width": 1080,
@@ -1961,7 +2249,10 @@
         "muted_view": true,
         "safe_bottom_fraction": 0.35,
         "source_text_suppression": true,
-        "source_policy": "approved_f1_photo_sources_then_blurred_legacy_fallback"
+        "source_policy": "one_unique_themed_primary_visual_per_content_no_reuse_14d",
+        "unique_primary_visual_per_content": true,
+        "visual_content_hash_verified": true,
+        "legacy_visuals_allowed": false
       }
     },
     {
@@ -2054,23 +2345,38 @@
         "appointment",
         "mandate"
       ],
+      "demand_evidence_verified": false,
+      "demand_evidence_source": null,
+      "content_override_source": null,
       "canva_visual_source": true,
       "canva_manifest": "publisher/canva_visual_manifest.json",
+      "visual_asset_urls": [
+        "https://images.pexels.com/photos/15824912/pexels-photo-15824912.jpeg"
+      ],
+      "resolved_visual_url": "https://images.pexels.com/photos/15824912/pexels-photo-15824912.jpeg",
+      "visual_theme": "immobile da valorizzare",
+      "visual_cache_path": ".cache/f1-qualified-sources/d34ae5b53c2f023e21101366.jpg",
+      "visual_content_sha256": "4539f412e5178ba28721236b5c4fbf81e9be3c46f12e69f5ec645a6f1b7d61c4",
+      "visual_dimensions": [
+        4000,
+        2668
+      ],
+      "unique_primary_visual": true,
+      "legacy_visuals_allowed": false,
       "canva_design_id": "DAHUQDScdJM",
       "canva_edit_url": "https://www.canva.com/d/cIzbB44_mzxEgw-",
       "canva_page_start": 91,
       "canva_page_end": 100,
-      "visual_asset_urls": [
-        "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1400&q=88"
-      ],
-      "legacy_visuals_allowed": false,
       "render_status": "RENDERED_CAROUSEL_JPG",
       "render_spec": {
         "width": 1080,
         "height": 1350,
         "slides": 10,
         "source_text_suppression": true,
-        "source_policy": "approved_f1_photo_sources_then_blurred_legacy_fallback"
+        "source_policy": "one_unique_themed_primary_visual_per_content_no_reuse_14d",
+        "unique_primary_visual_per_content": true,
+        "visual_content_hash_verified": true,
+        "legacy_visuals_allowed": false
       }
     },
     {
@@ -2149,16 +2455,28 @@
         "appointment",
         "mandate"
       ],
+      "demand_evidence_verified": false,
+      "demand_evidence_source": null,
+      "content_override_source": null,
       "canva_visual_source": true,
       "canva_manifest": "publisher/canva_visual_manifest.json",
+      "visual_asset_urls": [
+        "https://images.pexels.com/photos/7641910/pexels-photo-7641910.jpeg"
+      ],
+      "resolved_visual_url": "https://images.pexels.com/photos/7641910/pexels-photo-7641910.jpeg",
+      "visual_theme": "tempo di vendita",
+      "visual_cache_path": ".cache/f1-qualified-sources/31a31b28331e8fdba956e091.jpg",
+      "visual_content_sha256": "8525fc6c8d622f6f810dfe0f63a7d7aac2301b35416f4a749e65144a030eccbe",
+      "visual_dimensions": [
+        3097,
+        4645
+      ],
+      "unique_primary_visual": true,
+      "legacy_visuals_allowed": false,
       "canva_design_id": "DAHUQDlbIU0",
       "canva_edit_url": "https://www.canva.com/d/oZ7Dtz_5GqPkx1F",
       "canva_page_start": 71,
       "canva_page_end": 77,
-      "visual_asset_urls": [
-        "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1400&q=88"
-      ],
-      "legacy_visuals_allowed": false,
       "render_status": "RENDERED_REEL_MP4",
       "render_spec": {
         "width": 1080,
@@ -2167,7 +2485,10 @@
         "muted_view": true,
         "safe_bottom_fraction": 0.35,
         "source_text_suppression": true,
-        "source_policy": "approved_f1_photo_sources_then_blurred_legacy_fallback"
+        "source_policy": "one_unique_themed_primary_visual_per_content_no_reuse_14d",
+        "unique_primary_visual_per_content": true,
+        "visual_content_hash_verified": true,
+        "legacy_visuals_allowed": false
       }
     },
     {
@@ -2260,23 +2581,38 @@
         "appointment",
         "mandate"
       ],
+      "demand_evidence_verified": false,
+      "demand_evidence_source": null,
+      "content_override_source": null,
       "canva_visual_source": true,
       "canva_manifest": "publisher/canva_visual_manifest.json",
+      "visual_asset_urls": [
+        "https://images.pexels.com/photos/32045967/pexels-photo-32045967.jpeg"
+      ],
+      "resolved_visual_url": "https://images.pexels.com/photos/32045967/pexels-photo-32045967.jpeg",
+      "visual_theme": "decisione sul ribasso",
+      "visual_cache_path": ".cache/f1-qualified-sources/eccc718bf14c0dcac9d7c69e.jpg",
+      "visual_content_sha256": "a9d4c5000aff307cfd050a3224e56898cfc8b0758f1f297bd2966245f1503da7",
+      "visual_dimensions": [
+        3000,
+        2001
+      ],
+      "unique_primary_visual": true,
+      "legacy_visuals_allowed": false,
       "canva_design_id": "DAHUQDScdJM",
       "canva_edit_url": "https://www.canva.com/d/cIzbB44_mzxEgw-",
       "canva_page_start": 101,
       "canva_page_end": 110,
-      "visual_asset_urls": [
-        "https://images.unsplash.com/photo-1600607688969-a5bfcd646154?auto=format&fit=crop&w=1400&q=88"
-      ],
-      "legacy_visuals_allowed": false,
       "render_status": "RENDERED_CAROUSEL_JPG",
       "render_spec": {
         "width": 1080,
         "height": 1350,
         "slides": 10,
         "source_text_suppression": true,
-        "source_policy": "approved_f1_photo_sources_then_blurred_legacy_fallback"
+        "source_policy": "one_unique_themed_primary_visual_per_content_no_reuse_14d",
+        "unique_primary_visual_per_content": true,
+        "visual_content_hash_verified": true,
+        "legacy_visuals_allowed": false
       }
     },
     {
@@ -2355,16 +2691,28 @@
         "appointment",
         "mandate"
       ],
+      "demand_evidence_verified": false,
+      "demand_evidence_source": null,
+      "content_override_source": null,
       "canva_visual_source": true,
       "canva_manifest": "publisher/canva_visual_manifest.json",
+      "visual_asset_urls": [
+        "https://images.pexels.com/photos/31651009/pexels-photo-31651009.jpeg"
+      ],
+      "resolved_visual_url": "https://images.pexels.com/photos/31651009/pexels-photo-31651009.jpeg",
+      "visual_theme": "diagnosi poche visite",
+      "visual_cache_path": ".cache/f1-qualified-sources/0fe24047818b7549c346dad3.jpg",
+      "visual_content_sha256": "369face63438de4429abcfd75f052fc2ce127d236e5911040c756b1dfb9bd070",
+      "visual_dimensions": [
+        3000,
+        2001
+      ],
+      "unique_primary_visual": true,
+      "legacy_visuals_allowed": false,
       "canva_design_id": "DAHUQDlbIU0",
       "canva_edit_url": "https://www.canva.com/d/oZ7Dtz_5GqPkx1F",
       "canva_page_start": 78,
       "canva_page_end": 84,
-      "visual_asset_urls": [
-        "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1400&q=88"
-      ],
-      "legacy_visuals_allowed": false,
       "render_status": "RENDERED_REEL_MP4",
       "render_spec": {
         "width": 1080,
@@ -2373,7 +2721,10 @@
         "muted_view": true,
         "safe_bottom_fraction": 0.35,
         "source_text_suppression": true,
-        "source_policy": "approved_f1_photo_sources_then_blurred_legacy_fallback"
+        "source_policy": "one_unique_themed_primary_visual_per_content_no_reuse_14d",
+        "unique_primary_visual_per_content": true,
+        "visual_content_hash_verified": true,
+        "legacy_visuals_allowed": false
       }
     },
     {
@@ -2466,23 +2817,38 @@
         "appointment",
         "mandate"
       ],
+      "demand_evidence_verified": false,
+      "demand_evidence_source": null,
+      "content_override_source": null,
       "canva_visual_source": true,
       "canva_manifest": "publisher/canva_visual_manifest.json",
+      "visual_asset_urls": [
+        "https://images.pexels.com/photos/10161225/pexels-photo-10161225.jpeg"
+      ],
+      "resolved_visual_url": "https://images.pexels.com/photos/10161225/pexels-photo-10161225.jpeg",
+      "visual_theme": "target compratore",
+      "visual_cache_path": ".cache/f1-qualified-sources/60e9b4d9119facaa47deb5dc.jpg",
+      "visual_content_sha256": "5a443c5304da62ca7fbaf565fafee683c49949fef89cbf17918f4d25a8a3f354",
+      "visual_dimensions": [
+        5645,
+        3799
+      ],
+      "unique_primary_visual": true,
+      "legacy_visuals_allowed": false,
       "canva_design_id": "DAHUQDScdJM",
       "canva_edit_url": "https://www.canva.com/d/cIzbB44_mzxEgw-",
       "canva_page_start": 111,
       "canva_page_end": 120,
-      "visual_asset_urls": [
-        "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1400&q=88"
-      ],
-      "legacy_visuals_allowed": false,
       "render_status": "RENDERED_CAROUSEL_JPG",
       "render_spec": {
         "width": 1080,
         "height": 1350,
         "slides": 10,
         "source_text_suppression": true,
-        "source_policy": "approved_f1_photo_sources_then_blurred_legacy_fallback"
+        "source_policy": "one_unique_themed_primary_visual_per_content_no_reuse_14d",
+        "unique_primary_visual_per_content": true,
+        "visual_content_hash_verified": true,
+        "legacy_visuals_allowed": false
       }
     },
     {
@@ -2561,16 +2927,28 @@
         "appointment",
         "mandate"
       ],
+      "demand_evidence_verified": false,
+      "demand_evidence_source": null,
+      "content_override_source": null,
       "canva_visual_source": true,
       "canva_manifest": "publisher/canva_visual_manifest.json",
+      "visual_asset_urls": [
+        "https://images.pexels.com/photos/7647387/pexels-photo-7647387.jpeg"
+      ],
+      "resolved_visual_url": "https://images.pexels.com/photos/7647387/pexels-photo-7647387.jpeg",
+      "visual_theme": "più proprietari e decisione condivisa",
+      "visual_cache_path": ".cache/f1-qualified-sources/0ff36fe313e36423c6110f75.jpg",
+      "visual_content_sha256": "b33b86ec5d941f83ea674b63d81bd46405102ae80856738e5af2b0ae48da4c52",
+      "visual_dimensions": [
+        6000,
+        4000
+      ],
+      "unique_primary_visual": true,
+      "legacy_visuals_allowed": false,
       "canva_design_id": "DAHUQDlbIU0",
       "canva_edit_url": "https://www.canva.com/d/oZ7Dtz_5GqPkx1F",
       "canva_page_start": 85,
       "canva_page_end": 91,
-      "visual_asset_urls": [
-        "https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=1400&q=88"
-      ],
-      "legacy_visuals_allowed": false,
       "render_status": "RENDERED_REEL_MP4",
       "render_spec": {
         "width": 1080,
@@ -2579,7 +2957,10 @@
         "muted_view": true,
         "safe_bottom_fraction": 0.35,
         "source_text_suppression": true,
-        "source_policy": "approved_f1_photo_sources_then_blurred_legacy_fallback"
+        "source_policy": "one_unique_themed_primary_visual_per_content_no_reuse_14d",
+        "unique_primary_visual_per_content": true,
+        "visual_content_hash_verified": true,
+        "legacy_visuals_allowed": false
       }
     },
     {
@@ -2672,23 +3053,38 @@
         "appointment",
         "mandate"
       ],
+      "demand_evidence_verified": false,
+      "demand_evidence_source": null,
+      "content_override_source": null,
       "canva_visual_source": true,
       "canva_manifest": "publisher/canva_visual_manifest.json",
+      "visual_asset_urls": [
+        "https://images.pexels.com/photos/7642008/pexels-photo-7642008.jpeg"
+      ],
+      "resolved_visual_url": "https://images.pexels.com/photos/7642008/pexels-photo-7642008.jpeg",
+      "visual_theme": "incarico e metodo professionale",
+      "visual_cache_path": ".cache/f1-qualified-sources/f8473dbe49d2bde62cd45a3f.jpg",
+      "visual_content_sha256": "200d46d791e31742835ea4ebbfd286590e2a820d99ce9b17f4193ca029f63ef1",
+      "visual_dimensions": [
+        5040,
+        3360
+      ],
+      "unique_primary_visual": true,
+      "legacy_visuals_allowed": false,
       "canva_design_id": "DAHUQDScdJM",
       "canva_edit_url": "https://www.canva.com/d/cIzbB44_mzxEgw-",
       "canva_page_start": 121,
       "canva_page_end": 130,
-      "visual_asset_urls": [
-        "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&w=1400&q=88"
-      ],
-      "legacy_visuals_allowed": false,
       "render_status": "RENDERED_CAROUSEL_JPG",
       "render_spec": {
         "width": 1080,
         "height": 1350,
         "slides": 10,
         "source_text_suppression": true,
-        "source_policy": "approved_f1_photo_sources_then_blurred_legacy_fallback"
+        "source_policy": "one_unique_themed_primary_visual_per_content_no_reuse_14d",
+        "unique_primary_visual_per_content": true,
+        "visual_content_hash_verified": true,
+        "legacy_visuals_allowed": false
       }
     },
     {
@@ -2767,16 +3163,28 @@
         "appointment",
         "mandate"
       ],
+      "demand_evidence_verified": false,
+      "demand_evidence_source": null,
+      "content_override_source": null,
       "canva_visual_source": true,
       "canva_manifest": "publisher/canva_visual_manifest.json",
+      "visual_asset_urls": [
+        "https://images.pexels.com/photos/10610731/pexels-photo-10610731.jpeg"
+      ],
+      "resolved_visual_url": "https://images.pexels.com/photos/10610731/pexels-photo-10610731.jpeg",
+      "visual_theme": "valutazione professionale Valle",
+      "visual_cache_path": ".cache/f1-qualified-sources/254b3f8b6615166ed96eea3f.jpg",
+      "visual_content_sha256": "13e5b7cddd68a97f052f27b33ec6d7e09e61c31bd1d1e16dbb562970031f23c8",
+      "visual_dimensions": [
+        6000,
+        4000
+      ],
+      "unique_primary_visual": true,
+      "legacy_visuals_allowed": false,
       "canva_design_id": "DAHUQDlbIU0",
       "canva_edit_url": "https://www.canva.com/d/oZ7Dtz_5GqPkx1F",
       "canva_page_start": 92,
       "canva_page_end": 98,
-      "visual_asset_urls": [
-        "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1400&q=88"
-      ],
-      "legacy_visuals_allowed": false,
       "render_status": "RENDERED_REEL_MP4",
       "render_spec": {
         "width": 1080,
@@ -2785,7 +3193,10 @@
         "muted_view": true,
         "safe_bottom_fraction": 0.35,
         "source_text_suppression": true,
-        "source_policy": "approved_f1_photo_sources_then_blurred_legacy_fallback"
+        "source_policy": "one_unique_themed_primary_visual_per_content_no_reuse_14d",
+        "unique_primary_visual_per_content": true,
+        "visual_content_hash_verified": true,
+        "legacy_visuals_allowed": false
       }
     },
     {
@@ -2878,23 +3289,38 @@
         "appointment",
         "mandate"
       ],
+      "demand_evidence_verified": false,
+      "demand_evidence_source": null,
+      "content_override_source": null,
       "canva_visual_source": true,
       "canva_manifest": "publisher/canva_visual_manifest.json",
+      "visual_asset_urls": [
+        "https://images.pexels.com/photos/11435856/pexels-photo-11435856.jpeg"
+      ],
+      "resolved_visual_url": "https://images.pexels.com/photos/11435856/pexels-photo-11435856.jpeg",
+      "visual_theme": "prequalifica proprietario Valle",
+      "visual_cache_path": ".cache/f1-qualified-sources/b64206bcd023754abb0aa07f.jpg",
+      "visual_content_sha256": "c16a4f4f4ad27cf4ddba208c7778a8a803510f1896ef45723b0370aa01f20595",
+      "visual_dimensions": [
+        2048,
+        3089
+      ],
+      "unique_primary_visual": true,
+      "legacy_visuals_allowed": false,
       "canva_design_id": "DAHUQDScdJM",
       "canva_edit_url": "https://www.canva.com/d/cIzbB44_mzxEgw-",
       "canva_page_start": 131,
       "canva_page_end": 140,
-      "visual_asset_urls": [
-        "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1400&q=88"
-      ],
-      "legacy_visuals_allowed": false,
       "render_status": "RENDERED_CAROUSEL_JPG",
       "render_spec": {
         "width": 1080,
         "height": 1350,
         "slides": 10,
         "source_text_suppression": true,
-        "source_policy": "approved_f1_photo_sources_then_blurred_legacy_fallback"
+        "source_policy": "one_unique_themed_primary_visual_per_content_no_reuse_14d",
+        "unique_primary_visual_per_content": true,
+        "visual_content_hash_verified": true,
+        "legacy_visuals_allowed": false
       }
     }
   ],
@@ -2903,13 +3329,19 @@
     "blocked": 0,
     "total": 28
   },
-  "visual_source": "canva",
+  "visual_source": "direct_cdn_unique_manifest",
   "canva_manifest": "publisher/canva_visual_manifest.json",
   "legacy_visuals_allowed": false,
+  "unique_visual_summary": {
+    "contents": 28,
+    "unique_primary_visuals": 28,
+    "unique_content_hashes": 28,
+    "reuse": 0
+  },
   "render_summary": {
     "reels": 14,
     "carousels": 14,
     "total": 28
   },
-  "visual_source_policy": "approved F1 local/residential photo sources; legacy fallback blurred and source copy suppressed"
+  "visual_source_policy": "28 contents = 28 different themed primary images; URL and normalized pixel hash uniqueness required"
 }
