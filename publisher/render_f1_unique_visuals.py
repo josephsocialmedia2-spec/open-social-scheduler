@@ -26,6 +26,7 @@ def main() -> int:
         raise RuntimeError(f"Refusing render: {len(blocked)} jobs have not PASSED producer gate")
 
     used: set[str] = set()
+    content_hashes: set[str] = set()
     reels = carousels = 0
     for job in jobs:
         urls = list(job.get("visual_asset_urls") or [])
@@ -35,6 +36,13 @@ def main() -> int:
         if url in used:
             raise RuntimeError(f"Primary visual reused across contents: {url}")
         used.add(url)
+        visual_hash = str(job.get("visual_content_sha256") or "").strip()
+        if not visual_hash:
+            raise RuntimeError(f"Missing verified visual content hash for {job.get('id')}")
+        if visual_hash in content_hashes:
+            raise RuntimeError(f"Actual image content reused across contents: {visual_hash}")
+        content_hashes.add(visual_hash)
+
         src = cache_path(url)
         if not src.exists() or src.stat().st_size < 20000:
             raise RuntimeError(f"Cached unique visual missing for {job.get('id')}: {src}")
@@ -51,17 +59,23 @@ def main() -> int:
         spec = dict(job.get("render_spec") or {})
         spec["source_policy"] = "one_unique_themed_primary_visual_per_content_no_reuse_14d"
         spec["unique_primary_visual_per_content"] = True
+        spec["visual_content_hash_verified"] = True
         spec["legacy_visuals_allowed"] = False
         job["render_spec"] = spec
 
-    if len(used) != 28:
-        raise RuntimeError(f"Expected 28 unique visuals, got {len(used)}")
+    if len(used) != 28 or len(content_hashes) != 28:
+        raise RuntimeError(f"Expected 28 unique URLs and 28 unique content hashes, got {len(used)} / {len(content_hashes)}")
 
     data["render_summary"] = {"reels": reels, "carousels": carousels, "total": reels + carousels}
-    data["visual_source_policy"] = "28 contents = 28 different themed primary images; no primary visual reuse within 14 days"
-    data["unique_visual_summary"] = {"contents": 28, "unique_primary_visuals": 28, "reuse": 0}
+    data["visual_source_policy"] = "28 contents = 28 different themed primary images; URL and normalized pixel hash uniqueness required"
+    data["unique_visual_summary"] = {
+        "contents": 28,
+        "unique_primary_visuals": 28,
+        "unique_content_hashes": 28,
+        "reuse": 0
+    }
     QUEUE.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print("RENDERED UNIQUE F1 BATCH: 14 reels + 14 carousels; 28/28 distinct primary visuals")
+    print("RENDERED UNIQUE F1 BATCH: 14 reels + 14 carousels; 28 URLs + 28 hashes; reuse 0")
     return 0
 
 
