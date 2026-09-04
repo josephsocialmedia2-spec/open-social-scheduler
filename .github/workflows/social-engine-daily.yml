@@ -14,6 +14,7 @@ on:
       - '.github/workflows/social-engine-daily.yml'
       - 'publisher/pre_content_analysis.py'
       - 'publisher/enforce_content_analysis.py'
+      - 'publisher/instagram_distribution_policy.json'
       - 'publisher/insights/**'
       - 'publisher/build_cycle_queue.py'
       - 'publisher/apply_photo_only.py'
@@ -86,9 +87,25 @@ jobs:
           sudo apt-get install -y fonts-dejavu-core zip
           python -m pip install --disable-pip-version-check -r publisher/requirements.txt
 
-      - name: Validate publication scripts
+      - name: Validate publication scripts and Instagram policy
         run: |
           python -m py_compile publisher/pre_content_analysis.py publisher/enforce_content_analysis.py publisher/build_cycle_queue.py publisher/apply_photo_only.py publisher/render_photos_only.py publisher/run_publication_renderer.py
+          python - <<'PY'
+          import json
+          p=json.load(open('publisher/instagram_distribution_policy.json',encoding='utf-8'))
+          assert p.get('version')
+          required={
+            'carousel_completion','positive_action_probability','skip_probability',
+            'profile_time_after_post','direct_share_probability','predicted_time_on_post',
+            'first_post_skip_probability','first_post_over_10_seconds',
+            'audio_activation_probability','session_continuation_after_first_post'
+          }
+          assert required <= set((p.get('significant_predictions') or {}).keys())
+          reels=p.get('reels_creative_essentials') or {}
+          assert reels.get('format') == '9:16 vertical full-screen'
+          assert '35%' in str(reels.get('safe_area') or '')
+          print('INSTAGRAM POLICY VALIDATED')
+          PY
 
       - name: Analyze BEFORE content creation
         run: python publisher/pre_content_analysis.py
@@ -105,7 +122,7 @@ jobs:
       - name: Apply approved 5 F1 + 5 RMP policy
         run: python publisher/apply_photo_only.py
 
-      - name: Enforce audience objective message and Insights policy
+      - name: Enforce audience objective message Insights and Instagram policy
         run: python publisher/enforce_content_analysis.py
 
       - name: Render 10 JPG publications
@@ -144,6 +161,32 @@ jobs:
           assert all(str(j.get('post_objective') or '').strip() for j in jobs)
           assert all(str(j.get('main_message') or '').strip() for j in jobs)
           assert all(j.get('manual_approval_required') is True for j in jobs)
+
+          # Full Instagram Feed/Reels policy must be attached to every job.
+          required_predictions={
+              'positive_action_probability','skip_probability','profile_time_after_post',
+              'direct_share_probability','predicted_time_on_post','first_post_skip_probability',
+              'session_continuation_after_first_post'
+          }
+          for j in jobs:
+              assert j.get('instagram_policy_required') is True
+              assert j.get('instagram_policy_version')
+              targets=j.get('instagram_prediction_targets') or {}
+              assert required_predictions <= set(targets.keys()), (j.get('id'), targets.keys())
+              constraints=j.get('instagram_creative_constraints') or {}
+              assert constraints.get('first_visible_unit_must_work_without_context') is True
+              assert constraints.get('immediate_target_relevance') is True
+              assert constraints.get('skip_risk_must_be_reviewed') is True
+              assert constraints.get('visual_subject_immediately_recognizable') is True
+              assert constraints.get('visual_text_short') is True
+              assert constraints.get('photo_overlay_text_not_overloaded') is True
+              assert constraints.get('meaningful_positive_action_not_engagement_bait') is True
+              assert constraints.get('share_value_should_be_natural_not_forced') is True
+              assert constraints.get('profile_transition_must_match_brand_positioning') is True
+              assert constraints.get('deliver_value_after_hook') is True
+              assert j.get('instagram_reels_policy')
+              assert (j.get('instagram_reels_constraints') or {}).get('applicable') is False
+
           for j in jobs:
               if j.get('insights_status') != 'AVAILABLE':
                   assert j.get('publication_time_verified') is False
@@ -179,7 +222,7 @@ jobs:
               assert p.exists() and p.stat().st_size>20000, rel
           assert not list(Path('publisher/media/generated').rglob('*.mp4'))
           assert not list(Path('publisher/media/generated').rglob('*.mp3'))
-          print('VERIFIED: analysis-before-creation + 10 STATIC PUBLICATIONS. 5 F1 + 5 RMP.')
+          print('VERIFIED: pre-analysis + Instagram Feed/Reels directives + 10 STATIC PUBLICATIONS. 5 F1 + 5 RMP.')
           PY
 
       - name: Upload publication package
@@ -228,10 +271,11 @@ jobs:
           done
           cp publisher/queue.json /tmp/social-release/queue.json
           cp publisher/content_analysis.json /tmp/social-release/content_analysis.json
+          cp publisher/instagram_distribution_policy.json /tmp/social-release/instagram_distribution_policy.json
           gh release delete social-preview-latest --yes --cleanup-tag >/dev/null 2>&1 || true
           gh release create social-preview-latest /tmp/social-release/* \
             --title "10 PUBBLICAZIONI PRONTE - 5 F1 + 5 REAL MEDIA PRO" \
-            --notes "10 grafiche statiche pronte con analisi pre-creazione obbligatoria. Se Meta Insights non sono disponibili il sistema non inventa pubblico-online/orari e richiede approvazione manuale. F1: fonti locali Valle di Susa e soli hashtag territoriali. RMP: mockup originali da Shopify Theme Store, zero immagini copiate. Run ${GITHUB_RUN_ID}."
+            --notes "10 grafiche statiche pronte con analisi pre-creazione e policy completa Instagram Feed/Reels. Il sistema considera rischio di salto, tempo sul post, condivisioni Direct, visite profilo, azioni positive e regole specifiche di formato; non inventa Insights o orari. Le regole Reels 9:16/audio/safe area restano registrate anche se il workflow corrente produce foto statiche. Run ${GITHUB_RUN_ID}."
 
       - name: Notify publication results
         uses: actions/github-script@v8
@@ -242,10 +286,10 @@ jobs:
               '@josephsocialmedia2-spec pacchetto completato.',
               '',
               '**10 PUBBLICAZIONI PRONTE:** 5 F1 Immobiliare + 5 Real Media Pro.',
-              '**ANALISI PRE-CREAZIONE:** obbligatoria. Target, obiettivo, messaggio e comparabili registrati.',
-              '**INSIGHTS:** se assenti, il sistema li segnala come non disponibili e non inventa l’orario di pubblicazione.',
-              '**F1:** immagini locali Valle di Susa + soli hashtag territoriali + fascia Francesca/Joseph.',
-              '**RMP:** solo Shopify Theme Store come riferimento; mockup originali; nessuna immagine del tema copiata; zero hashtag + fascia Francesca/Joseph.',
+              '**ANALISI PRE-CREAZIONE:** target, obiettivo, messaggio, comparabili e dati disponibili.',
+              '**INSTAGRAM:** applicate le previsioni Feed su skip, tempo, azioni positive, Direct share, visite profilo e continuità di sessione.',
+              '**REELS:** policy completa 9:16, audio, area sicura, hook, sottotitoli, armonia e CTA registrata per i formati video futuri.',
+              '**INSIGHTS:** se assenti, il sistema non inventa metriche o orari.',
               '',
               'Controllo + caption: https://josephsocialmedia2-spec.github.io/open-social-scheduler/monday-control.html',
               'Download rapido: https://github.com/josephsocialmedia2-spec/open-social-scheduler/releases/tag/social-preview-latest',
