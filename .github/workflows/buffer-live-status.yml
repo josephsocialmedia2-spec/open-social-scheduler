@@ -1,0 +1,93 @@
+name: F1 Buffer LIVE Status Check
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.buffer-live-status-trigger'
+
+permissions:
+  contents: read
+
+jobs:
+  verify-live-posts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Verify all three Buffer posts reached sent
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          import os
+          import time
+          import urllib.request
+          from pathlib import Path
+
+          key = os.environ.get('BUFFER_API_KEY', '').strip()
+          queue = json.loads(Path('publisher/queue.json').read_text(encoding='utf-8'))
+          job_id = 'f1-immobiliare-buffer-2026-09-04-morning'
+          job = next(row for row in queue.get('jobs', []) if row.get('id') == job_id)
+          posts = {row['service']: row['post_id'] for row in job.get('buffer_posts', [])}
+          expected = {'facebook', 'instagram', 'linkedin'}
+          if set(posts) != expected:
+              raise SystemExit('Missing Buffer post ids: ' + json.dumps(posts))
+
+          def fetch_post(post_id):
+              query = '''query F1LivePostStatus {
+                post(input: { id: "%s" }) {
+                  id
+                  channelId
+                  status
+                  dueAt
+                  sentAt
+                  sharedNow
+                }
+              }''' % post_id
+              req = urllib.request.Request(
+                  'https://api.buffer.com',
+                  data=json.dumps({'query': query}).encode('utf-8'),
+                  headers={
+                      'Content-Type': 'application/json',
+                      'Authorization': 'Bearer ' + key,
+                  },
+                  method='POST',
+              )
+              with urllib.request.urlopen(req, timeout=30) as response:
+                  payload = json.loads(response.read().decode('utf-8'))
+              if payload.get('errors'):
+                  raise RuntimeError(json.dumps(payload['errors']))
+              return payload['data']['post']
+
+          last = {}
+          for attempt in range(18):
+              last = {service: fetch_post(post_id) for service, post_id in posts.items()}
+              safe = {
+                  service: {
+                      'post_id': row.get('id'),
+                      'status': row.get('status'),
+                      'sent_at': row.get('sentAt'),
+                      'shared_now': row.get('sharedNow'),
+                  }
+                  for service, row in last.items()
+              }
+              print('BUFFER_LIVE_STATUS ' + json.dumps(safe, ensure_ascii=False))
+              if all(str(row.get('status')) == 'sent' for row in last.values()):
+                  print(json.dumps({'status': 'ALL_THREE_SENT', 'posts': safe}, ensure_ascii=False, indent=2))
+                  raise SystemExit(0)
+              if any(str(row.get('status')) == 'error' for row in last.values()):
+                  raise SystemExit('A Buffer post entered error status')
+              time.sleep(5)
+
+          raise SystemExit('Timed out waiting for all three Buffer posts to reach sent')
+          PY
