@@ -4,7 +4,7 @@ on:
   schedule:
     # Four UTC companion runs cover Europe/Rome DST safely.
     # The Python gate publishes only the due local slot and retries once.
-    - cron: '45 8,9,16,17 * * *'
+    - cron: '30 8,9,16,17 * * *'
   push:
     branches:
       - main
