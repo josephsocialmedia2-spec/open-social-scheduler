@@ -1,7 +1,7 @@
 {
   "version": 1,
   "name": "F1 Qualified Seller 14-Day Queue",
-  "generated_at": "2026-09-04T18:17:30+02:00",
+  "generated_at": "2026-09-04T18:56:31+02:00",
   "window_start": "2026-08-22",
   "window_end": "2026-09-04",
   "goal": "qualified_seller_leads",
@@ -89,6 +89,16 @@
         "appointment",
         "mandate"
       ],
+      "canva_visual_source": true,
+      "canva_manifest": "publisher/canva_visual_manifest.json",
+      "canva_design_id": "DAHUQDlbIU0",
+      "canva_edit_url": "https://www.canva.com/d/oZ7Dtz_5GqPkx1F",
+      "canva_page_start": 1,
+      "canva_page_end": 7,
+      "visual_asset_urls": [
+        "https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=1400&q=88"
+      ],
+      "legacy_visuals_allowed": false,
       "render_status": "RENDERED_REEL_MP4",
       "render_spec": {
         "width": 1080,
@@ -190,6 +200,16 @@
         "appointment",
         "mandate"
       ],
+      "canva_visual_source": true,
+      "canva_manifest": "publisher/canva_visual_manifest.json",
+      "canva_design_id": "DAHUQDScdJM",
+      "canva_edit_url": "https://www.canva.com/d/cIzbB44_mzxEgw-",
+      "canva_page_start": 1,
+      "canva_page_end": 10,
+      "visual_asset_urls": [
+        "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&w=1400&q=88"
+      ],
+      "legacy_visuals_allowed": false,
       "render_status": "RENDERED_CAROUSEL_JPG",
       "render_spec": {
         "width": 1080,
@@ -275,6 +295,16 @@
         "appointment",
         "mandate"
       ],
+      "canva_visual_source": true,
+      "canva_manifest": "publisher/canva_visual_manifest.json",
+      "canva_design_id": "DAHUQDlbIU0",
+      "canva_edit_url": "https://www.canva.com/d/oZ7Dtz_5GqPkx1F",
+      "canva_page_start": 8,
+      "canva_page_end": 14,
+      "visual_asset_urls": [
+        "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1400&q=88"
+      ],
+      "legacy_visuals_allowed": false,
       "render_status": "RENDERED_REEL_MP4",
       "render_spec": {
         "width": 1080,
@@ -376,6 +406,16 @@
         "appointment",
         "mandate"
       ],
+      "canva_visual_source": true,
+      "canva_manifest": "publisher/canva_visual_manifest.json",
+      "canva_design_id": "DAHUQDScdJM",
+      "canva_edit_url": "https://www.canva.com/d/cIzbB44_mzxEgw-",
+      "canva_page_start": 11,
+      "canva_page_end": 20,
+      "visual_asset_urls": [
+        "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1400&q=88"
+      ],
+      "legacy_visuals_allowed": false,
       "render_status": "RENDERED_CAROUSEL_JPG",
       "render_spec": {
         "width": 1080,
@@ -461,6 +501,16 @@
         "appointment",
         "mandate"
       ],
+      "canva_visual_source": true,
+      "canva_manifest": "publisher/canva_visual_manifest.json",
+      "canva_design_id": "DAHUQDlbIU0",
+      "canva_edit_url": "https://www.canva.com/d/oZ7Dtz_5GqPkx1F",
+      "canva_page_start": 15,
+      "canva_page_end": 21,
+      "visual_asset_urls": [
+        "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1400&q=88"
+      ],
+      "legacy_visuals_allowed": false,
       "render_status": "RENDERED_REEL_MP4",
       "render_spec": {
         "width": 1080,
@@ -562,6 +612,16 @@
         "appointment",
         "mandate"
       ],
+      "canva_visual_source": true,
+      "canva_manifest": "publisher/canva_visual_manifest.json",
+      "canva_design_id": "DAHUQDScdJM",
+      "canva_edit_url": "https://www.canva.com/d/cIzbB44_mzxEgw-",
+      "canva_page_start": 21,
+      "canva_page_end": 30,
+      "visual_asset_urls": [
+        "https://images.unsplash.com/photo-1600607688969-a5bfcd646154?auto=format&fit=crop&w=1400&q=88"
+      ],
+      "legacy_visuals_allowed": false,
       "render_status": "RENDERED_CAROUSEL_JPG",
       "render_spec": {
         "width": 1080,
@@ -647,6 +707,16 @@
         "appointment",
         "mandate"
       ],
+      "canva_visual_source": true,
+      "canva_manifest": "publisher/canva_visual_manifest.json",
+      "canva_design_id": "DAHUQDlbIU0",
+      "canva_edit_url": "https://www.canva.com/d/oZ7Dtz_5GqPkx1F",
+      "canva_page_start": 22,
+      "canva_page_end": 28,
+      "visual_asset_urls": [
+        "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1400&q=88"
+      ],
+      "legacy_visuals_allowed": false,
       "render_status": "RENDERED_REEL_MP4",
       "render_spec": {
         "width": 1080,
@@ -748,6 +818,16 @@
         "appointment",
         "mandate"
       ],
+      "canva_visual_source": true,
+      "canva_manifest": "publisher/canva_visual_manifest.json",
+      "canva_design_id": "DAHUQDScdJM",
+      "canva_edit_url": "https://www.canva.com/d/cIzbB44_mzxEgw-",
+      "canva_page_start": 31,
+      "canva_page_end": 40,
+      "visual_asset_urls": [
+        "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1400&q=88"
+      ],
+      "legacy_visuals_allowed": false,
       "render_status": "RENDERED_CAROUSEL_JPG",
       "render_spec": {
         "width": 1080,
@@ -833,6 +913,16 @@
         "appointment",
         "mandate"
       ],
+      "canva_visual_source": true,
+      "canva_manifest": "publisher/canva_visual_manifest.json",
+      "canva_design_id": "DAHUQDlbIU0",
+      "canva_edit_url": "https://www.canva.com/d/oZ7Dtz_5GqPkx1F",
+      "canva_page_start": 29,
+      "canva_page_end": 35,
+      "visual_asset_urls": [
+        "https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=1400&q=88"
+      ],
+      "legacy_visuals_allowed": false,
       "render_status": "RENDERED_REEL_MP4",
       "render_spec": {
         "width": 1080,
@@ -934,6 +1024,16 @@
         "appointment",
         "mandate"
       ],
+      "canva_visual_source": true,
+      "canva_manifest": "publisher/canva_visual_manifest.json",
+      "canva_design_id": "DAHUQDScdJM",
+      "canva_edit_url": "https://www.canva.com/d/cIzbB44_mzxEgw-",
+      "canva_page_start": 41,
+      "canva_page_end": 50,
+      "visual_asset_urls": [
+        "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&w=1400&q=88"
+      ],
+      "legacy_visuals_allowed": false,
       "render_status": "RENDERED_CAROUSEL_JPG",
       "render_spec": {
         "width": 1080,
@@ -1019,6 +1119,16 @@
         "appointment",
         "mandate"
       ],
+      "canva_visual_source": true,
+      "canva_manifest": "publisher/canva_visual_manifest.json",
+      "canva_design_id": "DAHUQDlbIU0",
+      "canva_edit_url": "https://www.canva.com/d/oZ7Dtz_5GqPkx1F",
+      "canva_page_start": 36,
+      "canva_page_end": 42,
+      "visual_asset_urls": [
+        "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1400&q=88"
+      ],
+      "legacy_visuals_allowed": false,
       "render_status": "RENDERED_REEL_MP4",
       "render_spec": {
         "width": 1080,
@@ -1120,6 +1230,16 @@
         "appointment",
         "mandate"
       ],
+      "canva_visual_source": true,
+      "canva_manifest": "publisher/canva_visual_manifest.json",
+      "canva_design_id": "DAHUQDScdJM",
+      "canva_edit_url": "https://www.canva.com/d/cIzbB44_mzxEgw-",
+      "canva_page_start": 51,
+      "canva_page_end": 60,
+      "visual_asset_urls": [
+        "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1400&q=88"
+      ],
+      "legacy_visuals_allowed": false,
       "render_status": "RENDERED_CAROUSEL_JPG",
       "render_spec": {
         "width": 1080,
@@ -1205,6 +1325,16 @@
         "appointment",
         "mandate"
       ],
+      "canva_visual_source": true,
+      "canva_manifest": "publisher/canva_visual_manifest.json",
+      "canva_design_id": "DAHUQDlbIU0",
+      "canva_edit_url": "https://www.canva.com/d/oZ7Dtz_5GqPkx1F",
+      "canva_page_start": 43,
+      "canva_page_end": 49,
+      "visual_asset_urls": [
+        "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1400&q=88"
+      ],
+      "legacy_visuals_allowed": false,
       "render_status": "RENDERED_REEL_MP4",
       "render_spec": {
         "width": 1080,
@@ -1306,6 +1436,16 @@
         "appointment",
         "mandate"
       ],
+      "canva_visual_source": true,
+      "canva_manifest": "publisher/canva_visual_manifest.json",
+      "canva_design_id": "DAHUQDScdJM",
+      "canva_edit_url": "https://www.canva.com/d/cIzbB44_mzxEgw-",
+      "canva_page_start": 61,
+      "canva_page_end": 70,
+      "visual_asset_urls": [
+        "https://images.unsplash.com/photo-1600607688969-a5bfcd646154?auto=format&fit=crop&w=1400&q=88"
+      ],
+      "legacy_visuals_allowed": false,
       "render_status": "RENDERED_CAROUSEL_JPG",
       "render_spec": {
         "width": 1080,
@@ -1391,6 +1531,16 @@
         "appointment",
         "mandate"
       ],
+      "canva_visual_source": true,
+      "canva_manifest": "publisher/canva_visual_manifest.json",
+      "canva_design_id": "DAHUQDlbIU0",
+      "canva_edit_url": "https://www.canva.com/d/oZ7Dtz_5GqPkx1F",
+      "canva_page_start": 50,
+      "canva_page_end": 56,
+      "visual_asset_urls": [
+        "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1400&q=88"
+      ],
+      "legacy_visuals_allowed": false,
       "render_status": "RENDERED_REEL_MP4",
       "render_spec": {
         "width": 1080,
@@ -1492,6 +1642,16 @@
         "appointment",
         "mandate"
       ],
+      "canva_visual_source": true,
+      "canva_manifest": "publisher/canva_visual_manifest.json",
+      "canva_design_id": "DAHUQDScdJM",
+      "canva_edit_url": "https://www.canva.com/d/cIzbB44_mzxEgw-",
+      "canva_page_start": 71,
+      "canva_page_end": 80,
+      "visual_asset_urls": [
+        "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1400&q=88"
+      ],
+      "legacy_visuals_allowed": false,
       "render_status": "RENDERED_CAROUSEL_JPG",
       "render_spec": {
         "width": 1080,
@@ -1577,6 +1737,16 @@
         "appointment",
         "mandate"
       ],
+      "canva_visual_source": true,
+      "canva_manifest": "publisher/canva_visual_manifest.json",
+      "canva_design_id": "DAHUQDlbIU0",
+      "canva_edit_url": "https://www.canva.com/d/oZ7Dtz_5GqPkx1F",
+      "canva_page_start": 57,
+      "canva_page_end": 63,
+      "visual_asset_urls": [
+        "https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=1400&q=88"
+      ],
+      "legacy_visuals_allowed": false,
       "render_status": "RENDERED_REEL_MP4",
       "render_spec": {
         "width": 1080,
@@ -1678,6 +1848,16 @@
         "appointment",
         "mandate"
       ],
+      "canva_visual_source": true,
+      "canva_manifest": "publisher/canva_visual_manifest.json",
+      "canva_design_id": "DAHUQDScdJM",
+      "canva_edit_url": "https://www.canva.com/d/cIzbB44_mzxEgw-",
+      "canva_page_start": 81,
+      "canva_page_end": 90,
+      "visual_asset_urls": [
+        "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&w=1400&q=88"
+      ],
+      "legacy_visuals_allowed": false,
       "render_status": "RENDERED_CAROUSEL_JPG",
       "render_spec": {
         "width": 1080,
@@ -1763,6 +1943,16 @@
         "appointment",
         "mandate"
       ],
+      "canva_visual_source": true,
+      "canva_manifest": "publisher/canva_visual_manifest.json",
+      "canva_design_id": "DAHUQDlbIU0",
+      "canva_edit_url": "https://www.canva.com/d/oZ7Dtz_5GqPkx1F",
+      "canva_page_start": 64,
+      "canva_page_end": 70,
+      "visual_asset_urls": [
+        "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1400&q=88"
+      ],
+      "legacy_visuals_allowed": false,
       "render_status": "RENDERED_REEL_MP4",
       "render_spec": {
         "width": 1080,
@@ -1864,6 +2054,16 @@
         "appointment",
         "mandate"
       ],
+      "canva_visual_source": true,
+      "canva_manifest": "publisher/canva_visual_manifest.json",
+      "canva_design_id": "DAHUQDScdJM",
+      "canva_edit_url": "https://www.canva.com/d/cIzbB44_mzxEgw-",
+      "canva_page_start": 91,
+      "canva_page_end": 100,
+      "visual_asset_urls": [
+        "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1400&q=88"
+      ],
+      "legacy_visuals_allowed": false,
       "render_status": "RENDERED_CAROUSEL_JPG",
       "render_spec": {
         "width": 1080,
@@ -1949,6 +2149,16 @@
         "appointment",
         "mandate"
       ],
+      "canva_visual_source": true,
+      "canva_manifest": "publisher/canva_visual_manifest.json",
+      "canva_design_id": "DAHUQDlbIU0",
+      "canva_edit_url": "https://www.canva.com/d/oZ7Dtz_5GqPkx1F",
+      "canva_page_start": 71,
+      "canva_page_end": 77,
+      "visual_asset_urls": [
+        "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1400&q=88"
+      ],
+      "legacy_visuals_allowed": false,
       "render_status": "RENDERED_REEL_MP4",
       "render_spec": {
         "width": 1080,
@@ -2050,6 +2260,16 @@
         "appointment",
         "mandate"
       ],
+      "canva_visual_source": true,
+      "canva_manifest": "publisher/canva_visual_manifest.json",
+      "canva_design_id": "DAHUQDScdJM",
+      "canva_edit_url": "https://www.canva.com/d/cIzbB44_mzxEgw-",
+      "canva_page_start": 101,
+      "canva_page_end": 110,
+      "visual_asset_urls": [
+        "https://images.unsplash.com/photo-1600607688969-a5bfcd646154?auto=format&fit=crop&w=1400&q=88"
+      ],
+      "legacy_visuals_allowed": false,
       "render_status": "RENDERED_CAROUSEL_JPG",
       "render_spec": {
         "width": 1080,
@@ -2135,6 +2355,16 @@
         "appointment",
         "mandate"
       ],
+      "canva_visual_source": true,
+      "canva_manifest": "publisher/canva_visual_manifest.json",
+      "canva_design_id": "DAHUQDlbIU0",
+      "canva_edit_url": "https://www.canva.com/d/oZ7Dtz_5GqPkx1F",
+      "canva_page_start": 78,
+      "canva_page_end": 84,
+      "visual_asset_urls": [
+        "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1400&q=88"
+      ],
+      "legacy_visuals_allowed": false,
       "render_status": "RENDERED_REEL_MP4",
       "render_spec": {
         "width": 1080,
@@ -2236,6 +2466,16 @@
         "appointment",
         "mandate"
       ],
+      "canva_visual_source": true,
+      "canva_manifest": "publisher/canva_visual_manifest.json",
+      "canva_design_id": "DAHUQDScdJM",
+      "canva_edit_url": "https://www.canva.com/d/cIzbB44_mzxEgw-",
+      "canva_page_start": 111,
+      "canva_page_end": 120,
+      "visual_asset_urls": [
+        "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1400&q=88"
+      ],
+      "legacy_visuals_allowed": false,
       "render_status": "RENDERED_CAROUSEL_JPG",
       "render_spec": {
         "width": 1080,
@@ -2321,6 +2561,16 @@
         "appointment",
         "mandate"
       ],
+      "canva_visual_source": true,
+      "canva_manifest": "publisher/canva_visual_manifest.json",
+      "canva_design_id": "DAHUQDlbIU0",
+      "canva_edit_url": "https://www.canva.com/d/oZ7Dtz_5GqPkx1F",
+      "canva_page_start": 85,
+      "canva_page_end": 91,
+      "visual_asset_urls": [
+        "https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=1400&q=88"
+      ],
+      "legacy_visuals_allowed": false,
       "render_status": "RENDERED_REEL_MP4",
       "render_spec": {
         "width": 1080,
@@ -2422,6 +2672,16 @@
         "appointment",
         "mandate"
       ],
+      "canva_visual_source": true,
+      "canva_manifest": "publisher/canva_visual_manifest.json",
+      "canva_design_id": "DAHUQDScdJM",
+      "canva_edit_url": "https://www.canva.com/d/cIzbB44_mzxEgw-",
+      "canva_page_start": 121,
+      "canva_page_end": 130,
+      "visual_asset_urls": [
+        "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&w=1400&q=88"
+      ],
+      "legacy_visuals_allowed": false,
       "render_status": "RENDERED_CAROUSEL_JPG",
       "render_spec": {
         "width": 1080,
@@ -2507,6 +2767,16 @@
         "appointment",
         "mandate"
       ],
+      "canva_visual_source": true,
+      "canva_manifest": "publisher/canva_visual_manifest.json",
+      "canva_design_id": "DAHUQDlbIU0",
+      "canva_edit_url": "https://www.canva.com/d/oZ7Dtz_5GqPkx1F",
+      "canva_page_start": 92,
+      "canva_page_end": 98,
+      "visual_asset_urls": [
+        "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1400&q=88"
+      ],
+      "legacy_visuals_allowed": false,
       "render_status": "RENDERED_REEL_MP4",
       "render_spec": {
         "width": 1080,
@@ -2608,6 +2878,16 @@
         "appointment",
         "mandate"
       ],
+      "canva_visual_source": true,
+      "canva_manifest": "publisher/canva_visual_manifest.json",
+      "canva_design_id": "DAHUQDScdJM",
+      "canva_edit_url": "https://www.canva.com/d/cIzbB44_mzxEgw-",
+      "canva_page_start": 131,
+      "canva_page_end": 140,
+      "visual_asset_urls": [
+        "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1400&q=88"
+      ],
+      "legacy_visuals_allowed": false,
       "render_status": "RENDERED_CAROUSEL_JPG",
       "render_spec": {
         "width": 1080,
@@ -2623,6 +2903,9 @@
     "blocked": 0,
     "total": 28
   },
+  "visual_source": "canva",
+  "canva_manifest": "publisher/canva_visual_manifest.json",
+  "legacy_visuals_allowed": false,
   "render_summary": {
     "reels": 14,
     "carousels": 14,
