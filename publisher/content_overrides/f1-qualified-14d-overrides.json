@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "rules": {
     "never_invent_buyer_demand": true,
     "buyer_demand_claims_require_evidence": true,
@@ -8,7 +8,7 @@
   "items": {
     "R01": {
       "title": "Siamo alla ricerca di immobili in Valle di Susa",
-      "main_message": "F1 Immobiliare è alla ricerca di nuovi immobili da acquisire in Valle di Susa. Se stai pensando di vendere, il primo passo è capire il valore reale e la strategia corretta, senza inventare acquirenti o partire da un prezzo scelto a sensazione.",
+      "main_message": "F1 Immobiliare è alla ricerca di nuovi immobili da acquisire in Valle di Susa. Se stai pensando di vendere, il primo passo è capire il valore reale e la strategia corretta, senza partire da un prezzo scelto a sensazione.",
       "slides": [
         "SIAMO ALLA RICERCA|DI IMMOBILI",
         "IN VALLE|DI SUSA",
@@ -19,7 +19,7 @@
         "SCRIVI VALUTAZIONE|COMUNE · TIPOLOGIA · MQ · TEMPI"
       ],
       "voiceover": "Siamo alla ricerca di immobili in Valle di Susa. Se stai pensando di vendere casa, non partire da un prezzo scelto a sensazione. F1 Immobiliare parte da una valutazione professionale a tre livelli: valore minimo, valore centrale e valore massimo sostenibile. Poi definiamo target, fotografie, video, annunci, portali e campagne del Piano Marketing F1. Scrivi VALUTAZIONE indicando comune, tipologia, metri quadrati e quando vorresti vendere.",
-      "caption": "SIAMO ALLA RICERCA DI IMMOBILI IN VALLE DI SUSA.\n\nSe stai pensando di vendere casa, il primo passo non è pubblicare un annuncio con un prezzo scelto a sensazione. È capire quanto può valere realmente il tuo immobile e quale strategia può portarlo sul mercato nel modo corretto.\n\nF1 Immobiliare parte da una VALUTAZIONE PROFESSIONALE A 3 LIVELLI: valore minimo, valore centrale e valore massimo sostenibile. Analizziamo microzona, caratteristiche dell'immobile, concorrenza e target potenziale. Solo dopo costruiamo il Piano Marketing F1: valorizzazione degli ambienti, fotografie professionali, Reel e video verticali, copy dell'annuncio, grandi portali, sito F1, campagne Facebook/Instagram/Google e retargeting.\n\nNon usiamo claim su acquirenti o richieste attive senza una fonte reale verificata. Partiamo dai dati del tuo immobile.\n\nScrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere. F1 Immobiliare · 371 370 8294.\n\n#F1Immobiliare #ValleDiSusa #VendereCasa #ValutazioneImmobiliare",
+      "caption": "SIAMO ALLA RICERCA DI IMMOBILI IN VALLE DI SUSA.\n\nSe stai pensando di vendere casa, il primo passo non è pubblicare un annuncio con un prezzo scelto a sensazione. È capire quanto può valere realmente il tuo immobile e quale strategia può portarlo sul mercato nel modo corretto.\n\nF1 Immobiliare parte da una VALUTAZIONE PROFESSIONALE A 3 LIVELLI: valore minimo, valore centrale e valore massimo sostenibile. Analizziamo microzona, caratteristiche dell'immobile, concorrenza e target potenziale. Solo dopo costruiamo il Piano Marketing F1: valorizzazione degli ambienti, fotografie professionali, Reel e video verticali, copy dell'annuncio, grandi portali, sito F1, campagne Facebook/Instagram/Google e retargeting.\n\nScrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere. F1 Immobiliare · 371 370 8294.\n\n#F1Immobiliare #ValleDiSusa #VendereCasa #ValutazioneImmobiliare",
       "topic_keywords": [
         "ricerca immobili",
         "vendere",
