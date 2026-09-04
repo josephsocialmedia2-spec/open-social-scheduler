@@ -13,6 +13,7 @@ Every active-cycle job receives:
 - Instagram Creators best practices from instagram_creators_best_practices.json;
 - format diversification, trial-Reel consideration, share-worthiness, first-3-second hook,
   highest resolution, muted-view comprehension, audio rights and early comment response;
+- direct audience feedback, anti-engagement-bait and authentic CTA enforcement;
 - format-specific constraints for photo/carousel/reel/video;
 - measurement rules that forbid invented ranking probabilities;
 - mandatory manual approval when data is incomplete.
@@ -94,6 +95,11 @@ def main() -> int:
         raise RuntimeError("Instagram master policy missing measurement policy")
     if not creators.get("reels_best_practices") or not creators.get("format_diversification"):
         raise RuntimeError("Instagram Creators policy incomplete")
+    community = creators.get("community_connections") or {}
+    if not community.get("reach_audience_directly") or not community.get("engagement_bait") or not community.get("comment_interaction"):
+        raise RuntimeError("Instagram Creators community/anti-bait policy incomplete")
+    if (community.get("engagement_bait") or {}).get("prohibited") is not True:
+        raise RuntimeError("Instagram engagement bait must be prohibited")
 
     clients = a.get("clients", {})
     cycle = q.get("current_cycle")
@@ -144,6 +150,11 @@ def main() -> int:
         j["instagram_measurement_policy"] = master.get("measurement_policy", {})
         j["instagram_mandatory_prepublication_checks"] = master.get("mandatory_prepublication_checks", [])
         j["instagram_creators_best_practices"] = creators
+        j["instagram_community_connections"] = community
+        j["instagram_engagement_bait_prohibited"] = True
+        j["instagram_authentic_cta_required"] = True
+        j["instagram_audience_feedback_channels"] = (community.get("reach_audience_directly") or {}).get("channels", [])
+        j["instagram_early_comment_interaction_required"] = bool((community.get("comment_interaction") or {}).get("early_days_priority"))
         j["instagram_performance_data_status"] = instagram_ctx.get("performance_data_status", ctx.get("insights", {}).get("status"))
         j["instagram_performance_metrics_expected"] = (
             instagram_ctx.get("performance_metrics_expected")
@@ -165,6 +176,9 @@ def main() -> int:
             "visual_text_short": True,
             "photo_overlay_text_not_overloaded": True if fmt == "photo" else None,
             "meaningful_positive_action_not_engagement_bait": True,
+            "engagement_bait_forbidden": True,
+            "authentic_cta_only": True,
+            "audience_feedback_method_considered": True,
             "share_value_should_be_natural_not_forced": True,
             "save_value_should_be_considered_when_relevant": True,
             "profile_transition_must_match_brand_positioning": True,
@@ -245,6 +259,9 @@ def main() -> int:
             "caption_has_no_unnecessary_elements": None,
             "meaningful_for_target": True,
             "cta_connected_to_objective_or_omitted": True,
+            "authentic_cta_only": True,
+            "engagement_bait_absent": True,
+            "audience_feedback_method_considered": True,
             "question_is_relevant_if_present": True,
             "sufficiently_distinct_from_recent_posts": None,
             "creative_fatigue_reviewed": None,
@@ -259,6 +276,7 @@ def main() -> int:
             "new_idea_test_considered": True,
             "share_worthiness_reviewed": True,
             "highest_available_resolution_used": None,
+            "early_comment_interaction_plan_present": True,
             "carousel_completion_logic_passed": None if fmt != "carousel" else False,
             "first_3_seconds_passed": None if fmt not in {"reel", "video"} else False,
             "reason_beyond_10_seconds_passed": None if fmt not in {"reel", "video", "carousel"} else False,
@@ -270,14 +288,14 @@ def main() -> int:
             "gallery_metadata_permission_passed": None,
         }
 
-    q["analysis_policy"] = "ANALISI PRIMA DELLA CREAZIONE + FULL INSTAGRAM FEED/REELS MASTER POLICY + CREATORS BEST PRACTICES"
+    q["analysis_policy"] = "ANALISI PRIMA DELLA CREAZIONE + FULL INSTAGRAM FEED/REELS MASTER POLICY + CREATORS BEST PRACTICES + COMMUNITY/ANTI-BAIT"
     q["instagram_distribution_policy"] = "publisher/instagram_distribution_policy.json"
     q["instagram_distribution_policy_version"] = master.get("version")
     q["instagram_creators_best_practices"] = "publisher/instagram_creators_best_practices.json"
     q["instagram_creators_best_practices_version"] = creators.get("version")
     q["instagram_policy_loaded_directly"] = True
     QUEUE.write_text(json.dumps(q, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(f"ANALYSIS + FULL INSTAGRAM MASTER V{master.get('version')} + CREATORS V{creators.get('version')} ENFORCED on {len(jobs)} jobs")
+    print(f"ANALYSIS + FULL INSTAGRAM MASTER V{master.get('version')} + CREATORS V{creators.get('version')} + ANTI-BAIT ENFORCED on {len(jobs)} jobs")
     return 0
 
 
