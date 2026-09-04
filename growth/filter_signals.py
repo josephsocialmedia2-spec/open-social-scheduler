@@ -108,14 +108,18 @@ def is_recent(signal: dict) -> bool:
     return (datetime.now(timezone.utc) - dt).days <= MAX_AGE_DAYS
 
 
-def group_looks_local(group: dict, signal: dict) -> bool:
+def local_terms(signal: dict) -> tuple[str, ...]:
     territory = norm(signal.get("territory", ""))
-    text = norm(f"{group.get('territory', '')} {group.get('name', '')} {group.get('snippet', '')}")
-    if territory and territory in text:
-        return True
-    if "valle di susa" in text or "val di susa" in text or "valsusa" in text:
-        return True
-    return False
+    terms = ["valle di susa", "val di susa", "valsusa"]
+    if territory:
+        terms.insert(0, territory)
+    return tuple(dict.fromkeys(terms))
+
+
+def group_looks_local(group: dict, signal: dict) -> bool:
+    # Non fidarsi del campo group.territory: viene assegnato dalla query e può essere un falso positivo.
+    text = norm(f"{group.get('name', '')} {group.get('snippet', '')}")
+    return any(term and term in text for term in local_terms(signal))
 
 
 def valid_signal(signal: dict, groups: dict[str, dict]) -> bool:
@@ -134,10 +138,11 @@ def valid_signal(signal: dict, groups: dict[str, dict]) -> bool:
     title = norm(signal.get("title", ""))
     snippet = norm(signal.get("snippet", ""))
     text = f"{title} {snippet}"
+    local_in_signal = any(term and term in text for term in local_terms(signal))
 
     if any(x in title for x in NON_PROPERTY_TITLE) and not any(x in title for x in PROPERTY):
         return False
-    if any(x in text for x in FOREIGN_OR_WRONG_CONTEXT):
+    if any(x in text for x in FOREIGN_OR_WRONG_CONTEXT) and not local_in_signal:
         return False
     if "popular groups" in snippet and "find communities for you" in snippet and not any(x in title for x in INTENT):
         return False
