@@ -1,18 +1,19 @@
 #!/usr/bin/env python3
 """Mandatory analysis context before content production.
 
-Implements the operational rules supplied by the user:
-- inspect available Insights data before creation;
+Implements the operational rules supplied by the user and the Instagram Feed /
+Reels guidance stored in instagram_distribution_policy.json.
+
+Rules:
+- inspect available Insights before creation;
 - compare recent comparable posts;
 - choose one precise audience;
 - choose one primary objective;
 - define one main message;
-- use real audience-online data for publication timing when available;
-- never invent missing Meta Insights.
-
-This script does not publish. If Meta Insights are unavailable it records that
-explicitly and forces manual approval / unverified scheduling rather than
-inventing demographics, interests, performance or best posting times.
+- evaluate Instagram ranking predictions/signals, not just likes;
+- use real audience-online data for timing when available;
+- never invent missing Insights or performance data;
+- keep format-specific Feed/Reels requirements available downstream.
 """
 from __future__ import annotations
 
@@ -26,6 +27,7 @@ QUEUE = PUBLISHER / "queue.json"
 CLIENT_DIR = PUBLISHER / "clients"
 INSIGHTS_DIR = PUBLISHER / "insights"
 OUT = PUBLISHER / "content_analysis.json"
+IG_POLICY = PUBLISHER / "instagram_distribution_policy.json"
 
 
 def load(path: Path, default):
@@ -34,27 +36,38 @@ def load(path: Path, default):
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def recent_comparable(queue: dict, client_id: str, limit: int = 8) -> list[dict]:
+def recent_comparable(queue: dict, client_id: str, limit: int = 12) -> list[dict]:
     rows = [j for j in queue.get("jobs", []) if j.get("client_id") == client_id]
     rows.sort(key=lambda j: str(j.get("scheduled_at") or ""), reverse=True)
     out = []
     seen = set()
     for j in rows:
         title = str(j.get("title") or "").strip()
-        if not title or title in seen:
+        key = (title, str(j.get("format") or ""), str(j.get("category") or ""))
+        if not title or key in seen:
             continue
-        seen.add(title)
+        seen.add(key)
         out.append({
             "title": title,
             "format": j.get("format"),
             "category": j.get("category"),
             "visual_source": j.get("visual_source"),
-            "caption": str(j.get("caption") or "")[:500],
-            "likes": None,
-            "comments": None,
-            "shares": None,
-            "cta_clicks": None,
-            "metrics_status": "NOT_AVAILABLE_IN_QUEUE",
+            "caption": str(j.get("caption") or "")[:700],
+            "likes": j.get("likes"),
+            "comments": j.get("comments"),
+            "shares": j.get("shares"),
+            "saves": j.get("saves"),
+            "cta_clicks": j.get("cta_clicks"),
+            "profile_visits": j.get("profile_visits"),
+            "direct_shares": j.get("direct_shares"),
+            "dwell_time_seconds": j.get("dwell_time_seconds"),
+            "skip_rate": j.get("skip_rate"),
+            "carousel_completion_rate": j.get("carousel_completion_rate"),
+            "average_watch_time_seconds": j.get("average_watch_time_seconds"),
+            "three_second_view_rate": j.get("three_second_view_rate"),
+            "ten_second_view_rate": j.get("ten_second_view_rate"),
+            "audio_on_rate": j.get("audio_on_rate"),
+            "metrics_status": j.get("metrics_status") or "NOT_AVAILABLE_IN_QUEUE",
         })
         if len(out) >= limit:
             break
@@ -78,7 +91,66 @@ def defaults_for(client: dict) -> tuple[str, str, str]:
     return audience, objective, message
 
 
-def analyze_client(client: dict, queue: dict) -> dict:
+def normalize_top_posts(insights: dict | None) -> list[dict]:
+    if not isinstance(insights, dict):
+        return []
+    rows = insights.get("top_posts") or []
+    out = []
+    for row in rows:
+        if not isinstance(row, dict):
+            continue
+        out.append({
+            "type": row.get("type") or row.get("format"),
+            "creative": row.get("creative") or row.get("media"),
+            "topic": row.get("topic") or row.get("argument"),
+            "message": row.get("message"),
+            "likes": row.get("likes"),
+            "comments": row.get("comments"),
+            "shares": row.get("shares"),
+            "saves": row.get("saves"),
+            "cta_clicks": row.get("cta_clicks"),
+            "profile_visits": row.get("profile_visits"),
+            "direct_shares": row.get("direct_shares"),
+            "dwell_time_seconds": row.get("dwell_time_seconds"),
+            "skip_rate": row.get("skip_rate"),
+            "carousel_completion_rate": row.get("carousel_completion_rate"),
+            "average_watch_time_seconds": row.get("average_watch_time_seconds"),
+            "three_second_view_rate": row.get("three_second_view_rate"),
+            "ten_second_view_rate": row.get("ten_second_view_rate"),
+            "audio_on_rate": row.get("audio_on_rate"),
+        })
+    return out
+
+
+def instagram_analysis(policy: dict, insights: dict | None) -> dict:
+    available = isinstance(insights, dict)
+    return {
+        "policy_version": policy.get("version"),
+        "ranking_model": {
+            "inventory": policy.get("feed_system", {}).get("inventory"),
+            "signals": policy.get("feed_system", {}).get("signals"),
+            "predictions": policy.get("feed_system", {}).get("predictions"),
+            "ranking_score": policy.get("feed_system", {}).get("ranking_score"),
+        },
+        "predictions_to_optimize": policy.get("significant_predictions", {}),
+        "gallery_suggestion_metadata": policy.get("gallery_suggestion_metadata", {}),
+        "reels_creative_essentials": policy.get("reels_creative_essentials", {}),
+        "reels_for_sales": policy.get("reels_for_sales", {}),
+        "reels_for_results": policy.get("reels_for_results", {}),
+        "reels_editing": policy.get("reels_editing", {}),
+        "ai_assisted_reels": policy.get("ai_assisted_reels", {}),
+        "mandatory_prepublication_checks": policy.get("mandatory_prepublication_checks", []),
+        "performance_data_status": "AVAILABLE" if available else "NOT_AVAILABLE",
+        "performance_metrics_expected": [
+            "likes", "comments", "shares", "saves", "cta_clicks", "profile_visits",
+            "direct_shares", "dwell_time_seconds", "skip_rate", "carousel_completion_rate",
+            "average_watch_time_seconds", "three_second_view_rate", "ten_second_view_rate", "audio_on_rate",
+        ],
+        "rule": "Use actual account/page data when present. Never fabricate ranking performance, watch-time, skip, share, save, profile-visit or audio metrics.",
+    }
+
+
+def analyze_client(client: dict, queue: dict, policy: dict) -> dict:
     cid = str(client.get("id") or "")
     insights_path = INSIGHTS_DIR / f"{cid}.json"
     insights = load(insights_path, None)
@@ -93,7 +165,7 @@ def analyze_client(client: dict, queue: dict) -> dict:
             "page_actions": insights.get("page_actions"),
             "cta_clicks": insights.get("cta_clicks"),
         }
-        top_posts = insights.get("top_posts") or []
+        top_posts = normalize_top_posts(insights)
         online = insights.get("audience_online") or {}
         recommended_day = online.get("day")
         recommended_window = online.get("time_window")
@@ -126,7 +198,7 @@ def analyze_client(client: dict, queue: dict) -> dict:
         "public": audience,
         "objective": objective,
         "main_message": message,
-        "cta_policy": "ONE_OR_NONE",
+        "cta_policy": "ONE_OR_NONE_AND_ONLY_IF_OBJECTIVE_REQUIRES_IT",
         "quality_gate": {
             "sharp_media_required": True,
             "brand_coherence_required": True,
@@ -134,12 +206,18 @@ def analyze_client(client: dict, queue: dict) -> dict:
             "short_visual_text_required": True,
             "single_main_idea_required": True,
             "relevant_question_only": True,
+            "skip_risk_review_required": True,
+            "dwell_time_value_review_required": True,
+            "direct_share_value_review_required": True,
+            "profile_visit_value_review_required": True,
+            "format_specific_rules_required": True,
         },
+        "instagram": instagram_analysis(policy, insights),
         "publication_timing": {
             "status": schedule_status,
             "day": recommended_day,
             "time_window": recommended_window,
-            "rule": "Use Page Insights audience-online data. Never invent a best time.",
+            "rule": "Use actual Page/Instagram Insights audience-online data. Never invent a best time.",
         },
         "manual_approval_required": True,
     }
@@ -147,6 +225,10 @@ def analyze_client(client: dict, queue: dict) -> dict:
 
 def main() -> int:
     queue = load(QUEUE, {"jobs": []})
+    policy = load(IG_POLICY, {})
+    if not policy:
+        raise RuntimeError("Missing publisher/instagram_distribution_policy.json")
+
     clients = []
     for path in sorted(CLIENT_DIR.glob("*.json")):
         if path.name.startswith("_"):
@@ -156,17 +238,19 @@ def main() -> int:
             clients.append(data)
 
     result = {
-        "version": 1,
+        "version": 2,
         "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z"),
-        "policy": "ANALISI PRIMA DELLA CREAZIONE DEL POST",
-        "clients": {c["id"]: analyze_client(c, queue) for c in clients},
+        "policy": "ANALISI PRIMA DELLA CREAZIONE DEL POST + INSTAGRAM FEED/REELS DISTRIBUTION SIGNALS",
+        "instagram_policy_file": str(IG_POLICY.relative_to(ROOT)),
+        "clients": {c["id"]: analyze_client(c, queue, policy) for c in clients},
     }
     OUT.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
     for cid, row in result["clients"].items():
         print(
             f"ANALYSIS {cid}: status={row['analysis_status']} insights={row['insights']['status']} "
-            f"public={row['public']} objective={row['objective']} timing={row['publication_timing']['status']}"
+            f"public={row['public']} objective={row['objective']} timing={row['publication_timing']['status']} "
+            f"ig_policy={row['instagram']['policy_version']}"
         )
     return 0
 
