@@ -13535,7 +13535,7 @@
       "instagram_policy_required": true,
       "instagram_policy_version": 2,
       "instagram_policy_source": "publisher/instagram_distribution_policy.json",
-      "instagram_creators_policy_version": 1,
+      "instagram_creators_policy_version": 2,
       "instagram_creators_policy_source": "publisher/instagram_creators_best_practices.json",
       "instagram_full_policy_attached": true,
       "instagram_scope_note": {
@@ -13791,7 +13791,7 @@
         "gallery_metadata_used_only_with_permission_if_used"
       ],
       "instagram_creators_best_practices": {
-        "version": 1,
+        "version": 2,
         "name": "Instagram Creators Engaging Content Best Practices",
         "source_basis": "User-supplied Instagram Creators guidance",
         "engagement_definition": {
@@ -13851,6 +13851,39 @@
           "rights_rule": "Use only audio you are licensed or otherwise permitted to use.",
           "purpose": "Use music and sound to create atmosphere, meaning or pacing; never as decoration only."
         },
+        "community_connections": {
+          "reach_audience_directly": {
+            "channels": [
+              "comments",
+              "DM",
+              "stories",
+              "channels",
+              "live",
+              "post_polls"
+            ],
+            "rule": "When useful, ask the audience directly what matters to them using authentic feedback mechanisms such as comments, DMs, Stories, channels, live sessions or polls."
+          },
+          "engagement_bait": {
+            "prohibited": true,
+            "rule": "Do not ask for artificial or meaningless interactions intended only to inflate engagement or reach.",
+            "authentic_cta_allowed": true,
+            "examples_to_avoid": [
+              "Commenta SI senza valore rispetto al contenuto",
+              "Tagga persone senza una ragione utile",
+              "Condividi seguendo formule manipolative o superstiziose",
+              "Inviti a cliccare o condividere che non aggiungono valore al contenuto"
+            ]
+          },
+          "comment_interaction": {
+            "early_days_priority": true,
+            "actions": [
+              "like comments",
+              "reply to comments",
+              "reply to a Reel comment with a Reel when useful"
+            ],
+            "rule": "Keep the conversation alive by liking or replying to comments in the first days after publication; a relevant Reel reply may be used when it adds value."
+          }
+        },
         "reels_best_practices": {
           "share_worthy": true,
           "hook_first_seconds": 3,
@@ -13889,7 +13922,11 @@
           "muted_view_understandable_if_video",
           "audio_rights_verified_if_audio_used",
           "comment_followup_plan_present_if_reel",
-          "reel_duration_within_recommendation_if_non_follower_distribution_is_objective"
+          "reel_duration_within_recommendation_if_non_follower_distribution_is_objective",
+          "audience_feedback_method_considered",
+          "engagement_bait_absent",
+          "authentic_cta_only",
+          "early_comment_interaction_plan_present"
         ]
       },
       "instagram_performance_data_status": "NOT_AVAILABLE",
@@ -14055,7 +14092,7 @@
           ]
         },
         "creators_best_practices": {
-          "version": 1,
+          "version": 2,
           "name": "Instagram Creators Engaging Content Best Practices",
           "source_basis": "User-supplied Instagram Creators guidance",
           "engagement_definition": {
@@ -14115,6 +14152,39 @@
             "rights_rule": "Use only audio you are licensed or otherwise permitted to use.",
             "purpose": "Use music and sound to create atmosphere, meaning or pacing; never as decoration only."
           },
+          "community_connections": {
+            "reach_audience_directly": {
+              "channels": [
+                "comments",
+                "DM",
+                "stories",
+                "channels",
+                "live",
+                "post_polls"
+              ],
+              "rule": "When useful, ask the audience directly what matters to them using authentic feedback mechanisms such as comments, DMs, Stories, channels, live sessions or polls."
+            },
+            "engagement_bait": {
+              "prohibited": true,
+              "rule": "Do not ask for artificial or meaningless interactions intended only to inflate engagement or reach.",
+              "authentic_cta_allowed": true,
+              "examples_to_avoid": [
+                "Commenta SI senza valore rispetto al contenuto",
+                "Tagga persone senza una ragione utile",
+                "Condividi seguendo formule manipolative o superstiziose",
+                "Inviti a cliccare o condividere che non aggiungono valore al contenuto"
+              ]
+            },
+            "comment_interaction": {
+              "early_days_priority": true,
+              "actions": [
+                "like comments",
+                "reply to comments",
+                "reply to a Reel comment with a Reel when useful"
+              ],
+              "rule": "Keep the conversation alive by liking or replying to comments in the first days after publication; a relevant Reel reply may be used when it adds value."
+            }
+          },
           "reels_best_practices": {
             "share_worthy": true,
             "hook_first_seconds": 3,
@@ -14153,7 +14223,11 @@
             "muted_view_understandable_if_video",
             "audio_rights_verified_if_audio_used",
             "comment_followup_plan_present_if_reel",
-            "reel_duration_within_recommendation_if_non_follower_distribution_is_objective"
+            "reel_duration_within_recommendation_if_non_follower_distribution_is_objective",
+            "audience_feedback_method_considered",
+            "engagement_bait_absent",
+            "authentic_cta_only",
+            "early_comment_interaction_plan_present"
           ]
         }
       },
@@ -14629,7 +14703,7 @@
       "instagram_policy_required": true,
       "instagram_policy_version": 2,
       "instagram_policy_source": "publisher/instagram_distribution_policy.json",
-      "instagram_creators_policy_version": 1,
+      "instagram_creators_policy_version": 2,
       "instagram_creators_policy_source": "publisher/instagram_creators_best_practices.json",
       "instagram_full_policy_attached": true,
       "instagram_scope_note": {
@@ -14885,7 +14959,7 @@
         "gallery_metadata_used_only_with_permission_if_used"
       ],
       "instagram_creators_best_practices": {
-        "version": 1,
+        "version": 2,
         "name": "Instagram Creators Engaging Content Best Practices",
         "source_basis": "User-supplied Instagram Creators guidance",
         "engagement_definition": {
@@ -14945,6 +15019,39 @@
           "rights_rule": "Use only audio you are licensed or otherwise permitted to use.",
           "purpose": "Use music and sound to create atmosphere, meaning or pacing; never as decoration only."
         },
+        "community_connections": {
+          "reach_audience_directly": {
+            "channels": [
+              "comments",
+              "DM",
+              "stories",
+              "channels",
+              "live",
+              "post_polls"
+            ],
+            "rule": "When useful, ask the audience directly what matters to them using authentic feedback mechanisms such as comments, DMs, Stories, channels, live sessions or polls."
+          },
+          "engagement_bait": {
+            "prohibited": true,
+            "rule": "Do not ask for artificial or meaningless interactions intended only to inflate engagement or reach.",
+            "authentic_cta_allowed": true,
+            "examples_to_avoid": [
+              "Commenta SI senza valore rispetto al contenuto",
+              "Tagga persone senza una ragione utile",
+              "Condividi seguendo formule manipolative o superstiziose",
+              "Inviti a cliccare o condividere che non aggiungono valore al contenuto"
+            ]
+          },
+          "comment_interaction": {
+            "early_days_priority": true,
+            "actions": [
+              "like comments",
+              "reply to comments",
+              "reply to a Reel comment with a Reel when useful"
+            ],
+            "rule": "Keep the conversation alive by liking or replying to comments in the first days after publication; a relevant Reel reply may be used when it adds value."
+          }
+        },
         "reels_best_practices": {
           "share_worthy": true,
           "hook_first_seconds": 3,
@@ -14983,7 +15090,11 @@
           "muted_view_understandable_if_video",
           "audio_rights_verified_if_audio_used",
           "comment_followup_plan_present_if_reel",
-          "reel_duration_within_recommendation_if_non_follower_distribution_is_objective"
+          "reel_duration_within_recommendation_if_non_follower_distribution_is_objective",
+          "audience_feedback_method_considered",
+          "engagement_bait_absent",
+          "authentic_cta_only",
+          "early_comment_interaction_plan_present"
         ]
       },
       "instagram_performance_data_status": "NOT_AVAILABLE",
@@ -15149,7 +15260,7 @@
           ]
         },
         "creators_best_practices": {
-          "version": 1,
+          "version": 2,
           "name": "Instagram Creators Engaging Content Best Practices",
           "source_basis": "User-supplied Instagram Creators guidance",
           "engagement_definition": {
@@ -15209,6 +15320,39 @@
             "rights_rule": "Use only audio you are licensed or otherwise permitted to use.",
             "purpose": "Use music and sound to create atmosphere, meaning or pacing; never as decoration only."
           },
+          "community_connections": {
+            "reach_audience_directly": {
+              "channels": [
+                "comments",
+                "DM",
+                "stories",
+                "channels",
+                "live",
+                "post_polls"
+              ],
+              "rule": "When useful, ask the audience directly what matters to them using authentic feedback mechanisms such as comments, DMs, Stories, channels, live sessions or polls."
+            },
+            "engagement_bait": {
+              "prohibited": true,
+              "rule": "Do not ask for artificial or meaningless interactions intended only to inflate engagement or reach.",
+              "authentic_cta_allowed": true,
+              "examples_to_avoid": [
+                "Commenta SI senza valore rispetto al contenuto",
+                "Tagga persone senza una ragione utile",
+                "Condividi seguendo formule manipolative o superstiziose",
+                "Inviti a cliccare o condividere che non aggiungono valore al contenuto"
+              ]
+            },
+            "comment_interaction": {
+              "early_days_priority": true,
+              "actions": [
+                "like comments",
+                "reply to comments",
+                "reply to a Reel comment with a Reel when useful"
+              ],
+              "rule": "Keep the conversation alive by liking or replying to comments in the first days after publication; a relevant Reel reply may be used when it adds value."
+            }
+          },
           "reels_best_practices": {
             "share_worthy": true,
             "hook_first_seconds": 3,
@@ -15247,7 +15391,11 @@
             "muted_view_understandable_if_video",
             "audio_rights_verified_if_audio_used",
             "comment_followup_plan_present_if_reel",
-            "reel_duration_within_recommendation_if_non_follower_distribution_is_objective"
+            "reel_duration_within_recommendation_if_non_follower_distribution_is_objective",
+            "audience_feedback_method_considered",
+            "engagement_bait_absent",
+            "authentic_cta_only",
+            "early_comment_interaction_plan_present"
           ]
         }
       },
@@ -15723,7 +15871,7 @@
       "instagram_policy_required": true,
       "instagram_policy_version": 2,
       "instagram_policy_source": "publisher/instagram_distribution_policy.json",
-      "instagram_creators_policy_version": 1,
+      "instagram_creators_policy_version": 2,
       "instagram_creators_policy_source": "publisher/instagram_creators_best_practices.json",
       "instagram_full_policy_attached": true,
       "instagram_scope_note": {
@@ -15979,7 +16127,7 @@
         "gallery_metadata_used_only_with_permission_if_used"
       ],
       "instagram_creators_best_practices": {
-        "version": 1,
+        "version": 2,
         "name": "Instagram Creators Engaging Content Best Practices",
         "source_basis": "User-supplied Instagram Creators guidance",
         "engagement_definition": {
@@ -16039,6 +16187,39 @@
           "rights_rule": "Use only audio you are licensed or otherwise permitted to use.",
           "purpose": "Use music and sound to create atmosphere, meaning or pacing; never as decoration only."
         },
+        "community_connections": {
+          "reach_audience_directly": {
+            "channels": [
+              "comments",
+              "DM",
+              "stories",
+              "channels",
+              "live",
+              "post_polls"
+            ],
+            "rule": "When useful, ask the audience directly what matters to them using authentic feedback mechanisms such as comments, DMs, Stories, channels, live sessions or polls."
+          },
+          "engagement_bait": {
+            "prohibited": true,
+            "rule": "Do not ask for artificial or meaningless interactions intended only to inflate engagement or reach.",
+            "authentic_cta_allowed": true,
+            "examples_to_avoid": [
+              "Commenta SI senza valore rispetto al contenuto",
+              "Tagga persone senza una ragione utile",
+              "Condividi seguendo formule manipolative o superstiziose",
+              "Inviti a cliccare o condividere che non aggiungono valore al contenuto"
+            ]
+          },
+          "comment_interaction": {
+            "early_days_priority": true,
+            "actions": [
+              "like comments",
+              "reply to comments",
+              "reply to a Reel comment with a Reel when useful"
+            ],
+            "rule": "Keep the conversation alive by liking or replying to comments in the first days after publication; a relevant Reel reply may be used when it adds value."
+          }
+        },
         "reels_best_practices": {
           "share_worthy": true,
           "hook_first_seconds": 3,
@@ -16077,7 +16258,11 @@
           "muted_view_understandable_if_video",
           "audio_rights_verified_if_audio_used",
           "comment_followup_plan_present_if_reel",
-          "reel_duration_within_recommendation_if_non_follower_distribution_is_objective"
+          "reel_duration_within_recommendation_if_non_follower_distribution_is_objective",
+          "audience_feedback_method_considered",
+          "engagement_bait_absent",
+          "authentic_cta_only",
+          "early_comment_interaction_plan_present"
         ]
       },
       "instagram_performance_data_status": "NOT_AVAILABLE",
@@ -16243,7 +16428,7 @@
           ]
         },
         "creators_best_practices": {
-          "version": 1,
+          "version": 2,
           "name": "Instagram Creators Engaging Content Best Practices",
           "source_basis": "User-supplied Instagram Creators guidance",
           "engagement_definition": {
@@ -16303,6 +16488,39 @@
             "rights_rule": "Use only audio you are licensed or otherwise permitted to use.",
             "purpose": "Use music and sound to create atmosphere, meaning or pacing; never as decoration only."
           },
+          "community_connections": {
+            "reach_audience_directly": {
+              "channels": [
+                "comments",
+                "DM",
+                "stories",
+                "channels",
+                "live",
+                "post_polls"
+              ],
+              "rule": "When useful, ask the audience directly what matters to them using authentic feedback mechanisms such as comments, DMs, Stories, channels, live sessions or polls."
+            },
+            "engagement_bait": {
+              "prohibited": true,
+              "rule": "Do not ask for artificial or meaningless interactions intended only to inflate engagement or reach.",
+              "authentic_cta_allowed": true,
+              "examples_to_avoid": [
+                "Commenta SI senza valore rispetto al contenuto",
+                "Tagga persone senza una ragione utile",
+                "Condividi seguendo formule manipolative o superstiziose",
+                "Inviti a cliccare o condividere che non aggiungono valore al contenuto"
+              ]
+            },
+            "comment_interaction": {
+              "early_days_priority": true,
+              "actions": [
+                "like comments",
+                "reply to comments",
+                "reply to a Reel comment with a Reel when useful"
+              ],
+              "rule": "Keep the conversation alive by liking or replying to comments in the first days after publication; a relevant Reel reply may be used when it adds value."
+            }
+          },
           "reels_best_practices": {
             "share_worthy": true,
             "hook_first_seconds": 3,
@@ -16341,7 +16559,11 @@
             "muted_view_understandable_if_video",
             "audio_rights_verified_if_audio_used",
             "comment_followup_plan_present_if_reel",
-            "reel_duration_within_recommendation_if_non_follower_distribution_is_objective"
+            "reel_duration_within_recommendation_if_non_follower_distribution_is_objective",
+            "audience_feedback_method_considered",
+            "engagement_bait_absent",
+            "authentic_cta_only",
+            "early_comment_interaction_plan_present"
           ]
         }
       },
@@ -16817,7 +17039,7 @@
       "instagram_policy_required": true,
       "instagram_policy_version": 2,
       "instagram_policy_source": "publisher/instagram_distribution_policy.json",
-      "instagram_creators_policy_version": 1,
+      "instagram_creators_policy_version": 2,
       "instagram_creators_policy_source": "publisher/instagram_creators_best_practices.json",
       "instagram_full_policy_attached": true,
       "instagram_scope_note": {
@@ -17073,7 +17295,7 @@
         "gallery_metadata_used_only_with_permission_if_used"
       ],
       "instagram_creators_best_practices": {
-        "version": 1,
+        "version": 2,
         "name": "Instagram Creators Engaging Content Best Practices",
         "source_basis": "User-supplied Instagram Creators guidance",
         "engagement_definition": {
@@ -17133,6 +17355,39 @@
           "rights_rule": "Use only audio you are licensed or otherwise permitted to use.",
           "purpose": "Use music and sound to create atmosphere, meaning or pacing; never as decoration only."
         },
+        "community_connections": {
+          "reach_audience_directly": {
+            "channels": [
+              "comments",
+              "DM",
+              "stories",
+              "channels",
+              "live",
+              "post_polls"
+            ],
+            "rule": "When useful, ask the audience directly what matters to them using authentic feedback mechanisms such as comments, DMs, Stories, channels, live sessions or polls."
+          },
+          "engagement_bait": {
+            "prohibited": true,
+            "rule": "Do not ask for artificial or meaningless interactions intended only to inflate engagement or reach.",
+            "authentic_cta_allowed": true,
+            "examples_to_avoid": [
+              "Commenta SI senza valore rispetto al contenuto",
+              "Tagga persone senza una ragione utile",
+              "Condividi seguendo formule manipolative o superstiziose",
+              "Inviti a cliccare o condividere che non aggiungono valore al contenuto"
+            ]
+          },
+          "comment_interaction": {
+            "early_days_priority": true,
+            "actions": [
+              "like comments",
+              "reply to comments",
+              "reply to a Reel comment with a Reel when useful"
+            ],
+            "rule": "Keep the conversation alive by liking or replying to comments in the first days after publication; a relevant Reel reply may be used when it adds value."
+          }
+        },
         "reels_best_practices": {
           "share_worthy": true,
           "hook_first_seconds": 3,
@@ -17171,7 +17426,11 @@
           "muted_view_understandable_if_video",
           "audio_rights_verified_if_audio_used",
           "comment_followup_plan_present_if_reel",
-          "reel_duration_within_recommendation_if_non_follower_distribution_is_objective"
+          "reel_duration_within_recommendation_if_non_follower_distribution_is_objective",
+          "audience_feedback_method_considered",
+          "engagement_bait_absent",
+          "authentic_cta_only",
+          "early_comment_interaction_plan_present"
         ]
       },
       "instagram_performance_data_status": "NOT_AVAILABLE",
@@ -17337,7 +17596,7 @@
           ]
         },
         "creators_best_practices": {
-          "version": 1,
+          "version": 2,
           "name": "Instagram Creators Engaging Content Best Practices",
           "source_basis": "User-supplied Instagram Creators guidance",
           "engagement_definition": {
@@ -17397,6 +17656,39 @@
             "rights_rule": "Use only audio you are licensed or otherwise permitted to use.",
             "purpose": "Use music and sound to create atmosphere, meaning or pacing; never as decoration only."
           },
+          "community_connections": {
+            "reach_audience_directly": {
+              "channels": [
+                "comments",
+                "DM",
+                "stories",
+                "channels",
+                "live",
+                "post_polls"
+              ],
+              "rule": "When useful, ask the audience directly what matters to them using authentic feedback mechanisms such as comments, DMs, Stories, channels, live sessions or polls."
+            },
+            "engagement_bait": {
+              "prohibited": true,
+              "rule": "Do not ask for artificial or meaningless interactions intended only to inflate engagement or reach.",
+              "authentic_cta_allowed": true,
+              "examples_to_avoid": [
+                "Commenta SI senza valore rispetto al contenuto",
+                "Tagga persone senza una ragione utile",
+                "Condividi seguendo formule manipolative o superstiziose",
+                "Inviti a cliccare o condividere che non aggiungono valore al contenuto"
+              ]
+            },
+            "comment_interaction": {
+              "early_days_priority": true,
+              "actions": [
+                "like comments",
+                "reply to comments",
+                "reply to a Reel comment with a Reel when useful"
+              ],
+              "rule": "Keep the conversation alive by liking or replying to comments in the first days after publication; a relevant Reel reply may be used when it adds value."
+            }
+          },
           "reels_best_practices": {
             "share_worthy": true,
             "hook_first_seconds": 3,
@@ -17435,7 +17727,11 @@
             "muted_view_understandable_if_video",
             "audio_rights_verified_if_audio_used",
             "comment_followup_plan_present_if_reel",
-            "reel_duration_within_recommendation_if_non_follower_distribution_is_objective"
+            "reel_duration_within_recommendation_if_non_follower_distribution_is_objective",
+            "audience_feedback_method_considered",
+            "engagement_bait_absent",
+            "authentic_cta_only",
+            "early_comment_interaction_plan_present"
           ]
         }
       },
@@ -17911,7 +18207,7 @@
       "instagram_policy_required": true,
       "instagram_policy_version": 2,
       "instagram_policy_source": "publisher/instagram_distribution_policy.json",
-      "instagram_creators_policy_version": 1,
+      "instagram_creators_policy_version": 2,
       "instagram_creators_policy_source": "publisher/instagram_creators_best_practices.json",
       "instagram_full_policy_attached": true,
       "instagram_scope_note": {
@@ -18167,7 +18463,7 @@
         "gallery_metadata_used_only_with_permission_if_used"
       ],
       "instagram_creators_best_practices": {
-        "version": 1,
+        "version": 2,
         "name": "Instagram Creators Engaging Content Best Practices",
         "source_basis": "User-supplied Instagram Creators guidance",
         "engagement_definition": {
@@ -18227,6 +18523,39 @@
           "rights_rule": "Use only audio you are licensed or otherwise permitted to use.",
           "purpose": "Use music and sound to create atmosphere, meaning or pacing; never as decoration only."
         },
+        "community_connections": {
+          "reach_audience_directly": {
+            "channels": [
+              "comments",
+              "DM",
+              "stories",
+              "channels",
+              "live",
+              "post_polls"
+            ],
+            "rule": "When useful, ask the audience directly what matters to them using authentic feedback mechanisms such as comments, DMs, Stories, channels, live sessions or polls."
+          },
+          "engagement_bait": {
+            "prohibited": true,
+            "rule": "Do not ask for artificial or meaningless interactions intended only to inflate engagement or reach.",
+            "authentic_cta_allowed": true,
+            "examples_to_avoid": [
+              "Commenta SI senza valore rispetto al contenuto",
+              "Tagga persone senza una ragione utile",
+              "Condividi seguendo formule manipolative o superstiziose",
+              "Inviti a cliccare o condividere che non aggiungono valore al contenuto"
+            ]
+          },
+          "comment_interaction": {
+            "early_days_priority": true,
+            "actions": [
+              "like comments",
+              "reply to comments",
+              "reply to a Reel comment with a Reel when useful"
+            ],
+            "rule": "Keep the conversation alive by liking or replying to comments in the first days after publication; a relevant Reel reply may be used when it adds value."
+          }
+        },
         "reels_best_practices": {
           "share_worthy": true,
           "hook_first_seconds": 3,
@@ -18265,7 +18594,11 @@
           "muted_view_understandable_if_video",
           "audio_rights_verified_if_audio_used",
           "comment_followup_plan_present_if_reel",
-          "reel_duration_within_recommendation_if_non_follower_distribution_is_objective"
+          "reel_duration_within_recommendation_if_non_follower_distribution_is_objective",
+          "audience_feedback_method_considered",
+          "engagement_bait_absent",
+          "authentic_cta_only",
+          "early_comment_interaction_plan_present"
         ]
       },
       "instagram_performance_data_status": "NOT_AVAILABLE",
@@ -18431,7 +18764,7 @@
           ]
         },
         "creators_best_practices": {
-          "version": 1,
+          "version": 2,
           "name": "Instagram Creators Engaging Content Best Practices",
           "source_basis": "User-supplied Instagram Creators guidance",
           "engagement_definition": {
@@ -18491,6 +18824,39 @@
             "rights_rule": "Use only audio you are licensed or otherwise permitted to use.",
             "purpose": "Use music and sound to create atmosphere, meaning or pacing; never as decoration only."
           },
+          "community_connections": {
+            "reach_audience_directly": {
+              "channels": [
+                "comments",
+                "DM",
+                "stories",
+                "channels",
+                "live",
+                "post_polls"
+              ],
+              "rule": "When useful, ask the audience directly what matters to them using authentic feedback mechanisms such as comments, DMs, Stories, channels, live sessions or polls."
+            },
+            "engagement_bait": {
+              "prohibited": true,
+              "rule": "Do not ask for artificial or meaningless interactions intended only to inflate engagement or reach.",
+              "authentic_cta_allowed": true,
+              "examples_to_avoid": [
+                "Commenta SI senza valore rispetto al contenuto",
+                "Tagga persone senza una ragione utile",
+                "Condividi seguendo formule manipolative o superstiziose",
+                "Inviti a cliccare o condividere che non aggiungono valore al contenuto"
+              ]
+            },
+            "comment_interaction": {
+              "early_days_priority": true,
+              "actions": [
+                "like comments",
+                "reply to comments",
+                "reply to a Reel comment with a Reel when useful"
+              ],
+              "rule": "Keep the conversation alive by liking or replying to comments in the first days after publication; a relevant Reel reply may be used when it adds value."
+            }
+          },
           "reels_best_practices": {
             "share_worthy": true,
             "hook_first_seconds": 3,
@@ -18529,7 +18895,11 @@
             "muted_view_understandable_if_video",
             "audio_rights_verified_if_audio_used",
             "comment_followup_plan_present_if_reel",
-            "reel_duration_within_recommendation_if_non_follower_distribution_is_objective"
+            "reel_duration_within_recommendation_if_non_follower_distribution_is_objective",
+            "audience_feedback_method_considered",
+            "engagement_bait_absent",
+            "authentic_cta_only",
+            "early_comment_interaction_plan_present"
           ]
         }
       },
@@ -18976,7 +19346,7 @@
       "instagram_policy_required": true,
       "instagram_policy_version": 2,
       "instagram_policy_source": "publisher/instagram_distribution_policy.json",
-      "instagram_creators_policy_version": 1,
+      "instagram_creators_policy_version": 2,
       "instagram_creators_policy_source": "publisher/instagram_creators_best_practices.json",
       "instagram_full_policy_attached": true,
       "instagram_scope_note": {
@@ -19232,7 +19602,7 @@
         "gallery_metadata_used_only_with_permission_if_used"
       ],
       "instagram_creators_best_practices": {
-        "version": 1,
+        "version": 2,
         "name": "Instagram Creators Engaging Content Best Practices",
         "source_basis": "User-supplied Instagram Creators guidance",
         "engagement_definition": {
@@ -19292,6 +19662,39 @@
           "rights_rule": "Use only audio you are licensed or otherwise permitted to use.",
           "purpose": "Use music and sound to create atmosphere, meaning or pacing; never as decoration only."
         },
+        "community_connections": {
+          "reach_audience_directly": {
+            "channels": [
+              "comments",
+              "DM",
+              "stories",
+              "channels",
+              "live",
+              "post_polls"
+            ],
+            "rule": "When useful, ask the audience directly what matters to them using authentic feedback mechanisms such as comments, DMs, Stories, channels, live sessions or polls."
+          },
+          "engagement_bait": {
+            "prohibited": true,
+            "rule": "Do not ask for artificial or meaningless interactions intended only to inflate engagement or reach.",
+            "authentic_cta_allowed": true,
+            "examples_to_avoid": [
+              "Commenta SI senza valore rispetto al contenuto",
+              "Tagga persone senza una ragione utile",
+              "Condividi seguendo formule manipolative o superstiziose",
+              "Inviti a cliccare o condividere che non aggiungono valore al contenuto"
+            ]
+          },
+          "comment_interaction": {
+            "early_days_priority": true,
+            "actions": [
+              "like comments",
+              "reply to comments",
+              "reply to a Reel comment with a Reel when useful"
+            ],
+            "rule": "Keep the conversation alive by liking or replying to comments in the first days after publication; a relevant Reel reply may be used when it adds value."
+          }
+        },
         "reels_best_practices": {
           "share_worthy": true,
           "hook_first_seconds": 3,
@@ -19330,7 +19733,11 @@
           "muted_view_understandable_if_video",
           "audio_rights_verified_if_audio_used",
           "comment_followup_plan_present_if_reel",
-          "reel_duration_within_recommendation_if_non_follower_distribution_is_objective"
+          "reel_duration_within_recommendation_if_non_follower_distribution_is_objective",
+          "audience_feedback_method_considered",
+          "engagement_bait_absent",
+          "authentic_cta_only",
+          "early_comment_interaction_plan_present"
         ]
       },
       "instagram_performance_data_status": "NOT_AVAILABLE",
@@ -19496,7 +19903,7 @@
           ]
         },
         "creators_best_practices": {
-          "version": 1,
+          "version": 2,
           "name": "Instagram Creators Engaging Content Best Practices",
           "source_basis": "User-supplied Instagram Creators guidance",
           "engagement_definition": {
@@ -19556,6 +19963,39 @@
             "rights_rule": "Use only audio you are licensed or otherwise permitted to use.",
             "purpose": "Use music and sound to create atmosphere, meaning or pacing; never as decoration only."
           },
+          "community_connections": {
+            "reach_audience_directly": {
+              "channels": [
+                "comments",
+                "DM",
+                "stories",
+                "channels",
+                "live",
+                "post_polls"
+              ],
+              "rule": "When useful, ask the audience directly what matters to them using authentic feedback mechanisms such as comments, DMs, Stories, channels, live sessions or polls."
+            },
+            "engagement_bait": {
+              "prohibited": true,
+              "rule": "Do not ask for artificial or meaningless interactions intended only to inflate engagement or reach.",
+              "authentic_cta_allowed": true,
+              "examples_to_avoid": [
+                "Commenta SI senza valore rispetto al contenuto",
+                "Tagga persone senza una ragione utile",
+                "Condividi seguendo formule manipolative o superstiziose",
+                "Inviti a cliccare o condividere che non aggiungono valore al contenuto"
+              ]
+            },
+            "comment_interaction": {
+              "early_days_priority": true,
+              "actions": [
+                "like comments",
+                "reply to comments",
+                "reply to a Reel comment with a Reel when useful"
+              ],
+              "rule": "Keep the conversation alive by liking or replying to comments in the first days after publication; a relevant Reel reply may be used when it adds value."
+            }
+          },
           "reels_best_practices": {
             "share_worthy": true,
             "hook_first_seconds": 3,
@@ -19594,7 +20034,11 @@
             "muted_view_understandable_if_video",
             "audio_rights_verified_if_audio_used",
             "comment_followup_plan_present_if_reel",
-            "reel_duration_within_recommendation_if_non_follower_distribution_is_objective"
+            "reel_duration_within_recommendation_if_non_follower_distribution_is_objective",
+            "audience_feedback_method_considered",
+            "engagement_bait_absent",
+            "authentic_cta_only",
+            "early_comment_interaction_plan_present"
           ]
         }
       },
@@ -20037,7 +20481,7 @@
       "instagram_policy_required": true,
       "instagram_policy_version": 2,
       "instagram_policy_source": "publisher/instagram_distribution_policy.json",
-      "instagram_creators_policy_version": 1,
+      "instagram_creators_policy_version": 2,
       "instagram_creators_policy_source": "publisher/instagram_creators_best_practices.json",
       "instagram_full_policy_attached": true,
       "instagram_scope_note": {
@@ -20293,7 +20737,7 @@
         "gallery_metadata_used_only_with_permission_if_used"
       ],
       "instagram_creators_best_practices": {
-        "version": 1,
+        "version": 2,
         "name": "Instagram Creators Engaging Content Best Practices",
         "source_basis": "User-supplied Instagram Creators guidance",
         "engagement_definition": {
@@ -20353,6 +20797,39 @@
           "rights_rule": "Use only audio you are licensed or otherwise permitted to use.",
           "purpose": "Use music and sound to create atmosphere, meaning or pacing; never as decoration only."
         },
+        "community_connections": {
+          "reach_audience_directly": {
+            "channels": [
+              "comments",
+              "DM",
+              "stories",
+              "channels",
+              "live",
+              "post_polls"
+            ],
+            "rule": "When useful, ask the audience directly what matters to them using authentic feedback mechanisms such as comments, DMs, Stories, channels, live sessions or polls."
+          },
+          "engagement_bait": {
+            "prohibited": true,
+            "rule": "Do not ask for artificial or meaningless interactions intended only to inflate engagement or reach.",
+            "authentic_cta_allowed": true,
+            "examples_to_avoid": [
+              "Commenta SI senza valore rispetto al contenuto",
+              "Tagga persone senza una ragione utile",
+              "Condividi seguendo formule manipolative o superstiziose",
+              "Inviti a cliccare o condividere che non aggiungono valore al contenuto"
+            ]
+          },
+          "comment_interaction": {
+            "early_days_priority": true,
+            "actions": [
+              "like comments",
+              "reply to comments",
+              "reply to a Reel comment with a Reel when useful"
+            ],
+            "rule": "Keep the conversation alive by liking or replying to comments in the first days after publication; a relevant Reel reply may be used when it adds value."
+          }
+        },
         "reels_best_practices": {
           "share_worthy": true,
           "hook_first_seconds": 3,
@@ -20391,7 +20868,11 @@
           "muted_view_understandable_if_video",
           "audio_rights_verified_if_audio_used",
           "comment_followup_plan_present_if_reel",
-          "reel_duration_within_recommendation_if_non_follower_distribution_is_objective"
+          "reel_duration_within_recommendation_if_non_follower_distribution_is_objective",
+          "audience_feedback_method_considered",
+          "engagement_bait_absent",
+          "authentic_cta_only",
+          "early_comment_interaction_plan_present"
         ]
       },
       "instagram_performance_data_status": "NOT_AVAILABLE",
@@ -20557,7 +21038,7 @@
           ]
         },
         "creators_best_practices": {
-          "version": 1,
+          "version": 2,
           "name": "Instagram Creators Engaging Content Best Practices",
           "source_basis": "User-supplied Instagram Creators guidance",
           "engagement_definition": {
@@ -20617,6 +21098,39 @@
             "rights_rule": "Use only audio you are licensed or otherwise permitted to use.",
             "purpose": "Use music and sound to create atmosphere, meaning or pacing; never as decoration only."
           },
+          "community_connections": {
+            "reach_audience_directly": {
+              "channels": [
+                "comments",
+                "DM",
+                "stories",
+                "channels",
+                "live",
+                "post_polls"
+              ],
+              "rule": "When useful, ask the audience directly what matters to them using authentic feedback mechanisms such as comments, DMs, Stories, channels, live sessions or polls."
+            },
+            "engagement_bait": {
+              "prohibited": true,
+              "rule": "Do not ask for artificial or meaningless interactions intended only to inflate engagement or reach.",
+              "authentic_cta_allowed": true,
+              "examples_to_avoid": [
+                "Commenta SI senza valore rispetto al contenuto",
+                "Tagga persone senza una ragione utile",
+                "Condividi seguendo formule manipolative o superstiziose",
+                "Inviti a cliccare o condividere che non aggiungono valore al contenuto"
+              ]
+            },
+            "comment_interaction": {
+              "early_days_priority": true,
+              "actions": [
+                "like comments",
+                "reply to comments",
+                "reply to a Reel comment with a Reel when useful"
+              ],
+              "rule": "Keep the conversation alive by liking or replying to comments in the first days after publication; a relevant Reel reply may be used when it adds value."
+            }
+          },
           "reels_best_practices": {
             "share_worthy": true,
             "hook_first_seconds": 3,
@@ -20655,7 +21169,11 @@
             "muted_view_understandable_if_video",
             "audio_rights_verified_if_audio_used",
             "comment_followup_plan_present_if_reel",
-            "reel_duration_within_recommendation_if_non_follower_distribution_is_objective"
+            "reel_duration_within_recommendation_if_non_follower_distribution_is_objective",
+            "audience_feedback_method_considered",
+            "engagement_bait_absent",
+            "authentic_cta_only",
+            "early_comment_interaction_plan_present"
           ]
         }
       },
@@ -21098,7 +21616,7 @@
       "instagram_policy_required": true,
       "instagram_policy_version": 2,
       "instagram_policy_source": "publisher/instagram_distribution_policy.json",
-      "instagram_creators_policy_version": 1,
+      "instagram_creators_policy_version": 2,
       "instagram_creators_policy_source": "publisher/instagram_creators_best_practices.json",
       "instagram_full_policy_attached": true,
       "instagram_scope_note": {
@@ -21354,7 +21872,7 @@
         "gallery_metadata_used_only_with_permission_if_used"
       ],
       "instagram_creators_best_practices": {
-        "version": 1,
+        "version": 2,
         "name": "Instagram Creators Engaging Content Best Practices",
         "source_basis": "User-supplied Instagram Creators guidance",
         "engagement_definition": {
@@ -21414,6 +21932,39 @@
           "rights_rule": "Use only audio you are licensed or otherwise permitted to use.",
           "purpose": "Use music and sound to create atmosphere, meaning or pacing; never as decoration only."
         },
+        "community_connections": {
+          "reach_audience_directly": {
+            "channels": [
+              "comments",
+              "DM",
+              "stories",
+              "channels",
+              "live",
+              "post_polls"
+            ],
+            "rule": "When useful, ask the audience directly what matters to them using authentic feedback mechanisms such as comments, DMs, Stories, channels, live sessions or polls."
+          },
+          "engagement_bait": {
+            "prohibited": true,
+            "rule": "Do not ask for artificial or meaningless interactions intended only to inflate engagement or reach.",
+            "authentic_cta_allowed": true,
+            "examples_to_avoid": [
+              "Commenta SI senza valore rispetto al contenuto",
+              "Tagga persone senza una ragione utile",
+              "Condividi seguendo formule manipolative o superstiziose",
+              "Inviti a cliccare o condividere che non aggiungono valore al contenuto"
+            ]
+          },
+          "comment_interaction": {
+            "early_days_priority": true,
+            "actions": [
+              "like comments",
+              "reply to comments",
+              "reply to a Reel comment with a Reel when useful"
+            ],
+            "rule": "Keep the conversation alive by liking or replying to comments in the first days after publication; a relevant Reel reply may be used when it adds value."
+          }
+        },
         "reels_best_practices": {
           "share_worthy": true,
           "hook_first_seconds": 3,
@@ -21452,7 +22003,11 @@
           "muted_view_understandable_if_video",
           "audio_rights_verified_if_audio_used",
           "comment_followup_plan_present_if_reel",
-          "reel_duration_within_recommendation_if_non_follower_distribution_is_objective"
+          "reel_duration_within_recommendation_if_non_follower_distribution_is_objective",
+          "audience_feedback_method_considered",
+          "engagement_bait_absent",
+          "authentic_cta_only",
+          "early_comment_interaction_plan_present"
         ]
       },
       "instagram_performance_data_status": "NOT_AVAILABLE",
@@ -21618,7 +22173,7 @@
           ]
         },
         "creators_best_practices": {
-          "version": 1,
+          "version": 2,
           "name": "Instagram Creators Engaging Content Best Practices",
           "source_basis": "User-supplied Instagram Creators guidance",
           "engagement_definition": {
@@ -21678,6 +22233,39 @@
             "rights_rule": "Use only audio you are licensed or otherwise permitted to use.",
             "purpose": "Use music and sound to create atmosphere, meaning or pacing; never as decoration only."
           },
+          "community_connections": {
+            "reach_audience_directly": {
+              "channels": [
+                "comments",
+                "DM",
+                "stories",
+                "channels",
+                "live",
+                "post_polls"
+              ],
+              "rule": "When useful, ask the audience directly what matters to them using authentic feedback mechanisms such as comments, DMs, Stories, channels, live sessions or polls."
+            },
+            "engagement_bait": {
+              "prohibited": true,
+              "rule": "Do not ask for artificial or meaningless interactions intended only to inflate engagement or reach.",
+              "authentic_cta_allowed": true,
+              "examples_to_avoid": [
+                "Commenta SI senza valore rispetto al contenuto",
+                "Tagga persone senza una ragione utile",
+                "Condividi seguendo formule manipolative o superstiziose",
+                "Inviti a cliccare o condividere che non aggiungono valore al contenuto"
+              ]
+            },
+            "comment_interaction": {
+              "early_days_priority": true,
+              "actions": [
+                "like comments",
+                "reply to comments",
+                "reply to a Reel comment with a Reel when useful"
+              ],
+              "rule": "Keep the conversation alive by liking or replying to comments in the first days after publication; a relevant Reel reply may be used when it adds value."
+            }
+          },
           "reels_best_practices": {
             "share_worthy": true,
             "hook_first_seconds": 3,
@@ -21716,7 +22304,11 @@
             "muted_view_understandable_if_video",
             "audio_rights_verified_if_audio_used",
             "comment_followup_plan_present_if_reel",
-            "reel_duration_within_recommendation_if_non_follower_distribution_is_objective"
+            "reel_duration_within_recommendation_if_non_follower_distribution_is_objective",
+            "audience_feedback_method_considered",
+            "engagement_bait_absent",
+            "authentic_cta_only",
+            "early_comment_interaction_plan_present"
           ]
         }
       },
@@ -22159,7 +22751,7 @@
       "instagram_policy_required": true,
       "instagram_policy_version": 2,
       "instagram_policy_source": "publisher/instagram_distribution_policy.json",
-      "instagram_creators_policy_version": 1,
+      "instagram_creators_policy_version": 2,
       "instagram_creators_policy_source": "publisher/instagram_creators_best_practices.json",
       "instagram_full_policy_attached": true,
       "instagram_scope_note": {
@@ -22415,7 +23007,7 @@
         "gallery_metadata_used_only_with_permission_if_used"
       ],
       "instagram_creators_best_practices": {
-        "version": 1,
+        "version": 2,
         "name": "Instagram Creators Engaging Content Best Practices",
         "source_basis": "User-supplied Instagram Creators guidance",
         "engagement_definition": {
@@ -22475,6 +23067,39 @@
           "rights_rule": "Use only audio you are licensed or otherwise permitted to use.",
           "purpose": "Use music and sound to create atmosphere, meaning or pacing; never as decoration only."
         },
+        "community_connections": {
+          "reach_audience_directly": {
+            "channels": [
+              "comments",
+              "DM",
+              "stories",
+              "channels",
+              "live",
+              "post_polls"
+            ],
+            "rule": "When useful, ask the audience directly what matters to them using authentic feedback mechanisms such as comments, DMs, Stories, channels, live sessions or polls."
+          },
+          "engagement_bait": {
+            "prohibited": true,
+            "rule": "Do not ask for artificial or meaningless interactions intended only to inflate engagement or reach.",
+            "authentic_cta_allowed": true,
+            "examples_to_avoid": [
+              "Commenta SI senza valore rispetto al contenuto",
+              "Tagga persone senza una ragione utile",
+              "Condividi seguendo formule manipolative o superstiziose",
+              "Inviti a cliccare o condividere che non aggiungono valore al contenuto"
+            ]
+          },
+          "comment_interaction": {
+            "early_days_priority": true,
+            "actions": [
+              "like comments",
+              "reply to comments",
+              "reply to a Reel comment with a Reel when useful"
+            ],
+            "rule": "Keep the conversation alive by liking or replying to comments in the first days after publication; a relevant Reel reply may be used when it adds value."
+          }
+        },
         "reels_best_practices": {
           "share_worthy": true,
           "hook_first_seconds": 3,
@@ -22513,7 +23138,11 @@
           "muted_view_understandable_if_video",
           "audio_rights_verified_if_audio_used",
           "comment_followup_plan_present_if_reel",
-          "reel_duration_within_recommendation_if_non_follower_distribution_is_objective"
+          "reel_duration_within_recommendation_if_non_follower_distribution_is_objective",
+          "audience_feedback_method_considered",
+          "engagement_bait_absent",
+          "authentic_cta_only",
+          "early_comment_interaction_plan_present"
         ]
       },
       "instagram_performance_data_status": "NOT_AVAILABLE",
@@ -22679,7 +23308,7 @@
           ]
         },
         "creators_best_practices": {
-          "version": 1,
+          "version": 2,
           "name": "Instagram Creators Engaging Content Best Practices",
           "source_basis": "User-supplied Instagram Creators guidance",
           "engagement_definition": {
@@ -22739,6 +23368,39 @@
             "rights_rule": "Use only audio you are licensed or otherwise permitted to use.",
             "purpose": "Use music and sound to create atmosphere, meaning or pacing; never as decoration only."
           },
+          "community_connections": {
+            "reach_audience_directly": {
+              "channels": [
+                "comments",
+                "DM",
+                "stories",
+                "channels",
+                "live",
+                "post_polls"
+              ],
+              "rule": "When useful, ask the audience directly what matters to them using authentic feedback mechanisms such as comments, DMs, Stories, channels, live sessions or polls."
+            },
+            "engagement_bait": {
+              "prohibited": true,
+              "rule": "Do not ask for artificial or meaningless interactions intended only to inflate engagement or reach.",
+              "authentic_cta_allowed": true,
+              "examples_to_avoid": [
+                "Commenta SI senza valore rispetto al contenuto",
+                "Tagga persone senza una ragione utile",
+                "Condividi seguendo formule manipolative o superstiziose",
+                "Inviti a cliccare o condividere che non aggiungono valore al contenuto"
+              ]
+            },
+            "comment_interaction": {
+              "early_days_priority": true,
+              "actions": [
+                "like comments",
+                "reply to comments",
+                "reply to a Reel comment with a Reel when useful"
+              ],
+              "rule": "Keep the conversation alive by liking or replying to comments in the first days after publication; a relevant Reel reply may be used when it adds value."
+            }
+          },
           "reels_best_practices": {
             "share_worthy": true,
             "hook_first_seconds": 3,
@@ -22777,7 +23439,11 @@
             "muted_view_understandable_if_video",
             "audio_rights_verified_if_audio_used",
             "comment_followup_plan_present_if_reel",
-            "reel_duration_within_recommendation_if_non_follower_distribution_is_objective"
+            "reel_duration_within_recommendation_if_non_follower_distribution_is_objective",
+            "audience_feedback_method_considered",
+            "engagement_bait_absent",
+            "authentic_cta_only",
+            "early_comment_interaction_plan_present"
           ]
         }
       },
@@ -23220,7 +23886,7 @@
       "instagram_policy_required": true,
       "instagram_policy_version": 2,
       "instagram_policy_source": "publisher/instagram_distribution_policy.json",
-      "instagram_creators_policy_version": 1,
+      "instagram_creators_policy_version": 2,
       "instagram_creators_policy_source": "publisher/instagram_creators_best_practices.json",
       "instagram_full_policy_attached": true,
       "instagram_scope_note": {
@@ -23476,7 +24142,7 @@
         "gallery_metadata_used_only_with_permission_if_used"
       ],
       "instagram_creators_best_practices": {
-        "version": 1,
+        "version": 2,
         "name": "Instagram Creators Engaging Content Best Practices",
         "source_basis": "User-supplied Instagram Creators guidance",
         "engagement_definition": {
@@ -23536,6 +24202,39 @@
           "rights_rule": "Use only audio you are licensed or otherwise permitted to use.",
           "purpose": "Use music and sound to create atmosphere, meaning or pacing; never as decoration only."
         },
+        "community_connections": {
+          "reach_audience_directly": {
+            "channels": [
+              "comments",
+              "DM",
+              "stories",
+              "channels",
+              "live",
+              "post_polls"
+            ],
+            "rule": "When useful, ask the audience directly what matters to them using authentic feedback mechanisms such as comments, DMs, Stories, channels, live sessions or polls."
+          },
+          "engagement_bait": {
+            "prohibited": true,
+            "rule": "Do not ask for artificial or meaningless interactions intended only to inflate engagement or reach.",
+            "authentic_cta_allowed": true,
+            "examples_to_avoid": [
+              "Commenta SI senza valore rispetto al contenuto",
+              "Tagga persone senza una ragione utile",
+              "Condividi seguendo formule manipolative o superstiziose",
+              "Inviti a cliccare o condividere che non aggiungono valore al contenuto"
+            ]
+          },
+          "comment_interaction": {
+            "early_days_priority": true,
+            "actions": [
+              "like comments",
+              "reply to comments",
+              "reply to a Reel comment with a Reel when useful"
+            ],
+            "rule": "Keep the conversation alive by liking or replying to comments in the first days after publication; a relevant Reel reply may be used when it adds value."
+          }
+        },
         "reels_best_practices": {
           "share_worthy": true,
           "hook_first_seconds": 3,
@@ -23574,7 +24273,11 @@
           "muted_view_understandable_if_video",
           "audio_rights_verified_if_audio_used",
           "comment_followup_plan_present_if_reel",
-          "reel_duration_within_recommendation_if_non_follower_distribution_is_objective"
+          "reel_duration_within_recommendation_if_non_follower_distribution_is_objective",
+          "audience_feedback_method_considered",
+          "engagement_bait_absent",
+          "authentic_cta_only",
+          "early_comment_interaction_plan_present"
         ]
       },
       "instagram_performance_data_status": "NOT_AVAILABLE",
@@ -23740,7 +24443,7 @@
           ]
         },
         "creators_best_practices": {
-          "version": 1,
+          "version": 2,
           "name": "Instagram Creators Engaging Content Best Practices",
           "source_basis": "User-supplied Instagram Creators guidance",
           "engagement_definition": {
@@ -23800,6 +24503,39 @@
             "rights_rule": "Use only audio you are licensed or otherwise permitted to use.",
             "purpose": "Use music and sound to create atmosphere, meaning or pacing; never as decoration only."
           },
+          "community_connections": {
+            "reach_audience_directly": {
+              "channels": [
+                "comments",
+                "DM",
+                "stories",
+                "channels",
+                "live",
+                "post_polls"
+              ],
+              "rule": "When useful, ask the audience directly what matters to them using authentic feedback mechanisms such as comments, DMs, Stories, channels, live sessions or polls."
+            },
+            "engagement_bait": {
+              "prohibited": true,
+              "rule": "Do not ask for artificial or meaningless interactions intended only to inflate engagement or reach.",
+              "authentic_cta_allowed": true,
+              "examples_to_avoid": [
+                "Commenta SI senza valore rispetto al contenuto",
+                "Tagga persone senza una ragione utile",
+                "Condividi seguendo formule manipolative o superstiziose",
+                "Inviti a cliccare o condividere che non aggiungono valore al contenuto"
+              ]
+            },
+            "comment_interaction": {
+              "early_days_priority": true,
+              "actions": [
+                "like comments",
+                "reply to comments",
+                "reply to a Reel comment with a Reel when useful"
+              ],
+              "rule": "Keep the conversation alive by liking or replying to comments in the first days after publication; a relevant Reel reply may be used when it adds value."
+            }
+          },
           "reels_best_practices": {
             "share_worthy": true,
             "hook_first_seconds": 3,
@@ -23838,7 +24574,11 @@
             "muted_view_understandable_if_video",
             "audio_rights_verified_if_audio_used",
             "comment_followup_plan_present_if_reel",
-            "reel_duration_within_recommendation_if_non_follower_distribution_is_objective"
+            "reel_duration_within_recommendation_if_non_follower_distribution_is_objective",
+            "audience_feedback_method_considered",
+            "engagement_bait_absent",
+            "authentic_cta_only",
+            "early_comment_interaction_plan_present"
           ]
         }
       },
@@ -23895,7 +24635,7 @@
       "reused_visual_count": 0
     }
   ],
-  "updated_at": "2026-09-04T15:45:38+00:00",
+  "updated_at": "2026-09-04T15:50:30+00:00",
   "current_cycle": "2026-09-04T16:00",
   "visual_policy": "10 different images per content; F1 priority reels change image every 2 seconds; prefer unseen history",
   "f1_reel_policy": {
@@ -23935,5 +24675,5 @@
   "instagram_distribution_policy_version": 2,
   "instagram_policy_loaded_directly": true,
   "instagram_creators_best_practices": "publisher/instagram_creators_best_practices.json",
-  "instagram_creators_best_practices_version": 1
+  "instagram_creators_best_practices_version": 2
 }
