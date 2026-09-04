@@ -1,0 +1,81 @@
+name: F1 Buffer Connection Test
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.buffer-connection-test-trigger'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  connection-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+      CLOUDINARY_URL: ${{ secrets.CLOUDINARY_URL }}
+
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+
+      - name: Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Python dependencies
+        run: python -m pip install --disable-pip-version-check -r publisher/requirements.txt
+
+      - name: Validate Buffer and Cloudinary connections without publishing
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import base64
+          import json
+          import os
+          import sys
+          from pathlib import Path
+
+          sys.path.insert(0, 'publisher')
+          import buffer_twice_daily as b
+
+          api_key = os.getenv('BUFFER_API_KEY', '').strip()
+          cloudinary_url = os.getenv('CLOUDINARY_URL', '').strip()
+          missing = [name for name, value in (
+              ('BUFFER_API_KEY', api_key),
+              ('CLOUDINARY_URL', cloudinary_url),
+          ) if not value]
+          if missing:
+              raise SystemExit('MISSING_SECRETS: ' + ', '.join(missing))
+
+          organization_id, channels = b.discover_buffer_channels(api_key)
+          if set(channels) != {'facebook', 'instagram', 'linkedin'}:
+              raise SystemExit('BUFFER_CHANNELS_INVALID: ' + json.dumps(channels, ensure_ascii=False))
+
+          # Valid 1x1 transparent PNG; verifies Cloudinary credentials and public delivery.
+          png = base64.b64decode(
+              'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII='
+          )
+          path = Path('/tmp/f1-buffer-connection-test.png')
+          path.write_bytes(png)
+          asset = b.cloudinary_upload(path, 'f1-buffer/connection-test/pixel', cloudinary_url)
+          if not b.media_is_live(asset['url']):
+              raise SystemExit('CLOUDINARY_ASSET_NOT_PUBLIC')
+
+          safe_channels = {
+              service: {'name': row.get('name'), 'service': row.get('service')}
+              for service, row in channels.items()
+          }
+          print(json.dumps({
+              'status': 'CONNECTION_TEST_OK',
+              'buffer_organization_id_present': bool(organization_id),
+              'channels': safe_channels,
+              'cloudinary_public_media_ok': True,
+          }, ensure_ascii=False, indent=2))
+          PY
