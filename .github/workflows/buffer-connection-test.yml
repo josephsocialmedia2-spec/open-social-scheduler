@@ -41,6 +41,7 @@ jobs:
           import os
           import sys
           from pathlib import Path
+          from urllib.parse import urlparse
 
           sys.path.insert(0, 'publisher')
           import buffer_twice_daily as b
@@ -54,7 +55,6 @@ jobs:
           if missing:
               raise SystemExit('MISSING_SECRETS: ' + ', '.join(missing))
 
-          # Cloudinary may display the credential as CLOUDINARY_URL=cloudinary://...
           cloudinary_url = cloudinary_raw
           if cloudinary_url.startswith('CLOUDINARY_URL='):
               cloudinary_url = cloudinary_url.split('=', 1)[1].strip()
@@ -64,10 +64,16 @@ jobs:
           if set(channels) != {'facebook', 'instagram', 'linkedin'}:
               raise SystemExit('BUFFER_CHANNELS_INVALID: ' + json.dumps(channels, ensure_ascii=False))
 
-          if not cloudinary_url.startswith('cloudinary://'):
-              raise SystemExit('CLOUDINARY_URL_FORMAT_INVALID: expected full cloudinary://API_KEY:API_SECRET@CLOUD_NAME value')
+          parsed = urlparse(cloudinary_url)
+          component_state = {
+              'scheme_cloudinary': parsed.scheme == 'cloudinary',
+              'api_key_present': bool(parsed.username),
+              'api_secret_present': bool(parsed.password),
+              'cloud_name_present': bool(parsed.hostname),
+          }
+          if not all(component_state.values()):
+              raise SystemExit('CLOUDINARY_URL_COMPONENTS_INVALID: ' + json.dumps(component_state))
 
-          # Valid 1x1 transparent PNG; verifies Cloudinary credentials and public delivery.
           png = base64.b64decode(
               'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII='
           )
