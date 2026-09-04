@@ -25235,6 +25235,22 @@
             }
           ],
           "source": "meta-twice-daily"
+        },
+        {
+          "at": "2026-09-04T16:53:02+00:00",
+          "dry_run": false,
+          "results": [
+            {
+              "platform": "meta",
+              "status": "blocked",
+              "missing": [
+                "F1_FACEBOOK_PAGE_ACCESS_TOKEN",
+                "F1_INSTAGRAM_ACCESS_TOKEN",
+                "F1_INSTAGRAM_USER_ID"
+              ]
+            }
+          ],
+          "source": "meta-twice-daily"
         }
       ],
       "video_made_with_ai": true,
@@ -25245,7 +25261,7 @@
       "blocked_reason": "missing GitHub Actions Secrets: F1_FACEBOOK_PAGE_ACCESS_TOKEN, F1_INSTAGRAM_ACCESS_TOKEN, F1_INSTAGRAM_USER_ID"
     }
   ],
-  "updated_at": "2026-09-04T16:51:07+00:00",
+  "updated_at": "2026-09-04T16:53:02+00:00",
   "current_cycle": "2026-09-04T16:00",
   "visual_policy": "10 different images per content; F1 priority reels change image every 2 seconds; prefer unseen history",
   "f1_reel_policy": {
