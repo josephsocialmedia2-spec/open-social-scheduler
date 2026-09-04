@@ -40,31 +40,168 @@ jobs:
         run: |
           set -euxo pipefail
           sudo apt-get update
-          sudo apt-get install -y ffmpeg fonts-dejavu-core
+          sudo apt-get install -y fonts-dejavu-core
           python -m pip install --disable-pip-version-check -r publisher/requirements.txt
 
-      - name: Publish F1 test carousel NOW on Facebook Instagram LinkedIn
+      - name: Publish locally generated F1 carousel NOW on Facebook Instagram LinkedIn
         shell: bash
         run: |
           set -euo pipefail
           python - <<'PY'
+          import json
           import os
           import sys
+          from datetime import datetime
+          from pathlib import Path
+
+          from PIL import Image, ImageDraw, ImageFont
 
           raw = os.environ.get('CLOUDINARY_URL', '').strip()
           if raw.startswith('CLOUDINARY_URL='):
               raw = raw.split('=', 1)[1].strip()
-          os.environ['CLOUDINARY_URL'] = raw.strip('"\'')
+          cloudinary_url = raw.strip('"\'')
+          os.environ['CLOUDINARY_URL'] = cloudinary_url
+
+          api_key = os.environ.get('BUFFER_API_KEY', '').strip()
+          if not api_key or not cloudinary_url:
+              raise SystemExit('Missing Buffer or Cloudinary credentials')
 
           sys.path.insert(0, 'publisher')
           import buffer_twice_daily as b
 
-          sys.argv = [
-              'buffer_twice_daily.py',
-              '--slot', 'morning',
-              '--date', '2026-09-04',
+          queue_path = Path('publisher/queue.json')
+          queue = json.loads(queue_path.read_text(encoding='utf-8'))
+          job_id = 'f1-immobiliare-buffer-2026-09-04-morning'
+          job = next((row for row in queue.get('jobs', []) if row.get('id') == job_id), None)
+          if job is None:
+              raise SystemExit(f'Missing queue job {job_id}')
+
+          # Safety: never duplicate a channel that already has a Buffer post recorded.
+          already = set(str(x) for x in job.get('buffer_scheduled_platforms', []))
+          if set(b.TARGET_SERVICES).issubset(already):
+              print('NOOP: all three channels already have a Buffer post recorded')
+              raise SystemExit(0)
+
+          W, H = 1080, 1350
+          BG = '#070907'
+          PANEL = '#0D1711'
+          WHITE = '#F7F7F4'
+          GREEN = '#92C205'
+          MUTED = '#C7CDC8'
+          font_bold_path = '/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf'
+          font_regular_path = '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf'
+          brand_font = ImageFont.truetype(font_bold_path, 44)
+          footer_font = ImageFont.truetype(font_regular_path, 31)
+
+          slides = [
+              ('90 GIORNI\nONLINE', 'Una casa ferma online sta già parlando.'),
+              ('NON È SOLO\nTEMPO PASSATO.\nÈ UN SEGNALE.', 'Il mercato ci sta restituendo un’informazione.'),
+              ('PREZZO?\nPRESENTAZIONE?\nTARGET?\nCONCORRENZA?', 'Prima del ribasso serve capire la causa.'),
+              ('PRIMA DI RIDURRE\nSERVE DIAGNOSI.', 'F1 IMMOBILIARE\n371 370 8294'),
           ]
-          raise SystemExit(b.main())
+
+          out_dir = Path('publisher/media/generated/live-buffer-test-2026-09-04')
+          out_dir.mkdir(parents=True, exist_ok=True)
+          media_paths = []
+
+          def fit_font(draw, text, max_width, start=96, minimum=54):
+              size = start
+              while size >= minimum:
+                  font = ImageFont.truetype(font_bold_path, size)
+                  box = draw.multiline_textbbox((0, 0), text, font=font, spacing=14, align='center')
+                  if box[2] - box[0] <= max_width:
+                      return font
+                  size -= 4
+              return ImageFont.truetype(font_bold_path, minimum)
+
+          for idx, (headline, subline) in enumerate(slides, 1):
+              img = Image.new('RGB', (W, H), BG)
+              draw = ImageDraw.Draw(img)
+              draw.rounded_rectangle((56, 56, W - 56, H - 56), radius=34, fill=PANEL, outline=GREEN, width=5)
+              draw.rectangle((56, 56, W - 56, 76), fill=GREEN)
+
+              # Minimal real-estate house mark, drawn locally: no external asset dependency.
+              hx, hy = 128, 154
+              draw.line((hx, hy + 72, hx + 74, hy, hx + 148, hy + 72), fill=GREEN, width=10)
+              draw.rectangle((hx + 28, hy + 66, hx + 120, hy + 144), outline=WHITE, width=8)
+              draw.rectangle((hx + 64, hy + 101, hx + 89, hy + 144), outline=GREEN, width=6)
+              draw.text((320, 164), 'F1 IMMOBILIARE', font=brand_font, fill=WHITE)
+              draw.text((320, 220), 'NON A SENSAZIONE. CON I DATI.', font=footer_font, fill=GREEN)
+
+              title_font = fit_font(draw, headline, W - 180)
+              title_box = draw.multiline_textbbox((0, 0), headline, font=title_font, spacing=16, align='center')
+              title_h = title_box[3] - title_box[1]
+              title_y = 470 - title_h // 2
+              draw.multiline_text((W // 2, title_y), headline, font=title_font, fill=WHITE, spacing=16, align='center', anchor='ma')
+
+              sub_font = ImageFont.truetype(font_regular_path, 43)
+              draw.multiline_text((W // 2, 905), subline, font=sub_font, fill=MUTED, spacing=12, align='center', anchor='ma')
+              draw.line((170, 1090, W - 170, 1090), fill=GREEN, width=4)
+              draw.text((W // 2, 1160), 'Scrivi VALUTAZIONE in privato', font=ImageFont.truetype(font_bold_path, 38), fill=GREEN, anchor='mm')
+              draw.text((W // 2, 1225), f'{idx}/4', font=footer_font, fill=MUTED, anchor='mm')
+
+              path = out_dir / f'slide-{idx:02d}.jpg'
+              img.save(path, quality=94, optimize=True)
+              media_paths.append(str(path))
+
+          job['media'] = media_paths
+          job['format'] = 'carousel'
+          job['cloudinary_assets'] = []
+          job['blocked_reason'] = None
+          job['status'] = 'buffer_live_test_rendered'
+
+          organization_id, channels = b.discover_buffer_channels(api_key)
+          job['buffer_organization_id'] = organization_id
+          job['buffer_channels'] = channels
+
+          hosted = b.ensure_cloudinary_assets(job, cloudinary_url)
+          job['status'] = 'buffer_live_test_media_hosted'
+          b.persist_queue(queue)
+
+          scheduled = set(str(x) for x in job.get('buffer_scheduled_platforms', []))
+          results = []
+          for service in b.TARGET_SERVICES:
+              if service in scheduled:
+                  results.append({'service': service, 'status': 'already_recorded'})
+                  continue
+              try:
+                  result = b.create_buffer_post(
+                      api_key,
+                      str(channels[service]['id']),
+                      service,
+                      job,
+                      hosted,
+                      datetime.now(b.ROME),
+                  )
+                  job.setdefault('buffer_posts', []).append(result)
+                  job.setdefault('buffer_scheduled_platforms', []).append(service)
+                  scheduled.add(service)
+                  results.append({**result, 'status': 'created'})
+                  b.persist_queue(queue)
+              except Exception as exc:
+                  results.append({'service': service, 'status': 'error', 'error': str(exc)})
+
+          if set(b.TARGET_SERVICES).issubset(scheduled):
+              job['status'] = 'scheduled_in_buffer'
+              job.pop('blocked_reason', None)
+              code = 0
+          elif scheduled:
+              job['status'] = 'buffer_partially_scheduled'
+              job['blocked_reason'] = 'Retry only remaining channels'
+              code = 1
+          else:
+              job['status'] = 'buffer_retry_required'
+              job['blocked_reason'] = 'No Buffer channel accepted the post'
+              code = 1
+
+          b.persist_queue(queue)
+          print(json.dumps({
+              'job_id': job_id,
+              'status': job['status'],
+              'results': results,
+              'hosted_assets': len(hosted),
+          }, ensure_ascii=False, indent=2))
+          raise SystemExit(code)
           PY
 
       - name: Persist publication state
