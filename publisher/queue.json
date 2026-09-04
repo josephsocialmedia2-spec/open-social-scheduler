@@ -25143,9 +25143,109 @@
       "visual_count": 1,
       "fresh_visual_count": 1,
       "reused_visual_count": 0
+    },
+    {
+      "id": "f1-immobiliare-meta-2026-09-04-evening",
+      "client_id": "f1-immobiliare",
+      "client_name": "F1 Immobiliare",
+      "category": "error",
+      "editorial_role": "error",
+      "campaign": "F1 · Non a sensazione. Con i dati.",
+      "format": "reel",
+      "title": "Quanto vale non è l'unica domanda",
+      "caption": "Una vendita non è soltanto un prezzo. Scrivi VALUTAZIONE in privato.\n\n#F1Immobiliare #ValleDiSusa #Condove #Bussoleno #VillarDora #VendereBene",
+      "hashtags": [
+        "#F1Immobiliare",
+        "#ValleDiSusa",
+        "#Condove",
+        "#Bussoleno",
+        "#VillarDora",
+        "#VendereBene"
+      ],
+      "voiceover": "Quanto vale non è l'unica domanda importante. Dobbiamo sapere chi potrebbe comprarla, contro quali immobili compete, come presentarla e cosa succederà dopo la pubblicazione.",
+      "slides": [
+        "QUANTO VALE?|NON BASTA",
+        "CHI LA|COMPREREBBE?",
+        "CONTRO COSA|COMPETE?",
+        "COME LA|PRESENTIAMO?",
+        "COSA FACCIAMO|DOPO L'ANNUNCIO?",
+        "QUESTA È|STRATEGIA",
+        "F1 IMMOBILIARE|METODO|371 370 8294"
+      ],
+      "visuals": [],
+      "cta": "Scrivi VALUTAZIONE in privato",
+      "media": "publisher/media/generated/meta-twice/2026-09-04/evening-g5-non-solo-quanto-vale.mp4",
+      "scheduled_at": "2026-09-04T18:30:00+02:00",
+      "territory": "Susa",
+      "property_focus": {
+        "transaction": "vendita",
+        "min_price_eur": 100000,
+        "exclude": [
+          "affitto",
+          "locazione",
+          "garage",
+          "box",
+          "posto auto",
+          "rustico",
+          "rudere",
+          "terreno"
+        ],
+        "preferred": [
+          "appartamento",
+          "casa",
+          "villa",
+          "villetta",
+          "attico",
+          "bifamiliare",
+          "trifamiliare"
+        ],
+        "cash_subito": {
+          "enabled": true,
+          "label": "F1 CASH SUBITO",
+          "meaning": "acquisto diretto per opportunità immobiliari fortemente scontate e coerenti con i criteri F1",
+          "rule": "non presentarlo come garanzia di acquisto; prima verifica economica, tecnica e documentale"
+        }
+      },
+      "platforms": [
+        {
+          "platform": "facebook",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "direct-api"
+        }
+      ],
+      "enabled": true,
+      "status": "awaiting_credentials",
+      "published_platforms": [],
+      "direct_api_results": [
+        {
+          "at": "2026-09-04T16:51:07+00:00",
+          "dry_run": false,
+          "results": [
+            {
+              "platform": "meta",
+              "status": "blocked",
+              "missing": [
+                "F1_FACEBOOK_PAGE_ACCESS_TOKEN",
+                "F1_INSTAGRAM_ACCESS_TOKEN",
+                "F1_INSTAGRAM_USER_ID"
+              ]
+            }
+          ],
+          "source": "meta-twice-daily"
+        }
+      ],
+      "video_made_with_ai": true,
+      "approval_required": false,
+      "manual_approval_required": false,
+      "autonomous_publish": true,
+      "created_by": "meta-twice-daily",
+      "blocked_reason": "missing GitHub Actions Secrets: F1_FACEBOOK_PAGE_ACCESS_TOKEN, F1_INSTAGRAM_ACCESS_TOKEN, F1_INSTAGRAM_USER_ID"
     }
   ],
-  "updated_at": "2026-09-04T15:52:49+00:00",
+  "updated_at": "2026-09-04T16:51:07+00:00",
   "current_cycle": "2026-09-04T16:00",
   "visual_policy": "10 different images per content; F1 priority reels change image every 2 seconds; prefer unseen history",
   "f1_reel_policy": {
