@@ -41,15 +41,17 @@ jobs:
           import os
           import sys
           from pathlib import Path
-          from urllib.parse import urlparse
+          from urllib.parse import unquote, urlparse
+
+          import requests
 
           sys.path.insert(0, 'publisher')
           import buffer_twice_daily as b
 
-          api_key = os.getenv('BUFFER_API_KEY', '').strip()
+          buffer_key = os.getenv('BUFFER_API_KEY', '').strip()
           cloudinary_raw = os.getenv('CLOUDINARY_URL', '').strip()
           missing = [name for name, value in (
-              ('BUFFER_API_KEY', api_key),
+              ('BUFFER_API_KEY', buffer_key),
               ('CLOUDINARY_URL', cloudinary_raw),
           ) if not value]
           if missing:
@@ -60,7 +62,7 @@ jobs:
               cloudinary_url = cloudinary_url.split('=', 1)[1].strip()
           cloudinary_url = cloudinary_url.strip('"\'')
 
-          organization_id, channels = b.discover_buffer_channels(api_key)
+          organization_id, channels = b.discover_buffer_channels(buffer_key)
           if set(channels) != {'facebook', 'instagram', 'linkedin'}:
               raise SystemExit('BUFFER_CHANNELS_INVALID: ' + json.dumps(channels, ensure_ascii=False))
 
@@ -74,13 +76,32 @@ jobs:
           if not all(component_state.values()):
               raise SystemExit('CLOUDINARY_URL_COMPONENTS_INVALID: ' + json.dumps(component_state))
 
+          cloud_name = parsed.hostname
+          api_key = unquote(parsed.username)
+          api_secret = unquote(parsed.password)
+
           png = base64.b64decode(
               'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII='
           )
           path = Path('/tmp/f1-buffer-connection-test.png')
           path.write_bytes(png)
-          asset = b.cloudinary_upload(path, 'f1-buffer/connection-test/pixel', cloudinary_url)
-          if not b.media_is_live(asset['url']):
+          endpoint = f'https://api.cloudinary.com/v1_1/{cloud_name}/image/upload'
+          with path.open('rb') as fh:
+              response = requests.post(
+                  endpoint,
+                  auth=(api_key, api_secret),
+                  data={
+                      'public_id': 'f1-buffer/connection-test/pixel-basic-auth',
+                      'overwrite': 'true',
+                  },
+                  files={'file': (path.name, fh, 'image/png')},
+                  timeout=120,
+              )
+          if not response.ok:
+              raise SystemExit(f'CLOUDINARY_BASIC_AUTH_FAILED: HTTP {response.status_code}: {response.text[:500]}')
+          payload = response.json()
+          secure_url = str(payload.get('secure_url') or '')
+          if not secure_url.startswith('https://') or not b.media_is_live(secure_url):
               raise SystemExit('CLOUDINARY_ASSET_NOT_PUBLIC')
 
           safe_channels = {
@@ -91,6 +112,7 @@ jobs:
               'status': 'CONNECTION_TEST_OK',
               'buffer_organization_id_present': bool(organization_id),
               'channels': safe_channels,
+              'cloudinary_basic_auth_ok': True,
               'cloudinary_public_media_ok': True,
           }, ensure_ascii=False, indent=2))
           PY
