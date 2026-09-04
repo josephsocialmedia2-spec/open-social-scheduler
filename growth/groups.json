@@ -2482,8 +2482,25 @@
       "member_at": null,
       "last_post_at": null,
       "notes": ""
+    },
+    {
+      "id": "FBG-201A83EE33",
+      "brand": "f1-immobiliare",
+      "territory": "Susa",
+      "name": "Valle di Susa",
+      "url": "https://www.facebook.com/groups/valle.susa/",
+      "source_query": "site:facebook.com/groups \"Susa\" \"sei di\"",
+      "snippet": "Popular groups · Find communities for you · Over 1 billion people across the globe are using Facebook Groups to explore their favorite topics · Log in · Categories · Science & tech · Travel · Animals · Sports & fitness · Entertainment",
+      "status": "PENDING_APPROVAL",
+      "batch_id": "20260904-094105",
+      "discovered_at": "2026-09-04T09:41:07+00:00",
+      "approved_at": null,
+      "join_requested_at": null,
+      "member_at": null,
+      "last_post_at": null,
+      "notes": ""
     }
   ],
-  "updated_at": "2026-09-03T10:03:50+00:00",
-  "last_batch_id": "20260902-093920"
+  "updated_at": "2026-09-04T09:52:06+00:00",
+  "last_batch_id": "20260904-094105"
 }
