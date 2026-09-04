@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "name": "Instagram Creators Engaging Content Best Practices",
   "source_basis": "User-supplied Instagram Creators guidance",
   "engagement_definition": {
@@ -30,6 +30,28 @@
     "allowed_types": ["popular audio", "original audio", "voiceover", "licensed audio", "Meta Audio Collection"],
     "rights_rule": "Use only audio you are licensed or otherwise permitted to use.",
     "purpose": "Use music and sound to create atmosphere, meaning or pacing; never as decoration only."
+  },
+  "community_connections": {
+    "reach_audience_directly": {
+      "channels": ["comments", "DM", "stories", "channels", "live", "post_polls"],
+      "rule": "When useful, ask the audience directly what matters to them using authentic feedback mechanisms such as comments, DMs, Stories, channels, live sessions or polls."
+    },
+    "engagement_bait": {
+      "prohibited": true,
+      "rule": "Do not ask for artificial or meaningless interactions intended only to inflate engagement or reach.",
+      "authentic_cta_allowed": true,
+      "examples_to_avoid": [
+        "Commenta SI senza valore rispetto al contenuto",
+        "Tagga persone senza una ragione utile",
+        "Condividi seguendo formule manipolative o superstiziose",
+        "Inviti a cliccare o condividere che non aggiungono valore al contenuto"
+      ]
+    },
+    "comment_interaction": {
+      "early_days_priority": true,
+      "actions": ["like comments", "reply to comments", "reply to a Reel comment with a Reel when useful"],
+      "rule": "Keep the conversation alive by liking or replying to comments in the first days after publication; a relevant Reel reply may be used when it adds value."
+    }
   },
   "reels_best_practices": {
     "share_worthy": true,
@@ -65,6 +87,10 @@
     "muted_view_understandable_if_video",
     "audio_rights_verified_if_audio_used",
     "comment_followup_plan_present_if_reel",
-    "reel_duration_within_recommendation_if_non_follower_distribution_is_objective"
+    "reel_duration_within_recommendation_if_non_follower_distribution_is_objective",
+    "audience_feedback_method_considered",
+    "engagement_bait_absent",
+    "authentic_cta_only",
+    "early_comment_interaction_plan_present"
   ]
 }
