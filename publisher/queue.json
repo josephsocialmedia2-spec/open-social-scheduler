@@ -32,16 +32,10 @@
       "visuals": [],
       "cta": "Scrivi VALUTAZIONE in privato",
       "media": [
-        "publisher/media/generated/meta-twice/2026-09-04/morning-g4-novanta-giorni/slide-01.jpg",
-        "publisher/media/generated/meta-twice/2026-09-04/morning-g4-novanta-giorni/slide-02.jpg",
-        "publisher/media/generated/meta-twice/2026-09-04/morning-g4-novanta-giorni/slide-03.jpg",
-        "publisher/media/generated/meta-twice/2026-09-04/morning-g4-novanta-giorni/slide-04.jpg",
-        "publisher/media/generated/meta-twice/2026-09-04/morning-g4-novanta-giorni/slide-05.jpg",
-        "publisher/media/generated/meta-twice/2026-09-04/morning-g4-novanta-giorni/slide-06.jpg",
-        "publisher/media/generated/meta-twice/2026-09-04/morning-g4-novanta-giorni/slide-07.jpg",
-        "publisher/media/generated/meta-twice/2026-09-04/morning-g4-novanta-giorni/slide-08.jpg",
-        "publisher/media/generated/meta-twice/2026-09-04/morning-g4-novanta-giorni/slide-09.jpg",
-        "publisher/media/generated/meta-twice/2026-09-04/morning-g4-novanta-giorni/slide-10.jpg"
+        "publisher/media/generated/live-buffer-test-2026-09-04/slide-01.jpg",
+        "publisher/media/generated/live-buffer-test-2026-09-04/slide-02.jpg",
+        "publisher/media/generated/live-buffer-test-2026-09-04/slide-03.jpg",
+        "publisher/media/generated/live-buffer-test-2026-09-04/slide-04.jpg"
       ],
       "scheduled_at": "2026-09-04T10:30:00+02:00",
       "territory": "Susa",
@@ -89,7 +83,7 @@
         }
       ],
       "enabled": true,
-      "status": "buffer_render_or_media_failed",
+      "status": "buffer_partially_scheduled",
       "published_platforms": [],
       "direct_api_results": [],
       "video_made_with_ai": false,
@@ -97,8 +91,28 @@
       "manual_approval_required": false,
       "autonomous_publish": true,
       "created_by": "buffer-twice-daily",
-      "buffer_posts": [],
-      "buffer_scheduled_platforms": [],
+      "buffer_posts": [
+        {
+          "service": "facebook",
+          "channel_id": "6a9afff8065799be468ade7a",
+          "post_id": "6a9b129f8a5d17d6d46070bc",
+          "buffer_status": "sent",
+          "due_at": "2026-09-04T18:49:03.821Z",
+          "created_at": "2026-09-04T18:49:14+00:00"
+        },
+        {
+          "service": "linkedin",
+          "channel_id": "6a9b0062065799be468ae0b1",
+          "post_id": "6a9b12aa8a5d17d6d4607199",
+          "buffer_status": "sending",
+          "due_at": "2026-09-04T18:49:14.601Z",
+          "created_at": "2026-09-04T18:49:24+00:00"
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "facebook",
+        "linkedin"
+      ],
       "buffer_organization_id": "6a9aff970f059f084a2c8a6d",
       "buffer_channels": {
         "facebook": {
@@ -117,8 +131,34 @@
           "service": "linkedin"
         }
       },
-      "blocked_reason": "429 Client Error: Too many requests (f061ab2) for url: https://upload.wikimedia.org/wikipedia/commons/c/cc/Villa_Cantamerlo_Avigliana02.JPG?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original"
+      "blocked_reason": "Retry only remaining channels",
+      "cloudinary_assets": [
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1788547741/f1-buffer/f1-immobiliare-buffer-2026-09-04-morning/slide-01.jpg",
+          "public_id": "f1-buffer/f1-immobiliare-buffer-2026-09-04-morning/slide-01",
+          "resource_type": "image",
+          "bytes": "102624"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1788547741/f1-buffer/f1-immobiliare-buffer-2026-09-04-morning/slide-02.jpg",
+          "public_id": "f1-buffer/f1-immobiliare-buffer-2026-09-04-morning/slide-02",
+          "resource_type": "image",
+          "bytes": "131363"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1788547742/f1-buffer/f1-immobiliare-buffer-2026-09-04-morning/slide-03.jpg",
+          "public_id": "f1-buffer/f1-immobiliare-buffer-2026-09-04-morning/slide-03",
+          "resource_type": "image",
+          "bytes": "137476"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1788547742/f1-buffer/f1-immobiliare-buffer-2026-09-04-morning/slide-04.jpg",
+          "public_id": "f1-buffer/f1-immobiliare-buffer-2026-09-04-morning/slide-04",
+          "resource_type": "image",
+          "bytes": "115943"
+        }
+      ]
     }
   ],
-  "updated_at": "2026-09-04T18:46:44+00:00"
+  "updated_at": "2026-09-04T18:49:24+00:00"
 }
