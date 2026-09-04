@@ -1,0 +1,124 @@
+name: F1 Buffer Instagram LIVE Fix
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.buffer-instagram-fix-trigger'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: open-social-state
+  cancel-in-progress: false
+
+jobs:
+  publish-instagram-only:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+      CLOUDINARY_URL: ${{ secrets.CLOUDINARY_URL }}
+
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: publisher/requirements.txt
+
+      - name: Install Python dependencies
+        run: python -m pip install --disable-pip-version-check -r publisher/requirements.txt
+
+      - name: Publish Instagram carousel as Instagram post NOW
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          import os
+          import sys
+          from datetime import datetime
+          from pathlib import Path
+
+          raw = os.environ.get('CLOUDINARY_URL', '').strip()
+          if raw.startswith('CLOUDINARY_URL='):
+              raw = raw.split('=', 1)[1].strip()
+          os.environ['CLOUDINARY_URL'] = raw.strip('"\'')
+
+          sys.path.insert(0, 'publisher')
+          import buffer_twice_daily as b
+
+          queue_path = Path('publisher/queue.json')
+          queue = json.loads(queue_path.read_text(encoding='utf-8'))
+          job_id = 'f1-immobiliare-buffer-2026-09-04-morning'
+          job = next((row for row in queue.get('jobs', []) if row.get('id') == job_id), None)
+          if job is None:
+              raise SystemExit(f'Missing queue job {job_id}')
+
+          scheduled = set(str(x) for x in job.get('buffer_scheduled_platforms', []))
+          if 'instagram' in scheduled:
+              print('NOOP: Instagram already recorded; refusing duplicate')
+              raise SystemExit(0)
+
+          hosted = list(job.get('cloudinary_assets') or [])
+          if not hosted or not all(b.media_is_live(str(row.get('url') or '')) for row in hosted):
+              raise SystemExit('Hosted carousel assets are missing or unavailable')
+
+          api_key = os.environ.get('BUFFER_API_KEY', '').strip()
+          organization_id, channels = b.discover_buffer_channels(api_key)
+          job['buffer_organization_id'] = organization_id
+          job['buffer_channels'] = channels
+
+          original_metadata = b.gql_metadata
+          def instagram_post_metadata(service, row):
+              if service == 'instagram' and str(row.get('format')) != 'reel':
+                  return '{ instagram: { type: post, shouldShareToFeed: true } }'
+              return original_metadata(service, row)
+          b.gql_metadata = instagram_post_metadata
+
+          result = b.create_buffer_post(
+              api_key,
+              str(channels['instagram']['id']),
+              'instagram',
+              job,
+              hosted,
+              datetime.now(b.ROME),
+          )
+          job.setdefault('buffer_posts', []).append(result)
+          job.setdefault('buffer_scheduled_platforms', []).append('instagram')
+          job['status'] = 'scheduled_in_buffer'
+          job.pop('blocked_reason', None)
+          b.persist_queue(queue)
+
+          print(json.dumps({
+              'status': 'INSTAGRAM_LIVE_CREATED',
+              'result': result,
+              'all_channels_recorded': set(b.TARGET_SERVICES).issubset(set(job.get('buffer_scheduled_platforms', []))),
+          }, ensure_ascii=False, indent=2))
+          PY
+
+      - name: Persist publication state
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- publisher/queue.json; then
+            echo 'No queue state change.'
+            exit 0
+          fi
+          git config user.name 'f1-buffer-instagram-fix'
+          git config user.email 'f1-buffer-instagram-fix@users.noreply.github.com'
+          git add publisher/queue.json
+          git commit -m 'Persist Instagram live Buffer publication state'
+          git fetch origin main
+          git rebase origin/main
+          git push origin HEAD:main
