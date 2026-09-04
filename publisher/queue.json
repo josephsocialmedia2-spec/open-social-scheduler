@@ -13623,7 +13623,7 @@
         "Bardonecchia abitazioni Piemonte"
       ],
       "visual_asset_urls": [
-        "https://commons.wikimedia.org/wiki/Special:Redirect/file/Avigliana_Centro_Storico_Tramonto.JPG"
+        "https://commons.wikimedia.org/wiki/Special:Redirect/file/Centro_Storico_Avigliana.JPG"
       ],
       "visual_source": "f1-approved-local-valle-susa",
       "visual_transform": "f1-local-photo-plus-presenter-footer",
@@ -13751,7 +13751,7 @@
         "Bardonecchia abitazioni Piemonte"
       ],
       "visual_asset_urls": [
-        "https://commons.wikimedia.org/wiki/Special:Redirect/file/Centro_Storico_Avigliana.JPG"
+        "https://commons.wikimedia.org/wiki/Special:Redirect/file/Avigliana_Centro_Storico_Tramonto.JPG"
       ],
       "visual_source": "f1-approved-local-valle-susa",
       "visual_transform": "f1-local-photo-plus-presenter-footer",
@@ -14235,7 +14235,7 @@
       "reused_visual_count": 0
     }
   ],
-  "updated_at": "2026-09-04T14:46:27+00:00",
+  "updated_at": "2026-09-04T14:53:03+00:00",
   "current_cycle": "2026-09-04T16:00",
   "visual_policy": "10 different images per content; F1 priority reels change image every 2 seconds; prefer unseen history",
   "f1_reel_policy": {
