@@ -1,0 +1,31 @@
+{
+  "test": "F1 Buffer live publication",
+  "job_id": "f1-immobiliare-buffer-2026-09-04-morning",
+  "verified_at": "2026-09-04T20:55:12+02:00",
+  "result": "ALL_THREE_SENT",
+  "posts": {
+    "facebook": {
+      "account": "F1immobiliare",
+      "post_id": "6a9b129f8a5d17d6d46070bc",
+      "status": "sent",
+      "sent_at_utc": "2026-09-04T18:49:13.720Z",
+      "shared_now": true
+    },
+    "linkedin": {
+      "account": "Joseph Malafronte",
+      "post_id": "6a9b12aa8a5d17d6d4607199",
+      "status": "sent",
+      "sent_at_utc": "2026-09-04T18:49:36.805Z",
+      "shared_now": true
+    },
+    "instagram": {
+      "account": "joseph_malafronte",
+      "post_id": "6a9b132d8a5d17d6d4607c35",
+      "status": "sent",
+      "sent_at_utc": "2026-09-04T18:51:52.593Z",
+      "shared_now": true
+    }
+  },
+  "content_title": "Casa online da 90 giorni: cosa dice il mercato?",
+  "notes": "Facebook and LinkedIn were created on the first successful live pass. Instagram was retried alone with Buffer Instagram type=post to avoid duplicates."
+}
