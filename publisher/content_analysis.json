@@ -1,7 +1,8 @@
 {
-  "version": 1,
-  "generated_at": "2026-09-04T15:10:31Z",
-  "policy": "ANALISI PRIMA DELLA CREAZIONE DEL POST",
+  "version": 2,
+  "generated_at": "2026-09-04T15:32:11Z",
+  "policy": "ANALISI PRIMA DELLA CREAZIONE DEL POST + INSTAGRAM FEED/REELS DISTRIBUTION SIGNALS",
+  "instagram_policy_file": "publisher/instagram_distribution_policy.json",
   "clients": {
     "f1-immobiliare": {
       "client_id": "f1-immobiliare",
@@ -28,7 +29,17 @@
           "likes": null,
           "comments": null,
           "shares": null,
+          "saves": null,
           "cta_clicks": null,
+          "profile_visits": null,
+          "direct_shares": null,
+          "dwell_time_seconds": null,
+          "skip_rate": null,
+          "carousel_completion_rate": null,
+          "average_watch_time_seconds": null,
+          "three_second_view_rate": null,
+          "ten_second_view_rate": null,
+          "audio_on_rate": null,
           "metrics_status": "NOT_AVAILABLE_IN_QUEUE"
         },
         {
@@ -40,7 +51,17 @@
           "likes": null,
           "comments": null,
           "shares": null,
+          "saves": null,
           "cta_clicks": null,
+          "profile_visits": null,
+          "direct_shares": null,
+          "dwell_time_seconds": null,
+          "skip_rate": null,
+          "carousel_completion_rate": null,
+          "average_watch_time_seconds": null,
+          "three_second_view_rate": null,
+          "ten_second_view_rate": null,
+          "audio_on_rate": null,
           "metrics_status": "NOT_AVAILABLE_IN_QUEUE"
         },
         {
@@ -52,7 +73,17 @@
           "likes": null,
           "comments": null,
           "shares": null,
+          "saves": null,
           "cta_clicks": null,
+          "profile_visits": null,
+          "direct_shares": null,
+          "dwell_time_seconds": null,
+          "skip_rate": null,
+          "carousel_completion_rate": null,
+          "average_watch_time_seconds": null,
+          "three_second_view_rate": null,
+          "ten_second_view_rate": null,
+          "audio_on_rate": null,
           "metrics_status": "NOT_AVAILABLE_IN_QUEUE"
         },
         {
@@ -64,7 +95,17 @@
           "likes": null,
           "comments": null,
           "shares": null,
+          "saves": null,
           "cta_clicks": null,
+          "profile_visits": null,
+          "direct_shares": null,
+          "dwell_time_seconds": null,
+          "skip_rate": null,
+          "carousel_completion_rate": null,
+          "average_watch_time_seconds": null,
+          "three_second_view_rate": null,
+          "ten_second_view_rate": null,
+          "audio_on_rate": null,
           "metrics_status": "NOT_AVAILABLE_IN_QUEUE"
         },
         {
@@ -76,7 +117,127 @@
           "likes": null,
           "comments": null,
           "shares": null,
+          "saves": null,
           "cta_clicks": null,
+          "profile_visits": null,
+          "direct_shares": null,
+          "dwell_time_seconds": null,
+          "skip_rate": null,
+          "carousel_completion_rate": null,
+          "average_watch_time_seconds": null,
+          "three_second_view_rate": null,
+          "ten_second_view_rate": null,
+          "audio_on_rate": null,
+          "metrics_status": "NOT_AVAILABLE_IN_QUEUE"
+        },
+        {
+          "title": "VALUTAZIONE IMMOBILIARE CON I DATI",
+          "format": "photo",
+          "category": "data",
+          "visual_source": "f1-approved-local-valle-susa",
+          "caption": "VALUTAZIONE IMMOBILIARE CON I DATI.\n\nComparabili, mercato, microzona e strategia: il valore non è un numero inventato per convincere il proprietario. Deve essere una conclusione che puoi capire.\n\nRichiedi una prima analisi gratuita del tuo immobile.\n\nhttps://www.agentpricing.com/j.malafronte\n\n371 370 8294 · 371 424 6300\n\n#ValleDiSusa #Condove #Vaie #ChiusaDiSanMichele #SantAmbrogioDiTorino #Avigliana",
+          "likes": null,
+          "comments": null,
+          "shares": null,
+          "saves": null,
+          "cta_clicks": null,
+          "profile_visits": null,
+          "direct_shares": null,
+          "dwell_time_seconds": null,
+          "skip_rate": null,
+          "carousel_completion_rate": null,
+          "average_watch_time_seconds": null,
+          "three_second_view_rate": null,
+          "ten_second_view_rate": null,
+          "audio_on_rate": null,
+          "metrics_status": "NOT_AVAILABLE_IN_QUEUE"
+        },
+        {
+          "title": "LA MICROZONA CAMBIA IL VALORE",
+          "format": "photo",
+          "category": "proof",
+          "visual_source": "f1-approved-local-valle-susa",
+          "caption": "LA MICROZONA CAMBIA IL VALORE.\n\nStesso comune non significa stesso prezzo. Via, piano, esposizione, servizi, accessibilità e domanda possono cambiare il posizionamento di un immobile anche a poche centinaia di metri di distanza.\n\nPer questo una valutazione seria parte dal territorio reale, non da una media generica.\n\nhttps://www.agentpricing.com/j.malafronte\n\n371 370 8294 · 371 424 6300\n\n#ValleDiSusa #Oulx #Bardonecchia #SauzeDOulx #CesanaTorinese #Chiomonte",
+          "likes": null,
+          "comments": null,
+          "shares": null,
+          "saves": null,
+          "cta_clicks": null,
+          "profile_visits": null,
+          "direct_shares": null,
+          "dwell_time_seconds": null,
+          "skip_rate": null,
+          "carousel_completion_rate": null,
+          "average_watch_time_seconds": null,
+          "three_second_view_rate": null,
+          "ten_second_view_rate": null,
+          "audio_on_rate": null,
+          "metrics_status": "NOT_AVAILABLE_IN_QUEUE"
+        },
+        {
+          "title": "STAI PENSANDO DI VENDERE CASA?",
+          "format": "photo",
+          "category": "error",
+          "visual_source": "f1-approved-local-valle-susa",
+          "caption": "STAI PENSANDO DI VENDERE CASA?\n\nVendere bene comincia prima dell'annuncio. Prima analizziamo valore, concorrenza, domanda e posizionamento dell'immobile; poi costruiamo la strategia di vendita.\n\nSe hai una casa o un appartamento in Valle di Susa possiamo partire da una valutazione gratuita, chiara e basata sui dati.\n\nhttps://www.agentpricing.com/j.malafronte\n\n371 370 8294 · 371 424 6300\n\n#ValleDiSusa #Susa #BorgoneSusa #Bussoleno #SanGiorio #VillarFocchiardo",
+          "likes": null,
+          "comments": null,
+          "shares": null,
+          "saves": null,
+          "cta_clicks": null,
+          "profile_visits": null,
+          "direct_shares": null,
+          "dwell_time_seconds": null,
+          "skip_rate": null,
+          "carousel_completion_rate": null,
+          "average_watch_time_seconds": null,
+          "three_second_view_rate": null,
+          "ten_second_view_rate": null,
+          "audio_on_rate": null,
+          "metrics_status": "NOT_AVAILABLE_IN_QUEUE"
+        },
+        {
+          "title": "HAI UN APPARTAMENTO DA VALUTARE?",
+          "format": "photo",
+          "category": "data",
+          "visual_source": "f1-approved-local-valle-susa",
+          "caption": "HAI UN APPARTAMENTO DA VALUTARE?\n\nIl prezzo non si sceglie a sensazione. Si verifica con dati, immobili comparabili, caratteristiche reali, microzona e domanda.\n\nSe possiedi un appartamento in Valle di Susa e vuoi capire quanto può valere oggi, richiedi una prima analisi gratuita.\n\nhttps://www.agentpricing.com/j.malafronte\n\n371 370 8294 · 371 424 6300\n\n#ValleDiSusa #Avigliana #Almese #SantAmbrogioDiTorino #VillarDora #Caprie",
+          "likes": null,
+          "comments": null,
+          "shares": null,
+          "saves": null,
+          "cta_clicks": null,
+          "profile_visits": null,
+          "direct_shares": null,
+          "dwell_time_seconds": null,
+          "skip_rate": null,
+          "carousel_completion_rate": null,
+          "average_watch_time_seconds": null,
+          "three_second_view_rate": null,
+          "ten_second_view_rate": null,
+          "audio_on_rate": null,
+          "metrics_status": "NOT_AVAILABLE_IN_QUEUE"
+        },
+        {
+          "title": "CERCASI APPARTAMENTI IN VALLE DI SUSA",
+          "format": "photo",
+          "category": "proof",
+          "visual_source": "f1-approved-local-valle-susa",
+          "caption": "CERCASI APPARTAMENTI IN VALLE DI SUSA\n\nStiamo cercando appartamenti e abitazioni per persone interessate ad acquistare nella nostra zona.\n\nHai una casa o un appartamento che stai pensando di vendere? Prima di scegliere prezzo e strategia verifichiamo microzona, immobili comparabili, concorrenza e domanda reale.\n\nPrima valutazione gratuita e senza impegno:\nhttps://www.agentpricing.com/j.malafronte\n\n371 370 8294 · 371 424 6300\n\n#ValleDiSusa #Avigliana #Susa #Condove #Almese #Bussoleno",
+          "likes": null,
+          "comments": null,
+          "shares": null,
+          "saves": null,
+          "cta_clicks": null,
+          "profile_visits": null,
+          "direct_shares": null,
+          "dwell_time_seconds": null,
+          "skip_rate": null,
+          "carousel_completion_rate": null,
+          "average_watch_time_seconds": null,
+          "three_second_view_rate": null,
+          "ten_second_view_rate": null,
+          "audio_on_rate": null,
           "metrics_status": "NOT_AVAILABLE_IN_QUEUE"
         },
         {
@@ -84,11 +245,21 @@
           "format": "photo",
           "category": "proof",
           "visual_source": "manual-upload",
-          "caption": "RICHIEDI UNA VALUTAZIONE GRATUITA DEL TUO IMMOBILE\nhttps://www.agentpricing.com/j.malafronte\n\nVUOI VENDERE CASA IN VALLE DI SUSA?\n\nPrima di pubblicare un annuncio, parti da una valutazione immobiliare costruita su dati, caratteristiche reali dell'immobile, microzona e confronto con il mercato.\n\nF1 Immobiliare organizza la vendita partendo dall'analisi, non da un prezzo scelto a sensazione.\n\nRichiedi una valutazione gratuita del tuo immobile.\n371 370 8294 · 371 424 6300\n\n#F1Immobiliare #ValleDiSu",
+          "caption": "RICHIEDI UNA VALUTAZIONE GRATUITA DEL TUO IMMOBILE\nhttps://www.agentpricing.com/j.malafronte\n\nVUOI VENDERE CASA IN VALLE DI SUSA?\n\nPrima di pubblicare un annuncio, parti da una valutazione immobiliare costruita su dati, caratteristiche reali dell'immobile, microzona e confronto con il mercato.\n\nF1 Immobiliare organizza la vendita partendo dall'analisi, non da un prezzo scelto a sensazione.\n\nRichiedi una valutazione gratuita del tuo immobile.\n371 370 8294 · 371 424 6300\n\n#F1Immobiliare #ValleDiSusa #VendereCasa #ValutazioneImmobiliare #Susa #Bussoleno #Condove #Avigliana #Almese #Rivoli",
           "likes": null,
           "comments": null,
           "shares": null,
+          "saves": null,
           "cta_clicks": null,
+          "profile_visits": null,
+          "direct_shares": null,
+          "dwell_time_seconds": null,
+          "skip_rate": null,
+          "carousel_completion_rate": null,
+          "average_watch_time_seconds": null,
+          "three_second_view_rate": null,
+          "ten_second_view_rate": null,
+          "audio_on_rate": null,
           "metrics_status": "NOT_AVAILABLE_IN_QUEUE"
         },
         {
@@ -96,31 +267,402 @@
           "format": "photo",
           "category": "error",
           "visual_source": "manual-upload",
-          "caption": "RICHIEDI UNA VALUTAZIONE GRATUITA DEL TUO IMMOBILE\nhttps://www.agentpricing.com/j.malafronte\n\nLAVORA CON F1 IMMOBILIARE.\n\nCerchiamo collaboratori e collaboratrici da formare e affiancare, oltre ad agenti immobiliari già abilitati.\n\nPer chi non è ancora abilitato, il percorso iniziale riguarda presidio della zona, contatto con residenti e proprietari, ricerca immobili, appuntamenti e raccolta delle informazioni iniziali, sempre con affiancamento. Le attività riservate alla mediazione e alla negoz",
+          "caption": "RICHIEDI UNA VALUTAZIONE GRATUITA DEL TUO IMMOBILE\nhttps://www.agentpricing.com/j.malafronte\n\nLAVORA CON F1 IMMOBILIARE.\n\nCerchiamo collaboratori e collaboratrici da formare e affiancare, oltre ad agenti immobiliari già abilitati.\n\nPer chi non è ancora abilitato, il percorso iniziale riguarda presidio della zona, contatto con residenti e proprietari, ricerca immobili, appuntamenti e raccolta delle informazioni iniziali, sempre con affiancamento. Le attività riservate alla mediazione e alla negoziazione vengono svolte da professionisti abilitati.\n\nInvia il curriculum a f1immobiliaresusa@outlook.it\n371 370 8294\n\n#F1Immobiliare #LavoraConNoi #Immobiliare #ValleDiSusa #TorinoOvest",
           "likes": null,
           "comments": null,
           "shares": null,
+          "saves": null,
           "cta_clicks": null,
+          "profile_visits": null,
+          "direct_shares": null,
+          "dwell_time_seconds": null,
+          "skip_rate": null,
+          "carousel_completion_rate": null,
+          "average_watch_time_seconds": null,
+          "three_second_view_rate": null,
+          "ten_second_view_rate": null,
+          "audio_on_rate": null,
           "metrics_status": "NOT_AVAILABLE_IN_QUEUE"
         }
       ],
       "public": "Proprietari di immobili residenziali in Valle di Susa che stanno valutando la vendita o vogliono conoscere il valore reale dell'immobile",
       "objective": "richiesta informazioni",
       "main_message": "Prima di vendere casa, il valore va verificato con dati, comparabili, microzona e domanda reale.",
-      "cta_policy": "ONE_OR_NONE",
+      "cta_policy": "ONE_OR_NONE_AND_ONLY_IF_OBJECTIVE_REQUIRES_IT",
       "quality_gate": {
         "sharp_media_required": true,
         "brand_coherence_required": true,
         "recognizable_subject_required": true,
         "short_visual_text_required": true,
         "single_main_idea_required": true,
-        "relevant_question_only": true
+        "relevant_question_only": true,
+        "skip_risk_review_required": true,
+        "dwell_time_value_review_required": true,
+        "direct_share_value_review_required": true,
+        "profile_visit_value_review_required": true,
+        "format_specific_rules_required": true
+      },
+      "instagram": {
+        "policy_version": 1,
+        "ranking_model": {
+          "inventory": {
+            "rule": "The feed starts from eligible posts from followed accounts, then integrity systems remove content that violates platform rules.",
+            "production_implication": "Every asset must be policy-safe, clear, original/reusable as permitted, and designed for an identifiable audience."
+          },
+          "signals": {
+            "rule": "Ranking uses multiple input signals about the creator, the media type, prior interactions and the current post.",
+            "production_implication": "Do not optimize for one vanity metric. Build content around audience relevance, media fit, prior comparable performance and meaningful actions."
+          },
+          "predictions": {
+            "rule": "The system predicts which posts a person may find useful and relevant.",
+            "production_implication": "Before creation define one audience, one objective and one message that gives that audience a clear reason to stop, consume and act."
+          },
+          "ranking_score": {
+            "rule": "Eligible posts are scored for relevance and ordered; the feed also seeks a useful mix of content types.",
+            "production_implication": "Score each draft against predicted useful actions and avoid repetitive creative patterns."
+          }
+        },
+        "predictions_to_optimize": {
+          "carousel_completion": {
+            "applicable_to": [
+              "carousel"
+            ],
+            "signals": [
+              "how often the viewer advances to the next card",
+              "number of carousel units viewed",
+              "whether the carousel was reordered",
+              "whether the post is recommended",
+              "number of units in the carousel"
+            ],
+            "creative_rules": [
+              "Card 1 must create a precise reason to continue.",
+              "Each card must add new information and create a logical reason to swipe.",
+              "Do not pad the carousel with redundant slides.",
+              "The last card must close the information loop or present the single coherent action."
+            ]
+          },
+          "positive_action_probability": {
+            "applicable_to": [
+              "photo",
+              "carousel",
+              "reel",
+              "video"
+            ],
+            "signals": [
+              "likes",
+              "comments",
+              "reshares",
+              "time spent on the post",
+              "media type used to estimate expected viewing time"
+            ],
+            "creative_rules": [
+              "Create something meaningful for the selected audience, not generic engagement bait.",
+              "Make the subject immediately recognizable.",
+              "Use the media format that best serves the message rather than forcing every idea into one format."
+            ]
+          },
+          "skip_probability": {
+            "applicable_to": [
+              "photo",
+              "carousel",
+              "reel",
+              "video"
+            ],
+            "signals": [
+              "whether the post is photo, video or carousel",
+              "relative probability of skipping this post versus adjacent posts"
+            ],
+            "creative_rules": [
+              "Remove weak introductions.",
+              "Put the relevant subject, problem, desire, result or information in the first visible unit.",
+              "Avoid generic stock-like, confusing, blurred or visually unrelated assets.",
+              "Keep visual text short and immediately readable."
+            ]
+          },
+          "profile_time_after_post": {
+            "applicable_to": [
+              "photo",
+              "carousel",
+              "reel",
+              "video"
+            ],
+            "signals": [
+              "time spent on creator profile",
+              "whether the post is recommended",
+              "profile visit after viewing the post"
+            ],
+            "creative_rules": [
+              "Make brand identity visible without overwhelming the content.",
+              "Create enough credibility or curiosity that the target has a reason to inspect the profile.",
+              "Keep the post coherent with the profile positioning so the transition to the profile makes sense."
+            ]
+          },
+          "direct_share_probability": {
+            "applicable_to": [
+              "photo",
+              "carousel",
+              "reel",
+              "video"
+            ],
+            "signals": [
+              "whether content is informational such as news, product reviews, tutorials or instructions",
+              "recency of the post within 90 days",
+              "whether it is a repost",
+              "opening the share sheet and selecting a recipient",
+              "whether the post is recommended"
+            ],
+            "creative_rules": [
+              "Where appropriate, prefer useful information people may naturally send to another person.",
+              "Do not ask for meaningless shares; make the information itself share-worthy.",
+              "Use current, relevant and specific information when the subject is time-sensitive."
+            ]
+          },
+          "predicted_time_on_post": {
+            "applicable_to": [
+              "photo",
+              "carousel",
+              "reel",
+              "video"
+            ],
+            "signals": [
+              "for photos, amount of overlaid text",
+              "viewer Reels watch-time group",
+              "whether the post is recommended",
+              "time spent on the post",
+              "recent reshare-button use"
+            ],
+            "creative_rules": [
+              "For photos, do not overload the image with text.",
+              "Use one primary visual message and move explanation to the caption when necessary.",
+              "Design the content so understanding requires useful attention, not confusion."
+            ]
+          },
+          "first_post_skip_probability": {
+            "applicable_to": [
+              "photo",
+              "carousel",
+              "reel",
+              "video"
+            ],
+            "signals": [
+              "whether the first post was actually viewed",
+              "time spent on the first post",
+              "whether an action occurred",
+              "whether the post is first in feed"
+            ],
+            "creative_rules": [
+              "Assume every post may be the first item a follower sees.",
+              "The first visible unit must work without prior context.",
+              "Do not rely on a slow setup to explain why the content matters."
+            ]
+          },
+          "first_post_over_10_seconds": {
+            "applicable_to": [
+              "reel",
+              "video",
+              "carousel"
+            ],
+            "signals": [
+              "whether the post is recommended",
+              "whether viewing time reaches 10 seconds",
+              "total viewing time including Reels shown in feed"
+            ],
+            "creative_rules": [
+              "Create a strong first 1-3 seconds and a reason to continue beyond the hook.",
+              "Do not reveal only the hook and then repeat it; add progressive value.",
+              "For video, structure the middle so the viewer has a reason to stay beyond 10 seconds."
+            ]
+          },
+          "audio_activation_probability": {
+            "applicable_to": [
+              "reel",
+              "video"
+            ],
+            "signals": [
+              "whether the post is recommended",
+              "whether the viewer enables audio",
+              "whether the post is video/Reel"
+            ],
+            "creative_rules": [
+              "Design audio intentionally with music, voiceover or sound effects when rights permit.",
+              "The content must remain understandable with captions/context even if audio is not activated.",
+              "Audio should support the message rather than exist as decoration."
+            ]
+          },
+          "session_continuation_after_first_post": {
+            "applicable_to": [
+              "photo",
+              "carousel",
+              "reel",
+              "video"
+            ],
+            "signals": [
+              "whether the post is first in feed",
+              "whether it was viewed for at least 3 seconds",
+              "time spent in the rest of the session after the first post"
+            ],
+            "creative_rules": [
+              "Optimize the first impression for immediate relevance and low confusion.",
+              "Avoid clickbait that disappoints after the first seconds.",
+              "Deliver value quickly enough that the post contributes positively to the viewing session."
+            ]
+          }
+        },
+        "gallery_suggestion_metadata": {
+          "signals": [
+            "recency of photo/video capture",
+            "capture location",
+            "whether media was favorited",
+            "presence of people or animals"
+          ],
+          "production_implication": "When owned gallery metadata is available, it may be used to organize candidate media, but presence of people/animals is not itself a quality signal and must still be checked against the content brief."
+        },
+        "reels_creative_essentials": {
+          "format": "9:16 vertical full-screen",
+          "audio": "Use intentional audio when rights permit; Meta guidance identifies audio as a key Reels creative element.",
+          "safe_area": "Keep the bottom 35% free of essential creative elements, text and logos so interface overlays do not obscure the message.",
+          "message": "Keep primary messages inside the safe area.",
+          "first_frame": "The first frame/first seconds must make the subject and value understandable immediately.",
+          "captions": "Use captions/subtitles when they improve context, clarity and accessibility.",
+          "brand": "Show the brand clearly and coherently, especially for conversion-oriented Reels.",
+          "harmony": "Use visually coherent clips/assets; avoid mixing unrelated styles and shooting conditions without a reason.",
+          "production_quality": "Professional-only footage is not required; phone footage is acceptable when clear, coherent and useful."
+        },
+        "reels_for_sales": {
+          "do": [
+            "highlight the product/service clearly",
+            "keep the brand visible",
+            "show special offers when genuinely relevant",
+            "create harmonious content",
+            "use a clear purchase/action CTA when the objective is conversion"
+          ],
+          "dont": [
+            "mix footage created at very different times/styles without coherence",
+            "assume only professionally shot footage can work"
+          ],
+          "storyboard_patterns": {
+            "uniform_background": [
+              "introduction",
+              "product/subject movement",
+              "closer",
+              "clear CTA"
+            ],
+            "customer_interaction": [
+              "wide shot",
+              "close-up",
+              "detail",
+              "clear CTA"
+            ],
+            "photo_service_reuse": [
+              "intro close-up/text",
+              "action shot",
+              "group shot",
+              "single shot"
+            ]
+          }
+        },
+        "reels_for_results": {
+          "do": [
+            "show one clear CTA",
+            "show the value of taking the action immediately",
+            "keep brand visible",
+            "build the Reel toward the final action"
+          ],
+          "dont": [
+            "focus only on lifestyle or atmosphere when the objective is a measurable action"
+          ],
+          "storyboard_patterns": {
+            "unboxing_or_reveal": [
+              "whole package/result",
+              "details one by one",
+              "group/result together"
+            ],
+            "demo": [
+              "start from finished result",
+              "keep product/service visible during demonstration",
+              "return to initial result"
+            ],
+            "team_expertise": [
+              "introduce expert and role",
+              "share three relevant expertise/details",
+              "close with a clear next step"
+            ]
+          }
+        },
+        "reels_editing": {
+          "animate_static_images": "Use movement/transitions when turning static images into Reels, but movement must improve viewing rather than distract.",
+          "subtitles": "Add subtitles/captions to contextualize, clarify and improve accessibility.",
+          "audio": "Use rights-cleared/royalty-free audio; Meta Audio Collection is one supported source in the supplied guidance.",
+          "cutout": "Background removal/cutout may be used to emphasize subjects, text or alternate backgrounds when coherent.",
+          "metrics_to_review": [
+            "skip rate",
+            "average watch time",
+            "like rate",
+            "share rate",
+            "comment rate",
+            "save rate"
+          ]
+        },
+        "ai_assisted_reels": {
+          "allowed_uses": [
+            "image expansion",
+            "video expansion",
+            "text generation/variants",
+            "background generation for catalog assets",
+            "image animation",
+            "full image generation"
+          ],
+          "rules": [
+            "Use AI to scale what already works, renew creative faster and reuse existing assets.",
+            "Generated text variants must be based on the brand tone and prior high-performing ads/content when such data exists.",
+            "Convert existing video to 9:16 without damaging the subject or brand coherence.",
+            "AI output remains subject to the same quality, truthfulness, brand and rights checks as manually produced media."
+          ]
+        },
+        "mandatory_prepublication_checks": [
+          "audience_is_precise",
+          "single_objective",
+          "single_main_message",
+          "creative_is_sharp",
+          "creative_is_brand_coherent",
+          "subject_is_immediately_recognizable",
+          "visual_text_is_short",
+          "opening_is_immediately_relevant",
+          "caption_has_no_unnecessary_elements",
+          "content_is_meaningful_for_target",
+          "cta_matches_objective_or_is_omitted",
+          "question_is_relevant_if_used",
+          "content_is_distinct_enough_from_recent_posts",
+          "skip_risk_reviewed",
+          "dwell_time_value_reviewed",
+          "direct_share_value_reviewed",
+          "profile_visit_value_reviewed",
+          "format_specific_rules_passed"
+        ],
+        "performance_data_status": "NOT_AVAILABLE",
+        "performance_metrics_expected": [
+          "likes",
+          "comments",
+          "shares",
+          "saves",
+          "cta_clicks",
+          "profile_visits",
+          "direct_shares",
+          "dwell_time_seconds",
+          "skip_rate",
+          "carousel_completion_rate",
+          "average_watch_time_seconds",
+          "three_second_view_rate",
+          "ten_second_view_rate",
+          "audio_on_rate"
+        ],
+        "rule": "Use actual account/page data when present. Never fabricate ranking performance, watch-time, skip, share, save, profile-visit or audio metrics."
       },
       "publication_timing": {
         "status": "UNVERIFIED_NO_INSIGHTS",
         "day": null,
         "time_window": null,
-        "rule": "Use Page Insights audience-online data. Never invent a best time."
+        "rule": "Use actual Page/Instagram Insights audience-online data. Never invent a best time."
       },
       "manual_approval_required": true
     },
@@ -149,7 +691,17 @@
           "likes": null,
           "comments": null,
           "shares": null,
+          "saves": null,
           "cta_clicks": null,
+          "profile_visits": null,
+          "direct_shares": null,
+          "dwell_time_seconds": null,
+          "skip_rate": null,
+          "carousel_completion_rate": null,
+          "average_watch_time_seconds": null,
+          "three_second_view_rate": null,
+          "ten_second_view_rate": null,
+          "audio_on_rate": null,
           "metrics_status": "NOT_AVAILABLE_IN_QUEUE"
         },
         {
@@ -161,7 +713,17 @@
           "likes": null,
           "comments": null,
           "shares": null,
+          "saves": null,
           "cta_clicks": null,
+          "profile_visits": null,
+          "direct_shares": null,
+          "dwell_time_seconds": null,
+          "skip_rate": null,
+          "carousel_completion_rate": null,
+          "average_watch_time_seconds": null,
+          "three_second_view_rate": null,
+          "ten_second_view_rate": null,
+          "audio_on_rate": null,
           "metrics_status": "NOT_AVAILABLE_IN_QUEUE"
         },
         {
@@ -173,7 +735,17 @@
           "likes": null,
           "comments": null,
           "shares": null,
+          "saves": null,
           "cta_clicks": null,
+          "profile_visits": null,
+          "direct_shares": null,
+          "dwell_time_seconds": null,
+          "skip_rate": null,
+          "carousel_completion_rate": null,
+          "average_watch_time_seconds": null,
+          "three_second_view_rate": null,
+          "ten_second_view_rate": null,
+          "audio_on_rate": null,
           "metrics_status": "NOT_AVAILABLE_IN_QUEUE"
         },
         {
@@ -185,7 +757,17 @@
           "likes": null,
           "comments": null,
           "shares": null,
+          "saves": null,
           "cta_clicks": null,
+          "profile_visits": null,
+          "direct_shares": null,
+          "dwell_time_seconds": null,
+          "skip_rate": null,
+          "carousel_completion_rate": null,
+          "average_watch_time_seconds": null,
+          "three_second_view_rate": null,
+          "ten_second_view_rate": null,
+          "audio_on_rate": null,
           "metrics_status": "NOT_AVAILABLE_IN_QUEUE"
         },
         {
@@ -197,7 +779,127 @@
           "likes": null,
           "comments": null,
           "shares": null,
+          "saves": null,
           "cta_clicks": null,
+          "profile_visits": null,
+          "direct_shares": null,
+          "dwell_time_seconds": null,
+          "skip_rate": null,
+          "carousel_completion_rate": null,
+          "average_watch_time_seconds": null,
+          "three_second_view_rate": null,
+          "ten_second_view_rate": null,
+          "audio_on_rate": null,
+          "metrics_status": "NOT_AVAILABLE_IN_QUEUE"
+        },
+        {
+          "title": "SEZIONI MODULARI PER VENDERE MEGLIO",
+          "format": "photo",
+          "category": "attract",
+          "visual_source": "shopify-theme-store-description-only",
+          "caption": "SEZIONI MODULARI PER VENDERE MEGLIO.\n\nVivid mette insieme struttura pulita, personalizzazione, ricerca, filtri e sezioni dedicate alla scoperta dei prodotti.\n\nPer Real Media Pro il punto non è replicare il tema: è utilizzare queste logiche per progettare un'esperienza originale che aiuti l'utente a trovare, capire e scegliere più facilmente.\n\nNessuna immagine del Theme Store viene riutilizzata.\n\nAnalisi strategica gratuita: 371 370 8294",
+          "likes": null,
+          "comments": null,
+          "shares": null,
+          "saves": null,
+          "cta_clicks": null,
+          "profile_visits": null,
+          "direct_shares": null,
+          "dwell_time_seconds": null,
+          "skip_rate": null,
+          "carousel_completion_rate": null,
+          "average_watch_time_seconds": null,
+          "three_second_view_rate": null,
+          "ten_second_view_rate": null,
+          "audio_on_rate": null,
+          "metrics_status": "NOT_AVAILABLE_IN_QUEUE"
+        },
+        {
+          "title": "SITI WEB CHE VALORIZZANO IL BRAND",
+          "format": "photo",
+          "category": "convert",
+          "visual_source": "shopify-theme-store-description-only",
+          "caption": "SITI WEB CHE VALORIZZANO IL BRAND.\n\nAllure unisce semplicità, impatto visivo, scoperta dei prodotti e una struttura pensata per sostenere la vendita. È un riferimento utile per capire quanto design e percorso commerciale debbano lavorare insieme.\n\nNoi partiamo da questi principi per creare un sito originale, coerente con il brand e costruito attorno ai suoi prodotti e clienti.\n\nNessuna immagine Shopify viene copiata.\n\nAnalisi strategica gratuita: 371 370 8294",
+          "likes": null,
+          "comments": null,
+          "shares": null,
+          "saves": null,
+          "cta_clicks": null,
+          "profile_visits": null,
+          "direct_shares": null,
+          "dwell_time_seconds": null,
+          "skip_rate": null,
+          "carousel_completion_rate": null,
+          "average_watch_time_seconds": null,
+          "three_second_view_rate": null,
+          "ten_second_view_rate": null,
+          "audio_on_rate": null,
+          "metrics_status": "NOT_AVAILABLE_IN_QUEUE"
+        },
+        {
+          "title": "DESIGN PREMIUM, PRESTAZIONI VELOCI",
+          "format": "photo",
+          "category": "nurture",
+          "visual_source": "shopify-theme-store-description-only",
+          "caption": "DESIGN PREMIUM, PRESTAZIONI VELOCI.\n\nPrestige mostra come un e-commerce premium possa combinare immagine di marca, prodotto, sezioni configurabili, velocità e accessibilità.\n\nReal Media Pro traduce questi principi in un progetto originale costruito sull'identità del cliente: nessuna copia del tema, ma una struttura pensata per far percepire valore e facilitare l'acquisto.\n\nAnalisi strategica gratuita: 371 370 8294",
+          "likes": null,
+          "comments": null,
+          "shares": null,
+          "saves": null,
+          "cta_clicks": null,
+          "profile_visits": null,
+          "direct_shares": null,
+          "dwell_time_seconds": null,
+          "skip_rate": null,
+          "carousel_completion_rate": null,
+          "average_watch_time_seconds": null,
+          "three_second_view_rate": null,
+          "ten_second_view_rate": null,
+          "audio_on_rate": null,
+          "metrics_status": "NOT_AVAILABLE_IN_QUEUE"
+        },
+        {
+          "title": "MOBILE FIRST, PERCORSO CHIARO",
+          "format": "photo",
+          "category": "attract",
+          "visual_source": "shopify-theme-store-description-only",
+          "caption": "MOBILE FIRST, PERCORSO CHIARO.\n\nIl tema Shopify Broadcast mette al centro sezioni personalizzabili, velocità, mobile, acquisto rapido e strumenti che accompagnano il cliente verso la vendita.\n\nDa questa logica costruiamo un concept Real Media Pro completamente originale: gerarchia chiara, CTA visibili, navigazione veloce e meno attrito da smartphone.\n\nNessuna immagine del tema viene copiata o ripubblicata.\n\nAnalisi strategica gratuita: 371 370 8294",
+          "likes": null,
+          "comments": null,
+          "shares": null,
+          "saves": null,
+          "cta_clicks": null,
+          "profile_visits": null,
+          "direct_shares": null,
+          "dwell_time_seconds": null,
+          "skip_rate": null,
+          "carousel_completion_rate": null,
+          "average_watch_time_seconds": null,
+          "three_second_view_rate": null,
+          "ten_second_view_rate": null,
+          "audio_on_rate": null,
+          "metrics_status": "NOT_AVAILABLE_IN_QUEUE"
+        },
+        {
+          "title": "SHOPIFY: DAL PRODOTTO ALLA CONVERSIONE",
+          "format": "photo",
+          "category": "convert",
+          "visual_source": "shopify-theme-store-description-only",
+          "caption": "SHOPIFY: DAL PRODOTTO ALLA CONVERSIONE.\n\nUn e-commerce deve rendere semplice capire il prodotto, confrontare le alternative e arrivare all'azione. Prendiamo ispirazione dalle logiche del tema Shopify Shapes: struttura creativa, sezioni modulari, quick buy e percorso di scoperta chiaro.\n\nLa grafica che mostriamo è originale: non copiamo immagini o creatività del tema.\n\nReal Media Pro progetta siti Shopify orientati a navigazione, prodotto e conversione.\n\nAnalisi strategica gratuita: 371 370 8294",
+          "likes": null,
+          "comments": null,
+          "shares": null,
+          "saves": null,
+          "cta_clicks": null,
+          "profile_visits": null,
+          "direct_shares": null,
+          "dwell_time_seconds": null,
+          "skip_rate": null,
+          "carousel_completion_rate": null,
+          "average_watch_time_seconds": null,
+          "three_second_view_rate": null,
+          "ten_second_view_rate": null,
+          "audio_on_rate": null,
           "metrics_status": "NOT_AVAILABLE_IN_QUEUE"
         },
         {
@@ -209,7 +911,17 @@
           "likes": null,
           "comments": null,
           "shares": null,
+          "saves": null,
           "cta_clicks": null,
+          "profile_visits": null,
+          "direct_shares": null,
+          "dwell_time_seconds": null,
+          "skip_rate": null,
+          "carousel_completion_rate": null,
+          "average_watch_time_seconds": null,
+          "three_second_view_rate": null,
+          "ten_second_view_rate": null,
+          "audio_on_rate": null,
           "metrics_status": "NOT_AVAILABLE_IN_QUEUE"
         },
         {
@@ -221,39 +933,398 @@
           "likes": null,
           "comments": null,
           "shares": null,
+          "saves": null,
           "cta_clicks": null,
-          "metrics_status": "NOT_AVAILABLE_IN_QUEUE"
-        },
-        {
-          "title": "SITO CHE VENDE",
-          "format": "photo",
-          "category": "attract",
-          "visual_source": "pixabay-fresh-static-photo",
-          "caption": "IL TUO SITO AIUTA DAVVERO A VENDERE?\n\nUn sito efficace non è solo bello: deve rendere chiara l'offerta, guidare la persona e facilitare il contatto o l'acquisto. Real Media Pro analizza presenza digitale, sito, social e percorso commerciale per individuare cosa migliorare.\n\nRichiedi un'analisi strategica gratuita.\n371 370 8294\n\n#RealMediaPro #SitiWeb #Ecommerce #Shopify #DigitalMarketing #Torino #ValleDiSusa",
-          "likes": null,
-          "comments": null,
-          "shares": null,
-          "cta_clicks": null,
+          "profile_visits": null,
+          "direct_shares": null,
+          "dwell_time_seconds": null,
+          "skip_rate": null,
+          "carousel_completion_rate": null,
+          "average_watch_time_seconds": null,
+          "three_second_view_rate": null,
+          "ten_second_view_rate": null,
+          "audio_on_rate": null,
           "metrics_status": "NOT_AVAILABLE_IN_QUEUE"
         }
       ],
       "public": "Imprese e commercianti che vogliono migliorare sito, ecommerce e conversione digitale",
       "objective": "richiesta informazioni",
       "main_message": "Un sito efficace deve rendere più semplice capire l'offerta e arrivare all'azione.",
-      "cta_policy": "ONE_OR_NONE",
+      "cta_policy": "ONE_OR_NONE_AND_ONLY_IF_OBJECTIVE_REQUIRES_IT",
       "quality_gate": {
         "sharp_media_required": true,
         "brand_coherence_required": true,
         "recognizable_subject_required": true,
         "short_visual_text_required": true,
         "single_main_idea_required": true,
-        "relevant_question_only": true
+        "relevant_question_only": true,
+        "skip_risk_review_required": true,
+        "dwell_time_value_review_required": true,
+        "direct_share_value_review_required": true,
+        "profile_visit_value_review_required": true,
+        "format_specific_rules_required": true
+      },
+      "instagram": {
+        "policy_version": 1,
+        "ranking_model": {
+          "inventory": {
+            "rule": "The feed starts from eligible posts from followed accounts, then integrity systems remove content that violates platform rules.",
+            "production_implication": "Every asset must be policy-safe, clear, original/reusable as permitted, and designed for an identifiable audience."
+          },
+          "signals": {
+            "rule": "Ranking uses multiple input signals about the creator, the media type, prior interactions and the current post.",
+            "production_implication": "Do not optimize for one vanity metric. Build content around audience relevance, media fit, prior comparable performance and meaningful actions."
+          },
+          "predictions": {
+            "rule": "The system predicts which posts a person may find useful and relevant.",
+            "production_implication": "Before creation define one audience, one objective and one message that gives that audience a clear reason to stop, consume and act."
+          },
+          "ranking_score": {
+            "rule": "Eligible posts are scored for relevance and ordered; the feed also seeks a useful mix of content types.",
+            "production_implication": "Score each draft against predicted useful actions and avoid repetitive creative patterns."
+          }
+        },
+        "predictions_to_optimize": {
+          "carousel_completion": {
+            "applicable_to": [
+              "carousel"
+            ],
+            "signals": [
+              "how often the viewer advances to the next card",
+              "number of carousel units viewed",
+              "whether the carousel was reordered",
+              "whether the post is recommended",
+              "number of units in the carousel"
+            ],
+            "creative_rules": [
+              "Card 1 must create a precise reason to continue.",
+              "Each card must add new information and create a logical reason to swipe.",
+              "Do not pad the carousel with redundant slides.",
+              "The last card must close the information loop or present the single coherent action."
+            ]
+          },
+          "positive_action_probability": {
+            "applicable_to": [
+              "photo",
+              "carousel",
+              "reel",
+              "video"
+            ],
+            "signals": [
+              "likes",
+              "comments",
+              "reshares",
+              "time spent on the post",
+              "media type used to estimate expected viewing time"
+            ],
+            "creative_rules": [
+              "Create something meaningful for the selected audience, not generic engagement bait.",
+              "Make the subject immediately recognizable.",
+              "Use the media format that best serves the message rather than forcing every idea into one format."
+            ]
+          },
+          "skip_probability": {
+            "applicable_to": [
+              "photo",
+              "carousel",
+              "reel",
+              "video"
+            ],
+            "signals": [
+              "whether the post is photo, video or carousel",
+              "relative probability of skipping this post versus adjacent posts"
+            ],
+            "creative_rules": [
+              "Remove weak introductions.",
+              "Put the relevant subject, problem, desire, result or information in the first visible unit.",
+              "Avoid generic stock-like, confusing, blurred or visually unrelated assets.",
+              "Keep visual text short and immediately readable."
+            ]
+          },
+          "profile_time_after_post": {
+            "applicable_to": [
+              "photo",
+              "carousel",
+              "reel",
+              "video"
+            ],
+            "signals": [
+              "time spent on creator profile",
+              "whether the post is recommended",
+              "profile visit after viewing the post"
+            ],
+            "creative_rules": [
+              "Make brand identity visible without overwhelming the content.",
+              "Create enough credibility or curiosity that the target has a reason to inspect the profile.",
+              "Keep the post coherent with the profile positioning so the transition to the profile makes sense."
+            ]
+          },
+          "direct_share_probability": {
+            "applicable_to": [
+              "photo",
+              "carousel",
+              "reel",
+              "video"
+            ],
+            "signals": [
+              "whether content is informational such as news, product reviews, tutorials or instructions",
+              "recency of the post within 90 days",
+              "whether it is a repost",
+              "opening the share sheet and selecting a recipient",
+              "whether the post is recommended"
+            ],
+            "creative_rules": [
+              "Where appropriate, prefer useful information people may naturally send to another person.",
+              "Do not ask for meaningless shares; make the information itself share-worthy.",
+              "Use current, relevant and specific information when the subject is time-sensitive."
+            ]
+          },
+          "predicted_time_on_post": {
+            "applicable_to": [
+              "photo",
+              "carousel",
+              "reel",
+              "video"
+            ],
+            "signals": [
+              "for photos, amount of overlaid text",
+              "viewer Reels watch-time group",
+              "whether the post is recommended",
+              "time spent on the post",
+              "recent reshare-button use"
+            ],
+            "creative_rules": [
+              "For photos, do not overload the image with text.",
+              "Use one primary visual message and move explanation to the caption when necessary.",
+              "Design the content so understanding requires useful attention, not confusion."
+            ]
+          },
+          "first_post_skip_probability": {
+            "applicable_to": [
+              "photo",
+              "carousel",
+              "reel",
+              "video"
+            ],
+            "signals": [
+              "whether the first post was actually viewed",
+              "time spent on the first post",
+              "whether an action occurred",
+              "whether the post is first in feed"
+            ],
+            "creative_rules": [
+              "Assume every post may be the first item a follower sees.",
+              "The first visible unit must work without prior context.",
+              "Do not rely on a slow setup to explain why the content matters."
+            ]
+          },
+          "first_post_over_10_seconds": {
+            "applicable_to": [
+              "reel",
+              "video",
+              "carousel"
+            ],
+            "signals": [
+              "whether the post is recommended",
+              "whether viewing time reaches 10 seconds",
+              "total viewing time including Reels shown in feed"
+            ],
+            "creative_rules": [
+              "Create a strong first 1-3 seconds and a reason to continue beyond the hook.",
+              "Do not reveal only the hook and then repeat it; add progressive value.",
+              "For video, structure the middle so the viewer has a reason to stay beyond 10 seconds."
+            ]
+          },
+          "audio_activation_probability": {
+            "applicable_to": [
+              "reel",
+              "video"
+            ],
+            "signals": [
+              "whether the post is recommended",
+              "whether the viewer enables audio",
+              "whether the post is video/Reel"
+            ],
+            "creative_rules": [
+              "Design audio intentionally with music, voiceover or sound effects when rights permit.",
+              "The content must remain understandable with captions/context even if audio is not activated.",
+              "Audio should support the message rather than exist as decoration."
+            ]
+          },
+          "session_continuation_after_first_post": {
+            "applicable_to": [
+              "photo",
+              "carousel",
+              "reel",
+              "video"
+            ],
+            "signals": [
+              "whether the post is first in feed",
+              "whether it was viewed for at least 3 seconds",
+              "time spent in the rest of the session after the first post"
+            ],
+            "creative_rules": [
+              "Optimize the first impression for immediate relevance and low confusion.",
+              "Avoid clickbait that disappoints after the first seconds.",
+              "Deliver value quickly enough that the post contributes positively to the viewing session."
+            ]
+          }
+        },
+        "gallery_suggestion_metadata": {
+          "signals": [
+            "recency of photo/video capture",
+            "capture location",
+            "whether media was favorited",
+            "presence of people or animals"
+          ],
+          "production_implication": "When owned gallery metadata is available, it may be used to organize candidate media, but presence of people/animals is not itself a quality signal and must still be checked against the content brief."
+        },
+        "reels_creative_essentials": {
+          "format": "9:16 vertical full-screen",
+          "audio": "Use intentional audio when rights permit; Meta guidance identifies audio as a key Reels creative element.",
+          "safe_area": "Keep the bottom 35% free of essential creative elements, text and logos so interface overlays do not obscure the message.",
+          "message": "Keep primary messages inside the safe area.",
+          "first_frame": "The first frame/first seconds must make the subject and value understandable immediately.",
+          "captions": "Use captions/subtitles when they improve context, clarity and accessibility.",
+          "brand": "Show the brand clearly and coherently, especially for conversion-oriented Reels.",
+          "harmony": "Use visually coherent clips/assets; avoid mixing unrelated styles and shooting conditions without a reason.",
+          "production_quality": "Professional-only footage is not required; phone footage is acceptable when clear, coherent and useful."
+        },
+        "reels_for_sales": {
+          "do": [
+            "highlight the product/service clearly",
+            "keep the brand visible",
+            "show special offers when genuinely relevant",
+            "create harmonious content",
+            "use a clear purchase/action CTA when the objective is conversion"
+          ],
+          "dont": [
+            "mix footage created at very different times/styles without coherence",
+            "assume only professionally shot footage can work"
+          ],
+          "storyboard_patterns": {
+            "uniform_background": [
+              "introduction",
+              "product/subject movement",
+              "closer",
+              "clear CTA"
+            ],
+            "customer_interaction": [
+              "wide shot",
+              "close-up",
+              "detail",
+              "clear CTA"
+            ],
+            "photo_service_reuse": [
+              "intro close-up/text",
+              "action shot",
+              "group shot",
+              "single shot"
+            ]
+          }
+        },
+        "reels_for_results": {
+          "do": [
+            "show one clear CTA",
+            "show the value of taking the action immediately",
+            "keep brand visible",
+            "build the Reel toward the final action"
+          ],
+          "dont": [
+            "focus only on lifestyle or atmosphere when the objective is a measurable action"
+          ],
+          "storyboard_patterns": {
+            "unboxing_or_reveal": [
+              "whole package/result",
+              "details one by one",
+              "group/result together"
+            ],
+            "demo": [
+              "start from finished result",
+              "keep product/service visible during demonstration",
+              "return to initial result"
+            ],
+            "team_expertise": [
+              "introduce expert and role",
+              "share three relevant expertise/details",
+              "close with a clear next step"
+            ]
+          }
+        },
+        "reels_editing": {
+          "animate_static_images": "Use movement/transitions when turning static images into Reels, but movement must improve viewing rather than distract.",
+          "subtitles": "Add subtitles/captions to contextualize, clarify and improve accessibility.",
+          "audio": "Use rights-cleared/royalty-free audio; Meta Audio Collection is one supported source in the supplied guidance.",
+          "cutout": "Background removal/cutout may be used to emphasize subjects, text or alternate backgrounds when coherent.",
+          "metrics_to_review": [
+            "skip rate",
+            "average watch time",
+            "like rate",
+            "share rate",
+            "comment rate",
+            "save rate"
+          ]
+        },
+        "ai_assisted_reels": {
+          "allowed_uses": [
+            "image expansion",
+            "video expansion",
+            "text generation/variants",
+            "background generation for catalog assets",
+            "image animation",
+            "full image generation"
+          ],
+          "rules": [
+            "Use AI to scale what already works, renew creative faster and reuse existing assets.",
+            "Generated text variants must be based on the brand tone and prior high-performing ads/content when such data exists.",
+            "Convert existing video to 9:16 without damaging the subject or brand coherence.",
+            "AI output remains subject to the same quality, truthfulness, brand and rights checks as manually produced media."
+          ]
+        },
+        "mandatory_prepublication_checks": [
+          "audience_is_precise",
+          "single_objective",
+          "single_main_message",
+          "creative_is_sharp",
+          "creative_is_brand_coherent",
+          "subject_is_immediately_recognizable",
+          "visual_text_is_short",
+          "opening_is_immediately_relevant",
+          "caption_has_no_unnecessary_elements",
+          "content_is_meaningful_for_target",
+          "cta_matches_objective_or_is_omitted",
+          "question_is_relevant_if_used",
+          "content_is_distinct_enough_from_recent_posts",
+          "skip_risk_reviewed",
+          "dwell_time_value_reviewed",
+          "direct_share_value_reviewed",
+          "profile_visit_value_reviewed",
+          "format_specific_rules_passed"
+        ],
+        "performance_data_status": "NOT_AVAILABLE",
+        "performance_metrics_expected": [
+          "likes",
+          "comments",
+          "shares",
+          "saves",
+          "cta_clicks",
+          "profile_visits",
+          "direct_shares",
+          "dwell_time_seconds",
+          "skip_rate",
+          "carousel_completion_rate",
+          "average_watch_time_seconds",
+          "three_second_view_rate",
+          "ten_second_view_rate",
+          "audio_on_rate"
+        ],
+        "rule": "Use actual account/page data when present. Never fabricate ranking performance, watch-time, skip, share, save, profile-visit or audio metrics."
       },
       "publication_timing": {
         "status": "UNVERIFIED_NO_INSIGHTS",
         "day": null,
         "time_window": null,
-        "rule": "Use Page Insights audience-online data. Never invent a best time."
+        "rule": "Use actual Page/Instagram Insights audience-online data. Never invent a best time."
       },
       "manual_approval_required": true
     }
