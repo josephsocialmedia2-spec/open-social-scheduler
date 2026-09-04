@@ -14,6 +14,7 @@ on:
       - '.github/workflows/facebook-group-radar.yml'
       - 'growth/config.json'
       - 'growth/discover_groups.py'
+      - 'growth/filter_signals.py'
       - 'growth/requirements.txt'
 
 permissions:
@@ -42,17 +43,23 @@ jobs:
         env:
           LIMIT: ${{ inputs.limit || '40' }}
         run: python growth/discover_groups.py --limit "$LIMIT"
+      - name: Filter stale and off-territory signals
+        run: python growth/filter_signals.py
       - name: Read batch metadata
         id: batch
         shell: bash
         run: |
           echo "group_count=$(python -c 'import json; d=json.load(open("growth/new_batch.json", encoding="utf-8")); print(len(d.get("groups", [])))')" >> "$GITHUB_OUTPUT"
           echo "signal_count=$(python -c 'import json; d=json.load(open("growth/new_batch.json", encoding="utf-8")); print(len(d.get("signals", [])))')" >> "$GITHUB_OUTPUT"
-          echo "total_count=$(python -c 'import json; d=json.load(open("growth/new_batch.json", encoding="utf-8")); print(len(d.get("groups", []))+len(d.get("signals", [])))')" >> "$GITHUB_OUTPUT"
+          echo "removed_count=$(python -c 'import json; d=json.load(open("growth/new_batch.json", encoding="utf-8")); print(int(d.get("removed_bad_signals", 0)))')" >> "$GITHUB_OUTPUT"
           echo "batch_id=$(python -c 'import json; print(json.load(open("growth/new_batch.json", encoding="utf-8"))["batch_id"])')" >> "$GITHUB_OUTPUT"
       - name: Persist radar data
-        if: steps.batch.outputs.total_count != '0'
+        shell: bash
         run: |
+          if git diff --quiet -- growth/groups.json growth/signals.json growth/new_batch.json; then
+            echo "Nessuna modifica da salvare"
+            exit 0
+          fi
           git config user.name 'visibility-engine'
           git config user.email 'visibility-engine@users.noreply.github.com'
           git add growth/groups.json growth/signals.json growth/new_batch.json
