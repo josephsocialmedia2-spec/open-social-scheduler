@@ -2,20 +2,22 @@
 """Bind the F1 Canva visual manifest to the qualified-seller producer.
 
 The Canva designs are the editable visual source of truth. This script injects
-only clean photographic sources from the Canva manifest into the renderer and
-adds Canva traceability to every queue job. Legacy manual creative is not used
-when manifest images are available.
+only clean photographic sources from the Canva manifest into the renderer,
+adds Canva traceability to every queue job, and physically removes legacy F1
+creative from the ephemeral Actions workspace before rendering.
 """
 from __future__ import annotations
 
 import json
 import re
+import shutil
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = ROOT / "publisher" / "canva_visual_manifest.json"
 CLIENT = ROOT / "publisher" / "clients" / "f1-immobiliare.json"
 QUEUE = ROOT / "publisher" / "qualified_14d_queue.json"
+LEGACY = ROOT / "publisher" / "manual_images" / "f1-immobiliare" / "RIC LAVORO F1"
 
 
 def load(path: Path) -> dict:
@@ -39,6 +41,11 @@ def main() -> int:
     images = [str(x).strip() for x in manifest.get("cover_images") or [] if str(x).strip()]
     if len(images) < 6:
         raise RuntimeError(f"Canva visual manifest needs at least 6 clean image sources; got {len(images)}")
+
+    # Ephemeral Actions checkout only: old visual files are deleted before render,
+    # making regression to owls/legacy copy technically impossible in this batch.
+    if LEGACY.exists():
+        shutil.rmtree(LEGACY)
 
     brand = client.setdefault("brand", {})
     brand["photo_sources"] = [
@@ -68,7 +75,7 @@ def main() -> int:
     queue["legacy_visuals_allowed"] = False
     save(CLIENT, client)
     save(QUEUE, queue)
-    print(f"CANVA VISUALS APPLIED: {len(images)} clean sources -> {len(queue.get('jobs') or [])} jobs")
+    print(f"CANVA VISUALS APPLIED: {len(images)} clean sources -> {len(queue.get('jobs') or [])} jobs; legacy workspace removed")
     return 0
 
 
