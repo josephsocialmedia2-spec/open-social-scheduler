@@ -2,7 +2,8 @@
 """Mandatory analysis context before content production.
 
 Implements the operational rules supplied by the user and the Instagram Feed /
-Reels guidance stored in instagram_distribution_policy.json.
+Reels guidance stored in instagram_distribution_policy.json plus the Instagram
+Creators best practices stored in instagram_creators_best_practices.json.
 
 Rules:
 - inspect available Insights before creation;
@@ -11,6 +12,8 @@ Rules:
 - choose one primary objective;
 - define one main message;
 - evaluate Instagram ranking predictions/signals, not just likes;
+- consider trial Reels, format diversification, share-worthiness, first-3-second hooks,
+  highest-resolution media, muted-view comprehension, audio rights and early comment response;
 - use real audience-online data for timing when available;
 - never invent missing Insights or performance data;
 - keep format-specific Feed/Reels requirements available downstream.
@@ -28,6 +31,7 @@ CLIENT_DIR = PUBLISHER / "clients"
 INSIGHTS_DIR = PUBLISHER / "insights"
 OUT = PUBLISHER / "content_analysis.json"
 IG_POLICY = PUBLISHER / "instagram_distribution_policy.json"
+IG_CREATORS = PUBLISHER / "instagram_creators_best_practices.json"
 
 
 def load(path: Path, default):
@@ -122,10 +126,11 @@ def normalize_top_posts(insights: dict | None) -> list[dict]:
     return out
 
 
-def instagram_analysis(policy: dict, insights: dict | None) -> dict:
+def instagram_analysis(policy: dict, creators: dict, insights: dict | None) -> dict:
     available = isinstance(insights, dict)
     return {
         "policy_version": policy.get("version"),
+        "creators_policy_version": creators.get("version"),
         "ranking_model": {
             "inventory": policy.get("feed_system", {}).get("inventory"),
             "signals": policy.get("feed_system", {}).get("signals"),
@@ -140,6 +145,7 @@ def instagram_analysis(policy: dict, insights: dict | None) -> dict:
         "reels_editing": policy.get("reels_editing", {}),
         "ai_assisted_reels": policy.get("ai_assisted_reels", {}),
         "mandatory_prepublication_checks": policy.get("mandatory_prepublication_checks", []),
+        "creators_best_practices": creators,
         "performance_data_status": "AVAILABLE" if available else "NOT_AVAILABLE",
         "performance_metrics_expected": [
             "likes", "comments", "shares", "saves", "cta_clicks", "profile_visits",
@@ -150,7 +156,7 @@ def instagram_analysis(policy: dict, insights: dict | None) -> dict:
     }
 
 
-def analyze_client(client: dict, queue: dict, policy: dict) -> dict:
+def analyze_client(client: dict, queue: dict, policy: dict, creators: dict) -> dict:
     cid = str(client.get("id") or "")
     insights_path = INSIGHTS_DIR / f"{cid}.json"
     insights = load(insights_path, None)
@@ -211,8 +217,15 @@ def analyze_client(client: dict, queue: dict, policy: dict) -> dict:
             "direct_share_value_review_required": True,
             "profile_visit_value_review_required": True,
             "format_specific_rules_required": True,
+            "share_worthiness_review_required": True,
+            "format_diversification_review_required": True,
+            "first_three_seconds_or_first_unit_review_required": True,
+            "highest_resolution_required": True,
+            "muted_view_comprehension_required_for_video": True,
+            "audio_rights_review_required_if_audio": True,
+            "early_comment_response_plan_required_for_reels": True,
         },
-        "instagram": instagram_analysis(policy, insights),
+        "instagram": instagram_analysis(policy, creators, insights),
         "publication_timing": {
             "status": schedule_status,
             "day": recommended_day,
@@ -226,8 +239,11 @@ def analyze_client(client: dict, queue: dict, policy: dict) -> dict:
 def main() -> int:
     queue = load(QUEUE, {"jobs": []})
     policy = load(IG_POLICY, {})
+    creators = load(IG_CREATORS, {})
     if not policy:
         raise RuntimeError("Missing publisher/instagram_distribution_policy.json")
+    if not creators:
+        raise RuntimeError("Missing publisher/instagram_creators_best_practices.json")
 
     clients = []
     for path in sorted(CLIENT_DIR.glob("*.json")):
@@ -238,11 +254,12 @@ def main() -> int:
             clients.append(data)
 
     result = {
-        "version": 2,
+        "version": 3,
         "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z"),
-        "policy": "ANALISI PRIMA DELLA CREAZIONE DEL POST + INSTAGRAM FEED/REELS DISTRIBUTION SIGNALS",
+        "policy": "ANALISI PRIMA DELLA CREAZIONE DEL POST + INSTAGRAM FEED/REELS + INSTAGRAM CREATORS BEST PRACTICES",
         "instagram_policy_file": str(IG_POLICY.relative_to(ROOT)),
-        "clients": {c["id"]: analyze_client(c, queue, policy) for c in clients},
+        "instagram_creators_policy_file": str(IG_CREATORS.relative_to(ROOT)),
+        "clients": {c["id"]: analyze_client(c, queue, policy, creators) for c in clients},
     }
     OUT.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
@@ -250,7 +267,7 @@ def main() -> int:
         print(
             f"ANALYSIS {cid}: status={row['analysis_status']} insights={row['insights']['status']} "
             f"public={row['public']} objective={row['objective']} timing={row['publication_timing']['status']} "
-            f"ig_policy={row['instagram']['policy_version']}"
+            f"ig_policy={row['instagram']['policy_version']} creators_policy={row['instagram']['creators_policy_version']}"
         )
     return 0
 
