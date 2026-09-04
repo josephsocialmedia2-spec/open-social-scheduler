@@ -1,0 +1,189 @@
+name: F1 Qualified Seller - 14 Day Reels + Carousels
+
+on:
+  workflow_dispatch:
+    inputs:
+      end_date:
+        description: 'Optional end date YYYY-MM-DD. Defaults to today in Europe/Rome.'
+        required: false
+        type: string
+  push:
+    paths:
+      - '.github/workflows/f1-qualified-14d.yml'
+      - 'publisher/build_f1_qualified_14d.py'
+      - 'publisher/gate_f1_qualified.py'
+      - 'publisher/render_f1_qualified_14d.py'
+      - 'publisher/content_bank/f1-qualified-14d.json'
+      - 'publisher/instagram_distribution_policy.json'
+      - 'publisher/instagram_creators_best_practices.json'
+      - 'publisher/requirements.txt'
+      - 'publisher/manual_images/f1-immobiliare/**'
+      - 'publisher/assets/*_presenter.jpg.b64'
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: f1-qualified-seller-14d
+  cancel-in-progress: true
+
+jobs:
+  build-gate-render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          ref: main
+
+      - name: Python 3.12
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: publisher/requirements.txt
+
+      - name: Install media dependencies
+        run: |
+          set -euxo pipefail
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg fonts-dejavu-core zip
+          python -m pip install --disable-pip-version-check -r publisher/requirements.txt
+
+      - name: Validate scripts and policies
+        run: |
+          python -m py_compile publisher/build_f1_qualified_14d.py publisher/gate_f1_qualified.py publisher/render_f1_qualified_14d.py
+          python - <<'PY'
+          import json
+          p=json.load(open('publisher/instagram_distribution_policy.json',encoding='utf-8'))
+          c=json.load(open('publisher/instagram_creators_best_practices.json',encoding='utf-8'))
+          assert p.get('version') == 2
+          required={'carousel_completion','positive_action_probability','skip_probability','profile_time_after_post','direct_share_probability','predicted_time_on_post','first_post_skip_probability','first_post_over_10_seconds','audio_activation_probability','session_continuation_after_first_post'}
+          assert required <= set((p.get('significant_predictions') or {}).keys())
+          assert (c.get('reels_best_practices') or {}).get('hook_first_seconds') == 3
+          assert (c.get('reels_best_practices') or {}).get('muted_view_optimization') is True
+          print('POLICIES OK')
+          PY
+
+      - name: Build the last 14 days
+        shell: bash
+        env:
+          END_DATE: ${{ inputs.end_date }}
+        run: |
+          if [ -n "${END_DATE:-}" ]; then
+            python publisher/build_f1_qualified_14d.py --end-date "$END_DATE"
+          else
+            python publisher/build_f1_qualified_14d.py
+          fi
+
+      - name: Producer-side Instagram and qualification gate
+        run: python publisher/gate_f1_qualified.py --fail-on-blocked
+
+      - name: Render 14 Reels and 14 carousels
+        run: python publisher/render_f1_qualified_14d.py
+
+      - name: Verify final asset package
+        shell: bash
+        run: |
+          set -euxo pipefail
+          python - <<'PY'
+          import json, subprocess
+          from pathlib import Path
+          q=json.load(open('publisher/qualified_14d_queue.json',encoding='utf-8'))
+          jobs=q['jobs']
+          assert len(jobs)==28, len(jobs)
+          reels=[j for j in jobs if j['format']=='reel']
+          cars=[j for j in jobs if j['format']=='carousel']
+          assert len(reels)==14 and len(cars)==14
+          assert all(j.get('gate_status')=='PASSED' for j in jobs)
+          assert all(j.get('lead_goal')=='qualified_seller' for j in jobs)
+          required={'comune','tipologia','mq','tempistica_vendita'}
+          assert all(required <= set(j.get('lead_qualification_required_fields') or []) for j in jobs)
+          assert all(j.get('publication_time_verified') is False for j in jobs)
+          for j in reels:
+            p=Path(j['media'])
+            assert p.exists() and p.stat().st_size>100000, (p, p.stat().st_size if p.exists() else 0)
+            spec=j.get('render_spec') or {}
+            assert spec.get('width')==1080 and spec.get('height')==1920
+            assert spec.get('muted_view') is True
+            assert float(spec.get('safe_bottom_fraction') or 0)>=0.35
+          for j in cars:
+            paths=[Path(x) for x in j['media']]
+            assert 7<=len(paths)<=10
+            assert all(p.exists() and p.stat().st_size>15000 for p in paths)
+          print('VERIFIED 28 QUALIFIED SELLER ASSETS: 14 REELS + 14 CAROUSELS')
+          PY
+
+      - name: Build downloadable package
+        run: |
+          set -euxo pipefail
+          rm -rf /tmp/f1-qualified-14d
+          mkdir -p /tmp/f1-qualified-14d
+          cp publisher/qualified_14d_queue.json /tmp/f1-qualified-14d/
+          cp publisher/gate_feedback.json /tmp/f1-qualified-14d/
+          cp publisher/content_bank/f1-qualified-14d.json /tmp/f1-qualified-14d/content-plan.json
+          cp publisher/instagram_distribution_policy.json /tmp/f1-qualified-14d/
+          cp publisher/instagram_creators_best_practices.json /tmp/f1-qualified-14d/
+          cp -r publisher/media/generated/f1-qualified-14d /tmp/f1-qualified-14d/media
+          (cd /tmp && zip -qr F1_QUALIFIED_SELLER_14_GIORNI.zip f1-qualified-14d)
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: F1-QUALIFIED-SELLER-14-DAYS
+          path: /tmp/F1_QUALIFIED_SELLER_14_GIORNI.zip
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Persist producer feedback and queue
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          for FILE in publisher/qualified_14d_queue.json publisher/gate_feedback.json; do
+            SHA=$(gh api "repos/${GITHUB_REPOSITORY}/contents/${FILE}?ref=main" --jq '.sha' 2>/dev/null || true)
+            python - "$FILE" "$SHA" <<'PY'
+          import base64,json,sys
+          file,sha=sys.argv[1],sys.argv[2]
+          payload={'message':f'Persist qualified seller batch: {file}','content':base64.b64encode(open(file,'rb').read()).decode(),'branch':'main'}
+          if sha: payload['sha']=sha
+          json.dump(payload,open('/tmp/payload.json','w'))
+          PY
+            gh api "repos/${GITHUB_REPOSITORY}/contents/${FILE}" --method PUT --input /tmp/payload.json >/dev/null
+          done
+
+      - name: Replace qualified-seller release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euxo pipefail
+          gh release delete f1-qualified-14d-latest --yes --cleanup-tag >/dev/null 2>&1 || true
+          gh release create f1-qualified-14d-latest /tmp/F1_QUALIFIED_SELLER_14_GIORNI.zip \
+            --title "F1 · 14 GIORNI · CLIENTI VENDITORI QUALIFICATI" \
+            --notes "28 contenuti rigenerati: 14 Reel MP4 9:16 + 14 caroselli. Tutti passati dal producer-side Instagram Feed Gate e costruiti per generare richieste di valutazione qualificate con COMUNE, TIPOLOGIA, MQ e TEMPISTICA DI VENDITA. Pubblicazione finale soggetta ad approvazione umana; nessun orario ottimale inventato senza Insights. Run ${GITHUB_RUN_ID}."
+
+      - name: Notify completion
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const title='[F1 QUALIFIED] 14 giorni · venditori qualificati';
+            const body=[
+              '@josephsocialmedia2-spec batch rigenerato e verificato.',
+              '',
+              '**28 contenuti:** 14 Reel + 14 caroselli.',
+              '**Obiettivo:** proprietari con intenzione di vendita / richieste di valutazione qualificate.',
+              '**Prequalifica CTA:** comune + tipologia + mq + tempistica di vendita.',
+              '**Gate:** target, coerenza, creative fatigue, anti-bait, formato, 9:16, safe area, muted view e CTA.',
+              '**Pubblicazione:** resta manualmente approvata; nessun best time inventato senza Insights.',
+              '',
+              'Download: https://github.com/' + context.repo.owner + '/' + context.repo.repo + '/releases/tag/f1-qualified-14d-latest',
+              'Run: https://github.com/' + context.repo.owner + '/' + context.repo.repo + '/actions/runs/' + context.runId
+            ].join('\n');
+            const issues=await github.paginate(github.rest.issues.listForRepo,{owner:context.repo.owner,repo:context.repo.repo,state:'all',per_page:100});
+            let issue=issues.find(i=>i.title===title);
+            if(!issue) await github.rest.issues.create({owner:context.repo.owner,repo:context.repo.repo,title,body,assignees:['josephsocialmedia2-spec']});
+            else await github.rest.issues.createComment({owner:context.repo.owner,repo:context.repo.repo,issue_number:issue.number,body});
