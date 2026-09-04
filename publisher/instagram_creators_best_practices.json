@@ -1,0 +1,70 @@
+{
+  "version": 1,
+  "name": "Instagram Creators Engaging Content Best Practices",
+  "source_basis": "User-supplied Instagram Creators guidance",
+  "engagement_definition": {
+    "interactions": ["likes", "comments", "saves", "shares"],
+    "rule": "Create content that earns meaningful interactions rather than generic engagement bait."
+  },
+  "experimentation": {
+    "trial_reels": {
+      "enabled_when_available": true,
+      "audience": "non-followers first",
+      "profile_visibility": "not shown on profile or to followers during trial",
+      "review_after_hours": 24,
+      "metrics": ["views", "likes", "comments", "shares"],
+      "auto_share_window_hours": 72,
+      "rule": "Use trial Reels to test new concepts, characters and styles before wider distribution when the account is eligible."
+    }
+  },
+  "format_diversification": {
+    "allowed_mix": ["photo", "carousel", "reel", "story", "live"],
+    "rule": "Use a mix of formats instead of repeating one format automatically; choose format based on the message, target and objective."
+  },
+  "creative_effects": {
+    "allowed": ["interactive stickers", "custom cutouts", "text overlays", "media overlays", "creative effects"],
+    "rule": "Use creative effects only when they improve storytelling, clarity or interaction."
+  },
+  "audio": {
+    "multiple_tracks_max": 20,
+    "allowed_types": ["popular audio", "original audio", "voiceover", "licensed audio", "Meta Audio Collection"],
+    "rights_rule": "Use only audio you are licensed or otherwise permitted to use.",
+    "purpose": "Use music and sound to create atmosphere, meaning or pacing; never as decoration only."
+  },
+  "reels_best_practices": {
+    "share_worthy": true,
+    "hook_first_seconds": 3,
+    "highest_resolution_possible": true,
+    "popular_or_original_audio": true,
+    "muted_view_optimization": true,
+    "muted_view_methods": ["on-screen text", "captions", "subtitles"],
+    "comment_response_early_days": true,
+    "recommended_non_follower_max_duration_seconds": 180,
+    "rule": "Reels must capture attention immediately, remain understandable without sound, and be built to create natural sharing and conversation."
+  },
+  "post_publish": {
+    "early_comment_interaction_required": true,
+    "trial_reel_review_required": true,
+    "metrics_to_review": [
+      "views",
+      "likes",
+      "comments",
+      "shares",
+      "saves",
+      "skip_rate",
+      "average_watch_time",
+      "three_second_view_rate"
+    ]
+  },
+  "mandatory_checks": [
+    "format_selected_for_message_not_habit",
+    "new_idea_test_considered",
+    "share_worthiness_reviewed",
+    "first_3_seconds_or_first_visible_unit_clear",
+    "highest_available_resolution_used",
+    "muted_view_understandable_if_video",
+    "audio_rights_verified_if_audio_used",
+    "comment_followup_plan_present_if_reel",
+    "reel_duration_within_recommendation_if_non_follower_distribution_is_objective"
+  ]
+}
