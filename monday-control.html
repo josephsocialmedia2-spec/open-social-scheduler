@@ -4,73 +4,24 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>F1 · Approvazione contenuti visuali</title>
 <style>
-:root{--bg:#030503;--panel:#0b120c;--line:#2d3b2e;--text:#f6f8f4;--muted:#aab4aa;--f1:#9fe000;--red:#ff7373}
-*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#020402,#071008);color:var(--text);font:15px/1.45 Arial,sans-serif}
-.wrap{width:min(1480px,calc(100% - 24px));margin:auto;padding:22px 0 60px}h1{margin:0 0 5px;font-size:clamp(28px,6vw,46px)}.sub{color:var(--muted);max-width:980px}
-.toolbar,.actions{display:flex;gap:8px;flex-wrap:wrap}.toolbar{margin:18px 0}.btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border:0;border-radius:10px;padding:10px 12px;font-weight:900;cursor:pointer;background:var(--f1);color:#061005}.btn.alt{background:#111812;color:#fff;border:1px solid #465448}
-.status{padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#09100a;color:#cbd3cb;margin-bottom:18px}.status.error{border-color:#6d3333;color:#ffc1c1}
-.summary{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin:14px 0 24px}.kpi{border:1px solid var(--line);border-radius:12px;padding:13px;background:#09100a}.kpi b{display:block;font-size:24px;color:var(--f1)}
-.day{margin:30px 0}.day h2{font-size:22px;margin:0 0 12px;border-bottom:1px solid #314132;padding-bottom:8px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
-.card{background:var(--panel);border:1px solid #3c551d;border-radius:17px;overflow:hidden}.visual{position:relative;aspect-ratio:4/3;overflow:hidden;background:#111}.visual img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.92) contrast(1.03)}.visual:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.06),rgba(0,0,0,.68))}
-.vbrand{position:absolute;z-index:2;left:18px;top:18px;padding:7px 10px;border:1px solid var(--f1);border-radius:9px;background:rgba(5,8,5,.78);font-size:10px;font-weight:900;letter-spacing:.12em}.vformat{position:absolute;z-index:2;right:18px;top:18px;background:var(--f1);color:#061005;padding:7px 10px;border-radius:999px;font-size:9px;font-weight:900}.vtitle{position:absolute;z-index:2;left:18px;right:18px;bottom:20px;font-size:clamp(20px,3vw,30px);font-weight:900;line-height:1.05;text-transform:uppercase}.body{padding:14px}.badge{display:inline-flex;padding:5px 8px;border-radius:999px;border:1px solid #476229;color:var(--f1);font-size:9px;font-weight:900}.meta{color:var(--muted);font-size:11px;margin:8px 0}.cta{font-size:12px;padding:10px;border:1px solid #456121;border-radius:9px;background:#050805;color:#e8ffd0}.caption{white-space:pre-wrap;background:#050805;border:1px solid #334235;border-radius:10px;padding:10px;max-height:170px;overflow:auto;font-size:12px;margin-top:10px}.canva{margin-top:10px;padding:10px;border-radius:9px;background:#101810;border:1px solid #2d4427;font-size:11px;color:#cfe4c7}
-.actions{margin-top:10px}.actions .btn{font-size:10px;padding:8px 9px}.footer{text-align:center;color:#778179;font-size:11px;margin-top:30px}
-@media(max-width:850px){.grid{grid-template-columns:1fr}.summary{grid-template-columns:repeat(2,1fr)}}
+:root{--panel:#0b120c;--line:#2d3b2e;--text:#f6f8f4;--muted:#aab4aa;--f1:#9fe000}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#020402,#071008);color:var(--text);font:15px/1.45 Arial,sans-serif}.wrap{width:min(1480px,calc(100% - 24px));margin:auto;padding:22px 0 60px}h1{margin:0 0 5px;font-size:clamp(28px,6vw,46px)}.sub{color:var(--muted);max-width:1040px}.toolbar,.actions{display:flex;gap:8px;flex-wrap:wrap}.toolbar{margin:18px 0}.btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border:0;border-radius:10px;padding:10px 12px;font-weight:900;cursor:pointer;background:var(--f1);color:#061005}.btn.alt{background:#111812;color:#fff;border:1px solid #465448}.status{padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#09100a;color:#cbd3cb;margin-bottom:18px}.status.error{border-color:#6d3333;color:#ffc1c1}.summary{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin:14px 0 24px}.kpi{border:1px solid var(--line);border-radius:12px;padding:13px;background:#09100a}.kpi b{display:block;font-size:24px;color:var(--f1)}.day{margin:30px 0}.day h2{font-size:22px;margin:0 0 12px;border-bottom:1px solid #314132;padding-bottom:8px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.card{background:var(--panel);border:1px solid #3c551d;border-radius:17px;overflow:hidden}.visual{position:relative;aspect-ratio:4/3;overflow:hidden;background:#111}.visual img{width:100%;height:100%;object-fit:cover;display:block}.visual:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.05),rgba(0,0,0,.72))}.vbrand{position:absolute;z-index:2;left:18px;top:18px;padding:7px 10px;border:1px solid var(--f1);border-radius:9px;background:rgba(5,8,5,.82);font-size:10px;font-weight:900;letter-spacing:.12em}.vformat{position:absolute;z-index:2;right:18px;top:18px;background:var(--f1);color:#061005;padding:7px 10px;border-radius:999px;font-size:9px;font-weight:900}.vtitle{position:absolute;z-index:2;left:18px;right:18px;bottom:20px;font-size:clamp(20px,3vw,30px);font-weight:900;line-height:1.05;text-transform:uppercase}.body{padding:14px}.badge{display:inline-flex;padding:5px 8px;border-radius:999px;border:1px solid #476229;color:var(--f1);font-size:9px;font-weight:900}.meta{color:var(--muted);font-size:11px;margin:8px 0}.cta,.visualrule{font-size:12px;padding:10px;border:1px solid #456121;border-radius:9px;background:#050805;color:#e8ffd0;margin-top:8px}.visualrule{border-color:#355235;color:#d7e5d3}.caption{white-space:pre-wrap;background:#050805;border:1px solid #334235;border-radius:10px;padding:10px;max-height:190px;overflow:auto;font-size:12px;margin-top:10px}.actions{margin-top:10px}.actions .btn{font-size:10px;padding:8px 9px}.footer{text-align:center;color:#778179;font-size:11px;margin-top:30px}@media(max-width:850px){.grid{grid-template-columns:1fr}.summary{grid-template-columns:repeat(2,1fr)}}
 </style></head>
 <body><main class="wrap">
 <h1>F1 · CONTENUTI VISUALI · 14 GIORNI</h1>
-<div class="sub">Nuova produzione visuale collegata a Canva: fotografie immobiliari, 14 Reel 9:16 e 14 caroselli 4:5. I vecchi asset F1 e gli sfondi legacy non vengono caricati.</div>
-<div class="toolbar">
-<button class="btn" onclick="location.reload()">AGGIORNA ORA</button>
-<a id="reelsCanva" class="btn alt" target="_blank">CANVA · REEL</a>
-<a id="carsCanva" class="btn alt" target="_blank">CANVA · CAROSELLI</a>
-<a id="releaseBtn" class="btn alt" target="_blank">PACCHETTO GITHUB</a>
-</div>
-<div id="status" class="status">Caricamento produzione visuale…</div>
-<div id="summary" class="summary"></div><div id="history"></div>
-<div class="footer">F1 Immobiliare · Canva visual source · Instagram Feed Gate · obiettivo: venditori qualificati</div>
+<div class="sub">Regola attiva: 28 contenuti = 28 immagini primarie differenti. Nessuna immagine primaria può essere riutilizzata nello stesso ciclo di 14 giorni. Il primo messaggio di acquisizione è “Siamo alla ricerca di immobili in Valle di Susa”; nessun claim su clienti o acquirenti senza evidenza reale verificata.</div>
+<div class="toolbar"><button class="btn" onclick="location.reload()">AGGIORNA ORA</button><a id="reelsCanva" class="btn alt" target="_blank">CANVA · REEL</a><a id="carsCanva" class="btn alt" target="_blank">CANVA · CAROSELLI</a><a id="releaseBtn" class="btn alt" target="_blank">PACCHETTO GITHUB</a></div>
+<div id="status" class="status">Caricamento produzione visuale…</div><div id="summary" class="summary"></div><div id="history"></div>
+<div class="footer">F1 Immobiliare · Instagram Feed Gate · venditori qualificati · zero visual primari duplicati</div>
 </main>
 <script>
-const OWNER='josephsocialmedia2-spec',REPO='open-social-scheduler';
-const API='https://api.github.com/repos/'+OWNER+'/'+REPO;
-const RAW='https://raw.githubusercontent.com/'+OWNER+'/'+REPO+'/main/';
-let allJobs=[];
+const OWNER='josephsocialmedia2-spec',REPO='open-social-scheduler',API='https://api.github.com/repos/'+OWNER+'/'+REPO,RAW='https://raw.githubusercontent.com/'+OWNER+'/'+REPO+'/main/';let allJobs=[];
 const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
-const dayLabel=v=>new Date(v+'T12:00:00').toLocaleDateString('it-IT',{weekday:'long',day:'2-digit',month:'2-digit',year:'numeric'});
-const fmtName=f=>f==='reel'?'REEL 9:16':'CAROSELLO 4:5';
-const itemNo=j=>Math.max(1,parseInt(String(j.source_item_id||'1').replace(/\D/g,''),10)||1);
+const dayLabel=v=>new Date(v+'T12:00:00').toLocaleDateString('it-IT',{weekday:'long',day:'2-digit',month:'2-digit',year:'numeric'});const fmtName=f=>f==='reel'?'REEL 9:16':'CAROSELLO 4:5';
 function copyCaption(id){const j=allJobs.find(x=>x.id===id);if(!j?.caption)return;navigator.clipboard.writeText(j.caption).then(()=>{const b=document.getElementById('copy-'+id);if(b){b.textContent='COPIATA ✓';setTimeout(()=>b.textContent='COPIA CAPTION',1400)}})}
-function visualInfo(j,m){
- const n=itemNo(j), cfg=j.format==='reel'?m.reels:m.carousels, per=cfg.pages_per_item, start=(n-1)*per+1, end=start+per-1;
- const images=m.cover_images||[], image=images.length?images[(n*3+(j.format==='carousel'?1:0))%images.length]:'';
- return {cfg,start,end,image};
-}
-function card(j,m,releaseUrl){
- const vi=visualInfo(j,m), passed=j.gate_status==='PASSED';
- const visual='<div class="visual"><img loading="lazy" src="'+esc(vi.image)+'" alt="'+esc(j.title||'')+'"><span class="vbrand">F1 IMMOBILIARE</span><span class="vformat">'+fmtName(j.format)+'</span><div class="vtitle">'+esc(j.title||'')+'</div></div>';
- return '<article class="card">'+visual+'<div class="body"><span class="badge">'+(passed?'GATE PASSED':'DA RIVEDERE')+'</span><div class="meta">'+esc(j.content_date||'')+' · '+fmtName(j.format)+'</div><div class="cta"><b>CTA:</b> '+esc(j.cta||'')+'</div><div class="canva"><b>CANVA:</b> design '+esc(vi.cfg.design_id)+' · pagine '+vi.start+'–'+vi.end+'</div><div class="caption">'+esc(j.caption||'')+'</div><div class="actions"><a class="btn" href="'+esc(vi.cfg.edit_url)+'" target="_blank">APRI IN CANVA</a><a class="btn alt" href="'+esc(releaseUrl)+'" target="_blank">ASSET GITHUB</a><button id="copy-'+esc(j.id)+'" class="btn alt" onclick="copyCaption(\''+esc(j.id)+'\')">COPIA CAPTION</button></div></div></article>'
-}
-function render(q,m,releaseUrl){
- allJobs=(q.jobs||[]).filter(j=>j.client_id==='f1-immobiliare'&&['reel','carousel'].includes(j.format));
- const byDay={};for(const j of allJobs)(byDay[j.content_date]??=[]).push(j);
- const days=Object.keys(byDay).sort().reverse();
- const pass=allJobs.filter(j=>j.gate_status==='PASSED').length;
- document.getElementById('summary').innerHTML='<div class="kpi"><b>'+allJobs.length+'</b>contenuti</div><div class="kpi"><b>'+allJobs.filter(j=>j.format==='reel').length+'</b>Reel</div><div class="kpi"><b>'+allJobs.filter(j=>j.format==='carousel').length+'</b>caroselli</div><div class="kpi"><b>'+pass+'</b>gate passed</div><div class="kpi"><b>CANVA</b>sorgente visuale</div>';
- document.getElementById('history').innerHTML=days.map(day=>'<section class="day"><h2>'+esc(dayLabel(day))+'</h2><div class="grid">'+byDay[day].sort((a,b)=>a.format==='reel'?-1:1).map(j=>card(j,m,releaseUrl)).join('')+'</div></section>').join('');
-}
+function card(j,m,releaseUrl){const passed=j.gate_status==='PASSED',image=j.resolved_visual_url||'',cfg=j.format==='reel'?m.reels:m.carousels;const visual='<div class="visual"><img loading="lazy" src="'+esc(image)+'" alt="'+esc(j.visual_theme||j.title||'')+'"><span class="vbrand">F1 IMMOBILIARE</span><span class="vformat">'+fmtName(j.format)+'</span><div class="vtitle">'+esc(j.title||'')+'</div></div>';return '<article class="card">'+visual+'<div class="body"><span class="badge">'+(passed?'GATE PASSED':'DA RIVEDERE')+'</span><div class="meta">'+esc(j.content_date||'')+' · '+fmtName(j.format)+'</div><div class="visualrule"><b>VISUAL UNICO:</b> '+esc(j.visual_theme||'assegnato')+' · riuso nel ciclo: NO</div><div class="cta"><b>CTA:</b> '+esc(j.cta||'')+'</div><div class="caption">'+esc(j.caption||'')+'</div><div class="actions"><a class="btn" href="'+esc(j.canva_edit_url||cfg.edit_url||'#')+'" target="_blank">APRI IN CANVA</a><a class="btn alt" href="'+esc(releaseUrl)+'" target="_blank">ASSET GITHUB</a><button id="copy-'+esc(j.id)+'" class="btn alt" onclick="copyCaption(\''+esc(j.id)+'\')">COPIA CAPTION</button></div></div></article>'}
+function render(q,m,releaseUrl){allJobs=(q.jobs||[]).filter(j=>j.client_id==='f1-immobiliare'&&['reel','carousel'].includes(j.format));const byDay={};for(const j of allJobs)(byDay[j.content_date]??=[]).push(j);const days=Object.keys(byDay).sort().reverse(),pass=allJobs.filter(j=>j.gate_status==='PASSED').length,unique=new Set(allJobs.map(j=>j.resolved_visual_url).filter(Boolean)).size;document.getElementById('summary').innerHTML='<div class="kpi"><b>'+allJobs.length+'</b>contenuti</div><div class="kpi"><b>'+allJobs.filter(j=>j.format==='reel').length+'</b>Reel</div><div class="kpi"><b>'+allJobs.filter(j=>j.format==='carousel').length+'</b>caroselli</div><div class="kpi"><b>'+pass+'</b>gate passed</div><div class="kpi"><b>'+unique+'</b>visual unici</div>';document.getElementById('history').innerHTML=days.map(day=>'<section class="day"><h2>'+esc(dayLabel(day))+'</h2><div class="grid">'+byDay[day].sort((a,b)=>a.format==='reel'?-1:1).map(j=>card(j,m,releaseUrl)).join('')+'</div></section>').join('')}
 async function json(url){const r=await fetch(url,{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);return r.json()}
-async function load(){
- const st=document.getElementById('status');
- try{
-  const [q,m,rel]=await Promise.all([
-   json(RAW+'publisher/qualified_14d_queue.json?t='+Date.now()),
-   json(RAW+'publisher/canva_visual_manifest.json?t='+Date.now()),
-   json(API+'/releases/tags/f1-qualified-14d-latest?t='+Date.now())
-  ]);
-  const releaseUrl=rel.html_url||'https://github.com/'+OWNER+'/'+REPO+'/releases/tag/f1-qualified-14d-latest';
-  document.getElementById('releaseBtn').href=releaseUrl;document.getElementById('reelsCanva').href=m.reels.edit_url;document.getElementById('carsCanva').href=m.carousels.edit_url;
-  render(q,m,releaseUrl);
-  st.textContent='VISUALI CANVA ATTIVI · '+q.window_start+' → '+q.window_end+' · '+q.count+' contenuti · '+m.reels.page_count+' pagine Reel + '+m.carousels.page_count+' pagine carosello · aggiornato '+new Date().toLocaleString('it-IT')+'.';
- }catch(e){st.className='status error';st.textContent='ERRORE NEL CARICAMENTO: '+e.message}
-}
+async function load(){const st=document.getElementById('status');try{const [q,m,rel]=await Promise.all([json(RAW+'publisher/qualified_14d_queue.json?t='+Date.now()),json(RAW+'publisher/canva_visual_manifest.json?t='+Date.now()),json(API+'/releases/tags/f1-qualified-14d-latest?t='+Date.now())]);const releaseUrl=rel.html_url||'https://github.com/'+OWNER+'/'+REPO+'/releases/tag/f1-qualified-14d-latest';document.getElementById('releaseBtn').href=releaseUrl;document.getElementById('reelsCanva').href=m.reels.edit_url||'#';document.getElementById('carsCanva').href=m.carousels.edit_url||'#';render(q,m,releaseUrl);const u=q.unique_visual_summary||{};st.textContent='PRODUZIONE · '+q.window_start+' → '+q.window_end+' · '+q.count+' contenuti · visual unici '+(u.unique_primary_visuals||0)+'/'+q.count+' · riuso '+(u.reuse??'—')+' · aggiornato '+new Date().toLocaleString('it-IT')+'.'}catch(e){st.className='status error';st.textContent='ERRORE NEL CARICAMENTO: '+e.message}}
 load();
 </script></body></html>
