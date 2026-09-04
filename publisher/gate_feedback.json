@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "source": "producer_side_instagram_gate",
   "purpose": "qualified_seller_leads",
   "summary": {
@@ -38,5 +38,6 @@
     "f1-qualified-2026-09-04-r14",
     "f1-qualified-2026-09-04-c14"
   ],
+  "claim_policy": "Buyer-demand claims require verified evidence source; acquisition search does not imply existing buyers.",
   "note": "This gate checks policy compliance and content coherence; it does not estimate Instagram's internal ranking score."
 }
