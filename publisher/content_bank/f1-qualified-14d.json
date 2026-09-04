@@ -1,0 +1,310 @@
+{
+  "version": 1,
+  "name": "F1 Qualified Seller 14-Day Regeneration",
+  "goal": "qualified_seller_leads",
+  "brand": "f1-immobiliare",
+  "window_days": 14,
+  "daily_mix": {
+    "reel": 1,
+    "carousel": 1
+  },
+  "target_public": "Proprietari di immobili residenziali in Valle di Susa che stanno valutando concretamente una vendita e vogliono capire valore, tempi e strategia.",
+  "objective": "richiesta informazioni",
+  "qualification": {
+    "required_fields": [
+      "comune",
+      "tipologia",
+      "mq",
+      "tempistica_vendita"
+    ],
+    "optional_fields": [
+      "stato_immobile",
+      "prezzo_desiderato",
+      "motivazione"
+    ],
+    "keyword": "VALUTAZIONE"
+  },
+  "cta": "Scrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere.",
+  "items": [
+    {
+      "id": "R01",
+      "format": "reel",
+      "title": "Se pensi di vendere entro 6 mesi, parti da qui",
+      "main_message": "Vendere nei prossimi mesi richiede una decisione sul prezzo, sui documenti e sul posizionamento prima dell'annuncio.",
+      "slides": ["PENSI DI VENDERE|ENTRO 6 MESI?","PRIMA DEL POST|SERVONO DATI","MICROZONA|E COMPARABILI","DOCUMENTI|DA VERIFICARE","TEMPI|E OBIETTIVO","POI COSTRUIAMO|LA STRATEGIA","F1 IMMOBILIARE|PRIMA I DATI"],
+      "voiceover": "Vendere nei prossimi mesi richiede una decisione sul prezzo, sui documenti e sul posizionamento prima dell'annuncio. Se stai valutando la vendita, scrivi VALUTAZIONE con comune, tipologia, metri quadrati e tempistica.",
+      "caption": "SE PENSI DI VENDERE ENTRO 6 MESI, PARTI DA QUI.\n\nVendere nei prossimi mesi richiede una decisione sul prezzo, sui documenti e sul posizionamento prima dell'annuncio.\n\nScrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere. F1 Immobiliare · 371 370 8294.\n\n#F1Immobiliare #ValleDiSusa #VendereCasa #ValutazioneImmobiliare",
+      "topic_keywords": ["vendere","6 mesi","documenti","microzona","strategia"]
+    },
+    {
+      "id": "C01",
+      "format": "carousel",
+      "title": "7 dati che servono per valutare casa senza tirare a indovinare",
+      "main_message": "Una valutazione seria parte da dati verificabili: microzona, tipologia, metratura, stato, piano/esposizione, comparabili e domanda.",
+      "slides": ["7 DATI|PRIMA DEL PREZZO","1 MICROZONA","2 TIPOLOGIA|E MQ","3 STATO|DELL'IMMOBILE","4 PIANO|ESPOSIZIONE","5 COMPARABILI","6 CONCORRENZA","7 DOMANDA","POI|IL PREZZO","F1|CON I DATI"],
+      "voiceover": "Una valutazione seria parte da dati verificabili: microzona, tipologia, metratura, stato, piano ed esposizione, comparabili e domanda. Se stai valutando la vendita, scrivi VALUTAZIONE con comune, tipologia, metri quadrati e tempistica.",
+      "caption": "7 DATI CHE SERVONO PER VALUTARE CASA SENZA TIRARE A INDOVINARE.\n\nUna valutazione seria parte da dati verificabili: microzona, tipologia, metratura, stato, piano/esposizione, comparabili e domanda.\n\nScrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere. F1 Immobiliare · 371 370 8294.\n\n#F1Immobiliare #ValleDiSusa #VendereCasa #ValutazioneImmobiliare",
+      "topic_keywords": ["valutazione","microzona","metratura","comparabili","domanda"]
+    },
+    {
+      "id": "R02",
+      "format": "reel",
+      "title": "Casa ereditata: non partire dal prezzo",
+      "main_message": "Con un immobile ereditato, prima del prezzo vanno chiariti proprietà, documenti, stato dell'immobile e decisione dei comproprietari.",
+      "slides": ["CASA|EREDITATA?","NON PARTIRE|DAL PREZZO","CHI SONO|I PROPRIETARI","DOCUMENTI|E PROVENIENZA","STATO|DELL'IMMOBILE","OBIETTIVO|E TEMPI","POI|VALUTIAMO"],
+      "voiceover": "Con un immobile ereditato, prima del prezzo vanno chiariti proprietà, documenti, stato dell'immobile e decisione dei comproprietari. Se stai valutando la vendita, scrivi VALUTAZIONE con comune, tipologia, metri quadrati e tempistica.",
+      "caption": "CASA EREDITATA: NON PARTIRE DAL PREZZO.\n\nCon un immobile ereditato, prima del prezzo vanno chiariti proprietà, documenti, stato dell'immobile e decisione dei comproprietari.\n\nScrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere. F1 Immobiliare · 371 370 8294.\n\n#F1Immobiliare #ValleDiSusa #VendereCasa #ValutazioneImmobiliare",
+      "topic_keywords": ["ereditata","proprietari","documenti","stato","tempi"]
+    },
+    {
+      "id": "C02",
+      "format": "carousel",
+      "title": "Prezzo desiderato, pubblicato e di mercato: tre cose diverse",
+      "main_message": "Separare aspettativa, strategia di pubblicazione e risposta del mercato evita di confondere desiderio e valore sostenibile.",
+      "slides": ["TRE PREZZI|DIVERSI","DESIDERATO","PUBBLICATO","DI MERCATO","ASPETTATIVA|≠ STRATEGIA","STRATEGIA|≠ RISPOSTA","CONFRONTA|I DATI","LEGGI|LA DOMANDA","CORREGGI|SE SERVE","F1|PRIMA I DATI"],
+      "voiceover": "Separare aspettativa, strategia di pubblicazione e risposta del mercato evita di confondere desiderio e valore sostenibile. Se stai valutando la vendita, scrivi VALUTAZIONE con comune, tipologia, metri quadrati e tempistica.",
+      "caption": "PREZZO DESIDERATO, PUBBLICATO E DI MERCATO: TRE COSE DIVERSE.\n\nSeparare aspettativa, strategia di pubblicazione e risposta del mercato evita di confondere desiderio e valore sostenibile.\n\nScrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere. F1 Immobiliare · 371 370 8294.\n\n#F1Immobiliare #ValleDiSusa #VendereCasa #ValutazioneImmobiliare",
+      "topic_keywords": ["prezzo desiderato","pubblicato","mercato","strategia","domanda"]
+    },
+    {
+      "id": "R03",
+      "format": "reel",
+      "title": "Hai già un prezzo in mente? Verificalo",
+      "main_message": "Il prezzo desiderato è un dato utile, ma va confrontato con immobili realmente comparabili, domanda e concorrenza nella microzona.",
+      "slides": ["HAI GIÀ|UN PREZZO?","BENE:|È UN PUNTO DI PARTENZA","ORA GUARDIAMO|COMPARABILI","DOMANDA|E CONCORRENZA","MICROZONA|REALE","PREZZO DESIDERATO|≠ PREZZO DI MERCATO","F1|LO VERIFICA"],
+      "voiceover": "Il prezzo desiderato è un dato utile, ma va confrontato con immobili realmente comparabili, domanda e concorrenza nella microzona. Se stai valutando la vendita, scrivi VALUTAZIONE con comune, tipologia, metri quadrati e tempistica.",
+      "caption": "HAI GIÀ UN PREZZO IN MENTE? VERIFICALO.\n\nIl prezzo desiderato è un dato utile, ma va confrontato con immobili realmente comparabili, domanda e concorrenza nella microzona.\n\nScrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere. F1 Immobiliare · 371 370 8294.\n\n#F1Immobiliare #ValleDiSusa #VendereCasa #ValutazioneImmobiliare",
+      "topic_keywords": ["prezzo","comparabili","domanda","concorrenza","microzona"]
+    },
+    {
+      "id": "C03",
+      "format": "carousel",
+      "title": "Documenti: checklist prima di mettere casa in vendita",
+      "main_message": "Preparare i documenti prima dell'annuncio rende più solida la vendita e permette di individuare subito ciò che manca.",
+      "slides": ["CHECKLIST|DOCUMENTI","TITOLO|DI PROVENIENZA","DATI|CATASTALI","APE","CONDOMINIO","URBANISTICA|DA VERIFICARE","PERTINENZE","EVENTUALI|IPOTECHE","COSA MANCA?|LO SEGNALIAMO","PRIMA|DELLA VENDITA"],
+      "voiceover": "Preparare i documenti prima dell'annuncio rende più solida la vendita e permette di individuare subito ciò che manca. Se stai valutando la vendita, scrivi VALUTAZIONE con comune, tipologia, metri quadrati e tempistica.",
+      "caption": "DOCUMENTI: CHECKLIST PRIMA DI METTERE CASA IN VENDITA.\n\nPreparare i documenti prima dell'annuncio rende più solida la vendita e permette di individuare subito ciò che manca.\n\nScrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere. F1 Immobiliare · 371 370 8294.\n\n#F1Immobiliare #ValleDiSusa #VendereCasa #ValutazioneImmobiliare",
+      "topic_keywords": ["documenti","provenienza","catasto","APE","urbanistica"]
+    },
+    {
+      "id": "R04",
+      "format": "reel",
+      "title": "Casa online da 90 giorni? Il mercato sta parlando",
+      "main_message": "Se un immobile resta online senza richieste qualificate, bisogna diagnosticare prezzo, presentazione, distribuzione e target prima di ribassare.",
+      "slides": ["90 GIORNI|ONLINE?","NON È SOLO|TEMPO PASSATO","PREZZO?","PRESENTAZIONE?","DISTRIBUZIONE?","TARGET?","DIAGNOSI|PRIMA DEL RIBASSO"],
+      "voiceover": "Se un immobile resta online senza richieste qualificate, bisogna diagnosticare prezzo, presentazione, distribuzione e target prima di ribassare. Se stai valutando la vendita, scrivi VALUTAZIONE con comune, tipologia, metri quadrati e tempistica.",
+      "caption": "CASA ONLINE DA 90 GIORNI? IL MERCATO STA PARLANDO.\n\nSe un immobile resta online senza richieste qualificate, bisogna diagnosticare prezzo, presentazione, distribuzione e target prima di ribassare.\n\nScrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere. F1 Immobiliare · 371 370 8294.\n\n#F1Immobiliare #ValleDiSusa #VendereCasa #ValutazioneImmobiliare",
+      "topic_keywords": ["90 giorni","prezzo","presentazione","distribuzione","target"]
+    },
+    {
+      "id": "C04",
+      "format": "carousel",
+      "title": "5 segnali che il prezzo potrebbe essere fuori mercato",
+      "main_message": "Poche richieste, nessuna visita, confronti sfavorevoli, lunga permanenza e ribassi ripetuti sono segnali da leggere insieme.",
+      "slides": ["PREZZO|FUORI MERCATO?","1 POCHE|RICHIESTE","2 NESSUNA|VISITA","3 CONFRONTI|SFAVOREVOLI","4 TROPPO TEMPO|ONLINE","5 RIBASSI|RIPETUTI","UN SEGNALE|NON BASTA","LEGGILI|INSIEME","POI|DECIDI","F1|DIAGNOSI"],
+      "voiceover": "Poche richieste, nessuna visita, confronti sfavorevoli, lunga permanenza e ribassi ripetuti sono segnali da leggere insieme. Se stai valutando la vendita, scrivi VALUTAZIONE con comune, tipologia, metri quadrati e tempistica.",
+      "caption": "5 SEGNALI CHE IL PREZZO POTREBBE ESSERE FUORI MERCATO.\n\nPoche richieste, nessuna visita, confronti sfavorevoli, lunga permanenza e ribassi ripetuti sono segnali da leggere insieme.\n\nScrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere. F1 Immobiliare · 371 370 8294.\n\n#F1Immobiliare #ValleDiSusa #VendereCasa #ValutazioneImmobiliare",
+      "topic_keywords": ["prezzo","richieste","visite","tempo online","ribassi"]
+    },
+    {
+      "id": "R05",
+      "format": "reel",
+      "title": "Tre agenzie, tre prezzi: non scegliere il più alto",
+      "main_message": "Valutazioni diverse vanno confrontate sui dati utilizzati, non sul numero più piacevole. Chiedi comparabili, microzona e strategia.",
+      "slides": ["TRE AGENZIE|TRE PREZZI","190? 210?|235?","NON SCEGLIERE|IL PIÙ ALTO","CHIEDI|I COMPARABILI","CHIEDI|LA MICROZONA","CHIEDI|LA STRATEGIA","DEVI POTER|CAPIRE"],
+      "voiceover": "Valutazioni diverse vanno confrontate sui dati utilizzati, non sul numero più piacevole. Chiedi comparabili, microzona e strategia. Se stai valutando la vendita, scrivi VALUTAZIONE con comune, tipologia, metri quadrati e tempistica.",
+      "caption": "TRE AGENZIE, TRE PREZZI: NON SCEGLIERE IL PIÙ ALTO.\n\nValutazioni diverse vanno confrontate sui dati utilizzati, non sul numero più piacevole. Chiedi comparabili, microzona e strategia.\n\nScrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere. F1 Immobiliare · 371 370 8294.\n\n#F1Immobiliare #ValleDiSusa #VendereCasa #ValutazioneImmobiliare",
+      "topic_keywords": ["agenzie","prezzi","comparabili","microzona","strategia"]
+    },
+    {
+      "id": "C05",
+      "format": "carousel",
+      "title": "Microzona: cosa controlliamo davvero",
+      "main_message": "La microzona si legge con servizi, accessi, rumore, esposizione, caratteristiche della via, concorrenza e domanda locale.",
+      "slides": ["MICROZONA|NON È SOLO IL CAP","SERVIZI","ACCESSI","RUMORE","ESPOSIZIONE","CARATTERISTICHE|DELLA VIA","CONCORRENZA","DOMANDA|LOCALE","CONFRONTO|REALE","F1|LOCALIZZA IL VALORE"],
+      "voiceover": "La microzona si legge con servizi, accessi, rumore, esposizione, caratteristiche della via, concorrenza e domanda locale. Se stai valutando la vendita, scrivi VALUTAZIONE con comune, tipologia, metri quadrati e tempistica.",
+      "caption": "MICROZONA: COSA CONTROLLIAMO DAVVERO.\n\nLa microzona si legge con servizi, accessi, rumore, esposizione, caratteristiche della via, concorrenza e domanda locale.\n\nScrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere. F1 Immobiliare · 371 370 8294.\n\n#F1Immobiliare #ValleDiSusa #VendereCasa #ValutazioneImmobiliare",
+      "topic_keywords": ["microzona","servizi","rumore","esposizione","domanda"]
+    },
+    {
+      "id": "R06",
+      "format": "reel",
+      "title": "Vuoi vendere da privato? Controlla queste 5 cose",
+      "main_message": "Vendere da privato può essere una scelta, ma documenti, comparabili, concorrenza, prezzo e target devono essere verificati prima di pubblicare.",
+      "slides": ["VENDI|DA PRIVATO?","1 DOCUMENTI","2 COMPARABILI","3 CONCORRENZA","4 PREZZO","5 TARGET","PRIMA CAPIRE|POI PUBBLICARE"],
+      "voiceover": "Vendere da privato può essere una scelta, ma documenti, comparabili, concorrenza, prezzo e target devono essere verificati prima di pubblicare. Se stai valutando la vendita, scrivi VALUTAZIONE con comune, tipologia, metri quadrati e tempistica.",
+      "caption": "VUOI VENDERE DA PRIVATO? CONTROLLA QUESTE 5 COSE.\n\nVendere da privato può essere una scelta, ma documenti, comparabili, concorrenza, prezzo e target devono essere verificati prima di pubblicare.\n\nScrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere. F1 Immobiliare · 371 370 8294.\n\n#F1Immobiliare #ValleDiSusa #VendereCasa #ValutazioneImmobiliare",
+      "topic_keywords": ["privato","documenti","comparabili","prezzo","target"]
+    },
+    {
+      "id": "C06",
+      "format": "carousel",
+      "title": "Comparabili: quando una casa simile va esclusa",
+      "main_message": "Una casa apparentemente simile può essere un cattivo comparabile se cambiano piano, stato, pertinenze, microzona o condizioni di vendita.",
+      "slides": ["SEMBRA|SIMILE","MA È DAVVERO|COMPARABILE?","PIANO","STATO","PERTINENZE","MICROZONA","CONDIZIONI|DI VENDITA","SE CAMBIANO|TROPPO","IL DATO|VA ESCLUSO","QUALITÀ|PRIMA DELLA QUANTITÀ"],
+      "voiceover": "Una casa apparentemente simile può essere un cattivo comparabile se cambiano piano, stato, pertinenze, microzona o condizioni di vendita. Se stai valutando la vendita, scrivi VALUTAZIONE con comune, tipologia, metri quadrati e tempistica.",
+      "caption": "COMPARABILI: QUANDO UNA CASA SIMILE VA ESCLUSA.\n\nUna casa apparentemente simile può essere un cattivo comparabile se cambiano piano, stato, pertinenze, microzona o condizioni di vendita.\n\nScrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere. F1 Immobiliare · 371 370 8294.\n\n#F1Immobiliare #ValleDiSusa #VendereCasa #ValutazioneImmobiliare",
+      "topic_keywords": ["comparabili","piano","stato","pertinenze","microzona"]
+    },
+    {
+      "id": "R07",
+      "format": "reel",
+      "title": "Devi vendere per comprare un'altra casa?",
+      "main_message": "Quando la vendita serve per un acquisto successivo, tempi, prezzo realistico e coordinamento diventano parte della strategia.",
+      "slides": ["VENDI PER|COMPRARE?","ALLORA IL TEMPO|CONTA","PREZZO|REALISTICO","TEMPI DI|VENDITA","TEMPI DI|ACQUISTO","MARGINE|DI SICUREZZA","PIANIFICA|PRIMA"],
+      "voiceover": "Quando la vendita serve per un acquisto successivo, tempi, prezzo realistico e coordinamento diventano parte della strategia. Se stai valutando la vendita, scrivi VALUTAZIONE con comune, tipologia, metri quadrati e tempistica.",
+      "caption": "DEVI VENDERE PER COMPRARE UN'ALTRA CASA?\n\nQuando la vendita serve per un acquisto successivo, tempi, prezzo realistico e coordinamento diventano parte della strategia.\n\nScrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere. F1 Immobiliare · 371 370 8294.\n\n#F1Immobiliare #ValleDiSusa #VendereCasa #ValutazioneImmobiliare",
+      "topic_keywords": ["vendere","comprare","tempi","prezzo","strategia"]
+    },
+    {
+      "id": "C07",
+      "format": "carousel",
+      "title": "I primi 30 giorni di vendita vanno progettati",
+      "main_message": "Nei primi 30 giorni bisogna monitorare risposta al prezzo, qualità delle richieste, visite, obiezioni e confronto con la concorrenza.",
+      "slides": ["PRIMI 30 GIORNI|NON A CASO","GIORNO 0|POSIZIONAMENTO","SETTIMANA 1|RICHIESTE","SETTIMANA 2|VISITE","SETTIMANA 3|OBIEZIONI","SETTIMANA 4|CONFRONTO","QUALITÀ|DEI LEAD","CONCORRENZA","DECISIONE|SUI DATI","F1|MISURA E CORREGGE"],
+      "voiceover": "Nei primi 30 giorni bisogna monitorare risposta al prezzo, qualità delle richieste, visite, obiezioni e confronto con la concorrenza. Se stai valutando la vendita, scrivi VALUTAZIONE con comune, tipologia, metri quadrati e tempistica.",
+      "caption": "I PRIMI 30 GIORNI DI VENDITA VANNO PROGETTATI.\n\nNei primi 30 giorni bisogna monitorare risposta al prezzo, qualità delle richieste, visite, obiezioni e confronto con la concorrenza.\n\nScrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere. F1 Immobiliare · 371 370 8294.\n\n#F1Immobiliare #ValleDiSusa #VendereCasa #ValutazioneImmobiliare",
+      "topic_keywords": ["30 giorni","richieste","visite","obiezioni","concorrenza"]
+    },
+    {
+      "id": "R08",
+      "format": "reel",
+      "title": "La microzona può cambiare il valore anche in 500 metri",
+      "main_message": "Via, piano, esposizione, rumore, servizi e accessibilità possono cambiare la domanda anche nello stesso comune.",
+      "slides": ["STESSO COMUNE|NON BASTA","500 METRI|POSSONO CAMBIARE","VIA|E SERVIZI","PIANO|ED ESPOSIZIONE","RUMORE|E ACCESSI","DOMANDA|LOCALE","MICROZONA|PRIMA DEL PREZZO"],
+      "voiceover": "Via, piano, esposizione, rumore, servizi e accessibilità possono cambiare la domanda anche nello stesso comune. Se stai valutando la vendita, scrivi VALUTAZIONE con comune, tipologia, metri quadrati e tempistica.",
+      "caption": "LA MICROZONA PUÒ CAMBIARE IL VALORE ANCHE IN 500 METRI.\n\nVia, piano, esposizione, rumore, servizi e accessibilità possono cambiare la domanda anche nello stesso comune.\n\nScrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere. F1 Immobiliare · 371 370 8294.\n\n#F1Immobiliare #ValleDiSusa #VendereCasa #ValutazioneImmobiliare",
+      "topic_keywords": ["microzona","500 metri","via","esposizione","domanda"]
+    },
+    {
+      "id": "C08",
+      "format": "carousel",
+      "title": "Foto, annuncio, distribuzione e target: il prezzo non lavora da solo",
+      "main_message": "Un immobile può essere correttamente valutato e comunque performare male se presentazione, distribuzione o target sono sbagliati.",
+      "slides": ["IL PREZZO|NON LAVORA DA SOLO","FOTO","TESTO|ANNUNCIO","PORTALI|E SOCIAL","DISTRIBUZIONE","TARGET","TEMPI|DI RISPOSTA","VISITE","FEEDBACK","F1|STRATEGIA COMPLETA"],
+      "voiceover": "Un immobile può essere correttamente valutato e comunque performare male se presentazione, distribuzione o target sono sbagliati. Se stai valutando la vendita, scrivi VALUTAZIONE con comune, tipologia, metri quadrati e tempistica.",
+      "caption": "FOTO, ANNUNCIO, DISTRIBUZIONE E TARGET: IL PREZZO NON LAVORA DA SOLO.\n\nUn immobile può essere correttamente valutato e comunque performare male se presentazione, distribuzione o target sono sbagliati.\n\nScrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere. F1 Immobiliare · 371 370 8294.\n\n#F1Immobiliare #ValleDiSusa #VendereCasa #ValutazioneImmobiliare",
+      "topic_keywords": ["foto","annuncio","distribuzione","target","prezzo"]
+    },
+    {
+      "id": "R09",
+      "format": "reel",
+      "title": "Ristrutturato o da ristrutturare? Cambia il compratore",
+      "main_message": "Lo stato dell'immobile non incide solo sul prezzo: cambia il pubblico, il confronto con la concorrenza e la strategia di presentazione.",
+      "slides": ["RISTRUTTURATO|O DA FARE?","CAMBIA|IL PREZZO","MA CAMBIA ANCHE|IL TARGET","CAMBIA|LA CONCORRENZA","CAMBIA|LA PRESENTAZIONE","CAMBIA|LA STRATEGIA","POSIZIONA|CORRETTAMENTE"],
+      "voiceover": "Lo stato dell'immobile non incide solo sul prezzo: cambia il pubblico, il confronto con la concorrenza e la strategia di presentazione. Se stai valutando la vendita, scrivi VALUTAZIONE con comune, tipologia, metri quadrati e tempistica.",
+      "caption": "RISTRUTTURATO O DA RISTRUTTURARE? CAMBIA IL COMPRATORE.\n\nLo stato dell'immobile non incide solo sul prezzo: cambia il pubblico, il confronto con la concorrenza e la strategia di presentazione.\n\nScrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere. F1 Immobiliare · 371 370 8294.\n\n#F1Immobiliare #ValleDiSusa #VendereCasa #ValutazioneImmobiliare",
+      "topic_keywords": ["ristrutturato","stato","target","concorrenza","presentazione"]
+    },
+    {
+      "id": "C09",
+      "format": "carousel",
+      "title": "Vendere casa mentre ci vivi: cosa cambia",
+      "main_message": "Se l'immobile è abitato, disponibilità visite, ordine, privacy, fotografie e gestione degli appuntamenti diventano parte della strategia.",
+      "slides": ["CASA|ABITATA?","SI PUÒ VENDERE|BENE","PROGRAMMA|LE VISITE","PREPARA|GLI SPAZI","PROTEGGI|LA PRIVACY","FOTO|COERENTI","GESTISCI|GLI APPUNTAMENTI","FILTRA|I VISITATORI","RIDUCI|IL DISTURBO","F1|PIANO OPERATIVO"],
+      "voiceover": "Se l'immobile è abitato, disponibilità visite, ordine, privacy, fotografie e gestione degli appuntamenti diventano parte della strategia. Se stai valutando la vendita, scrivi VALUTAZIONE con comune, tipologia, metri quadrati e tempistica.",
+      "caption": "VENDERE CASA MENTRE CI VIVI: COSA CAMBIA.\n\nSe l'immobile è abitato, disponibilità visite, ordine, privacy, fotografie e gestione degli appuntamenti diventano parte della strategia.\n\nScrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere. F1 Immobiliare · 371 370 8294.\n\n#F1Immobiliare #ValleDiSusa #VendereCasa #ValutazioneImmobiliare",
+      "topic_keywords": ["abitata","visite","privacy","foto","appuntamenti"]
+    },
+    {
+      "id": "R10",
+      "format": "reel",
+      "title": "Documenti mancanti: il problema arriva quando hai già l'acquirente",
+      "main_message": "Verificare la documentazione prima della vendita riduce ritardi e sorprese quando arriva una proposta concreta.",
+      "slides": ["DOCUMENTI|MANCANTI?","IL PROBLEMA|ARRIVA DOPO","QUANDO C'È|L'ACQUIRENTE","TITOLO|E CATASTO","APE|E CONDOMINIO","VERIFICA|PRIMA","VENDITA|PIÙ SOLIDA"],
+      "voiceover": "Verificare la documentazione prima della vendita riduce ritardi e sorprese quando arriva una proposta concreta. Se stai valutando la vendita, scrivi VALUTAZIONE con comune, tipologia, metri quadrati e tempistica.",
+      "caption": "DOCUMENTI MANCANTI: IL PROBLEMA ARRIVA QUANDO HAI GIÀ L'ACQUIRENTE.\n\nVerificare la documentazione prima della vendita riduce ritardi e sorprese quando arriva una proposta concreta.\n\nScrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere. F1 Immobiliare · 371 370 8294.\n\n#F1Immobiliare #ValleDiSusa #VendereCasa #ValutazioneImmobiliare",
+      "topic_keywords": ["documenti","acquirente","catasto","APE","condominio"]
+    },
+    {
+      "id": "C10",
+      "format": "carousel",
+      "title": "Casa da ristrutturare: non venderla come se fosse pronta",
+      "main_message": "Un immobile da ristrutturare richiede target, prezzo e presentazione coerenti con costi, tempi e potenziale di trasformazione.",
+      "slides": ["DA|RISTRUTTURARE?","NON NASCONDERLO","TARGET|GIUSTO","PREZZO|COERENTE","COSTI|DA CONSIDERARE","TEMPI|DI LAVORO","POTENZIALE","FOTO|ONESTE","POSIZIONAMENTO","F1|TRASPARENZA"],
+      "voiceover": "Un immobile da ristrutturare richiede target, prezzo e presentazione coerenti con costi, tempi e potenziale di trasformazione. Se stai valutando la vendita, scrivi VALUTAZIONE con comune, tipologia, metri quadrati e tempistica.",
+      "caption": "CASA DA RISTRUTTURARE: NON VENDERLA COME SE FOSSE PRONTA.\n\nUn immobile da ristrutturare richiede target, prezzo e presentazione coerenti con costi, tempi e potenziale di trasformazione.\n\nScrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere. F1 Immobiliare · 371 370 8294.\n\n#F1Immobiliare #ValleDiSusa #VendereCasa #ValutazioneImmobiliare",
+      "topic_keywords": ["ristrutturare","target","prezzo","costi","potenziale"]
+    },
+    {
+      "id": "R11",
+      "format": "reel",
+      "title": "Quanto tempo vuoi davvero impiegare a vendere?",
+      "main_message": "La strategia cambia se vuoi vendere in poche settimane o puoi aspettare molti mesi. Il tempo è una variabile del posizionamento.",
+      "slides": ["QUANTO TEMPO|HAI?","30 GIORNI?","90 GIORNI?","6 MESI?","IL TEMPO|CAMBIA LA STRATEGIA","PREZZO E TARGET|DEVONO COINCIDERE","DICCI|IL TUO OBIETTIVO"],
+      "voiceover": "La strategia cambia se vuoi vendere in poche settimane o puoi aspettare molti mesi. Il tempo è una variabile del posizionamento. Se stai valutando la vendita, scrivi VALUTAZIONE con comune, tipologia, metri quadrati e tempistica.",
+      "caption": "QUANTO TEMPO VUOI DAVVERO IMPIEGARE A VENDERE?\n\nLa strategia cambia se vuoi vendere in poche settimane o puoi aspettare molti mesi. Il tempo è una variabile del posizionamento.\n\nScrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere. F1 Immobiliare · 371 370 8294.\n\n#F1Immobiliare #ValleDiSusa #VendereCasa #ValutazioneImmobiliare",
+      "topic_keywords": ["tempo","30 giorni","90 giorni","6 mesi","strategia"]
+    },
+    {
+      "id": "C11",
+      "format": "carousel",
+      "title": "Quando un ribasso ha senso e quando no",
+      "main_message": "Il ribasso ha senso quando i dati mostrano un problema di posizionamento; non è la risposta automatica a ogni settimana senza vendita.",
+      "slides": ["RIBASSARE?|DIPENDE","PRIMA|LE RICHIESTE","POI|LE VISITE","POI|LE OBIEZIONI","POI|LA CONCORRENZA","POI|IL PREZZO","SE I DATI|CONVERGONO","IL RIBASSO|HA SENSO","ALTRIMENTI|CORREGGI ALTRO","F1|DIAGNOSI PRIMA"],
+      "voiceover": "Il ribasso ha senso quando i dati mostrano un problema di posizionamento; non è la risposta automatica a ogni settimana senza vendita. Se stai valutando la vendita, scrivi VALUTAZIONE con comune, tipologia, metri quadrati e tempistica.",
+      "caption": "QUANDO UN RIBASSO HA SENSO E QUANDO NO.\n\nIl ribasso ha senso quando i dati mostrano un problema di posizionamento; non è la risposta automatica a ogni settimana senza vendita.\n\nScrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere. F1 Immobiliare · 371 370 8294.\n\n#F1Immobiliare #ValleDiSusa #VendereCasa #ValutazioneImmobiliare",
+      "topic_keywords": ["ribasso","richieste","visite","obiezioni","prezzo"]
+    },
+    {
+      "id": "R12",
+      "format": "reel",
+      "title": "Poche visite non significa automaticamente prezzo troppo alto",
+      "main_message": "Poche visite possono dipendere da prezzo, fotografie, annuncio, distribuzione o target. Prima di intervenire serve capire dove si rompe il percorso.",
+      "slides": ["POCHE|VISITE?","NON DIRE SUBITO|PREZZO","FOTO?","ANNUNCIO?","DISTRIBUZIONE?","TARGET?","TROVA|IL COLLO DI BOTTIGLIA"],
+      "voiceover": "Poche visite possono dipendere da prezzo, fotografie, annuncio, distribuzione o target. Prima di intervenire serve capire dove si rompe il percorso. Se stai valutando la vendita, scrivi VALUTAZIONE con comune, tipologia, metri quadrati e tempistica.",
+      "caption": "POCHE VISITE NON SIGNIFICA AUTOMATICAMENTE PREZZO TROPPO ALTO.\n\nPoche visite possono dipendere da prezzo, fotografie, annuncio, distribuzione o target. Prima di intervenire serve capire dove si rompe il percorso.\n\nScrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere. F1 Immobiliare · 371 370 8294.\n\n#F1Immobiliare #ValleDiSusa #VendereCasa #ValutazioneImmobiliare",
+      "topic_keywords": ["visite","prezzo","foto","distribuzione","target"]
+    },
+    {
+      "id": "C12",
+      "format": "carousel",
+      "title": "Chi è il compratore probabile della tua casa?",
+      "main_message": "Capire il compratore probabile aiuta a scegliere presentazione, canali, messaggio e priorità delle visite.",
+      "slides": ["CHI LA|COMPREREBBE?","FAMIGLIA?","COPPIA?","INVESTITORE?","SENIOR?","PRIMA CASA?","CAMBIA|IL MESSAGGIO","CAMBIANO|I CANALI","CAMBIA|LA PRESENTAZIONE","F1|TARGET PRIMA"],
+      "voiceover": "Capire il compratore probabile aiuta a scegliere presentazione, canali, messaggio e priorità delle visite. Se stai valutando la vendita, scrivi VALUTAZIONE con comune, tipologia, metri quadrati e tempistica.",
+      "caption": "CHI È IL COMPRATORE PROBABILE DELLA TUA CASA?\n\nCapire il compratore probabile aiuta a scegliere presentazione, canali, messaggio e priorità delle visite.\n\nScrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere. F1 Immobiliare · 371 370 8294.\n\n#F1Immobiliare #ValleDiSusa #VendereCasa #ValutazioneImmobiliare",
+      "topic_keywords": ["compratore","target","famiglia","investitore","presentazione"]
+    },
+    {
+      "id": "R13",
+      "format": "reel",
+      "title": "Più eredi, una sola vendita: prima serve allineamento",
+      "main_message": "Quando i proprietari sono più di uno, obiettivo, prezzo minimo, tempi e responsabilità vanno condivisi prima di portare l'immobile sul mercato.",
+      "slides": ["PIÙ EREDI|UNA CASA","PRIMA SERVE|ALLINEAMENTO","OBIETTIVO|COMUNE","PREZZO|CONDIVISO","TEMPI|CONDIVISI","DOCUMENTI|E DELEGHE","POI|SI VENDE"],
+      "voiceover": "Quando i proprietari sono più di uno, obiettivo, prezzo minimo, tempi e responsabilità vanno condivisi prima di portare l'immobile sul mercato. Se stai valutando la vendita, scrivi VALUTAZIONE con comune, tipologia, metri quadrati e tempistica.",
+      "caption": "PIÙ EREDI, UNA SOLA VENDITA: PRIMA SERVE ALLINEAMENTO.\n\nQuando i proprietari sono più di uno, obiettivo, prezzo minimo, tempi e responsabilità vanno condivisi prima di portare l'immobile sul mercato.\n\nScrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere. F1 Immobiliare · 371 370 8294.\n\n#F1Immobiliare #ValleDiSusa #VendereCasa #ValutazioneImmobiliare",
+      "topic_keywords": ["eredi","proprietari","prezzo","tempi","documenti"]
+    },
+    {
+      "id": "C13",
+      "format": "carousel",
+      "title": "Prima di firmare un incarico, fai queste 6 domande",
+      "main_message": "Un proprietario dovrebbe capire dati, comparabili, strategia, distribuzione, reporting e gestione delle richieste prima di affidare la vendita.",
+      "slides": ["PRIMA|DELL'INCARICO","1 SU QUALI|DATI?","2 QUALI|COMPARABILI?","3 QUALE|STRATEGIA?","4 DOVE|PUBBLICATE?","5 COME|MISURATE?","6 COME|GESTITE I LEAD?","DEVI POTER|CAPIRE","NON SOLO|FIDARTI","F1|METODO"],
+      "voiceover": "Un proprietario dovrebbe capire dati, comparabili, strategia, distribuzione, reporting e gestione delle richieste prima di affidare la vendita. Se stai valutando la vendita, scrivi VALUTAZIONE con comune, tipologia, metri quadrati e tempistica.",
+      "caption": "PRIMA DI FIRMARE UN INCARICO, FAI QUESTE 6 DOMANDE.\n\nUn proprietario dovrebbe capire dati, comparabili, strategia, distribuzione, reporting e gestione delle richieste prima di affidare la vendita.\n\nScrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere. F1 Immobiliare · 371 370 8294.\n\n#F1Immobiliare #ValleDiSusa #VendereCasa #ValutazioneImmobiliare",
+      "topic_keywords": ["incarico","dati","comparabili","strategia","lead"]
+    },
+    {
+      "id": "R14",
+      "format": "reel",
+      "title": "Per una valutazione seria ci servono 4 informazioni",
+      "main_message": "Comune, tipologia, metri quadrati e tempistica di vendita permettono di capire subito se possiamo impostare un'analisi utile.",
+      "slides": ["VUOI UNA|VALUTAZIONE?","SCRIVI|IL COMUNE","TIPOLOGIA","METRI QUADRATI","QUANDO VORRESTI|VENDERE","NO NUMERI|A CASO","PARTIAMO|DA DATI REALI"],
+      "voiceover": "Comune, tipologia, metri quadrati e tempistica di vendita permettono di capire subito se possiamo impostare un'analisi utile. Se stai valutando la vendita, scrivi VALUTAZIONE con comune, tipologia, metri quadrati e tempistica.",
+      "caption": "PER UNA VALUTAZIONE SERIA CI SERVONO 4 INFORMAZIONI.\n\nComune, tipologia, metri quadrati e tempistica di vendita permettono di capire subito se possiamo impostare un'analisi utile.\n\nScrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere. F1 Immobiliare · 371 370 8294.\n\n#F1Immobiliare #ValleDiSusa #VendereCasa #ValutazioneImmobiliare",
+      "topic_keywords": ["valutazione","comune","tipologia","metri quadrati","vendere"]
+    },
+    {
+      "id": "C14",
+      "format": "carousel",
+      "title": "Vuoi sapere se possiamo aiutarti? Mandaci questi dati",
+      "main_message": "Comune, tipologia, metri quadrati, stato dell'immobile e tempistica di vendita permettono una prima prequalifica concreta.",
+      "slides": ["PREQUALIFICA|VALUTAZIONE","1 COMUNE","2 TIPOLOGIA","3 METRI|QUADRATI","4 STATO|IMMOBILE","5 QUANDO|VUOI VENDERE","AGGIUNGI|EVENTUALE PREZZO","NO RISPOSTE|GENERICHE","TI DICIAMO|COME PARTIRE","SCRIVI|VALUTAZIONE"],
+      "voiceover": "Comune, tipologia, metri quadrati, stato dell'immobile e tempistica di vendita permettono una prima prequalifica concreta. Se stai valutando la vendita, scrivi VALUTAZIONE con comune, tipologia, metri quadrati e tempistica.",
+      "caption": "VUOI SAPERE SE POSSIAMO AIUTARTI? MANDACI QUESTI DATI.\n\nComune, tipologia, metri quadrati, stato dell'immobile e tempistica di vendita permettono una prima prequalifica concreta.\n\nScrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere. F1 Immobiliare · 371 370 8294.\n\n#F1Immobiliare #ValleDiSusa #VendereCasa #ValutazioneImmobiliare",
+      "topic_keywords": ["prequalifica","comune","tipologia","metri quadrati","tempistica"]
+    }
+  ]
+}
