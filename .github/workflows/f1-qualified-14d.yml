@@ -12,13 +12,13 @@ on:
       - '.github/workflows/f1-qualified-14d.yml'
       - 'publisher/build_f1_qualified_14d.py'
       - 'publisher/gate_f1_qualified.py'
+      - 'publisher/apply_canva_visual_manifest.py'
       - 'publisher/render_f1_qualified_14d.py'
       - 'publisher/content_bank/f1-qualified-14d.json'
+      - 'publisher/canva_visual_manifest.json'
       - 'publisher/instagram_distribution_policy.json'
       - 'publisher/instagram_creators_best_practices.json'
       - 'publisher/requirements.txt'
-      - 'publisher/manual_images/f1-immobiliare/**'
-      - 'publisher/assets/*_presenter.jpg.b64'
 
 permissions:
   contents: write
@@ -54,17 +54,22 @@ jobs:
 
       - name: Validate scripts and policies
         run: |
-          python -m py_compile publisher/build_f1_qualified_14d.py publisher/gate_f1_qualified.py publisher/render_f1_qualified_14d.py
+          python -m py_compile publisher/build_f1_qualified_14d.py publisher/gate_f1_qualified.py publisher/apply_canva_visual_manifest.py publisher/render_f1_qualified_14d.py
           python - <<'PY'
           import json
           p=json.load(open('publisher/instagram_distribution_policy.json',encoding='utf-8'))
           c=json.load(open('publisher/instagram_creators_best_practices.json',encoding='utf-8'))
+          m=json.load(open('publisher/canva_visual_manifest.json',encoding='utf-8'))
           assert p.get('version') == 2
           required={'carousel_completion','positive_action_probability','skip_probability','profile_time_after_post','direct_share_probability','predicted_time_on_post','first_post_skip_probability','first_post_over_10_seconds','audio_activation_probability','session_continuation_after_first_post'}
           assert required <= set((p.get('significant_predictions') or {}).keys())
           assert (c.get('reels_best_practices') or {}).get('hook_first_seconds') == 3
           assert (c.get('reels_best_practices') or {}).get('muted_view_optimization') is True
-          print('POLICIES OK')
+          assert m['reels']['page_count'] == 98
+          assert m['carousels']['page_count'] == 140
+          assert m['rules']['no_legacy_assets'] is True
+          assert len(m.get('cover_images') or []) >= 6
+          print('POLICIES + CANVA MANIFEST OK')
           PY
 
       - name: Build the last 14 days
@@ -81,6 +86,9 @@ jobs:
       - name: Producer-side Instagram and qualification gate
         run: python publisher/gate_f1_qualified.py --fail-on-blocked
 
+      - name: Apply Canva visual source of truth
+        run: python publisher/apply_canva_visual_manifest.py
+
       - name: Render 14 Reels and 14 carousels
         run: python publisher/render_f1_qualified_14d.py
 
@@ -89,7 +97,7 @@ jobs:
         run: |
           set -euxo pipefail
           python - <<'PY'
-          import json, subprocess
+          import json
           from pathlib import Path
           q=json.load(open('publisher/qualified_14d_queue.json',encoding='utf-8'))
           jobs=q['jobs']
@@ -99,6 +107,9 @@ jobs:
           assert len(reels)==14 and len(cars)==14
           assert all(j.get('gate_status')=='PASSED' for j in jobs)
           assert all(j.get('lead_goal')=='qualified_seller' for j in jobs)
+          assert all(j.get('canva_visual_source') is True for j in jobs)
+          assert all(j.get('legacy_visuals_allowed') is False for j in jobs)
+          assert q.get('visual_source') == 'canva'
           required={'comune','tipologia','mq','tempistica_vendita'}
           assert all(required <= set(j.get('lead_qualification_required_fields') or []) for j in jobs)
           assert all(j.get('publication_time_verified') is False for j in jobs)
@@ -113,7 +124,7 @@ jobs:
             paths=[Path(x) for x in j['media']]
             assert 7<=len(paths)<=10
             assert all(p.exists() and p.stat().st_size>15000 for p in paths)
-          print('VERIFIED 28 QUALIFIED SELLER ASSETS: 14 REELS + 14 CAROUSELS')
+          print('VERIFIED CANVA-SOURCED PACKAGE: 14 REELS + 14 CAROUSELS')
           PY
 
       - name: Build downloadable package
@@ -124,6 +135,7 @@ jobs:
           cp publisher/qualified_14d_queue.json /tmp/f1-qualified-14d/
           cp publisher/gate_feedback.json /tmp/f1-qualified-14d/
           cp publisher/content_bank/f1-qualified-14d.json /tmp/f1-qualified-14d/content-plan.json
+          cp publisher/canva_visual_manifest.json /tmp/f1-qualified-14d/
           cp publisher/instagram_distribution_policy.json /tmp/f1-qualified-14d/
           cp publisher/instagram_creators_best_practices.json /tmp/f1-qualified-14d/
           cp -r publisher/media/generated/f1-qualified-14d /tmp/f1-qualified-14d/media
@@ -148,7 +160,7 @@ jobs:
             python - "$FILE" "$SHA" <<'PY'
           import base64,json,sys
           file,sha=sys.argv[1],sys.argv[2]
-          payload={'message':f'Persist qualified seller batch: {file}','content':base64.b64encode(open(file,'rb').read()).decode(),'branch':'main'}
+          payload={'message':f'Persist Canva-sourced qualified batch: {file}','content':base64.b64encode(open(file,'rb').read()).decode(),'branch':'main'}
           if sha: payload['sha']=sha
           json.dump(payload,open('/tmp/payload.json','w'))
           PY
@@ -164,21 +176,21 @@ jobs:
           gh release delete f1-qualified-14d-latest --yes --cleanup-tag >/dev/null 2>&1 || true
           gh release create f1-qualified-14d-latest /tmp/F1_QUALIFIED_SELLER_14_GIORNI.zip \
             --title "F1 · 14 GIORNI · CLIENTI VENDITORI QUALIFICATI" \
-            --notes "28 contenuti rigenerati: 14 Reel MP4 9:16 + 14 caroselli. Tutti passati dal producer-side Instagram Feed Gate e costruiti per generare richieste di valutazione qualificate con COMUNE, TIPOLOGIA, MQ e TEMPISTICA DI VENDITA. Pubblicazione finale soggetta ad approvazione umana; nessun orario ottimale inventato senza Insights. Run ${GITHUB_RUN_ID}."
+            --notes "28 contenuti rigenerati da sorgente visuale Canva: 14 Reel MP4 9:16 + 14 caroselli 4:5. Tutti passati dal producer-side Instagram Feed Gate. CTA qualificante: COMUNE, TIPOLOGIA, MQ e TEMPISTICA DI VENDITA. Vecchi asset legacy esclusi. Run ${GITHUB_RUN_ID}."
 
       - name: Notify completion
         uses: actions/github-script@v8
         with:
           script: |
-            const title='[F1 QUALIFIED] 14 giorni · venditori qualificati';
+            const title='[F1 QUALIFIED] 14 giorni · Canva · venditori qualificati';
             const body=[
-              '@josephsocialmedia2-spec batch rigenerato e verificato.',
+              '@josephsocialmedia2-spec batch Canva rigenerato e verificato.',
               '',
               '**28 contenuti:** 14 Reel + 14 caroselli.',
+              '**Sorgente visuale:** Canva manifest; vecchi asset legacy esclusi.',
               '**Obiettivo:** proprietari con intenzione di vendita / richieste di valutazione qualificate.',
               '**Prequalifica CTA:** comune + tipologia + mq + tempistica di vendita.',
               '**Gate:** target, coerenza, creative fatigue, anti-bait, formato, 9:16, safe area, muted view e CTA.',
-              '**Pubblicazione:** resta manualmente approvata; nessun best time inventato senza Insights.',
               '',
               'Download: https://github.com/' + context.repo.owner + '/' + context.repo.repo + '/releases/tag/f1-qualified-14d-latest',
               'Run: https://github.com/' + context.repo.owner + '/' + context.repo.repo + '/actions/runs/' + context.runId
