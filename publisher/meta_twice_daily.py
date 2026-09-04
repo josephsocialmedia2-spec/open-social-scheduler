@@ -7,7 +7,8 @@ No approval gate, no Postiz, no paid scheduler. The workflow renders and publish
 one GitHub Actions run using the official Meta APIs implemented in direct_api_publish.py.
 
 The job IDs are deterministic, so retries are idempotent: a slot already published is
-never published a second time.
+never published a second time. Failed/credential-blocked jobs are kept out of the
+legacy direct publisher and are retried only by this autonomous workflow.
 """
 from __future__ import annotations
 
@@ -129,8 +130,6 @@ def build_job(client: dict[str, Any], bank: dict[str, Any], day: date, slot: str
 
     if format_name == "carousel":
         slides = list(item.get("slides") or [])
-        # Instagram carousel path is intentionally 10 items: renderer and Meta API
-        # are already validated for this shape in the existing engine.
         slide_count = 10
         media: Any = [f"{base}/slide-{n:02d}.jpg" for n in range(1, slide_count + 1)]
     else:
@@ -184,22 +183,38 @@ def find_job(queue: dict[str, Any], job_id: str) -> dict[str, Any] | None:
     return None
 
 
+def configure_owned_photo_sources(client: dict[str, Any]) -> None:
+    """Use only the explicitly reusable F1 sources in client configuration.
+
+    This deliberately bypasses the renderer's legacy Pixabay page URLs, which can
+    reject unattended requests with HTTP 403. Wikimedia Special:Redirect/file URLs
+    resolve directly to the reusable/public-domain/CC0 assets already documented in
+    the F1 client configuration.
+    """
+    rows = client.get("brand", {}).get("photo_sources", [])
+    sources = [
+        str(row.get("url") or "").strip()
+        for row in rows
+        if isinstance(row, dict) and str(row.get("url") or "").strip()
+    ]
+    if not sources:
+        raise RuntimeError("F1 reusable photo_sources are not configured")
+    repeat = (10 + len(sources) - 1) // len(sources)
+    renderer.F1 = (sources * repeat)[:10]
+
+
 def render_job(job: dict[str, Any], client: dict[str, Any]) -> None:
+    configure_owned_photo_sources(client)
     if str(job.get("format")) == "carousel":
         renderer.render_carousel(job, client)
     elif str(job.get("format")) == "reel":
         job["_presenter"] = "joseph"
-        renderer.render_reel(job, client)
-        job.pop("_presenter", None)
+        try:
+            renderer.render_reel(job, client)
+        finally:
+            job.pop("_presenter", None)
     else:
         raise RuntimeError(f"Unsupported format: {job.get('format')}")
-
-
-def media_root(job: dict[str, Any]) -> Path:
-    raw = job.get("media")
-    first = raw[0] if isinstance(raw, list) else raw
-    path = ROOT / str(first)
-    return path.parent if isinstance(raw, list) else path
 
 
 def cleanup_media(job: dict[str, Any]) -> None:
@@ -227,6 +242,23 @@ def prune_meta_history(queue: dict[str, Any], keep: int = 120) -> None:
         j for j in jobs
         if str(j.get("created_by")) != "meta-twice-daily" or str(j.get("id")) in keep_ids
     ]
+
+
+def record_result(job: dict[str, Any], results: list[dict[str, Any]], dry_run: bool) -> None:
+    job.setdefault("direct_api_results", []).append(
+        {
+            "at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+            "dry_run": dry_run,
+            "results": results,
+            "source": "meta-twice-daily",
+        }
+    )
+
+
+def persist_queue(queue: dict[str, Any]) -> None:
+    queue["updated_at"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
+    prune_meta_history(queue)
+    save_json(QUEUE_PATH, queue)
 
 
 def main() -> int:
@@ -259,8 +291,6 @@ def main() -> int:
         if existing.get("status") == "published" or set(PLATFORMS).issubset(published):
             print(f"NOOP: {template['id']} already published on Facebook + Instagram")
             return 0
-        # Preserve partial-publication state across retries, but refresh content/media
-        # fields from the deterministic template.
         preserved = {
             "published_platforms": list(existing.get("published_platforms", [])),
             "direct_api_results": list(existing.get("direct_api_results", [])),
@@ -274,20 +304,50 @@ def main() -> int:
         queue["jobs"].append(template)
         job = template
 
+    # Fail early and explicitly before doing expensive rendering. The workflow stays
+    # fully autonomous: as soon as the secrets exist, the next scheduled companion
+    # run will proceed without any approval step.
+    missing: list[str] = []
+    for platform in PLATFORMS:
+        for name in core.required_secrets(platform, client):
+            if name not in missing:
+                missing.append(name)
+    if missing:
+        results = [{"platform": "meta", "status": "blocked", "missing": missing}]
+        job["status"] = "awaiting_credentials"
+        job["blocked_reason"] = "missing GitHub Actions Secrets: " + ", ".join(missing)
+        record_result(job, results, args.dry_run)
+        persist_queue(queue)
+        print(json.dumps({"job_id": job["id"], "slot": slot, "results": results}, ensure_ascii=False, indent=2))
+        return 2
+
     try:
-        render_job(job, client)
+        try:
+            render_job(job, client)
+        except Exception as exc:
+            results = [{"platform": "renderer", "status": "error", "error": str(exc)}]
+            job["status"] = "render_failed"
+            job["blocked_reason"] = str(exc)
+            record_result(job, results, args.dry_run)
+            persist_queue(queue)
+            print(json.dumps({"job_id": job["id"], "slot": slot, "results": results}, ensure_ascii=False, indent=2))
+            return 1
+
         results, ok = core.publish_job(job, set(PLATFORMS), args.dry_run)
-        job.setdefault("direct_api_results", []).append(
-            {
-                "at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-                "dry_run": args.dry_run,
-                "results": results,
-                "source": "meta-twice-daily",
-            }
-        )
-        queue["updated_at"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
-        prune_meta_history(queue)
-        save_json(QUEUE_PATH, queue)
+        record_result(job, results, args.dry_run)
+        if not ok:
+            published = {str(x) for x in job.get("published_platforms", [])}
+            if published:
+                job["status"] = "partially_published"
+            elif any(str(row.get("status")) == "blocked" for row in results):
+                job["status"] = "awaiting_credentials"
+            else:
+                job["status"] = "retry_required"
+            if job.get("status") != "partially_published":
+                job["blocked_reason"] = "automatic Meta publication requires retry"
+        else:
+            job.pop("blocked_reason", None)
+        persist_queue(queue)
         print(json.dumps({"job_id": job["id"], "slot": slot, "results": results}, ensure_ascii=False, indent=2))
         return 0 if ok else 1
     finally:
