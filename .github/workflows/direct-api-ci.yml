@@ -3,7 +3,14 @@ name: Direct API Visibility Engine CI
 on:
   push:
     branches:
+      - main
       - agent/direct-api-zero-cost
+    paths:
+      - 'publisher/*.py'
+      - 'publisher/clients/*.json'
+      - 'publisher/content_bank/*.json'
+      - '.github/workflows/meta-twice-daily.yml'
+      - '.github/workflows/direct-api-ci.yml'
   pull_request:
     branches:
       - main
@@ -43,3 +50,29 @@ jobs:
         env:
           SOCIAL_START_OFFSET_DAYS: '0'
         run: python publisher/build_daily_queue.py --date 2026-08-17
+      - name: Validate autonomous Meta publisher contract
+        run: |
+          python - <<'PY'
+          from datetime import date
+          import json
+          import sys
+          sys.path.insert(0, 'publisher')
+          import meta_twice_daily as m
+
+          client=json.load(open('publisher/clients/f1-immobiliare.json',encoding='utf-8'))
+          bank=json.load(open('publisher/content_bank/f1-immobiliare.json',encoding='utf-8'))
+          day=date(2026,9,4)
+          morning=m.build_job(client,bank,day,'morning')
+          evening=m.build_job(client,bank,day,'evening')
+          assert morning['id']=='f1-immobiliare-meta-2026-09-04-morning'
+          assert evening['id']=='f1-immobiliare-meta-2026-09-04-evening'
+          assert morning['format']=='carousel'
+          assert evening['format']=='reel'
+          assert morning['approval_required'] is False
+          assert evening['manual_approval_required'] is False
+          for job in (morning,evening):
+              assert [x['platform'] for x in job['platforms']]==['facebook','instagram']
+              assert job['autonomous_publish'] is True
+              assert job['status']=='ready'
+          print('AUTONOMOUS META CONTRACT OK')
+          PY
