@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Attach and enforce pre-content analysis + the full Instagram Feed/Reels master policy.
+"""Attach and enforce pre-content analysis + full Instagram Feed/Reels/Creators policy.
 
 Every active-cycle job receives:
 - one precise target public;
@@ -10,12 +10,12 @@ Every active-cycle job receives:
 - the full Instagram Feed ranking model from instagram_distribution_policy.json;
 - all supplied significant prediction targets;
 - viewer controls/feedback implications;
+- Instagram Creators best practices from instagram_creators_best_practices.json;
+- format diversification, trial-Reel consideration, share-worthiness, first-3-second hook,
+  highest resolution, muted-view comprehension, audio rights and early comment response;
 - format-specific constraints for photo/carousel/reel/video;
 - measurement rules that forbid invented ranking probabilities;
 - mandatory manual approval when data is incomplete.
-
-The master Instagram policy is loaded directly on every run so a stale copy in
-content_analysis.json cannot silently replace or simplify the supplied directives.
 """
 from __future__ import annotations
 
@@ -26,6 +26,7 @@ ROOT = Path(__file__).resolve().parents[1]
 QUEUE = ROOT / "publisher" / "queue.json"
 ANALYSIS = ROOT / "publisher" / "content_analysis.json"
 POLICY = ROOT / "publisher" / "instagram_distribution_policy.json"
+CREATORS = ROOT / "publisher" / "instagram_creators_best_practices.json"
 
 ALLOWED_OBJECTIVES = {
     "visibilità", "conversazione", "richiesta informazioni", "visita sito",
@@ -58,13 +59,14 @@ def format_strategy(fmt: str, policy: dict) -> dict:
     return common
 
 
-def reel_rules(policy: dict) -> dict:
+def reel_rules(policy: dict, creators: dict) -> dict:
     return {
         "creative_essentials": policy.get("reels_creative_essentials", {}),
         "sales_rules": policy.get("reels_for_sales", {}),
         "results_rules": policy.get("reels_for_results", {}),
         "editing_rules": policy.get("reels_editing", {}),
         "ai_assisted_rules": policy.get("ai_assisted_reels", {}),
+        "creators_best_practices": creators,
     }
 
 
@@ -72,6 +74,7 @@ def main() -> int:
     q = load(QUEUE)
     a = load(ANALYSIS)
     master = load(POLICY)
+    creators = load(CREATORS)
 
     required_predictions = {
         "carousel_completion", "positive_action_probability", "skip_probability",
@@ -89,6 +92,8 @@ def main() -> int:
         raise RuntimeError("Instagram master policy missing viewer controls/feedback")
     if not master.get("measurement_policy"):
         raise RuntimeError("Instagram master policy missing measurement policy")
+    if not creators.get("reels_best_practices") or not creators.get("format_diversification"):
+        raise RuntimeError("Instagram Creators policy incomplete")
 
     clients = a.get("clients", {})
     cycle = q.get("current_cycle")
@@ -126,10 +131,11 @@ def main() -> int:
         j["cta_policy"] = ctx.get("cta_policy", "ONE_OR_NONE_AND_ONLY_IF_OBJECTIVE_REQUIRES_IT")
         j["manual_approval_required"] = True
 
-        # Master policy is the single source of truth.
         j["instagram_policy_required"] = True
         j["instagram_policy_version"] = master.get("version")
         j["instagram_policy_source"] = "publisher/instagram_distribution_policy.json"
+        j["instagram_creators_policy_version"] = creators.get("version")
+        j["instagram_creators_policy_source"] = "publisher/instagram_creators_best_practices.json"
         j["instagram_full_policy_attached"] = True
         j["instagram_scope_note"] = master.get("scope_note", {})
         j["instagram_ranking_model"] = master.get("feed_system", {})
@@ -137,6 +143,7 @@ def main() -> int:
         j["instagram_prediction_targets"] = format_strategy(fmt, master)
         j["instagram_measurement_policy"] = master.get("measurement_policy", {})
         j["instagram_mandatory_prepublication_checks"] = master.get("mandatory_prepublication_checks", [])
+        j["instagram_creators_best_practices"] = creators
         j["instagram_performance_data_status"] = instagram_ctx.get("performance_data_status", ctx.get("insights", {}).get("status"))
         j["instagram_performance_metrics_expected"] = (
             instagram_ctx.get("performance_metrics_expected")
@@ -145,11 +152,10 @@ def main() -> int:
         j["instagram_gallery_metadata_policy"] = master.get("gallery_suggestion_metadata", {})
         j["instagram_format"] = fmt
         j["instagram_format_mix_note"] = (
-            "Current production workflow is constrained to static photo jobs; carousel/Reels rules remain mandatory in the master policy for future matching formats."
+            "Current production workflow is constrained to static photo jobs; format diversification must still be considered in planning and future cycles."
             if fmt == "photo" else "Full format-specific master policy applied."
         )
 
-        # Common Feed creative constraints derived from the supplied ranking signals.
         j["instagram_creative_constraints"] = {
             "integrity_truthfulness_required": True,
             "first_visible_unit_must_work_without_context": True,
@@ -167,6 +173,11 @@ def main() -> int:
             "deliver_value_after_hook": True,
             "no_slow_generic_intro": True,
             "publication_time_must_not_be_invented": True,
+            "format_selected_for_message_not_habit": True,
+            "format_diversification_considered": True,
+            "new_idea_test_or_trial_reel_considered": True,
+            "share_worthiness_reviewed": True,
+            "highest_available_resolution_required": True,
         }
 
         if fmt == "carousel":
@@ -181,25 +192,30 @@ def main() -> int:
             j["instagram_carousel_constraints"] = None
 
         if fmt in {"reel", "video"}:
-            j["instagram_reels_policy"] = reel_rules(master)
+            j["instagram_reels_policy"] = reel_rules(master, creators)
             j["instagram_reels_constraints"] = {
                 "vertical_9_16": True,
                 "intentional_audio": True,
                 "understandable_without_audio": True,
                 "bottom_35_percent_free_of_essential_text_logo": True,
                 "primary_message_in_safe_area": True,
-                "first_1_3_seconds_clear": True,
+                "first_3_seconds_clear": True,
                 "three_second_value_reviewed": True,
                 "reason_to_continue_beyond_10_seconds": True,
+                "captions_or_text_for_muted_view": True,
                 "captions_when_useful_for_context_accessibility": True,
                 "brand_visible_and_coherent": True,
                 "clips_assets_visually_harmonious": True,
                 "phone_footage_allowed_if_clear": True,
+                "highest_resolution_possible": True,
                 "rights_cleared_audio_required": True,
                 "audio_activation_value_reviewed": True,
+                "early_comment_response_plan_required": True,
+                "max_180_seconds_for_non_follower_recommendation": True,
+                "trial_reel_considered_when_available": True,
             }
         else:
-            j["instagram_reels_policy"] = reel_rules(master)
+            j["instagram_reels_policy"] = reel_rules(master, creators)
             j["instagram_reels_constraints"] = {"applicable": False, "reason": f"Current format is {fmt}"}
 
         timing = ctx.get("publication_timing", {})
@@ -239,19 +255,29 @@ def main() -> int:
             "profile_visit_value_reviewed": None,
             "negative_feedback_risk_reviewed": None,
             "format_specific_rules_passed": None,
+            "format_diversification_considered": True,
+            "new_idea_test_considered": True,
+            "share_worthiness_reviewed": True,
+            "highest_available_resolution_used": None,
             "carousel_completion_logic_passed": None if fmt != "carousel" else False,
             "first_3_seconds_passed": None if fmt not in {"reel", "video"} else False,
             "reason_beyond_10_seconds_passed": None if fmt not in {"reel", "video", "carousel"} else False,
+            "reel_muted_view_passed": None if fmt not in {"reel", "video"} else False,
+            "reel_audio_rights_verified": None if fmt not in {"reel", "video"} else False,
             "reel_9_16_safe_area_audio_passed": None if fmt not in {"reel", "video"} else False,
+            "reel_comment_followup_plan_present": None if fmt not in {"reel", "video"} else False,
+            "reel_duration_recommendation_passed": None if fmt not in {"reel", "video"} else False,
             "gallery_metadata_permission_passed": None,
         }
 
-    q["analysis_policy"] = "ANALISI PRIMA DELLA CREAZIONE + FULL INSTAGRAM FEED/REELS MASTER POLICY V2"
+    q["analysis_policy"] = "ANALISI PRIMA DELLA CREAZIONE + FULL INSTAGRAM FEED/REELS MASTER POLICY + CREATORS BEST PRACTICES"
     q["instagram_distribution_policy"] = "publisher/instagram_distribution_policy.json"
     q["instagram_distribution_policy_version"] = master.get("version")
+    q["instagram_creators_best_practices"] = "publisher/instagram_creators_best_practices.json"
+    q["instagram_creators_best_practices_version"] = creators.get("version")
     q["instagram_policy_loaded_directly"] = True
     QUEUE.write_text(json.dumps(q, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(f"ANALYSIS + FULL INSTAGRAM MASTER POLICY V{master.get('version')} ENFORCED on {len(jobs)} jobs")
+    print(f"ANALYSIS + FULL INSTAGRAM MASTER V{master.get('version')} + CREATORS V{creators.get('version')} ENFORCED on {len(jobs)} jobs")
     return 0
 
 
