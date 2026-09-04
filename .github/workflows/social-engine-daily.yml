@@ -117,7 +117,14 @@ jobs:
           assert trial.get('auto_share_window_hours') == 72
           assert 'photo' in (c.get('format_diversification') or {}).get('allowed_mix', [])
           assert 'reel' in (c.get('format_diversification') or {}).get('allowed_mix', [])
-          print('INSTAGRAM FEED/REELS + CREATORS POLICIES VALIDATED')
+          community=c.get('community_connections') or {}
+          assert community.get('reach_audience_directly')
+          assert (community.get('engagement_bait') or {}).get('prohibited') is True
+          assert (community.get('engagement_bait') or {}).get('authentic_cta_allowed') is True
+          assert (community.get('comment_interaction') or {}).get('early_days_priority') is True
+          mandatory=set(c.get('mandatory_checks') or [])
+          assert {'audience_feedback_method_considered','engagement_bait_absent','authentic_cta_only','early_comment_interaction_plan_present'} <= mandatory
+          print('INSTAGRAM FEED/REELS + CREATORS + COMMUNITY/ANTI-BAIT POLICIES VALIDATED')
           PY
 
       - name: Analyze BEFORE content creation
@@ -184,6 +191,10 @@ jobs:
               assert j.get('instagram_policy_version')
               assert j.get('instagram_creators_policy_version')
               assert j.get('instagram_creators_best_practices')
+              assert j.get('instagram_engagement_bait_prohibited') is True
+              assert j.get('instagram_authentic_cta_required') is True
+              assert j.get('instagram_audience_feedback_channels')
+              assert j.get('instagram_early_comment_interaction_required') is True
               targets=j.get('instagram_prediction_targets') or {}
               assert required_predictions <= set(targets.keys()), (j.get('id'), targets.keys())
               constraints=j.get('instagram_creative_constraints') or {}
@@ -194,6 +205,9 @@ jobs:
               assert constraints.get('visual_text_short') is True
               assert constraints.get('photo_overlay_text_not_overloaded') is True
               assert constraints.get('meaningful_positive_action_not_engagement_bait') is True
+              assert constraints.get('engagement_bait_forbidden') is True
+              assert constraints.get('authentic_cta_only') is True
+              assert constraints.get('audience_feedback_method_considered') is True
               assert constraints.get('share_value_should_be_natural_not_forced') is True
               assert constraints.get('profile_transition_must_match_brand_positioning') is True
               assert constraints.get('deliver_value_after_hook') is True
@@ -202,6 +216,11 @@ jobs:
               assert constraints.get('new_idea_test_or_trial_reel_considered') is True
               assert constraints.get('share_worthiness_reviewed') is True
               assert constraints.get('highest_available_resolution_required') is True
+              checklist=j.get('prepublish_checklist') or {}
+              assert checklist.get('engagement_bait_absent') is True
+              assert checklist.get('authentic_cta_only') is True
+              assert checklist.get('audience_feedback_method_considered') is True
+              assert checklist.get('early_comment_interaction_plan_present') is True
               assert j.get('instagram_reels_policy')
               assert (j.get('instagram_reels_constraints') or {}).get('applicable') is False
 
@@ -240,7 +259,7 @@ jobs:
               assert p.exists() and p.stat().st_size>20000, rel
           assert not list(Path('publisher/media/generated').rglob('*.mp4'))
           assert not list(Path('publisher/media/generated').rglob('*.mp3'))
-          print('VERIFIED: pre-analysis + Instagram Feed/Reels + Creators directives + 10 STATIC PUBLICATIONS. 5 F1 + 5 RMP.')
+          print('VERIFIED: pre-analysis + Instagram Feed/Reels + Creators + community/anti-bait directives + 10 STATIC PUBLICATIONS. 5 F1 + 5 RMP.')
           PY
 
       - name: Upload publication package
@@ -294,7 +313,7 @@ jobs:
           gh release delete social-preview-latest --yes --cleanup-tag >/dev/null 2>&1 || true
           gh release create social-preview-latest /tmp/social-release/* \
             --title "10 PUBBLICAZIONI PRONTE - 5 F1 + 5 REAL MEDIA PRO" \
-            --notes "10 grafiche statiche pronte con analisi pre-creazione, policy completa Instagram Feed/Reels e best practice Instagram Creators. Il sistema considera rischio di salto, tempo sul post, condivisioni Direct, visite profilo, azioni positive, diversificazione formati, trial Reels, primi 3 secondi, massima risoluzione, comprensione senza audio, diritti audio e follow-up commenti; non inventa Insights o orari. Run ${GITHUB_RUN_ID}."
+            --notes "10 grafiche statiche pronte con analisi pre-creazione, policy completa Instagram Feed/Reels e best practice Instagram Creators. Inclusi: diversificazione formati, trial Reels, primi 3 secondi, massima risoluzione, fruizione senza audio, diritti audio, richiesta diretta di feedback, divieto engagement bait, CTA autentiche e interazione con i commenti nei primi giorni. Run ${GITHUB_RUN_ID}."
 
       - name: Notify publication results
         uses: actions/github-script@v8
@@ -307,8 +326,8 @@ jobs:
               '**10 PUBBLICAZIONI PRONTE:** 5 F1 Immobiliare + 5 Real Media Pro.',
               '**ANALISI PRE-CREAZIONE:** target, obiettivo, messaggio, comparabili e dati disponibili.',
               '**INSTAGRAM FEED:** applicate previsioni su skip, tempo, azioni positive, Direct share, visite profilo e continuità di sessione.',
-              '**INSTAGRAM CREATORS:** applicate diversificazione formati, trial Reels, share-worthiness, hook entro 3 secondi, massima risoluzione, fruizione senza audio, diritti audio e risposta ai commenti.',
-              '**REELS:** policy completa 9:16, audio, area sicura, hook, sottotitoli, armonia e CTA registrata per i formati video futuri.',
+              '**INSTAGRAM CREATORS:** applicate diversificazione formati, trial Reels, share-worthiness, hook entro 3 secondi, massima risoluzione, fruizione senza audio e diritti audio.',
+              '**COMMUNITY:** feedback diretto via commenti/DM/Storie/canali/live/sondaggi quando utile; engagement bait vietato; CTA solo autentiche; interazione commenti nei primi giorni.',
               '**INSIGHTS:** se assenti, il sistema non inventa metriche o orari.',
               '',
               'Controllo + caption: https://josephsocialmedia2-spec.github.io/open-social-scheduler/monday-control.html',
