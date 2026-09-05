@@ -22,7 +22,46 @@ PROFILE_DIR = Path.home() / ".f1_chatgpt_chrome_profile"
 
 CHAT_URL = "https://chatgpt.com/g/g-6a9c210485488191b072eb694c2f114c-generatore-grafica-f1/c/6a9c2a0a-abdc-83eb-9bf4-3a4dbeb6f82f"
 GRAPHIC_SUFFIX = "l modello è già allegato qui in chat"
-REFERENCES = os.getenv("F1_CAPTION_REFERENCES", "").strip()
+
+DEFAULT_REFERENCES = """F1 Immobiliare
+Valutazione gratuita: https://www.agentpricing.com/j.malafronte
+Telefono: +39 371 370 8294
+Secondo telefono: +39 371 424 6300
+Email: f1immobiliaresusa@outlook.it"""
+REFERENCES = os.getenv("F1_CAPTION_REFERENCES", DEFAULT_REFERENCES).strip()
+
+F1_CAPTION_POLICY = """
+Le caption devono spiegare il lavoro concreto svolto da F1 Immobiliare. Non limitarti mai a dire che un immobile viene pubblicato online.
+
+PRINCIPI OBBLIGATORI:
+1. Spiega che prima di promuovere un immobile F1 studia immobile, concorrenza, mercato locale, fascia di prezzo, posizione, servizi, target e motivazioni d'acquisto.
+2. Quando pertinente cita attività concrete: fotografie curate, video e Reel, planimetrie leggibili, render, caroselli, contenuti social, annuncio e scheda completa, promozione territoriale, Google, Pinterest, gruppi locali, WhatsApp, database acquirenti.
+3. Fai capire che un annuncio non è una campagna: la strategia deve attirare l'acquirente corretto, comunicare i punti di forza, rispondere alle domande, differenziare l'immobile e trasformare interesse in visite.
+4. Quando pertinente parla della preparazione prima della pubblicità: ordine, luce, inquadrature, presentazione ambienti, criticità, documentazione, home staging e render.
+5. Per immobili da ristrutturare o da valorizzare, mostra il potenziale con render realistici, ipotesi distributive, arredo virtuale, prima/dopo e fasce indicative dei lavori, sempre con trasparenza sullo stato attuale.
+6. Spiega la promozione geolocalizzata: il messaggio va adattato a famiglie, coppie, investitori, seconde case o persone che vogliono trasferirsi nel territorio.
+7. Dopo la pubblicazione il lavoro continua: F1 controlla visualizzazioni, salvataggi, clic, richieste, contatti qualificati, visite, feedback e proposte. Se i risultati non arrivano, valuta prezzo, presentazione, comunicazione o distribuzione.
+8. Non inventare dati, risultati, numeri, clienti, visite o performance non forniti.
+9. Mantieni un tono professionale, concreto e comprensibile. Evita frasi vuote come 'massima visibilità', 'pubblicità a 360 gradi' o 'siamo i migliori'.
+10. Ogni caption deve essere coerente con la QUERY e con il comune o la tipologia immobiliare citata. Non deve sembrare un testo generico riciclato.
+
+STRUTTURA CONSIGLIATA:
+HOOK -> problema/desiderio -> cosa fa concretamente F1 -> perché serve -> CTA -> riferimenti -> hashtag.
+
+RUOTA NATURALMENTE TRA QUESTI 6 ANGOLI, scegliendo quello più coerente con la query e senza ripetere sempre lo stesso schema:
+A. Come promuoviamo il tuo immobile.
+B. Non basta pubblicare un annuncio.
+C. Preparazione prima della pubblicità.
+D. Promozione geolocalizzata e target corretto.
+E. Valorizzazione di immobili da ristrutturare.
+F. Controllo dei risultati dopo la pubblicazione.
+
+CTA PREFERITA:
+Invita a richiedere una valutazione gratuita tramite https://www.agentpricing.com/j.malafronte
+
+HASHTAG BASE, da adattare senza esagerare:
+#F1Immobiliare #VendereCasa #ValleDiSusa #MarketingImmobiliare #ValutazioneImmobiliare
+""".strip()
 
 
 def load_state():
@@ -193,7 +232,6 @@ def download_latest_graphic(driver, final_path):
             shutil.move(str(downloaded), str(final_path))
             return
 
-    # Fallback gratuito: salva direttamente l'immagine visualizzata come PNG.
     final_path.parent.mkdir(parents=True, exist_ok=True)
     img.screenshot(str(final_path))
 
@@ -207,12 +245,13 @@ def capture_latest_text(driver):
 
 
 def build_caption_prompt(query):
-    refs = REFERENCES or "Nessun riferimento aggiuntivo configurato."
     return (
-        "Crea ora una caption social professionale per F1 Immobiliare partendo dalla query seguente. "
-        "Restituisci esclusivamente la caption finale, senza spiegazioni e senza creare altre immagini.\n\n"
-        f"QUERY:\n{query}\n\n"
-        f"RIFERIMENTI OBBLIGATORI:\n{refs}"
+        "Crea una caption social finale per F1 Immobiliare.\n\n"
+        f"QUERY DI PARTENZA:\n{query}\n\n"
+        f"LINEE GUIDA OBBLIGATORIE:\n{F1_CAPTION_POLICY}\n\n"
+        f"RIFERIMENTI DA INSERIRE:\n{REFERENCES}\n\n"
+        "Regole finali: restituisci esclusivamente la caption pronta da pubblicare; non spiegare il ragionamento; "
+        "non creare immagini; non inventare dati; evita di ripetere meccanicamente la query; rendi il testo specifico, concreto e diverso dalle caption precedenti."
     )
 
 
@@ -261,14 +300,11 @@ def main():
         driver = make_driver()
         ensure_logged_in(driver)
 
-        # 1) Grafica: invia esattamente la query + frase richiesta.
         send_prompt(driver, f"{query}\n\n{GRAPHIC_SUFFIX}")
-        # L'utente ha richiesto un'attesa di 5 minuti prima di scaricare.
         time.sleep(300)
         wait_until_generation_finishes(driver, timeout=300)
         download_latest_graphic(driver, image_path)
 
-        # 2) Caption: usa la stessa sessione ChatGPT, senza API.
         send_prompt(driver, build_caption_prompt(query))
         wait_until_generation_finishes(driver, timeout=300)
         time.sleep(3)
