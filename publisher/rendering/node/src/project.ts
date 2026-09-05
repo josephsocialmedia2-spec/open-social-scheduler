@@ -1,5 +1,5 @@
 import {makeProject} from '@revideo/core';
-import f1Reel from './scenes/f1-reel';
+import f1Reel from './scenes/f1-reel.js';
 
 export default makeProject({
   name: 'f1-renderer-v2',
