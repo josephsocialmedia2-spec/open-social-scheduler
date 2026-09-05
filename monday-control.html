@@ -34,7 +34,10 @@
 const OWNER='josephsocialmedia2-spec';
 const REPO='open-social-scheduler';
 const RAW=`https://raw.githubusercontent.com/${OWNER}/${REPO}/main/`;
-const MANIFEST=RAW+'publisher/social-preview-latest.json';
+const API=`https://api.github.com/repos/${OWNER}/${REPO}`;
+const SAME_ORIGIN_MANIFEST=new URL('./publisher/social-preview-latest.json', window.location.href).href;
+const RAW_MANIFEST=RAW+'publisher/social-preview-latest.json';
+const API_MANIFEST=API+'/contents/publisher/social-preview-latest.json?ref=main';
 let allEntries=[];
 
 const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
@@ -115,19 +118,45 @@ function render(m){
   document.getElementById('releaseBtn').href=m.release_url||`https://github.com/${OWNER}/${REPO}/releases/tag/social-preview-latest`;
 }
 
-async function getJson(url){
-  const r=await fetch(withBust(url),{cache:'no-store',headers:{'Cache-Control':'no-cache'}});
-  if(!r.ok)throw new Error('HTTP '+r.status+' su '+url);
+async function fetchJsonDirect(url){
+  const r=await fetch(withBust(url),{cache:'no-store'});
+  if(!r.ok)throw new Error(`HTTP ${r.status}`);
   return r.json();
+}
+
+async function fetchManifestViaApi(){
+  const r=await fetch(withBust(API_MANIFEST),{
+    cache:'no-store',
+    headers:{'Accept':'application/vnd.github.raw+json'}
+  });
+  if(!r.ok)throw new Error(`GitHub API HTTP ${r.status}`);
+  return r.json();
+}
+
+async function loadManifest(){
+  const attempts=[];
+  for(const [label,fn] of [
+    ['GitHub Pages',()=>fetchJsonDirect(SAME_ORIGIN_MANIFEST)],
+    ['raw.githubusercontent.com',()=>fetchJsonDirect(RAW_MANIFEST)],
+    ['GitHub API',()=>fetchManifestViaApi()]
+  ]){
+    try{
+      const data=await fn();
+      if(!data || data.pipeline!=='social-preview-latest')throw new Error('manifest non valido');
+      return {data,source:label};
+    }catch(e){attempts.push(label+': '+e.message);}
+  }
+  throw new Error(attempts.join(' | '));
 }
 
 async function load(manual=false){
   const st=document.getElementById('status');
   st.className=''; st.textContent=manual?'Aggiornamento forzato in corso…':'Caricamento dati GitHub reali…';
   try{
-    const manifest=await getJson(MANIFEST);
+    const result=await loadManifest();
+    const manifest=result.data;
     render(manifest);
-    st.textContent=`PIPELINE COLLEGATA · ${manifest.week_start} → ${manifest.week_end} · ${manifest.entries?.length||0} file · aggiornato ${new Date(manifest.updated_at||Date.now()).toLocaleString('it-IT')} · cache bust ${new Date().getTime()}`;
+    st.textContent=`PIPELINE COLLEGATA VIA ${result.source.toUpperCase()} · ${manifest.week_start} → ${manifest.week_end} · ${manifest.entries?.length||0} file · aggiornato ${new Date(manifest.updated_at||Date.now()).toLocaleString('it-IT')} · cache disabilitata`;
   }catch(e){
     st.className='error';
     st.textContent='ERRORE NEL CARICAMENTO DELLA NUOVA PIPELINE: '+e.message;
