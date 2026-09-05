@@ -1,0 +1,16 @@
+{
+  "type": "static",
+  "format": "4:5",
+  "template": "f1_institutional_static_v2",
+  "content": {
+    "title": "Quanto vale davvero la tua casa?",
+    "subtitle": "Una valutazione professionale parte da comparabili, microzona e domanda reale.",
+    "cta": "RICHIEDI UNA VALUTAZIONE PROFESSIONALE"
+  },
+  "assets": {
+    "images": []
+  },
+  "output": {
+    "quality": 94
+  }
+}
