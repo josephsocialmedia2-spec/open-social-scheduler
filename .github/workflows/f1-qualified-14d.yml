@@ -38,7 +38,7 @@ jobs:
     timeout-minutes: 90
     env:
       F1_RENDERER_ENGINE: 'v2'
-      F1_RENDERER_V2_STRICT: '0'
+      F1_RENDERER_V2_STRICT: '1'
     steps:
       - name: Checkout
         uses: actions/checkout@v5
@@ -147,7 +147,9 @@ jobs:
           assert u.get('reuse')==0
           render=q.get('render_summary') or {}
           assert render.get('requested_engine')=='v2', render
-          assert render.get('renderer_v2',0)+render.get('legacy',0)==28, render
+          assert render.get('strict_v2') is True, render
+          assert render.get('renderer_v2')==28, render
+          assert render.get('legacy')==0, render
           r01=next(j for j in jobs if j['source_item_id']=='R01')
           assert r01['title']=='Siamo alla ricerca di immobili in Valle di Susa'
           assert 'siamo alla ricerca di immobili' in (r01['caption']+' '+r01['voiceover']).lower()
@@ -155,17 +157,32 @@ jobs:
           required={'comune','tipologia','mq','tempistica_vendita'}
           assert all(required <= set(j.get('lead_qualification_required_fields') or []) for j in jobs)
           for j in reels:
-            p=Path(j['media']); assert p.exists() and p.stat().st_size>100000
-            spec=j.get('render_spec') or {}
-            assert spec.get('width')==1080 and spec.get('height')==1920
-            assert spec.get('muted_view') is True
-            assert spec.get('unique_primary_visual_per_content') is True
+            p=Path(j['media'])
+            assert p.exists() and p.stat().st_size>100000
+            rv2=j.get('renderer_v2') or {}
+            assert rv2.get('engine')=='revideo', (j.get('id'),rv2)
+            assert rv2.get('fallback_used') is False, (j.get('id'),rv2)
+            gate=rv2.get('quality_gate') or {}
+            assert gate.get('passed') is True, (j.get('id'),gate)
+            checks=gate.get('checks') or []
+            assert checks, (j.get('id'),gate)
+            video=checks[0].get('video') or {}
+            assert int(video.get('width') or 0)==1080, (j.get('id'),video)
+            assert int(video.get('height') or 0)==1920, (j.get('id'),video)
           for j in cars:
             paths=[Path(x) for x in j['media']]
             assert 7<=len(paths)<=10 and all(p.exists() and p.stat().st_size>15000 for p in paths)
+            rv2=j.get('renderer_v2') or {}
+            assert rv2.get('engine')=='svg-resvg-sharp', (j.get('id'),rv2)
+            assert rv2.get('fallback_used') is False, (j.get('id'),rv2)
+            gate=rv2.get('quality_gate') or {}
+            assert gate.get('passed') is True, (j.get('id'),gate)
+            checks=gate.get('checks') or []
+            assert len(checks)==len(paths), (j.get('id'),len(checks),len(paths))
+            assert all(tuple(x.get('dimensions') or [])==(1080,1350) for x in checks), (j.get('id'),checks)
           assert Path('publisher/canva_generated/reels-latest.html').exists()
           assert Path('publisher/canva_generated/carousels-latest.html').exists()
-          print('VERIFIED: RENDERER V2 REQUESTED + 28 CONTENTS / 28 URLS / 28 DISTINCT PIXEL HASHES / 0 REUSE / TRUTHFUL COPY')
+          print('VERIFIED: RENDERER V2 STRICT 28/28, LEGACY 0, QUALITY GATES PASSED, ZERO VISUAL REUSE')
           PY
 
       - name: Build downloadable package
@@ -218,8 +235,8 @@ jobs:
           set -euxo pipefail
           gh release delete f1-qualified-14d-latest --yes --cleanup-tag >/dev/null 2>&1 || true
           gh release create f1-qualified-14d-latest /tmp/F1_QUALIFIED_SELLER_14_GIORNI.zip \
-            --title "F1 · 14 GIORNI · 28 VISUALI REALMENTE UNICI · VENDITORI QUALIFICATI" \
-            --notes "28 contenuti: 14 Reel + 14 caroselli. Renderer V2 attivo con fallback legacy di sicurezza. Verifica forte: 28 URL immagine diversi + 28 hash pixel diversi = zero riuso reale nel ciclo. Primo messaggio: SIAMO ALLA RICERCA DI IMMOBILI IN VALLE DI SUSA. Nessuna dichiarazione su clienti/acquirenti senza evidenza verificata. CTA: VALUTAZIONE con COMUNE, TIPOLOGIA, MQ e TEMPISTICA. Run ${GITHUB_RUN_ID}."
+            --title "F1 · 14 GIORNI · RENDERER V2 · VENDITORI QUALIFICATI" \
+            --notes "28 contenuti: 14 Reel + 14 caroselli. Renderer V2 strict verificato 28/28, legacy 0. 28 URL immagine diversi + 28 hash pixel diversi = zero riuso reale nel ciclo. Claim verificati e CTA di qualificazione proprietario. Run ${GITHUB_RUN_ID}."
 
       - name: Notify completion
         uses: actions/github-script@v8
@@ -227,11 +244,10 @@ jobs:
           script: |
             const title='[F1 QUALIFIED] 14 giorni · Renderer V2';
             const body=[
-              '@josephsocialmedia2-spec batch rigenerato e verificato con Renderer V2 richiesto.',
+              '@josephsocialmedia2-spec batch rigenerato e verificato.',
               '',
+              '**Renderer V2 strict: 28/28. Legacy: 0.**',
               '**28 contenuti = 28 URL + 28 hash immagine distinti. Riutilizzo: 0.**',
-              '**Primo messaggio:** SIAMO ALLA RICERCA DI IMMOBILI IN VALLE DI SUSA.',
-              '**Claim policy:** niente clienti/acquirenti inventati; serve evidenza verificata.',
               '**Lead goal:** valutazione professionale → proprietario qualificato → appuntamento → incarico.',
               '',
               'Release: https://github.com/' + context.repo.owner + '/' + context.repo.repo + '/releases/tag/f1-qualified-14d-latest',
