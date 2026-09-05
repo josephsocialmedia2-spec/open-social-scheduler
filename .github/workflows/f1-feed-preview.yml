@@ -1,0 +1,203 @@
+name: F1 Instagram-style Feed Preview
+
+on:
+  workflow_run:
+    workflows:
+      - F1 Qualified Seller - 14 Day Reels + Carousels
+    types: [completed]
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/f1-feed-preview.yml'
+      - 'f1-feed.html'
+
+permissions:
+  contents: write
+  actions: read
+
+concurrency:
+  group: f1-instagram-feed-preview
+  cancel-in-progress: true
+
+jobs:
+  build-feed:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      GH_TOKEN: ${{ github.token }}
+      FEED_TAG: f1-feed-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v5
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Resolve qualified-seller run
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ "${{ github.event_name }}" = "workflow_run" ]; then
+            RUN_ID='${{ github.event.workflow_run.id }}'
+          else
+            RUN_ID=$(gh api "repos/${GITHUB_REPOSITORY}/actions/workflows/f1-qualified-14d.yml/runs?status=success&per_page=20" --jq '.workflow_runs[0].id')
+          fi
+          test -n "$RUN_ID"
+          echo "QUALIFIED_RUN_ID=$RUN_ID" >> "$GITHUB_ENV"
+          echo "Using qualified run $RUN_ID"
+
+      - name: Download exact generated package
+        shell: bash
+        run: |
+          set -euxo pipefail
+          rm -rf /tmp/f1-feed-download /tmp/f1-feed-package /tmp/f1-feed-assets
+          mkdir -p /tmp/f1-feed-download /tmp/f1-feed-package /tmp/f1-feed-assets
+          gh run download "$QUALIFIED_RUN_ID" --repo "$GITHUB_REPOSITORY" --name F1-QUALIFIED-SELLER-14-DAYS --dir /tmp/f1-feed-download
+          PACKAGE=$(find /tmp/f1-feed-download -maxdepth 2 -type f -name '*.zip' | head -n1)
+          test -n "$PACKAGE"
+          unzip -q "$PACKAGE" -d /tmp/f1-feed-package
+          test -f /tmp/f1-feed-package/f1-qualified-14d/qualified_14d_queue.json
+
+      - name: Build exact feed assets and manifest
+        shell: bash
+        run: |
+          set -euxo pipefail
+          python - <<'PY'
+          import json, os, shutil, subprocess
+          from datetime import datetime
+          from pathlib import Path
+          from zoneinfo import ZoneInfo
+
+          root=Path('/tmp/f1-feed-package/f1-qualified-14d')
+          assets=Path('/tmp/f1-feed-assets')
+          q=json.load(open(root/'qualified_14d_queue.json',encoding='utf-8'))
+          repo=os.environ['GITHUB_REPOSITORY']
+          tag=os.environ['FEED_TAG']
+          entries=[]
+
+          for j in q.get('jobs',[]):
+              sid=str(j.get('source_item_id') or j.get('id') or 'CONTENT').upper()
+              fmt=str(j.get('format') or '').lower()
+              base={
+                  'id':j.get('id'),
+                  'source_item_id':sid,
+                  'format':fmt,
+                  'title':j.get('title') or sid,
+                  'caption':j.get('caption') or '',
+                  'cta':j.get('cta') or '',
+                  'scheduled_at':j.get('scheduled_at'),
+                  'content_date':j.get('content_date'),
+                  'engine':(j.get('renderer_v2') or {}).get('engine'),
+                  'fallback_used':bool((j.get('renderer_v2') or {}).get('fallback_used')),
+                  'quality_gate_passed':bool(((j.get('renderer_v2') or {}).get('quality_gate') or {}).get('passed')),
+              }
+              if fmt == 'reel':
+                  media=str(j.get('media') or '')
+                  src=root/'media'/Path(media).relative_to('publisher/media/generated/f1-qualified-14d')
+                  if not src.exists():
+                      raise SystemExit(f'Missing reel: {src}')
+                  video_name=f'{sid}.mp4'
+                  cover_name=f'{sid}-cover.jpg'
+                  shutil.copy2(src,assets/video_name)
+                  subprocess.run([
+                      'ffmpeg','-hide_banner','-loglevel','error','-y','-ss','1','-i',str(src),
+                      '-frames:v','1','-q:v','2',str(assets/cover_name)
+                  ],check=True)
+                  base['media_url']=f'https://github.com/{repo}/releases/download/{tag}/{video_name}'
+                  base['thumbnail_url']=f'https://github.com/{repo}/releases/download/{tag}/{cover_name}'
+                  base['slides']=[]
+              elif fmt == 'carousel':
+                  urls=[]
+                  media=j.get('media') or []
+                  for idx,item in enumerate(media,1):
+                      src=root/'media'/Path(str(item)).relative_to('publisher/media/generated/f1-qualified-14d')
+                      if not src.exists():
+                          raise SystemExit(f'Missing carousel slide: {src}')
+                      name=f'{sid}-slide-{idx:02d}.jpg'
+                      shutil.copy2(src,assets/name)
+                      urls.append(f'https://github.com/{repo}/releases/download/{tag}/{name}')
+                  if not urls:
+                      raise SystemExit(f'No carousel slides for {sid}')
+                  base['media_url']=None
+                  base['thumbnail_url']=urls[0]
+                  base['slides']=urls
+              else:
+                  continue
+              entries.append(base)
+
+          if len(entries) != 28:
+              raise SystemExit(f'Expected 28 feed entries, got {len(entries)}')
+          if sum(1 for x in entries if x['format']=='reel') != 14:
+              raise SystemExit('Expected 14 reels')
+          if sum(1 for x in entries if x['format']=='carousel') != 14:
+              raise SystemExit('Expected 14 carousels')
+          if not all(x['quality_gate_passed'] and not x['fallback_used'] for x in entries):
+              raise SystemExit('Renderer V2 quality/fallback contract not satisfied')
+
+          manifest={
+              'version':1,
+              'pipeline':'f1-instagram-feed-preview',
+              'brand':'F1 Immobiliare',
+              'generated_at':datetime.now(ZoneInfo('Europe/Rome')).isoformat(timespec='seconds'),
+              'source_run_id':int(os.environ['QUALIFIED_RUN_ID']),
+              'release_tag':tag,
+              'release_url':f'https://github.com/{repo}/releases/tag/{tag}',
+              'count':len(entries),
+              'reels':14,
+              'carousels':14,
+              'entries':entries,
+          }
+          Path('publisher/f1-feed-latest.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          print('FEED MANIFEST READY: 28 contents / 14 reels / 14 carousels')
+          PY
+
+      - name: Replace public feed release
+        shell: bash
+        run: |
+          set -euxo pipefail
+          gh release delete "$FEED_TAG" --yes --cleanup-tag >/dev/null 2>&1 || true
+          FILES=(/tmp/f1-feed-assets/*)
+          test ${#FILES[@]} -gt 0
+          gh release create "$FEED_TAG" "${FILES[@]}" \
+            --title "F1 · FEED INSTAGRAM · RENDERER V2" \
+            --notes "Anteprima visuale feed: 14 Reel + 14 caroselli, asset esatti prodotti dal Renderer V2. Run ${QUALIFIED_RUN_ID}."
+
+      - name: Persist feed manifest on main
+        shell: bash
+        run: |
+          set -euo pipefail
+          FILE='publisher/f1-feed-latest.json'
+          SHA=$(gh api "repos/${GITHUB_REPOSITORY}/contents/${FILE}?ref=main" --jq '.sha' 2>/dev/null || true)
+          python - "$FILE" "$SHA" <<'PY'
+          import base64,json,sys
+          file,sha=sys.argv[1],sys.argv[2]
+          payload={
+              'message':'Update F1 Instagram feed preview manifest',
+              'content':base64.b64encode(open(file,'rb').read()).decode(),
+              'branch':'main'
+          }
+          if sha: payload['sha']=sha
+          json.dump(payload,open('/tmp/feed-payload.json','w'))
+          PY
+          gh api "repos/${GITHUB_REPOSITORY}/contents/${FILE}" --method PUT --input /tmp/feed-payload.json >/dev/null
+
+      - name: Verify public feed assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, subprocess
+          m=json.load(open('publisher/f1-feed-latest.json',encoding='utf-8'))
+          assert m['count']==28 and m['reels']==14 and m['carousels']==14
+          for e in m['entries']:
+              targets=[e['thumbnail_url']]
+              if e['format']=='reel': targets.append(e['media_url'])
+              else: targets.extend(e['slides'])
+              for url in targets:
+                  r=subprocess.run(['curl','-fsIL','--retry','3','--retry-delay','2',url],stdout=subprocess.DEVNULL)
+                  if r.returncode != 0:
+                      raise SystemExit('Public asset unreachable: '+url)
+          print('PUBLIC FEED VERIFIED: all thumbnails, videos and slides reachable')
+          PY
