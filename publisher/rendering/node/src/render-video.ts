@@ -25,11 +25,19 @@ async function main() {
     variables: {spec},
     settings: {
       outFile,
+      workers: 1,
       logProgress: true,
       projectSettings: {
         exporter: {
           name: '@revideo/core/wasm',
         },
+      },
+      ffmpeg: {
+        ffmpegLogLevel: 'error',
+        ffmpegPath: 'ffmpeg',
+      },
+      puppeteer: {
+        args: ['--no-sandbox', '--disable-setuid-sandbox'],
       },
     },
   });
