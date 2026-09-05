@@ -10570,9 +10570,101 @@
       "visual_count": 1,
       "fresh_visual_count": 1,
       "reused_visual_count": 0
+    },
+    {
+      "id": "f1-feed-R01",
+      "client_id": "f1-immobiliare",
+      "created_by": "buffer-feed-production",
+      "source_item_id": "R01",
+      "source_feed_id": "f1-qualified-2026-08-23-r01",
+      "source_feed_run_id": null,
+      "title": "Siamo alla ricerca di immobili in Valle di Susa",
+      "caption": "SIAMO ALLA RICERCA DI IMMOBILI IN VALLE DI SUSA.\n\nSe stai pensando di vendere casa, il primo passo non è pubblicare un annuncio con un prezzo scelto a sensazione. È capire quanto può valere realmente il tuo immobile e quale strategia può portarlo sul mercato nel modo corretto.\n\nF1 Immobiliare parte da una VALUTAZIONE PROFESSIONALE A 3 LIVELLI: valore minimo, valore centrale e valore massimo sostenibile. Analizziamo microzona, caratteristiche dell'immobile, concorrenza e target potenziale. Solo dopo costruiamo il Piano Marketing F1: valorizzazione degli ambienti, fotografie professionali, Reel e video verticali, copy dell'annuncio, grandi portali, sito F1, campagne Facebook/Instagram/Google e retargeting.\n\nScrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere. F1 Immobiliare · 371 370 8294.\n\n#F1Immobiliare #ValleDiSusa #VendereCasa #ValutazioneImmobiliare",
+      "cta": "Scrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere.",
+      "format": "reel",
+      "media": "publisher/media/generated/buffer-feed-production/R01.mp4",
+      "scheduled_at": "2026-09-05T18:30:00+02:00",
+      "platforms": [
+        {
+          "platform": "facebook",
+          "integration_id": "buffer"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "buffer"
+        },
+        {
+          "platform": "linkedin",
+          "integration_id": "buffer"
+        }
+      ],
+      "status": "scheduled_in_buffer",
+      "buffer_posts": [
+        {
+          "service": "facebook",
+          "channel_id": "6a9afff8065799be468ade7a",
+          "post_id": "6a9c190af97391de04b55beb",
+          "buffer_status": "scheduled",
+          "due_at": "2026-09-05T16:30:00.000Z",
+          "created_at": "2026-09-05T13:28:42+00:00"
+        },
+        {
+          "service": "instagram",
+          "channel_id": "6a9b0034065799be468adfe4",
+          "post_id": "6a9c190b0ca93dff239a27af",
+          "buffer_status": "scheduled",
+          "due_at": "2026-09-05T16:30:00.000Z",
+          "created_at": "2026-09-05T13:28:43+00:00"
+        },
+        {
+          "service": "linkedin",
+          "channel_id": "6a9b0062065799be468ae0b1",
+          "post_id": "6a9c190b85ccb3a22c01bd9e",
+          "buffer_status": "scheduled",
+          "due_at": "2026-09-05T16:30:00.000Z",
+          "created_at": "2026-09-05T13:28:44+00:00"
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "facebook",
+        "instagram",
+        "linkedin"
+      ],
+      "approval_required": false,
+      "manual_approval_required": false,
+      "autonomous_publish": true,
+      "production_source": "f1-feed-latest.json",
+      "quality_gate_passed": true,
+      "video_made_with_ai": true,
+      "buffer_organization_id": "6a9aff970f059f084a2c8a6d",
+      "buffer_channels": {
+        "facebook": {
+          "id": "6a9afff8065799be468ade7a",
+          "name": "F1immobiliare",
+          "service": "facebook"
+        },
+        "instagram": {
+          "id": "6a9b0034065799be468adfe4",
+          "name": "joseph_malafronte",
+          "service": "instagram"
+        },
+        "linkedin": {
+          "id": "6a9b0062065799be468ae0b1",
+          "name": "Joseph Malafronte",
+          "service": "linkedin"
+        }
+      },
+      "cloudinary_assets": [
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/video/upload/v1788614921/f1-buffer/f1-feed-R01/video.mp4",
+          "public_id": "f1-buffer/f1-feed-R01/video",
+          "resource_type": "video",
+          "bytes": "4364512"
+        }
+      ]
     }
   ],
-  "updated_at": "2026-09-05T03:35:49+00:00",
+  "updated_at": "2026-09-05T13:28:44+00:00",
   "updated_by": "Approved 5+5 publication renderer",
   "current_cycle": "2026-09-05T04:00",
   "history_days": 14,
