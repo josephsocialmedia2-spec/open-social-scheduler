@@ -57,7 +57,6 @@ jobs:
           data=json.load(open('/tmp/runs.json',encoding='utf-8'))
           for r in data.get('workflow_runs',[]):
               created=datetime.fromisoformat(str(r.get('created_at')).replace('Z','+00:00'))
-              # 33942244608 is the first run produced by the institutional-v2 renderer.
               if created >= start and int(r['id']) >= 33942244608:
                   print(r['id'])
           PY
@@ -118,7 +117,6 @@ jobs:
                   content_date,cycle_hour,basename=m.groups()
                   media='publisher/media/generated/'+rel
                   job=by_media.get(media) or by_name.get(basename) or {}
-                  # Critical filter: never expose pre-brand/legacy graphics again.
                   if job.get('visual_compliance') != 'F1_LIGHT_INSTITUTIONAL_V2' or job.get('institutional_render_v2') is not True:
                       continue
                   if not job.get('service_id'):
@@ -163,7 +161,7 @@ jobs:
           automatic='POLICY HOLD / DRY RUN ONLY' not in hold
 
           manifest={
-              'version':'2026-09-05.4',
+              'version':'2026-09-05.5',
               'pipeline':'social-preview-latest',
               'brand':'F1 Immobiliare',
               'week_id':week_id,
@@ -192,9 +190,22 @@ jobs:
           TAG=$(python -c "import json;print(json.load(open('/tmp/week-meta.json'))['tag'])")
           TITLE=$(python -c "import json;print(json.load(open('/tmp/week-meta.json'))['title'])")
           gh release view "$TAG" >/dev/null 2>&1 || gh release create "$TAG" --title "$TITLE" --notes "Solo anteprime F1 conformi al renderer istituzionale v2. Legacy escluse."
+
+          # Delete every previously uploaded release asset before uploading the clean
+          # institutional set. This removes legacy JPGs from the visible GitHub release,
+          # not only from monday-control.html.
+          RELEASE_ID=$(gh api "repos/${GITHUB_REPOSITORY}/releases/tags/${TAG}" --jq '.id')
+          gh api "repos/${GITHUB_REPOSITORY}/releases/${RELEASE_ID}/assets?per_page=100" --jq '.[].id' > /tmp/old-release-assets.txt || true
+          while IFS= read -r ASSET_ID; do
+            [ -n "$ASSET_ID" ] || continue
+            gh api --method DELETE "repos/${GITHUB_REPOSITORY}/releases/assets/${ASSET_ID}"
+          done < /tmp/old-release-assets.txt
+
           shopt -s nullglob
           FILES=(/tmp/f1-week-upload/*)
-          if [ ${#FILES[@]} -gt 0 ]; then gh release upload "$TAG" "${FILES[@]}" --clobber; fi
+          if [ ${#FILES[@]} -gt 0 ]; then
+            gh release upload "$TAG" "${FILES[@]}"
+          fi
 
       - name: Persist weekly JSON manifest
         shell: bash
