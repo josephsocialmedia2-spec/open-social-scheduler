@@ -1,0 +1,17 @@
+{
+  "type": "carousel",
+  "format": "4:5",
+  "template": "f1_carousel_v2",
+  "content": {
+    "title": "Come prepariamo la vendita",
+    "cta": "RICHIEDI IL PIANO DI VENDITA",
+    "slides": [
+      {"title": "1. Valutazione professionale", "subtitle": "Dati, comparabili, microzona e domanda reale."},
+      {"title": "2. Piano di marketing", "subtitle": "Portali, sito, social, banca dati e attività territoriale."},
+      {"title": "3. Contatti qualificati", "subtitle": "Gestione delle richieste e percorso commerciale tracciato."},
+      {"title": "4. Strategia fino al rogito", "subtitle": "Aggiornamenti, negoziazione e coordinamento della vendita."}
+    ]
+  },
+  "assets": {"images": []},
+  "output": {"quality": 94}
+}
