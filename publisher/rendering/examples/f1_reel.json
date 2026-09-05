@@ -1,0 +1,18 @@
+{
+  "type": "reel",
+  "format": "9:16",
+  "template": "f1_reel_v2",
+  "content": {
+    "title": "Non vendere a sensazione",
+    "subtitle": "Prima i dati. Poi la strategia. Poi la vendita.",
+    "cta": "PARLA CON F1 IMMOBILIARE",
+    "duration_s": 6
+  },
+  "assets": {
+    "images": []
+  },
+  "captions": {
+    "enabled": false,
+    "items": []
+  }
+}
