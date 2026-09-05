@@ -16,11 +16,13 @@ try:
     from .adapters.pillow_fallback_adapter import PillowFallbackAdapter
     from .adapters.revideo_adapter import RevideoAdapter
     from .adapters.static_svg_adapter import StaticSvgAdapter
+    from .visual_compliance import visual_compliance_gate
 except ImportError:
     from adapters.audio_adapter import AudioAdapter
     from adapters.pillow_fallback_adapter import PillowFallbackAdapter
     from adapters.revideo_adapter import RevideoAdapter
     from adapters.static_svg_adapter import StaticSvgAdapter
+    from visual_compliance import visual_compliance_gate
 
 ROOT = Path(__file__).resolve().parents[2]
 STATIC_TYPES = {"static", "photo", "carousel"}
@@ -152,6 +154,7 @@ def generate_content(
         engine = fallback.name
         fallback_used = True
     gate = quality_gate(paths, spec)
+    visual_gate = visual_compliance_gate(paths, spec)
     return {
         "status": "RENDERER_V2_OK",
         "engine": engine,
@@ -163,6 +166,7 @@ def generate_content(
         "outputs": [str(path) for path in paths],
         "audio": audio_info,
         "quality_gate": gate,
+        "visual_compliance": visual_gate,
     }
 
 
