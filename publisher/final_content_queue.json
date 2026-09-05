@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "pipeline": "f1-final-assets",
+  "brand": "F1 Immobiliare",
+  "asset_policy": "immutable-final-layout",
+  "platforms": ["facebook", "instagram", "linkedin"],
+  "jobs": []
+}
