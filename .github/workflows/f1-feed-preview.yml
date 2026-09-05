@@ -81,81 +81,37 @@ jobs:
           repo=os.environ['GITHUB_REPOSITORY']
           tag=os.environ['FEED_TAG']
           entries=[]
-
           for j in q.get('jobs',[]):
               sid=str(j.get('source_item_id') or j.get('id') or 'CONTENT').upper()
               fmt=str(j.get('format') or '').lower()
-              base={
-                  'id':j.get('id'),
-                  'source_item_id':sid,
-                  'format':fmt,
-                  'title':j.get('title') or sid,
-                  'caption':j.get('caption') or '',
-                  'cta':j.get('cta') or '',
-                  'scheduled_at':j.get('scheduled_at'),
-                  'content_date':j.get('content_date'),
-                  'engine':(j.get('renderer_v2') or {}).get('engine'),
-                  'fallback_used':bool((j.get('renderer_v2') or {}).get('fallback_used')),
-                  'quality_gate_passed':bool(((j.get('renderer_v2') or {}).get('quality_gate') or {}).get('passed')),
-              }
+              base={'id':j.get('id'),'source_item_id':sid,'format':fmt,'title':j.get('title') or sid,'caption':j.get('caption') or '','cta':j.get('cta') or '','scheduled_at':j.get('scheduled_at'),'content_date':j.get('content_date'),'engine':(j.get('renderer_v2') or {}).get('engine'),'fallback_used':bool((j.get('renderer_v2') or {}).get('fallback_used')),'quality_gate_passed':bool(((j.get('renderer_v2') or {}).get('quality_gate') or {}).get('passed'))}
               if fmt == 'reel':
                   media=str(j.get('media') or '')
                   src=root/'media'/Path(media).relative_to('publisher/media/generated/f1-qualified-14d')
-                  if not src.exists():
-                      raise SystemExit(f'Missing reel: {src}')
-                  video_name=f'{sid}.mp4'
-                  cover_name=f'{sid}-cover.jpg'
+                  if not src.exists(): raise SystemExit(f'Missing reel: {src}')
+                  video_name=f'{sid}.mp4'; cover_name=f'{sid}-cover.jpg'
                   shutil.copy2(src,assets/video_name)
-                  subprocess.run([
-                      'ffmpeg','-hide_banner','-loglevel','error','-y','-ss','1','-i',str(src),
-                      '-frames:v','1','-q:v','2',str(assets/cover_name)
-                  ],check=True)
+                  subprocess.run(['ffmpeg','-hide_banner','-loglevel','error','-y','-ss','1','-i',str(src),'-frames:v','1','-q:v','2',str(assets/cover_name)],check=True)
                   base['media_url']=f'https://github.com/{repo}/releases/download/{tag}/{video_name}'
                   base['thumbnail_url']=f'https://github.com/{repo}/releases/download/{tag}/{cover_name}'
                   base['slides']=[]
               elif fmt == 'carousel':
                   urls=[]
-                  media=j.get('media') or []
-                  for idx,item in enumerate(media,1):
+                  for idx,item in enumerate(j.get('media') or [],1):
                       src=root/'media'/Path(str(item)).relative_to('publisher/media/generated/f1-qualified-14d')
-                      if not src.exists():
-                          raise SystemExit(f'Missing carousel slide: {src}')
-                      name=f'{sid}-slide-{idx:02d}.jpg'
-                      shutil.copy2(src,assets/name)
-                      urls.append(f'https://github.com/{repo}/releases/download/{tag}/{name}')
-                  if not urls:
-                      raise SystemExit(f'No carousel slides for {sid}')
-                  base['media_url']=None
-                  base['thumbnail_url']=urls[0]
-                  base['slides']=urls
-              else:
-                  continue
+                      if not src.exists(): raise SystemExit(f'Missing carousel slide: {src}')
+                      name=f'{sid}-slide-{idx:02d}.jpg'; shutil.copy2(src,assets/name); urls.append(f'https://github.com/{repo}/releases/download/{tag}/{name}')
+                  if not urls: raise SystemExit(f'No carousel slides for {sid}')
+                  base['media_url']=None; base['thumbnail_url']=urls[0]; base['slides']=urls
+              else: continue
               entries.append(base)
-
-          if len(entries) != 28:
-              raise SystemExit(f'Expected 28 feed entries, got {len(entries)}')
-          if sum(1 for x in entries if x['format']=='reel') != 14:
-              raise SystemExit('Expected 14 reels')
-          if sum(1 for x in entries if x['format']=='carousel') != 14:
-              raise SystemExit('Expected 14 carousels')
-          if not all(x['quality_gate_passed'] and not x['fallback_used'] for x in entries):
-              raise SystemExit('Renderer V2 quality/fallback contract not satisfied')
-
-          manifest={
-              'version':1,
-              'pipeline':'f1-instagram-feed-preview',
-              'brand':'F1 Immobiliare',
-              'generated_at':datetime.now(ZoneInfo('Europe/Rome')).isoformat(timespec='seconds'),
-              'source_run_id':int(os.environ['QUALIFIED_RUN_ID']),
-              'release_tag':tag,
-              'release_url':f'https://github.com/{repo}/releases/tag/{tag}',
-              'count':len(entries),
-              'reels':14,
-              'carousels':14,
-              'entries':entries,
-          }
+          if len(entries) != 28: raise SystemExit(f'Expected 28 feed entries, got {len(entries)}')
+          if sum(1 for x in entries if x['format']=='reel') != 14: raise SystemExit('Expected 14 reels')
+          if sum(1 for x in entries if x['format']=='carousel') != 14: raise SystemExit('Expected 14 carousels')
+          if not all(x['quality_gate_passed'] and not x['fallback_used'] for x in entries): raise SystemExit('Production quality/fallback contract not satisfied')
+          manifest={'version':1,'pipeline':'f1-instagram-production-feed','brand':'F1 Immobiliare','generated_at':datetime.now(ZoneInfo('Europe/Rome')).isoformat(timespec='seconds'),'source_run_id':int(os.environ['QUALIFIED_RUN_ID']),'release_tag':tag,'release_url':f'https://github.com/{repo}/releases/tag/{tag}','count':len(entries),'reels':14,'carousels':14,'entries':entries}
           Path('publisher/f1-feed-latest.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-          print('FEED MANIFEST READY: 28 contents / 14 reels / 14 carousels')
+          print('PRODUCTION FEED MANIFEST READY: 28 contents / 14 reels / 14 carousels')
           PY
 
       - name: Replace public feed release
@@ -166,8 +122,8 @@ jobs:
           FILES=(/tmp/f1-feed-assets/*)
           test ${#FILES[@]} -gt 0
           gh release create "$FEED_TAG" "${FILES[@]}" \
-            --title "F1 · FEED INSTAGRAM · RENDERER V2" \
-            --notes "Anteprima visuale feed: 14 Reel + 14 caroselli, asset esatti prodotti dal Renderer V2. Run ${QUALIFIED_RUN_ID}."
+            --title "F1 · FEED INSTAGRAM · PRODUZIONE" \
+            --notes "Feed F1 corrente: 14 Reel + 14 caroselli, asset esatti prodotti dalla pipeline di produzione e verificati dal Golden Master."
 
       - name: Persist feed manifest on main
         shell: bash
@@ -178,11 +134,7 @@ jobs:
           python - "$FILE" "$SHA" <<'PY'
           import base64,json,sys
           file,sha=sys.argv[1],sys.argv[2]
-          payload={
-              'message':'Update F1 Instagram feed preview manifest',
-              'content':base64.b64encode(open(file,'rb').read()).decode(),
-              'branch':'main'
-          }
+          payload={'message':'Update F1 production feed manifest','content':base64.b64encode(open(file,'rb').read()).decode(),'branch':'main'}
           if sha: payload['sha']=sha
           json.dump(payload,open('/tmp/feed-payload.json','w'))
           PY
@@ -202,7 +154,6 @@ jobs:
               else: targets.extend(e['slides'])
               for url in targets:
                   r=subprocess.run(['curl','-fsIL','--retry','3','--retry-delay','2',url],stdout=subprocess.DEVNULL)
-                  if r.returncode != 0:
-                      raise SystemExit('Public asset unreachable: '+url)
-          print('PUBLIC FEED VERIFIED: all thumbnails, videos and slides reachable')
+                  if r.returncode != 0: raise SystemExit('Public asset unreachable: '+url)
+          print('PUBLIC PRODUCTION FEED VERIFIED: all thumbnails, videos and slides reachable')
           PY
