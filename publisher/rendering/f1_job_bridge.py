@@ -5,7 +5,7 @@ from pathlib import Path
 from typing import Any
 
 
-GOLDEN_MASTER_VERSION = "F1_GOLDEN_MASTER_FEED_V4"
+GOLDEN_MASTER_VERSION = "F1_REFERENCE_FEED_V5"
 
 F1_BRAND = {
     "name": "F1 IMMOBILIARE",
@@ -36,6 +36,9 @@ def _clean_slide(value: Any) -> dict[str, str]:
 
 
 def _family(job: dict[str, Any]) -> str:
+    explicit = str(job.get("visual_family") or "").strip().lower()
+    if explicit in {"property", "recruiting", "institutional"}:
+        return explicit
     haystack = " ".join(
         str(job.get(key) or "")
         for key in ("title", "caption", "main_message", "visual_theme", "target_public")
@@ -47,32 +50,36 @@ def _family(job: dict[str, Any]) -> str:
     property_terms = (
         "alloggio", "appartamento", "villa", "bilocale", "trilocale", "quadrilocale",
         "salone", "balcone", "terrazzo", "capannone", "locali commerciali", "in vendita",
-        "camera", "bagno", "mq", "metr", "planimetr", "distribuzione",
+        "camera", "bagno", "mq", "metr", "planimetr", "distribuzione", "moncalieri",
     )
     if any(term in haystack for term in recruiting):
         return "recruiting"
-    if any(term in haystack for term in property_terms) and str(job.get("lead_goal") or "") != "qualified_seller":
+    if any(term in haystack for term in property_terms):
         return "property"
     return "institutional"
 
 
 def _visual_variant(source_item_id: str, fmt: str, family: str) -> str:
-    """Choose only layouts belonging to the locked Golden Master family."""
     match = re.search(r"(\d+)", source_item_id or "")
     number = int(match.group(1)) if match else 1
     if family == "recruiting":
-        variants = ("recruit_split", "recruit_portrait")
+        variants = ("recruit_portrait", "recruit_split", "recruit_portrait")
     elif family == "property":
-        variants = ("property_split", "property_photo")
+        variants = ("property_listing", "property_feature", "property_location", "property_plan")
     else:
-        variants = ("institutional_split", "institutional_photo", "institutional_editorial")
+        variants = ("institutional_split", "institutional_photo", "institutional_service")
     offset = 0 if fmt == "reel" else 1
     return variants[(number - 1 + offset) % len(variants)]
 
 
-def _proofs(job: dict[str, Any]) -> list[str]:
+def _proofs(job: dict[str, Any], family: str) -> list[str]:
     keywords = [str(x).strip() for x in list(job.get("topic_keywords") or []) if str(x).strip()]
-    defaults = ["METODO F1", "TERRITORIO", "STRATEGIA"]
+    if family == "property":
+        defaults = ["AMBIENTI LUMINOSI", "ZONA COMODA E SERVITA", "SPAZI BEN DISTRIBUITI"]
+    elif family == "recruiting":
+        defaults = ["FORMAZIONE INTERNA", "TERRITORIO ASSEGNATO", "PERCORSO DI CRESCITA"]
+    else:
+        defaults = ["METODO F1", "TERRITORIO", "STRATEGIA"]
     values = keywords[:3] or defaults
     while len(values) < 3:
         values.append(defaults[len(values)])
@@ -80,14 +87,17 @@ def _proofs(job: dict[str, Any]) -> list[str]:
 
 
 def _first_cover_title(slides: list[dict[str, str]], title: str) -> str:
-    raw = str(slides[0].get("title") if slides else title).strip()
-    if not raw:
-        raw = title
+    raw = str(slides[0].get("title") if slides else title).strip() or title
     words = raw.replace("\n", " ").split()
-    if len(words) <= 8:
-        return raw
-    # The Golden Master requires covers readable at grid size: never dump a long headline into the tile.
-    return " ".join(words[:8])
+    return raw if len(words) <= 7 else " ".join(words[:7])
+
+
+def _short_cta(family: str) -> str:
+    if family == "recruiting":
+        return "CANDIDATI ORA"
+    if family == "property":
+        return "PRENOTA LA TUA VISITA"
+    return "SCRIVI VALUTAZIONE"
 
 
 def job_to_content_spec(job: dict[str, Any], source_image: str | Path) -> dict[str, Any]:
@@ -107,7 +117,7 @@ def job_to_content_spec(job: dict[str, Any], source_image: str | Path) -> dict[s
     return {
         "type": "reel" if fmt == "reel" else "carousel",
         "format": "9:16" if fmt == "reel" else "4:5",
-        "template": "f1_golden_master_reel_v4" if fmt == "reel" else "f1_golden_master_carousel_v4",
+        "template": "f1_reference_feed_reel_v5" if fmt == "reel" else "f1_reference_feed_carousel_v5",
         "brand": dict(F1_BRAND),
         "content": {
             "title": title,
@@ -115,14 +125,15 @@ def job_to_content_spec(job: dict[str, Any], source_image: str | Path) -> dict[s
             "subtitle": subtitle,
             "body": str(job.get("caption") or ""),
             "cta": cta,
-            "short_cta": "SCRIVI VALUTAZIONE",
+            "short_cta": _short_cta(family),
             "duration_s": float(job.get("reel_duration_seconds") or 28) if fmt == "reel" else 1,
             "slides": slides,
-            "proofs": _proofs(job),
+            "proofs": _proofs(job, family),
+            "price": str(job.get("price") or ""),
+            "location": str(job.get("location") or job.get("comune") or ""),
+            "features": [str(x) for x in list(job.get("features") or [])[:6]],
         },
-        "assets": {
-            "images": [str(source_image)],
-        },
+        "assets": {"images": [str(source_image)]},
         "audio": {
             "voiceover_text": str(job.get("voiceover") or ""),
             "rights": str(job.get("audio_rights") or ""),
@@ -144,10 +155,11 @@ def job_to_content_spec(job: dict[str, Any], source_image: str | Path) -> dict[s
             "locked_template": True,
             "feed_first": True,
             "feed_safe_square_px": 1080,
-            "headline_max_words": 8,
+            "headline_max_words": 7,
             "palette_locked": True,
             "logo_position": "top_left",
             "cta_position": "lower_panel",
+            "reference_layout": "instagram_f1_reference_2026_09_05",
         },
-        "output": {"quality": 94},
+        "output": {"quality": 95},
     }
