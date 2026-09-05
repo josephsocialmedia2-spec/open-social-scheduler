@@ -35,6 +35,11 @@ jobs:
           ref: main
           fetch-depth: 0
 
+      - name: Install feed media dependency
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+
       - name: Resolve qualified-seller run
         shell: bash
         run: |
