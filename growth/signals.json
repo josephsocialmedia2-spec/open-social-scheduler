@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-04T15:02:38+00:00",
+  "updated_at": "2026-09-05T09:15:08+00:00",
   "signals": [
     {
       "id": "FBS-64D8E3A2C4",
@@ -85,6 +85,114 @@
       "source_query": "site:facebook.com/groups \"Oulx\" \"vendo compro\"",
       "status": "NEW",
       "discovered_at": "2026-09-04T14:55:03+00:00"
+    },
+    {
+      "id": "FBS-187DDCA92F",
+      "brand": "f1-immobiliare",
+      "territory": "Avigliana",
+      "group_url": "https://www.facebook.com/groups/1464381056905859/",
+      "source_url": "https://www.facebook.com/groups/1464381056905859/posts/28361649843418949/",
+      "title": "bacheca annunci Avigliana Almese Caselette | **Val Sangone ...",
+      "snippet": "Jul 22, 2026 · **Val Sangone Villetta **con giardino **GIAVENO (TO)** proponiamo in vendita graziosa villetta indipendente su 4 lati, disposta su più livelli. La proprietà è composta al piano terreno dalla Taverna...",
+      "source_query": "site:facebook.com/groups \"Avigliana\" \"bacheca annunci\"",
+      "status": "NEW",
+      "discovered_at": "2026-09-05T09:06:57+00:00"
+    },
+    {
+      "id": "FBS-0EE1B368E9",
+      "brand": "f1-immobiliare",
+      "territory": "Almese",
+      "group_url": "https://www.facebook.com/groups/307179086293602/",
+      "source_url": "https://www.facebook.com/groups/307179086293602/permalink/2788167261528093/",
+      "title": "Vendo, compro, Val di Susa ( Avigliana/ Almese / Ferriera ...",
+      "snippet": "🏡SEI ALLA RICERCA DI UNA SOLUZIONE PRONTA DA VIVERE?? ABBIAMO QUELLO CHE FA PER TE!! 📍 GIVOLETTO Incantevole appartamento bi livello, impeccabile e dotato di ogni confort frutto di una completa ristrutturazione di alto livello, caratterizzato da uno stile moderno e ricercato con cura maniacale del dettaglio, pronto per essere abitato! 🏠 costruzione recente 📐 130 mq 🍽️ cucina ...",
+      "source_query": "site:facebook.com/groups \"Almese\" \"vendo compro\"",
+      "status": "NEW",
+      "discovered_at": "2026-09-05T09:07:11+00:00"
+    },
+    {
+      "id": "FBS-24F799A92E",
+      "brand": "f1-immobiliare",
+      "territory": "Almese",
+      "group_url": "https://www.facebook.com/groups/307179086293602/",
+      "source_url": "https://www.facebook.com/groups/307179086293602/permalink/2883844155293736/",
+      "title": "Vendo, compro, Val di Susa ( Avigliana/ Almese / Ferriera ...",
+      "snippet": "NUOVA ACQUISIZIONE APPARTAMENTO IN CASA INDIPENDENTE AL PRIMO PIANO 75 Mq. La Rent Host Valsusa propone. Una soluzione abitativa stabile, generosa negli spazi e pensata per garantire il massimo comfort a una famiglia vicina alla stazione del treno. 📍 Location: Bussoleno (TO) 🔑 Locazione residenziale 4+4 | Solo referenziati Perché è la soluzione ideale: 📐 75 mq ben distribuiti: Ampio ...",
+      "source_query": "site:facebook.com/groups \"Almese\" \"vendo compro\"",
+      "status": "NEW",
+      "discovered_at": "2026-09-05T09:07:11+00:00"
+    },
+    {
+      "id": "FBS-5543DADB2F",
+      "brand": "f1-immobiliare",
+      "territory": "Almese",
+      "group_url": "https://www.facebook.com/groups/1612274875481626/",
+      "source_url": "https://www.facebook.com/groups/1612274875481626/posts/37248194441462884/",
+      "title": "Cerco appartamento/ a in vendita sito tra Alpignano, Caselette ...",
+      "snippet": "OCR: Cerco appartamento/ a in vendita sito tra Alpignano, Caselette, Almese, Brione, Avigliana, pianezza o dintorni. Budget sotto i 100000°. Camere 2.",
+      "source_query": "site:facebook.com/groups \"Almese\" \"cerco affitto\"",
+      "status": "NEW",
+      "discovered_at": "2026-09-05T09:07:17+00:00"
+    },
+    {
+      "id": "FBS-5C1E59DFCE",
+      "brand": "f1-immobiliare",
+      "territory": "Collegno",
+      "group_url": "https://www.facebook.com/groups/1120224991365149/",
+      "source_url": "https://www.facebook.com/groups/1120224991365149/posts/9098536376867264/",
+      "title": "Vendo compro ( Rivoli/ Collegno/ Villarbasse/ Pianezza ...",
+      "snippet": "Vendo compro ( Rivoli/ Collegno/ Villarbasse/ Pianezza/ Alpignano/ Grugliasc 6.8K Members Join group Kolia Cassin Vendo compro ( Rivoli/ Collegno/ Villarbasse/ Pianezza/ Alpignano/ Grugliasc Feb 19 Ad Almese c'è una bella realtà gestita da persone veramente speciali. Sono maestri ed educatori che si sono raccolti intorno a questo progetto educativo dove portano avanti una Casa ...",
+      "source_query": "site:facebook.com/groups \"Collegno\" \"vendo compro\"",
+      "status": "NEW",
+      "discovered_at": "2026-09-05T09:09:10+00:00"
+    },
+    {
+      "id": "FBS-D441638557",
+      "brand": "f1-immobiliare",
+      "territory": "Grugliasco",
+      "group_url": "https://www.facebook.com/groups/875843275850090/",
+      "source_url": "https://www.facebook.com/groups/875843275850090/posts/7438255319608820/",
+      "title": "Sei di Grugliasco se... | Buonasera cerco in affitto in ...",
+      "snippet": "Buonasera cerco in affitto in Grugliasco bilocale per due ragazzi che iniziano il primo anno di Agraria. Chi avesse disponibilità mi può contattare grazie.",
+      "source_query": "site:facebook.com/groups \"Grugliasco\" \"cerco affitto\"",
+      "status": "NEW",
+      "discovered_at": "2026-09-05T09:09:44+00:00"
+    },
+    {
+      "id": "FBS-A513AD746F",
+      "brand": "f1-immobiliare",
+      "territory": "Giaveno",
+      "group_url": "https://www.facebook.com/groups/seidigiaveno/",
+      "source_url": "https://www.facebook.com/groups/seidigiaveno/permalink/26750649781303897/",
+      "title": "SEI DI GIAVENO SE... | Salve cerco una casa economica da ...",
+      "snippet": "Salve cerco una casa economica da acquistare con formula affitto a riscatto con anticipo, senza agente intermediario, max €10000, da ristrutturare ma temporaneamente agibile, nelle frazioni di...",
+      "source_query": "site:facebook.com/groups \"Giaveno\" \"cerco casa\"",
+      "status": "NEW",
+      "discovered_at": "2026-09-05T09:10:52+00:00"
+    },
+    {
+      "id": "FBS-14FEF73FF0",
+      "brand": "f1-immobiliare",
+      "territory": "Giaveno",
+      "group_url": "https://www.facebook.com/groups/216130891909846/",
+      "source_url": "https://www.facebook.com/groups/216130891909846/permalink/3007592009430373/",
+      "title": "sei di giaveno o sei stato a giaveno se... | Grazie a te/voi ...",
+      "snippet": "🏡 CERCO CASA IN AFFITTO A GIAVENOBuonasera a tutti! 😊 Per motivi lavorativi, da settembre mi trasferirò a Giaveno e sono alla ricerca di un appartamento in affitto, in paese o nelle zone limitrofe. Cerco bilocale o trilocale, esclusivamente arredato, disponibile fino al 30 giugno. Sono una persona seria, tranquilla e referenziata.",
+      "source_query": "site:facebook.com/groups \"Giaveno\" \"cerco casa\"",
+      "status": "NEW",
+      "discovered_at": "2026-09-05T09:10:52+00:00"
+    },
+    {
+      "id": "FBS-883E36D6D7",
+      "brand": "f1-immobiliare",
+      "territory": "Giaveno",
+      "group_url": "https://www.facebook.com/groups/216130891909846/",
+      "source_url": "https://www.facebook.com/groups/216130891909846/permalink/3111046119084961/",
+      "title": "c'è ancora coda nella strada Giaveno Avigliana ? | Facebook",
+      "snippet": "Jul 8, 2026 · 🏡 CERCO CASA IN AFFITTO A GIAVENO Buonasera a tutti! 😊 Per motivi lavorativi, da settembre mi trasferirò a Giaveno e sono alla ricerca di un appartamento in affitto, in paese o nelle zone limitrofe. Cerco bilocale o trilocale, esclusivamente arredato, disponibile fino al 30 giugno. Sono una persona seria, tranquilla e referenziata.",
+      "source_query": "site:facebook.com/groups \"Giaveno\" \"cerco casa\"",
+      "status": "NEW",
+      "discovered_at": "2026-09-05T09:10:52+00:00"
     }
   ]
 }
