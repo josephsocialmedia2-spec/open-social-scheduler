@@ -1,7 +1,7 @@
 {
   "version": 2,
   "name": "F1 Qualified Seller 14-Day Queue",
-  "generated_at": "2026-09-05T10:35:42+02:00",
+  "generated_at": "2026-09-05T11:05:51+02:00",
   "window_start": "2026-08-23",
   "window_end": "2026-09-05",
   "goal": "qualified_seller_leads",
@@ -117,18 +117,39 @@
       "canva_edit_url": "https://www.canva.com/d/oZ7Dtz_5GqPkx1F",
       "canva_page_start": 1,
       "canva_page_end": 7,
-      "render_status": "RENDERED_REEL_MP4",
+      "render_status": "RENDERED_REEL_MP4_V2",
+      "renderer_v2": {
+        "engine": "revideo",
+        "primary_engine": "revideo",
+        "fallback_used": false,
+        "audio": {
+          "applied": true,
+          "voice": true,
+          "music": true,
+          "engine": "edge-tts-piper-ffmpeg"
+        },
+        "quality_gate": {
+          "passed": true,
+          "checks": [
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-23/r01.mp4",
+              "bytes": 3286887,
+              "video": {
+                "codec_name": "h264",
+                "width": 1080,
+                "height": 1920,
+                "duration": "28.000000"
+              }
+            }
+          ]
+        }
+      },
       "render_spec": {
-        "width": 1080,
-        "height": 1920,
-        "duration_seconds": 28.0,
-        "muted_view": true,
-        "safe_bottom_fraction": 0.35,
-        "source_text_suppression": true,
         "source_policy": "one_unique_themed_primary_visual_per_content_no_reuse_14d",
         "unique_primary_visual_per_content": true,
         "visual_content_hash_verified": true,
-        "legacy_visuals_allowed": false
+        "legacy_visuals_allowed": false,
+        "renderer_migration": "v2"
       }
     },
     {
@@ -243,16 +264,107 @@
       "canva_edit_url": "https://www.canva.com/d/cIzbB44_mzxEgw-",
       "canva_page_start": 1,
       "canva_page_end": 10,
-      "render_status": "RENDERED_CAROUSEL_JPG",
+      "render_status": "RENDERED_CAROUSEL_JPG_V2",
+      "renderer_v2": {
+        "engine": "svg-resvg-sharp",
+        "primary_engine": "svg-resvg-sharp",
+        "fallback_used": false,
+        "audio": {
+          "applied": false,
+          "engine": null
+        },
+        "quality_gate": {
+          "passed": true,
+          "checks": [
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-23/c01/slide-01.jpg",
+              "bytes": 167053,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-23/c01/slide-02.jpg",
+              "bytes": 162964,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-23/c01/slide-03.jpg",
+              "bytes": 163875,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-23/c01/slide-04.jpg",
+              "bytes": 166078,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-23/c01/slide-05.jpg",
+              "bytes": 166129,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-23/c01/slide-06.jpg",
+              "bytes": 163698,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-23/c01/slide-07.jpg",
+              "bytes": 164533,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-23/c01/slide-08.jpg",
+              "bytes": 162018,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-23/c01/slide-09.jpg",
+              "bytes": 162523,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-23/c01/slide-10.jpg",
+              "bytes": 161944,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            }
+          ]
+        }
+      },
       "render_spec": {
-        "width": 1080,
-        "height": 1350,
-        "slides": 10,
-        "source_text_suppression": true,
         "source_policy": "one_unique_themed_primary_visual_per_content_no_reuse_14d",
         "unique_primary_visual_per_content": true,
         "visual_content_hash_verified": true,
-        "legacy_visuals_allowed": false
+        "legacy_visuals_allowed": false,
+        "renderer_migration": "v2"
       }
     },
     {
@@ -353,18 +465,39 @@
       "canva_edit_url": "https://www.canva.com/d/oZ7Dtz_5GqPkx1F",
       "canva_page_start": 8,
       "canva_page_end": 14,
-      "render_status": "RENDERED_REEL_MP4",
+      "render_status": "RENDERED_REEL_MP4_V2",
+      "renderer_v2": {
+        "engine": "revideo",
+        "primary_engine": "revideo",
+        "fallback_used": false,
+        "audio": {
+          "applied": true,
+          "voice": true,
+          "music": true,
+          "engine": "edge-tts-piper-ffmpeg"
+        },
+        "quality_gate": {
+          "passed": true,
+          "checks": [
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-24/r02.mp4",
+              "bytes": 2470357,
+              "video": {
+                "codec_name": "h264",
+                "width": 1080,
+                "height": 1920,
+                "duration": "28.000000"
+              }
+            }
+          ]
+        }
+      },
       "render_spec": {
-        "width": 1080,
-        "height": 1920,
-        "duration_seconds": 28.0,
-        "muted_view": true,
-        "safe_bottom_fraction": 0.35,
-        "source_text_suppression": true,
         "source_policy": "one_unique_themed_primary_visual_per_content_no_reuse_14d",
         "unique_primary_visual_per_content": true,
         "visual_content_hash_verified": true,
-        "legacy_visuals_allowed": false
+        "legacy_visuals_allowed": false,
+        "renderer_migration": "v2"
       }
     },
     {
@@ -479,16 +612,107 @@
       "canva_edit_url": "https://www.canva.com/d/cIzbB44_mzxEgw-",
       "canva_page_start": 11,
       "canva_page_end": 20,
-      "render_status": "RENDERED_CAROUSEL_JPG",
+      "render_status": "RENDERED_CAROUSEL_JPG_V2",
+      "renderer_v2": {
+        "engine": "svg-resvg-sharp",
+        "primary_engine": "svg-resvg-sharp",
+        "fallback_used": false,
+        "audio": {
+          "applied": false,
+          "engine": null
+        },
+        "quality_gate": {
+          "passed": true,
+          "checks": [
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-24/c02/slide-01.jpg",
+              "bytes": 191983,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-24/c02/slide-02.jpg",
+              "bytes": 189777,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-24/c02/slide-03.jpg",
+              "bytes": 189465,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-24/c02/slide-04.jpg",
+              "bytes": 189415,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-24/c02/slide-05.jpg",
+              "bytes": 194885,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-24/c02/slide-06.jpg",
+              "bytes": 193652,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-24/c02/slide-07.jpg",
+              "bytes": 191986,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-24/c02/slide-08.jpg",
+              "bytes": 192501,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-24/c02/slide-09.jpg",
+              "bytes": 193380,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-24/c02/slide-10.jpg",
+              "bytes": 190225,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            }
+          ]
+        }
+      },
       "render_spec": {
-        "width": 1080,
-        "height": 1350,
-        "slides": 10,
-        "source_text_suppression": true,
         "source_policy": "one_unique_themed_primary_visual_per_content_no_reuse_14d",
         "unique_primary_visual_per_content": true,
         "visual_content_hash_verified": true,
-        "legacy_visuals_allowed": false
+        "legacy_visuals_allowed": false,
+        "renderer_migration": "v2"
       }
     },
     {
@@ -589,18 +813,39 @@
       "canva_edit_url": "https://www.canva.com/d/oZ7Dtz_5GqPkx1F",
       "canva_page_start": 15,
       "canva_page_end": 21,
-      "render_status": "RENDERED_REEL_MP4",
+      "render_status": "RENDERED_REEL_MP4_V2",
+      "renderer_v2": {
+        "engine": "revideo",
+        "primary_engine": "revideo",
+        "fallback_used": false,
+        "audio": {
+          "applied": true,
+          "voice": true,
+          "music": true,
+          "engine": "edge-tts-piper-ffmpeg"
+        },
+        "quality_gate": {
+          "passed": true,
+          "checks": [
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-25/r03.mp4",
+              "bytes": 2704678,
+              "video": {
+                "codec_name": "h264",
+                "width": 1080,
+                "height": 1920,
+                "duration": "28.000000"
+              }
+            }
+          ]
+        }
+      },
       "render_spec": {
-        "width": 1080,
-        "height": 1920,
-        "duration_seconds": 28.0,
-        "muted_view": true,
-        "safe_bottom_fraction": 0.35,
-        "source_text_suppression": true,
         "source_policy": "one_unique_themed_primary_visual_per_content_no_reuse_14d",
         "unique_primary_visual_per_content": true,
         "visual_content_hash_verified": true,
-        "legacy_visuals_allowed": false
+        "legacy_visuals_allowed": false,
+        "renderer_migration": "v2"
       }
     },
     {
@@ -715,16 +960,107 @@
       "canva_edit_url": "https://www.canva.com/d/cIzbB44_mzxEgw-",
       "canva_page_start": 21,
       "canva_page_end": 30,
-      "render_status": "RENDERED_CAROUSEL_JPG",
+      "render_status": "RENDERED_CAROUSEL_JPG_V2",
+      "renderer_v2": {
+        "engine": "svg-resvg-sharp",
+        "primary_engine": "svg-resvg-sharp",
+        "fallback_used": false,
+        "audio": {
+          "applied": false,
+          "engine": null
+        },
+        "quality_gate": {
+          "passed": true,
+          "checks": [
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-25/c03/slide-01.jpg",
+              "bytes": 215803,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-25/c03/slide-02.jpg",
+              "bytes": 216324,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-25/c03/slide-03.jpg",
+              "bytes": 212634,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-25/c03/slide-04.jpg",
+              "bytes": 208047,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-25/c03/slide-05.jpg",
+              "bytes": 212664,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-25/c03/slide-06.jpg",
+              "bytes": 216144,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-25/c03/slide-07.jpg",
+              "bytes": 211429,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-25/c03/slide-08.jpg",
+              "bytes": 214653,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-25/c03/slide-09.jpg",
+              "bytes": 216592,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-25/c03/slide-10.jpg",
+              "bytes": 215172,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            }
+          ]
+        }
+      },
       "render_spec": {
-        "width": 1080,
-        "height": 1350,
-        "slides": 10,
-        "source_text_suppression": true,
         "source_policy": "one_unique_themed_primary_visual_per_content_no_reuse_14d",
         "unique_primary_visual_per_content": true,
         "visual_content_hash_verified": true,
-        "legacy_visuals_allowed": false
+        "legacy_visuals_allowed": false,
+        "renderer_migration": "v2"
       }
     },
     {
@@ -825,18 +1161,39 @@
       "canva_edit_url": "https://www.canva.com/d/oZ7Dtz_5GqPkx1F",
       "canva_page_start": 22,
       "canva_page_end": 28,
-      "render_status": "RENDERED_REEL_MP4",
+      "render_status": "RENDERED_REEL_MP4_V2",
+      "renderer_v2": {
+        "engine": "revideo",
+        "primary_engine": "revideo",
+        "fallback_used": false,
+        "audio": {
+          "applied": true,
+          "voice": true,
+          "music": true,
+          "engine": "edge-tts-piper-ffmpeg"
+        },
+        "quality_gate": {
+          "passed": true,
+          "checks": [
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-26/r04.mp4",
+              "bytes": 3411998,
+              "video": {
+                "codec_name": "h264",
+                "width": 1080,
+                "height": 1920,
+                "duration": "28.000000"
+              }
+            }
+          ]
+        }
+      },
       "render_spec": {
-        "width": 1080,
-        "height": 1920,
-        "duration_seconds": 28.0,
-        "muted_view": true,
-        "safe_bottom_fraction": 0.35,
-        "source_text_suppression": true,
         "source_policy": "one_unique_themed_primary_visual_per_content_no_reuse_14d",
         "unique_primary_visual_per_content": true,
         "visual_content_hash_verified": true,
-        "legacy_visuals_allowed": false
+        "legacy_visuals_allowed": false,
+        "renderer_migration": "v2"
       }
     },
     {
@@ -951,16 +1308,107 @@
       "canva_edit_url": "https://www.canva.com/d/cIzbB44_mzxEgw-",
       "canva_page_start": 31,
       "canva_page_end": 40,
-      "render_status": "RENDERED_CAROUSEL_JPG",
+      "render_status": "RENDERED_CAROUSEL_JPG_V2",
+      "renderer_v2": {
+        "engine": "svg-resvg-sharp",
+        "primary_engine": "svg-resvg-sharp",
+        "fallback_used": false,
+        "audio": {
+          "applied": false,
+          "engine": null
+        },
+        "quality_gate": {
+          "passed": true,
+          "checks": [
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-26/c04/slide-01.jpg",
+              "bytes": 230484,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-26/c04/slide-02.jpg",
+              "bytes": 228491,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-26/c04/slide-03.jpg",
+              "bytes": 229518,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-26/c04/slide-04.jpg",
+              "bytes": 230498,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-26/c04/slide-05.jpg",
+              "bytes": 229425,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-26/c04/slide-06.jpg",
+              "bytes": 229644,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-26/c04/slide-07.jpg",
+              "bytes": 229909,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-26/c04/slide-08.jpg",
+              "bytes": 228574,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-26/c04/slide-09.jpg",
+              "bytes": 226511,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-26/c04/slide-10.jpg",
+              "bytes": 227943,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            }
+          ]
+        }
+      },
       "render_spec": {
-        "width": 1080,
-        "height": 1350,
-        "slides": 10,
-        "source_text_suppression": true,
         "source_policy": "one_unique_themed_primary_visual_per_content_no_reuse_14d",
         "unique_primary_visual_per_content": true,
         "visual_content_hash_verified": true,
-        "legacy_visuals_allowed": false
+        "legacy_visuals_allowed": false,
+        "renderer_migration": "v2"
       }
     },
     {
@@ -1061,18 +1509,39 @@
       "canva_edit_url": "https://www.canva.com/d/oZ7Dtz_5GqPkx1F",
       "canva_page_start": 29,
       "canva_page_end": 35,
-      "render_status": "RENDERED_REEL_MP4",
+      "render_status": "RENDERED_REEL_MP4_V2",
+      "renderer_v2": {
+        "engine": "revideo",
+        "primary_engine": "revideo",
+        "fallback_used": false,
+        "audio": {
+          "applied": true,
+          "voice": true,
+          "music": true,
+          "engine": "edge-tts-piper-ffmpeg"
+        },
+        "quality_gate": {
+          "passed": true,
+          "checks": [
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-27/r05.mp4",
+              "bytes": 2385553,
+              "video": {
+                "codec_name": "h264",
+                "width": 1080,
+                "height": 1920,
+                "duration": "28.000000"
+              }
+            }
+          ]
+        }
+      },
       "render_spec": {
-        "width": 1080,
-        "height": 1920,
-        "duration_seconds": 28.0,
-        "muted_view": true,
-        "safe_bottom_fraction": 0.35,
-        "source_text_suppression": true,
         "source_policy": "one_unique_themed_primary_visual_per_content_no_reuse_14d",
         "unique_primary_visual_per_content": true,
         "visual_content_hash_verified": true,
-        "legacy_visuals_allowed": false
+        "legacy_visuals_allowed": false,
+        "renderer_migration": "v2"
       }
     },
     {
@@ -1187,16 +1656,107 @@
       "canva_edit_url": "https://www.canva.com/d/cIzbB44_mzxEgw-",
       "canva_page_start": 41,
       "canva_page_end": 50,
-      "render_status": "RENDERED_CAROUSEL_JPG",
+      "render_status": "RENDERED_CAROUSEL_JPG_V2",
+      "renderer_v2": {
+        "engine": "svg-resvg-sharp",
+        "primary_engine": "svg-resvg-sharp",
+        "fallback_used": false,
+        "audio": {
+          "applied": false,
+          "engine": null
+        },
+        "quality_gate": {
+          "passed": true,
+          "checks": [
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-27/c05/slide-01.jpg",
+              "bytes": 220392,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-27/c05/slide-02.jpg",
+              "bytes": 210227,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-27/c05/slide-03.jpg",
+              "bytes": 210775,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-27/c05/slide-04.jpg",
+              "bytes": 210586,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-27/c05/slide-05.jpg",
+              "bytes": 212454,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-27/c05/slide-06.jpg",
+              "bytes": 218117,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-27/c05/slide-07.jpg",
+              "bytes": 213763,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-27/c05/slide-08.jpg",
+              "bytes": 214181,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-27/c05/slide-09.jpg",
+              "bytes": 214608,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-27/c05/slide-10.jpg",
+              "bytes": 216371,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            }
+          ]
+        }
+      },
       "render_spec": {
-        "width": 1080,
-        "height": 1350,
-        "slides": 10,
-        "source_text_suppression": true,
         "source_policy": "one_unique_themed_primary_visual_per_content_no_reuse_14d",
         "unique_primary_visual_per_content": true,
         "visual_content_hash_verified": true,
-        "legacy_visuals_allowed": false
+        "legacy_visuals_allowed": false,
+        "renderer_migration": "v2"
       }
     },
     {
@@ -1297,18 +1857,39 @@
       "canva_edit_url": "https://www.canva.com/d/oZ7Dtz_5GqPkx1F",
       "canva_page_start": 36,
       "canva_page_end": 42,
-      "render_status": "RENDERED_REEL_MP4",
+      "render_status": "RENDERED_REEL_MP4_V2",
+      "renderer_v2": {
+        "engine": "revideo",
+        "primary_engine": "revideo",
+        "fallback_used": false,
+        "audio": {
+          "applied": true,
+          "voice": true,
+          "music": true,
+          "engine": "edge-tts-piper-ffmpeg"
+        },
+        "quality_gate": {
+          "passed": true,
+          "checks": [
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-28/r06.mp4",
+              "bytes": 2380875,
+              "video": {
+                "codec_name": "h264",
+                "width": 1080,
+                "height": 1920,
+                "duration": "28.000000"
+              }
+            }
+          ]
+        }
+      },
       "render_spec": {
-        "width": 1080,
-        "height": 1920,
-        "duration_seconds": 28.0,
-        "muted_view": true,
-        "safe_bottom_fraction": 0.35,
-        "source_text_suppression": true,
         "source_policy": "one_unique_themed_primary_visual_per_content_no_reuse_14d",
         "unique_primary_visual_per_content": true,
         "visual_content_hash_verified": true,
-        "legacy_visuals_allowed": false
+        "legacy_visuals_allowed": false,
+        "renderer_migration": "v2"
       }
     },
     {
@@ -1423,16 +2004,107 @@
       "canva_edit_url": "https://www.canva.com/d/cIzbB44_mzxEgw-",
       "canva_page_start": 51,
       "canva_page_end": 60,
-      "render_status": "RENDERED_CAROUSEL_JPG",
+      "render_status": "RENDERED_CAROUSEL_JPG_V2",
+      "renderer_v2": {
+        "engine": "svg-resvg-sharp",
+        "primary_engine": "svg-resvg-sharp",
+        "fallback_used": false,
+        "audio": {
+          "applied": false,
+          "engine": null
+        },
+        "quality_gate": {
+          "passed": true,
+          "checks": [
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-28/c06/slide-01.jpg",
+              "bytes": 240132,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-28/c06/slide-02.jpg",
+              "bytes": 249882,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-28/c06/slide-03.jpg",
+              "bytes": 236808,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-28/c06/slide-04.jpg",
+              "bytes": 236878,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-28/c06/slide-05.jpg",
+              "bytes": 238648,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-28/c06/slide-06.jpg",
+              "bytes": 239324,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-28/c06/slide-07.jpg",
+              "bytes": 244939,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-28/c06/slide-08.jpg",
+              "bytes": 244432,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-28/c06/slide-09.jpg",
+              "bytes": 242907,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-28/c06/slide-10.jpg",
+              "bytes": 248327,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            }
+          ]
+        }
+      },
       "render_spec": {
-        "width": 1080,
-        "height": 1350,
-        "slides": 10,
-        "source_text_suppression": true,
         "source_policy": "one_unique_themed_primary_visual_per_content_no_reuse_14d",
         "unique_primary_visual_per_content": true,
         "visual_content_hash_verified": true,
-        "legacy_visuals_allowed": false
+        "legacy_visuals_allowed": false,
+        "renderer_migration": "v2"
       }
     },
     {
@@ -1533,18 +2205,39 @@
       "canva_edit_url": "https://www.canva.com/d/oZ7Dtz_5GqPkx1F",
       "canva_page_start": 43,
       "canva_page_end": 49,
-      "render_status": "RENDERED_REEL_MP4",
+      "render_status": "RENDERED_REEL_MP4_V2",
+      "renderer_v2": {
+        "engine": "revideo",
+        "primary_engine": "revideo",
+        "fallback_used": false,
+        "audio": {
+          "applied": true,
+          "voice": true,
+          "music": true,
+          "engine": "edge-tts-piper-ffmpeg"
+        },
+        "quality_gate": {
+          "passed": true,
+          "checks": [
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-29/r07.mp4",
+              "bytes": 2459601,
+              "video": {
+                "codec_name": "h264",
+                "width": 1080,
+                "height": 1920,
+                "duration": "28.000000"
+              }
+            }
+          ]
+        }
+      },
       "render_spec": {
-        "width": 1080,
-        "height": 1920,
-        "duration_seconds": 28.0,
-        "muted_view": true,
-        "safe_bottom_fraction": 0.35,
-        "source_text_suppression": true,
         "source_policy": "one_unique_themed_primary_visual_per_content_no_reuse_14d",
         "unique_primary_visual_per_content": true,
         "visual_content_hash_verified": true,
-        "legacy_visuals_allowed": false
+        "legacy_visuals_allowed": false,
+        "renderer_migration": "v2"
       }
     },
     {
@@ -1659,16 +2352,107 @@
       "canva_edit_url": "https://www.canva.com/d/cIzbB44_mzxEgw-",
       "canva_page_start": 61,
       "canva_page_end": 70,
-      "render_status": "RENDERED_CAROUSEL_JPG",
+      "render_status": "RENDERED_CAROUSEL_JPG_V2",
+      "renderer_v2": {
+        "engine": "svg-resvg-sharp",
+        "primary_engine": "svg-resvg-sharp",
+        "fallback_used": false,
+        "audio": {
+          "applied": false,
+          "engine": null
+        },
+        "quality_gate": {
+          "passed": true,
+          "checks": [
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-29/c07/slide-01.jpg",
+              "bytes": 230843,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-29/c07/slide-02.jpg",
+              "bytes": 230790,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-29/c07/slide-03.jpg",
+              "bytes": 226935,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-29/c07/slide-04.jpg",
+              "bytes": 226295,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-29/c07/slide-05.jpg",
+              "bytes": 227419,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-29/c07/slide-06.jpg",
+              "bytes": 228318,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-29/c07/slide-07.jpg",
+              "bytes": 226209,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-29/c07/slide-08.jpg",
+              "bytes": 227086,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-29/c07/slide-09.jpg",
+              "bytes": 227033,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-29/c07/slide-10.jpg",
+              "bytes": 227310,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            }
+          ]
+        }
+      },
       "render_spec": {
-        "width": 1080,
-        "height": 1350,
-        "slides": 10,
-        "source_text_suppression": true,
         "source_policy": "one_unique_themed_primary_visual_per_content_no_reuse_14d",
         "unique_primary_visual_per_content": true,
         "visual_content_hash_verified": true,
-        "legacy_visuals_allowed": false
+        "legacy_visuals_allowed": false,
+        "renderer_migration": "v2"
       }
     },
     {
@@ -1769,18 +2553,39 @@
       "canva_edit_url": "https://www.canva.com/d/oZ7Dtz_5GqPkx1F",
       "canva_page_start": 50,
       "canva_page_end": 56,
-      "render_status": "RENDERED_REEL_MP4",
+      "render_status": "RENDERED_REEL_MP4_V2",
+      "renderer_v2": {
+        "engine": "revideo",
+        "primary_engine": "revideo",
+        "fallback_used": false,
+        "audio": {
+          "applied": true,
+          "voice": true,
+          "music": true,
+          "engine": "edge-tts-piper-ffmpeg"
+        },
+        "quality_gate": {
+          "passed": true,
+          "checks": [
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-30/r08.mp4",
+              "bytes": 2699650,
+              "video": {
+                "codec_name": "h264",
+                "width": 1080,
+                "height": 1920,
+                "duration": "28.000000"
+              }
+            }
+          ]
+        }
+      },
       "render_spec": {
-        "width": 1080,
-        "height": 1920,
-        "duration_seconds": 28.0,
-        "muted_view": true,
-        "safe_bottom_fraction": 0.35,
-        "source_text_suppression": true,
         "source_policy": "one_unique_themed_primary_visual_per_content_no_reuse_14d",
         "unique_primary_visual_per_content": true,
         "visual_content_hash_verified": true,
-        "legacy_visuals_allowed": false
+        "legacy_visuals_allowed": false,
+        "renderer_migration": "v2"
       }
     },
     {
@@ -1895,16 +2700,107 @@
       "canva_edit_url": "https://www.canva.com/d/cIzbB44_mzxEgw-",
       "canva_page_start": 71,
       "canva_page_end": 80,
-      "render_status": "RENDERED_CAROUSEL_JPG",
+      "render_status": "RENDERED_CAROUSEL_JPG_V2",
+      "renderer_v2": {
+        "engine": "svg-resvg-sharp",
+        "primary_engine": "svg-resvg-sharp",
+        "fallback_used": false,
+        "audio": {
+          "applied": false,
+          "engine": null
+        },
+        "quality_gate": {
+          "passed": true,
+          "checks": [
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-30/c08/slide-01.jpg",
+              "bytes": 221553,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-30/c08/slide-02.jpg",
+              "bytes": 209933,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-30/c08/slide-03.jpg",
+              "bytes": 214923,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-30/c08/slide-04.jpg",
+              "bytes": 214985,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-30/c08/slide-05.jpg",
+              "bytes": 214199,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-30/c08/slide-06.jpg",
+              "bytes": 211246,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-30/c08/slide-07.jpg",
+              "bytes": 215138,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-30/c08/slide-08.jpg",
+              "bytes": 210503,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-30/c08/slide-09.jpg",
+              "bytes": 212151,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-30/c08/slide-10.jpg",
+              "bytes": 217374,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            }
+          ]
+        }
+      },
       "render_spec": {
-        "width": 1080,
-        "height": 1350,
-        "slides": 10,
-        "source_text_suppression": true,
         "source_policy": "one_unique_themed_primary_visual_per_content_no_reuse_14d",
         "unique_primary_visual_per_content": true,
         "visual_content_hash_verified": true,
-        "legacy_visuals_allowed": false
+        "legacy_visuals_allowed": false,
+        "renderer_migration": "v2"
       }
     },
     {
@@ -2005,18 +2901,39 @@
       "canva_edit_url": "https://www.canva.com/d/oZ7Dtz_5GqPkx1F",
       "canva_page_start": 57,
       "canva_page_end": 63,
-      "render_status": "RENDERED_REEL_MP4",
+      "render_status": "RENDERED_REEL_MP4_V2",
+      "renderer_v2": {
+        "engine": "revideo",
+        "primary_engine": "revideo",
+        "fallback_used": false,
+        "audio": {
+          "applied": true,
+          "voice": true,
+          "music": true,
+          "engine": "edge-tts-piper-ffmpeg"
+        },
+        "quality_gate": {
+          "passed": true,
+          "checks": [
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-31/r09.mp4",
+              "bytes": 2724458,
+              "video": {
+                "codec_name": "h264",
+                "width": 1080,
+                "height": 1920,
+                "duration": "28.000000"
+              }
+            }
+          ]
+        }
+      },
       "render_spec": {
-        "width": 1080,
-        "height": 1920,
-        "duration_seconds": 28.0,
-        "muted_view": true,
-        "safe_bottom_fraction": 0.35,
-        "source_text_suppression": true,
         "source_policy": "one_unique_themed_primary_visual_per_content_no_reuse_14d",
         "unique_primary_visual_per_content": true,
         "visual_content_hash_verified": true,
-        "legacy_visuals_allowed": false
+        "legacy_visuals_allowed": false,
+        "renderer_migration": "v2"
       }
     },
     {
@@ -2131,16 +3048,107 @@
       "canva_edit_url": "https://www.canva.com/d/cIzbB44_mzxEgw-",
       "canva_page_start": 81,
       "canva_page_end": 90,
-      "render_status": "RENDERED_CAROUSEL_JPG",
+      "render_status": "RENDERED_CAROUSEL_JPG_V2",
+      "renderer_v2": {
+        "engine": "svg-resvg-sharp",
+        "primary_engine": "svg-resvg-sharp",
+        "fallback_used": false,
+        "audio": {
+          "applied": false,
+          "engine": null
+        },
+        "quality_gate": {
+          "passed": true,
+          "checks": [
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-31/c09/slide-01.jpg",
+              "bytes": 218729,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-31/c09/slide-02.jpg",
+              "bytes": 219515,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-31/c09/slide-03.jpg",
+              "bytes": 220353,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-31/c09/slide-04.jpg",
+              "bytes": 219648,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-31/c09/slide-05.jpg",
+              "bytes": 220128,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-31/c09/slide-06.jpg",
+              "bytes": 218169,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-31/c09/slide-07.jpg",
+              "bytes": 222174,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-31/c09/slide-08.jpg",
+              "bytes": 218635,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-31/c09/slide-09.jpg",
+              "bytes": 219158,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-31/c09/slide-10.jpg",
+              "bytes": 219845,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            }
+          ]
+        }
+      },
       "render_spec": {
-        "width": 1080,
-        "height": 1350,
-        "slides": 10,
-        "source_text_suppression": true,
         "source_policy": "one_unique_themed_primary_visual_per_content_no_reuse_14d",
         "unique_primary_visual_per_content": true,
         "visual_content_hash_verified": true,
-        "legacy_visuals_allowed": false
+        "legacy_visuals_allowed": false,
+        "renderer_migration": "v2"
       }
     },
     {
@@ -2241,18 +3249,39 @@
       "canva_edit_url": "https://www.canva.com/d/oZ7Dtz_5GqPkx1F",
       "canva_page_start": 64,
       "canva_page_end": 70,
-      "render_status": "RENDERED_REEL_MP4",
+      "render_status": "RENDERED_REEL_MP4_V2",
+      "renderer_v2": {
+        "engine": "revideo",
+        "primary_engine": "revideo",
+        "fallback_used": false,
+        "audio": {
+          "applied": true,
+          "voice": true,
+          "music": true,
+          "engine": "edge-tts-piper-ffmpeg"
+        },
+        "quality_gate": {
+          "passed": true,
+          "checks": [
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-01/r10.mp4",
+              "bytes": 2510887,
+              "video": {
+                "codec_name": "h264",
+                "width": 1080,
+                "height": 1920,
+                "duration": "28.000000"
+              }
+            }
+          ]
+        }
+      },
       "render_spec": {
-        "width": 1080,
-        "height": 1920,
-        "duration_seconds": 28.0,
-        "muted_view": true,
-        "safe_bottom_fraction": 0.35,
-        "source_text_suppression": true,
         "source_policy": "one_unique_themed_primary_visual_per_content_no_reuse_14d",
         "unique_primary_visual_per_content": true,
         "visual_content_hash_verified": true,
-        "legacy_visuals_allowed": false
+        "legacy_visuals_allowed": false,
+        "renderer_migration": "v2"
       }
     },
     {
@@ -2367,16 +3396,107 @@
       "canva_edit_url": "https://www.canva.com/d/cIzbB44_mzxEgw-",
       "canva_page_start": 91,
       "canva_page_end": 100,
-      "render_status": "RENDERED_CAROUSEL_JPG",
+      "render_status": "RENDERED_CAROUSEL_JPG_V2",
+      "renderer_v2": {
+        "engine": "svg-resvg-sharp",
+        "primary_engine": "svg-resvg-sharp",
+        "fallback_used": false,
+        "audio": {
+          "applied": false,
+          "engine": null
+        },
+        "quality_gate": {
+          "passed": true,
+          "checks": [
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-01/c10/slide-01.jpg",
+              "bytes": 223140,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-01/c10/slide-02.jpg",
+              "bytes": 223391,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-01/c10/slide-03.jpg",
+              "bytes": 221686,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-01/c10/slide-04.jpg",
+              "bytes": 222662,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-01/c10/slide-05.jpg",
+              "bytes": 225061,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-01/c10/slide-06.jpg",
+              "bytes": 222051,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-01/c10/slide-07.jpg",
+              "bytes": 219758,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-01/c10/slide-08.jpg",
+              "bytes": 220458,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-01/c10/slide-09.jpg",
+              "bytes": 222879,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-01/c10/slide-10.jpg",
+              "bytes": 222056,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            }
+          ]
+        }
+      },
       "render_spec": {
-        "width": 1080,
-        "height": 1350,
-        "slides": 10,
-        "source_text_suppression": true,
         "source_policy": "one_unique_themed_primary_visual_per_content_no_reuse_14d",
         "unique_primary_visual_per_content": true,
         "visual_content_hash_verified": true,
-        "legacy_visuals_allowed": false
+        "legacy_visuals_allowed": false,
+        "renderer_migration": "v2"
       }
     },
     {
@@ -2477,18 +3597,39 @@
       "canva_edit_url": "https://www.canva.com/d/oZ7Dtz_5GqPkx1F",
       "canva_page_start": 71,
       "canva_page_end": 77,
-      "render_status": "RENDERED_REEL_MP4",
+      "render_status": "RENDERED_REEL_MP4_V2",
+      "renderer_v2": {
+        "engine": "revideo",
+        "primary_engine": "revideo",
+        "fallback_used": false,
+        "audio": {
+          "applied": true,
+          "voice": true,
+          "music": true,
+          "engine": "edge-tts-piper-ffmpeg"
+        },
+        "quality_gate": {
+          "passed": true,
+          "checks": [
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-02/r11.mp4",
+              "bytes": 2647874,
+              "video": {
+                "codec_name": "h264",
+                "width": 1080,
+                "height": 1920,
+                "duration": "28.000000"
+              }
+            }
+          ]
+        }
+      },
       "render_spec": {
-        "width": 1080,
-        "height": 1920,
-        "duration_seconds": 28.0,
-        "muted_view": true,
-        "safe_bottom_fraction": 0.35,
-        "source_text_suppression": true,
         "source_policy": "one_unique_themed_primary_visual_per_content_no_reuse_14d",
         "unique_primary_visual_per_content": true,
         "visual_content_hash_verified": true,
-        "legacy_visuals_allowed": false
+        "legacy_visuals_allowed": false,
+        "renderer_migration": "v2"
       }
     },
     {
@@ -2603,16 +3744,107 @@
       "canva_edit_url": "https://www.canva.com/d/cIzbB44_mzxEgw-",
       "canva_page_start": 101,
       "canva_page_end": 110,
-      "render_status": "RENDERED_CAROUSEL_JPG",
+      "render_status": "RENDERED_CAROUSEL_JPG_V2",
+      "renderer_v2": {
+        "engine": "svg-resvg-sharp",
+        "primary_engine": "svg-resvg-sharp",
+        "fallback_used": false,
+        "audio": {
+          "applied": false,
+          "engine": null
+        },
+        "quality_gate": {
+          "passed": true,
+          "checks": [
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-02/c11/slide-01.jpg",
+              "bytes": 168173,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-02/c11/slide-02.jpg",
+              "bytes": 166550,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-02/c11/slide-03.jpg",
+              "bytes": 164648,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-02/c11/slide-04.jpg",
+              "bytes": 166016,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-02/c11/slide-05.jpg",
+              "bytes": 167022,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-02/c11/slide-06.jpg",
+              "bytes": 165434,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-02/c11/slide-07.jpg",
+              "bytes": 167481,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-02/c11/slide-08.jpg",
+              "bytes": 167626,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-02/c11/slide-09.jpg",
+              "bytes": 167661,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-02/c11/slide-10.jpg",
+              "bytes": 166904,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            }
+          ]
+        }
+      },
       "render_spec": {
-        "width": 1080,
-        "height": 1350,
-        "slides": 10,
-        "source_text_suppression": true,
         "source_policy": "one_unique_themed_primary_visual_per_content_no_reuse_14d",
         "unique_primary_visual_per_content": true,
         "visual_content_hash_verified": true,
-        "legacy_visuals_allowed": false
+        "legacy_visuals_allowed": false,
+        "renderer_migration": "v2"
       }
     },
     {
@@ -2713,18 +3945,39 @@
       "canva_edit_url": "https://www.canva.com/d/oZ7Dtz_5GqPkx1F",
       "canva_page_start": 78,
       "canva_page_end": 84,
-      "render_status": "RENDERED_REEL_MP4",
+      "render_status": "RENDERED_REEL_MP4_V2",
+      "renderer_v2": {
+        "engine": "revideo",
+        "primary_engine": "revideo",
+        "fallback_used": false,
+        "audio": {
+          "applied": true,
+          "voice": true,
+          "music": true,
+          "engine": "edge-tts-piper-ffmpeg"
+        },
+        "quality_gate": {
+          "passed": true,
+          "checks": [
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-03/r12.mp4",
+              "bytes": 2410997,
+              "video": {
+                "codec_name": "h264",
+                "width": 1080,
+                "height": 1920,
+                "duration": "28.000000"
+              }
+            }
+          ]
+        }
+      },
       "render_spec": {
-        "width": 1080,
-        "height": 1920,
-        "duration_seconds": 28.0,
-        "muted_view": true,
-        "safe_bottom_fraction": 0.35,
-        "source_text_suppression": true,
         "source_policy": "one_unique_themed_primary_visual_per_content_no_reuse_14d",
         "unique_primary_visual_per_content": true,
         "visual_content_hash_verified": true,
-        "legacy_visuals_allowed": false
+        "legacy_visuals_allowed": false,
+        "renderer_migration": "v2"
       }
     },
     {
@@ -2839,16 +4092,107 @@
       "canva_edit_url": "https://www.canva.com/d/cIzbB44_mzxEgw-",
       "canva_page_start": 111,
       "canva_page_end": 120,
-      "render_status": "RENDERED_CAROUSEL_JPG",
+      "render_status": "RENDERED_CAROUSEL_JPG_V2",
+      "renderer_v2": {
+        "engine": "svg-resvg-sharp",
+        "primary_engine": "svg-resvg-sharp",
+        "fallback_used": false,
+        "audio": {
+          "applied": false,
+          "engine": null
+        },
+        "quality_gate": {
+          "passed": true,
+          "checks": [
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-03/c12/slide-01.jpg",
+              "bytes": 241950,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-03/c12/slide-02.jpg",
+              "bytes": 238565,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-03/c12/slide-03.jpg",
+              "bytes": 238466,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-03/c12/slide-04.jpg",
+              "bytes": 239807,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-03/c12/slide-05.jpg",
+              "bytes": 238699,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-03/c12/slide-06.jpg",
+              "bytes": 239897,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-03/c12/slide-07.jpg",
+              "bytes": 242646,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-03/c12/slide-08.jpg",
+              "bytes": 241529,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-03/c12/slide-09.jpg",
+              "bytes": 244104,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-03/c12/slide-10.jpg",
+              "bytes": 240758,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            }
+          ]
+        }
+      },
       "render_spec": {
-        "width": 1080,
-        "height": 1350,
-        "slides": 10,
-        "source_text_suppression": true,
         "source_policy": "one_unique_themed_primary_visual_per_content_no_reuse_14d",
         "unique_primary_visual_per_content": true,
         "visual_content_hash_verified": true,
-        "legacy_visuals_allowed": false
+        "legacy_visuals_allowed": false,
+        "renderer_migration": "v2"
       }
     },
     {
@@ -2949,18 +4293,39 @@
       "canva_edit_url": "https://www.canva.com/d/oZ7Dtz_5GqPkx1F",
       "canva_page_start": 85,
       "canva_page_end": 91,
-      "render_status": "RENDERED_REEL_MP4",
+      "render_status": "RENDERED_REEL_MP4_V2",
+      "renderer_v2": {
+        "engine": "revideo",
+        "primary_engine": "revideo",
+        "fallback_used": false,
+        "audio": {
+          "applied": true,
+          "voice": true,
+          "music": true,
+          "engine": "edge-tts-piper-ffmpeg"
+        },
+        "quality_gate": {
+          "passed": true,
+          "checks": [
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-04/r13.mp4",
+              "bytes": 2520743,
+              "video": {
+                "codec_name": "h264",
+                "width": 1080,
+                "height": 1920,
+                "duration": "28.000000"
+              }
+            }
+          ]
+        }
+      },
       "render_spec": {
-        "width": 1080,
-        "height": 1920,
-        "duration_seconds": 28.0,
-        "muted_view": true,
-        "safe_bottom_fraction": 0.35,
-        "source_text_suppression": true,
         "source_policy": "one_unique_themed_primary_visual_per_content_no_reuse_14d",
         "unique_primary_visual_per_content": true,
         "visual_content_hash_verified": true,
-        "legacy_visuals_allowed": false
+        "legacy_visuals_allowed": false,
+        "renderer_migration": "v2"
       }
     },
     {
@@ -3075,16 +4440,107 @@
       "canva_edit_url": "https://www.canva.com/d/cIzbB44_mzxEgw-",
       "canva_page_start": 121,
       "canva_page_end": 130,
-      "render_status": "RENDERED_CAROUSEL_JPG",
+      "render_status": "RENDERED_CAROUSEL_JPG_V2",
+      "renderer_v2": {
+        "engine": "svg-resvg-sharp",
+        "primary_engine": "svg-resvg-sharp",
+        "fallback_used": false,
+        "audio": {
+          "applied": false,
+          "engine": null
+        },
+        "quality_gate": {
+          "passed": true,
+          "checks": [
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-04/c13/slide-01.jpg",
+              "bytes": 203966,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-04/c13/slide-02.jpg",
+              "bytes": 202673,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-04/c13/slide-03.jpg",
+              "bytes": 204615,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-04/c13/slide-04.jpg",
+              "bytes": 204023,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-04/c13/slide-05.jpg",
+              "bytes": 203540,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-04/c13/slide-06.jpg",
+              "bytes": 203547,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-04/c13/slide-07.jpg",
+              "bytes": 205043,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-04/c13/slide-08.jpg",
+              "bytes": 203276,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-04/c13/slide-09.jpg",
+              "bytes": 202978,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-04/c13/slide-10.jpg",
+              "bytes": 200989,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            }
+          ]
+        }
+      },
       "render_spec": {
-        "width": 1080,
-        "height": 1350,
-        "slides": 10,
-        "source_text_suppression": true,
         "source_policy": "one_unique_themed_primary_visual_per_content_no_reuse_14d",
         "unique_primary_visual_per_content": true,
         "visual_content_hash_verified": true,
-        "legacy_visuals_allowed": false
+        "legacy_visuals_allowed": false,
+        "renderer_migration": "v2"
       }
     },
     {
@@ -3185,18 +4641,39 @@
       "canva_edit_url": "https://www.canva.com/d/oZ7Dtz_5GqPkx1F",
       "canva_page_start": 92,
       "canva_page_end": 98,
-      "render_status": "RENDERED_REEL_MP4",
+      "render_status": "RENDERED_REEL_MP4_V2",
+      "renderer_v2": {
+        "engine": "revideo",
+        "primary_engine": "revideo",
+        "fallback_used": false,
+        "audio": {
+          "applied": true,
+          "voice": true,
+          "music": true,
+          "engine": "edge-tts-piper-ffmpeg"
+        },
+        "quality_gate": {
+          "passed": true,
+          "checks": [
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-05/r14.mp4",
+              "bytes": 3169235,
+              "video": {
+                "codec_name": "h264",
+                "width": 1080,
+                "height": 1920,
+                "duration": "28.000000"
+              }
+            }
+          ]
+        }
+      },
       "render_spec": {
-        "width": 1080,
-        "height": 1920,
-        "duration_seconds": 28.0,
-        "muted_view": true,
-        "safe_bottom_fraction": 0.35,
-        "source_text_suppression": true,
         "source_policy": "one_unique_themed_primary_visual_per_content_no_reuse_14d",
         "unique_primary_visual_per_content": true,
         "visual_content_hash_verified": true,
-        "legacy_visuals_allowed": false
+        "legacy_visuals_allowed": false,
+        "renderer_migration": "v2"
       }
     },
     {
@@ -3311,16 +4788,107 @@
       "canva_edit_url": "https://www.canva.com/d/cIzbB44_mzxEgw-",
       "canva_page_start": 131,
       "canva_page_end": 140,
-      "render_status": "RENDERED_CAROUSEL_JPG",
+      "render_status": "RENDERED_CAROUSEL_JPG_V2",
+      "renderer_v2": {
+        "engine": "svg-resvg-sharp",
+        "primary_engine": "svg-resvg-sharp",
+        "fallback_used": false,
+        "audio": {
+          "applied": false,
+          "engine": null
+        },
+        "quality_gate": {
+          "passed": true,
+          "checks": [
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-05/c14/slide-01.jpg",
+              "bytes": 195269,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-05/c14/slide-02.jpg",
+              "bytes": 187202,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-05/c14/slide-03.jpg",
+              "bytes": 188233,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-05/c14/slide-04.jpg",
+              "bytes": 190350,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-05/c14/slide-05.jpg",
+              "bytes": 190647,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-05/c14/slide-06.jpg",
+              "bytes": 194024,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-05/c14/slide-07.jpg",
+              "bytes": 195424,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-05/c14/slide-08.jpg",
+              "bytes": 193679,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-05/c14/slide-09.jpg",
+              "bytes": 193737,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            },
+            {
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-05/c14/slide-10.jpg",
+              "bytes": 192685,
+              "dimensions": [
+                1080,
+                1350
+              ]
+            }
+          ]
+        }
+      },
       "render_spec": {
-        "width": 1080,
-        "height": 1350,
-        "slides": 10,
-        "source_text_suppression": true,
         "source_policy": "one_unique_themed_primary_visual_per_content_no_reuse_14d",
         "unique_primary_visual_per_content": true,
         "visual_content_hash_verified": true,
-        "legacy_visuals_allowed": false
+        "legacy_visuals_allowed": false,
+        "renderer_migration": "v2"
       }
     }
   ],
@@ -3341,7 +4909,11 @@
   "render_summary": {
     "reels": 14,
     "carousels": 14,
-    "total": 28
+    "total": 28,
+    "renderer_v2": 28,
+    "legacy": 0,
+    "requested_engine": "v2",
+    "strict_v2": true
   },
   "visual_source_policy": "28 contents = 28 different themed primary images; URL and normalized pixel hash uniqueness required"
 }
