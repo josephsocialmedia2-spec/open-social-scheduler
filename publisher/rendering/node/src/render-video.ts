@@ -13,6 +13,10 @@ function arg(name: string): string {
 async function main() {
   const specPath = arg('--spec');
   const output = path.resolve(arg('--output'));
+  if (!output.endsWith('.mp4')) {
+    throw new Error(`Renderer V2 video output must end in .mp4: ${output}`);
+  }
+  const outFile = output as `${string}.mp4`;
   const spec = JSON.parse(fs.readFileSync(specPath, 'utf8'));
   fs.mkdirSync(path.dirname(output), {recursive: true});
 
@@ -20,7 +24,7 @@ async function main() {
     projectFile: path.resolve('src/project.ts'),
     variables: {spec},
     settings: {
-      outFile: output,
+      outFile,
       logProgress: true,
       projectSettings: {
         exporter: {
