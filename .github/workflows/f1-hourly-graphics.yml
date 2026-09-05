@@ -15,7 +15,7 @@ concurrency:
 
 jobs:
   generate-one-graphic:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, Windows, X64]
     timeout-minutes: 30
 
     steps:
@@ -30,32 +30,31 @@ jobs:
           python-version: '3.12'
 
       - name: Install dependencies
+        shell: powershell
         run: pip install -r publisher/f1_graphics_hourly/requirements.txt
 
       - name: Verify Excel exists
+        shell: powershell
         run: |
-          test -f publisher/f1_graphics_hourly/queries.xlsx || {
-            echo "ERRORE: manca publisher/f1_graphics_hourly/queries.xlsx"
-            exit 1
+          if (-not (Test-Path 'publisher/f1_graphics_hourly/queries.xlsx')) {
+            throw 'ERRORE: manca publisher/f1_graphics_hourly/queries.xlsx'
           }
 
       - name: Generate one F1 graphic and caption
+        shell: powershell
         env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          OPENAI_IMAGE_MODEL: ${{ vars.OPENAI_IMAGE_MODEL || 'gpt-image-2' }}
-          OPENAI_TEXT_MODEL: ${{ vars.OPENAI_TEXT_MODEL || 'gpt-5.6-terra' }}
           F1_CAPTION_REFERENCES: ${{ vars.F1_CAPTION_REFERENCES }}
         run: python publisher/f1_graphics_hourly/worker.py
 
       - name: Commit generated assets and state
+        shell: powershell
         run: |
-          if [ -z "$(git status --porcelain)" ]; then
-            echo "Nessuna modifica da salvare."
+          if (-not (git status --porcelain)) {
+            Write-Host 'Nessuna modifica da salvare.'
             exit 0
-          fi
-
-          git config user.name "F1 Graphics Bot"
-          git config user.email "actions@users.noreply.github.com"
+          }
+          git config user.name 'F1 Graphics Bot'
+          git config user.email 'actions@users.noreply.github.com'
           git add publisher/final_assets publisher/f1_graphics_hourly/state.json
-          git commit -m "Add hourly F1 graphic"
+          git commit -m 'Add hourly F1 graphic'
           git push
