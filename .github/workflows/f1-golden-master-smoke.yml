@@ -5,6 +5,11 @@ on:
     branches: [main]
     paths:
       - '.github/workflows/f1-golden-master-smoke.yml'
+      - 'publisher/rendering/f1_job_bridge.py'
+      - 'publisher/rendering/content_engine.py'
+      - 'publisher/rendering/visual_compliance.py'
+      - 'publisher/rendering/node/render-static.mjs'
+      - 'publisher/rendering/node/src/scenes/f1-reel.tsx'
   workflow_dispatch:
 
 permissions:
