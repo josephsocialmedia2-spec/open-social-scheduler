@@ -1,7 +1,7 @@
 {
   "version": 2,
   "name": "F1 Qualified Seller 14-Day Queue",
-  "generated_at": "2026-09-05T12:41:21+02:00",
+  "generated_at": "2026-09-05T12:52:53+02:00",
   "window_start": "2026-08-23",
   "window_end": "2026-09-05",
   "goal": "qualified_seller_leads",
@@ -133,7 +133,7 @@
           "checks": [
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-23/r01.mp4",
-              "bytes": 5197820,
+              "bytes": 3872788,
               "video": {
                 "codec_name": "h264",
                 "width": 1080,
@@ -157,10 +157,10 @@
               "name": "feed_cover_reel_at_1s",
               "passed": true,
               "stats": {
-                "white_ratio": 0.4018,
-                "dark_ratio": 0.0996,
-                "green_ratio": 0.0535,
-                "mean_luminance": 173.7
+                "white_ratio": 0.5668,
+                "dark_ratio": 0.0606,
+                "green_ratio": 0.0339,
+                "mean_luminance": 197.02
               },
               "failed": []
             }
@@ -304,7 +304,7 @@
           "checks": [
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-23/c01/slide-01.jpg",
-              "bytes": 163281,
+              "bytes": 135135,
               "dimensions": [
                 1080,
                 1350
@@ -312,7 +312,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-23/c01/slide-02.jpg",
-              "bytes": 145091,
+              "bytes": 121256,
               "dimensions": [
                 1080,
                 1350
@@ -320,7 +320,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-23/c01/slide-03.jpg",
-              "bytes": 148654,
+              "bytes": 122865,
               "dimensions": [
                 1080,
                 1350
@@ -328,7 +328,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-23/c01/slide-04.jpg",
-              "bytes": 152536,
+              "bytes": 126102,
               "dimensions": [
                 1080,
                 1350
@@ -336,7 +336,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-23/c01/slide-05.jpg",
-              "bytes": 153001,
+              "bytes": 126369,
               "dimensions": [
                 1080,
                 1350
@@ -344,7 +344,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-23/c01/slide-06.jpg",
-              "bytes": 145810,
+              "bytes": 121727,
               "dimensions": [
                 1080,
                 1350
@@ -352,7 +352,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-23/c01/slide-07.jpg",
-              "bytes": 147745,
+              "bytes": 122713,
               "dimensions": [
                 1080,
                 1350
@@ -360,7 +360,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-23/c01/slide-08.jpg",
-              "bytes": 144448,
+              "bytes": 120303,
               "dimensions": [
                 1080,
                 1350
@@ -368,7 +368,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-23/c01/slide-09.jpg",
-              "bytes": 148465,
+              "bytes": 121509,
               "dimensions": [
                 1080,
                 1350
@@ -376,7 +376,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-23/c01/slide-10.jpg",
-              "bytes": 147113,
+              "bytes": 120736,
               "dimensions": [
                 1080,
                 1350
@@ -398,10 +398,10 @@
               "name": "feed_cover_static_01",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3857,
-                "dark_ratio": 0.0343,
-                "green_ratio": 0.0607,
-                "mean_luminance": 186.75
+                "white_ratio": 0.4661,
+                "dark_ratio": 0.0388,
+                "green_ratio": 0.0419,
+                "mean_luminance": 197.34
               },
               "failed": []
             },
@@ -409,10 +409,10 @@
               "name": "feed_cover_static_02",
               "passed": true,
               "stats": {
-                "white_ratio": 0.4054,
-                "dark_ratio": 0.0398,
-                "green_ratio": 0.0419,
-                "mean_luminance": 187.39
+                "white_ratio": 0.4827,
+                "dark_ratio": 0.0383,
+                "green_ratio": 0.0362,
+                "mean_luminance": 198.69
               },
               "failed": []
             },
@@ -420,10 +420,10 @@
               "name": "feed_cover_static_03",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3996,
-                "dark_ratio": 0.0383,
-                "green_ratio": 0.0465,
-                "mean_luminance": 187.25
+                "white_ratio": 0.4804,
+                "dark_ratio": 0.0376,
+                "green_ratio": 0.0387,
+                "mean_luminance": 198.61
               },
               "failed": []
             },
@@ -431,10 +431,10 @@
               "name": "feed_cover_static_04",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3942,
-                "dark_ratio": 0.0352,
-                "green_ratio": 0.0561,
-                "mean_luminance": 187.22
+                "white_ratio": 0.4759,
+                "dark_ratio": 0.0362,
+                "green_ratio": 0.0445,
+                "mean_luminance": 198.47
               },
               "failed": []
             },
@@ -442,10 +442,10 @@
               "name": "feed_cover_static_05",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3929,
-                "dark_ratio": 0.0351,
-                "green_ratio": 0.0548,
-                "mean_luminance": 187.17
+                "white_ratio": 0.4769,
+                "dark_ratio": 0.0364,
+                "green_ratio": 0.0437,
+                "mean_luminance": 198.51
               },
               "failed": []
             },
@@ -453,10 +453,10 @@
               "name": "feed_cover_static_06",
               "passed": true,
               "stats": {
-                "white_ratio": 0.4053,
-                "dark_ratio": 0.0404,
-                "green_ratio": 0.0418,
-                "mean_luminance": 187.09
+                "white_ratio": 0.4822,
+                "dark_ratio": 0.0387,
+                "green_ratio": 0.0362,
+                "mean_luminance": 198.51
               },
               "failed": []
             },
@@ -464,10 +464,10 @@
               "name": "feed_cover_static_07",
               "passed": true,
               "stats": {
-                "white_ratio": 0.4055,
-                "dark_ratio": 0.0417,
-                "green_ratio": 0.0418,
-                "mean_luminance": 186.8
+                "white_ratio": 0.4823,
+                "dark_ratio": 0.0389,
+                "green_ratio": 0.0362,
+                "mean_luminance": 198.32
               },
               "failed": []
             },
@@ -475,10 +475,10 @@
               "name": "feed_cover_static_08",
               "passed": true,
               "stats": {
-                "white_ratio": 0.4055,
-                "dark_ratio": 0.0388,
-                "green_ratio": 0.0423,
-                "mean_luminance": 187.66
+                "white_ratio": 0.4843,
+                "dark_ratio": 0.0378,
+                "green_ratio": 0.0362,
+                "mean_luminance": 198.88
               },
               "failed": []
             },
@@ -486,10 +486,10 @@
               "name": "feed_cover_static_09",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3998,
-                "dark_ratio": 0.0332,
-                "green_ratio": 0.0518,
-                "mean_luminance": 188.31
+                "white_ratio": 0.4835,
+                "dark_ratio": 0.0352,
+                "green_ratio": 0.0415,
+                "mean_luminance": 199.29
               },
               "failed": []
             },
@@ -497,10 +497,10 @@
               "name": "feed_cover_static_10",
               "passed": true,
               "stats": {
-                "white_ratio": 0.4024,
-                "dark_ratio": 0.0323,
-                "green_ratio": 0.0512,
-                "mean_luminance": 188.64
+                "white_ratio": 0.4848,
+                "dark_ratio": 0.0347,
+                "green_ratio": 0.0413,
+                "mean_luminance": 199.48
               },
               "failed": []
             }
@@ -632,7 +632,7 @@
           "checks": [
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-24/r02.mp4",
-              "bytes": 3713886,
+              "bytes": 2984105,
               "video": {
                 "codec_name": "h264",
                 "width": 1080,
@@ -656,10 +656,10 @@
               "name": "feed_cover_reel_at_1s",
               "passed": true,
               "stats": {
-                "white_ratio": 0.4331,
-                "dark_ratio": 0.2472,
-                "green_ratio": 0.0569,
-                "mean_luminance": 156.62
+                "white_ratio": 0.5839,
+                "dark_ratio": 0.2125,
+                "green_ratio": 0.0347,
+                "mean_luminance": 178.83
               },
               "failed": []
             }
@@ -803,7 +803,7 @@
           "checks": [
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-24/c02/slide-01.jpg",
-              "bytes": 198779,
+              "bytes": 178215,
               "dimensions": [
                 1080,
                 1350
@@ -811,7 +811,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-24/c02/slide-02.jpg",
-              "bytes": 183370,
+              "bytes": 165458,
               "dimensions": [
                 1080,
                 1350
@@ -819,7 +819,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-24/c02/slide-03.jpg",
-              "bytes": 183132,
+              "bytes": 165154,
               "dimensions": [
                 1080,
                 1350
@@ -827,7 +827,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-24/c02/slide-04.jpg",
-              "bytes": 182813,
+              "bytes": 164654,
               "dimensions": [
                 1080,
                 1350
@@ -835,7 +835,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-24/c02/slide-05.jpg",
-              "bytes": 193296,
+              "bytes": 173211,
               "dimensions": [
                 1080,
                 1350
@@ -843,7 +843,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-24/c02/slide-06.jpg",
-              "bytes": 192541,
+              "bytes": 171727,
               "dimensions": [
                 1080,
                 1350
@@ -851,7 +851,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-24/c02/slide-07.jpg",
-              "bytes": 188328,
+              "bytes": 168069,
               "dimensions": [
                 1080,
                 1350
@@ -859,7 +859,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-24/c02/slide-08.jpg",
-              "bytes": 190096,
+              "bytes": 169540,
               "dimensions": [
                 1080,
                 1350
@@ -867,7 +867,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-24/c02/slide-09.jpg",
-              "bytes": 191806,
+              "bytes": 170172,
               "dimensions": [
                 1080,
                 1350
@@ -875,7 +875,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-24/c02/slide-10.jpg",
-              "bytes": 186133,
+              "bytes": 166211,
               "dimensions": [
                 1080,
                 1350
@@ -897,10 +897,10 @@
               "name": "feed_cover_static_01",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3686,
-                "dark_ratio": 0.1773,
-                "green_ratio": 0.0473,
-                "mean_luminance": 171.23
+                "white_ratio": 0.4914,
+                "dark_ratio": 0.1524,
+                "green_ratio": 0.0398,
+                "mean_luminance": 186.17
               },
               "failed": []
             },
@@ -908,10 +908,10 @@
               "name": "feed_cover_static_02",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3885,
-                "dark_ratio": 0.1782,
-                "green_ratio": 0.0391,
-                "mean_luminance": 172.36
+                "white_ratio": 0.5058,
+                "dark_ratio": 0.1529,
+                "green_ratio": 0.0345,
+                "mean_luminance": 186.99
               },
               "failed": []
             },
@@ -919,10 +919,10 @@
               "name": "feed_cover_static_03",
               "passed": true,
               "stats": {
-                "white_ratio": 0.389,
-                "dark_ratio": 0.1779,
-                "green_ratio": 0.0389,
-                "mean_luminance": 172.49
+                "white_ratio": 0.5064,
+                "dark_ratio": 0.1527,
+                "green_ratio": 0.0345,
+                "mean_luminance": 187.07
               },
               "failed": []
             },
@@ -930,10 +930,10 @@
               "name": "feed_cover_static_04",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3896,
-                "dark_ratio": 0.1777,
-                "green_ratio": 0.039,
-                "mean_luminance": 172.58
+                "white_ratio": 0.507,
+                "dark_ratio": 0.1526,
+                "green_ratio": 0.0345,
+                "mean_luminance": 187.12
               },
               "failed": []
             },
@@ -941,10 +941,10 @@
               "name": "feed_cover_static_05",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3792,
-                "dark_ratio": 0.176,
-                "green_ratio": 0.0494,
-                "mean_luminance": 171.66
+                "white_ratio": 0.4961,
+                "dark_ratio": 0.153,
+                "green_ratio": 0.0409,
+                "mean_luminance": 186.24
               },
               "failed": []
             },
@@ -952,10 +952,10 @@
               "name": "feed_cover_static_06",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3788,
-                "dark_ratio": 0.1757,
-                "green_ratio": 0.0484,
-                "mean_luminance": 171.85
+                "white_ratio": 0.4984,
+                "dark_ratio": 0.1523,
+                "green_ratio": 0.0402,
+                "mean_luminance": 186.56
               },
               "failed": []
             },
@@ -963,10 +963,10 @@
               "name": "feed_cover_static_07",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3817,
-                "dark_ratio": 0.1779,
-                "green_ratio": 0.044,
-                "mean_luminance": 171.84
+                "white_ratio": 0.5021,
+                "dark_ratio": 0.1527,
+                "green_ratio": 0.0373,
+                "mean_luminance": 186.73
               },
               "failed": []
             },
@@ -974,10 +974,10 @@
               "name": "feed_cover_static_08",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3821,
-                "dark_ratio": 0.1721,
-                "green_ratio": 0.052,
-                "mean_luminance": 172.59
+                "white_ratio": 0.5014,
+                "dark_ratio": 0.1508,
+                "green_ratio": 0.0416,
+                "mean_luminance": 187.04
               },
               "failed": []
             },
@@ -985,10 +985,10 @@
               "name": "feed_cover_static_09",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3775,
-                "dark_ratio": 0.1753,
-                "green_ratio": 0.048,
-                "mean_luminance": 171.9
+                "white_ratio": 0.4999,
+                "dark_ratio": 0.1522,
+                "green_ratio": 0.0393,
+                "mean_luminance": 186.72
               },
               "failed": []
             },
@@ -996,10 +996,10 @@
               "name": "feed_cover_static_10",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3873,
-                "dark_ratio": 0.1702,
-                "green_ratio": 0.0502,
-                "mean_luminance": 173.52
+                "white_ratio": 0.5057,
+                "dark_ratio": 0.1497,
+                "green_ratio": 0.0413,
+                "mean_luminance": 187.58
               },
               "failed": []
             }
@@ -1131,7 +1131,7 @@
           "checks": [
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-25/r03.mp4",
-              "bytes": 4266391,
+              "bytes": 3255296,
               "video": {
                 "codec_name": "h264",
                 "width": 1080,
@@ -1155,10 +1155,10 @@
               "name": "feed_cover_reel_at_1s",
               "passed": true,
               "stats": {
-                "white_ratio": 0.4419,
-                "dark_ratio": 0.2202,
-                "green_ratio": 0.0536,
-                "mean_luminance": 165.27
+                "white_ratio": 0.5922,
+                "dark_ratio": 0.1299,
+                "green_ratio": 0.0345,
+                "mean_luminance": 196.31
               },
               "failed": []
             }
@@ -1302,7 +1302,7 @@
           "checks": [
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-25/c03/slide-01.jpg",
-              "bytes": 218027,
+              "bytes": 183789,
               "dimensions": [
                 1080,
                 1350
@@ -1310,7 +1310,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-25/c03/slide-02.jpg",
-              "bytes": 209369,
+              "bytes": 176689,
               "dimensions": [
                 1080,
                 1350
@@ -1318,7 +1318,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-25/c03/slide-03.jpg",
-              "bytes": 206317,
+              "bytes": 172192,
               "dimensions": [
                 1080,
                 1350
@@ -1326,7 +1326,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-25/c03/slide-04.jpg",
-              "bytes": 196658,
+              "bytes": 165515,
               "dimensions": [
                 1080,
                 1350
@@ -1334,7 +1334,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-25/c03/slide-05.jpg",
-              "bytes": 202521,
+              "bytes": 170897,
               "dimensions": [
                 1080,
                 1350
@@ -1342,7 +1342,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-25/c03/slide-06.jpg",
-              "bytes": 213138,
+              "bytes": 179540,
               "dimensions": [
                 1080,
                 1350
@@ -1350,7 +1350,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-25/c03/slide-07.jpg",
-              "bytes": 200161,
+              "bytes": 169632,
               "dimensions": [
                 1080,
                 1350
@@ -1358,7 +1358,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-25/c03/slide-08.jpg",
-              "bytes": 208457,
+              "bytes": 174374,
               "dimensions": [
                 1080,
                 1350
@@ -1366,7 +1366,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-25/c03/slide-09.jpg",
-              "bytes": 214789,
+              "bytes": 181482,
               "dimensions": [
                 1080,
                 1350
@@ -1374,7 +1374,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-25/c03/slide-10.jpg",
-              "bytes": 208065,
+              "bytes": 175376,
               "dimensions": [
                 1080,
                 1350
@@ -1396,10 +1396,10 @@
               "name": "feed_cover_static_01",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3687,
-                "dark_ratio": 0.1531,
-                "green_ratio": 0.0535,
-                "mean_luminance": 174.66
+                "white_ratio": 0.4903,
+                "dark_ratio": 0.1129,
+                "green_ratio": 0.0448,
+                "mean_luminance": 193.41
               },
               "failed": []
             },
@@ -1407,10 +1407,10 @@
               "name": "feed_cover_static_02",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3811,
-                "dark_ratio": 0.151,
-                "green_ratio": 0.0591,
-                "mean_luminance": 175.61
+                "white_ratio": 0.4981,
+                "dark_ratio": 0.1119,
+                "green_ratio": 0.0461,
+                "mean_luminance": 194.06
               },
               "failed": []
             },
@@ -1418,10 +1418,10 @@
               "name": "feed_cover_static_03",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3834,
-                "dark_ratio": 0.1502,
-                "green_ratio": 0.0508,
-                "mean_luminance": 176.17
+                "white_ratio": 0.5054,
+                "dark_ratio": 0.1115,
+                "green_ratio": 0.0428,
+                "mean_luminance": 194.7
               },
               "failed": []
             },
@@ -1429,10 +1429,10 @@
               "name": "feed_cover_static_04",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3959,
-                "dark_ratio": 0.1506,
-                "green_ratio": 0.0421,
-                "mean_luminance": 177.22
+                "white_ratio": 0.514,
+                "dark_ratio": 0.1113,
+                "green_ratio": 0.0373,
+                "mean_luminance": 195.43
               },
               "failed": []
             },
@@ -1440,10 +1440,10 @@
               "name": "feed_cover_static_05",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3895,
-                "dark_ratio": 0.1568,
-                "green_ratio": 0.0414,
-                "mean_luminance": 175.53
+                "white_ratio": 0.5058,
+                "dark_ratio": 0.1142,
+                "green_ratio": 0.0373,
+                "mean_luminance": 194.21
               },
               "failed": []
             },
@@ -1451,10 +1451,10 @@
               "name": "feed_cover_static_06",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3777,
-                "dark_ratio": 0.1555,
-                "green_ratio": 0.0563,
-                "mean_luminance": 174.49
+                "white_ratio": 0.4937,
+                "dark_ratio": 0.1142,
+                "green_ratio": 0.0448,
+                "mean_luminance": 193.29
               },
               "failed": []
             },
@@ -1462,10 +1462,10 @@
               "name": "feed_cover_static_07",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3893,
-                "dark_ratio": 0.1558,
-                "green_ratio": 0.0413,
-                "mean_luminance": 175.67
+                "white_ratio": 0.5061,
+                "dark_ratio": 0.1137,
+                "green_ratio": 0.0373,
+                "mean_luminance": 194.31
               },
               "failed": []
             },
@@ -1473,10 +1473,10 @@
               "name": "feed_cover_static_08",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3781,
-                "dark_ratio": 0.1531,
-                "green_ratio": 0.051,
-                "mean_luminance": 175.13
+                "white_ratio": 0.4994,
+                "dark_ratio": 0.1133,
+                "green_ratio": 0.0424,
+                "mean_luminance": 193.94
               },
               "failed": []
             },
@@ -1484,10 +1484,10 @@
               "name": "feed_cover_static_09",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3791,
-                "dark_ratio": 0.1554,
-                "green_ratio": 0.057,
-                "mean_luminance": 174.69
+                "white_ratio": 0.4928,
+                "dark_ratio": 0.1143,
+                "green_ratio": 0.0459,
+                "mean_luminance": 193.23
               },
               "failed": []
             },
@@ -1495,10 +1495,10 @@
               "name": "feed_cover_static_10",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3819,
-                "dark_ratio": 0.1512,
-                "green_ratio": 0.057,
-                "mean_luminance": 175.67
+                "white_ratio": 0.5001,
+                "dark_ratio": 0.112,
+                "green_ratio": 0.0451,
+                "mean_luminance": 194.13
               },
               "failed": []
             }
@@ -1630,7 +1630,7 @@
           "checks": [
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-26/r04.mp4",
-              "bytes": 5216003,
+              "bytes": 4144260,
               "video": {
                 "codec_name": "h264",
                 "width": 1080,
@@ -1654,10 +1654,10 @@
               "name": "feed_cover_reel_at_1s",
               "passed": true,
               "stats": {
-                "white_ratio": 0.4177,
-                "dark_ratio": 0.0902,
-                "green_ratio": 0.0508,
-                "mean_luminance": 173.38
+                "white_ratio": 0.5781,
+                "dark_ratio": 0.0525,
+                "green_ratio": 0.0325,
+                "mean_luminance": 200.13
               },
               "failed": []
             }
@@ -1801,7 +1801,7 @@
           "checks": [
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-26/c04/slide-01.jpg",
-              "bytes": 241677,
+              "bytes": 208120,
               "dimensions": [
                 1080,
                 1350
@@ -1809,7 +1809,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-26/c04/slide-02.jpg",
-              "bytes": 231034,
+              "bytes": 196911,
               "dimensions": [
                 1080,
                 1350
@@ -1817,7 +1817,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-26/c04/slide-03.jpg",
-              "bytes": 229834,
+              "bytes": 196942,
               "dimensions": [
                 1080,
                 1350
@@ -1825,7 +1825,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-26/c04/slide-04.jpg",
-              "bytes": 234921,
+              "bytes": 202343,
               "dimensions": [
                 1080,
                 1350
@@ -1833,7 +1833,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-26/c04/slide-05.jpg",
-              "bytes": 230602,
+              "bytes": 198836,
               "dimensions": [
                 1080,
                 1350
@@ -1841,7 +1841,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-26/c04/slide-06.jpg",
-              "bytes": 230611,
+              "bytes": 197184,
               "dimensions": [
                 1080,
                 1350
@@ -1849,7 +1849,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-26/c04/slide-07.jpg",
-              "bytes": 232328,
+              "bytes": 200408,
               "dimensions": [
                 1080,
                 1350
@@ -1857,7 +1857,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-26/c04/slide-08.jpg",
-              "bytes": 229133,
+              "bytes": 195303,
               "dimensions": [
                 1080,
                 1350
@@ -1865,7 +1865,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-26/c04/slide-09.jpg",
-              "bytes": 225885,
+              "bytes": 192744,
               "dimensions": [
                 1080,
                 1350
@@ -1873,7 +1873,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-26/c04/slide-10.jpg",
-              "bytes": 227913,
+              "bytes": 194316,
               "dimensions": [
                 1080,
                 1350
@@ -1895,10 +1895,10 @@
               "name": "feed_cover_static_01",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3723,
-                "dark_ratio": 0.0553,
-                "green_ratio": 0.0587,
-                "mean_luminance": 168.5
+                "white_ratio": 0.4643,
+                "dark_ratio": 0.0508,
+                "green_ratio": 0.0471,
+                "mean_luminance": 183.19
               },
               "failed": []
             },
@@ -1906,10 +1906,10 @@
               "name": "feed_cover_static_02",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3829,
-                "dark_ratio": 0.0542,
-                "green_ratio": 0.0503,
-                "mean_luminance": 168.98
+                "white_ratio": 0.4758,
+                "dark_ratio": 0.0506,
+                "green_ratio": 0.0423,
+                "mean_luminance": 183.97
               },
               "failed": []
             },
@@ -1917,10 +1917,10 @@
               "name": "feed_cover_static_03",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3843,
-                "dark_ratio": 0.0574,
-                "green_ratio": 0.046,
-                "mean_luminance": 168.78
+                "white_ratio": 0.4769,
+                "dark_ratio": 0.0515,
+                "green_ratio": 0.0403,
+                "mean_luminance": 183.83
               },
               "failed": []
             },
@@ -1928,10 +1928,10 @@
               "name": "feed_cover_static_04",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3817,
-                "dark_ratio": 0.0582,
-                "green_ratio": 0.0533,
-                "mean_luminance": 168.43
+                "white_ratio": 0.4687,
+                "dark_ratio": 0.0518,
+                "green_ratio": 0.0442,
+                "mean_luminance": 183.14
               },
               "failed": []
             },
@@ -1939,10 +1939,10 @@
               "name": "feed_cover_static_05",
               "passed": true,
               "stats": {
-                "white_ratio": 0.383,
-                "dark_ratio": 0.0627,
-                "green_ratio": 0.0478,
-                "mean_luminance": 168.12
+                "white_ratio": 0.4736,
+                "dark_ratio": 0.0533,
+                "green_ratio": 0.0409,
+                "mean_luminance": 183.23
               },
               "failed": []
             },
@@ -1950,10 +1950,10 @@
               "name": "feed_cover_static_06",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3816,
-                "dark_ratio": 0.0569,
-                "green_ratio": 0.0487,
-                "mean_luminance": 168.58
+                "white_ratio": 0.4756,
+                "dark_ratio": 0.0512,
+                "green_ratio": 0.0416,
+                "mean_luminance": 183.84
               },
               "failed": []
             },
@@ -1961,10 +1961,10 @@
               "name": "feed_cover_static_07",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3821,
-                "dark_ratio": 0.0577,
-                "green_ratio": 0.0505,
-                "mean_luminance": 168.39
+                "white_ratio": 0.4712,
+                "dark_ratio": 0.0519,
+                "green_ratio": 0.0431,
+                "mean_luminance": 183.34
               },
               "failed": []
             },
@@ -1972,10 +1972,10 @@
               "name": "feed_cover_static_08",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3816,
-                "dark_ratio": 0.056,
-                "green_ratio": 0.0489,
-                "mean_luminance": 168.89
+                "white_ratio": 0.4777,
+                "dark_ratio": 0.0504,
+                "green_ratio": 0.0417,
+                "mean_luminance": 184.12
               },
               "failed": []
             },
@@ -1983,10 +1983,10 @@
               "name": "feed_cover_static_09",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3898,
-                "dark_ratio": 0.0537,
-                "green_ratio": 0.0472,
-                "mean_luminance": 169.94
+                "white_ratio": 0.4829,
+                "dark_ratio": 0.0494,
+                "green_ratio": 0.0405,
+                "mean_luminance": 184.71
               },
               "failed": []
             },
@@ -1994,10 +1994,10 @@
               "name": "feed_cover_static_10",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3896,
-                "dark_ratio": 0.0519,
-                "green_ratio": 0.0502,
-                "mean_luminance": 170.09
+                "white_ratio": 0.481,
+                "dark_ratio": 0.0489,
+                "green_ratio": 0.0423,
+                "mean_luminance": 184.68
               },
               "failed": []
             }
@@ -2129,7 +2129,7 @@
           "checks": [
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-27/r05.mp4",
-              "bytes": 3398255,
+              "bytes": 2640553,
               "video": {
                 "codec_name": "h264",
                 "width": 1080,
@@ -2153,10 +2153,10 @@
               "name": "feed_cover_reel_at_1s",
               "passed": true,
               "stats": {
-                "white_ratio": 0.5198,
-                "dark_ratio": 0.073,
-                "green_ratio": 0.0545,
-                "mean_luminance": 205.19
+                "white_ratio": 0.6455,
+                "dark_ratio": 0.0465,
+                "green_ratio": 0.0344,
+                "mean_luminance": 217.0
               },
               "failed": []
             }
@@ -2300,7 +2300,7 @@
           "checks": [
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-27/c05/slide-01.jpg",
-              "bytes": 221090,
+              "bytes": 185908,
               "dimensions": [
                 1080,
                 1350
@@ -2308,7 +2308,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-27/c05/slide-02.jpg",
-              "bytes": 196585,
+              "bytes": 166400,
               "dimensions": [
                 1080,
                 1350
@@ -2316,7 +2316,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-27/c05/slide-03.jpg",
-              "bytes": 197846,
+              "bytes": 167053,
               "dimensions": [
                 1080,
                 1350
@@ -2324,7 +2324,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-27/c05/slide-04.jpg",
-              "bytes": 197457,
+              "bytes": 166831,
               "dimensions": [
                 1080,
                 1350
@@ -2332,7 +2332,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-27/c05/slide-05.jpg",
-              "bytes": 199539,
+              "bytes": 169579,
               "dimensions": [
                 1080,
                 1350
@@ -2340,7 +2340,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-27/c05/slide-06.jpg",
-              "bytes": 209295,
+              "bytes": 175900,
               "dimensions": [
                 1080,
                 1350
@@ -2348,7 +2348,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-27/c05/slide-07.jpg",
-              "bytes": 201303,
+              "bytes": 170616,
               "dimensions": [
                 1080,
                 1350
@@ -2356,7 +2356,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-27/c05/slide-08.jpg",
-              "bytes": 204784,
+              "bytes": 172061,
               "dimensions": [
                 1080,
                 1350
@@ -2364,7 +2364,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-27/c05/slide-09.jpg",
-              "bytes": 204713,
+              "bytes": 172329,
               "dimensions": [
                 1080,
                 1350
@@ -2372,7 +2372,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-27/c05/slide-10.jpg",
-              "bytes": 207390,
+              "bytes": 173909,
               "dimensions": [
                 1080,
                 1350
@@ -2394,10 +2394,10 @@
               "name": "feed_cover_static_01",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3692,
-                "dark_ratio": 0.0497,
-                "green_ratio": 0.0591,
-                "mean_luminance": 201.22
+                "white_ratio": 0.484,
+                "dark_ratio": 0.0523,
+                "green_ratio": 0.0394,
+                "mean_luminance": 209.12
               },
               "failed": []
             },
@@ -2405,10 +2405,10 @@
               "name": "feed_cover_static_02",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3895,
-                "dark_ratio": 0.0488,
-                "green_ratio": 0.0412,
-                "mean_luminance": 203.45
+                "white_ratio": 0.5094,
+                "dark_ratio": 0.047,
+                "green_ratio": 0.0365,
+                "mean_luminance": 212.0
               },
               "failed": []
             },
@@ -2416,10 +2416,10 @@
               "name": "feed_cover_static_03",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3887,
-                "dark_ratio": 0.0491,
-                "green_ratio": 0.0412,
-                "mean_luminance": 203.41
+                "white_ratio": 0.5091,
+                "dark_ratio": 0.0473,
+                "green_ratio": 0.0365,
+                "mean_luminance": 211.99
               },
               "failed": []
             },
@@ -2427,10 +2427,10 @@
               "name": "feed_cover_static_04",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3884,
-                "dark_ratio": 0.0494,
-                "green_ratio": 0.0413,
-                "mean_luminance": 203.17
+                "white_ratio": 0.5087,
+                "dark_ratio": 0.0477,
+                "green_ratio": 0.0365,
+                "mean_luminance": 211.85
               },
               "failed": []
             },
@@ -2438,10 +2438,10 @@
               "name": "feed_cover_static_05",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3883,
-                "dark_ratio": 0.0517,
-                "green_ratio": 0.0405,
-                "mean_luminance": 202.65
+                "white_ratio": 0.5048,
+                "dark_ratio": 0.0487,
+                "green_ratio": 0.0365,
+                "mean_luminance": 211.28
               },
               "failed": []
             },
@@ -2449,10 +2449,10 @@
               "name": "feed_cover_static_06",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3789,
-                "dark_ratio": 0.0531,
-                "green_ratio": 0.0495,
-                "mean_luminance": 201.24
+                "white_ratio": 0.4952,
+                "dark_ratio": 0.0494,
+                "green_ratio": 0.0414,
+                "mean_luminance": 210.37
               },
               "failed": []
             },
@@ -2460,10 +2460,10 @@
               "name": "feed_cover_static_07",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3888,
-                "dark_ratio": 0.0533,
-                "green_ratio": 0.0403,
-                "mean_luminance": 202.37
+                "white_ratio": 0.5031,
+                "dark_ratio": 0.0494,
+                "green_ratio": 0.0365,
+                "mean_luminance": 211.05
               },
               "failed": []
             },
@@ -2471,10 +2471,10 @@
               "name": "feed_cover_static_08",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3782,
-                "dark_ratio": 0.0504,
-                "green_ratio": 0.0475,
-                "mean_luminance": 202.21
+                "white_ratio": 0.5012,
+                "dark_ratio": 0.048,
+                "green_ratio": 0.0401,
+                "mean_luminance": 211.16
               },
               "failed": []
             },
@@ -2482,10 +2482,10 @@
               "name": "feed_cover_static_09",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3795,
-                "dark_ratio": 0.0516,
-                "green_ratio": 0.0469,
-                "mean_luminance": 202.09
+                "white_ratio": 0.5004,
+                "dark_ratio": 0.0485,
+                "green_ratio": 0.0397,
+                "mean_luminance": 211.01
               },
               "failed": []
             },
@@ -2493,10 +2493,10 @@
               "name": "feed_cover_static_10",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3863,
-                "dark_ratio": 0.0442,
-                "green_ratio": 0.0623,
-                "mean_luminance": 203.44
+                "white_ratio": 0.4979,
+                "dark_ratio": 0.0487,
+                "green_ratio": 0.0408,
+                "mean_luminance": 210.73
               },
               "failed": []
             }
@@ -2628,7 +2628,7 @@
           "checks": [
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-28/r06.mp4",
-              "bytes": 3341170,
+              "bytes": 2637264,
               "video": {
                 "codec_name": "h264",
                 "width": 1080,
@@ -2652,10 +2652,10 @@
               "name": "feed_cover_reel_at_1s",
               "passed": true,
               "stats": {
-                "white_ratio": 0.4215,
-                "dark_ratio": 0.0673,
-                "green_ratio": 0.0518,
-                "mean_luminance": 206.68
+                "white_ratio": 0.5824,
+                "dark_ratio": 0.0415,
+                "green_ratio": 0.0343,
+                "mean_luminance": 218.23
               },
               "failed": []
             }
@@ -2799,7 +2799,7 @@
           "checks": [
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-28/c06/slide-01.jpg",
-              "bytes": 248876,
+              "bytes": 206075,
               "dimensions": [
                 1080,
                 1350
@@ -2807,7 +2807,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-28/c06/slide-02.jpg",
-              "bytes": 249640,
+              "bytes": 206469,
               "dimensions": [
                 1080,
                 1350
@@ -2815,7 +2815,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-28/c06/slide-03.jpg",
-              "bytes": 232228,
+              "bytes": 192079,
               "dimensions": [
                 1080,
                 1350
@@ -2823,7 +2823,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-28/c06/slide-04.jpg",
-              "bytes": 232436,
+              "bytes": 192035,
               "dimensions": [
                 1080,
                 1350
@@ -2831,7 +2831,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-28/c06/slide-05.jpg",
-              "bytes": 234199,
+              "bytes": 194715,
               "dimensions": [
                 1080,
                 1350
@@ -2839,7 +2839,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-28/c06/slide-06.jpg",
-              "bytes": 236125,
+              "bytes": 195746,
               "dimensions": [
                 1080,
                 1350
@@ -2847,7 +2847,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-28/c06/slide-07.jpg",
-              "bytes": 242858,
+              "bytes": 201621,
               "dimensions": [
                 1080,
                 1350
@@ -2855,7 +2855,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-28/c06/slide-08.jpg",
-              "bytes": 244804,
+              "bytes": 201446,
               "dimensions": [
                 1080,
                 1350
@@ -2863,7 +2863,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-28/c06/slide-09.jpg",
-              "bytes": 241916,
+              "bytes": 199825,
               "dimensions": [
                 1080,
                 1350
@@ -2871,7 +2871,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-28/c06/slide-10.jpg",
-              "bytes": 249627,
+              "bytes": 205380,
               "dimensions": [
                 1080,
                 1350
@@ -2893,10 +2893,10 @@
               "name": "feed_cover_static_01",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3771,
-                "dark_ratio": 0.0654,
-                "green_ratio": 0.0477,
-                "mean_luminance": 174.61
+                "white_ratio": 0.5016,
+                "dark_ratio": 0.0569,
+                "green_ratio": 0.0401,
+                "mean_luminance": 189.43
               },
               "failed": []
             },
@@ -2904,10 +2904,10 @@
               "name": "feed_cover_static_02",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3841,
-                "dark_ratio": 0.0672,
-                "green_ratio": 0.054,
-                "mean_luminance": 174.18
+                "white_ratio": 0.4987,
+                "dark_ratio": 0.0589,
+                "green_ratio": 0.0437,
+                "mean_luminance": 188.7
               },
               "failed": []
             },
@@ -2915,10 +2915,10 @@
               "name": "feed_cover_static_03",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3986,
-                "dark_ratio": 0.0641,
-                "green_ratio": 0.0406,
-                "mean_luminance": 176.41
+                "white_ratio": 0.518,
+                "dark_ratio": 0.0563,
+                "green_ratio": 0.0355,
+                "mean_luminance": 190.67
               },
               "failed": []
             },
@@ -2926,10 +2926,10 @@
               "name": "feed_cover_static_04",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3993,
-                "dark_ratio": 0.0634,
-                "green_ratio": 0.0407,
-                "mean_luminance": 176.5
+                "white_ratio": 0.5182,
+                "dark_ratio": 0.0562,
+                "green_ratio": 0.0355,
+                "mean_luminance": 190.71
               },
               "failed": []
             },
@@ -2937,10 +2937,10 @@
               "name": "feed_cover_static_05",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3956,
-                "dark_ratio": 0.0673,
-                "green_ratio": 0.0399,
-                "mean_luminance": 175.47
+                "white_ratio": 0.5123,
+                "dark_ratio": 0.058,
+                "green_ratio": 0.0355,
+                "mean_luminance": 189.86
               },
               "failed": []
             },
@@ -2948,10 +2948,10 @@
               "name": "feed_cover_static_06",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3961,
-                "dark_ratio": 0.0668,
-                "green_ratio": 0.0401,
-                "mean_luminance": 175.57
+                "white_ratio": 0.5126,
+                "dark_ratio": 0.0582,
+                "green_ratio": 0.0355,
+                "mean_luminance": 189.91
               },
               "failed": []
             },
@@ -2959,10 +2959,10 @@
               "name": "feed_cover_static_07",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3849,
-                "dark_ratio": 0.0656,
-                "green_ratio": 0.0505,
-                "mean_luminance": 174.65
+                "white_ratio": 0.5042,
+                "dark_ratio": 0.0579,
+                "green_ratio": 0.0413,
+                "mean_luminance": 189.23
               },
               "failed": []
             },
@@ -2970,10 +2970,10 @@
               "name": "feed_cover_static_08",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3849,
-                "dark_ratio": 0.0682,
-                "green_ratio": 0.0478,
-                "mean_luminance": 174.4
+                "white_ratio": 0.5055,
+                "dark_ratio": 0.0582,
+                "green_ratio": 0.04,
+                "mean_luminance": 189.24
               },
               "failed": []
             },
@@ -2981,10 +2981,10 @@
               "name": "feed_cover_static_09",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3877,
-                "dark_ratio": 0.0631,
-                "green_ratio": 0.0511,
-                "mean_luminance": 175.35
+                "white_ratio": 0.508,
+                "dark_ratio": 0.0565,
+                "green_ratio": 0.0416,
+                "mean_luminance": 189.87
               },
               "failed": []
             },
@@ -2992,10 +2992,10 @@
               "name": "feed_cover_static_10",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3727,
-                "dark_ratio": 0.0711,
-                "green_ratio": 0.0497,
-                "mean_luminance": 172.69
+                "white_ratio": 0.4989,
+                "dark_ratio": 0.0605,
+                "green_ratio": 0.0416,
+                "mean_luminance": 188.19
               },
               "failed": []
             }
@@ -3127,7 +3127,7 @@
           "checks": [
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-29/r07.mp4",
-              "bytes": 4308750,
+              "bytes": 2826175,
               "video": {
                 "codec_name": "h264",
                 "width": 1080,
@@ -3151,10 +3151,10 @@
               "name": "feed_cover_reel_at_1s",
               "passed": true,
               "stats": {
-                "white_ratio": 0.4124,
-                "dark_ratio": 0.1335,
-                "green_ratio": 0.0532,
-                "mean_luminance": 167.31
+                "white_ratio": 0.5744,
+                "dark_ratio": 0.0626,
+                "green_ratio": 0.0347,
+                "mean_luminance": 193.11
               },
               "failed": []
             }
@@ -3298,7 +3298,7 @@
           "checks": [
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-29/c07/slide-01.jpg",
-              "bytes": 233668,
+              "bytes": 197787,
               "dimensions": [
                 1080,
                 1350
@@ -3306,7 +3306,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-29/c07/slide-02.jpg",
-              "bytes": 228241,
+              "bytes": 190238,
               "dimensions": [
                 1080,
                 1350
@@ -3314,7 +3314,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-29/c07/slide-03.jpg",
-              "bytes": 223161,
+              "bytes": 186812,
               "dimensions": [
                 1080,
                 1350
@@ -3322,7 +3322,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-29/c07/slide-04.jpg",
-              "bytes": 220516,
+              "bytes": 184844,
               "dimensions": [
                 1080,
                 1350
@@ -3330,7 +3330,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-29/c07/slide-05.jpg",
-              "bytes": 223991,
+              "bytes": 187360,
               "dimensions": [
                 1080,
                 1350
@@ -3338,7 +3338,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-29/c07/slide-06.jpg",
-              "bytes": 224818,
+              "bytes": 188810,
               "dimensions": [
                 1080,
                 1350
@@ -3346,7 +3346,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-29/c07/slide-07.jpg",
-              "bytes": 221356,
+              "bytes": 183865,
               "dimensions": [
                 1080,
                 1350
@@ -3354,7 +3354,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-29/c07/slide-08.jpg",
-              "bytes": 217155,
+              "bytes": 182922,
               "dimensions": [
                 1080,
                 1350
@@ -3362,7 +3362,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-29/c07/slide-09.jpg",
-              "bytes": 222146,
+              "bytes": 185159,
               "dimensions": [
                 1080,
                 1350
@@ -3370,7 +3370,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-29/c07/slide-10.jpg",
-              "bytes": 224750,
+              "bytes": 187589,
               "dimensions": [
                 1080,
                 1350
@@ -3392,10 +3392,10 @@
               "name": "feed_cover_static_01",
               "passed": true,
               "stats": {
-                "white_ratio": 0.5464,
-                "dark_ratio": 0.061,
-                "green_ratio": 0.0512,
-                "mean_luminance": 202.46
+                "white_ratio": 0.6371,
+                "dark_ratio": 0.0514,
+                "green_ratio": 0.0427,
+                "mean_luminance": 212.97
               },
               "failed": []
             },
@@ -3403,10 +3403,10 @@
               "name": "feed_cover_static_02",
               "passed": true,
               "stats": {
-                "white_ratio": 0.5516,
-                "dark_ratio": 0.0569,
-                "green_ratio": 0.0574,
-                "mean_luminance": 203.31
+                "white_ratio": 0.6449,
+                "dark_ratio": 0.049,
+                "green_ratio": 0.0456,
+                "mean_luminance": 213.88
               },
               "failed": []
             },
@@ -3414,10 +3414,10 @@
               "name": "feed_cover_static_03",
               "passed": true,
               "stats": {
-                "white_ratio": 0.5546,
-                "dark_ratio": 0.0579,
-                "green_ratio": 0.0492,
-                "mean_luminance": 203.4
+                "white_ratio": 0.6459,
+                "dark_ratio": 0.0509,
+                "green_ratio": 0.041,
+                "mean_luminance": 213.83
               },
               "failed": []
             },
@@ -3425,10 +3425,10 @@
               "name": "feed_cover_static_04",
               "passed": true,
               "stats": {
-                "white_ratio": 0.5577,
-                "dark_ratio": 0.0595,
-                "green_ratio": 0.0454,
-                "mean_luminance": 203.52
+                "white_ratio": 0.6495,
+                "dark_ratio": 0.0508,
+                "green_ratio": 0.0389,
+                "mean_luminance": 214.08
               },
               "failed": []
             },
@@ -3436,10 +3436,10 @@
               "name": "feed_cover_static_05",
               "passed": true,
               "stats": {
-                "white_ratio": 0.5534,
-                "dark_ratio": 0.058,
-                "green_ratio": 0.0501,
-                "mean_luminance": 203.3
+                "white_ratio": 0.6459,
+                "dark_ratio": 0.0507,
+                "green_ratio": 0.0414,
+                "mean_luminance": 213.77
               },
               "failed": []
             },
@@ -3447,10 +3447,10 @@
               "name": "feed_cover_static_06",
               "passed": true,
               "stats": {
-                "white_ratio": 0.5545,
-                "dark_ratio": 0.0583,
-                "green_ratio": 0.051,
-                "mean_luminance": 203.22
+                "white_ratio": 0.6445,
+                "dark_ratio": 0.0508,
+                "green_ratio": 0.0424,
+                "mean_luminance": 213.66
               },
               "failed": []
             },
@@ -3458,10 +3458,10 @@
               "name": "feed_cover_static_07",
               "passed": true,
               "stats": {
-                "white_ratio": 0.5548,
-                "dark_ratio": 0.0574,
-                "green_ratio": 0.0484,
-                "mean_luminance": 203.75
+                "white_ratio": 0.6522,
+                "dark_ratio": 0.0495,
+                "green_ratio": 0.0404,
+                "mean_luminance": 214.43
               },
               "failed": []
             },
@@ -3469,10 +3469,10 @@
               "name": "feed_cover_static_08",
               "passed": true,
               "stats": {
-                "white_ratio": 0.5666,
-                "dark_ratio": 0.0619,
-                "green_ratio": 0.0399,
-                "mean_luminance": 203.84
+                "white_ratio": 0.6531,
+                "dark_ratio": 0.0515,
+                "green_ratio": 0.0357,
+                "mean_luminance": 214.14
               },
               "failed": []
             },
@@ -3480,10 +3480,10 @@
               "name": "feed_cover_static_09",
               "passed": true,
               "stats": {
-                "white_ratio": 0.5558,
-                "dark_ratio": 0.0586,
-                "green_ratio": 0.0477,
-                "mean_luminance": 203.55
+                "white_ratio": 0.6503,
+                "dark_ratio": 0.0502,
+                "green_ratio": 0.0398,
+                "mean_luminance": 214.16
               },
               "failed": []
             },
@@ -3491,10 +3491,10 @@
               "name": "feed_cover_static_10",
               "passed": true,
               "stats": {
-                "white_ratio": 0.5562,
-                "dark_ratio": 0.0531,
-                "green_ratio": 0.0598,
-                "mean_luminance": 204.55
+                "white_ratio": 0.6472,
+                "dark_ratio": 0.0502,
+                "green_ratio": 0.0419,
+                "mean_luminance": 213.91
               },
               "failed": []
             }
@@ -3626,7 +3626,7 @@
           "checks": [
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-30/r08.mp4",
-              "bytes": 5805348,
+              "bytes": 3617160,
               "video": {
                 "codec_name": "h264",
                 "width": 1080,
@@ -3650,10 +3650,10 @@
               "name": "feed_cover_reel_at_1s",
               "passed": true,
               "stats": {
-                "white_ratio": 0.4089,
-                "dark_ratio": 0.0888,
-                "green_ratio": 0.0527,
-                "mean_luminance": 144.47
+                "white_ratio": 0.571,
+                "dark_ratio": 0.0521,
+                "green_ratio": 0.0341,
+                "mean_luminance": 177.61
               },
               "failed": []
             }
@@ -3797,7 +3797,7 @@
           "checks": [
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-30/c08/slide-01.jpg",
-              "bytes": 235282,
+              "bytes": 203228,
               "dimensions": [
                 1080,
                 1350
@@ -3805,7 +3805,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-30/c08/slide-02.jpg",
-              "bytes": 207520,
+              "bytes": 179636,
               "dimensions": [
                 1080,
                 1350
@@ -3813,7 +3813,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-30/c08/slide-03.jpg",
-              "bytes": 216945,
+              "bytes": 186997,
               "dimensions": [
                 1080,
                 1350
@@ -3821,7 +3821,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-30/c08/slide-04.jpg",
-              "bytes": 217374,
+              "bytes": 186538,
               "dimensions": [
                 1080,
                 1350
@@ -3829,7 +3829,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-30/c08/slide-05.jpg",
-              "bytes": 212055,
+              "bytes": 185369,
               "dimensions": [
                 1080,
                 1350
@@ -3837,7 +3837,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-30/c08/slide-06.jpg",
-              "bytes": 208828,
+              "bytes": 180978,
               "dimensions": [
                 1080,
                 1350
@@ -3845,7 +3845,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-30/c08/slide-07.jpg",
-              "bytes": 217783,
+              "bytes": 187632,
               "dimensions": [
                 1080,
                 1350
@@ -3853,7 +3853,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-30/c08/slide-08.jpg",
-              "bytes": 208139,
+              "bytes": 180052,
               "dimensions": [
                 1080,
                 1350
@@ -3861,7 +3861,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-30/c08/slide-09.jpg",
-              "bytes": 210193,
+              "bytes": 182916,
               "dimensions": [
                 1080,
                 1350
@@ -3869,7 +3869,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-30/c08/slide-10.jpg",
-              "bytes": 221320,
+              "bytes": 189973,
               "dimensions": [
                 1080,
                 1350
@@ -3891,10 +3891,10 @@
               "name": "feed_cover_static_01",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3714,
-                "dark_ratio": 0.0468,
-                "green_ratio": 0.0615,
-                "mean_luminance": 186.88
+                "white_ratio": 0.4827,
+                "dark_ratio": 0.0502,
+                "green_ratio": 0.0394,
+                "mean_luminance": 197.95
               },
               "failed": []
             },
@@ -3902,10 +3902,10 @@
               "name": "feed_cover_static_02",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3946,
-                "dark_ratio": 0.0458,
-                "green_ratio": 0.0408,
-                "mean_luminance": 189.61
+                "white_ratio": 0.5132,
+                "dark_ratio": 0.0442,
+                "green_ratio": 0.0358,
+                "mean_luminance": 201.34
               },
               "failed": []
             },
@@ -3913,10 +3913,10 @@
               "name": "feed_cover_static_03",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3809,
-                "dark_ratio": 0.0452,
-                "green_ratio": 0.0509,
-                "mean_luminance": 188.45
+                "white_ratio": 0.5033,
+                "dark_ratio": 0.0444,
+                "green_ratio": 0.0412,
+                "mean_luminance": 200.52
               },
               "failed": []
             },
@@ -3924,10 +3924,10 @@
               "name": "feed_cover_static_04",
               "passed": true,
               "stats": {
-                "white_ratio": 0.38,
-                "dark_ratio": 0.0478,
-                "green_ratio": 0.0482,
-                "mean_luminance": 187.99
+                "white_ratio": 0.5038,
+                "dark_ratio": 0.0452,
+                "green_ratio": 0.0401,
+                "mean_luminance": 200.44
               },
               "failed": []
             },
@@ -3935,10 +3935,10 @@
               "name": "feed_cover_static_05",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3901,
-                "dark_ratio": 0.0523,
-                "green_ratio": 0.0401,
-                "mean_luminance": 187.84
+                "white_ratio": 0.5041,
+                "dark_ratio": 0.0472,
+                "green_ratio": 0.0357,
+                "mean_luminance": 199.99
               },
               "failed": []
             },
@@ -3946,10 +3946,10 @@
               "name": "feed_cover_static_06",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3911,
-                "dark_ratio": 0.0477,
-                "green_ratio": 0.0409,
-                "mean_luminance": 189.04
+                "white_ratio": 0.5113,
+                "dark_ratio": 0.045,
+                "green_ratio": 0.0358,
+                "mean_luminance": 201.04
               },
               "failed": []
             },
@@ -3957,10 +3957,10 @@
               "name": "feed_cover_static_07",
               "passed": true,
               "stats": {
-                "white_ratio": 0.382,
-                "dark_ratio": 0.0452,
-                "green_ratio": 0.0517,
-                "mean_luminance": 188.44
+                "white_ratio": 0.5027,
+                "dark_ratio": 0.0445,
+                "green_ratio": 0.0423,
+                "mean_luminance": 200.44
               },
               "failed": []
             },
@@ -3968,10 +3968,10 @@
               "name": "feed_cover_static_08",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3932,
-                "dark_ratio": 0.0461,
-                "green_ratio": 0.0409,
-                "mean_luminance": 189.39
+                "white_ratio": 0.5124,
+                "dark_ratio": 0.0444,
+                "green_ratio": 0.0358,
+                "mean_luminance": 201.23
               },
               "failed": []
             },
@@ -3979,10 +3979,10 @@
               "name": "feed_cover_static_09",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3897,
-                "dark_ratio": 0.0489,
-                "green_ratio": 0.0405,
-                "mean_luminance": 188.63
+                "white_ratio": 0.5081,
+                "dark_ratio": 0.0458,
+                "green_ratio": 0.0357,
+                "mean_luminance": 200.65
               },
               "failed": []
             },
@@ -3990,10 +3990,10 @@
               "name": "feed_cover_static_10",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3865,
-                "dark_ratio": 0.0431,
-                "green_ratio": 0.061,
-                "mean_luminance": 188.84
+                "white_ratio": 0.4985,
+                "dark_ratio": 0.0461,
+                "green_ratio": 0.0416,
+                "mean_luminance": 199.7
               },
               "failed": []
             }
@@ -4125,7 +4125,7 @@
           "checks": [
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-31/r09.mp4",
-              "bytes": 4633847,
+              "bytes": 3413318,
               "video": {
                 "codec_name": "h264",
                 "width": 1080,
@@ -4149,10 +4149,10 @@
               "name": "feed_cover_reel_at_1s",
               "passed": true,
               "stats": {
-                "white_ratio": 0.4135,
-                "dark_ratio": 0.0691,
-                "green_ratio": 0.0478,
-                "mean_luminance": 193.69
+                "white_ratio": 0.5818,
+                "dark_ratio": 0.0465,
+                "green_ratio": 0.0331,
+                "mean_luminance": 209.88
               },
               "failed": []
             }
@@ -4296,7 +4296,7 @@
           "checks": [
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-31/c09/slide-01.jpg",
-              "bytes": 227923,
+              "bytes": 194488,
               "dimensions": [
                 1080,
                 1350
@@ -4304,7 +4304,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-31/c09/slide-02.jpg",
-              "bytes": 218655,
+              "bytes": 190404,
               "dimensions": [
                 1080,
                 1350
@@ -4312,7 +4312,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-31/c09/slide-03.jpg",
-              "bytes": 220897,
+              "bytes": 191501,
               "dimensions": [
                 1080,
                 1350
@@ -4320,7 +4320,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-31/c09/slide-04.jpg",
-              "bytes": 220078,
+              "bytes": 189615,
               "dimensions": [
                 1080,
                 1350
@@ -4328,7 +4328,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-31/c09/slide-05.jpg",
-              "bytes": 221252,
+              "bytes": 191205,
               "dimensions": [
                 1080,
                 1350
@@ -4336,7 +4336,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-31/c09/slide-06.jpg",
-              "bytes": 218333,
+              "bytes": 187447,
               "dimensions": [
                 1080,
                 1350
@@ -4344,7 +4344,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-31/c09/slide-07.jpg",
-              "bytes": 222288,
+              "bytes": 194913,
               "dimensions": [
                 1080,
                 1350
@@ -4352,7 +4352,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-31/c09/slide-08.jpg",
-              "bytes": 219510,
+              "bytes": 188978,
               "dimensions": [
                 1080,
                 1350
@@ -4360,7 +4360,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-31/c09/slide-09.jpg",
-              "bytes": 220137,
+              "bytes": 189732,
               "dimensions": [
                 1080,
                 1350
@@ -4368,7 +4368,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-31/c09/slide-10.jpg",
-              "bytes": 218452,
+              "bytes": 190209,
               "dimensions": [
                 1080,
                 1350
@@ -4390,10 +4390,10 @@
               "name": "feed_cover_static_01",
               "passed": true,
               "stats": {
-                "white_ratio": 0.388,
-                "dark_ratio": 0.0681,
-                "green_ratio": 0.0512,
-                "mean_luminance": 180.06
+                "white_ratio": 0.5137,
+                "dark_ratio": 0.0648,
+                "green_ratio": 0.0419,
+                "mean_luminance": 194.58
               },
               "failed": []
             },
@@ -4401,10 +4401,10 @@
               "name": "feed_cover_static_02",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3947,
-                "dark_ratio": 0.0747,
-                "green_ratio": 0.0463,
-                "mean_luminance": 178.95
+                "white_ratio": 0.5136,
+                "dark_ratio": 0.0679,
+                "green_ratio": 0.0389,
+                "mean_luminance": 193.83
               },
               "failed": []
             },
@@ -4412,10 +4412,10 @@
               "name": "feed_cover_static_03",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3932,
-                "dark_ratio": 0.073,
-                "green_ratio": 0.0488,
-                "mean_luminance": 179.26
+                "white_ratio": 0.5137,
+                "dark_ratio": 0.0673,
+                "green_ratio": 0.0404,
+                "mean_luminance": 193.95
               },
               "failed": []
             },
@@ -4423,10 +4423,10 @@
               "name": "feed_cover_static_04",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3927,
-                "dark_ratio": 0.0704,
-                "green_ratio": 0.0493,
-                "mean_luminance": 179.67
+                "white_ratio": 0.517,
+                "dark_ratio": 0.0662,
+                "green_ratio": 0.0408,
+                "mean_luminance": 194.43
               },
               "failed": []
             },
@@ -4434,10 +4434,10 @@
               "name": "feed_cover_static_05",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3936,
-                "dark_ratio": 0.0699,
-                "green_ratio": 0.0508,
-                "mean_luminance": 179.75
+                "white_ratio": 0.5151,
+                "dark_ratio": 0.0661,
+                "green_ratio": 0.0415,
+                "mean_luminance": 194.26
               },
               "failed": []
             },
@@ -4445,10 +4445,10 @@
               "name": "feed_cover_static_06",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3965,
-                "dark_ratio": 0.0677,
-                "green_ratio": 0.0507,
-                "mean_luminance": 180.56
+                "white_ratio": 0.5192,
+                "dark_ratio": 0.0648,
+                "green_ratio": 0.0413,
+                "mean_luminance": 194.9
               },
               "failed": []
             },
@@ -4456,10 +4456,10 @@
               "name": "feed_cover_static_07",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3928,
-                "dark_ratio": 0.07,
-                "green_ratio": 0.0595,
-                "mean_luminance": 179.39
+                "white_ratio": 0.5088,
+                "dark_ratio": 0.0667,
+                "green_ratio": 0.0448,
+                "mean_luminance": 193.72
               },
               "failed": []
             },
@@ -4467,10 +4467,10 @@
               "name": "feed_cover_static_08",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3964,
-                "dark_ratio": 0.0686,
-                "green_ratio": 0.0513,
-                "mean_luminance": 180.25
+                "white_ratio": 0.5169,
+                "dark_ratio": 0.0652,
+                "green_ratio": 0.042,
+                "mean_luminance": 194.64
               },
               "failed": []
             },
@@ -4478,10 +4478,10 @@
               "name": "feed_cover_static_09",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3957,
-                "dark_ratio": 0.0682,
-                "green_ratio": 0.0522,
-                "mean_luminance": 180.23
+                "white_ratio": 0.5165,
+                "dark_ratio": 0.0653,
+                "green_ratio": 0.0424,
+                "mean_luminance": 194.57
               },
               "failed": []
             },
@@ -4489,10 +4489,10 @@
               "name": "feed_cover_static_10",
               "passed": true,
               "stats": {
-                "white_ratio": 0.4009,
-                "dark_ratio": 0.0656,
-                "green_ratio": 0.058,
-                "mean_luminance": 180.87
+                "white_ratio": 0.5174,
+                "dark_ratio": 0.063,
+                "green_ratio": 0.0456,
+                "mean_luminance": 194.99
               },
               "failed": []
             }
@@ -4624,7 +4624,7 @@
           "checks": [
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-01/r10.mp4",
-              "bytes": 4059734,
+              "bytes": 3050043,
               "video": {
                 "codec_name": "h264",
                 "width": 1080,
@@ -4648,10 +4648,10 @@
               "name": "feed_cover_reel_at_1s",
               "passed": true,
               "stats": {
-                "white_ratio": 0.4107,
-                "dark_ratio": 0.0978,
-                "green_ratio": 0.0546,
-                "mean_luminance": 166.01
+                "white_ratio": 0.5739,
+                "dark_ratio": 0.0717,
+                "green_ratio": 0.034,
+                "mean_luminance": 192.42
               },
               "failed": []
             }
@@ -4795,7 +4795,7 @@
           "checks": [
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-01/c10/slide-01.jpg",
-              "bytes": 232748,
+              "bytes": 198651,
               "dimensions": [
                 1080,
                 1350
@@ -4803,7 +4803,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-01/c10/slide-02.jpg",
-              "bytes": 221122,
+              "bytes": 189819,
               "dimensions": [
                 1080,
                 1350
@@ -4811,7 +4811,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-01/c10/slide-03.jpg",
-              "bytes": 221853,
+              "bytes": 189350,
               "dimensions": [
                 1080,
                 1350
@@ -4819,7 +4819,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-01/c10/slide-04.jpg",
-              "bytes": 224063,
+              "bytes": 191232,
               "dimensions": [
                 1080,
                 1350
@@ -4827,7 +4827,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-01/c10/slide-05.jpg",
-              "bytes": 227004,
+              "bytes": 193952,
               "dimensions": [
                 1080,
                 1350
@@ -4835,7 +4835,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-01/c10/slide-06.jpg",
-              "bytes": 221775,
+              "bytes": 189841,
               "dimensions": [
                 1080,
                 1350
@@ -4843,7 +4843,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-01/c10/slide-07.jpg",
-              "bytes": 215952,
+              "bytes": 186557,
               "dimensions": [
                 1080,
                 1350
@@ -4851,7 +4851,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-01/c10/slide-08.jpg",
-              "bytes": 220466,
+              "bytes": 187770,
               "dimensions": [
                 1080,
                 1350
@@ -4859,7 +4859,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-01/c10/slide-09.jpg",
-              "bytes": 220007,
+              "bytes": 189044,
               "dimensions": [
                 1080,
                 1350
@@ -4867,7 +4867,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-01/c10/slide-10.jpg",
-              "bytes": 221851,
+              "bytes": 190150,
               "dimensions": [
                 1080,
                 1350
@@ -4889,10 +4889,10 @@
               "name": "feed_cover_static_01",
               "passed": true,
               "stats": {
-                "white_ratio": 0.4372,
-                "dark_ratio": 0.0603,
-                "green_ratio": 0.0572,
-                "mean_luminance": 187.54
+                "white_ratio": 0.5119,
+                "dark_ratio": 0.0556,
+                "green_ratio": 0.0454,
+                "mean_luminance": 195.73
               },
               "failed": []
             },
@@ -4900,10 +4900,10 @@
               "name": "feed_cover_static_02",
               "passed": true,
               "stats": {
-                "white_ratio": 0.4515,
-                "dark_ratio": 0.0715,
-                "green_ratio": 0.0393,
-                "mean_luminance": 186.36
+                "white_ratio": 0.521,
+                "dark_ratio": 0.0608,
+                "green_ratio": 0.0351,
+                "mean_luminance": 195.25
               },
               "failed": []
             },
@@ -4911,10 +4911,10 @@
               "name": "feed_cover_static_03",
               "passed": true,
               "stats": {
-                "white_ratio": 0.4458,
-                "dark_ratio": 0.0642,
-                "green_ratio": 0.0466,
-                "mean_luminance": 187.5
+                "white_ratio": 0.5234,
+                "dark_ratio": 0.0573,
+                "green_ratio": 0.0394,
+                "mean_luminance": 196.1
               },
               "failed": []
             },
@@ -4922,10 +4922,10 @@
               "name": "feed_cover_static_04",
               "passed": true,
               "stats": {
-                "white_ratio": 0.4427,
-                "dark_ratio": 0.0631,
-                "green_ratio": 0.0503,
-                "mean_luminance": 187.28
+                "white_ratio": 0.5195,
+                "dark_ratio": 0.0576,
+                "green_ratio": 0.0412,
+                "mean_luminance": 195.8
               },
               "failed": []
             },
@@ -4933,10 +4933,10 @@
               "name": "feed_cover_static_05",
               "passed": true,
               "stats": {
-                "white_ratio": 0.4441,
-                "dark_ratio": 0.0613,
-                "green_ratio": 0.057,
-                "mean_luminance": 187.56
+                "white_ratio": 0.5176,
+                "dark_ratio": 0.0561,
+                "green_ratio": 0.0451,
+                "mean_luminance": 195.8
               },
               "failed": []
             },
@@ -4944,10 +4944,10 @@
               "name": "feed_cover_static_06",
               "passed": true,
               "stats": {
-                "white_ratio": 0.4466,
-                "dark_ratio": 0.0616,
-                "green_ratio": 0.0491,
-                "mean_luminance": 187.78
+                "white_ratio": 0.5222,
+                "dark_ratio": 0.0568,
+                "green_ratio": 0.041,
+                "mean_luminance": 196.09
               },
               "failed": []
             },
@@ -4955,10 +4955,10 @@
               "name": "feed_cover_static_07",
               "passed": true,
               "stats": {
-                "white_ratio": 0.4535,
-                "dark_ratio": 0.0658,
-                "green_ratio": 0.0396,
-                "mean_luminance": 187.62
+                "white_ratio": 0.5247,
+                "dark_ratio": 0.0587,
+                "green_ratio": 0.0355,
+                "mean_luminance": 195.99
               },
               "failed": []
             },
@@ -4966,10 +4966,10 @@
               "name": "feed_cover_static_08",
               "passed": true,
               "stats": {
-                "white_ratio": 0.4483,
-                "dark_ratio": 0.0623,
-                "green_ratio": 0.0478,
-                "mean_luminance": 187.96
+                "white_ratio": 0.5243,
+                "dark_ratio": 0.0566,
+                "green_ratio": 0.0399,
+                "mean_luminance": 196.35
               },
               "failed": []
             },
@@ -4977,10 +4977,10 @@
               "name": "feed_cover_static_09",
               "passed": true,
               "stats": {
-                "white_ratio": 0.4506,
-                "dark_ratio": 0.0708,
-                "green_ratio": 0.0396,
-                "mean_luminance": 186.54
+                "white_ratio": 0.5203,
+                "dark_ratio": 0.0605,
+                "green_ratio": 0.0355,
+                "mean_luminance": 195.35
               },
               "failed": []
             },
@@ -4988,10 +4988,10 @@
               "name": "feed_cover_static_10",
               "passed": true,
               "stats": {
-                "white_ratio": 0.4483,
-                "dark_ratio": 0.059,
-                "green_ratio": 0.054,
-                "mean_luminance": 188.36
+                "white_ratio": 0.5221,
+                "dark_ratio": 0.0556,
+                "green_ratio": 0.0438,
+                "mean_luminance": 196.31
               },
               "failed": []
             }
@@ -5123,7 +5123,7 @@
           "checks": [
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-02/r11.mp4",
-              "bytes": 4367765,
+              "bytes": 3191628,
               "video": {
                 "codec_name": "h264",
                 "width": 1080,
@@ -5147,10 +5147,10 @@
               "name": "feed_cover_reel_at_1s",
               "passed": true,
               "stats": {
-                "white_ratio": 0.4484,
-                "dark_ratio": 0.1155,
-                "green_ratio": 0.044,
-                "mean_luminance": 181.43
+                "white_ratio": 0.5854,
+                "dark_ratio": 0.0724,
+                "green_ratio": 0.0301,
+                "mean_luminance": 204.17
               },
               "failed": []
             }
@@ -5294,7 +5294,7 @@
           "checks": [
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-02/c11/slide-01.jpg",
-              "bytes": 164392,
+              "bytes": 141306,
               "dimensions": [
                 1080,
                 1350
@@ -5302,7 +5302,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-02/c11/slide-02.jpg",
-              "bytes": 153109,
+              "bytes": 132039,
               "dimensions": [
                 1080,
                 1350
@@ -5310,7 +5310,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-02/c11/slide-03.jpg",
-              "bytes": 149288,
+              "bytes": 128095,
               "dimensions": [
                 1080,
                 1350
@@ -5318,7 +5318,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-02/c11/slide-04.jpg",
-              "bytes": 151214,
+              "bytes": 130709,
               "dimensions": [
                 1080,
                 1350
@@ -5326,7 +5326,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-02/c11/slide-05.jpg",
-              "bytes": 155729,
+              "bytes": 133914,
               "dimensions": [
                 1080,
                 1350
@@ -5334,7 +5334,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-02/c11/slide-06.jpg",
-              "bytes": 149991,
+              "bytes": 129175,
               "dimensions": [
                 1080,
                 1350
@@ -5342,7 +5342,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-02/c11/slide-07.jpg",
-              "bytes": 156117,
+              "bytes": 135293,
               "dimensions": [
                 1080,
                 1350
@@ -5350,7 +5350,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-02/c11/slide-08.jpg",
-              "bytes": 154592,
+              "bytes": 134277,
               "dimensions": [
                 1080,
                 1350
@@ -5358,7 +5358,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-02/c11/slide-09.jpg",
-              "bytes": 158486,
+              "bytes": 137733,
               "dimensions": [
                 1080,
                 1350
@@ -5366,7 +5366,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-02/c11/slide-10.jpg",
-              "bytes": 153465,
+              "bytes": 132729,
               "dimensions": [
                 1080,
                 1350
@@ -5388,10 +5388,10 @@
               "name": "feed_cover_static_01",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3685,
-                "dark_ratio": 0.1274,
-                "green_ratio": 0.052,
-                "mean_luminance": 151.51
+                "white_ratio": 0.492,
+                "dark_ratio": 0.1033,
+                "green_ratio": 0.0433,
+                "mean_luminance": 171.38
               },
               "failed": []
             },
@@ -5399,10 +5399,10 @@
               "name": "feed_cover_static_02",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3825,
-                "dark_ratio": 0.1226,
-                "green_ratio": 0.0534,
-                "mean_luminance": 153.19
+                "white_ratio": 0.5024,
+                "dark_ratio": 0.1015,
+                "green_ratio": 0.0441,
+                "mean_luminance": 172.32
               },
               "failed": []
             },
@@ -5410,10 +5410,10 @@
               "name": "feed_cover_static_03",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3869,
-                "dark_ratio": 0.1224,
-                "green_ratio": 0.0506,
-                "mean_luminance": 153.79
+                "white_ratio": 0.5083,
+                "dark_ratio": 0.1006,
+                "green_ratio": 0.0418,
+                "mean_luminance": 172.99
               },
               "failed": []
             },
@@ -5421,10 +5421,10 @@
               "name": "feed_cover_static_04",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3859,
-                "dark_ratio": 0.1213,
-                "green_ratio": 0.054,
-                "mean_luminance": 153.85
+                "white_ratio": 0.5043,
+                "dark_ratio": 0.1006,
+                "green_ratio": 0.0445,
+                "mean_luminance": 172.69
               },
               "failed": []
             },
@@ -5432,10 +5432,10 @@
               "name": "feed_cover_static_05",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3868,
-                "dark_ratio": 0.1194,
-                "green_ratio": 0.0576,
-                "mean_luminance": 154.17
+                "white_ratio": 0.5021,
+                "dark_ratio": 0.0997,
+                "green_ratio": 0.047,
+                "mean_luminance": 172.6
               },
               "failed": []
             },
@@ -5443,10 +5443,10 @@
               "name": "feed_cover_static_06",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3863,
-                "dark_ratio": 0.1222,
-                "green_ratio": 0.0513,
-                "mean_luminance": 153.73
+                "white_ratio": 0.5073,
+                "dark_ratio": 0.1006,
+                "green_ratio": 0.0427,
+                "mean_luminance": 172.9
               },
               "failed": []
             },
@@ -5454,10 +5454,10 @@
               "name": "feed_cover_static_07",
               "passed": true,
               "stats": {
-                "white_ratio": 0.38,
-                "dark_ratio": 0.1233,
-                "green_ratio": 0.0549,
-                "mean_luminance": 152.88
+                "white_ratio": 0.4994,
+                "dark_ratio": 0.1017,
+                "green_ratio": 0.045,
+                "mean_luminance": 172.06
               },
               "failed": []
             },
@@ -5465,10 +5465,10 @@
               "name": "feed_cover_static_08",
               "passed": true,
               "stats": {
-                "white_ratio": 0.38,
-                "dark_ratio": 0.1258,
-                "green_ratio": 0.0509,
-                "mean_luminance": 152.47
+                "white_ratio": 0.5006,
+                "dark_ratio": 0.1029,
+                "green_ratio": 0.0428,
+                "mean_luminance": 171.99
               },
               "failed": []
             },
@@ -5476,10 +5476,10 @@
               "name": "feed_cover_static_09",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3785,
-                "dark_ratio": 0.1253,
-                "green_ratio": 0.0561,
-                "mean_luminance": 152.43
+                "white_ratio": 0.4947,
+                "dark_ratio": 0.1025,
+                "green_ratio": 0.0464,
+                "mean_luminance": 171.5
               },
               "failed": []
             },
@@ -5487,10 +5487,10 @@
               "name": "feed_cover_static_10",
               "passed": true,
               "stats": {
-                "white_ratio": 0.387,
-                "dark_ratio": 0.1195,
-                "green_ratio": 0.0576,
-                "mean_luminance": 154.16
+                "white_ratio": 0.503,
+                "dark_ratio": 0.0998,
+                "green_ratio": 0.0462,
+                "mean_luminance": 172.69
               },
               "failed": []
             }
@@ -5622,7 +5622,7 @@
           "checks": [
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-03/r12.mp4",
-              "bytes": 3433886,
+              "bytes": 2762394,
               "video": {
                 "codec_name": "h264",
                 "width": 1080,
@@ -5646,10 +5646,10 @@
               "name": "feed_cover_reel_at_1s",
               "passed": true,
               "stats": {
-                "white_ratio": 0.4238,
-                "dark_ratio": 0.1092,
-                "green_ratio": 0.0479,
-                "mean_luminance": 173.39
+                "white_ratio": 0.5822,
+                "dark_ratio": 0.0592,
+                "green_ratio": 0.0319,
+                "mean_luminance": 199.6
               },
               "failed": []
             }
@@ -5793,7 +5793,7 @@
           "checks": [
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-03/c12/slide-01.jpg",
-              "bytes": 269504,
+              "bytes": 230556,
               "dimensions": [
                 1080,
                 1350
@@ -5801,7 +5801,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-03/c12/slide-02.jpg",
-              "bytes": 253576,
+              "bytes": 214784,
               "dimensions": [
                 1080,
                 1350
@@ -5809,7 +5809,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-03/c12/slide-03.jpg",
-              "bytes": 254003,
+              "bytes": 213979,
               "dimensions": [
                 1080,
                 1350
@@ -5817,7 +5817,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-03/c12/slide-04.jpg",
-              "bytes": 253827,
+              "bytes": 216678,
               "dimensions": [
                 1080,
                 1350
@@ -5825,7 +5825,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-03/c12/slide-05.jpg",
-              "bytes": 253805,
+              "bytes": 214371,
               "dimensions": [
                 1080,
                 1350
@@ -5833,7 +5833,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-03/c12/slide-06.jpg",
-              "bytes": 254179,
+              "bytes": 217058,
               "dimensions": [
                 1080,
                 1350
@@ -5841,7 +5841,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-03/c12/slide-07.jpg",
-              "bytes": 262069,
+              "bytes": 222829,
               "dimensions": [
                 1080,
                 1350
@@ -5849,7 +5849,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-03/c12/slide-08.jpg",
-              "bytes": 261971,
+              "bytes": 220189,
               "dimensions": [
                 1080,
                 1350
@@ -5857,7 +5857,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-03/c12/slide-09.jpg",
-              "bytes": 262616,
+              "bytes": 225741,
               "dimensions": [
                 1080,
                 1350
@@ -5865,7 +5865,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-03/c12/slide-10.jpg",
-              "bytes": 256798,
+              "bytes": 218637,
               "dimensions": [
                 1080,
                 1350
@@ -5887,10 +5887,10 @@
               "name": "feed_cover_static_01",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3733,
-                "dark_ratio": 0.0781,
-                "green_ratio": 0.0576,
-                "mean_luminance": 170.26
+                "white_ratio": 0.4894,
+                "dark_ratio": 0.0749,
+                "green_ratio": 0.0451,
+                "mean_luminance": 184.0
               },
               "failed": []
             },
@@ -5898,10 +5898,10 @@
               "name": "feed_cover_static_02",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3906,
-                "dark_ratio": 0.0826,
-                "green_ratio": 0.0411,
-                "mean_luminance": 170.71
+                "white_ratio": 0.5076,
+                "dark_ratio": 0.0762,
+                "green_ratio": 0.0354,
+                "mean_luminance": 185.0
               },
               "failed": []
             },
@@ -5909,10 +5909,10 @@
               "name": "feed_cover_static_03",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3911,
-                "dark_ratio": 0.0822,
-                "green_ratio": 0.0415,
-                "mean_luminance": 170.94
+                "white_ratio": 0.5097,
+                "dark_ratio": 0.0757,
+                "green_ratio": 0.0354,
+                "mean_luminance": 185.28
               },
               "failed": []
             },
@@ -5920,10 +5920,10 @@
               "name": "feed_cover_static_04",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3902,
-                "dark_ratio": 0.0858,
-                "green_ratio": 0.041,
-                "mean_luminance": 170.33
+                "white_ratio": 0.5044,
+                "dark_ratio": 0.0772,
+                "green_ratio": 0.0354,
+                "mean_luminance": 184.54
               },
               "failed": []
             },
@@ -5931,10 +5931,10 @@
               "name": "feed_cover_static_05",
               "passed": true,
               "stats": {
-                "white_ratio": 0.39,
-                "dark_ratio": 0.0826,
-                "green_ratio": 0.0415,
-                "mean_luminance": 170.79
+                "white_ratio": 0.5093,
+                "dark_ratio": 0.0757,
+                "green_ratio": 0.0354,
+                "mean_luminance": 185.2
               },
               "failed": []
             },
@@ -5942,10 +5942,10 @@
               "name": "feed_cover_static_06",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3911,
-                "dark_ratio": 0.0848,
-                "green_ratio": 0.0409,
-                "mean_luminance": 170.56
+                "white_ratio": 0.5061,
+                "dark_ratio": 0.0771,
+                "green_ratio": 0.0354,
+                "mean_luminance": 184.71
               },
               "failed": []
             },
@@ -5953,10 +5953,10 @@
               "name": "feed_cover_static_07",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3801,
-                "dark_ratio": 0.0802,
-                "green_ratio": 0.0544,
-                "mean_luminance": 170.19
+                "white_ratio": 0.4985,
+                "dark_ratio": 0.0757,
+                "green_ratio": 0.0426,
+                "mean_luminance": 184.38
               },
               "failed": []
             },
@@ -5964,10 +5964,10 @@
               "name": "feed_cover_static_08",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3796,
-                "dark_ratio": 0.0833,
-                "green_ratio": 0.0481,
-                "mean_luminance": 169.71
+                "white_ratio": 0.5007,
+                "dark_ratio": 0.0767,
+                "green_ratio": 0.0393,
+                "mean_luminance": 184.38
               },
               "failed": []
             },
@@ -5975,10 +5975,10 @@
               "name": "feed_cover_static_09",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3808,
-                "dark_ratio": 0.0794,
-                "green_ratio": 0.0602,
-                "mean_luminance": 170.39
+                "white_ratio": 0.4947,
+                "dark_ratio": 0.0763,
+                "green_ratio": 0.0452,
+                "mean_luminance": 183.9
               },
               "failed": []
             },
@@ -5986,10 +5986,10 @@
               "name": "feed_cover_static_10",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3877,
-                "dark_ratio": 0.0765,
-                "green_ratio": 0.0545,
-                "mean_luminance": 171.58
+                "white_ratio": 0.5034,
+                "dark_ratio": 0.0739,
+                "green_ratio": 0.0433,
+                "mean_luminance": 185.08
               },
               "failed": []
             }
@@ -6121,7 +6121,7 @@
           "checks": [
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-04/r13.mp4",
-              "bytes": 4163278,
+              "bytes": 3109698,
               "video": {
                 "codec_name": "h264",
                 "width": 1080,
@@ -6145,10 +6145,10 @@
               "name": "feed_cover_reel_at_1s",
               "passed": true,
               "stats": {
-                "white_ratio": 0.4165,
-                "dark_ratio": 0.1309,
-                "green_ratio": 0.0517,
-                "mean_luminance": 161.49
+                "white_ratio": 0.578,
+                "dark_ratio": 0.1116,
+                "green_ratio": 0.0331,
+                "mean_luminance": 187.64
               },
               "failed": []
             }
@@ -6292,7 +6292,7 @@
           "checks": [
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-04/c13/slide-01.jpg",
-              "bytes": 211927,
+              "bytes": 185483,
               "dimensions": [
                 1080,
                 1350
@@ -6300,7 +6300,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-04/c13/slide-02.jpg",
-              "bytes": 199472,
+              "bytes": 174579,
               "dimensions": [
                 1080,
                 1350
@@ -6308,7 +6308,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-04/c13/slide-03.jpg",
-              "bytes": 205149,
+              "bytes": 178689,
               "dimensions": [
                 1080,
                 1350
@@ -6316,7 +6316,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-04/c13/slide-04.jpg",
-              "bytes": 203280,
+              "bytes": 177493,
               "dimensions": [
                 1080,
                 1350
@@ -6324,7 +6324,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-04/c13/slide-05.jpg",
-              "bytes": 203242,
+              "bytes": 177071,
               "dimensions": [
                 1080,
                 1350
@@ -6332,7 +6332,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-04/c13/slide-06.jpg",
-              "bytes": 202492,
+              "bytes": 176409,
               "dimensions": [
                 1080,
                 1350
@@ -6340,7 +6340,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-04/c13/slide-07.jpg",
-              "bytes": 203664,
+              "bytes": 177944,
               "dimensions": [
                 1080,
                 1350
@@ -6348,7 +6348,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-04/c13/slide-08.jpg",
-              "bytes": 200941,
+              "bytes": 176055,
               "dimensions": [
                 1080,
                 1350
@@ -6356,7 +6356,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-04/c13/slide-09.jpg",
-              "bytes": 201293,
+              "bytes": 175683,
               "dimensions": [
                 1080,
                 1350
@@ -6364,7 +6364,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-04/c13/slide-10.jpg",
-              "bytes": 197235,
+              "bytes": 171851,
               "dimensions": [
                 1080,
                 1350
@@ -6386,10 +6386,10 @@
               "name": "feed_cover_static_01",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3746,
-                "dark_ratio": 0.0677,
-                "green_ratio": 0.0543,
-                "mean_luminance": 171.32
+                "white_ratio": 0.466,
+                "dark_ratio": 0.067,
+                "green_ratio": 0.044,
+                "mean_luminance": 184.19
               },
               "failed": []
             },
@@ -6397,10 +6397,10 @@
               "name": "feed_cover_static_02",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3889,
-                "dark_ratio": 0.0701,
-                "green_ratio": 0.0444,
-                "mean_luminance": 171.86
+                "white_ratio": 0.4786,
+                "dark_ratio": 0.0677,
+                "green_ratio": 0.0381,
+                "mean_luminance": 184.84
               },
               "failed": []
             },
@@ -6408,10 +6408,10 @@
               "name": "feed_cover_static_03",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3846,
-                "dark_ratio": 0.0679,
-                "green_ratio": 0.053,
-                "mean_luminance": 171.67
+                "white_ratio": 0.4729,
+                "dark_ratio": 0.0671,
+                "green_ratio": 0.0432,
+                "mean_luminance": 184.57
               },
               "failed": []
             },
@@ -6419,10 +6419,10 @@
               "name": "feed_cover_static_04",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3834,
-                "dark_ratio": 0.0683,
-                "green_ratio": 0.0503,
-                "mean_luminance": 171.68
+                "white_ratio": 0.4745,
+                "dark_ratio": 0.0673,
+                "green_ratio": 0.042,
+                "mean_luminance": 184.66
               },
               "failed": []
             },
@@ -6430,10 +6430,10 @@
               "name": "feed_cover_static_05",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3847,
-                "dark_ratio": 0.0677,
-                "green_ratio": 0.0517,
-                "mean_luminance": 171.75
+                "white_ratio": 0.4748,
+                "dark_ratio": 0.0669,
+                "green_ratio": 0.0424,
+                "mean_luminance": 184.7
               },
               "failed": []
             },
@@ -6441,10 +6441,10 @@
               "name": "feed_cover_static_06",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3844,
-                "dark_ratio": 0.0675,
-                "green_ratio": 0.0498,
-                "mean_luminance": 171.84
+                "white_ratio": 0.4759,
+                "dark_ratio": 0.0672,
+                "green_ratio": 0.0412,
+                "mean_luminance": 184.79
               },
               "failed": []
             },
@@ -6452,10 +6452,10 @@
               "name": "feed_cover_static_07",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3848,
-                "dark_ratio": 0.0686,
-                "green_ratio": 0.053,
-                "mean_luminance": 171.6
+                "white_ratio": 0.4738,
+                "dark_ratio": 0.0672,
+                "green_ratio": 0.0433,
+                "mean_luminance": 184.59
               },
               "failed": []
             },
@@ -6463,10 +6463,10 @@
               "name": "feed_cover_static_08",
               "passed": true,
               "stats": {
-                "white_ratio": 0.386,
-                "dark_ratio": 0.0713,
-                "green_ratio": 0.0461,
-                "mean_luminance": 171.39
+                "white_ratio": 0.4753,
+                "dark_ratio": 0.0684,
+                "green_ratio": 0.0391,
+                "mean_luminance": 184.49
               },
               "failed": []
             },
@@ -6474,10 +6474,10 @@
               "name": "feed_cover_static_09",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3841,
-                "dark_ratio": 0.0706,
-                "green_ratio": 0.0472,
-                "mean_luminance": 171.43
+                "white_ratio": 0.4767,
+                "dark_ratio": 0.068,
+                "green_ratio": 0.0396,
+                "mean_luminance": 184.62
               },
               "failed": []
             },
@@ -6485,10 +6485,10 @@
               "name": "feed_cover_static_10",
               "passed": true,
               "stats": {
-                "white_ratio": 0.3921,
-                "dark_ratio": 0.0661,
-                "green_ratio": 0.0481,
-                "mean_luminance": 172.85
+                "white_ratio": 0.4822,
+                "dark_ratio": 0.0656,
+                "green_ratio": 0.0403,
+                "mean_luminance": 185.55
               },
               "failed": []
             }
@@ -6620,7 +6620,7 @@
           "checks": [
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-05/r14.mp4",
-              "bytes": 6481191,
+              "bytes": 4228813,
               "video": {
                 "codec_name": "h264",
                 "width": 1080,
@@ -6644,10 +6644,10 @@
               "name": "feed_cover_reel_at_1s",
               "passed": true,
               "stats": {
-                "white_ratio": 0.4112,
-                "dark_ratio": 0.0968,
-                "green_ratio": 0.0573,
-                "mean_luminance": 174.43
+                "white_ratio": 0.5743,
+                "dark_ratio": 0.052,
+                "green_ratio": 0.0352,
+                "mean_luminance": 198.43
               },
               "failed": []
             }
@@ -6791,7 +6791,7 @@
           "checks": [
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-05/c14/slide-01.jpg",
-              "bytes": 229140,
+              "bytes": 203274,
               "dimensions": [
                 1080,
                 1350
@@ -6799,7 +6799,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-05/c14/slide-02.jpg",
-              "bytes": 208031,
+              "bytes": 183768,
               "dimensions": [
                 1080,
                 1350
@@ -6807,7 +6807,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-05/c14/slide-03.jpg",
-              "bytes": 208200,
+              "bytes": 184830,
               "dimensions": [
                 1080,
                 1350
@@ -6815,7 +6815,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-05/c14/slide-04.jpg",
-              "bytes": 216954,
+              "bytes": 188919,
               "dimensions": [
                 1080,
                 1350
@@ -6823,7 +6823,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-05/c14/slide-05.jpg",
-              "bytes": 216411,
+              "bytes": 188444,
               "dimensions": [
                 1080,
                 1350
@@ -6831,7 +6831,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-05/c14/slide-06.jpg",
-              "bytes": 219984,
+              "bytes": 192759,
               "dimensions": [
                 1080,
                 1350
@@ -6839,7 +6839,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-05/c14/slide-07.jpg",
-              "bytes": 223261,
+              "bytes": 194581,
               "dimensions": [
                 1080,
                 1350
@@ -6847,7 +6847,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-05/c14/slide-08.jpg",
-              "bytes": 218814,
+              "bytes": 192298,
               "dimensions": [
                 1080,
                 1350
@@ -6855,7 +6855,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-05/c14/slide-09.jpg",
-              "bytes": 219130,
+              "bytes": 193013,
               "dimensions": [
                 1080,
                 1350
@@ -6863,7 +6863,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-05/c14/slide-10.jpg",
-              "bytes": 217796,
+              "bytes": 190463,
               "dimensions": [
                 1080,
                 1350
@@ -6885,10 +6885,10 @@
               "name": "feed_cover_static_01",
               "passed": true,
               "stats": {
-                "white_ratio": 0.4806,
-                "dark_ratio": 0.0635,
-                "green_ratio": 0.0523,
-                "mean_luminance": 203.09
+                "white_ratio": 0.5596,
+                "dark_ratio": 0.0638,
+                "green_ratio": 0.0427,
+                "mean_luminance": 208.08
               },
               "failed": []
             },
@@ -6896,10 +6896,10 @@
               "name": "feed_cover_static_02",
               "passed": true,
               "stats": {
-                "white_ratio": 0.5082,
-                "dark_ratio": 0.0619,
-                "green_ratio": 0.0392,
-                "mean_luminance": 205.65
+                "white_ratio": 0.5838,
+                "dark_ratio": 0.0623,
+                "green_ratio": 0.0346,
+                "mean_luminance": 210.02
               },
               "failed": []
             },
@@ -6907,10 +6907,10 @@
               "name": "feed_cover_static_03",
               "passed": true,
               "stats": {
-                "white_ratio": 0.5079,
-                "dark_ratio": 0.0634,
-                "green_ratio": 0.0392,
-                "mean_luminance": 205.37
+                "white_ratio": 0.5825,
+                "dark_ratio": 0.063,
+                "green_ratio": 0.0346,
+                "mean_luminance": 209.81
               },
               "failed": []
             },
@@ -6918,10 +6918,10 @@
               "name": "feed_cover_static_04",
               "passed": true,
               "stats": {
-                "white_ratio": 0.496,
-                "dark_ratio": 0.0603,
-                "green_ratio": 0.0494,
-                "mean_luminance": 204.82
+                "white_ratio": 0.5773,
+                "dark_ratio": 0.0618,
+                "green_ratio": 0.0404,
+                "mean_luminance": 209.63
               },
               "failed": []
             },
@@ -6929,10 +6929,10 @@
               "name": "feed_cover_static_05",
               "passed": true,
               "stats": {
-                "white_ratio": 0.4965,
-                "dark_ratio": 0.0604,
-                "green_ratio": 0.0493,
-                "mean_luminance": 204.88
+                "white_ratio": 0.5776,
+                "dark_ratio": 0.0616,
+                "green_ratio": 0.0402,
+                "mean_luminance": 209.65
               },
               "failed": []
             },
@@ -6940,10 +6940,10 @@
               "name": "feed_cover_static_06",
               "passed": true,
               "stats": {
-                "white_ratio": 0.4912,
-                "dark_ratio": 0.0607,
-                "green_ratio": 0.0527,
-                "mean_luminance": 204.31
+                "white_ratio": 0.5715,
+                "dark_ratio": 0.0626,
+                "green_ratio": 0.0424,
+                "mean_luminance": 209.0
               },
               "failed": []
             },
@@ -6951,10 +6951,10 @@
               "name": "feed_cover_static_07",
               "passed": true,
               "stats": {
-                "white_ratio": 0.487,
-                "dark_ratio": 0.0611,
-                "green_ratio": 0.0578,
-                "mean_luminance": 203.74
+                "white_ratio": 0.5673,
+                "dark_ratio": 0.0654,
+                "green_ratio": 0.0395,
+                "mean_luminance": 208.03
               },
               "failed": []
             },
@@ -6962,10 +6962,10 @@
               "name": "feed_cover_static_08",
               "passed": true,
               "stats": {
-                "white_ratio": 0.493,
-                "dark_ratio": 0.0642,
-                "green_ratio": 0.0497,
-                "mean_luminance": 203.96
+                "white_ratio": 0.5718,
+                "dark_ratio": 0.0634,
+                "green_ratio": 0.0411,
+                "mean_luminance": 208.87
               },
               "failed": []
             },
@@ -6973,10 +6973,10 @@
               "name": "feed_cover_static_09",
               "passed": true,
               "stats": {
-                "white_ratio": 0.4911,
-                "dark_ratio": 0.0618,
-                "green_ratio": 0.0524,
-                "mean_luminance": 204.22
+                "white_ratio": 0.5713,
+                "dark_ratio": 0.0625,
+                "green_ratio": 0.0422,
+                "mean_luminance": 209.0
               },
               "failed": []
             },
@@ -6984,10 +6984,10 @@
               "name": "feed_cover_static_10",
               "passed": true,
               "stats": {
-                "white_ratio": 0.4946,
-                "dark_ratio": 0.0594,
-                "green_ratio": 0.0522,
-                "mean_luminance": 204.9
+                "white_ratio": 0.5751,
+                "dark_ratio": 0.0615,
+                "green_ratio": 0.0419,
+                "mean_luminance": 209.55
               },
               "failed": []
             }
