@@ -1,0 +1,24 @@
+{
+  "name": "f1-renderer-v2",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "render:static": "node render-static.mjs",
+    "render:video": "tsx src/render-video.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@resvg/resvg-js": "2.6.2",
+    "@revideo/2d": "0.11.0",
+    "@revideo/core": "0.11.0",
+    "@revideo/ffmpeg": "0.11.0",
+    "@revideo/renderer": "0.11.0",
+    "sharp": "0.35.4"
+  },
+  "devDependencies": {
+    "@types/node": "22.18.1",
+    "tsx": "4.20.5",
+    "typescript": "5.9.2"
+  }
+}
