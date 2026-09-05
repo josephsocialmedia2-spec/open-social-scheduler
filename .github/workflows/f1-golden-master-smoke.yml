@@ -1,4 +1,4 @@
-name: F1 Golden Master V4 Smoke
+name: F1 Reference Feed V5 Smoke
 
 on:
   push:
@@ -46,85 +46,74 @@ jobs:
           npm install --no-audit --no-fund
           npm run typecheck
 
-      - name: Prepare representative Golden Master spec
+      - name: Prepare representative reference specs
         run: |
           set -euxo pipefail
-          mkdir -p /tmp/f1-golden-smoke
-          curl -fL --retry 4 --retry-delay 2 \
-            'https://images.pexels.com/photos/17191427/pexels-photo-17191427.jpeg' \
-            -o /tmp/f1-golden-smoke/hero.jpg
+          mkdir -p /tmp/f1-reference-smoke
+          curl -fL --retry 4 --retry-delay 2 'https://images.pexels.com/photos/259588/pexels-photo-259588.jpeg' -o /tmp/f1-reference-smoke/property.jpg
+          curl -fL --retry 4 --retry-delay 2 'https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg' -o /tmp/f1-reference-smoke/recruit.jpg
           PYTHONPATH=publisher python - <<'PY'
           import json
           from pathlib import Path
           from rendering.f1_job_bridge import job_to_content_spec
-          source=Path('/tmp/f1-golden-smoke/hero.jpg')
-          base={
-              'id':'golden-smoke',
-              'source_item_id':'R01',
-              'title':'Valorizziamo il tuo immobile',
-              'main_message':'Realizziamo il progetto di vendita con metodo, territorio e strategia.',
-              'caption':'Golden Master smoke',
-              'cta':'Scrivi VALUTAZIONE',
-              'lead_goal':'qualified_seller',
-              'topic_keywords':['METODO F1','TERRITORIO','STRATEGIA'],
-              'visual_theme':'valorizzazione immobiliare',
-              'slides':['VALORIZZIAMO|IL TUO IMMOBILE','METODO F1|PER VENDERE MEGLIO'],
-              'unique_primary_visual':True,
+          folder=Path('/tmp/f1-reference-smoke')
+          property_job={
+            'id':'reference-property','source_item_id':'C01','format':'carousel','visual_family':'property',
+            'title':'Alloggio a Moncalieri','main_message':'Spazi, comfort e praticità in una posizione strategica.',
+            'caption':'Reference property','cta':'Prenota la tua visita','price':'€ 139.000','location':'Moncalieri · Strada Genova',
+            'features':['100 mq','4 locali','2 camere','1 bagno'],'topic_keywords':['AMBIENTI LUMINOSI','ZONA COMODA E SERVITA','IDEALE PER FAMIGLIE'],
+            'slides':['ALLOGGIO|A MONCALIERI','SALONE|DOPPIO'], 'unique_primary_visual':True,
           }
-          car=dict(base,format='carousel')
-          reel=dict(base,format='reel',reel_duration_seconds=5,muted_view_comprehension_required=True,
-                    voiceover='',audio_rights='')
-          Path('/tmp/f1-golden-smoke/carousel.json').write_text(json.dumps(job_to_content_spec(car,source),ensure_ascii=False,indent=2))
-          Path('/tmp/f1-golden-smoke/reel.json').write_text(json.dumps(job_to_content_spec(reel,source),ensure_ascii=False,indent=2))
+          recruit_job={
+            'id':'reference-recruit','source_item_id':'R01','format':'reel','visual_family':'recruiting',
+            'title':'Entra nella squadra F1','main_message':'Il tuo futuro nell’immobiliare parte da qui.',
+            'caption':'Reference recruiting','cta':'Candidati ora','topic_keywords':['FORMAZIONE INTERNA','ZONA ASSEGNATA','PERCORSO DI CRESCITA'],
+            'slides':['ENTRA NELLA|SQUADRA F1','DIVENTA|AGENTE IMMOBILIARE'],'reel_duration_seconds':5,'voiceover':'','audio_rights':'',
+          }
+          folder.joinpath('property.json').write_text(json.dumps(job_to_content_spec(property_job,folder/'property.jpg'),ensure_ascii=False,indent=2))
+          folder.joinpath('recruit.json').write_text(json.dumps(job_to_content_spec(recruit_job,folder/'recruit.jpg'),ensure_ascii=False,indent=2))
           PY
 
-      - name: Render representative carousel and Reel
+      - name: Render reference carousel and Reel
         run: |
           set -euxo pipefail
-          PYTHONPATH=publisher python publisher/rendering/content_engine.py \
-            --spec /tmp/f1-golden-smoke/carousel.json \
-            --output /tmp/f1-golden-smoke/carousel.jpg --no-fallback \
-            > /tmp/f1-golden-smoke/carousel-result.json
-          PYTHONPATH=publisher python publisher/rendering/content_engine.py \
-            --spec /tmp/f1-golden-smoke/reel.json \
-            --output /tmp/f1-golden-smoke/reel.mp4 --no-fallback \
-            > /tmp/f1-golden-smoke/reel-result.json
-          ffmpeg -hide_banner -loglevel error -y -ss 1 -i /tmp/f1-golden-smoke/reel.mp4 \
-            -frames:v 1 -q:v 2 /tmp/f1-golden-smoke/reel-cover.jpg
+          PYTHONPATH=publisher python publisher/rendering/content_engine.py --spec /tmp/f1-reference-smoke/property.json --output /tmp/f1-reference-smoke/property.jpg.out.jpg --no-fallback > /tmp/f1-reference-smoke/property-result.json
+          PYTHONPATH=publisher python publisher/rendering/content_engine.py --spec /tmp/f1-reference-smoke/recruit.json --output /tmp/f1-reference-smoke/recruit.mp4 --no-fallback > /tmp/f1-reference-smoke/recruit-result.json
+          ffmpeg -hide_banner -loglevel error -y -ss 0.2 -i /tmp/f1-reference-smoke/recruit.mp4 -frames:v 1 -q:v 2 /tmp/f1-reference-smoke/recruit-cover.jpg
 
-      - name: Assert strict compliance
+      - name: Assert strict reference compliance
         run: |
           python - <<'PY'
           import json
           from pathlib import Path
           from PIL import Image
-          folder=Path('/tmp/f1-golden-smoke')
-          for result_name in ('carousel-result.json','reel-result.json'):
+          folder=Path('/tmp/f1-reference-smoke')
+          for result_name in ('property-result.json','recruit-result.json'):
               result=json.load(open(folder/result_name,encoding='utf-8'))
               assert result['fallback_used'] is False, result
               assert result['quality_gate']['passed'] is True, result
               visual=result['visual_compliance']
               assert visual['passed'] is True, visual
               assert visual['score']==100, visual
-              assert visual['golden_master']=='F1_GOLDEN_MASTER_FEED_V4', visual
-          covers=[folder/'carousel-01.jpg',folder/'reel-cover.jpg']
+              assert visual['golden_master']=='F1_REFERENCE_FEED_V5', visual
+          covers=[folder/'property.jpg.out-01.jpg',folder/'recruit-cover.jpg']
           for p in covers:
               assert p.exists() and p.stat().st_size>15000, p
               with Image.open(p) as im:
                   assert im.width==1080, (p,im.size)
                   assert im.height in (1350,1920), (p,im.size)
-          print('GOLDEN MASTER V4 SMOKE PASS')
+          print('F1 REFERENCE FEED V5 SMOKE PASS')
           PY
 
       - uses: actions/upload-artifact@v4
         with:
-          name: F1-GOLDEN-MASTER-V4-SMOKE
+          name: F1-REFERENCE-FEED-V5-SMOKE
           path: |
-            /tmp/f1-golden-smoke/carousel-01.jpg
-            /tmp/f1-golden-smoke/carousel-02.jpg
-            /tmp/f1-golden-smoke/reel-cover.jpg
-            /tmp/f1-golden-smoke/reel.mp4
-            /tmp/f1-golden-smoke/carousel-result.json
-            /tmp/f1-golden-smoke/reel-result.json
+            /tmp/f1-reference-smoke/property.jpg.out-01.jpg
+            /tmp/f1-reference-smoke/property.jpg.out-02.jpg
+            /tmp/f1-reference-smoke/recruit-cover.jpg
+            /tmp/f1-reference-smoke/recruit.mp4
+            /tmp/f1-reference-smoke/property-result.json
+            /tmp/f1-reference-smoke/recruit-result.json
           if-no-files-found: error
           retention-days: 7
