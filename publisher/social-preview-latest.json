@@ -1,11 +1,11 @@
 {
-  "version": "2026-09-05.4",
+  "version": "2026-09-05.5",
   "pipeline": "social-preview-latest",
   "brand": "F1 Immobiliare",
   "week_id": "2026-W36",
   "week_start": "2026-08-31",
   "week_end": "2026-09-06",
-  "updated_at": "2026-09-05T05:38:27+02:00",
+  "updated_at": "2026-09-05T06:37:38+02:00",
   "release_tag": "social-preview-week-2026-W36",
   "release_url": "https://github.com/josephsocialmedia2-spec/open-social-scheduler/releases/tag/social-preview-week-2026-W36",
   "legacy_hidden": true,
@@ -14,8 +14,8 @@
     "connected": true,
     "data_flow": "CONNECTED",
     "last_verified_at": "2026-09-04T20:55:12+02:00",
-    "automatic_publishing": false,
-    "sending_status": "PAUSED_BY_POLICY",
+    "automatic_publishing": true,
+    "sending_status": "AUTOMATIC",
     "channels": [
       {
         "name": "Facebook",
