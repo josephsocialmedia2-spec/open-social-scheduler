@@ -12,10 +12,12 @@ from typing import Any
 from PIL import Image
 
 try:
+    from .adapters.audio_adapter import AudioAdapter
     from .adapters.pillow_fallback_adapter import PillowFallbackAdapter
     from .adapters.revideo_adapter import RevideoAdapter
     from .adapters.static_svg_adapter import StaticSvgAdapter
 except ImportError:
+    from adapters.audio_adapter import AudioAdapter
     from adapters.pillow_fallback_adapter import PillowFallbackAdapter
     from adapters.revideo_adapter import RevideoAdapter
     from adapters.static_svg_adapter import StaticSvgAdapter
@@ -116,6 +118,12 @@ def quality_gate(paths: list[Path], spec: dict[str, Any]) -> dict[str, Any]:
     return {"passed": True, "checks": checks}
 
 
+def _apply_audio(paths: list[Path], spec: dict[str, Any]) -> dict[str, Any]:
+    if spec["type"] not in VIDEO_TYPES or not paths:
+        return {"applied": False, "engine": None}
+    return AudioAdapter(ROOT).apply(paths[0], spec)
+
+
 def generate_content(
     content_spec: dict[str, Any],
     *,
@@ -130,14 +138,17 @@ def generate_content(
     fallback = PillowFallbackAdapter(ROOT)
     fallback_used = False
     primary_error = None
+    audio_info: dict[str, Any] = {"applied": False, "engine": None}
     try:
         paths = primary.render(spec, out)
+        audio_info = _apply_audio(paths, spec)
         engine = primary.name
     except Exception as exc:
         primary_error = f"{type(exc).__name__}: {exc}"
         if not allow_fallback or os.getenv("RENDERER_V2_NO_FALLBACK") == "1":
             raise
         paths = fallback.render(spec, out)
+        audio_info = _apply_audio(paths, spec)
         engine = fallback.name
         fallback_used = True
     gate = quality_gate(paths, spec)
@@ -150,6 +161,7 @@ def generate_content(
         "type": spec["type"],
         "format": spec["format"],
         "outputs": [str(path) for path in paths],
+        "audio": audio_info,
         "quality_gate": gate,
     }
 
