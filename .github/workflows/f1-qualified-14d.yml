@@ -16,6 +16,7 @@ on:
       - 'publisher/render_f1_unique_visuals.py'
       - 'publisher/render_f1_qualified_14d.py'
       - 'publisher/build_canva_unique_html.py'
+      - 'publisher/rendering/**'
       - 'publisher/content_bank/f1-qualified-14d.json'
       - 'publisher/content_overrides/f1-qualified-14d-overrides.json'
       - 'publisher/canva_visual_manifest.json'
@@ -35,6 +36,9 @@ jobs:
   build-gate-render:
     runs-on: ubuntu-latest
     timeout-minutes: 90
+    env:
+      F1_RENDERER_ENGINE: 'v2'
+      F1_RENDERER_V2_STRICT: '0'
     steps:
       - name: Checkout
         uses: actions/checkout@v5
@@ -48,16 +52,26 @@ jobs:
           cache: pip
           cache-dependency-path: publisher/requirements.txt
 
+      - name: Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: publisher/rendering/node/package.json
+
       - name: Install media dependencies
         run: |
           set -euxo pipefail
           sudo apt-get update
           sudo apt-get install -y ffmpeg fonts-dejavu-core zip
           python -m pip install --disable-pip-version-check -r publisher/requirements.txt
+          cd publisher/rendering/node
+          npm install --no-audit --no-fund
+          npm run typecheck
 
       - name: Validate policies, copy and visual manifest
         run: |
-          python -m py_compile publisher/build_f1_qualified_14d.py publisher/gate_f1_qualified.py publisher/apply_canva_visual_manifest.py publisher/render_f1_qualified_14d.py publisher/render_f1_unique_visuals.py publisher/build_canva_unique_html.py
+          python -m py_compile publisher/build_f1_qualified_14d.py publisher/gate_f1_qualified.py publisher/apply_canva_visual_manifest.py publisher/render_f1_qualified_14d.py publisher/render_f1_unique_visuals.py publisher/build_canva_unique_html.py publisher/rendering/content_engine.py publisher/rendering/f1_job_bridge.py publisher/rendering/adapters/static_svg_adapter.py publisher/rendering/adapters/revideo_adapter.py publisher/rendering/adapters/audio_adapter.py
           python - <<'PY'
           import json
           p=json.load(open('publisher/instagram_distribution_policy.json',encoding='utf-8'))
@@ -100,7 +114,7 @@ jobs:
       - name: Download, hash and assign 28 unique themed visuals
         run: python publisher/apply_canva_visual_manifest.py
 
-      - name: Render without visual reuse
+      - name: Render without visual reuse using Renderer V2
         run: python publisher/render_f1_unique_visuals.py
 
       - name: Build Canva import packs
@@ -131,6 +145,9 @@ jobs:
           assert u.get('unique_primary_visuals')==28
           assert u.get('unique_content_hashes')==28
           assert u.get('reuse')==0
+          render=q.get('render_summary') or {}
+          assert render.get('requested_engine')=='v2', render
+          assert render.get('renderer_v2',0)+render.get('legacy',0)==28, render
           r01=next(j for j in jobs if j['source_item_id']=='R01')
           assert r01['title']=='Siamo alla ricerca di immobili in Valle di Susa'
           assert 'siamo alla ricerca di immobili' in (r01['caption']+' '+r01['voiceover']).lower()
@@ -148,7 +165,7 @@ jobs:
             assert 7<=len(paths)<=10 and all(p.exists() and p.stat().st_size>15000 for p in paths)
           assert Path('publisher/canva_generated/reels-latest.html').exists()
           assert Path('publisher/canva_generated/carousels-latest.html').exists()
-          print('VERIFIED: 28 CONTENTS / 28 URLS / 28 DISTINCT PIXEL HASHES / 0 REUSE / TRUTHFUL COPY')
+          print('VERIFIED: RENDERER V2 REQUESTED + 28 CONTENTS / 28 URLS / 28 DISTINCT PIXEL HASHES / 0 REUSE / TRUTHFUL COPY')
           PY
 
       - name: Build downloadable package
@@ -202,15 +219,15 @@ jobs:
           gh release delete f1-qualified-14d-latest --yes --cleanup-tag >/dev/null 2>&1 || true
           gh release create f1-qualified-14d-latest /tmp/F1_QUALIFIED_SELLER_14_GIORNI.zip \
             --title "F1 · 14 GIORNI · 28 VISUALI REALMENTE UNICI · VENDITORI QUALIFICATI" \
-            --notes "28 contenuti: 14 Reel + 14 caroselli. Verifica forte: 28 URL immagine diversi + 28 hash pixel diversi = zero riuso reale nel ciclo. Primo messaggio: SIAMO ALLA RICERCA DI IMMOBILI IN VALLE DI SUSA. Nessuna dichiarazione su clienti/acquirenti senza evidenza verificata. CTA: VALUTAZIONE con COMUNE, TIPOLOGIA, MQ e TEMPISTICA. Run ${GITHUB_RUN_ID}."
+            --notes "28 contenuti: 14 Reel + 14 caroselli. Renderer V2 attivo con fallback legacy di sicurezza. Verifica forte: 28 URL immagine diversi + 28 hash pixel diversi = zero riuso reale nel ciclo. Primo messaggio: SIAMO ALLA RICERCA DI IMMOBILI IN VALLE DI SUSA. Nessuna dichiarazione su clienti/acquirenti senza evidenza verificata. CTA: VALUTAZIONE con COMUNE, TIPOLOGIA, MQ e TEMPISTICA. Run ${GITHUB_RUN_ID}."
 
       - name: Notify completion
         uses: actions/github-script@v8
         with:
           script: |
-            const title='[F1 QUALIFIED] 14 giorni · 28 visuali realmente unici';
+            const title='[F1 QUALIFIED] 14 giorni · Renderer V2';
             const body=[
-              '@josephsocialmedia2-spec batch rigenerato e verificato.',
+              '@josephsocialmedia2-spec batch rigenerato e verificato con Renderer V2 richiesto.',
               '',
               '**28 contenuti = 28 URL + 28 hash immagine distinti. Riutilizzo: 0.**',
               '**Primo messaggio:** SIAMO ALLA RICERCA DI IMMOBILI IN VALLE DI SUSA.',
