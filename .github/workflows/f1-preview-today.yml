@@ -1,4 +1,4 @@
-name: F1 Preview Today - REAL RENDERER
+name: F1 Preview Today - EXACT PRODUCTION RENDER
 
 on:
   push:
@@ -37,10 +37,7 @@ jobs:
           sudo apt-get install -y ffmpeg fonts-dejavu-core
           python -m pip install --disable-pip-version-check -r publisher/requirements.txt
 
-      - name: Prepare deterministic F1 residential photo cache
-        run: python publisher/prewarm_photo_cache.py
-
-      - name: Generate TODAY morning + evening with production renderer - NO PUBLISH
+      - name: Generate TODAY graphics using exact production render logic - NO PUBLISH
         shell: bash
         run: |
           set -euo pipefail
@@ -49,10 +46,13 @@ jobs:
           python - <<'PY'
           import json
           import shutil
+          import subprocess
           import sys
           from datetime import datetime
           from pathlib import Path
           from zoneinfo import ZoneInfo
+
+          from PIL import Image, ImageDraw, ImageFont
 
           sys.path.insert(0, 'publisher')
           import meta_twice_daily as m
@@ -63,10 +63,101 @@ jobs:
           day = datetime.now(ZoneInfo('Europe/Rome')).date()
           summary = {'date': day.isoformat(), 'publisher_called': False, 'slots': {}}
 
+          def local_fallback(job):
+              rel_dir = Path('publisher/media/generated/buffer-fallback') / str(job['id'])
+              out_dir = root / rel_dir
+              out_dir.mkdir(parents=True, exist_ok=True)
+
+              bold_path = '/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf'
+              regular_path = '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf'
+              green = '#92C205'
+              white = '#F7F7F4'
+              muted = '#C7CDC8'
+              panel = '#0D1711'
+              bg = '#070907'
+
+              def fit(draw, text, max_width, start, minimum):
+                  size = start
+                  while size >= minimum:
+                      font = ImageFont.truetype(bold_path, size)
+                      box = draw.multiline_textbbox((0, 0), text, font=font, spacing=14, align='center')
+                      if box[2] - box[0] <= max_width:
+                          return font
+                      size -= 4
+                  return ImageFont.truetype(bold_path, minimum)
+
+              def make_frame(path, headline, subline, width, height):
+                  img = Image.new('RGB', (width, height), bg)
+                  draw = ImageDraw.Draw(img)
+                  margin = max(44, int(width * 0.05))
+                  draw.rounded_rectangle(
+                      (margin, margin, width - margin, height - margin),
+                      radius=34, fill=panel, outline=green, width=5,
+                  )
+                  draw.rectangle((margin, margin, width - margin, margin + 20), fill=green)
+                  brand = ImageFont.truetype(bold_path, max(32, int(width * 0.04)))
+                  small = ImageFont.truetype(regular_path, max(24, int(width * 0.027)))
+                  draw.text((width // 2, int(height * 0.13)), 'F1 IMMOBILIARE', font=brand, fill=white, anchor='mm')
+                  draw.text((width // 2, int(height * 0.18)), 'NON A SENSAZIONE. CON I DATI.', font=small, fill=green, anchor='mm')
+                  title_font = fit(draw, headline, width - 2 * margin - 80, max(62, int(width * 0.082)), 46)
+                  draw.multiline_text(
+                      (width // 2, int(height * 0.45)), headline,
+                      font=title_font, fill=white, spacing=16, align='center', anchor='mm',
+                  )
+                  sub_font = ImageFont.truetype(regular_path, max(30, int(width * 0.038)))
+                  draw.multiline_text(
+                      (width // 2, int(height * 0.68)), subline,
+                      font=sub_font, fill=muted, spacing=12, align='center', anchor='mm',
+                  )
+                  cta = str(job.get('cta') or 'F1 IMMOBILIARE · 371 370 8294')
+                  cta_font = ImageFont.truetype(bold_path, max(27, int(width * 0.034)))
+                  draw.text((width // 2, int(height * 0.86)), cta, font=cta_font, fill=green, anchor='mm')
+                  img.save(path, quality=94, optimize=True)
+
+              raw_slides = list(job.get('slides') or [])
+              clean_slides = [str(x).replace('|', '\n') for x in raw_slides if str(x).strip()]
+              title = str(job.get('title') or 'F1 IMMOBILIARE').upper()
+              caption_hint = str(job.get('caption') or '').split('\n', 1)[0][:180]
+
+              if str(job.get('format')) == 'reel':
+                  frame = out_dir / 'reel-frame.jpg'
+                  headline = clean_slides[0] if clean_slides else title
+                  make_frame(frame, headline, caption_hint, 1080, 1920)
+                  video = out_dir / 'reel-fallback.mp4'
+                  subprocess.run(
+                      [
+                          'ffmpeg', '-y', '-loglevel', 'error', '-loop', '1',
+                          '-i', str(frame), '-t', '12', '-r', '30',
+                          '-c:v', 'libx264', '-pix_fmt', 'yuv420p',
+                          '-vf', 'scale=1080:1920', '-movflags', '+faststart', str(video),
+                      ],
+                      check=True,
+                  )
+                  job['media'] = [str(video.relative_to(root))]
+                  job['video_made_with_ai'] = False
+              else:
+                  slide_texts = clean_slides[:4] or [title]
+                  paths = []
+                  for index, headline in enumerate(slide_texts, 1):
+                      path = out_dir / f'slide-{index:02d}.jpg'
+                      make_frame(path, headline, caption_hint, 1080, 1350)
+                      paths.append(str(path.relative_to(root)))
+                  job['media'] = paths
+
+              job['render_fallback'] = 'local_no_external_media'
+
           for slot in ('morning', 'evening'):
               job = m.build_job(client, bank, day, slot)
-              # Same renderer used by the production publisher. Render only: no social API is called.
-              m.render_job(job, client)
+              # Match Buffer production IDs because the fallback output path uses job ID.
+              job['id'] = f'f1-immobiliare-buffer-{day.isoformat()}-{slot}'
+              render_mode = 'primary'
+              try:
+                  m.render_job(job, client)
+              except Exception as exc:
+                  render_mode = 'local_no_external_media'
+                  print(f'PRIMARY_RENDER_FAILED_{slot.upper()}: {type(exc).__name__}: {exc}')
+                  local_fallback(job)
+
               raw = job.get('media')
               paths = raw if isinstance(raw, list) else [raw]
               outdir = root / 'preview_today' / slot
@@ -76,13 +167,22 @@ jobs:
                   if not src.exists():
                       raise RuntimeError(f'Renderer did not create {src}')
                   suffix = src.suffix.lower()
-                  name = f'slide-{idx:02d}{suffix}' if len(paths) > 1 else f'reel{suffix}'
+                  name = f'slide-{idx:02d}{suffix}' if len(paths) > 1 else (f'reel{suffix}' if suffix == '.mp4' else f'asset-{idx:02d}{suffix}')
                   dst = outdir / name
                   shutil.copy2(src, dst)
                   copied.append(str(dst.relative_to(root)))
+
+              # Copy production fallback frame too, so the exact Reel visual is directly viewable.
+              fallback_frame = root / 'publisher/media/generated/buffer-fallback' / job['id'] / 'reel-frame.jpg'
+              if fallback_frame.exists():
+                  dst = outdir / 'reel-frame.jpg'
+                  shutil.copy2(fallback_frame, dst)
+                  copied.append(str(dst.relative_to(root)))
+
               summary['slots'][slot] = {
                   'title': job.get('title'),
                   'format': job.get('format'),
+                  'render_mode': render_mode,
                   'caption': job.get('caption'),
                   'hashtags': job.get('hashtags'),
                   'territory': job.get('territory'),
@@ -107,34 +207,38 @@ jobs:
           if not files:
               raise SystemExit('No morning slides found')
           thumbs=[]
-          tw=324
+          tw=432
           for p in files:
               im=Image.open(p).convert('RGB')
               th=round(im.height*tw/im.width)
               thumbs.append(im.resize((tw,th),Image.Resampling.LANCZOS))
           cols=2
-          gap=20
+          gap=24
           rows=(len(thumbs)+cols-1)//cols
           th=max(i.height for i in thumbs)
-          top=90
-          canvas=Image.new('RGB',(cols*tw+(cols+1)*gap,top+rows*th+(rows+1)*gap),'#111111')
+          top=105
+          canvas=Image.new('RGB',(cols*tw+(cols+1)*gap,top+rows*th+(rows+1)*gap),'#070907')
           d=ImageDraw.Draw(canvas)
-          f=ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf',32)
-          d.text((gap,24),'F1 IMMOBILIARE — ANTEPRIMA CAROUSEL OGGI',font=f,fill='white')
+          f=ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf',34)
+          d.text((gap,28),'F1 IMMOBILIARE — CAROUSEL DI OGGI',font=f,fill='white')
           for idx,im in enumerate(thumbs):
               x=gap+(idx%cols)*(tw+gap)
               y=top+gap+(idx//cols)*(th+gap)
               canvas.paste(im,(x,y))
-          canvas.save('preview_today/morning-contact-sheet.jpg',quality=92)
+          canvas.save('preview_today/morning-contact-sheet.jpg',quality=94,optimize=True)
           PY
 
-      - name: Extract evening reel poster frame
+      - name: Extract evening Reel preview frame
         shell: bash
         run: |
           set -euo pipefail
-          REEL=$(find preview_today/evening -maxdepth 1 -type f -name '*.mp4' | head -n1)
-          if [ -n "$REEL" ]; then
-            ffmpeg -y -ss 00:00:02 -i "$REEL" -frames:v 1 preview_today/evening-reel-preview.jpg >/dev/null 2>&1
+          if [ -f preview_today/evening/reel-frame.jpg ]; then
+            cp preview_today/evening/reel-frame.jpg preview_today/evening-reel-preview.jpg
+          else
+            REEL=$(find preview_today/evening -maxdepth 1 -type f -name '*.mp4' | head -n1)
+            if [ -n "$REEL" ]; then
+              ffmpeg -y -ss 00:00:02 -i "$REEL" -frames:v 1 preview_today/evening-reel-preview.jpg >/dev/null 2>&1
+            fi
           fi
 
       - name: Upload exact preview
