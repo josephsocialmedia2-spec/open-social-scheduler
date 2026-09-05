@@ -2,7 +2,7 @@
   "version": 1,
   "pipeline": "f1-instagram-feed-preview",
   "brand": "F1 Immobiliare",
-  "generated_at": "2026-09-05T11:30:57+02:00",
+  "generated_at": "2026-09-05T11:54:48+02:00",
   "source_run_id": 33956998783,
   "release_tag": "f1-feed-latest",
   "release_url": "https://github.com/josephsocialmedia2-spec/open-social-scheduler/releases/tag/f1-feed-latest",
