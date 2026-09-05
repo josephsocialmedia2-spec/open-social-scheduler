@@ -1,4 +1,4 @@
-name: F1 Buffer Publisher - LIVE INSTITUTIONAL
+name: F1 Buffer Publisher - LIVE FEED
 
 on:
   workflow_dispatch:
@@ -12,15 +12,18 @@ on:
           - auto
           - morning
           - evening
-      date:
-        description: 'Optional Europe/Rome date YYYY-MM-DD'
-        required: false
-        type: string
       dry_run:
         description: 'Validate without creating Buffer posts'
         required: true
         default: false
         type: boolean
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/buffer-twice-daily.yml'
+      - 'publisher/buffer_feed_production.py'
+      - 'publisher/f1-feed-latest.json'
   schedule:
     - cron: '0 8,16 * * *'
 
@@ -28,11 +31,11 @@ permissions:
   contents: write
 
 concurrency:
-  group: f1-buffer-live-institutional
+  group: f1-buffer-live-feed
   cancel-in-progress: false
 
 jobs:
-  publish-approved-f1:
+  publish-approved-f1-feed:
     runs-on: ubuntu-latest
     timeout-minutes: 35
     env:
@@ -41,13 +44,13 @@ jobs:
 
     steps:
       - name: Checkout main
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: main
           fetch-depth: 0
 
       - name: Python 3.12
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: '3.12'
           cache: pip
@@ -61,49 +64,42 @@ jobs:
           sudo apt-get install -y fonts-dejavu-core
           python -m pip install --disable-pip-version-check -r publisher/requirements.txt
 
-      - name: Validate production policy and institutional manifest
+      - name: Validate approved F1 feed
         shell: bash
         run: |
           set -euxo pipefail
-          python -m json.tool publisher/f1_content_policy.json >/dev/null
-          python -m json.tool publisher/social-preview-latest.json >/dev/null
+          python -m json.tool publisher/f1-feed-latest.json >/dev/null
+          python -m py_compile publisher/buffer_twice_daily.py publisher/buffer_feed_production.py
           python - <<'PY'
           import json
-          p=json.load(open('publisher/f1_content_policy.json',encoding='utf-8'))
-          m=json.load(open('publisher/social-preview-latest.json',encoding='utf-8'))
-          assert p.get('brand') == 'F1 Immobiliare'
-          assert p.get('status') == 'binding'
-          assert p.get('visual_identity',{}).get('template_family') == 'light_f1_institutional'
-          assert p.get('publication_guard',{}).get('block_if_visual_template_is_not_light_f1') is True
-          assert m.get('pipeline') == 'social-preview-latest'
-          assert m.get('legacy_hidden') is True
-          assert m.get('required_visual_compliance') == 'F1_LIGHT_INSTITUTIONAL_V2'
-          assert all(e.get('visual_compliance') == 'F1_LIGHT_INSTITUTIONAL_V2' for e in m.get('entries',[]))
-          print('F1 LIVE PRODUCTION POLICY VALIDATED')
+          m=json.load(open('publisher/f1-feed-latest.json',encoding='utf-8'))
+          assert m.get('pipeline') == 'f1-instagram-production-feed'
+          assert m.get('brand') == 'F1 Immobiliare'
+          assert m.get('count') == 28
+          assert m.get('reels') == 14
+          assert m.get('carousels') == 14
+          entries=m.get('entries') or []
+          assert len(entries) == 28
+          assert all(e.get('quality_gate_passed') is True for e in entries)
+          print('F1 LIVE FEED VALIDATED: 28/28')
           PY
 
-      - name: Validate publisher code
-        run: |
-          python -m py_compile \
-            publisher/buffer_twice_daily.py \
-            publisher/buffer_preview_production.py
-
-      - name: Publish or schedule approved institutional content
+      - name: Publish or schedule next approved feed item
         shell: bash
         run: |
           set -euo pipefail
           SLOT='${{ inputs.slot }}'
-          DATE='${{ inputs.date }}'
           DRY='${{ inputs.dry_run }}'
+          if [ "${GITHUB_EVENT_NAME}" = "push" ]; then
+            SLOT='evening'
+            DRY='false'
+          fi
           SLOT="${SLOT:-auto}"
           ARGS=(--slot "$SLOT")
-          if [ -n "$DATE" ]; then
-            ARGS+=(--date "$DATE")
-          fi
           if [ "$DRY" = "true" ]; then
             ARGS+=(--dry-run)
           fi
-          python publisher/buffer_preview_production.py "${ARGS[@]}"
+          python publisher/buffer_feed_production.py "${ARGS[@]}"
 
       - name: Persist Buffer production state
         if: always()
@@ -117,14 +113,14 @@ jobs:
             echo 'No Buffer state changes to persist.'
             exit 0
           fi
-          git commit -m 'Persist F1 Buffer production state'
+          git commit -m 'Persist F1 live feed publication state'
           git pull --rebase origin main
           git push origin HEAD:main
 
       - name: Production status
         if: always()
         run: |
-          echo 'F1 production source: publisher/social-preview-latest.json'
-          echo 'Required visual compliance: F1_LIGHT_INSTITUTIONAL_V2'
-          echo 'Scheduled slots: 10:30 and 18:30 Europe/Rome'
+          echo 'F1 production source: publisher/f1-feed-latest.json'
+          echo 'Publishing cadence: 10:30 and 18:30 Europe/Rome'
           echo 'Targets: Facebook + Instagram + LinkedIn through Buffer'
+          echo 'Formats: Reel + Carousel'
