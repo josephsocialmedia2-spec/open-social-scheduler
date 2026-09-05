@@ -1,0 +1,70 @@
+name: Renderer V2 - Qualified F1 Smoke
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - renderer-v2-migration
+    paths:
+      - 'publisher/rendering/**'
+      - 'publisher/qualified_14d_queue.json'
+      - '.github/workflows/renderer-v2-qualified-smoke.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  qualified-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout migration branch
+        uses: actions/checkout@v4
+
+      - name: Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: publisher/requirements.txt
+
+      - name: Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: publisher/rendering/node/package.json
+
+      - name: Install dependencies
+        shell: bash
+        run: |
+          set -euxo pipefail
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg fonts-dejavu-core
+          python -m pip install --disable-pip-version-check -r publisher/requirements.txt
+          cd publisher/rendering/node
+          npm install --no-audit --no-fund
+
+      - name: Render real qualified Reel and carousel through V2 only
+        env:
+          RENDERER_V2_NO_FALLBACK: '1'
+        run: python publisher/rendering/qualified_smoke.py
+
+      - name: Verify real qualified outputs
+        shell: bash
+        run: |
+          set -euxo pipefail
+          test -s renderer-v2-qualified-smoke/qualified-reel.mp4
+          test -s renderer-v2-qualified-smoke/qualified-carousel-01.jpg
+          test -s renderer-v2-qualified-smoke/summary.json
+          ffprobe -v error -select_streams v:0 -show_entries stream=codec_name,width,height -of json renderer-v2-qualified-smoke/qualified-reel.mp4
+          ffprobe -v error -select_streams a:0 -show_entries stream=codec_name -of json renderer-v2-qualified-smoke/qualified-reel.mp4
+
+      - name: Upload qualified V2 proof
+        uses: actions/upload-artifact@v4
+        with:
+          name: renderer-v2-qualified-proof
+          path: renderer-v2-qualified-smoke
+          if-no-files-found: error
+          retention-days: 7
