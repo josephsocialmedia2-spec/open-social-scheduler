@@ -1,0 +1,125 @@
+name: F1 Golden Master V4 Smoke
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/f1-golden-master-smoke.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      RENDERER_V2_NO_FALLBACK: '1'
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: publisher/requirements.txt
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: publisher/rendering/node/package.json
+
+      - name: Install renderer dependencies
+        run: |
+          set -euxo pipefail
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg fonts-dejavu-core
+          python -m pip install --disable-pip-version-check -r publisher/requirements.txt
+          cd publisher/rendering/node
+          npm install --no-audit --no-fund
+          npm run typecheck
+
+      - name: Prepare representative Golden Master spec
+        run: |
+          set -euxo pipefail
+          mkdir -p /tmp/f1-golden-smoke
+          curl -fL --retry 4 --retry-delay 2 \
+            'https://images.pexels.com/photos/17191427/pexels-photo-17191427.jpeg' \
+            -o /tmp/f1-golden-smoke/hero.jpg
+          PYTHONPATH=publisher python - <<'PY'
+          import json
+          from pathlib import Path
+          from rendering.f1_job_bridge import job_to_content_spec
+          source=Path('/tmp/f1-golden-smoke/hero.jpg')
+          base={
+              'id':'golden-smoke',
+              'source_item_id':'R01',
+              'title':'Valorizziamo il tuo immobile',
+              'main_message':'Realizziamo il progetto di vendita con metodo, territorio e strategia.',
+              'caption':'Golden Master smoke',
+              'cta':'Scrivi VALUTAZIONE',
+              'lead_goal':'qualified_seller',
+              'topic_keywords':['METODO F1','TERRITORIO','STRATEGIA'],
+              'visual_theme':'valorizzazione immobiliare',
+              'slides':['VALORIZZIAMO|IL TUO IMMOBILE','METODO F1|PER VENDERE MEGLIO'],
+              'unique_primary_visual':True,
+          }
+          car=dict(base,format='carousel')
+          reel=dict(base,format='reel',reel_duration_seconds=5,muted_view_comprehension_required=True,
+                    voiceover='',audio_rights='')
+          Path('/tmp/f1-golden-smoke/carousel.json').write_text(json.dumps(job_to_content_spec(car,source),ensure_ascii=False,indent=2))
+          Path('/tmp/f1-golden-smoke/reel.json').write_text(json.dumps(job_to_content_spec(reel,source),ensure_ascii=False,indent=2))
+          PY
+
+      - name: Render representative carousel and Reel
+        run: |
+          set -euxo pipefail
+          PYTHONPATH=publisher python publisher/rendering/content_engine.py \
+            --spec /tmp/f1-golden-smoke/carousel.json \
+            --output /tmp/f1-golden-smoke/carousel.jpg --no-fallback \
+            > /tmp/f1-golden-smoke/carousel-result.json
+          PYTHONPATH=publisher python publisher/rendering/content_engine.py \
+            --spec /tmp/f1-golden-smoke/reel.json \
+            --output /tmp/f1-golden-smoke/reel.mp4 --no-fallback \
+            > /tmp/f1-golden-smoke/reel-result.json
+          ffmpeg -hide_banner -loglevel error -y -ss 1 -i /tmp/f1-golden-smoke/reel.mp4 \
+            -frames:v 1 -q:v 2 /tmp/f1-golden-smoke/reel-cover.jpg
+
+      - name: Assert strict compliance
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from PIL import Image
+          folder=Path('/tmp/f1-golden-smoke')
+          for result_name in ('carousel-result.json','reel-result.json'):
+              result=json.load(open(folder/result_name,encoding='utf-8'))
+              assert result['fallback_used'] is False, result
+              assert result['quality_gate']['passed'] is True, result
+              visual=result['visual_compliance']
+              assert visual['passed'] is True, visual
+              assert visual['score']==100, visual
+              assert visual['golden_master']=='F1_GOLDEN_MASTER_FEED_V4', visual
+          covers=[folder/'carousel-01.jpg',folder/'reel-cover.jpg']
+          for p in covers:
+              assert p.exists() and p.stat().st_size>15000, p
+              with Image.open(p) as im:
+                  assert im.width==1080, (p,im.size)
+                  assert im.height in (1350,1920), (p,im.size)
+          print('GOLDEN MASTER V4 SMOKE PASS')
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: F1-GOLDEN-MASTER-V4-SMOKE
+          path: |
+            /tmp/f1-golden-smoke/carousel-01.jpg
+            /tmp/f1-golden-smoke/carousel-02.jpg
+            /tmp/f1-golden-smoke/reel-cover.jpg
+            /tmp/f1-golden-smoke/reel.mp4
+            /tmp/f1-golden-smoke/carousel-result.json
+            /tmp/f1-golden-smoke/reel-result.json
+          if-no-files-found: error
+          retention-days: 7
