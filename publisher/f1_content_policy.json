@@ -1,0 +1,103 @@
+{
+  "version": "2026-09-05",
+  "brand": "F1 Immobiliare",
+  "status": "binding",
+  "visual_identity": {
+    "template_family": "light_f1_institutional",
+    "allowed_colors": ["#4E9E15", "#000000", "#FFFFFF"],
+    "forbidden": ["dark_recruiting_template", "ad_hoc_styles", "gold", "blue", "generic_marketing_ui"],
+    "fixed_elements": [
+      "F1 logo top-left",
+      "light white-green-black institutional composition",
+      "black footer with institutional contacts, address, social icons and QR code",
+      "central three-box brand strip",
+      "consistent F1 typography and spacing"
+    ],
+    "service_adaptation_rule": "The three-box strip remains structurally fixed. Copy inside the boxes may be adapted only to the active service while preserving the same geometry, hierarchy and brand role.",
+    "recruiting_rule": "Recruiting always uses the same light white-green-black F1 institutional template. Dark recruiting visuals are references for message only and must never become the production template.",
+    "no_style_invention": true
+  },
+  "contacts": {
+    "primary_phone": "+39 371 370 8294",
+    "secondary_phone": "+39 371 424 6300",
+    "email": "f1immobiliaresusa@outlook.it",
+    "website": "f1immobiliare.com"
+  },
+  "services": {
+    "service_1_agent_pricing": {
+      "name": "Valutazione professionale con Agent Pricing",
+      "goal": "Spiegare una valutazione professionale basata su dati, comparabili, microzona, concorrenza, domanda e strategia di prezzo.",
+      "forbidden": ["prezzi inventati", "stime non verificabili", "promesse di vendita garantita"],
+      "preferred_cta": "Richiedi una valutazione professionale"
+    },
+    "service_2_piano_vendita": {
+      "name": "Piano di Vendita F1 Immobiliare",
+      "master_message": "Non pubblichiamo semplicemente un annuncio. Costruiamo un piano di marketing dedicato alla proprietà.",
+      "phases": [
+        "Preparazione professionale dell'immobile: servizio fotografico, video, Reel, planimetrie, descrizione commerciale, cartello, scheda immobile e materiali per le visite",
+        "Presenza online: Immobiliare.it, Idealista, Casa.it, TrovaCasa, Wikicasa, F1Immobiliare.com, Facebook, Instagram, LinkedIn, Facebook Marketplace e gruppi Facebook locali",
+        "Rete F1: banca dati, email, WhatsApp e rete di collaboratori",
+        "Marketing territoriale: fino a 2.500 volantini dedicati con distribuzione progressiva registrata e monitorata",
+        "Open House quando previsto, coordinato con tutte le altre attività del piano"
+      ],
+      "preferred_cta": "Vuoi sapere come venderemmo la tua casa?"
+    },
+    "service_3_bonus_casa": {
+      "name": "Informazioni e guide utili su agevolazioni e bonus casa",
+      "official_source_root": "https://www.agenziaentrate.gov.it/portale/aree-tematiche/casa",
+      "official_sources_only": true,
+      "zero_hallucinations": true,
+      "daily_verification_required": true,
+      "must_check_news_before_generation": true,
+      "stale_or_unverified_content_must_not_publish": true,
+      "update_tag": "⚠️ AGGIORNAMENTO NORMATIVO DEL [DATA]",
+      "required_layout": {
+        "left_block": "IL CONCETTO IN BREVE",
+        "right_block": "REQUISITI E DATI TECNICI",
+        "right_block_rule": "Ultra-condensed points with bold figures, percentages, ISEE limits and deadlines only when confirmed by official current sources"
+      },
+      "topics": [
+        "Prima casa ordinaria",
+        "Prima casa Under 36 only if currently operative",
+        "Ristrutturazioni edilizie",
+        "Risparmio energetico",
+        "Bonus mobili ed elettrodomestici",
+        "Eliminazione barriere architettoniche",
+        "Sismabonus"
+      ]
+    },
+    "service_4_recruiting": {
+      "name": "Recruiting e ricerca personale",
+      "campaign_concept": "F1 Immobiliare - Scatta in prima fila",
+      "targets": ["giovani neodiplomati", "neolaureati", "prima esperienza", "profili da formare internamente"],
+      "roles": ["Collaboratore/Agente Immobiliare Junior", "Coordinatrice d'Ufficio"],
+      "career_path": ["Collaboratore Junior", "Agente", "Team Leader", "Responsabile", "possibile sviluppo di nuova sede"],
+      "territory_method": "Assegnazione di una zona geografica, presidio quotidiano, pubbliche relazioni, raccolta informazioni e monitoraggio capillare del mercato privato.",
+      "coordinator_role": "Front office, banca dati, telemarketing operativo, agenda, fissazione appuntamenti e supporto alla squadra.",
+      "economic_communication": {
+        "allowed": ["provvigioni", "percentuali crescenti in base ai risultati", "bonus su obiettivi misurabili", "incentivi collegati ai risultati della squadra"],
+        "forbidden": ["supporto economico iniziale", "fisso di avviamento", "promessa automatica di diventare socio", "promessa automatica di apertura ufficio"]
+      },
+      "competitor_names_forbidden": true,
+      "preferred_messages": [
+        "ANCHE PRIMA ESPERIENZA",
+        "TI FORMIAMO NOI",
+        "UNA ZONA. UN METODO. UN PERCORSO.",
+        "ENTRA COME JUNIOR. COSTRUISCI IL TUO FUTURO IN F1."
+      ]
+    }
+  },
+  "copy_rules": {
+    "tone": ["professionale", "chiaro", "motivante quando recruiting", "istituzionale", "commerciale senza promesse non verificabili"],
+    "no_competitor_brand_mentions": true,
+    "no_unverified_legal_or_tax_claims": true,
+    "no_fake_statistics": true,
+    "service_first_logic": "OBIETTIVO COMMERCIALE -> TARGET -> PROBLEMA/DESIDERIO -> HOOK -> CONTENUTO -> PROVA -> CTA -> TERRITORIO COERENTE -> VISUAL F1 -> CONTROLLO QUALITA -> PUBBLICAZIONE"
+  },
+  "publication_guard": {
+    "block_if_visual_template_is_not_light_f1": true,
+    "block_service_3_if_not_verified_today": true,
+    "block_recruiting_if_fixed_starting_salary_is_claimed": true,
+    "block_if_contact_numbers_are_not_official": true
+  }
+}
