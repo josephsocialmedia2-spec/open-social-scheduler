@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-05T02:16:53Z",
+  "updated_at": "2026-09-05T02:19:08Z",
   "brands": {
     "f1-immobiliare": {
       "recent": [
@@ -3086,46 +3086,6 @@
           "source_type": "f1-approved-local-valle-susa"
         },
         {
-          "key": "https://commons.wikimedia.org/wiki/special:redirect/file/avigliana%2c_italy_%28unsplash%29.jpg",
-          "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Avigliana%2C_Italy_%28Unsplash%29.jpg",
-          "used_at": "2026-09-04T02:16:12Z",
-          "job_id": "f1-immobiliare-2026-09-04-c04-02-07-g5-domanda-agente",
-          "output_type": "static-photo",
-          "source_type": "f1-approved-local-valle-susa"
-        },
-        {
-          "key": "https://commons.wikimedia.org/wiki/special:redirect/file/avigliana%2c_italy_%28unsplash_yhnotbw9spy%29.jpg",
-          "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Avigliana%2C_Italy_%28Unsplash_yhnOTbw9SPY%29.jpg",
-          "used_at": "2026-09-04T02:16:18Z",
-          "job_id": "f1-immobiliare-2026-09-04-c04-03-08-g6-prezzo-da-soli",
-          "output_type": "static-photo",
-          "source_type": "f1-approved-local-valle-susa"
-        },
-        {
-          "key": "https://commons.wikimedia.org/wiki/special:redirect/file/villa_cantamerlo_avigliana02.jpg",
-          "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Villa_Cantamerlo_Avigliana02.JPG",
-          "used_at": "2026-09-05T02:16:30Z",
-          "job_id": "f1-immobiliare-2026-09-05-c04-01-06-g5-dopo-pubblicazione",
-          "output_type": "static-photo",
-          "source_type": "f1-approved-local-valle-susa"
-        },
-        {
-          "key": "https://commons.wikimedia.org/wiki/special:redirect/file/avigliana_centro_storico.jpg",
-          "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Avigliana_Centro_Storico.JPG",
-          "used_at": "2026-09-05T02:16:36Z",
-          "job_id": "f1-immobiliare-2026-09-05-c04-02-07-g6-vendita-privata-verifiche",
-          "output_type": "static-photo",
-          "source_type": "f1-approved-local-valle-susa"
-        },
-        {
-          "key": "https://commons.wikimedia.org/wiki/special:redirect/file/architecture-villa-house-building-home-construction-542165.jpg",
-          "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Architecture-villa-house-building-home-construction-542165.jpg",
-          "used_at": "2026-09-05T02:16:41Z",
-          "job_id": "f1-immobiliare-2026-09-05-c04-03-08-g7-comparabile-escluso",
-          "output_type": "static-photo",
-          "source_type": "f1-approved-local-valle-susa"
-        },
-        {
           "key": "https://commons.wikimedia.org/wiki/special:redirect/file/centro_storico_avigliana.jpg",
           "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Centro_Storico_Avigliana.JPG",
           "used_at": "2026-09-05T02:16:47Z",
@@ -3137,6 +3097,46 @@
           "key": "https://commons.wikimedia.org/wiki/special:redirect/file/avigliana_centro_storico_tramonto.jpg",
           "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Avigliana_Centro_Storico_Tramonto.JPG",
           "used_at": "2026-09-05T02:16:53Z",
+          "job_id": "f1-immobiliare-2026-09-05-c04-05-10-g2-tre-prezzi",
+          "output_type": "static-photo",
+          "source_type": "f1-approved-local-valle-susa"
+        },
+        {
+          "key": "https://commons.wikimedia.org/wiki/special:redirect/file/villa_cantamerlo_avigliana02.jpg",
+          "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Villa_Cantamerlo_Avigliana02.JPG",
+          "used_at": "2026-09-05T02:18:45Z",
+          "job_id": "f1-immobiliare-2026-09-05-c04-01-06-g5-dopo-pubblicazione",
+          "output_type": "static-photo",
+          "source_type": "f1-approved-local-valle-susa"
+        },
+        {
+          "key": "https://commons.wikimedia.org/wiki/special:redirect/file/avigliana_centro_storico.jpg",
+          "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Avigliana_Centro_Storico.JPG",
+          "used_at": "2026-09-05T02:18:51Z",
+          "job_id": "f1-immobiliare-2026-09-05-c04-02-07-g6-vendita-privata-verifiche",
+          "output_type": "static-photo",
+          "source_type": "f1-approved-local-valle-susa"
+        },
+        {
+          "key": "https://commons.wikimedia.org/wiki/special:redirect/file/avigliana%2c_italy_%28unsplash%29.jpg",
+          "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Avigliana%2C_Italy_%28Unsplash%29.jpg",
+          "used_at": "2026-09-05T02:18:57Z",
+          "job_id": "f1-immobiliare-2026-09-05-c04-03-08-g7-comparabile-escluso",
+          "output_type": "static-photo",
+          "source_type": "f1-approved-local-valle-susa"
+        },
+        {
+          "key": "https://commons.wikimedia.org/wiki/special:redirect/file/avigliana%2c_italy_%28unsplash_yhnotbw9spy%29.jpg",
+          "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Avigliana%2C_Italy_%28Unsplash_yhnOTbw9SPY%29.jpg",
+          "used_at": "2026-09-05T02:19:02Z",
+          "job_id": "f1-immobiliare-2026-09-05-c04-04-09-g1-tre-agenzie",
+          "output_type": "static-photo",
+          "source_type": "f1-approved-local-valle-susa"
+        },
+        {
+          "key": "https://commons.wikimedia.org/wiki/special:redirect/file/architecture-villa-house-building-home-construction-542165.jpg",
+          "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Architecture-villa-house-building-home-construction-542165.jpg",
+          "used_at": "2026-09-05T02:19:08Z",
           "job_id": "f1-immobiliare-2026-09-05-c04-05-10-g2-tre-prezzi",
           "output_type": "static-photo",
           "source_type": "f1-approved-local-valle-susa"
@@ -6229,7 +6229,7 @@
         {
           "key": "https://themes.shopify.com/themes/shapes/presets/shapes?locale=it",
           "url": "https://themes.shopify.com/themes/shapes/presets/shapes?locale=it",
-          "used_at": "2026-09-05T02:16:53Z",
+          "used_at": "2026-09-05T02:19:08Z",
           "job_id": "real-media-pro-2026-09-05-c04-01-06-shopify-servizio",
           "output_type": "static-photo",
           "source_type": "shopify-theme-store-description-only"
@@ -6237,7 +6237,7 @@
         {
           "key": "https://themes.shopify.com/themes/broadcast/presets/broadcast?locale=it",
           "url": "https://themes.shopify.com/themes/broadcast/presets/broadcast?locale=it",
-          "used_at": "2026-09-05T02:16:53Z",
+          "used_at": "2026-09-05T02:19:08Z",
           "job_id": "real-media-pro-2026-09-05-c04-02-07-shopify-che-converte",
           "output_type": "static-photo",
           "source_type": "shopify-theme-store-description-only"
@@ -6245,7 +6245,7 @@
         {
           "key": "https://themes.shopify.com/themes/prestige/presets/prestige?locale=it",
           "url": "https://themes.shopify.com/themes/prestige/presets/prestige?locale=it",
-          "used_at": "2026-09-05T02:16:53Z",
+          "used_at": "2026-09-05T02:19:08Z",
           "job_id": "real-media-pro-2026-09-05-c04-03-08-crm-followup",
           "output_type": "static-photo",
           "source_type": "shopify-theme-store-description-only"
@@ -6253,7 +6253,7 @@
         {
           "key": "https://themes.shopify.com/themes/allure/presets/allure?locale=it",
           "url": "https://themes.shopify.com/themes/allure/presets/allure?locale=it",
-          "used_at": "2026-09-05T02:16:53Z",
+          "used_at": "2026-09-05T02:19:08Z",
           "job_id": "real-media-pro-2026-09-05-c04-04-09-analisi-gratuita",
           "output_type": "static-photo",
           "source_type": "shopify-theme-store-description-only"
@@ -6261,7 +6261,7 @@
         {
           "key": "https://themes.shopify.com/themes/vivid/presets/vivid?locale=it",
           "url": "https://themes.shopify.com/themes/vivid/presets/vivid?locale=it",
-          "used_at": "2026-09-05T02:16:53Z",
+          "used_at": "2026-09-05T02:19:08Z",
           "job_id": "real-media-pro-2026-09-05-c04-05-10-seo-ai-search",
           "output_type": "static-photo",
           "source_type": "shopify-theme-store-description-only"
