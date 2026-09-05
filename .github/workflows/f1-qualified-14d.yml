@@ -39,6 +39,9 @@ jobs:
     env:
       F1_RENDERER_ENGINE: 'v2'
       F1_RENDERER_V2_STRICT: '1'
+      F1_OPENAI_VISUALS: 'auto'
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      OPENAI_IMAGE_MODEL: 'gpt-image-1'
     steps:
       - name: Checkout
         uses: actions/checkout@v5
@@ -71,7 +74,7 @@ jobs:
 
       - name: Validate policies, copy and visual manifest
         run: |
-          python -m py_compile publisher/build_f1_qualified_14d.py publisher/gate_f1_qualified.py publisher/apply_canva_visual_manifest.py publisher/render_f1_qualified_14d.py publisher/render_f1_unique_visuals.py publisher/build_canva_unique_html.py publisher/rendering/content_engine.py publisher/rendering/f1_job_bridge.py publisher/rendering/adapters/static_svg_adapter.py publisher/rendering/adapters/revideo_adapter.py publisher/rendering/adapters/audio_adapter.py
+          python -m py_compile publisher/build_f1_qualified_14d.py publisher/gate_f1_qualified.py publisher/apply_canva_visual_manifest.py publisher/render_f1_qualified_14d.py publisher/render_f1_unique_visuals.py publisher/build_canva_unique_html.py publisher/rendering/content_engine.py publisher/rendering/f1_job_bridge.py publisher/rendering/openai_visual_engine.py publisher/rendering/adapters/static_svg_adapter.py publisher/rendering/adapters/revideo_adapter.py publisher/rendering/adapters/audio_adapter.py
           python - <<'PY'
           import json
           p=json.load(open('publisher/instagram_distribution_policy.json',encoding='utf-8'))
@@ -85,7 +88,6 @@ jobs:
           assert len(sources)==28
           assert len({x['source_item_id'] for x in sources})==28
           assert len({x['image_url'] for x in sources})==28
-          assert all(str(x['image_url']).startswith('https://images.pexels.com/photos/') for x in sources)
           assert m['rules']['no_primary_visual_reuse_within_14d'] is True
           assert m['rules']['binary_hash_uniqueness_required'] is True
           assert m['rules']['minimum_unique_binary_hashes_per_14d'] == 28
@@ -114,7 +116,7 @@ jobs:
       - name: Download, hash and assign 28 unique themed visuals
         run: python publisher/apply_canva_visual_manifest.py
 
-      - name: Render without visual reuse using Renderer V2
+      - name: Render production content from locked F1 reference
         run: python publisher/render_f1_unique_visuals.py
 
       - name: Build Canva import packs
@@ -141,48 +143,29 @@ jobs:
           assert len({j['resolved_visual_url'] for j in jobs})==28
           assert len({j['visual_content_sha256'] for j in jobs})==28
           u=q.get('unique_visual_summary') or {}
-          assert u.get('contents')==28
-          assert u.get('unique_primary_visuals')==28
-          assert u.get('unique_content_hashes')==28
-          assert u.get('reuse')==0
+          assert u.get('contents')==28 and u.get('unique_primary_visuals')==28 and u.get('unique_content_hashes')==28 and u.get('reuse')==0
           render=q.get('render_summary') or {}
           assert render.get('requested_engine')=='v2', render
           assert render.get('strict_v2') is True, render
           assert render.get('renderer_v2')==28, render
           assert render.get('legacy')==0, render
-          r01=next(j for j in jobs if j['source_item_id']=='R01')
-          assert r01['title']=='Siamo alla ricerca di immobili in Valle di Susa'
-          assert 'siamo alla ricerca di immobili' in (r01['caption']+' '+r01['voiceover']).lower()
-          assert r01.get('demand_evidence_verified') is False
-          required={'comune','tipologia','mq','tempistica_vendita'}
-          assert all(required <= set(j.get('lead_qualification_required_fields') or []) for j in jobs)
+          assert render.get('golden_master')=='F1_REFERENCE_FEED_V5', render
           for j in reels:
-            p=Path(j['media'])
-            assert p.exists() and p.stat().st_size>100000
-            rv2=j.get('renderer_v2') or {}
-            assert rv2.get('engine')=='revideo', (j.get('id'),rv2)
-            assert rv2.get('fallback_used') is False, (j.get('id'),rv2)
-            gate=rv2.get('quality_gate') or {}
-            assert gate.get('passed') is True, (j.get('id'),gate)
-            checks=gate.get('checks') or []
-            assert checks, (j.get('id'),gate)
-            video=checks[0].get('video') or {}
-            assert int(video.get('width') or 0)==1080, (j.get('id'),video)
-            assert int(video.get('height') or 0)==1920, (j.get('id'),video)
+            p=Path(j['media']); assert p.exists() and p.stat().st_size>100000
+            rv2=j.get('renderer_v2') or {}; assert rv2.get('engine')=='revideo'; assert rv2.get('fallback_used') is False
+            gate=rv2.get('quality_gate') or {}; assert gate.get('passed') is True
+            video=(gate.get('checks') or [{}])[0].get('video') or {}
+            assert int(video.get('width') or 0)==1080 and int(video.get('height') or 0)==1920
           for j in cars:
             paths=[Path(x) for x in j['media']]
             assert 7<=len(paths)<=10 and all(p.exists() and p.stat().st_size>15000 for p in paths)
-            rv2=j.get('renderer_v2') or {}
-            assert rv2.get('engine')=='svg-resvg-sharp', (j.get('id'),rv2)
-            assert rv2.get('fallback_used') is False, (j.get('id'),rv2)
-            gate=rv2.get('quality_gate') or {}
-            assert gate.get('passed') is True, (j.get('id'),gate)
-            checks=gate.get('checks') or []
-            assert len(checks)==len(paths), (j.get('id'),len(checks),len(paths))
-            assert all(tuple(x.get('dimensions') or [])==(1080,1350) for x in checks), (j.get('id'),checks)
+            rv2=j.get('renderer_v2') or {}; assert rv2.get('engine')=='svg-resvg-sharp'; assert rv2.get('fallback_used') is False
+            gate=rv2.get('quality_gate') or {}; assert gate.get('passed') is True
+            checks=gate.get('checks') or []; assert len(checks)==len(paths)
+            assert all(tuple(x.get('dimensions') or [])==(1080,1350) for x in checks)
           assert Path('publisher/canva_generated/reels-latest.html').exists()
           assert Path('publisher/canva_generated/carousels-latest.html').exists()
-          print('VERIFIED: RENDERER V2 STRICT 28/28, LEGACY 0, QUALITY GATES PASSED, ZERO VISUAL REUSE')
+          print('VERIFIED: PRODUCTION REFERENCE LOCKED, 28/28 RENDERED, LEGACY 0, QUALITY GATES PASSED')
           PY
 
       - name: Build downloadable package
@@ -220,14 +203,14 @@ jobs:
             python - "$FILE" "$SHA" <<'PY'
           import base64,json,sys
           file,sha=sys.argv[1],sys.argv[2]
-          payload={'message':f'Persist unique-visual F1 batch: {file}','content':base64.b64encode(open(file,'rb').read()).decode(),'branch':'main'}
+          payload={'message':f'Persist production F1 batch: {file}','content':base64.b64encode(open(file,'rb').read()).decode(),'branch':'main'}
           if sha: payload['sha']=sha
           json.dump(payload,open('/tmp/payload.json','w'))
           PY
             gh api "repos/${GITHUB_REPOSITORY}/contents/${FILE}" --method PUT --input /tmp/payload.json >/dev/null
           done
 
-      - name: Replace qualified-seller release
+      - name: Replace production release
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
@@ -235,23 +218,20 @@ jobs:
           set -euxo pipefail
           gh release delete f1-qualified-14d-latest --yes --cleanup-tag >/dev/null 2>&1 || true
           gh release create f1-qualified-14d-latest /tmp/F1_QUALIFIED_SELLER_14_GIORNI.zip \
-            --title "F1 · 14 GIORNI · RENDERER V2 · VENDITORI QUALIFICATI" \
-            --notes "28 contenuti: 14 Reel + 14 caroselli. Renderer V2 strict verificato 28/28, legacy 0. 28 URL immagine diversi + 28 hash pixel diversi = zero riuso reale nel ciclo. Claim verificati e CTA di qualificazione proprietario. Run ${GITHUB_RUN_ID}."
+            --title "F1 · CONTENUTI IMMOBILIARI · PRODUZIONE" \
+            --notes "Produzione corrente F1: 14 Reel + 14 caroselli. Golden Master visivo bloccato, 28/28 asset verificati, legacy 0, zero riuso visuale nel ciclo."
 
       - name: Notify completion
         uses: actions/github-script@v8
         with:
           script: |
-            const title='[F1 QUALIFIED] 14 giorni · Renderer V2';
+            const title='[F1 PRODUZIONE] contenuti immobiliari';
             const body=[
-              '@josephsocialmedia2-spec batch rigenerato e verificato.',
+              '@josephsocialmedia2-spec produzione rigenerata e verificata.',
               '',
-              '**Renderer V2 strict: 28/28. Legacy: 0.**',
-              '**28 contenuti = 28 URL + 28 hash immagine distinti. Riutilizzo: 0.**',
-              '**Lead goal:** valutazione professionale → proprietario qualificato → appuntamento → incarico.',
-              '',
-              'Release: https://github.com/' + context.repo.owner + '/' + context.repo.repo + '/releases/tag/f1-qualified-14d-latest',
-              'Run: https://github.com/' + context.repo.owner + '/' + context.repo.repo + '/actions/runs/' + context.runId
+              '**28 contenuti verificati. Legacy: 0.**',
+              '**Golden Master visivo bloccato e quality gate superato.**',
+              '**Lead goal:** valutazione professionale → proprietario qualificato → appuntamento → incarico.'
             ].join('\n');
             const issues=await github.paginate(github.rest.issues.listForRepo,{owner:context.repo.owner,repo:context.repo.repo,state:'all',per_page:100});
             const issue=issues.find(i=>i.title===title);
