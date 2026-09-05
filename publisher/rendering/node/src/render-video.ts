@@ -16,14 +16,17 @@ async function main() {
   if (!output.endsWith('.mp4')) {
     throw new Error(`Renderer V2 video output must end in .mp4: ${output}`);
   }
-  const outFile = output as `${string}.mp4`;
+
+  const outDir = path.dirname(output);
+  const outFile = path.basename(output) as `${string}.mp4`;
   const spec = JSON.parse(fs.readFileSync(specPath, 'utf8'));
-  fs.mkdirSync(path.dirname(output), {recursive: true});
+  fs.mkdirSync(outDir, {recursive: true});
 
   const rendered = await renderVideo({
     projectFile: path.resolve('src/project.ts'),
     variables: {spec},
     settings: {
+      outDir,
       outFile,
       workers: 1,
       logProgress: true,
@@ -42,7 +45,7 @@ async function main() {
     },
   });
 
-  const actual = path.resolve(rendered);
+  const actual = path.isAbsolute(rendered) ? path.resolve(rendered) : path.resolve(rendered);
   if (actual !== output && fs.existsSync(actual)) {
     fs.copyFileSync(actual, output);
   }
