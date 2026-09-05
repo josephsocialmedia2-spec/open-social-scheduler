@@ -37,6 +37,9 @@ jobs:
           sudo apt-get install -y ffmpeg fonts-dejavu-core
           python -m pip install --disable-pip-version-check -r publisher/requirements.txt
 
+      - name: Prepare deterministic F1 residential photo cache
+        run: python publisher/prewarm_photo_cache.py
+
       - name: Generate TODAY morning + evening with production renderer - NO PUBLISH
         shell: bash
         run: |
@@ -62,7 +65,7 @@ jobs:
 
           for slot in ('morning', 'evening'):
               job = m.build_job(client, bank, day, slot)
-              # Same production renderer. We render only; no Buffer/Meta publishing functions are called.
+              # Same renderer used by the production publisher. Render only: no social API is called.
               m.render_job(job, client)
               raw = job.get('media')
               paths = raw if isinstance(raw, list) else [raw]
