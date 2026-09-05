@@ -1,0 +1,143 @@
+name: F1 Preview Today - REAL RENDERER
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.f1-preview-trigger'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: publisher/requirements.txt
+
+      - name: Install renderer dependencies
+        shell: bash
+        run: |
+          set -euxo pipefail
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg fonts-dejavu-core
+          python -m pip install --disable-pip-version-check -r publisher/requirements.txt
+
+      - name: Generate TODAY morning + evening with production renderer - NO PUBLISH
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf preview_today
+          mkdir -p preview_today/morning preview_today/evening
+          python - <<'PY'
+          import json
+          import shutil
+          import sys
+          from datetime import datetime
+          from pathlib import Path
+          from zoneinfo import ZoneInfo
+
+          sys.path.insert(0, 'publisher')
+          import meta_twice_daily as m
+
+          root = Path('.').resolve()
+          client = m.load_json(root / 'publisher/clients/f1-immobiliare.json')
+          bank = m.load_json(root / 'publisher/content_bank/f1-immobiliare.json')
+          day = datetime.now(ZoneInfo('Europe/Rome')).date()
+          summary = {'date': day.isoformat(), 'publisher_called': False, 'slots': {}}
+
+          for slot in ('morning', 'evening'):
+              job = m.build_job(client, bank, day, slot)
+              # Same production renderer. We render only; no Buffer/Meta publishing functions are called.
+              m.render_job(job, client)
+              raw = job.get('media')
+              paths = raw if isinstance(raw, list) else [raw]
+              outdir = root / 'preview_today' / slot
+              copied = []
+              for idx, rel in enumerate(paths, 1):
+                  src = root / str(rel)
+                  if not src.exists():
+                      raise RuntimeError(f'Renderer did not create {src}')
+                  suffix = src.suffix.lower()
+                  name = f'slide-{idx:02d}{suffix}' if len(paths) > 1 else f'reel{suffix}'
+                  dst = outdir / name
+                  shutil.copy2(src, dst)
+                  copied.append(str(dst.relative_to(root)))
+              summary['slots'][slot] = {
+                  'title': job.get('title'),
+                  'format': job.get('format'),
+                  'caption': job.get('caption'),
+                  'hashtags': job.get('hashtags'),
+                  'territory': job.get('territory'),
+                  'scheduled_at': job.get('scheduled_at'),
+                  'files': copied,
+              }
+
+          (root / 'preview_today/preview-summary.json').write_text(
+              json.dumps(summary, ensure_ascii=False, indent=2) + '\n', encoding='utf-8'
+          )
+          print(json.dumps(summary, ensure_ascii=False, indent=2))
+          PY
+
+      - name: Create morning contact sheet
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from PIL import Image, ImageDraw, ImageFont
+
+          files = sorted(Path('preview_today/morning').glob('slide-*.jpg')) + sorted(Path('preview_today/morning').glob('slide-*.png'))
+          if not files:
+              raise SystemExit('No morning slides found')
+          thumbs=[]
+          tw=324
+          for p in files:
+              im=Image.open(p).convert('RGB')
+              th=round(im.height*tw/im.width)
+              thumbs.append(im.resize((tw,th),Image.Resampling.LANCZOS))
+          cols=2
+          gap=20
+          rows=(len(thumbs)+cols-1)//cols
+          th=max(i.height for i in thumbs)
+          top=90
+          canvas=Image.new('RGB',(cols*tw+(cols+1)*gap,top+rows*th+(rows+1)*gap),'#111111')
+          d=ImageDraw.Draw(canvas)
+          f=ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf',32)
+          d.text((gap,24),'F1 IMMOBILIARE — ANTEPRIMA CAROUSEL OGGI',font=f,fill='white')
+          for idx,im in enumerate(thumbs):
+              x=gap+(idx%cols)*(tw+gap)
+              y=top+gap+(idx//cols)*(th+gap)
+              canvas.paste(im,(x,y))
+          canvas.save('preview_today/morning-contact-sheet.jpg',quality=92)
+          PY
+
+      - name: Extract evening reel poster frame
+        shell: bash
+        run: |
+          set -euo pipefail
+          REEL=$(find preview_today/evening -maxdepth 1 -type f -name '*.mp4' | head -n1)
+          if [ -n "$REEL" ]; then
+            ffmpeg -y -ss 00:00:02 -i "$REEL" -frames:v 1 preview_today/evening-reel-preview.jpg >/dev/null 2>&1
+          fi
+
+      - name: Upload exact preview
+        uses: actions/upload-artifact@v4
+        with:
+          name: f1-preview-today-real
+          path: preview_today
+          if-no-files-found: error
+          retention-days: 7
