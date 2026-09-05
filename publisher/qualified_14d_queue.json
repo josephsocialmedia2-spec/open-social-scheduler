@@ -1,7 +1,7 @@
 {
   "version": 2,
   "name": "F1 Qualified Seller 14-Day Queue",
-  "generated_at": "2026-09-05T11:05:51+02:00",
+  "generated_at": "2026-09-05T11:54:19+02:00",
   "window_start": "2026-08-23",
   "window_end": "2026-09-05",
   "goal": "qualified_seller_leads",
@@ -133,7 +133,7 @@
           "checks": [
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-23/r01.mp4",
-              "bytes": 3286887,
+              "bytes": 5589882,
               "video": {
                 "codec_name": "h264",
                 "width": 1080,
@@ -278,7 +278,7 @@
           "checks": [
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-23/c01/slide-01.jpg",
-              "bytes": 167053,
+              "bytes": 170971,
               "dimensions": [
                 1080,
                 1350
@@ -286,7 +286,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-23/c01/slide-02.jpg",
-              "bytes": 162964,
+              "bytes": 151316,
               "dimensions": [
                 1080,
                 1350
@@ -294,7 +294,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-23/c01/slide-03.jpg",
-              "bytes": 163875,
+              "bytes": 154822,
               "dimensions": [
                 1080,
                 1350
@@ -302,7 +302,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-23/c01/slide-04.jpg",
-              "bytes": 166078,
+              "bytes": 159023,
               "dimensions": [
                 1080,
                 1350
@@ -310,7 +310,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-23/c01/slide-05.jpg",
-              "bytes": 166129,
+              "bytes": 159040,
               "dimensions": [
                 1080,
                 1350
@@ -318,7 +318,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-23/c01/slide-06.jpg",
-              "bytes": 163698,
+              "bytes": 151977,
               "dimensions": [
                 1080,
                 1350
@@ -326,7 +326,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-23/c01/slide-07.jpg",
-              "bytes": 164533,
+              "bytes": 153930,
               "dimensions": [
                 1080,
                 1350
@@ -334,7 +334,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-23/c01/slide-08.jpg",
-              "bytes": 162018,
+              "bytes": 151039,
               "dimensions": [
                 1080,
                 1350
@@ -342,7 +342,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-23/c01/slide-09.jpg",
-              "bytes": 162523,
+              "bytes": 153257,
               "dimensions": [
                 1080,
                 1350
@@ -350,7 +350,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-23/c01/slide-10.jpg",
-              "bytes": 161944,
+              "bytes": 152984,
               "dimensions": [
                 1080,
                 1350
@@ -481,7 +481,7 @@
           "checks": [
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-24/r02.mp4",
-              "bytes": 2470357,
+              "bytes": 3938923,
               "video": {
                 "codec_name": "h264",
                 "width": 1080,
@@ -626,7 +626,7 @@
           "checks": [
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-24/c02/slide-01.jpg",
-              "bytes": 191983,
+              "bytes": 198026,
               "dimensions": [
                 1080,
                 1350
@@ -634,7 +634,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-24/c02/slide-02.jpg",
-              "bytes": 189777,
+              "bytes": 182812,
               "dimensions": [
                 1080,
                 1350
@@ -642,7 +642,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-24/c02/slide-03.jpg",
-              "bytes": 189465,
+              "bytes": 182868,
               "dimensions": [
                 1080,
                 1350
@@ -650,7 +650,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-24/c02/slide-04.jpg",
-              "bytes": 189415,
+              "bytes": 182683,
               "dimensions": [
                 1080,
                 1350
@@ -658,7 +658,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-24/c02/slide-05.jpg",
-              "bytes": 194885,
+              "bytes": 190418,
               "dimensions": [
                 1080,
                 1350
@@ -666,7 +666,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-24/c02/slide-06.jpg",
-              "bytes": 193652,
+              "bytes": 190773,
               "dimensions": [
                 1080,
                 1350
@@ -674,7 +674,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-24/c02/slide-07.jpg",
-              "bytes": 191986,
+              "bytes": 186915,
               "dimensions": [
                 1080,
                 1350
@@ -682,7 +682,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-24/c02/slide-08.jpg",
-              "bytes": 192501,
+              "bytes": 188198,
               "dimensions": [
                 1080,
                 1350
@@ -690,7 +690,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-24/c02/slide-09.jpg",
-              "bytes": 193380,
+              "bytes": 190033,
               "dimensions": [
                 1080,
                 1350
@@ -698,7 +698,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-24/c02/slide-10.jpg",
-              "bytes": 190225,
+              "bytes": 185237,
               "dimensions": [
                 1080,
                 1350
@@ -829,7 +829,7 @@
           "checks": [
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-25/r03.mp4",
-              "bytes": 2704678,
+              "bytes": 4672743,
               "video": {
                 "codec_name": "h264",
                 "width": 1080,
@@ -974,7 +974,7 @@
           "checks": [
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-25/c03/slide-01.jpg",
-              "bytes": 215803,
+              "bytes": 229173,
               "dimensions": [
                 1080,
                 1350
@@ -982,7 +982,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-25/c03/slide-02.jpg",
-              "bytes": 216324,
+              "bytes": 217739,
               "dimensions": [
                 1080,
                 1350
@@ -990,7 +990,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-25/c03/slide-03.jpg",
-              "bytes": 212634,
+              "bytes": 214718,
               "dimensions": [
                 1080,
                 1350
@@ -998,7 +998,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-25/c03/slide-04.jpg",
-              "bytes": 208047,
+              "bytes": 206386,
               "dimensions": [
                 1080,
                 1350
@@ -1006,7 +1006,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-25/c03/slide-05.jpg",
-              "bytes": 212664,
+              "bytes": 211132,
               "dimensions": [
                 1080,
                 1350
@@ -1014,7 +1014,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-25/c03/slide-06.jpg",
-              "bytes": 216144,
+              "bytes": 220493,
               "dimensions": [
                 1080,
                 1350
@@ -1022,7 +1022,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-25/c03/slide-07.jpg",
-              "bytes": 211429,
+              "bytes": 209458,
               "dimensions": [
                 1080,
                 1350
@@ -1030,7 +1030,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-25/c03/slide-08.jpg",
-              "bytes": 214653,
+              "bytes": 216576,
               "dimensions": [
                 1080,
                 1350
@@ -1038,7 +1038,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-25/c03/slide-09.jpg",
-              "bytes": 216592,
+              "bytes": 222046,
               "dimensions": [
                 1080,
                 1350
@@ -1046,7 +1046,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-25/c03/slide-10.jpg",
-              "bytes": 215172,
+              "bytes": 216423,
               "dimensions": [
                 1080,
                 1350
@@ -1177,7 +1177,7 @@
           "checks": [
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-26/r04.mp4",
-              "bytes": 3411998,
+              "bytes": 5716140,
               "video": {
                 "codec_name": "h264",
                 "width": 1080,
@@ -1322,7 +1322,7 @@
           "checks": [
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-26/c04/slide-01.jpg",
-              "bytes": 230484,
+              "bytes": 218991,
               "dimensions": [
                 1080,
                 1350
@@ -1330,7 +1330,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-26/c04/slide-02.jpg",
-              "bytes": 228491,
+              "bytes": 205782,
               "dimensions": [
                 1080,
                 1350
@@ -1338,7 +1338,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-26/c04/slide-03.jpg",
-              "bytes": 229518,
+              "bytes": 205267,
               "dimensions": [
                 1080,
                 1350
@@ -1346,7 +1346,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-26/c04/slide-04.jpg",
-              "bytes": 230498,
+              "bytes": 210231,
               "dimensions": [
                 1080,
                 1350
@@ -1354,7 +1354,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-26/c04/slide-05.jpg",
-              "bytes": 229425,
+              "bytes": 206326,
               "dimensions": [
                 1080,
                 1350
@@ -1362,7 +1362,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-26/c04/slide-06.jpg",
-              "bytes": 229644,
+              "bytes": 206192,
               "dimensions": [
                 1080,
                 1350
@@ -1370,7 +1370,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-26/c04/slide-07.jpg",
-              "bytes": 229909,
+              "bytes": 207521,
               "dimensions": [
                 1080,
                 1350
@@ -1378,7 +1378,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-26/c04/slide-08.jpg",
-              "bytes": 228574,
+              "bytes": 204927,
               "dimensions": [
                 1080,
                 1350
@@ -1386,7 +1386,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-26/c04/slide-09.jpg",
-              "bytes": 226511,
+              "bytes": 202356,
               "dimensions": [
                 1080,
                 1350
@@ -1394,7 +1394,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-26/c04/slide-10.jpg",
-              "bytes": 227943,
+              "bytes": 203266,
               "dimensions": [
                 1080,
                 1350
@@ -1525,7 +1525,7 @@
           "checks": [
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-27/r05.mp4",
-              "bytes": 2385553,
+              "bytes": 3661548,
               "video": {
                 "codec_name": "h264",
                 "width": 1080,
@@ -1670,7 +1670,7 @@
           "checks": [
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-27/c05/slide-01.jpg",
-              "bytes": 220392,
+              "bytes": 213356,
               "dimensions": [
                 1080,
                 1350
@@ -1678,7 +1678,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-27/c05/slide-02.jpg",
-              "bytes": 210227,
+              "bytes": 191756,
               "dimensions": [
                 1080,
                 1350
@@ -1686,7 +1686,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-27/c05/slide-03.jpg",
-              "bytes": 210775,
+              "bytes": 193143,
               "dimensions": [
                 1080,
                 1350
@@ -1694,7 +1694,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-27/c05/slide-04.jpg",
-              "bytes": 210586,
+              "bytes": 192059,
               "dimensions": [
                 1080,
                 1350
@@ -1702,7 +1702,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-27/c05/slide-05.jpg",
-              "bytes": 212454,
+              "bytes": 194303,
               "dimensions": [
                 1080,
                 1350
@@ -1710,7 +1710,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-27/c05/slide-06.jpg",
-              "bytes": 218117,
+              "bytes": 200109,
               "dimensions": [
                 1080,
                 1350
@@ -1718,7 +1718,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-27/c05/slide-07.jpg",
-              "bytes": 213763,
+              "bytes": 194681,
               "dimensions": [
                 1080,
                 1350
@@ -1726,7 +1726,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-27/c05/slide-08.jpg",
-              "bytes": 214181,
+              "bytes": 198429,
               "dimensions": [
                 1080,
                 1350
@@ -1734,7 +1734,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-27/c05/slide-09.jpg",
-              "bytes": 214608,
+              "bytes": 198290,
               "dimensions": [
                 1080,
                 1350
@@ -1742,7 +1742,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-27/c05/slide-10.jpg",
-              "bytes": 216371,
+              "bytes": 196474,
               "dimensions": [
                 1080,
                 1350
@@ -1873,7 +1873,7 @@
           "checks": [
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-28/r06.mp4",
-              "bytes": 2380875,
+              "bytes": 3727498,
               "video": {
                 "codec_name": "h264",
                 "width": 1080,
@@ -2018,7 +2018,7 @@
           "checks": [
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-28/c06/slide-01.jpg",
-              "bytes": 240132,
+              "bytes": 248210,
               "dimensions": [
                 1080,
                 1350
@@ -2026,7 +2026,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-28/c06/slide-02.jpg",
-              "bytes": 249882,
+              "bytes": 244164,
               "dimensions": [
                 1080,
                 1350
@@ -2034,7 +2034,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-28/c06/slide-03.jpg",
-              "bytes": 236808,
+              "bytes": 230383,
               "dimensions": [
                 1080,
                 1350
@@ -2042,7 +2042,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-28/c06/slide-04.jpg",
-              "bytes": 236878,
+              "bytes": 230672,
               "dimensions": [
                 1080,
                 1350
@@ -2050,7 +2050,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-28/c06/slide-05.jpg",
-              "bytes": 238648,
+              "bytes": 231835,
               "dimensions": [
                 1080,
                 1350
@@ -2058,7 +2058,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-28/c06/slide-06.jpg",
-              "bytes": 239324,
+              "bytes": 233525,
               "dimensions": [
                 1080,
                 1350
@@ -2066,7 +2066,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-28/c06/slide-07.jpg",
-              "bytes": 244939,
+              "bytes": 239988,
               "dimensions": [
                 1080,
                 1350
@@ -2074,7 +2074,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-28/c06/slide-08.jpg",
-              "bytes": 244432,
+              "bytes": 240542,
               "dimensions": [
                 1080,
                 1350
@@ -2082,7 +2082,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-28/c06/slide-09.jpg",
-              "bytes": 242907,
+              "bytes": 239336,
               "dimensions": [
                 1080,
                 1350
@@ -2090,7 +2090,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-28/c06/slide-10.jpg",
-              "bytes": 248327,
+              "bytes": 245956,
               "dimensions": [
                 1080,
                 1350
@@ -2221,7 +2221,7 @@
           "checks": [
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-29/r07.mp4",
-              "bytes": 2459601,
+              "bytes": 4531299,
               "video": {
                 "codec_name": "h264",
                 "width": 1080,
@@ -2366,7 +2366,7 @@
           "checks": [
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-29/c07/slide-01.jpg",
-              "bytes": 230843,
+              "bytes": 202884,
               "dimensions": [
                 1080,
                 1350
@@ -2374,7 +2374,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-29/c07/slide-02.jpg",
-              "bytes": 230790,
+              "bytes": 195012,
               "dimensions": [
                 1080,
                 1350
@@ -2382,7 +2382,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-29/c07/slide-03.jpg",
-              "bytes": 226935,
+              "bytes": 190119,
               "dimensions": [
                 1080,
                 1350
@@ -2390,7 +2390,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-29/c07/slide-04.jpg",
-              "bytes": 226295,
+              "bytes": 189130,
               "dimensions": [
                 1080,
                 1350
@@ -2398,7 +2398,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-29/c07/slide-05.jpg",
-              "bytes": 227419,
+              "bytes": 190961,
               "dimensions": [
                 1080,
                 1350
@@ -2406,7 +2406,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-29/c07/slide-06.jpg",
-              "bytes": 228318,
+              "bytes": 192173,
               "dimensions": [
                 1080,
                 1350
@@ -2414,7 +2414,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-29/c07/slide-07.jpg",
-              "bytes": 226209,
+              "bytes": 188918,
               "dimensions": [
                 1080,
                 1350
@@ -2422,7 +2422,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-29/c07/slide-08.jpg",
-              "bytes": 227086,
+              "bytes": 186139,
               "dimensions": [
                 1080,
                 1350
@@ -2430,7 +2430,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-29/c07/slide-09.jpg",
-              "bytes": 227033,
+              "bytes": 189843,
               "dimensions": [
                 1080,
                 1350
@@ -2438,7 +2438,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-29/c07/slide-10.jpg",
-              "bytes": 227310,
+              "bytes": 193552,
               "dimensions": [
                 1080,
                 1350
@@ -2569,7 +2569,7 @@
           "checks": [
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-30/r08.mp4",
-              "bytes": 2699650,
+              "bytes": 6244536,
               "video": {
                 "codec_name": "h264",
                 "width": 1080,
@@ -2714,7 +2714,7 @@
           "checks": [
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-30/c08/slide-01.jpg",
-              "bytes": 221553,
+              "bytes": 211547,
               "dimensions": [
                 1080,
                 1350
@@ -2722,7 +2722,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-30/c08/slide-02.jpg",
-              "bytes": 209933,
+              "bytes": 190285,
               "dimensions": [
                 1080,
                 1350
@@ -2730,7 +2730,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-30/c08/slide-03.jpg",
-              "bytes": 214923,
+              "bytes": 198238,
               "dimensions": [
                 1080,
                 1350
@@ -2738,7 +2738,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-30/c08/slide-04.jpg",
-              "bytes": 214985,
+              "bytes": 197575,
               "dimensions": [
                 1080,
                 1350
@@ -2746,7 +2746,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-30/c08/slide-05.jpg",
-              "bytes": 214199,
+              "bytes": 193080,
               "dimensions": [
                 1080,
                 1350
@@ -2754,7 +2754,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-30/c08/slide-06.jpg",
-              "bytes": 211246,
+              "bytes": 191103,
               "dimensions": [
                 1080,
                 1350
@@ -2762,7 +2762,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-30/c08/slide-07.jpg",
-              "bytes": 215138,
+              "bytes": 198015,
               "dimensions": [
                 1080,
                 1350
@@ -2770,7 +2770,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-30/c08/slide-08.jpg",
-              "bytes": 210503,
+              "bytes": 190547,
               "dimensions": [
                 1080,
                 1350
@@ -2778,7 +2778,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-30/c08/slide-09.jpg",
-              "bytes": 212151,
+              "bytes": 192716,
               "dimensions": [
                 1080,
                 1350
@@ -2786,7 +2786,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-30/c08/slide-10.jpg",
-              "bytes": 217374,
+              "bytes": 196846,
               "dimensions": [
                 1080,
                 1350
@@ -2917,7 +2917,7 @@
           "checks": [
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-31/r09.mp4",
-              "bytes": 2724458,
+              "bytes": 5089104,
               "video": {
                 "codec_name": "h264",
                 "width": 1080,
@@ -3062,7 +3062,7 @@
           "checks": [
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-31/c09/slide-01.jpg",
-              "bytes": 218729,
+              "bytes": 230546,
               "dimensions": [
                 1080,
                 1350
@@ -3070,7 +3070,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-31/c09/slide-02.jpg",
-              "bytes": 219515,
+              "bytes": 219384,
               "dimensions": [
                 1080,
                 1350
@@ -3078,7 +3078,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-31/c09/slide-03.jpg",
-              "bytes": 220353,
+              "bytes": 221393,
               "dimensions": [
                 1080,
                 1350
@@ -3086,7 +3086,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-31/c09/slide-04.jpg",
-              "bytes": 219648,
+              "bytes": 220512,
               "dimensions": [
                 1080,
                 1350
@@ -3094,7 +3094,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-31/c09/slide-05.jpg",
-              "bytes": 220128,
+              "bytes": 221404,
               "dimensions": [
                 1080,
                 1350
@@ -3102,7 +3102,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-31/c09/slide-06.jpg",
-              "bytes": 218169,
+              "bytes": 218319,
               "dimensions": [
                 1080,
                 1350
@@ -3110,7 +3110,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-31/c09/slide-07.jpg",
-              "bytes": 222174,
+              "bytes": 223194,
               "dimensions": [
                 1080,
                 1350
@@ -3118,7 +3118,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-31/c09/slide-08.jpg",
-              "bytes": 218635,
+              "bytes": 218619,
               "dimensions": [
                 1080,
                 1350
@@ -3126,7 +3126,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-31/c09/slide-09.jpg",
-              "bytes": 219158,
+              "bytes": 219147,
               "dimensions": [
                 1080,
                 1350
@@ -3134,7 +3134,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-31/c09/slide-10.jpg",
-              "bytes": 219845,
+              "bytes": 218864,
               "dimensions": [
                 1080,
                 1350
@@ -3265,7 +3265,7 @@
           "checks": [
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-01/r10.mp4",
-              "bytes": 2510887,
+              "bytes": 4433573,
               "video": {
                 "codec_name": "h264",
                 "width": 1080,
@@ -3410,7 +3410,7 @@
           "checks": [
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-01/c10/slide-01.jpg",
-              "bytes": 223140,
+              "bytes": 221183,
               "dimensions": [
                 1080,
                 1350
@@ -3418,7 +3418,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-01/c10/slide-02.jpg",
-              "bytes": 223391,
+              "bytes": 208628,
               "dimensions": [
                 1080,
                 1350
@@ -3426,7 +3426,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-01/c10/slide-03.jpg",
-              "bytes": 221686,
+              "bytes": 209409,
               "dimensions": [
                 1080,
                 1350
@@ -3434,7 +3434,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-01/c10/slide-04.jpg",
-              "bytes": 222662,
+              "bytes": 210444,
               "dimensions": [
                 1080,
                 1350
@@ -3442,7 +3442,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-01/c10/slide-05.jpg",
-              "bytes": 225061,
+              "bytes": 214949,
               "dimensions": [
                 1080,
                 1350
@@ -3450,7 +3450,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-01/c10/slide-06.jpg",
-              "bytes": 222051,
+              "bytes": 208333,
               "dimensions": [
                 1080,
                 1350
@@ -3458,7 +3458,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-01/c10/slide-07.jpg",
-              "bytes": 219758,
+              "bytes": 203944,
               "dimensions": [
                 1080,
                 1350
@@ -3466,7 +3466,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-01/c10/slide-08.jpg",
-              "bytes": 220458,
+              "bytes": 208891,
               "dimensions": [
                 1080,
                 1350
@@ -3474,7 +3474,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-01/c10/slide-09.jpg",
-              "bytes": 222879,
+              "bytes": 207410,
               "dimensions": [
                 1080,
                 1350
@@ -3482,7 +3482,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-01/c10/slide-10.jpg",
-              "bytes": 222056,
+              "bytes": 209786,
               "dimensions": [
                 1080,
                 1350
@@ -3613,7 +3613,7 @@
           "checks": [
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-02/r11.mp4",
-              "bytes": 2647874,
+              "bytes": 4766137,
               "video": {
                 "codec_name": "h264",
                 "width": 1080,
@@ -3758,7 +3758,7 @@
           "checks": [
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-02/c11/slide-01.jpg",
-              "bytes": 168173,
+              "bytes": 183049,
               "dimensions": [
                 1080,
                 1350
@@ -3766,7 +3766,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-02/c11/slide-02.jpg",
-              "bytes": 166550,
+              "bytes": 169264,
               "dimensions": [
                 1080,
                 1350
@@ -3774,7 +3774,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-02/c11/slide-03.jpg",
-              "bytes": 164648,
+              "bytes": 166558,
               "dimensions": [
                 1080,
                 1350
@@ -3782,7 +3782,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-02/c11/slide-04.jpg",
-              "bytes": 166016,
+              "bytes": 168812,
               "dimensions": [
                 1080,
                 1350
@@ -3790,7 +3790,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-02/c11/slide-05.jpg",
-              "bytes": 167022,
+              "bytes": 169165,
               "dimensions": [
                 1080,
                 1350
@@ -3798,7 +3798,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-02/c11/slide-06.jpg",
-              "bytes": 165434,
+              "bytes": 167409,
               "dimensions": [
                 1080,
                 1350
@@ -3806,7 +3806,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-02/c11/slide-07.jpg",
-              "bytes": 167481,
+              "bytes": 171401,
               "dimensions": [
                 1080,
                 1350
@@ -3814,7 +3814,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-02/c11/slide-08.jpg",
-              "bytes": 167626,
+              "bytes": 171791,
               "dimensions": [
                 1080,
                 1350
@@ -3822,7 +3822,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-02/c11/slide-09.jpg",
-              "bytes": 167661,
+              "bytes": 171998,
               "dimensions": [
                 1080,
                 1350
@@ -3830,7 +3830,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-02/c11/slide-10.jpg",
-              "bytes": 166904,
+              "bytes": 168007,
               "dimensions": [
                 1080,
                 1350
@@ -3961,7 +3961,7 @@
           "checks": [
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-03/r12.mp4",
-              "bytes": 2410997,
+              "bytes": 3764229,
               "video": {
                 "codec_name": "h264",
                 "width": 1080,
@@ -4106,7 +4106,7 @@
           "checks": [
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-03/c12/slide-01.jpg",
-              "bytes": 241950,
+              "bytes": 252037,
               "dimensions": [
                 1080,
                 1350
@@ -4114,7 +4114,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-03/c12/slide-02.jpg",
-              "bytes": 238565,
+              "bytes": 237144,
               "dimensions": [
                 1080,
                 1350
@@ -4122,7 +4122,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-03/c12/slide-03.jpg",
-              "bytes": 238466,
+              "bytes": 236928,
               "dimensions": [
                 1080,
                 1350
@@ -4130,7 +4130,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-03/c12/slide-04.jpg",
-              "bytes": 239807,
+              "bytes": 237562,
               "dimensions": [
                 1080,
                 1350
@@ -4138,7 +4138,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-03/c12/slide-05.jpg",
-              "bytes": 238699,
+              "bytes": 237115,
               "dimensions": [
                 1080,
                 1350
@@ -4146,7 +4146,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-03/c12/slide-06.jpg",
-              "bytes": 239897,
+              "bytes": 237884,
               "dimensions": [
                 1080,
                 1350
@@ -4154,7 +4154,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-03/c12/slide-07.jpg",
-              "bytes": 242646,
+              "bytes": 244466,
               "dimensions": [
                 1080,
                 1350
@@ -4162,7 +4162,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-03/c12/slide-08.jpg",
-              "bytes": 241529,
+              "bytes": 243562,
               "dimensions": [
                 1080,
                 1350
@@ -4170,7 +4170,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-03/c12/slide-09.jpg",
-              "bytes": 244104,
+              "bytes": 244205,
               "dimensions": [
                 1080,
                 1350
@@ -4178,7 +4178,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-03/c12/slide-10.jpg",
-              "bytes": 240758,
+              "bytes": 239649,
               "dimensions": [
                 1080,
                 1350
@@ -4309,7 +4309,7 @@
           "checks": [
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-04/r13.mp4",
-              "bytes": 2520743,
+              "bytes": 4508028,
               "video": {
                 "codec_name": "h264",
                 "width": 1080,
@@ -4454,7 +4454,7 @@
           "checks": [
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-04/c13/slide-01.jpg",
-              "bytes": 203966,
+              "bytes": 206649,
               "dimensions": [
                 1080,
                 1350
@@ -4462,7 +4462,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-04/c13/slide-02.jpg",
-              "bytes": 202673,
+              "bytes": 192110,
               "dimensions": [
                 1080,
                 1350
@@ -4470,7 +4470,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-04/c13/slide-03.jpg",
-              "bytes": 204615,
+              "bytes": 197103,
               "dimensions": [
                 1080,
                 1350
@@ -4478,7 +4478,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-04/c13/slide-04.jpg",
-              "bytes": 204023,
+              "bytes": 195911,
               "dimensions": [
                 1080,
                 1350
@@ -4486,7 +4486,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-04/c13/slide-05.jpg",
-              "bytes": 203540,
+              "bytes": 194921,
               "dimensions": [
                 1080,
                 1350
@@ -4494,7 +4494,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-04/c13/slide-06.jpg",
-              "bytes": 203547,
+              "bytes": 194933,
               "dimensions": [
                 1080,
                 1350
@@ -4502,7 +4502,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-04/c13/slide-07.jpg",
-              "bytes": 205043,
+              "bytes": 197649,
               "dimensions": [
                 1080,
                 1350
@@ -4510,7 +4510,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-04/c13/slide-08.jpg",
-              "bytes": 203276,
+              "bytes": 193639,
               "dimensions": [
                 1080,
                 1350
@@ -4518,7 +4518,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-04/c13/slide-09.jpg",
-              "bytes": 202978,
+              "bytes": 193708,
               "dimensions": [
                 1080,
                 1350
@@ -4526,7 +4526,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-04/c13/slide-10.jpg",
-              "bytes": 200989,
+              "bytes": 190354,
               "dimensions": [
                 1080,
                 1350
@@ -4657,7 +4657,7 @@
           "checks": [
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-05/r14.mp4",
-              "bytes": 3169235,
+              "bytes": 6827619,
               "video": {
                 "codec_name": "h264",
                 "width": 1080,
@@ -4802,7 +4802,7 @@
           "checks": [
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-05/c14/slide-01.jpg",
-              "bytes": 195269,
+              "bytes": 204484,
               "dimensions": [
                 1080,
                 1350
@@ -4810,7 +4810,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-05/c14/slide-02.jpg",
-              "bytes": 187202,
+              "bytes": 184664,
               "dimensions": [
                 1080,
                 1350
@@ -4818,7 +4818,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-05/c14/slide-03.jpg",
-              "bytes": 188233,
+              "bytes": 185768,
               "dimensions": [
                 1080,
                 1350
@@ -4826,7 +4826,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-05/c14/slide-04.jpg",
-              "bytes": 190350,
+              "bytes": 190569,
               "dimensions": [
                 1080,
                 1350
@@ -4834,7 +4834,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-05/c14/slide-05.jpg",
-              "bytes": 190647,
+              "bytes": 190855,
               "dimensions": [
                 1080,
                 1350
@@ -4842,7 +4842,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-05/c14/slide-06.jpg",
-              "bytes": 194024,
+              "bytes": 193704,
               "dimensions": [
                 1080,
                 1350
@@ -4850,7 +4850,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-05/c14/slide-07.jpg",
-              "bytes": 195424,
+              "bytes": 192760,
               "dimensions": [
                 1080,
                 1350
@@ -4858,7 +4858,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-05/c14/slide-08.jpg",
-              "bytes": 193679,
+              "bytes": 194321,
               "dimensions": [
                 1080,
                 1350
@@ -4866,7 +4866,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-05/c14/slide-09.jpg",
-              "bytes": 193737,
+              "bytes": 192911,
               "dimensions": [
                 1080,
                 1350
@@ -4874,7 +4874,7 @@
             },
             {
               "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-05/c14/slide-10.jpg",
-              "bytes": 192685,
+              "bytes": 192129,
               "dimensions": [
                 1080,
                 1350
