@@ -19,6 +19,7 @@ OUTPUT_DIR = ROOT / "publisher" / "final_assets"
 CAPTION_DIR = OUTPUT_DIR / "captions"
 DOWNLOAD_DIR = ROOT / "publisher" / "f1_graphics_hourly" / "downloads"
 PROFILE_DIR = Path.home() / ".f1_chatgpt_chrome_profile"
+RECRUITING_CAPTIONS_FILE = ROOT / "publisher" / "f1_graphics_hourly" / "RICERCA_PERSONALE_CAPTIONS.md"
 
 CHAT_URL = "https://chatgpt.com/g/g-6a9c210485488191b072eb694c2f114c-generatore-grafica-f1/c/6a9c2a0a-abdc-83eb-9bf4-3a4dbeb6f82f"
 GRAPHIC_SUFFIX = "l modello è già allegato qui in chat"
@@ -63,6 +64,43 @@ HASHTAG BASE, da adattare senza esagerare:
 #F1Immobiliare #VendereCasa #ValleDiSusa #MarketingImmobiliare #ValutazioneImmobiliare
 """.strip()
 
+RECRUITING_KEYWORDS = (
+    "ricerca personale",
+    "ricerchiamo personale",
+    "cerca personale",
+    "lavora con noi",
+    "curriculum",
+    "invia il cv",
+    "invia cv",
+    "selezione personale",
+    "opportunita di lavoro",
+    "opportunità di lavoro",
+    "candidatura",
+)
+
+RECRUITING_POLICY = """
+Questa è una query di RICERCA PERSONALE F1 Immobiliare, non una caption per la vendita di immobili.
+
+OBIETTIVO:
+Creare una caption recruiting professionale, locale e concreta, coerente con il comune indicato nella query.
+
+REGOLE OBBLIGATORIE:
+- Presenta F1 Immobiliare come realtà che sta ampliando la propria presenza sul territorio.
+- Cerca persone serie, motivate, dinamiche, con buone capacità relazionali, attitudine commerciale e voglia di crescere.
+- La conoscenza del territorio può essere indicata come valore aggiunto.
+- Non inventare contratto, stipendio, compensi, benefit, orari, partita IVA, requisiti obbligatori o condizioni non fornite.
+- Non promettere assunzioni o guadagni.
+- Non usare la CTA di valutazione immobiliare AgentPricing.
+- La CTA finale deve essere SEMPRE e SOLO per la candidatura:
+  "Invia il tuo curriculum via WhatsApp al 371 370 8294".
+- Adatta hashtag e testo al comune presente nella query quando disponibile.
+- Alterna naturalmente formulazioni diverse per evitare caption identiche.
+- Restituisci esclusivamente la caption finale pronta da pubblicare.
+
+HASHTAG CONSIGLIATI:
+#F1Immobiliare #RicercaPersonale #LavoraConNoi #OpportunitaDiLavoro #ValleDiSusa
+""".strip()
+
 
 def load_state():
     if STATE_FILE.exists():
@@ -84,23 +122,30 @@ def find_query_column(df):
     raise RuntimeError("Nessuna colonna query trovata. Usa una colonna chiamata QUERY.")
 
 
+def is_recruiting_query(query):
+    q = str(query).lower().strip()
+    return any(keyword in q for keyword in RECRUITING_KEYWORDS)
+
+
+def load_recruiting_examples():
+    if RECRUITING_CAPTIONS_FILE.exists():
+        return RECRUITING_CAPTIONS_FILE.read_text(encoding="utf-8")
+    return ""
+
+
 def make_driver():
     DOWNLOAD_DIR.mkdir(parents=True, exist_ok=True)
     PROFILE_DIR.mkdir(parents=True, exist_ok=True)
-
     options = webdriver.ChromeOptions()
     options.add_argument(f"--user-data-dir={PROFILE_DIR}")
     options.add_argument("--start-maximized")
     options.add_argument("--disable-notifications")
-    options.add_experimental_option(
-        "prefs",
-        {
-            "download.default_directory": str(DOWNLOAD_DIR.resolve()),
-            "download.prompt_for_download": False,
-            "download.directory_upgrade": True,
-            "safebrowsing.enabled": True,
-        },
-    )
+    options.add_experimental_option("prefs", {
+        "download.default_directory": str(DOWNLOAD_DIR.resolve()),
+        "download.prompt_for_download": False,
+        "download.directory_upgrade": True,
+        "safebrowsing.enabled": True,
+    })
     return webdriver.Chrome(options=options)
 
 
@@ -138,10 +183,7 @@ def wait_until_generation_finishes(driver, timeout=600):
     end = time.time() + timeout
     saw_stop = False
     while time.time() < end:
-        stop_buttons = driver.find_elements(
-            By.XPATH,
-            "//button[contains(translate(@aria-label,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),'stop') or contains(translate(@aria-label,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),'interrompi')]",
-        )
+        stop_buttons = driver.find_elements(By.XPATH, "//button[contains(translate(@aria-label,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),'stop') or contains(translate(@aria-label,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),'interrompi')]")
         visible = [b for b in stop_buttons if b.is_displayed()]
         if visible:
             saw_stop = True
@@ -171,7 +213,6 @@ def newest_image(driver):
             continue
     if usable:
         return usable[-1]
-
     all_images = driver.find_elements(By.TAG_NAME, "img")
     for img in reversed(all_images):
         try:
@@ -200,7 +241,6 @@ def download_latest_graphic(driver, final_path):
     driver.execute_script("arguments[0].scrollIntoView({block:'center'});", img)
     img.click()
     time.sleep(2)
-
     xpaths = [
         "//button[contains(translate(@aria-label,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),'download')]",
         "//button[contains(translate(@aria-label,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),'scarica')]",
@@ -209,7 +249,6 @@ def download_latest_graphic(driver, final_path):
         "//button[contains(translate(@title,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),'download')]",
         "//button[contains(translate(@title,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),'scarica')]",
     ]
-
     clicked = False
     for xpath in xpaths:
         for button in driver.find_elements(By.XPATH, xpath):
@@ -222,7 +261,6 @@ def download_latest_graphic(driver, final_path):
                     pass
         if clicked:
             break
-
     if clicked:
         downloaded = wait_for_new_download(before)
         if downloaded:
@@ -231,7 +269,6 @@ def download_latest_graphic(driver, final_path):
                 final_path.unlink()
             shutil.move(str(downloaded), str(final_path))
             return
-
     final_path.parent.mkdir(parents=True, exist_ok=True)
     img.screenshot(str(final_path))
 
@@ -245,13 +282,21 @@ def capture_latest_text(driver):
 
 
 def build_caption_prompt(query):
+    if is_recruiting_query(query):
+        examples = load_recruiting_examples()
+        return (
+            "Crea una caption social finale di RICERCA PERSONALE per F1 Immobiliare.\n\n"
+            f"QUERY DI PARTENZA:\n{query}\n\n"
+            f"REGOLE RECRUITING OBBLIGATORIE:\n{RECRUITING_POLICY}\n\n"
+            f"ESEMPI E VARIANTI APPROVATE DA CUI PRENDERE STILE E STRUTTURA, SENZA COPIARE SEMPRE LO STESSO TESTO:\n{examples}\n\n"
+            "Restituisci esclusivamente la caption pronta da pubblicare."
+        )
     return (
         "Crea una caption social finale per F1 Immobiliare.\n\n"
         f"QUERY DI PARTENZA:\n{query}\n\n"
         f"LINEE GUIDA OBBLIGATORIE:\n{F1_CAPTION_POLICY}\n\n"
         f"RIFERIMENTI DA INSERIRE:\n{REFERENCES}\n\n"
-        "Regole finali: restituisci esclusivamente la caption pronta da pubblicare; non spiegare il ragionamento; "
-        "non creare immagini; non inventare dati; evita di ripetere meccanicamente la query; rendi il testo specifico, concreto e diverso dalle caption precedenti."
+        "Regole finali: restituisci esclusivamente la caption pronta da pubblicare; non spiegare il ragionamento; non creare immagini; non inventare dati; evita di ripetere meccanicamente la query; rendi il testo specifico, concreto e diverso dalle caption precedenti."
     )
 
 
@@ -261,65 +306,54 @@ def ensure_logged_in(driver):
     try:
         prompt_box(driver, timeout=30)
     except Exception as exc:
-        raise RuntimeError(
-            "ChatGPT non è pronto. Apri manualmente Chrome con il profilo dedicato, accedi a ChatGPT una volta e rilancia il workflow."
-        ) from exc
+        raise RuntimeError("ChatGPT non è pronto. Apri manualmente Chrome con il profilo dedicato, accedi a ChatGPT una volta e rilancia il workflow.") from exc
 
 
 def main():
     if not INPUT_XLSX.exists():
         raise RuntimeError(f"File Excel mancante: {INPUT_XLSX}")
-
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     CAPTION_DIR.mkdir(parents=True, exist_ok=True)
     DOWNLOAD_DIR.mkdir(parents=True, exist_ok=True)
     STATE_FILE.parent.mkdir(parents=True, exist_ok=True)
-
     df = pd.read_excel(INPUT_XLSX)
     col = find_query_column(df)
     state = load_state()
     idx = int(state.get("next_row", 0))
-
     if idx >= len(df):
         print("Tutte le righe del file Excel sono state elaborate.")
         return
-
     raw = df.iloc[idx][col]
     if pd.isna(raw) or not str(raw).strip():
         raise RuntimeError(f"Riga Excel {idx + 2} vuota: arresto per non saltare nessuna riga.")
-
     query = str(raw).strip()
     number = idx + 1
     stem = f"F1-{number:03d}"
     image_path = OUTPUT_DIR / f"{stem}.png"
     caption_path = CAPTION_DIR / f"{stem}.txt"
-
     print(f"Elaboro riga {idx + 2}: {query}")
+    print("Tipo caption:", "RICERCA PERSONALE" if is_recruiting_query(query) else "IMMOBILIARE")
     driver = None
     try:
         driver = make_driver()
         ensure_logged_in(driver)
-
         send_prompt(driver, f"{query}\n\n{GRAPHIC_SUFFIX}")
         time.sleep(300)
         wait_until_generation_finishes(driver, timeout=300)
         download_latest_graphic(driver, image_path)
-
         send_prompt(driver, build_caption_prompt(query))
         wait_until_generation_finishes(driver, timeout=300)
         time.sleep(3)
         caption = capture_latest_text(driver)
         caption_path.write_text(caption, encoding="utf-8")
-
-        state.setdefault("completed", []).append(
-            {
-                "excel_index": idx,
-                "excel_row": idx + 2,
-                "query": query,
-                "image": str(image_path.relative_to(ROOT)),
-                "caption": str(caption_path.relative_to(ROOT)),
-            }
-        )
+        state.setdefault("completed", []).append({
+            "excel_index": idx,
+            "excel_row": idx + 2,
+            "query": query,
+            "type": "recruiting" if is_recruiting_query(query) else "real_estate",
+            "image": str(image_path.relative_to(ROOT)),
+            "caption": str(caption_path.relative_to(ROOT)),
+        })
         state["next_row"] = idx + 1
         save_state(state)
         print(f"Creato {image_path.name} e relativa caption.")
