@@ -1,0 +1,237 @@
+name: F1 Weekly Social Preview Index
+
+on:
+  workflow_run:
+    workflows:
+      - Open Social Engine - 10 STATIC PUBLICATIONS - 5 F1 + 5 RMP
+    types:
+      - completed
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+concurrency:
+  group: f1-weekly-social-preview-index
+  cancel-in-progress: false
+
+jobs:
+  build-weekly-preview-index:
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      GH_TOKEN: ${{ github.token }}
+
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Resolve source workflow run
+        id: source
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ "${GITHUB_EVENT_NAME}" = "workflow_run" ]; then
+            RUN_ID='${{ github.event.workflow_run.id }}'
+          else
+            RUN_ID=$(gh api "repos/${GITHUB_REPOSITORY}/actions/workflows/social-engine-daily.yml/runs?status=success&per_page=1" --jq '.workflow_runs[0].id')
+          fi
+          test -n "$RUN_ID"
+          echo "run_id=$RUN_ID" >> "$GITHUB_OUTPUT"
+
+      - name: Download generated social artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          RUN_ID='${{ steps.source.outputs.run_id }}'
+          ARTIFACT_ID=$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs/${RUN_ID}/artifacts" \
+            --jq ".artifacts[] | select(.name == \"social-publications-${RUN_ID}\") | .id" | head -n 1)
+          if [ -z "$ARTIFACT_ID" ]; then
+            echo "Artifact social-publications-${RUN_ID} not found" >&2
+            exit 1
+          fi
+          rm -rf /tmp/social-preview-artifact /tmp/social-preview-upload
+          mkdir -p /tmp/social-preview-artifact /tmp/social-preview-upload
+          curl -fsSL \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/${GITHUB_REPOSITORY}/actions/artifacts/${ARTIFACT_ID}/zip" \
+            -o /tmp/social-preview.zip
+          unzip -q /tmp/social-preview.zip -d /tmp/social-preview-artifact
+
+      - name: Build weekly release and JSON manifest
+        shell: bash
+        env:
+          SOURCE_RUN_ID: ${{ steps.source.outputs.run_id }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          import os
+          import shutil
+          from datetime import datetime, timedelta
+          from pathlib import Path
+          from zoneinfo import ZoneInfo
+
+          ROOT = Path('.')
+          ART = Path('/tmp/social-preview-artifact')
+          UPLOAD = Path('/tmp/social-preview-upload')
+          QUEUE = ROOT / 'publisher' / 'queue.json'
+          MANIFEST = ROOT / 'publisher' / 'social-preview-latest.json'
+          LIVE = ROOT / 'publisher' / 'live-test-2026-09-04-status.json'
+          HOLD = ROOT / '.github' / 'workflows' / 'buffer-twice-daily.yml'
+          ROME = ZoneInfo('Europe/Rome')
+          run_id = os.environ['SOURCE_RUN_ID']
+
+          q = json.loads(QUEUE.read_text(encoding='utf-8'))
+          cycle_key = q.get('current_cycle')
+          jobs = [j for j in q.get('jobs', []) if j.get('cycle_key') == cycle_key and j.get('client_id') == 'f1-immobiliare']
+          if not jobs:
+              raise SystemExit('No F1 jobs found for current cycle')
+
+          date_text = str(jobs[0].get('scheduled_at') or '')[:10]
+          local_day = datetime.fromisoformat(date_text).date() if date_text else datetime.now(ROME).date()
+          monday = local_day - timedelta(days=local_day.weekday())
+          sunday = monday + timedelta(days=6)
+          iso = local_day.isocalendar()
+          week_id = f'{iso.year}-W{iso.week:02d}'
+          week_tag = f'social-preview-week-{week_id}'
+          repo = os.environ['GITHUB_REPOSITORY']
+          release_url = f'https://github.com/{repo}/releases/tag/{week_tag}'
+
+          previous = {}
+          if MANIFEST.exists():
+              try:
+                  previous = json.loads(MANIFEST.read_text(encoding='utf-8'))
+              except Exception:
+                  previous = {}
+          old_entries = previous.get('entries', []) if previous.get('week_id') == week_id else []
+          entries = {str(e.get('id')): e for e in old_entries if e.get('id')}
+
+          def safe_asset_name(media: str) -> str:
+              prefix = 'publisher/media/generated/'
+              rel = media[len(prefix):] if media.startswith(prefix) else media
+              return rel.replace('/', '__')
+
+          for job in jobs:
+              media = str(job.get('media') or '')
+              if not media:
+                  continue
+              rel = media.replace('publisher/media/generated/', '', 1)
+              source = ART / rel
+              if not source.exists():
+                  matches = list(ART.rglob(Path(rel).name))
+                  if len(matches) == 1:
+                      source = matches[0]
+              if not source.exists():
+                  raise SystemExit(f'Generated preview not found in artifact: {rel}')
+
+              asset_name = safe_asset_name(media)
+              target = UPLOAD / asset_name
+              shutil.copy2(source, target)
+              asset_url = f'https://github.com/{repo}/releases/download/{week_tag}/{asset_name}'
+              scheduled = str(job.get('scheduled_at') or '')
+              content_date = scheduled[:10] if scheduled else local_day.isoformat()
+
+              entries[str(job.get('id'))] = {
+                  'id': job.get('id'),
+                  'content_date': content_date,
+                  'scheduled_at': scheduled,
+                  'cycle_key': job.get('cycle_key'),
+                  'cycle_hour': job.get('cycle_hour'),
+                  'service_id': job.get('service_id'),
+                  'format': job.get('format'),
+                  'title': job.get('title'),
+                  'caption': job.get('caption'),
+                  'cta': job.get('cta'),
+                  'hashtags': job.get('hashtags') or [],
+                  'territory': job.get('territory'),
+                  'status': job.get('status'),
+                  'publication_ready': bool(job.get('publication_ready')),
+                  'published_platforms': job.get('published_platforms') or [],
+                  'asset_name': asset_name,
+                  'asset_url': asset_url,
+                  'source_run_id': int(run_id),
+                  'brand_template': job.get('brand_template'),
+                  'three_boxes': job.get('three_boxes') or []
+              }
+
+          live = {}
+          if LIVE.exists():
+              try:
+                  live = json.loads(LIVE.read_text(encoding='utf-8'))
+              except Exception:
+                  live = {}
+          posts = live.get('posts') or {}
+          channels = []
+          for key, label in [('facebook','Facebook'), ('instagram','Instagram'), ('linkedin','LinkedIn')]:
+              row = posts.get(key) or {}
+              channels.append({
+                  'name': label,
+                  'connected': str(row.get('status')).lower() == 'sent',
+                  'account': row.get('account'),
+                  'last_sent_at': row.get('sent_at_utc')
+              })
+
+          hold_text = HOLD.read_text(encoding='utf-8') if HOLD.exists() else ''
+          automatic = 'POLICY HOLD / DRY RUN ONLY' not in hold_text
+          connected = live.get('result') == 'ALL_THREE_SENT' and all(c['connected'] for c in channels)
+
+          manifest = {
+              'version': '2026-09-05.2',
+              'pipeline': 'social-preview-latest',
+              'brand': 'F1 Immobiliare',
+              'week_id': week_id,
+              'week_start': monday.isoformat(),
+              'week_end': sunday.isoformat(),
+              'updated_at': datetime.now(ROME).isoformat(timespec='seconds'),
+              'release_tag': week_tag,
+              'release_url': release_url,
+              'source_run_id': int(run_id),
+              'social_connection': {
+                  'connected': connected,
+                  'data_flow': 'CONNECTED' if connected else 'CHECK_REQUIRED',
+                  'last_verified_at': live.get('verified_at'),
+                  'automatic_publishing': automatic,
+                  'sending_status': 'AUTOMATIC' if automatic else 'PAUSED_BY_POLICY',
+                  'channels': channels
+              },
+              'entries': sorted(entries.values(), key=lambda x: (str(x.get('content_date') or ''), str(x.get('cycle_key') or ''), str(x.get('id') or '')))
+          }
+          MANIFEST.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          Path('/tmp/week-meta.json').write_text(json.dumps({'tag': week_tag, 'title': f'F1 ANTEPRIME {week_id}'}), encoding='utf-8')
+          print(f"WEEK={week_id} ENTRIES={len(manifest['entries'])} NEW={len(jobs)}")
+          PY
+
+          TAG=$(python -c "import json;print(json.load(open('/tmp/week-meta.json'))['tag'])")
+          TITLE=$(python -c "import json;print(json.load(open('/tmp/week-meta.json'))['title'])")
+
+          if ! gh release view "$TAG" >/dev/null 2>&1; then
+            gh release create "$TAG" --title "$TITLE" --notes "Anteprime F1 Immobiliare accumulate per l'intera settimana. File aggiornati automaticamente dalla pipeline social."
+          fi
+
+          shopt -s nullglob
+          FILES=(/tmp/social-preview-upload/*)
+          if [ ${#FILES[@]} -gt 0 ]; then
+            gh release upload "$TAG" "${FILES[@]}" --clobber
+          fi
+
+      - name: Persist weekly manifest
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'f1-social-preview-index'
+          git config user.email 'f1-social-preview-index@users.noreply.github.com'
+          git add publisher/social-preview-latest.json
+          if git diff --cached --quiet; then
+            echo 'No manifest changes.'
+            exit 0
+          fi
+          git commit -m 'Update F1 weekly social preview manifest'
+          git pull --rebase origin main
+          git push origin HEAD:main
