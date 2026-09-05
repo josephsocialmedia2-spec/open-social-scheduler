@@ -67,6 +67,7 @@ def render_v2(job: dict, src: Path) -> dict:
         "fallback_used": bool(result.get("fallback_used")),
         "audio": result.get("audio"),
         "quality_gate": result.get("quality_gate"),
+        "visual_compliance": result.get("visual_compliance"),
     }
     return result
 
@@ -146,6 +147,10 @@ def main() -> int:
         spec["visual_content_hash_verified"] = True
         spec["legacy_visuals_allowed"] = False
         spec["renderer_migration"] = "v2" if job.get("renderer_v2", {}).get("engine") != "legacy-pillow-ffmpeg" else "legacy_fallback"
+        visual = (job.get("renderer_v2") or {}).get("visual_compliance") or {}
+        spec["golden_master"] = visual.get("golden_master")
+        spec["visual_compliance_score"] = visual.get("score")
+        spec["visual_compliance_passed"] = visual.get("passed") is True
         job["render_spec"] = spec
 
     if len(used) != 28 or len(content_hashes) != 28:
@@ -159,6 +164,8 @@ def main() -> int:
         "legacy": legacy_count,
         "requested_engine": engine,
         "strict_v2": strict_v2,
+        "golden_master": "F1_GOLDEN_MASTER_FEED_V4",
+        "visual_compliance_required": True,
     }
     data["visual_source_policy"] = "28 contents = 28 different themed primary images; URL and normalized pixel hash uniqueness required"
     data["unique_visual_summary"] = {
@@ -170,7 +177,7 @@ def main() -> int:
     QUEUE.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(
         f"RENDERED UNIQUE F1 BATCH: reels={reels} carousels={carousels} "
-        f"renderer_v2={v2_count} legacy={legacy_count}; reuse=0"
+        f"renderer_v2={v2_count} legacy={legacy_count}; reuse=0; golden_master=V4"
     )
     return 0
 
