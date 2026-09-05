@@ -1,0 +1,114 @@
+name: Renderer V2 - Revideo + SVG/Resvg/Sharp
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - renderer-v2-migration
+    paths:
+      - 'publisher/rendering/**'
+      - '.github/workflows/renderer-v2-ci.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  renderer-v2:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+
+    steps:
+      - name: Checkout migration branch
+        uses: actions/checkout@v4
+
+      - name: Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: publisher/requirements.txt
+
+      - name: Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: publisher/rendering/node/package.json
+
+      - name: Install system and Python dependencies
+        shell: bash
+        run: |
+          set -euxo pipefail
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg fonts-dejavu-core
+          python -m pip install --disable-pip-version-check -r publisher/requirements.txt
+
+      - name: Install Renderer V2 Node dependencies
+        working-directory: publisher/rendering/node
+        run: npm install --no-audit --no-fund
+
+      - name: Typecheck Revideo project
+        working-directory: publisher/rendering/node
+        run: npm run typecheck
+
+      - name: Compile Python facade
+        run: |
+          python -m py_compile \
+            publisher/rendering/content_engine.py \
+            publisher/rendering/adapters/static_svg_adapter.py \
+            publisher/rendering/adapters/revideo_adapter.py \
+            publisher/rendering/adapters/pillow_fallback_adapter.py
+
+      - name: Render static with primary SVG engine only
+        env:
+          RENDERER_V2_NO_FALLBACK: '1'
+        run: |
+          mkdir -p renderer-v2-output
+          python publisher/rendering/content_engine.py \
+            --spec publisher/rendering/examples/f1_static.json \
+            --output renderer-v2-output/f1-static.jpg \
+            --no-fallback
+
+      - name: Render carousel with primary SVG engine only
+        env:
+          RENDERER_V2_NO_FALLBACK: '1'
+        run: |
+          python publisher/rendering/content_engine.py \
+            --spec publisher/rendering/examples/f1_carousel.json \
+            --output renderer-v2-output/f1-carousel.jpg \
+            --no-fallback
+
+      - name: Render reel with Revideo only
+        env:
+          RENDERER_V2_NO_FALLBACK: '1'
+        run: |
+          python publisher/rendering/content_engine.py \
+            --spec publisher/rendering/examples/f1_reel.json \
+            --output renderer-v2-output/f1-reel.mp4 \
+            --no-fallback
+
+      - name: Verify outputs
+        shell: bash
+        run: |
+          set -euxo pipefail
+          test -s renderer-v2-output/f1-static.jpg
+          test -s renderer-v2-output/f1-carousel-01.jpg
+          test -s renderer-v2-output/f1-carousel-04.jpg
+          test -s renderer-v2-output/f1-reel.mp4
+          ffprobe -v error -select_streams v:0 -show_entries stream=codec_name,width,height -of json renderer-v2-output/f1-reel.mp4
+          python - <<'PY'
+          from PIL import Image
+          from pathlib import Path
+          for p in [Path('renderer-v2-output/f1-static.jpg'), *sorted(Path('renderer-v2-output').glob('f1-carousel-*.jpg'))]:
+              with Image.open(p) as im:
+                  assert im.size == (1080, 1350), (p, im.size)
+          print('STATIC_AND_CAROUSEL_DIMENSIONS_OK')
+          PY
+
+      - name: Upload Renderer V2 proof artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: renderer-v2-proof
+          path: renderer-v2-output
+          if-no-files-found: error
+          retention-days: 7
