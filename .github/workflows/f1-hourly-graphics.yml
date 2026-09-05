@@ -49,7 +49,7 @@ jobs:
 
       - name: Commit generated assets and state
         run: |
-          if git diff --quiet && git status --porcelain | grep -q '^$'; then
+          if [ -z "$(git status --porcelain)" ]; then
             echo "Nessuna modifica da salvare."
             exit 0
           fi
