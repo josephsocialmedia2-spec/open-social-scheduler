@@ -1,0 +1,90 @@
+{
+  "version": "2026-09-05.1",
+  "pipeline": "social-preview-latest",
+  "brand": "F1 Immobiliare",
+  "week_id": "2026-W36",
+  "week_start": "2026-08-31",
+  "week_end": "2026-09-06",
+  "updated_at": "2026-09-05T04:19:17+02:00",
+  "release_tag": "social-preview-week-2026-W36",
+  "release_url": "https://github.com/josephsocialmedia2-spec/open-social-scheduler/releases/tag/social-preview-latest",
+  "social_connection": {
+    "connected": true,
+    "data_flow": "CONNECTED",
+    "last_verified_at": "2026-09-04T20:55:12+02:00",
+    "automatic_publishing": false,
+    "sending_status": "PAUSED_BY_POLICY",
+    "channels": [
+      {"name": "Facebook", "connected": true, "account": "F1immobiliare"},
+      {"name": "Instagram", "connected": true, "account": "joseph_malafronte"},
+      {"name": "LinkedIn", "connected": true, "account": "Joseph Malafronte"}
+    ]
+  },
+  "entries": [
+    {
+      "id": "f1-immobiliare-2026-09-05-c04-01-06-g5-dopo-pubblicazione",
+      "content_date": "2026-09-05",
+      "cycle_key": "2026-09-05T04:00",
+      "service_id": "service_1_agent_pricing",
+      "format": "photo",
+      "title": "QUANTO VALE DAVVERO CASA TUA?",
+      "cta": "RICHIEDI UNA VALUTAZIONE PROFESSIONALE",
+      "caption": "",
+      "asset_name": "f1-immobiliare__2026-09-05__cycle-04__01-05-c04-01-06-g5-dopo-pubblicazione.jpg",
+      "asset_url": "https://github.com/josephsocialmedia2-spec/open-social-scheduler/releases/download/social-preview-latest/f1-immobiliare__2026-09-05__cycle-04__01-05-c04-01-06-g5-dopo-pubblicazione.jpg",
+      "status": "awaiting_approval"
+    },
+    {
+      "id": "f1-immobiliare-2026-09-05-c04-02-07-g6-vendita-privata-verifiche",
+      "content_date": "2026-09-05",
+      "cycle_key": "2026-09-05T04:00",
+      "service_id": "service_2_piano_vendita",
+      "format": "photo",
+      "title": "NON UN ANNUNCIO. UN PIANO DI VENDITA.",
+      "cta": "VUOI SAPERE COME VENDEREMMO LA TUA CASA?",
+      "caption": "",
+      "asset_name": "f1-immobiliare__2026-09-05__cycle-04__02-05-c04-02-07-g6-vendita-privata-verifiche.jpg",
+      "asset_url": "https://github.com/josephsocialmedia2-spec/open-social-scheduler/releases/download/social-preview-latest/f1-immobiliare__2026-09-05__cycle-04__02-05-c04-02-07-g6-vendita-privata-verifiche.jpg",
+      "status": "awaiting_approval"
+    },
+    {
+      "id": "f1-immobiliare-2026-09-05-c04-03-08-g7-comparabile-escluso",
+      "content_date": "2026-09-05",
+      "cycle_key": "2026-09-05T04:00",
+      "service_id": "service_4_recruiting",
+      "format": "photo",
+      "title": "CERCHIAMO TALENTO, NON ESPERIENZA.",
+      "cta": "CANDIDATI",
+      "caption": "",
+      "asset_name": "f1-immobiliare__2026-09-05__cycle-04__03-05-c04-03-08-g7-comparabile-escluso.jpg",
+      "asset_url": "https://github.com/josephsocialmedia2-spec/open-social-scheduler/releases/download/social-preview-latest/f1-immobiliare__2026-09-05__cycle-04__03-05-c04-03-08-g7-comparabile-escluso.jpg",
+      "status": "awaiting_approval"
+    },
+    {
+      "id": "f1-immobiliare-2026-09-05-c04-04-09-g1-tre-agenzie",
+      "content_date": "2026-09-05",
+      "cycle_key": "2026-09-05T04:00",
+      "service_id": "service_4_recruiting",
+      "format": "photo",
+      "title": "CERCHIAMO UNA COORDINATRICE D'UFFICIO",
+      "cta": "CANDIDATI",
+      "caption": "",
+      "asset_name": "f1-immobiliare__2026-09-05__cycle-04__04-05-c04-04-09-g1-tre-agenzie.jpg",
+      "asset_url": "https://github.com/josephsocialmedia2-spec/open-social-scheduler/releases/download/social-preview-latest/f1-immobiliare__2026-09-05__cycle-04__04-05-c04-04-09-g1-tre-agenzie.jpg",
+      "status": "awaiting_approval"
+    },
+    {
+      "id": "f1-immobiliare-2026-09-05-c04-05-10-g2-tre-prezzi",
+      "content_date": "2026-09-05",
+      "cycle_key": "2026-09-05T04:00",
+      "service_id": "service_3_bonus_casa",
+      "format": "photo",
+      "title": "BONUS CASA: PRIMA LE FONTI UFFICIALI",
+      "cta": "INFORMATI PRIMA DI COMPRARE",
+      "caption": "",
+      "asset_name": "f1-immobiliare__2026-09-05__cycle-04__05-05-c04-05-10-g2-tre-prezzi.jpg",
+      "asset_url": "https://github.com/josephsocialmedia2-spec/open-social-scheduler/releases/download/social-preview-latest/f1-immobiliare__2026-09-05__cycle-04__05-05-c04-05-10-g2-tre-prezzi.jpg",
+      "status": "awaiting_approval"
+    }
+  ]
+}
