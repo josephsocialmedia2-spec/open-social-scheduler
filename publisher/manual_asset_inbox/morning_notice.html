@@ -1,1 +1,42 @@
-<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>F1 — Grafiche pronte</title><style>body{margin:0;background:#0A0D0A;color:#fff;font-family:Arial,Helvetica,sans-serif;display:grid;place-items:center;min-height:100vh}.box{max-width:760px;padding:42px;border-radius:24px;background:#111611;border:1px solid #2d3a2b;text-align:center}h1{font-size:46px;margin:0 0 16px;color:#64C800}p{font-size:22px;line-height:1.45;color:#e6ebe3}.row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:28px}a{padding:15px 22px;border-radius:12px;text-decoration:none;font-weight:800}.chat{background:#fff;color:#0A0D0A}.inbox{background:#4E9E15;color:#fff}</style></head><body><div class="box"><h1>GRAFICHE PRONTE</h1><p>Apri la chat, scarica le immagini generate e poi inseriscile nella Raccolta Grafiche F1 per inviarle a GitHub e metterle in pubblicazione.</p><div class="row"><a class="chat" href="https://chatgpt.com/c/6a9af32f-d574-83ed-9232-2b4025e3893c">APRI CHAT</a><a class="inbox" href="http://127.0.0.1:8765/">APRI RACCOLTA GRAFICHE</a></div></div></body></html>
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>F1 — Grafiche pronte</title>
+  <style>
+    *{box-sizing:border-box}
+    body{margin:0;background:#0A0D0A;color:#fff;font-family:Arial,Helvetica,sans-serif;display:grid;place-items:center;min-height:100vh;padding:24px}
+    .box{width:min(860px,100%);padding:46px;border-radius:26px;background:#111611;border:1px solid #2d3a2b;text-align:center;box-shadow:0 20px 70px rgba(0,0,0,.35)}
+    .eyebrow{font-size:14px;font-weight:800;letter-spacing:.14em;color:#9fb99a;margin-bottom:12px}
+    h1{font-size:52px;margin:0 0 16px;color:#64C800}
+    p{font-size:22px;line-height:1.45;color:#e6ebe3;margin:0 auto;max-width:720px}
+    .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:30px 0;text-align:left}
+    .step{background:#182018;border:1px solid #283428;border-radius:16px;padding:18px}
+    .step b{display:block;color:#64C800;font-size:18px;margin-bottom:7px}
+    .step span{color:#dfe6dc;line-height:1.4}
+    .row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:28px}
+    a{padding:16px 24px;border-radius:12px;text-decoration:none;font-weight:800;min-width:220px}
+    .chat{background:#fff;color:#0A0D0A}.inbox{background:#4E9E15;color:#fff}
+    @media(max-width:700px){h1{font-size:38px}.steps{grid-template-columns:1fr}.box{padding:28px}p{font-size:18px}}
+  </style>
+</head>
+<body>
+  <div class="box">
+    <div class="eyebrow">F1 IMMOBILIARE · PRODUZIONE CONTENUTI</div>
+    <h1>GRAFICHE PRONTE</h1>
+    <p>Le query sono state inviate al Generatore Grafica F1. Ora completa il passaggio manuale prima della pubblicazione.</p>
+
+    <div class="steps">
+      <div class="step"><b>1. SCARICA</b><span>Apri il GPT e scarica le immagini generate.</span></div>
+      <div class="step"><b>2. CARICA</b><span>Trascina i file nella Raccolta Grafiche.</span></div>
+      <div class="step"><b>3. INVIA</b><span>Controlla query e orario, poi invia a GitHub.</span></div>
+    </div>
+
+    <div class="row">
+      <a class="chat" href="https://chatgpt.com/g/g-6a9c210485488191b072eb694c2f114c-generatore-grafica-f1" target="_blank">APRI GENERATORE F1</a>
+      <a class="inbox" href="http://127.0.0.1:8765/" target="_blank">APRI RACCOLTA GRAFICHE</a>
+    </div>
+  </div>
+</body>
+</html>
