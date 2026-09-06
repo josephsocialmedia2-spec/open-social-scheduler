@@ -30,7 +30,8 @@ if (-not (Get-Command python -ErrorAction SilentlyContinue)) {
 }
 
 $env:F1_INBOX_PORT = "$Port"
-Start-Process -FilePath 'python' -ArgumentList @($Server) -WorkingDirectory $Root -WindowStyle Hidden
+$ServerArg = '"' + $Server + '"'
+Start-Process -FilePath 'python' -ArgumentList $ServerArg -WorkingDirectory $Root -WindowStyle Hidden
 
 for ($i = 0; $i -lt 30; $i++) {
     if (Test-Port -Port $Port) { exit 0 }
