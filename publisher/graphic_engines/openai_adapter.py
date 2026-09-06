@@ -1,17 +1,14 @@
 from __future__ import annotations
 
+import shutil
 from pathlib import Path
 from typing import Any
 
-from .base import GraphicResult
+from .base import GraphicResult, validate_final_asset
 
 
 class OpenAIVisualEngine:
-    """Thin adapter over the existing F1 OpenAI visual engine.
-
-    Kept behind the common graphic-engine interface so it can be replaced
-    without touching the queue or publisher.
-    """
+    """Adapter over the existing F1 OpenAI visual engine."""
 
     name = "openai"
 
@@ -24,11 +21,16 @@ class OpenAIVisualEngine:
         if fn is None:
             raise RuntimeError("Existing OpenAI visual engine exposes no supported generate function")
 
-        result = fn(spec, output_path)
-        if not output_path.exists() or output_path.stat().st_size == 0:
-            raise RuntimeError("OpenAI visual engine did not create the requested output")
+        produced = fn(spec, output_path)
+        produced_path = Path(produced) if produced else output_path
+
+        if produced_path != output_path:
+            output_path.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(produced_path, output_path)
+
+        asset_meta = validate_final_asset(output_path)
         return GraphicResult(
             engine=self.name,
             output_path=output_path,
-            metadata={"wrapped_result": result},
+            metadata={"source_output": str(produced_path), "asset": asset_meta},
         )
