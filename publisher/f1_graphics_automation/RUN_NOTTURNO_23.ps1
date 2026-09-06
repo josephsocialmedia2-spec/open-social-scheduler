@@ -18,6 +18,14 @@ function Write-Log {
     Write-Host $line
 }
 
+function Write-NativeOutput {
+    process {
+        $line = [string]$_
+        Add-Content -Path $Log -Value $line -Encoding UTF8
+        Write-Host $line
+    }
+}
+
 Write-Log 'Avvio sistema F1 Grafiche.'
 Set-Location $Root
 
@@ -33,7 +41,6 @@ try {
     throw
 }
 
-# Aggiorna il codice solo se il repository locale è pulito.
 try {
     $dirty = git status --porcelain
     if (-not $dirty) {
@@ -45,14 +52,15 @@ try {
     Write-Log "Git pull non riuscito, continuo con la versione locale: $($_.Exception.Message)"
 }
 
-# Verifica dipendenze e le installa solo se mancano.
 $depsOk = $true
-try { python -c "import selenium, flask" | Out-Null } catch { $depsOk = $false }
+python -c "import selenium, flask" 2>$null
 if ($LASTEXITCODE -ne 0) { $depsOk = $false }
 if (-not $depsOk) {
     Write-Log 'Installazione dipendenze Python mancanti.'
     python -m pip install -r publisher\chatgpt_query_runner\requirements.txt 2>&1 | ForEach-Object { Write-Log $_ }
+    if ($LASTEXITCODE -ne 0) { throw 'Installazione Selenium fallita.' }
     python -m pip install -r publisher\manual_asset_inbox\requirements.txt 2>&1 | ForEach-Object { Write-Log $_ }
+    if ($LASTEXITCODE -ne 0) { throw 'Installazione Flask fallita.' }
 }
 
 $env:F1_QUERY_BATCH_SIZE = '4'
@@ -60,10 +68,10 @@ $env:F1_INBOX_PORT = '8765'
 
 if ($Test) {
     Write-Log 'Modalità TEST: una sola query.'
-    & python $Worker --batch-size 1 2>&1 | Tee-Object -FilePath $Log -Append
+    & python $Worker --batch-size 1 2>&1 | Write-NativeOutput
 } else {
     Write-Log 'Modalità automatica 23:00: batch da quattro query.'
-    & python $Worker --scheduled --batch-size 4 2>&1 | Tee-Object -FilePath $Log -Append
+    & python $Worker --scheduled --batch-size 4 2>&1 | Write-NativeOutput
 }
 $WorkerExit = $LASTEXITCODE
 
