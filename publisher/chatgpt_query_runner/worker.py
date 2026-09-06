@@ -21,11 +21,24 @@ from selenium.webdriver.support.ui import WebDriverWait
 ROOT = Path(__file__).resolve().parents[2]
 QUERY_FILE = ROOT / "publisher" / "github_graphics" / "queries.json"
 STATE_FILE = ROOT / "publisher" / "chatgpt_query_runner" / "state.json"
+LAST_RUN_FILE = ROOT / "publisher" / "chatgpt_query_runner" / "last_run.json"
 GPT_URL = "https://chatgpt.com/g/g-6a9c210485488191b072eb694c2f114c-generatore-grafica-f1"
 ROME = ZoneInfo("Europe/Rome")
 DEFAULT_BATCH_SIZE = int(os.getenv("F1_QUERY_BATCH_SIZE", "4"))
 INBOX_HOST = "127.0.0.1"
 INBOX_PORT = int(os.getenv("F1_INBOX_PORT", "8765"))
+
+
+def write_last_run(status: str, **extra) -> None:
+    payload = {
+        "status": status,
+        "updated_at": datetime.now(ROME).isoformat(timespec="seconds"),
+        "gpt_url": GPT_URL,
+        "inbox_url": f"http://{INBOX_HOST}:{INBOX_PORT}/",
+        **extra,
+    }
+    LAST_RUN_FILE.parent.mkdir(parents=True, exist_ok=True)
+    LAST_RUN_FILE.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
 def load_state() -> dict:
@@ -74,8 +87,8 @@ def make_driver() -> webdriver.Chrome:
         return webdriver.Chrome(options=options)
     except Exception as exc:
         raise RuntimeError(
-            "Chrome non può usare il profilo già aperto. Chiudi tutte le finestre Chrome una volta, "
-            "poi rilancia. L'automazione userà lo stesso account già presente nel profilo."
+            "Chrome non può usare il profilo già aperto. Per l'automazione delle 23:00 lascia chiuso Chrome "
+            "oppure usa un profilo Chrome dedicato già autenticato impostando F1_CHROME_PROFILE."
         ) from exc
 
 
@@ -124,6 +137,7 @@ def wait_generation(driver: webdriver.Chrome, timeout: int = 900) -> None:
             saw_stop = True
             stable_since = None
         elif saw_stop:
+            time.sleep(8)
             return
         else:
             if stable_since is None:
@@ -164,8 +178,7 @@ def start_inbox_server() -> None:
         kwargs["creationflags"] = subprocess.DETACHED_PROCESS | subprocess.CREATE_NEW_PROCESS_GROUP
 
     subprocess.Popen([sys.executable, str(server)], **kwargs)
-
-    for _ in range(20):
+    for _ in range(30):
         if inbox_is_up():
             return
         time.sleep(0.5)
@@ -173,10 +186,8 @@ def start_inbox_server() -> None:
 
 def open_morning_notice(driver: webdriver.Chrome) -> None:
     start_inbox_server()
-    notice = ROOT / "publisher" / "manual_asset_inbox" / "morning_notice.html"
-    if not notice.exists():
-        return
-    driver.execute_script("window.open(arguments[0], '_blank');", notice.resolve().as_uri())
+    url = f"http://{INBOX_HOST}:{INBOX_PORT}/ready"
+    driver.execute_script("window.open(arguments[0], '_blank');", url)
     time.sleep(2)
     driver.switch_to.window(driver.window_handles[-1])
 
@@ -187,6 +198,9 @@ def run(batch_size: int) -> int:
     start = int(state.get("next_index", 0))
     if start >= len(queries):
         start = 0
+
+    write_last_run("RUNNING", batch_size=batch_size, start_index=start)
+    start_inbox_server()
 
     driver = make_driver()
     driver.get("https://www.google.com/")
@@ -206,33 +220,28 @@ def run(batch_size: int) -> int:
 
         send_query(driver, query)
         wait_generation(driver)
-        processed.append({"index": idx, "id": row.get("id"), "query": query})
+        item = {"index": idx, "id": row.get("id"), "query": query}
+        processed.append(item)
         state.setdefault("completed", []).append(
             {
-                "index": idx,
-                "id": row.get("id"),
-                "query": query,
+                **item,
                 "submitted_at": datetime.now(ROME).isoformat(timespec="seconds"),
             }
         )
         state["next_index"] = idx + 1
         save_state(state)
+        write_last_run("RUNNING", processed=processed, next_index=state.get("next_index"))
         time.sleep(4)
 
-    open_morning_notice(driver)
-    print(
-        json.dumps(
-            {
-                "status": "OK",
-                "gpt_url": GPT_URL,
-                "processed": processed,
-                "next_index": state.get("next_index"),
-                "inbox_url": f"http://{INBOX_HOST}:{INBOX_PORT}/",
-            },
-            ensure_ascii=False,
-            indent=2,
-        )
+    write_last_run(
+        "GRAFICHE_PRONTE",
+        processed=processed,
+        processed_count=len(processed),
+        next_index=state.get("next_index"),
+        completed_at=datetime.now(ROME).isoformat(timespec="seconds"),
     )
+    open_morning_notice(driver)
+    print(json.dumps(json.loads(LAST_RUN_FILE.read_text(encoding="utf-8")), ensure_ascii=False, indent=2))
     return 0
 
 
@@ -244,10 +253,16 @@ def main() -> int:
 
     if args.scheduled:
         now = datetime.now(ROME)
-        if now.hour != 4:
-            print(f"NOOP: ora locale {now:%H:%M}, finestra automatica prevista alle 04:xx Europe/Rome")
+        if now.hour != 23:
+            print(f"NOOP: ora locale {now:%H:%M}, finestra automatica prevista alle 23:xx Europe/Rome")
             return 0
-    return run(max(1, args.batch_size))
+
+    try:
+        return run(max(1, args.batch_size))
+    except Exception as exc:
+        start_inbox_server()
+        write_last_run("ERRORE", error=str(exc), completed_at=datetime.now(ROME).isoformat(timespec="seconds"))
+        raise
 
 
 if __name__ == "__main__":
