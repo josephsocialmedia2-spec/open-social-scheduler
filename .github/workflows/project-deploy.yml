@@ -33,8 +33,33 @@ jobs:
         run: |
           python -m py_compile publisher/final_asset_publisher.py
           python -m py_compile publisher/buffer_twice_daily.py
+          python -m py_compile publisher/chatgpt_query_runner/core.py
+          python -m py_compile publisher/chatgpt_query_runner/ui_driver.py
           python -m py_compile publisher/chatgpt_query_runner/worker.py
           python -m py_compile publisher/manual_asset_inbox/server.py
+
+      - name: Test F1 graphics state machine
+        run: |
+          python -m unittest discover -s publisher/chatgpt_query_runner/tests -v
+
+      - name: Validate exact image prompts
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from publisher.chatgpt_query_runner.core import build_prompt
+
+          payload = json.loads(Path('publisher/github_graphics/queries.json').read_text(encoding='utf-8'))
+          rows = payload.get('queries') or []
+          assert len(rows) >= 4, 'Expected at least 4 F1 queries'
+          for row in rows:
+              q = ' '.join(str(row['query']).split())
+              expected = f"Genera un'immagine ultrarealistica, cerchiamo {q}."
+              actual = build_prompt(row['query'])
+              assert actual == expected, (row.get('id'), actual, expected)
+              assert actual != q, 'Raw query would trigger a text/web search instead of image generation'
+          print('Exact F1 image prompt contract OK')
+          PY
 
       - name: Validate production queue
         run: |
@@ -50,24 +75,35 @@ jobs:
           print('Queue schema OK')
           PY
 
-      - name: Validate query source and manual inbox
+      - name: Validate F1 collection and launchers
         run: |
           python - <<'PY'
-          import json
           from pathlib import Path
-          q = Path('publisher/github_graphics/queries.json')
-          assert q.exists(), 'publisher/github_graphics/queries.json missing'
-          data = json.loads(q.read_text(encoding='utf-8'))
-          assert isinstance(data.get('queries'), list) and data['queries'], 'queries list is empty'
-          assert Path('publisher/manual_asset_inbox/index.html').exists(), 'manual inbox HTML missing'
-          assert Path('publisher/manual_asset_inbox/morning_notice.html').exists(), 'morning notice missing'
-          print(f"ChatGPT query source OK: {len(data['queries'])} queries")
+          server = Path('publisher/manual_asset_inbox/server.py').read_text(encoding='utf-8')
+          worker = Path('publisher/chatgpt_query_runner/worker.py').read_text(encoding='utf-8')
+          installer = Path('publisher/f1_graphics_automation/INSTALLA_AUTOMAZIONE_23.ps1').read_text(encoding='utf-8')
+          assert '8877' in server
+          assert '/api/generated' in server
+          assert 'chatgpt_generated' in server
+          assert 'IMMAGINE_SALVATA' in worker and 'advance_after_completed' in worker
+          assert 'Selenium' not in worker
+          assert "New-ScheduledTaskTrigger -Daily -At 23:00" in installer
+          for path in [
+              'publisher/f1_graphics_automation/AVVIA_F1_GRAFICHE_ORA.bat',
+              'publisher/f1_graphics_automation/PROVA_ORA.bat',
+              'publisher/f1_graphics_automation/PROVA_4_QUERY.bat',
+              'publisher/f1_graphics_automation/APRI_RACCOLTA_GRAFICHE.bat',
+              'publisher/manual_asset_inbox/index.html',
+              'publisher/manual_asset_inbox/morning_notice.html',
+          ]:
+              assert Path(path).exists(), path
+          print('F1 collection/launcher contract OK')
           PY
 
       - name: Deployment summary
         run: |
           echo 'F1 deployment validation completed successfully.'
-          echo 'Graphics flow: queries -> ChatGPT browser -> manual download -> local inbox -> GitHub -> Buffer.'
-          echo 'No graphic rendering engine is used in production.'
+          echo 'Graphics flow: normal Chrome -> verified prompt -> verified image generation -> saved local image -> F1 collection -> human approval -> GitHub -> Buffer.'
+          echo 'No Selenium or dedicated Chrome profile is used by the F1 graphics worker.'
           echo 'Repository: josephsocialmedia2-spec/open-social-scheduler'
           echo 'Branch: main'
