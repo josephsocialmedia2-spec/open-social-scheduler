@@ -20,6 +20,7 @@ publisher/reports/
 publisher/chatgpt_query_runner/state.json
 publisher/chatgpt_query_runner/last_run.json
 publisher/f1_graphics_automation/logs/
+publisher/final_assets/chatgpt_generated/
 
 # Python
 __pycache__/
