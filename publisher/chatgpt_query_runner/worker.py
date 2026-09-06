@@ -3,7 +3,6 @@ from __future__ import annotations
 import argparse
 import json
 import os
-import shutil
 import socket
 import subprocess
 import sys
@@ -28,12 +27,6 @@ ROME = ZoneInfo("Europe/Rome")
 DEFAULT_BATCH_SIZE = int(os.getenv("F1_QUERY_BATCH_SIZE", "4"))
 INBOX_HOST = "127.0.0.1"
 INBOX_PORT = int(os.getenv("F1_INBOX_PORT", "8877"))
-AUTOMATION_USER_DATA = Path(
-    os.path.expandvars(os.getenv(
-        "F1_AUTOMATION_CHROME_DIR",
-        r"%USERPROFILE%\F1-Automazione-Grafiche\chrome-f1-profile",
-    ))
-)
 
 
 def write_last_run(status: str, **extra) -> None:
@@ -79,14 +72,15 @@ def chrome_binary() -> str:
     return "chrome.exe"
 
 
-def source_chrome_user_data() -> Path:
+def normal_chrome_user_data() -> Path:
     return Path(os.path.expandvars(r"%LocalAppData%\Google\Chrome\User Data"))
 
 
-def source_chrome_profile(user_data: Path) -> str:
+def normal_chrome_profile(user_data: Path) -> str:
     override = os.getenv("F1_CHROME_PROFILE", "").strip()
     if override:
         return override
+
     local_state = user_data / "Local State"
     try:
         payload = json.loads(local_state.read_text(encoding="utf-8"))
@@ -98,84 +92,58 @@ def source_chrome_profile(user_data: Path) -> str:
     return "Default"
 
 
-def _ignore_chrome_copy(path: str, names: list[str]) -> set[str]:
-    ignored = {
-        "Cache",
-        "Code Cache",
-        "GPUCache",
-        "GrShaderCache",
-        "ShaderCache",
-        "DawnCache",
-        "Crashpad",
-        "BrowserMetrics",
-        "OptimizationGuidePredictionModels",
-        "Safe Browsing",
-        "SingletonLock",
-        "SingletonCookie",
-        "SingletonSocket",
-        "lockfile",
-    }
-    return {name for name in names if name in ignored or name.startswith("Singleton")}
-
-
-def ensure_automation_profile() -> tuple[Path, str]:
-    src_root = source_chrome_user_data()
-    src_profile = source_chrome_profile(src_root)
-    src_profile_dir = src_root / src_profile
-    marker = AUTOMATION_USER_DATA / ".f1-profile-ready"
-
-    if marker.exists() and (AUTOMATION_USER_DATA / src_profile).exists():
-        return AUTOMATION_USER_DATA, src_profile
-
-    if not src_root.exists() or not src_profile_dir.exists():
-        raise RuntimeError(
-            f"Profilo Chrome sorgente non trovato: {src_profile_dir}. "
-            "Apri Chrome almeno una volta con l'account che usi per ChatGPT."
-        )
-
-    AUTOMATION_USER_DATA.mkdir(parents=True, exist_ok=True)
-
-    local_state = src_root / "Local State"
-    if local_state.exists():
-        shutil.copy2(local_state, AUTOMATION_USER_DATA / "Local State")
-
-    dst_profile_dir = AUTOMATION_USER_DATA / src_profile
-    if dst_profile_dir.exists():
-        shutil.rmtree(dst_profile_dir, ignore_errors=True)
-
-    copy_ok = True
-    copy_error = ""
+def normal_chrome_is_running() -> bool:
+    if os.name != "nt":
+        return False
     try:
-        shutil.copytree(
-            src_profile_dir,
-            dst_profile_dir,
-            ignore=_ignore_chrome_copy,
-            dirs_exist_ok=True,
+        result = subprocess.run(
+            ["tasklist", "/FI", "IMAGENAME eq chrome.exe", "/NH"],
+            text=True,
+            capture_output=True,
+            timeout=10,
+            check=False,
         )
-    except Exception as exc:
-        copy_ok = False
-        copy_error = f"{type(exc).__name__}: {exc}"
-        shutil.rmtree(dst_profile_dir, ignore_errors=True)
-        dst_profile_dir.mkdir(parents=True, exist_ok=True)
+        return "chrome.exe" in (result.stdout or "").lower()
+    except Exception:
+        return False
 
-    marker.write_text(
-        json.dumps(
-            {
-                "source_profile": src_profile,
-                "created_at": datetime.now(ROME).isoformat(timespec="seconds"),
-                "profile_copied": copy_ok,
-                "copy_error": copy_error,
-            },
-            ensure_ascii=False,
-            indent=2,
-        ),
-        encoding="utf-8",
+
+def wait_for_normal_chrome(max_wait_minutes: int) -> None:
+    if not normal_chrome_is_running():
+        return
+
+    if max_wait_minutes <= 0:
+        raise RuntimeError(
+            "Google Chrome normale è già aperto. Chiudi tutte le finestre Chrome e rilancia la prova. "
+            "F1 usa il tuo Chrome normale e il tuo profilo normale: non usa profili dedicati."
+        )
+
+    deadline = time.time() + (max_wait_minutes * 60)
+    write_last_run(
+        "ATTESA_CHROME",
+        message="Chrome normale è in uso. Attendo che venga chiuso senza forzarlo.",
+        wait_minutes=max_wait_minutes,
     )
-    return AUTOMATION_USER_DATA, src_profile
+    while time.time() < deadline:
+        if not normal_chrome_is_running():
+            return
+        time.sleep(30)
+
+    raise RuntimeError(
+        f"Chrome normale è rimasto aperto per oltre {max_wait_minutes} minuti. "
+        "Il sistema non lo chiude forzatamente per non perdere le schede."
+    )
 
 
 def make_driver() -> webdriver.Chrome:
-    user_data, profile = ensure_automation_profile()
+    user_data = normal_chrome_user_data()
+    profile = normal_chrome_profile(user_data)
+    profile_dir = user_data / profile
+
+    if not user_data.exists() or not profile_dir.exists():
+        raise RuntimeError(
+            f"Profilo Chrome normale non trovato: {profile_dir}. Apri Chrome almeno una volta con il tuo account."
+        )
 
     options = webdriver.ChromeOptions()
     options.binary_location = chrome_binary()
@@ -185,21 +153,32 @@ def make_driver() -> webdriver.Chrome:
     options.add_argument("--disable-notifications")
     options.add_argument("--no-first-run")
     options.add_argument("--no-default-browser-check")
+    options.add_argument("--disable-blink-features=AutomationControlled")
+    options.add_experimental_option("excludeSwitches", ["enable-automation"])
+    options.add_experimental_option("useAutomationExtension", False)
     options.add_experimental_option("detach", True)
 
     try:
         driver = webdriver.Chrome(options=options)
+        try:
+            driver.execute_cdp_cmd(
+                "Page.addScriptToEvaluateOnNewDocument",
+                {"source": "Object.defineProperty(navigator,'webdriver',{get:()=>undefined})"},
+            )
+        except Exception:
+            pass
         write_last_run(
             "RUNNING",
+            chrome_mode="NORMAL",
             chrome_profile=profile,
             chrome_user_data=str(user_data),
         )
         return driver
     except Exception as exc:
         raise RuntimeError(
-            "Chrome F1 non si è avviato. "
-            f"Profilo dedicato: {user_data} / {profile}. "
-            f"Errore tecnico: {type(exc).__name__}: {exc}"
+            "Non riesco ad aprire il Chrome normale con il profilo già autenticato. "
+            "Chiudi completamente Chrome e riprova. "
+            f"Profilo: {profile}. Errore tecnico: {type(exc).__name__}: {exc}"
         ) from exc
 
 
@@ -218,12 +197,7 @@ def prompt_box(driver: webdriver.Chrome, timeout: int = 90):
                 return el
         except Exception as exc:
             last = exc
-    raise RuntimeError(
-        "Casella prompt ChatGPT non trovata. "
-        "Se il profilo F1 non è ancora autenticato, accedi a ChatGPT nella finestra Chrome F1 "
-        "e poi rilancia la prova. "
-        f"Dettaglio: {last}"
-    )
+    raise RuntimeError(f"Casella prompt ChatGPT non trovata: {last}")
 
 
 def send_query(driver: webdriver.Chrome, query: str) -> None:
@@ -304,21 +278,22 @@ def open_morning_notice(driver: webdriver.Chrome) -> None:
     driver.switch_to.window(driver.window_handles[-1])
 
 
-def run(batch_size: int) -> int:
+def run(batch_size: int, chrome_wait_minutes: int = 0) -> int:
     queries = load_queries()
     state = load_state()
     start = int(state.get("next_index", 0))
     if start >= len(queries):
         start = 0
 
-    write_last_run("RUNNING", batch_size=batch_size, start_index=start)
+    write_last_run("RUNNING", batch_size=batch_size, start_index=start, chrome_mode="NORMAL")
     start_inbox_server()
+    wait_for_normal_chrome(chrome_wait_minutes)
 
     driver = make_driver()
     driver.get("https://www.google.com/")
     time.sleep(2)
     driver.get(GPT_URL)
-    prompt_box(driver, timeout=600)
+    prompt_box(driver, timeout=120)
 
     processed: list[dict] = []
     for offset in range(batch_size):
@@ -339,11 +314,17 @@ def run(batch_size: int) -> int:
         )
         state["next_index"] = idx + 1
         save_state(state)
-        write_last_run("RUNNING", processed=processed, next_index=state.get("next_index"))
+        write_last_run(
+            "RUNNING",
+            chrome_mode="NORMAL",
+            processed=processed,
+            next_index=state.get("next_index"),
+        )
         time.sleep(4)
 
     write_last_run(
         "GRAFICHE_PRONTE",
+        chrome_mode="NORMAL",
         processed=processed,
         processed_count=len(processed),
         next_index=state.get("next_index"),
@@ -358,11 +339,8 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--batch-size", type=int, default=DEFAULT_BATCH_SIZE)
     parser.add_argument("--scheduled", action="store_true")
-    parser.add_argument("--reset-chrome-profile", action="store_true")
+    parser.add_argument("--chrome-wait-minutes", type=int, default=0)
     args = parser.parse_args()
-
-    if args.reset_chrome_profile and AUTOMATION_USER_DATA.exists():
-        shutil.rmtree(AUTOMATION_USER_DATA, ignore_errors=True)
 
     if args.scheduled:
         now = datetime.now(ROME)
@@ -370,12 +348,17 @@ def main() -> int:
             print(f"NOOP: ora locale {now:%H:%M}, finestra automatica prevista alle 23:xx Europe/Rome")
             return 0
 
+    wait_minutes = args.chrome_wait_minutes
+    if args.scheduled and wait_minutes <= 0:
+        wait_minutes = 120
+
     try:
-        return run(max(1, args.batch_size))
+        return run(max(1, args.batch_size), chrome_wait_minutes=max(0, wait_minutes))
     except Exception as exc:
         start_inbox_server()
         write_last_run(
             "ERRORE",
+            chrome_mode="NORMAL",
             error=f"{type(exc).__name__}: {exc}",
             completed_at=datetime.now(ROME).isoformat(timespec="seconds"),
         )
