@@ -1,0 +1,45 @@
+name: F1 Graphic Engine Healthcheck
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'publisher/graphic_engines/**'
+      - 'publisher/rendering/content_engine.py'
+      - '.github/workflows/graphic-engine-healthcheck.yml'
+  schedule:
+    - cron: '15 5 * * *'
+
+permissions:
+  contents: read
+
+jobs:
+  healthcheck:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install minimal dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests==2.32.5 Pillow==11.3.0 qrcode[pil]==8.2
+
+      - name: Compile graphic engine modules
+        run: |
+          python -m py_compile publisher/graphic_engines/*.py
+          python -m py_compile publisher/rendering/content_engine.py
+
+      - name: Run healthcheck
+        env:
+          COMFYUI_URL: ${{ secrets.COMFYUI_URL }}
+          COMFYUI_WORKFLOW: ${{ vars.COMFYUI_WORKFLOW }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          F1_HTTP_GRAPHIC_URL: ${{ secrets.F1_HTTP_GRAPHIC_URL }}
+          F1_GRAPHIC_ENGINE_ORDER: ${{ vars.F1_GRAPHIC_ENGINE_ORDER }}
+        run: python -m publisher.graphic_engines.healthcheck
