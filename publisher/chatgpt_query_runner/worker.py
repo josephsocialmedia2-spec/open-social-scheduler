@@ -3,7 +3,9 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import socket
 import subprocess
+import sys
 import time
 from datetime import datetime
 from pathlib import Path
@@ -19,10 +21,11 @@ from selenium.webdriver.support.ui import WebDriverWait
 ROOT = Path(__file__).resolve().parents[2]
 QUERY_FILE = ROOT / "publisher" / "github_graphics" / "queries.json"
 STATE_FILE = ROOT / "publisher" / "chatgpt_query_runner" / "state.json"
-CHAT_URL = "https://chatgpt.com/c/6a9af32f-d574-83ed-9232-2b4025e3893c"
+GPT_URL = "https://chatgpt.com/g/g-6a9c210485488191b072eb694c2f114c-generatore-grafica-f1"
 ROME = ZoneInfo("Europe/Rome")
 DEFAULT_BATCH_SIZE = int(os.getenv("F1_QUERY_BATCH_SIZE", "4"))
-GRAPHIC_SUFFIX = "l modello è già allegato qui in chat"
+INBOX_HOST = "127.0.0.1"
+INBOX_PORT = int(os.getenv("F1_INBOX_PORT", "8765"))
 
 
 def load_state() -> dict:
@@ -102,7 +105,7 @@ def send_query(driver: webdriver.Chrome, query: str) -> None:
         box.send_keys(Keys.BACKSPACE)
     except Exception:
         pass
-    box.send_keys(f"{query}\n{GRAPHIC_SUFFIX}")
+    box.send_keys(query)
     box.send_keys(Keys.ENTER)
 
 
@@ -131,7 +134,45 @@ def wait_generation(driver: webdriver.Chrome, timeout: int = 900) -> None:
     raise TimeoutException("La generazione non si è conclusa entro il timeout.")
 
 
-def open_morning_notice(driver: webdriver.Chrome, processed: list[dict]) -> None:
+def inbox_is_up() -> bool:
+    try:
+        with socket.create_connection((INBOX_HOST, INBOX_PORT), timeout=1):
+            return True
+    except OSError:
+        return False
+
+
+def start_inbox_server() -> None:
+    if inbox_is_up():
+        return
+
+    server = ROOT / "publisher" / "manual_asset_inbox" / "server.py"
+    if not server.exists():
+        return
+
+    env = os.environ.copy()
+    env.pop("RUNNER_TRACKING_ID", None)
+    env["F1_INBOX_PORT"] = str(INBOX_PORT)
+
+    kwargs: dict = {
+        "cwd": ROOT,
+        "env": env,
+        "stdout": subprocess.DEVNULL,
+        "stderr": subprocess.DEVNULL,
+    }
+    if os.name == "nt":
+        kwargs["creationflags"] = subprocess.DETACHED_PROCESS | subprocess.CREATE_NEW_PROCESS_GROUP
+
+    subprocess.Popen([sys.executable, str(server)], **kwargs)
+
+    for _ in range(20):
+        if inbox_is_up():
+            return
+        time.sleep(0.5)
+
+
+def open_morning_notice(driver: webdriver.Chrome) -> None:
+    start_inbox_server()
     notice = ROOT / "publisher" / "manual_asset_inbox" / "morning_notice.html"
     if not notice.exists():
         return
@@ -150,7 +191,7 @@ def run(batch_size: int) -> int:
     driver = make_driver()
     driver.get("https://www.google.com/")
     time.sleep(2)
-    driver.get(CHAT_URL)
+    driver.get(GPT_URL)
     prompt_box(driver, timeout=90)
 
     processed: list[dict] = []
@@ -162,21 +203,36 @@ def run(batch_size: int) -> int:
         query = str(row.get("query") or "").strip()
         if not query:
             continue
+
         send_query(driver, query)
         wait_generation(driver)
         processed.append({"index": idx, "id": row.get("id"), "query": query})
-        state.setdefault("completed", []).append({
-            "index": idx,
-            "id": row.get("id"),
-            "query": query,
-            "submitted_at": datetime.now(ROME).isoformat(timespec="seconds"),
-        })
+        state.setdefault("completed", []).append(
+            {
+                "index": idx,
+                "id": row.get("id"),
+                "query": query,
+                "submitted_at": datetime.now(ROME).isoformat(timespec="seconds"),
+            }
+        )
         state["next_index"] = idx + 1
         save_state(state)
         time.sleep(4)
 
-    open_morning_notice(driver, processed)
-    print(json.dumps({"status": "OK", "processed": processed, "next_index": state.get("next_index")}, ensure_ascii=False, indent=2))
+    open_morning_notice(driver)
+    print(
+        json.dumps(
+            {
+                "status": "OK",
+                "gpt_url": GPT_URL,
+                "processed": processed,
+                "next_index": state.get("next_index"),
+                "inbox_url": f"http://{INBOX_HOST}:{INBOX_PORT}/",
+            },
+            ensure_ascii=False,
+            indent=2,
+        )
+    )
     return 0
 
 
