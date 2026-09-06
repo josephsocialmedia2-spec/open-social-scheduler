@@ -1,0 +1,37 @@
+{
+  "batch": "susa-first-4",
+  "queries": [
+    {
+      "id": "SUSA-001",
+      "query": "immobili in vendita a Susa",
+      "family": "property",
+      "headline": "Immobili in vendita a Susa",
+      "subheadline": "Scopri le opportunità immobiliari nel territorio di Susa.",
+      "cta": "SCOPRI LE OPPORTUNITÀ"
+    },
+    {
+      "id": "SUSA-002",
+      "query": "case in vendita a Susa",
+      "family": "property",
+      "headline": "Case in vendita a Susa",
+      "subheadline": "Soluzioni per chi vuole vivere, investire o trasferirsi a Susa.",
+      "cta": "CERCA LA TUA CASA"
+    },
+    {
+      "id": "SUSA-003",
+      "query": "lavoro agenzia immobiliare Susa prima esperienza",
+      "family": "recruiting",
+      "headline": "Inizia nel settore immobiliare",
+      "subheadline": "Prima esperienza? Formazione, affiancamento e territorio.",
+      "cta": "CANDIDATI ORA"
+    },
+    {
+      "id": "SUSA-004",
+      "query": "appartamenti in vendita a Susa",
+      "family": "property",
+      "headline": "Appartamenti in vendita a Susa",
+      "subheadline": "Trova la soluzione più adatta alle tue esigenze nel cuore della Valle di Susa.",
+      "cta": "SCOPRI GLI APPARTAMENTI"
+    }
+  ]
+}
