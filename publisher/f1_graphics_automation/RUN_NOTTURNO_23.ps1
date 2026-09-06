@@ -1,5 +1,6 @@
 param(
     [switch]$Test,
+    [switch]$Test4,
     [switch]$Manual
 )
 
@@ -36,32 +37,24 @@ function Show-WorkerLogs {
     }
 }
 
-Write-Log 'Avvio sistema F1 Grafiche.'
+Write-Log 'RUN START - F1 Grafiche'
 Set-Location $Root
 
 $PythonCmd = Get-Command python -ErrorAction SilentlyContinue
-if (-not $PythonCmd) {
-    throw 'Python non trovato nel PATH.'
-}
+if (-not $PythonCmd) { throw 'Python non trovato nel PATH.' }
 $PythonExe = $PythonCmd.Source
 
 $env:F1_QUERY_BATCH_SIZE = '4'
 $env:F1_INBOX_PORT = '8877'
+$env:F1_MAX_ATTEMPTS = '3'
 
-try {
-    & $StartInbox
-    Write-Log 'Inbox locale disponibile su http://127.0.0.1:8877/.'
-} catch {
-    Write-Log "ERRORE Inbox: $($_.Exception.Message)"
-    throw
-}
-
+# Prima aggiorna il codice, poi avvia il server: evita processi Flask con codice vecchio.
 try {
     $dirty = git status --porcelain
     if (-not $dirty) {
         git pull --ff-only origin main 2>&1 | ForEach-Object { Write-Log $_ }
     } else {
-        Write-Log 'Repository con modifiche locali: salto git pull per non sovrascrivere dati.'
+        Write-Log 'Repository con modifiche locali non ignorate: salto git pull per non sovrascriverle.'
     }
 } catch {
     Write-Log "Git pull non riuscito, continuo con la versione locale: $($_.Exception.Message)"
@@ -78,16 +71,27 @@ if (-not $depsOk) {
     if ($LASTEXITCODE -ne 0) { throw 'Installazione dipendenze Inbox fallita.' }
 }
 
+try {
+    & $StartInbox
+    Write-Log 'Raccolta F1 disponibile su http://127.0.0.1:8877/.'
+} catch {
+    Write-Log "ERRORE Raccolta: $($_.Exception.Message)"
+    throw
+}
+
 Remove-Item $PyOut,$PyErr -Force -ErrorAction SilentlyContinue
 
 if ($Test) {
-    Write-Log 'Modalita TEST: una sola query.'
-    $WorkerArgs = @($Worker, '--batch-size', '1')
+    Write-Log 'Modalita PROVA 1 QUERY: nuovo batch da una query.'
+    $WorkerArgs = @($Worker, '--batch-size', '1', '--fresh-run')
+} elseif ($Test4) {
+    Write-Log 'Modalita PROVA 4 QUERY: nuovo batch completo.'
+    $WorkerArgs = @($Worker, '--batch-size', '4', '--fresh-run')
 } elseif ($Manual) {
-    Write-Log 'Modalita MANUALE: batch da quattro query.'
+    Write-Log 'Modalita MANUALE: quattro query, con recovery di eventuale batch incompleto.'
     $WorkerArgs = @($Worker, '--batch-size', '4')
 } else {
-    Write-Log 'Modalita automatica 23:00: batch da quattro query.'
+    Write-Log 'Modalita AUTOMATICA 23:00: quattro query, con recovery di eventuale batch incompleto.'
     $WorkerArgs = @($Worker, '--scheduled', '--batch-size', '4')
 }
 
@@ -109,19 +113,16 @@ Show-WorkerLogs
 $WorkerExit = $Process.ExitCode
 
 if ($WorkerExit -eq 0) {
-    Write-Log 'Produzione completata. Schermata mattutina pronta.'
+    Write-Log 'RUN END - GRAFICHE_PRONTE verificato dal worker.'
     exit 0
 }
 
-Write-Log "Produzione terminata con errore codice $WorkerExit."
+Write-Log "RUN END - non completato, codice worker $WorkerExit."
 Write-Host ''
-Write-Host 'ERRORE COMPLETO DEL WORKER:' -ForegroundColor Yellow
+Write-Host 'ERRORE/ESITO COMPLETO DEL WORKER:' -ForegroundColor Yellow
 if (Test-Path $PyErr) {
-    Get-Content $PyErr -ErrorAction SilentlyContinue | Select-Object -Last 80 | ForEach-Object {
-        Write-Host $_ -ForegroundColor Red
-    }
+    Get-Content $PyErr -ErrorAction SilentlyContinue | Select-Object -Last 100 | ForEach-Object { Write-Host $_ -ForegroundColor Red }
 }
-Write-Host ''
 Write-Host "Log: $Log" -ForegroundColor Yellow
 Start-Process 'http://127.0.0.1:8877/ready'
 exit $WorkerExit
