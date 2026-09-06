@@ -1,0 +1,29 @@
+{
+  "batch": "susa-first-4",
+  "generated": [
+    {
+      "id": "SUSA-001",
+      "query": "immobili in vendita a Susa",
+      "asset": "publisher/final_assets/github_generated/01_susa-001_property.png",
+      "bytes": 71348
+    },
+    {
+      "id": "SUSA-002",
+      "query": "case in vendita a Susa",
+      "asset": "publisher/final_assets/github_generated/02_susa-002_property.png",
+      "bytes": 71259
+    },
+    {
+      "id": "SUSA-003",
+      "query": "lavoro agenzia immobiliare Susa prima esperienza",
+      "asset": "publisher/final_assets/github_generated/03_susa-003_recruiting.png",
+      "bytes": 70890
+    },
+    {
+      "id": "SUSA-004",
+      "query": "appartamenti in vendita a Susa",
+      "asset": "publisher/final_assets/github_generated/04_susa-004_property.png",
+      "bytes": 75234
+    }
+  ]
+}
