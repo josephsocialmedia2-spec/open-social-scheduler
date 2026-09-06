@@ -1,5 +1,6 @@
 param(
-    [switch]$Test
+    [switch]$Test,
+    [switch]$Manual
 )
 
 $ErrorActionPreference = 'Stop'
@@ -69,6 +70,9 @@ if (-not $depsOk) {
 if ($Test) {
     Write-Log 'Modalita TEST: una sola query.'
     & python $Worker --batch-size 1 2>&1 | Write-NativeOutput
+} elseif ($Manual) {
+    Write-Log 'Modalita MANUALE: quattro query subito.'
+    & python $Worker --batch-size 4 2>&1 | Write-NativeOutput
 } else {
     Write-Log 'Modalita automatica 23:00: batch da quattro query.'
     & python $Worker --scheduled --batch-size 4 2>&1 | Write-NativeOutput
