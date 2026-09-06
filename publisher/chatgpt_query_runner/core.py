@@ -25,32 +25,30 @@ STAGES = (
     "IMMAGINE_SALVATA",
     "COMPLETED",
 )
-
-# PARZIALE/ERRORE restano recuperabili al riavvio finché esistono job incompleti.
 TERMINAL_RUN_STATUSES = {"GRAFICHE_PRONTE", "ANNULLATO"}
 
 
 def now_iso(now: datetime | None = None) -> str:
-    value = now or datetime.now().astimezone()
-    return value.isoformat(timespec="seconds")
+    return (now or datetime.now().astimezone()).isoformat(timespec="seconds")
 
 
 def normalize_query(value: str) -> str:
-    value = str(value or "")
-    value = re.sub(r"\s+", " ", value).strip()
+    value = re.sub(r"\s+", " ", str(value or "")).strip()
     if not value:
         raise ValueError("Query vuota")
     return value
 
 
 def build_prompt(query: str) -> str:
-    return f"Genera un'immagine ultrarealistica, cerchiamo {normalize_query(query)}."
+    return (
+        "Genera un'immagine ultrarealistica, usa i modelli che abbiamo caricato per "
+        f"cerchiamo {normalize_query(query)}."
+    )
 
 
 def safe_slug(value: str, max_len: int = 72) -> str:
     value = normalize_query(value).lower()
-    value = re.sub(r"[^a-z0-9àèéìòù]+", "-", value, flags=re.IGNORECASE)
-    value = value.strip("-")
+    value = re.sub(r"[^a-z0-9àèéìòù]+", "-", value, flags=re.IGNORECASE).strip("-")
     return (value[:max_len] or "grafica").strip("-") or "grafica"
 
 
@@ -81,10 +79,7 @@ def migrate_state(payload: Any) -> dict[str, Any]:
         state.setdefault("runs", [])
         state.setdefault("legacy_unverified", [])
         return state
-
-    # Le vecchie versioni marcavano COMPLETED subito dopo Enter. Non sono attendibili.
     state = blank_state()
-    state["next_index"] = 0
     old_completed = payload.get("completed") or []
     if isinstance(old_completed, list):
         state["legacy_unverified"] = deepcopy(old_completed)[-100:]
@@ -142,7 +137,10 @@ def _archive_active_before_fresh_run(state: dict[str, Any], now: datetime | None
     if snapshot.get("status") != "GRAFICHE_PRONTE":
         snapshot["status"] = "ANNULLATO"
         snapshot["completed_at"] = now_iso(now)
-        snapshot["error"] = "Batch sostituito da un nuovo avvio esplicito (--fresh-run); stato precedente preservato nello storico."
+        snapshot["error"] = (
+            "Batch sostituito da un nuovo avvio esplicito (--fresh-run); "
+            "stato precedente preservato nello storico."
+        )
     history = state.setdefault("runs", [])
     if history and history[-1].get("run_id") == snapshot.get("run_id"):
         history[-1] = snapshot
@@ -152,33 +150,41 @@ def _archive_active_before_fresh_run(state: dict[str, Any], now: datetime | None
         del history[:-MAX_RUN_HISTORY]
 
 
-def create_run(state: dict[str, Any], queries: list[dict[str, Any]], batch_size: int, now: datetime | None = None) -> dict[str, Any]:
+def create_run(
+    state: dict[str, Any],
+    queries: list[dict[str, Any]],
+    batch_size: int,
+    now: datetime | None = None,
+) -> dict[str, Any]:
     if not queries:
         raise ValueError("Nessuna query disponibile")
     _archive_active_before_fresh_run(state, now=now)
     batch_size = max(1, int(batch_size))
     start = int(state.get("next_index", 0)) % len(queries)
     stamp = (now or datetime.now().astimezone()).strftime("%Y%m%dT%H%M%S")
-    run_id = f"{stamp}-{uuid.uuid4().hex[:8]}"
-    jobs = []
-    for offset in range(batch_size):
-        idx = (start + offset) % len(queries)
-        jobs.append(_new_job(queries[idx], idx, offset + 1))
     run = {
-        "run_id": run_id,
+        "run_id": f"{stamp}-{uuid.uuid4().hex[:8]}",
         "status": "RUNNING",
         "batch_size": batch_size,
         "start_index": start,
         "started_at": now_iso(now),
         "completed_at": None,
-        "jobs": jobs,
+        "jobs": [
+            _new_job(queries[(start + offset) % len(queries)], (start + offset) % len(queries), offset + 1)
+            for offset in range(batch_size)
+        ],
         "error": None,
     }
     state["active_run"] = run
     return run
 
 
-def get_or_create_run(state: dict[str, Any], queries: list[dict[str, Any]], batch_size: int, now: datetime | None = None) -> dict[str, Any]:
+def get_or_create_run(
+    state: dict[str, Any],
+    queries: list[dict[str, Any]],
+    batch_size: int,
+    now: datetime | None = None,
+) -> dict[str, Any]:
     active = state.get("active_run")
     if isinstance(active, dict):
         incomplete = any(job.get("status") != "COMPLETED" for job in active.get("jobs") or [])
@@ -197,15 +203,19 @@ def transition(job: dict[str, Any], status: str, *, at: str | None = None, **fie
     job["updated_at"] = stamp
     for key, value in fields.items():
         job[key] = value
-    history = job.setdefault("history", [])
-    history.append({"status": status, "at": stamp, **{k: v for k, v in fields.items() if k in {"error", "retry_count"}}})
+    job.setdefault("history", []).append(
+        {
+            "status": status,
+            "at": stamp,
+            **{k: v for k, v in fields.items() if k in {"error", "retry_count"}},
+        }
+    )
 
 
 def advance_after_completed(state: dict[str, Any], job: dict[str, Any], total_queries: int) -> None:
     if job.get("status") != "COMPLETED":
         raise ValueError("next_index può avanzare solo dopo COMPLETED")
-    image_path = str(job.get("image_path") or "").strip()
-    if not image_path:
+    if not str(job.get("image_path") or "").strip():
         raise ValueError("COMPLETED richiede image_path")
     if total_queries <= 0:
         raise ValueError("total_queries non valido")
