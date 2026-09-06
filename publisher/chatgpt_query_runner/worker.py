@@ -26,7 +26,7 @@ GPT_URL = "https://chatgpt.com/g/g-6a9c210485488191b072eb694c2f114c-generatore-g
 ROME = ZoneInfo("Europe/Rome")
 DEFAULT_BATCH_SIZE = int(os.getenv("F1_QUERY_BATCH_SIZE", "4"))
 INBOX_HOST = "127.0.0.1"
-INBOX_PORT = int(os.getenv("F1_INBOX_PORT", "8765"))
+INBOX_PORT = int(os.getenv("F1_INBOX_PORT", "8877"))
 
 
 def write_last_run(status: str, **extra) -> None:
@@ -111,8 +111,7 @@ def make_driver() -> webdriver.Chrome:
         return driver
     except Exception as exc:
         raise RuntimeError(
-            f"Chrome non può usare il profilo '{profile}'. L'automazione usa automaticamente l'ultimo profilo Chrome attivo. "
-            "Se alle 23:00 lo stesso profilo è già aperto in un'altra finestra Chrome, chiudilo prima dell'orario oppure configura un profilo dedicato."
+            f"Chrome non può usare il profilo '{profile}'. Chiudi tutte le finestre Chrome e rilancia F1 GRAFICHE."
         ) from exc
 
 
