@@ -26,7 +26,8 @@ STAGES = (
     "COMPLETED",
 )
 
-TERMINAL_RUN_STATUSES = {"GRAFICHE_PRONTE", "PARZIALE", "ERRORE", "ANNULLATO"}
+# PARZIALE/ERRORE restano recuperabili al riavvio finché esistono job incompleti.
+TERMINAL_RUN_STATUSES = {"GRAFICHE_PRONTE", "ANNULLATO"}
 
 
 def now_iso(now: datetime | None = None) -> str:
@@ -112,6 +113,7 @@ def save_state(path: Path, state: dict[str, Any]) -> None:
 
 def _new_job(row: dict[str, Any], query_index: int, sequence: int) -> dict[str, Any]:
     query = normalize_query(row.get("query") or "")
+    stamp = now_iso()
     return {
         "sequence": sequence,
         "query_index": query_index,
@@ -127,8 +129,8 @@ def _new_job(row: dict[str, Any], query_index: int, sequence: int) -> dict[str, 
         "image_sha256": None,
         "capture_mode": None,
         "error": None,
-        "updated_at": now_iso(),
-        "history": [{"status": "QUERY_CARICATA", "at": now_iso()}],
+        "updated_at": stamp,
+        "history": [{"status": "QUERY_CARICATA", "at": stamp}],
     }
 
 
@@ -159,8 +161,11 @@ def create_run(state: dict[str, Any], queries: list[dict[str, Any]], batch_size:
 
 def get_or_create_run(state: dict[str, Any], queries: list[dict[str, Any]], batch_size: int, now: datetime | None = None) -> dict[str, Any]:
     active = state.get("active_run")
-    if isinstance(active, dict) and active.get("status") not in TERMINAL_RUN_STATUSES:
-        if any(job.get("status") != "COMPLETED" for job in active.get("jobs") or []):
+    if isinstance(active, dict):
+        incomplete = any(job.get("status") != "COMPLETED" for job in active.get("jobs") or [])
+        if incomplete and active.get("status") not in TERMINAL_RUN_STATUSES:
+            active["status"] = "RUNNING"
+            active["completed_at"] = None
             return active
     return create_run(state, queries, batch_size, now=now)
 
@@ -215,7 +220,11 @@ def finalize_run(state: dict[str, Any], *, now: datetime | None = None) -> str:
     run["completed_at"] = now_iso(now)
     run["counts"] = counts
     history = state.setdefault("runs", [])
-    history.append(deepcopy(run))
+    snapshot = deepcopy(run)
+    if history and history[-1].get("run_id") == run.get("run_id"):
+        history[-1] = snapshot
+    else:
+        history.append(snapshot)
     if len(history) > MAX_RUN_HISTORY:
         del history[:-MAX_RUN_HISTORY]
     return status
