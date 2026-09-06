@@ -87,13 +87,25 @@ def _norm(value: Any) -> str:
 def _rect(control: Any) -> tuple[int, int, int, int]:
     try:
         r = control.BoundingRectangle
-        left, top, right, bottom = int(r.left), int(r.top), int(r.right), int(r.bottom)
-        return left, top, right, bottom
+        return int(r.left), int(r.top), int(r.right), int(r.bottom)
     except Exception:
         return 0, 0, 0, 0
 
 
+def _runtime_id(control: Any) -> str:
+    try:
+        rid = control.GetRuntimeId()
+        if rid:
+            return ".".join(str(x) for x in rid)
+    except Exception:
+        pass
+    return ""
+
+
 def _signature(control: Any) -> str:
+    runtime = _runtime_id(control)
+    if runtime:
+        return "runtime:" + runtime
     left, top, right, bottom = _rect(control)
     return "|".join(
         [
@@ -148,6 +160,7 @@ class ChromeChatGPTDriver:
         self.generation_timeout = generation_timeout
         self.start_timeout = start_timeout
         self._chrome_window = None
+        self._coordinate_composer_point: tuple[int, int] | None = None
         pyautogui.FAILSAFE = True
 
     def chrome_binary(self) -> str:
@@ -187,7 +200,7 @@ class ChromeChatGPTDriver:
                 except Exception:
                     pass
                 self._chrome_window = window
-                time.sleep(0.8)
+                time.sleep(0.7)
                 return
             except Exception:
                 continue
@@ -214,16 +227,14 @@ class ChromeChatGPTDriver:
         else:
             raise RuntimeError("Google Chrome non è comparso entro 35 secondi.")
 
-        # Forza la destinazione senza usare la clipboard nel composer.
         pyautogui.hotkey("ctrl", "l")
         pyautogui.write(GPT_URL, interval=0.001)
         pyautogui.press("enter")
-        time.sleep(4)
-        self.wait_composer(timeout=60)
-        self.log("GPT pronto e composer rilevato")
+        time.sleep(5)
+        self.wait_composer(timeout=25)
+        self.log("GPT pronto e campo messaggio verificato")
 
     def _uia_window(self):
-        # Preferisce il vero HWND della finestra attiva, evitando altre finestre Chrome.
         window = self._chrome_window
         if window is not None:
             hwnd = getattr(window, "_hWnd", None)
@@ -268,25 +279,105 @@ class ChromeChatGPTDriver:
             return True
         name = record["name"]
         ctype = record["control_type"]
-        return any(token in name for token in PROMPT_NAMES) and any(
+        if any(token in name for token in PROMPT_NAMES) and any(
             token in ctype for token in ("edit", "document", "custom", "pane", "group")
-        )
+        ):
+            return True
+        # Chrome/ChatGPT a volte espone il composer senza nome. Accetta un editor
+        # sufficientemente grande nella parte bassa della finestra.
+        left, top, right, bottom = record["rect"]
+        width, height = right - left, bottom - top
+        if any(token in ctype for token in ("edit", "document")) and width >= 350 and height >= 35:
+            screen_h = pyautogui.size().height
+            if top >= int(screen_h * 0.62):
+                return True
+        return False
 
-    def find_composer(self, timeout: int = 25):
+    def find_composer(self, timeout: int = 8):
         deadline = time.time() + timeout
         while time.time() < deadline:
             self.activate_chrome()
             for record in self._records():
                 if self._is_composer_record(record):
                     return record["control"]
-            time.sleep(1)
+            time.sleep(0.8)
         return None
 
-    def wait_composer(self, timeout: int = 60):
-        composer = self.find_composer(timeout=timeout)
-        if composer is None:
-            raise RuntimeError("COMPOSER_TROVATO=FALSE: il GPT è aperto ma il campo messaggio non è identificabile.")
-        return composer
+    def _window_geometry(self) -> tuple[int, int, int, int]:
+        self.activate_chrome()
+        window = self._chrome_window
+        if window is not None:
+            try:
+                left = int(window.left)
+                top = int(window.top)
+                width = int(window.width)
+                height = int(window.height)
+                if width > 600 and height > 400:
+                    return left, top, width, height
+            except Exception:
+                pass
+        size = pyautogui.size()
+        return 0, 0, int(size.width), int(size.height)
+
+    def _candidate_composer_points(self) -> list[tuple[int, int]]:
+        left, top, width, height = self._window_geometry()
+        xs = (0.50, 0.46, 0.54)
+        ys = (0.90, 0.86, 0.82, 0.94)
+        points = []
+        for y_ratio in ys:
+            for x_ratio in xs:
+                points.append((left + int(width * x_ratio), top + int(height * y_ratio)))
+        return points
+
+    @staticmethod
+    def _clipboard_selected_text() -> str | None:
+        sentinel = "__F1_CLIPBOARD_SENTINEL__"
+        pyperclip.copy(sentinel)
+        pyautogui.hotkey("ctrl", "a")
+        pyautogui.hotkey("ctrl", "c")
+        time.sleep(0.25)
+        copied = _safe_text(pyperclip.paste())
+        return None if copied == sentinel else copied
+
+    def _probe_coordinate_composer(self) -> tuple[int, int] | None:
+        if self._coordinate_composer_point is not None:
+            return self._coordinate_composer_point
+        self.activate_chrome()
+        marker = "F1-COMPOSER-TEST-94731"
+        for point in self._candidate_composer_points():
+            try:
+                pyautogui.click(*point)
+                time.sleep(0.25)
+                pyautogui.hotkey("ctrl", "a")
+                pyautogui.press("backspace")
+                pyperclip.copy(marker)
+                pyautogui.hotkey("ctrl", "v")
+                time.sleep(0.35)
+                copied = self._clipboard_selected_text()
+                if _norm(copied) == _norm(marker):
+                    pyautogui.press("backspace")
+                    self._coordinate_composer_point = point
+                    self.log(f"Composer verificato con fallback coordinate: {point[0]},{point[1]}")
+                    return point
+                pyautogui.press("esc")
+            except Exception:
+                try:
+                    pyautogui.press("esc")
+                except Exception:
+                    pass
+        return None
+
+    def wait_composer(self, timeout: int = 25):
+        # Prima prova l'albero accessibile, ma non resta bloccato 60 secondi.
+        composer = self.find_composer(timeout=min(timeout, 8))
+        if composer is not None:
+            return composer
+        point = self._probe_coordinate_composer()
+        if point is not None:
+            return point
+        raise RuntimeError(
+            "COMPOSER_TROVATO=FALSE: né UI Automation né il fallback verificato sul box della chat riescono a identificare il campo messaggio."
+        )
 
     def _focused_is(self, expected: Any) -> bool:
         try:
@@ -299,14 +390,11 @@ class ChromeChatGPTDriver:
             fr = _rect(focused)
             if er != (0, 0, 0, 0) and fr == er:
                 return True
-            if _control_name(focused) == _control_name(expected) and _control_type(focused) == _control_type(expected):
-                return True
+            return _control_name(focused) == _control_name(expected) and _control_type(focused) == _control_type(expected)
         except Exception:
             return False
-        return False
 
     def _read_focused_text(self, composer: Any) -> str | None:
-        # Prima usa ValuePattern, se disponibile.
         try:
             pattern = composer.GetValuePattern()
             value = _safe_text(getattr(pattern, "Value", ""))
@@ -314,42 +402,53 @@ class ChromeChatGPTDriver:
                 return value
         except Exception:
             pass
-        # Fallback tastiera, ma solo dopo verifica esplicita del focus sul composer.
         if not self._focused_is(composer):
             return None
-        sentinel = "__F1_CLIPBOARD_SENTINEL__"
-        pyperclip.copy(sentinel)
-        pyautogui.hotkey("ctrl", "a")
-        pyautogui.hotkey("ctrl", "c")
-        time.sleep(0.25)
-        copied = _safe_text(pyperclip.paste())
+        copied = self._clipboard_selected_text()
         pyautogui.press("end")
-        return None if copied == sentinel else copied
+        return copied
 
-    def set_and_verify_prompt(self, prompt: str) -> str:
-        composer = self.wait_composer(timeout=35)
-        try:
-            composer.SetFocus()
-        except Exception as exc:
-            raise RuntimeError(f"Composer trovato ma SetFocus è fallito: {exc}") from exc
-        time.sleep(0.4)
-        if not self._focused_is(composer):
-            raise RuntimeError("Composer trovato ma il focus tastiera non è sul composer.")
-
-        # Ctrl+A/Backspace è consentito solo dopo la verifica del focus.
+    def _set_prompt_by_coordinate(self, prompt: str) -> str:
+        point = self._probe_coordinate_composer()
+        if point is None:
+            raise RuntimeError("Fallback coordinate: campo messaggio non verificabile.")
+        self.activate_chrome()
+        pyautogui.click(*point)
+        time.sleep(0.3)
         pyautogui.hotkey("ctrl", "a")
         pyautogui.press("backspace")
         pyperclip.copy(prompt)
         pyautogui.hotkey("ctrl", "v")
         time.sleep(0.5)
-
-        actual = self._read_focused_text(composer)
-        if actual is None:
-            raise RuntimeError("Non riesco a leggere il testo dal composer dopo l'inserimento.")
-        if re.sub(r"\s+", " ", actual).strip() != re.sub(r"\s+", " ", prompt).strip():
-            raise RuntimeError(f"TESTO_VERIFICATO=FALSE. Atteso: {prompt!r}. Presente: {actual!r}")
+        actual = self._clipboard_selected_text()
+        if _norm(actual) != _norm(prompt):
+            raise RuntimeError(f"TESTO_VERIFICATO=FALSE nel fallback coordinate. Atteso: {prompt!r}. Presente: {actual!r}")
         pyautogui.press("end")
-        self.log("Testo nel composer verificato")
+        self.log("Testo nel composer verificato con fallback coordinate")
+        return "coordinate-verified+clipboard"
+
+    def set_and_verify_prompt(self, prompt: str) -> str:
+        composer = self.find_composer(timeout=5)
+        if composer is None:
+            return self._set_prompt_by_coordinate(prompt)
+        try:
+            composer.SetFocus()
+        except Exception:
+            return self._set_prompt_by_coordinate(prompt)
+        time.sleep(0.35)
+        if not self._focused_is(composer):
+            return self._set_prompt_by_coordinate(prompt)
+        pyautogui.hotkey("ctrl", "a")
+        pyautogui.press("backspace")
+        pyperclip.copy(prompt)
+        pyautogui.hotkey("ctrl", "v")
+        time.sleep(0.5)
+        actual = self._read_focused_text(composer)
+        if _norm(actual) != _norm(prompt):
+            # Se la lettura UIA è inaffidabile, prova lo stesso box via coordinate.
+            return self._set_prompt_by_coordinate(prompt)
+        pyautogui.press("end")
+        self.log("Testo nel composer verificato tramite UI Automation")
         return "uia-focus+clipboard"
 
     @staticmethod
@@ -383,13 +482,28 @@ class ChromeChatGPTDriver:
         )
 
     def _page_contains_prompt(self, prompt: str) -> bool:
-        expected = re.sub(r"\s+", " ", prompt).strip().lower()
+        expected = _norm(prompt)
         names = "\n".join(r["name"] for r in self._records() if r["name"])
-        return expected in re.sub(r"\s+", " ", names).lower()
+        return expected in _norm(names)
+
+    def _coordinate_composer_text(self) -> str | None:
+        point = self._coordinate_composer_point
+        if point is None:
+            return None
+        try:
+            self.activate_chrome()
+            pyautogui.click(*point)
+            time.sleep(0.2)
+            copied = self._clipboard_selected_text()
+            pyautogui.press("end")
+            return copied
+        except Exception:
+            return None
 
     def send_and_verify(self, prompt: str) -> None:
         self.activate_chrome()
         pyautogui.press("enter")
+        time.sleep(0.8)
         deadline = time.time() + 25
         while time.time() < deadline:
             records = self._records()
@@ -409,12 +523,15 @@ class ChromeChatGPTDriver:
                         return
                 except Exception:
                     pass
-            time.sleep(1)
+            current = self._coordinate_composer_text()
+            if current is not None and not current.strip():
+                self.log("Invio verificato: composer coordinate svuotato")
+                return
+            time.sleep(0.8)
         raise RuntimeError("PROMPT_INVIATO non verificato entro 25 secondi.")
 
     def _error_text(self, records: list[dict[str, Any]]) -> str | None:
-        names = [r["name"] for r in records if r["name"]]
-        joined = "\n".join(names)
+        joined = "\n".join(r["name"] for r in records if r["name"])
         for token in ERROR_NAMES:
             if token in joined:
                 return token
@@ -425,33 +542,25 @@ class ChromeChatGPTDriver:
         overall_deadline = time.time() + self.generation_timeout
         started_at = 0.0
         last_scroll = 0.0
-
         while time.time() < overall_deadline:
             self.activate_chrome()
             if time.time() - last_scroll > 8:
                 pyautogui.press("end")
                 last_scroll = time.time()
                 time.sleep(0.4)
-
             records = self._records()
             error = self._error_text(records)
             if error:
                 raise RuntimeError(f"ChatGPT segnala un errore durante la generazione: {error}")
-
             generating = any(self._is_generating_record(r) for r in records)
             images = [r for r in records if self._is_image_record(r) and r["signature"] not in baseline.image_signatures]
             downloads = [r for r in records if self._is_download_record(r) and r["signature"] not in baseline.download_signatures]
-
             if generating and not started_at:
                 started_at = time.time()
                 self.log("Generazione iniziata")
-
-            # Un'immagine/download nuovo è prova sufficiente che la generazione è partita,
-            # anche se il controllo Stop è scomparso troppo rapidamente.
             if (images or downloads) and not started_at:
                 started_at = time.time()
                 self.log("Generazione iniziata: nuovo risultato immagine rilevato")
-
             if started_at and not generating and (images or downloads):
                 self.log("Generazione terminata e immagine rilevata")
                 return GenerationResult(
@@ -460,11 +569,9 @@ class ChromeChatGPTDriver:
                     started_at=started_at,
                     completed_at=time.time(),
                 )
-
             if not started_at and time.time() > start_deadline:
                 raise RuntimeError("GENERAZIONE_IN_CORSO non rilevata entro il timeout iniziale.")
             time.sleep(2.5)
-
         raise RuntimeError("Timeout: generazione immagine non completata entro il limite massimo.")
 
     def _downloads_dir(self) -> Path:
@@ -510,8 +617,6 @@ class ChromeChatGPTDriver:
 
     def save_image(self, result: GenerationResult, destination_without_ext: Path) -> tuple[Path, str]:
         destination_without_ext.parent.mkdir(parents=True, exist_ok=True)
-
-        # Strategia primaria: pulsante Download accessibile di ChatGPT.
         for control in reversed(result.download_controls):
             try:
                 try:
@@ -530,8 +635,6 @@ class ChromeChatGPTDriver:
                         return target, "download"
             except Exception as exc:
                 self.log(f"Download UI non riuscito, provo fallback: {exc}")
-
-        # Fallback: acquisizione dell'area dell'immagine realmente rilevata.
         control = result.image_control
         if control is None:
             raise RuntimeError("Immagine rilevata tramite UI ma nessun controllo immagine acquisibile è disponibile.")
@@ -553,11 +656,7 @@ class ChromeChatGPTDriver:
         return target, "screenshot"
 
     def open_new_tab(self, url: str) -> None:
-        subprocess.Popen(
-            [self.chrome_binary(), "--new-tab", url],
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL,
-        )
+        subprocess.Popen([self.chrome_binary(), "--new-tab", url], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
     def current_url(self) -> str | None:
         try:
@@ -583,7 +682,6 @@ class ChromeChatGPTDriver:
             pyautogui.screenshot().save(screenshot_path)
         except Exception:
             screenshot_path = Path("")
-
         tree_dir = self.diagnostic_root / "accessibility"
         tree_dir.mkdir(parents=True, exist_ok=True)
         tree_path = tree_dir / f"{stamp}-{safe_stage}-retry{retry_count}.json"
@@ -594,6 +692,7 @@ class ChromeChatGPTDriver:
             "retry_count": retry_count,
             "error": error,
             "url": self.current_url(),
+            "coordinate_composer_point": self._coordinate_composer_point,
             "controls": [],
         }
         try:
