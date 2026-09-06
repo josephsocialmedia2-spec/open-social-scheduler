@@ -2,11 +2,11 @@ name: F1 ChatGPT Query Nightly
 
 on:
   schedule:
-    - cron: '17 * * * *'
+    # 04:17 Europe/Rome: 02:17 UTC in summer, 03:17 UTC in winter.
+    # worker.py checks the Europe/Rome hour, so only the correct DST slot executes.
+    - cron: '17 2 * * *'
+    - cron: '17 3 * * *'
   workflow_dispatch:
-  push:
-    paths:
-      - '.f1-chatgpt-query-test-trigger'
 
 permissions:
   contents: write
@@ -31,11 +31,13 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Install Selenium
+      - name: Install runner dependencies
         shell: powershell
-        run: pip install -r publisher/chatgpt_query_runner/requirements.txt
+        run: |
+          pip install -r publisher/chatgpt_query_runner/requirements.txt
+          pip install -r publisher/manual_asset_inbox/requirements.txt
 
-      - name: Submit next query batch to ChatGPT
+      - name: Submit next query batch to F1 custom GPT
         shell: powershell
         env:
           F1_QUERY_BATCH_SIZE: '4'
@@ -43,8 +45,6 @@ jobs:
         run: |
           if ('${{ github.event_name }}' -eq 'schedule') {
             python publisher/chatgpt_query_runner/worker.py --scheduled
-          } elseif ('${{ github.event_name }}' -eq 'push') {
-            python publisher/chatgpt_query_runner/worker.py --batch-size 1
           } else {
             python publisher/chatgpt_query_runner/worker.py
           }
