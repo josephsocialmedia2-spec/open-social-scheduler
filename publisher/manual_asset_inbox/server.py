@@ -16,6 +16,7 @@ HERE = Path(__file__).resolve().parent
 ASSET_ROOT = ROOT / "publisher" / "final_assets" / "manual_inbox"
 QUEUE_PATH = ROOT / "publisher" / "final_content_queue.json"
 QUERY_FILE = ROOT / "publisher" / "github_graphics" / "queries.json"
+LAST_RUN_FILE = ROOT / "publisher" / "chatgpt_query_runner" / "last_run.json"
 GPT_URL = "https://chatgpt.com/g/g-6a9c210485488191b072eb694c2f114c-generatore-grafica-f1"
 ROME = ZoneInfo("Europe/Rome")
 
@@ -23,9 +24,7 @@ app = Flask(__name__)
 
 
 def run_git(*args: str, check: bool = True) -> subprocess.CompletedProcess:
-    return subprocess.run(
-        ["git", *args], cwd=ROOT, text=True, capture_output=True, check=check
-    )
+    return subprocess.run(["git", *args], cwd=ROOT, text=True, capture_output=True, check=check)
 
 
 def safe_slug(value: str) -> str:
@@ -92,9 +91,24 @@ def index():
     return send_from_directory(HERE, "index.html")
 
 
+@app.get("/ready")
+def ready():
+    return send_from_directory(HERE, "morning_notice.html")
+
+
 @app.get("/api/health")
 def api_health():
     return jsonify({"ok": True, "service": "f1-manual-asset-inbox"})
+
+
+@app.get("/api/run-status")
+def api_run_status():
+    if not LAST_RUN_FILE.exists():
+        return jsonify({"status": "NESSUNA_ESECUZIONE", "gpt_url": GPT_URL})
+    try:
+        return jsonify(json.loads(LAST_RUN_FILE.read_text(encoding="utf-8")))
+    except Exception as exc:
+        return jsonify({"status": "ERRORE_STATUS", "error": str(exc), "gpt_url": GPT_URL})
 
 
 @app.get("/api/queries")
@@ -120,7 +134,7 @@ def ingest():
 
     status = run_git("status", "--porcelain")
     if status.stdout.strip():
-        return jsonify({"ok": False, "error": "Repository locale con modifiche non salvate. Fai commit o ripristina prima di inviare."}), 409
+        return jsonify({"ok": False, "error": "Repository locale con modifiche non salvate. Attendi la chiusura del ciclo notturno o esegui il salvataggio Git."}), 409
     run_git("pull", "--rebase", "origin", "main")
 
     queue = load_queue()
