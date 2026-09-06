@@ -39,8 +39,7 @@ jobs:
           python -m py_compile publisher/manual_asset_inbox/server.py
 
       - name: Test F1 graphics state machine
-        run: |
-          python -m unittest discover -s publisher/chatgpt_query_runner/tests -v
+        run: python -m unittest discover -s publisher/chatgpt_query_runner/tests -v
 
       - name: Validate exact image prompts
         run: |
@@ -54,11 +53,11 @@ jobs:
           assert len(rows) >= 4, 'Expected at least 4 F1 queries'
           for row in rows:
               q = ' '.join(str(row['query']).split())
-              expected = f"Genera un'immagine ultrarealistica, cerchiamo {q}."
+              expected = f"Genera un'immagine ultrarealistica, usa i modelli che abbiamo caricato per cerchiamo {q}."
               actual = build_prompt(row['query'])
               assert actual == expected, (row.get('id'), actual, expected)
-              assert actual != q, 'Raw query would trigger a text/web search instead of image generation'
-          print('Exact F1 image prompt contract OK')
+              assert actual != q
+          print('Exact uploaded-model F1 image prompt contract OK')
           PY
 
       - name: Validate production queue
@@ -66,8 +65,7 @@ jobs:
           python - <<'PY'
           import json
           from pathlib import Path
-          p = Path('publisher/final_content_queue.json')
-          data = json.loads(p.read_text(encoding='utf-8'))
+          data = json.loads(Path('publisher/final_content_queue.json').read_text(encoding='utf-8'))
           assert data['pipeline'] == 'f1-final-assets'
           assert data['asset_policy'] == 'immutable-final-layout'
           assert data['brand'] == 'F1 Immobiliare'
@@ -103,7 +101,5 @@ jobs:
       - name: Deployment summary
         run: |
           echo 'F1 deployment validation completed successfully.'
+          echo 'Prompt contract: uploaded F1 models + search query.'
           echo 'Graphics flow: normal Chrome -> verified prompt -> verified image generation -> saved local image -> F1 collection -> human approval -> GitHub -> Buffer.'
-          echo 'No Selenium or dedicated Chrome profile is used by the F1 graphics worker.'
-          echo 'Repository: josephsocialmedia2-spec/open-social-scheduler'
-          echo 'Branch: main'
