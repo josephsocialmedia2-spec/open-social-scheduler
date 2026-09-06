@@ -1,68 +1,33 @@
-name: F1 ChatGPT Query Nightly
+name: F1 ChatGPT Query Manual Recovery
 
 on:
-  schedule:
-    # 04:17 Europe/Rome: 02:17 UTC in summer, 03:17 UTC in winter.
-    # worker.py checks the Europe/Rome hour, so only the correct DST slot executes.
-    - cron: '17 2 * * *'
-    - cron: '17 3 * * *'
   workflow_dispatch:
-  push:
-    paths:
-      - '.f1-chatgpt-query-test-trigger'
 
 permissions:
-  contents: write
-
-concurrency:
-  group: f1-chatgpt-query-nightly
-  cancel-in-progress: true
+  contents: read
 
 jobs:
-  submit-queries:
+  manual-recovery:
     runs-on: [self-hosted, Windows, X64]
     timeout-minutes: 90
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
 
-      - name: Install runner dependencies
+      - name: Install dependencies
         shell: powershell
         run: |
           pip install -r publisher/chatgpt_query_runner/requirements.txt
           pip install -r publisher/manual_asset_inbox/requirements.txt
 
-      - name: Submit next query batch to F1 custom GPT
+      - name: Run one recovery query
         shell: powershell
         env:
-          F1_QUERY_BATCH_SIZE: '4'
           F1_CHROME_PROFILE: ${{ vars.F1_CHROME_PROFILE }}
-        run: |
-          if ('${{ github.event_name }}' -eq 'schedule') {
-            python publisher/chatgpt_query_runner/worker.py --scheduled
-          } elseif ('${{ github.event_name }}' -eq 'push') {
-            python publisher/chatgpt_query_runner/worker.py --batch-size 1
-          } else {
-            python publisher/chatgpt_query_runner/worker.py
-          }
-
-      - name: Persist query state
-        if: always()
-        shell: powershell
-        run: |
-          if (-not (Test-Path 'publisher/chatgpt_query_runner/state.json')) { exit 0 }
-          git config user.name 'F1 ChatGPT Query Bot'
-          git config user.email 'actions@users.noreply.github.com'
-          git add publisher/chatgpt_query_runner/state.json
-          if (git diff --cached --quiet) { exit 0 }
-          git commit -m 'Update ChatGPT query runner state'
-          git pull --rebase origin main
-          git push origin main
+        run: python publisher/chatgpt_query_runner/worker.py --batch-size 1
