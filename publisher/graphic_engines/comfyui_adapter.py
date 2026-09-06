@@ -9,7 +9,7 @@ from typing import Any
 
 import requests
 
-from .base import GraphicResult
+from .base import GraphicResult, validate_final_asset
 
 
 class ComfyUIEngine:
@@ -27,13 +27,17 @@ class ComfyUIEngine:
         path = Path(self.workflow_path)
         if not path.exists():
             raise RuntimeError(f"ComfyUI workflow not found: {path}")
-        return json.loads(path.read_text(encoding="utf-8"))
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        if not isinstance(payload, dict) or not payload:
+            raise RuntimeError(f"Invalid ComfyUI API workflow: {path}")
+        return payload
 
     @staticmethod
     def _inject_prompt(workflow: dict[str, Any], spec: dict[str, Any]) -> dict[str, Any]:
         prompt = str(spec.get("prompt") or spec.get("headline") or "").strip()
         negative = str(spec.get("negative_prompt") or "").strip()
         seed = int(spec.get("seed") or 0)
+
         for node in workflow.values():
             if not isinstance(node, dict):
                 continue
@@ -42,19 +46,23 @@ class ComfyUIEngine:
                 continue
             title = str((node.get("_meta") or {}).get("title") or "").lower()
             class_type = str(node.get("class_type") or "").lower()
+
             if "positive" in title and "text" in inputs:
                 inputs["text"] = prompt
             elif "negative" in title and "text" in inputs:
                 inputs["text"] = negative
             elif "cliptextencode" in class_type and "text" in inputs and not inputs.get("text"):
                 inputs["text"] = prompt
+
             if seed and "seed" in inputs:
                 inputs["seed"] = seed
+
         return workflow
 
     def generate(self, spec: dict[str, Any], output_path: Path) -> GraphicResult:
         workflow = self._inject_prompt(self._load_workflow(), spec)
         client_id = str(uuid.uuid4())
+
         response = requests.post(
             f"{self.base_url}/prompt",
             json={"prompt": workflow, "client_id": client_id},
@@ -82,6 +90,7 @@ class ComfyUIEngine:
             if images:
                 image_info = images[0]
                 break
+
         if not image_info:
             raise RuntimeError("ComfyUI returned no image output")
 
@@ -92,11 +101,13 @@ class ComfyUIEngine:
         }
         image = requests.get(f"{self.base_url}/view", params=params, timeout=120)
         image.raise_for_status()
+
         output_path.parent.mkdir(parents=True, exist_ok=True)
         output_path.write_bytes(image.content)
+        asset_meta = validate_final_asset(output_path)
 
         return GraphicResult(
             engine=self.name,
             output_path=output_path,
-            metadata={"prompt_id": prompt_id, "source": image_info},
+            metadata={"prompt_id": prompt_id, "source": image_info, "asset": asset_meta},
         )
