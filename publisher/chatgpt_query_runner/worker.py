@@ -72,9 +72,31 @@ def chrome_binary() -> str:
     return "chrome.exe"
 
 
+def chrome_user_data_dir() -> Path:
+    override = os.getenv("F1_CHROME_USER_DATA_DIR", "").strip()
+    if override:
+        return Path(os.path.expandvars(override))
+    return Path(os.path.expandvars(r"%LocalAppData%\Google\Chrome\User Data"))
+
+
+def chrome_profile(user_data: Path) -> str:
+    override = os.getenv("F1_CHROME_PROFILE", "").strip()
+    if override:
+        return override
+    local_state = user_data / "Local State"
+    try:
+        payload = json.loads(local_state.read_text(encoding="utf-8"))
+        last_used = str((payload.get("profile") or {}).get("last_used") or "").strip()
+        if last_used and (user_data / last_used).exists():
+            return last_used
+    except Exception:
+        pass
+    return "Default"
+
+
 def make_driver() -> webdriver.Chrome:
-    user_data = Path(os.path.expandvars(r"%LocalAppData%\Google\Chrome\User Data"))
-    profile = os.getenv("F1_CHROME_PROFILE", "Default").strip() or "Default"
+    user_data = chrome_user_data_dir()
+    profile = chrome_profile(user_data)
 
     options = webdriver.ChromeOptions()
     options.binary_location = chrome_binary()
@@ -84,11 +106,13 @@ def make_driver() -> webdriver.Chrome:
     options.add_argument("--disable-notifications")
     options.add_experimental_option("detach", True)
     try:
-        return webdriver.Chrome(options=options)
+        driver = webdriver.Chrome(options=options)
+        write_last_run("RUNNING", chrome_profile=profile)
+        return driver
     except Exception as exc:
         raise RuntimeError(
-            "Chrome non può usare il profilo già aperto. Per l'automazione delle 23:00 lascia chiuso Chrome "
-            "oppure usa un profilo Chrome dedicato già autenticato impostando F1_CHROME_PROFILE."
+            f"Chrome non può usare il profilo '{profile}'. L'automazione usa automaticamente l'ultimo profilo Chrome attivo. "
+            "Se alle 23:00 lo stesso profilo è già aperto in un'altra finestra Chrome, chiudilo prima dell'orario oppure configura un profilo dedicato."
         ) from exc
 
 
@@ -159,15 +183,12 @@ def inbox_is_up() -> bool:
 def start_inbox_server() -> None:
     if inbox_is_up():
         return
-
     server = ROOT / "publisher" / "manual_asset_inbox" / "server.py"
     if not server.exists():
         return
-
     env = os.environ.copy()
     env.pop("RUNNER_TRACKING_ID", None)
     env["F1_INBOX_PORT"] = str(INBOX_PORT)
-
     kwargs: dict = {
         "cwd": ROOT,
         "env": env,
@@ -176,7 +197,6 @@ def start_inbox_server() -> None:
     }
     if os.name == "nt":
         kwargs["creationflags"] = subprocess.DETACHED_PROCESS | subprocess.CREATE_NEW_PROCESS_GROUP
-
     subprocess.Popen([sys.executable, str(server)], **kwargs)
     for _ in range(30):
         if inbox_is_up():
@@ -223,10 +243,7 @@ def run(batch_size: int) -> int:
         item = {"index": idx, "id": row.get("id"), "query": query}
         processed.append(item)
         state.setdefault("completed", []).append(
-            {
-                **item,
-                "submitted_at": datetime.now(ROME).isoformat(timespec="seconds"),
-            }
+            {**item, "submitted_at": datetime.now(ROME).isoformat(timespec="seconds")}
         )
         state["next_index"] = idx + 1
         save_state(state)
