@@ -3,69 +3,44 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>F1 — Grafiche pronte</title>
+  <title>F1 — Stato grafiche</title>
   <style>
-    *{box-sizing:border-box}
-    body{margin:0;background:#090c09;color:#fff;font-family:Arial,Helvetica,sans-serif;display:grid;place-items:center;min-height:100vh;padding:24px}
-    .box{width:min(940px,100%);padding:50px;border-radius:28px;background:#111611;border:1px solid #2d3a2b;text-align:center;box-shadow:0 24px 80px rgba(0,0,0,.42)}
-    .eyebrow{font-size:14px;font-weight:800;letter-spacing:.14em;color:#9fb99a;margin-bottom:12px}
-    h1{font-size:58px;margin:0 0 12px;color:#64C800;line-height:1}
-    .lead{font-size:25px;line-height:1.4;color:#fff;margin:0 auto;max-width:760px;font-weight:800}
-    .sub{font-size:17px;line-height:1.5;color:#cbd4c8;margin:12px auto 0;max-width:720px}
-    .status{margin:26px auto 0;padding:14px 18px;border-radius:14px;background:#182018;border:1px solid #2f4230;color:#dfe8dc;max-width:720px}
-    .status strong{color:#64C800}.status.error strong{color:#ff9b9b}
-    .primary{display:block;margin:30px auto 0;background:#64C800;color:#091009;text-decoration:none;font-size:25px;font-weight:900;padding:22px 28px;border-radius:16px;max-width:560px;box-shadow:0 12px 34px rgba(100,200,0,.18)}
-    .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:26px 0 0;text-align:left}
-    .step{background:#182018;border:1px solid #283428;border-radius:16px;padding:18px}
-    .step b{display:block;color:#64C800;font-size:18px;margin-bottom:7px}.step span{color:#dfe6dc;line-height:1.4}
-    .row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:18px}
-    .row a{padding:14px 20px;border-radius:12px;text-decoration:none;font-weight:800;min-width:210px}
-    .chat{background:#fff;color:#0A0D0A}.inbox{background:#243224;color:#fff;border:1px solid #3a4a39}
-    @media(max-width:700px){h1{font-size:40px}.lead{font-size:21px}.steps{grid-template-columns:1fr}.box{padding:28px}.primary{font-size:20px}}
+    *{box-sizing:border-box}body{margin:0;background:#090c09;color:#fff;font-family:Arial,Helvetica,sans-serif;display:grid;place-items:center;min-height:100vh;padding:24px}.box{width:min(940px,100%);padding:50px;border-radius:28px;background:#111611;border:1px solid #2d3a2b;text-align:center;box-shadow:0 24px 80px rgba(0,0,0,.42)}.eyebrow{font-size:14px;font-weight:800;letter-spacing:.14em;color:#9fb99a;margin-bottom:12px}h1{font-size:58px;margin:0 0 12px;color:#64C800;line-height:1}.lead{font-size:25px;line-height:1.4;color:#fff;margin:0 auto;max-width:760px;font-weight:800}.sub{font-size:17px;line-height:1.5;color:#cbd4c8;margin:12px auto 0;max-width:720px}.status{margin:26px auto 0;padding:16px 18px;border-radius:14px;background:#182018;border:1px solid #2f4230;color:#dfe8dc;max-width:760px;line-height:1.5}.status strong{color:#64C800}.status.error strong{color:#ff9b9b}.status.warn strong{color:#ffd572}.primary{display:block;margin:30px auto 0;background:#64C800;color:#091009;text-decoration:none;font-size:25px;font-weight:900;padding:22px 28px;border-radius:16px;max-width:560px}.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:26px 0 0;text-align:left}.step{background:#182018;border:1px solid #283428;border-radius:16px;padding:18px}.step b{display:block;color:#64C800;font-size:18px;margin-bottom:7px}.step span{color:#dfe6dc;line-height:1.4}.row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:18px}.row a{padding:14px 20px;border-radius:12px;text-decoration:none;font-weight:800;min-width:210px}.chat{background:#fff;color:#0A0D0A}.inbox{background:#243224;color:#fff;border:1px solid #3a4a39}@media(max-width:700px){h1{font-size:40px}.lead{font-size:21px}.steps{grid-template-columns:1fr}.box{padding:28px}.primary{font-size:20px}}
   </style>
 </head>
 <body>
-  <div class="box">
-    <div class="eyebrow">F1 IMMOBILIARE · PRODUZIONE AUTOMATICA ORE 23:00</div>
-    <h1>GRAFICHE PRONTE</h1>
-    <p class="lead">Scarica le immagini generate e caricale qui per mandarle in pubblicazione.</p>
-    <p class="sub">Il passaggio finale resta sotto il tuo controllo: controlli le immagini, le associ alle query e solo dopo le approvi per GitHub e la coda social.</p>
-
-    <div id="runStatus" class="status"><strong>Stato:</strong> controllo ultima esecuzione…</div>
-
-    <a class="primary" href="http://127.0.0.1:8877/">CARICA QUI LE GRAFICHE</a>
-
-    <div class="steps">
-      <div class="step"><b>1. SCARICA</b><span>Apri il Generatore Grafica F1 e scarica le immagini create durante la notte.</span></div>
-      <div class="step"><b>2. CARICA</b><span>Trascina tutte le immagini nella pagina Raccolta Grafiche.</span></div>
-      <div class="step"><b>3. APPROVA</b><span>Controlla query, orario e caption, poi invia a GitHub e pubblicazione.</span></div>
-    </div>
-
-    <div class="row">
-      <a class="chat" href="https://chatgpt.com/g/g-6a9c210485488191b072eb694c2f114c-generatore-grafica-f1" target="_blank">APRI GENERATORE F1</a>
-      <a class="inbox" href="http://127.0.0.1:8877/" target="_blank">APRI RACCOLTA GRAFICHE</a>
-    </div>
+<div class="box">
+  <div class="eyebrow">F1 IMMOBILIARE · PRODUZIONE AUTOMATICA ORE 23:00</div>
+  <h1 id="title">CONTROLLO GRAFICHE</h1>
+  <p class="lead" id="lead">Verifico l'esito dell'ultima produzione.</p>
+  <p class="sub">Una grafica viene dichiarata pronta solo dopo invio verificato, generazione completata, immagine rilevata e file salvato.</p>
+  <div id="runStatus" class="status"><strong>Stato:</strong> controllo ultima esecuzione…</div>
+  <a class="primary" href="http://127.0.0.1:8877/">APRI RACCOLTA F1</a>
+  <div class="steps">
+    <div class="step"><b>1. CONTROLLA</b><span>Apri la Raccolta: le immagini salvate automaticamente sono già visibili.</span></div>
+    <div class="step"><b>2. VERIFICA</b><span>Controlla grafica, query, caption e orario.</span></div>
+    <div class="step"><b>3. APPROVA</b><span>Solo dopo la tua conferma entrano in GitHub e nella coda READY.</span></div>
   </div>
+  <div class="row"><a class="chat" href="https://chatgpt.com/g/g-6a9c210485488191b072eb694c2f114c-generatore-grafica-f1" target="_blank">APRI GENERATORE F1</a><a class="inbox" href="http://127.0.0.1:8877/" target="_blank">APRI RACCOLTA GRAFICHE</a></div>
+</div>
 <script>
 async function refreshStatus(){
-  const box=document.getElementById('runStatus');
+  const box=document.getElementById('runStatus'),title=document.getElementById('title'),lead=document.getElementById('lead');
   try{
-    const r=await fetch('/api/run-status',{cache:'no-store'}); const d=await r.json();
-    const count=Number(d.processed_count||0);
+    const r=await fetch('/api/run-status',{cache:'no-store'}),d=await r.json(),c=d.counts||{};
+    const summary=`previste ${c.query_previste||0} · inviate ${c.query_inviate||0} · riuscite ${c.query_riuscite||0} · immagini salvate ${c.immagini_salvate||0}`;
     if(d.status==='GRAFICHE_PRONTE'){
-      box.className='status';
-      box.innerHTML=`<strong>ULTIMA ESECUZIONE OK</strong> · ${count} grafiche preparate · completata ${d.completed_at?new Date(d.completed_at).toLocaleString('it-IT'):''}`;
+      title.textContent='GRAFICHE PRONTE';lead.textContent='Le immagini sono state realmente generate e salvate. Apri la Raccolta F1 per approvarle.';box.className='status';box.innerHTML=`<strong>ULTIMA ESECUZIONE OK</strong><br>${summary}`;
+    }else if(d.status==='PARZIALE'){
+      title.textContent='PRODUZIONE PARZIALE';lead.textContent='Alcune grafiche sono pronte, altre no. Il sistema non le considera completate.';box.className='status warn';box.innerHTML=`<strong>PARZIALE</strong><br>${summary}<br>${d.error||''}`;
     }else if(d.status==='ERRORE'){
-      box.className='status error';
-      box.innerHTML=`<strong>ERRORE NELL'ESECUZIONE</strong> · ${String(d.error||'controllare il log del sistema')}`;
+      title.textContent='ERRORE PRODUZIONE';lead.textContent='La produzione non ha raggiunto i criteri di completamento.';box.className='status error';box.innerHTML=`<strong>ERRORE NELL'ESECUZIONE</strong><br>${summary}<br>${String(d.error||'controllare i log')}`;
     }else if(d.status==='RUNNING'){
-      box.className='status'; box.innerHTML='<strong>PRODUZIONE IN CORSO</strong> · il sistema sta ancora elaborando le query.';
-    }else{
-      box.className='status'; box.innerHTML=`<strong>STATO</strong> · ${String(d.status||'non disponibile')}`;
-    }
-  }catch(e){box.className='status error';box.innerHTML='<strong>INBOX NON RAGGIUNGIBILE</strong> · riavvia F1 Inbox dal collegamento sul desktop.'}
+      title.textContent='PRODUZIONE IN CORSO';lead.textContent='Il sistema sta elaborando le query.';box.className='status';box.innerHTML=`<strong>IN CORSO</strong><br>${summary}`;
+    }else{title.textContent='CONTROLLO GRAFICHE';lead.textContent='Nessuna produzione verificata disponibile.';box.className='status';box.innerHTML=`<strong>STATO</strong> · ${String(d.status||'non disponibile')}`}
+  }catch(e){box.className='status error';box.innerHTML='<strong>RACCOLTA NON RAGGIUNGIBILE</strong> · avvia F1 Raccolta Grafiche.'}
 }
-refreshStatus(); setInterval(refreshStatus,30000);
+refreshStatus();setInterval(refreshStatus,15000);
 </script>
 </body>
 </html>
