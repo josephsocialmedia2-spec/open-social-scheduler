@@ -143,18 +143,28 @@ def ensure_automation_profile() -> tuple[Path, str]:
     if dst_profile_dir.exists():
         shutil.rmtree(dst_profile_dir, ignore_errors=True)
 
-    shutil.copytree(
-        src_profile_dir,
-        dst_profile_dir,
-        ignore=_ignore_chrome_copy,
-        dirs_exist_ok=True,
-    )
+    copy_ok = True
+    copy_error = ""
+    try:
+        shutil.copytree(
+            src_profile_dir,
+            dst_profile_dir,
+            ignore=_ignore_chrome_copy,
+            dirs_exist_ok=True,
+        )
+    except Exception as exc:
+        copy_ok = False
+        copy_error = f"{type(exc).__name__}: {exc}"
+        shutil.rmtree(dst_profile_dir, ignore_errors=True)
+        dst_profile_dir.mkdir(parents=True, exist_ok=True)
 
     marker.write_text(
         json.dumps(
             {
                 "source_profile": src_profile,
                 "created_at": datetime.now(ROME).isoformat(timespec="seconds"),
+                "profile_copied": copy_ok,
+                "copy_error": copy_error,
             },
             ensure_ascii=False,
             indent=2,
@@ -308,7 +318,7 @@ def run(batch_size: int) -> int:
     driver.get("https://www.google.com/")
     time.sleep(2)
     driver.get(GPT_URL)
-    prompt_box(driver, timeout=90)
+    prompt_box(driver, timeout=600)
 
     processed: list[dict] = []
     for offset in range(batch_size):
