@@ -134,9 +134,28 @@ def _new_job(row: dict[str, Any], query_index: int, sequence: int) -> dict[str, 
     }
 
 
+def _archive_active_before_fresh_run(state: dict[str, Any], now: datetime | None = None) -> None:
+    active = state.get("active_run")
+    if not isinstance(active, dict) or not active.get("run_id"):
+        return
+    snapshot = deepcopy(active)
+    if snapshot.get("status") != "GRAFICHE_PRONTE":
+        snapshot["status"] = "ANNULLATO"
+        snapshot["completed_at"] = now_iso(now)
+        snapshot["error"] = "Batch sostituito da un nuovo avvio esplicito (--fresh-run); stato precedente preservato nello storico."
+    history = state.setdefault("runs", [])
+    if history and history[-1].get("run_id") == snapshot.get("run_id"):
+        history[-1] = snapshot
+    else:
+        history.append(snapshot)
+    if len(history) > MAX_RUN_HISTORY:
+        del history[:-MAX_RUN_HISTORY]
+
+
 def create_run(state: dict[str, Any], queries: list[dict[str, Any]], batch_size: int, now: datetime | None = None) -> dict[str, Any]:
     if not queries:
         raise ValueError("Nessuna query disponibile")
+    _archive_active_before_fresh_run(state, now=now)
     batch_size = max(1, int(batch_size))
     start = int(state.get("next_index", 0)) % len(queries)
     stamp = (now or datetime.now().astimezone()).strftime("%Y%m%dT%H%M%S")
