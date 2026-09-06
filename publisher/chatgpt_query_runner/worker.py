@@ -11,12 +11,8 @@ from datetime import datetime
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
-from selenium import webdriver
-from selenium.common.exceptions import TimeoutException
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.ui import WebDriverWait
+import pyautogui
+import pyperclip
 
 ROOT = Path(__file__).resolve().parents[2]
 QUERY_FILE = ROOT / "publisher" / "github_graphics" / "queries.json"
@@ -27,6 +23,7 @@ ROME = ZoneInfo("Europe/Rome")
 DEFAULT_BATCH_SIZE = int(os.getenv("F1_QUERY_BATCH_SIZE", "4"))
 INBOX_HOST = "127.0.0.1"
 INBOX_PORT = int(os.getenv("F1_INBOX_PORT", "8877"))
+GENERATION_WAIT = int(os.getenv("F1_GENERATION_WAIT_SECONDS", "150"))
 
 
 def write_last_run(status: str, **extra) -> None:
@@ -72,172 +69,6 @@ def chrome_binary() -> str:
     return "chrome.exe"
 
 
-def normal_chrome_user_data() -> Path:
-    return Path(os.path.expandvars(r"%LocalAppData%\Google\Chrome\User Data"))
-
-
-def normal_chrome_profile(user_data: Path) -> str:
-    override = os.getenv("F1_CHROME_PROFILE", "").strip()
-    if override:
-        return override
-
-    local_state = user_data / "Local State"
-    try:
-        payload = json.loads(local_state.read_text(encoding="utf-8"))
-        last_used = str((payload.get("profile") or {}).get("last_used") or "").strip()
-        if last_used and (user_data / last_used).exists():
-            return last_used
-    except Exception:
-        pass
-    return "Default"
-
-
-def normal_chrome_is_running() -> bool:
-    if os.name != "nt":
-        return False
-    try:
-        result = subprocess.run(
-            ["tasklist", "/FI", "IMAGENAME eq chrome.exe", "/NH"],
-            text=True,
-            capture_output=True,
-            timeout=10,
-            check=False,
-        )
-        return "chrome.exe" in (result.stdout or "").lower()
-    except Exception:
-        return False
-
-
-def wait_for_normal_chrome(max_wait_minutes: int) -> None:
-    if not normal_chrome_is_running():
-        return
-
-    if max_wait_minutes <= 0:
-        raise RuntimeError(
-            "Google Chrome normale è già aperto. Chiudi tutte le finestre Chrome e rilancia la prova. "
-            "F1 usa il tuo Chrome normale e il tuo profilo normale: non usa profili dedicati."
-        )
-
-    deadline = time.time() + (max_wait_minutes * 60)
-    write_last_run(
-        "ATTESA_CHROME",
-        message="Chrome normale è in uso. Attendo che venga chiuso senza forzarlo.",
-        wait_minutes=max_wait_minutes,
-    )
-    while time.time() < deadline:
-        if not normal_chrome_is_running():
-            return
-        time.sleep(30)
-
-    raise RuntimeError(
-        f"Chrome normale è rimasto aperto per oltre {max_wait_minutes} minuti. "
-        "Il sistema non lo chiude forzatamente per non perdere le schede."
-    )
-
-
-def make_driver() -> webdriver.Chrome:
-    user_data = normal_chrome_user_data()
-    profile = normal_chrome_profile(user_data)
-    profile_dir = user_data / profile
-
-    if not user_data.exists() or not profile_dir.exists():
-        raise RuntimeError(
-            f"Profilo Chrome normale non trovato: {profile_dir}. Apri Chrome almeno una volta con il tuo account."
-        )
-
-    options = webdriver.ChromeOptions()
-    options.binary_location = chrome_binary()
-    options.add_argument(f"--user-data-dir={user_data}")
-    options.add_argument(f"--profile-directory={profile}")
-    options.add_argument("--start-maximized")
-    options.add_argument("--disable-notifications")
-    options.add_argument("--no-first-run")
-    options.add_argument("--no-default-browser-check")
-    options.add_argument("--disable-blink-features=AutomationControlled")
-    options.add_experimental_option("excludeSwitches", ["enable-automation"])
-    options.add_experimental_option("useAutomationExtension", False)
-    options.add_experimental_option("detach", True)
-
-    try:
-        driver = webdriver.Chrome(options=options)
-        try:
-            driver.execute_cdp_cmd(
-                "Page.addScriptToEvaluateOnNewDocument",
-                {"source": "Object.defineProperty(navigator,'webdriver',{get:()=>undefined})"},
-            )
-        except Exception:
-            pass
-        write_last_run(
-            "RUNNING",
-            chrome_mode="NORMAL",
-            chrome_profile=profile,
-            chrome_user_data=str(user_data),
-        )
-        return driver
-    except Exception as exc:
-        raise RuntimeError(
-            "Non riesco ad aprire il Chrome normale con il profilo già autenticato. "
-            "Chiudi completamente Chrome e riprova. "
-            f"Profilo: {profile}. Errore tecnico: {type(exc).__name__}: {exc}"
-        ) from exc
-
-
-def prompt_box(driver: webdriver.Chrome, timeout: int = 90):
-    wait = WebDriverWait(driver, timeout)
-    selectors = [
-        (By.ID, "prompt-textarea"),
-        (By.CSS_SELECTOR, "textarea"),
-        (By.CSS_SELECTOR, "div[contenteditable='true']"),
-    ]
-    last = None
-    for by, selector in selectors:
-        try:
-            el = wait.until(EC.presence_of_element_located((by, selector)))
-            if el.is_displayed():
-                return el
-        except Exception as exc:
-            last = exc
-    raise RuntimeError(f"Casella prompt ChatGPT non trovata: {last}")
-
-
-def send_query(driver: webdriver.Chrome, query: str) -> None:
-    box = prompt_box(driver)
-    box.click()
-    try:
-        box.send_keys(Keys.CONTROL, "a")
-        box.send_keys(Keys.BACKSPACE)
-    except Exception:
-        pass
-    box.send_keys(query)
-    box.send_keys(Keys.ENTER)
-
-
-def wait_generation(driver: webdriver.Chrome, timeout: int = 900) -> None:
-    end = time.time() + timeout
-    saw_stop = False
-    stable_since = None
-    while time.time() < end:
-        buttons = driver.find_elements(
-            By.XPATH,
-            "//button[contains(translate(@aria-label,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),'stop') "
-            "or contains(translate(@aria-label,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),'interrompi')]",
-        )
-        visible = [b for b in buttons if b.is_displayed()]
-        if visible:
-            saw_stop = True
-            stable_since = None
-        elif saw_stop:
-            time.sleep(8)
-            return
-        else:
-            if stable_since is None:
-                stable_since = time.time()
-            elif time.time() - stable_since > 45:
-                return
-        time.sleep(3)
-    raise TimeoutException("La generazione non si è conclusa entro il timeout.")
-
-
 def inbox_is_up() -> bool:
     try:
         with socket.create_connection((INBOX_HOST, INBOX_PORT), timeout=1):
@@ -250,12 +81,9 @@ def start_inbox_server() -> None:
     if inbox_is_up():
         return
     server = ROOT / "publisher" / "manual_asset_inbox" / "server.py"
-    if not server.exists():
-        return
     env = os.environ.copy()
-    env.pop("RUNNER_TRACKING_ID", None)
     env["F1_INBOX_PORT"] = str(INBOX_PORT)
-    kwargs: dict = {
+    kwargs = {
         "cwd": ROOT,
         "env": env,
         "stdout": subprocess.DEVNULL,
@@ -268,34 +96,73 @@ def start_inbox_server() -> None:
         if inbox_is_up():
             return
         time.sleep(0.5)
+    raise RuntimeError(f"F1 Inbox non disponibile su porta {INBOX_PORT}")
 
 
-def open_morning_notice(driver: webdriver.Chrome) -> None:
+def activate_chrome() -> None:
+    if os.name != "nt":
+        return
+    cmd = (
+        "$ws=New-Object -ComObject WScript.Shell; "
+        "$ok=$ws.AppActivate('Google Chrome'); "
+        "if(-not $ok){$ok=$ws.AppActivate('Chrome')}; "
+        "if(-not $ok){exit 1}"
+    )
+    subprocess.run(["powershell.exe", "-NoProfile", "-Command", cmd], check=False,
+                   stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    time.sleep(1)
+
+
+def open_normal_chrome() -> None:
+    subprocess.Popen([chrome_binary(), GPT_URL], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    time.sleep(8)
+    activate_chrome()
+    pyautogui.hotkey("win", "up")
+    time.sleep(1)
+    pyautogui.hotkey("ctrl", "l")
+    pyperclip.copy(GPT_URL)
+    pyautogui.hotkey("ctrl", "v")
+    pyautogui.press("enter")
+    time.sleep(8)
+
+
+def focus_prompt() -> None:
+    width, height = pyautogui.size()
+    # Il box prompt di ChatGPT è stabilmente nella parte bassa centrale della finestra.
+    pyautogui.click(int(width * 0.50), int(height * 0.84))
+    time.sleep(1)
+
+
+def send_query(query: str) -> None:
+    activate_chrome()
+    focus_prompt()
+    pyperclip.copy(query)
+    pyautogui.hotkey("ctrl", "v")
+    time.sleep(0.5)
+    pyautogui.press("enter")
+
+
+def open_morning_notice() -> None:
+    activate_chrome()
+    pyautogui.hotkey("ctrl", "l")
+    pyperclip.copy(f"http://{INBOX_HOST}:{INBOX_PORT}/ready")
+    pyautogui.hotkey("ctrl", "v")
+    pyautogui.press("enter")
+
+
+def run(batch_size: int) -> int:
+    pyautogui.FAILSAFE = True
     start_inbox_server()
-    url = f"http://{INBOX_HOST}:{INBOX_PORT}/ready"
-    driver.execute_script("window.open(arguments[0], '_blank');", url)
-    time.sleep(2)
-    driver.switch_to.window(driver.window_handles[-1])
-
-
-def run(batch_size: int, chrome_wait_minutes: int = 0) -> int:
     queries = load_queries()
     state = load_state()
     start = int(state.get("next_index", 0))
     if start >= len(queries):
         start = 0
 
-    write_last_run("RUNNING", batch_size=batch_size, start_index=start, chrome_mode="NORMAL")
-    start_inbox_server()
-    wait_for_normal_chrome(chrome_wait_minutes)
+    write_last_run("RUNNING", batch_size=batch_size, start_index=start, browser_mode="normal-chrome-ui")
+    open_normal_chrome()
 
-    driver = make_driver()
-    driver.get("https://www.google.com/")
-    time.sleep(2)
-    driver.get(GPT_URL)
-    prompt_box(driver, timeout=120)
-
-    processed: list[dict] = []
+    processed = []
     for offset in range(batch_size):
         idx = start + offset
         if idx >= len(queries):
@@ -305,8 +172,7 @@ def run(batch_size: int, chrome_wait_minutes: int = 0) -> int:
         if not query:
             continue
 
-        send_query(driver, query)
-        wait_generation(driver)
+        send_query(query)
         item = {"index": idx, "id": row.get("id"), "query": query}
         processed.append(item)
         state.setdefault("completed", []).append(
@@ -314,24 +180,18 @@ def run(batch_size: int, chrome_wait_minutes: int = 0) -> int:
         )
         state["next_index"] = idx + 1
         save_state(state)
-        write_last_run(
-            "RUNNING",
-            chrome_mode="NORMAL",
-            processed=processed,
-            next_index=state.get("next_index"),
-        )
-        time.sleep(4)
+        write_last_run("RUNNING", processed=processed, next_index=state.get("next_index"), browser_mode="normal-chrome-ui")
+        time.sleep(GENERATION_WAIT)
 
     write_last_run(
         "GRAFICHE_PRONTE",
-        chrome_mode="NORMAL",
         processed=processed,
         processed_count=len(processed),
         next_index=state.get("next_index"),
         completed_at=datetime.now(ROME).isoformat(timespec="seconds"),
+        browser_mode="normal-chrome-ui",
     )
-    open_morning_notice(driver)
-    print(json.dumps(json.loads(LAST_RUN_FILE.read_text(encoding="utf-8")), ensure_ascii=False, indent=2))
+    open_morning_notice()
     return 0
 
 
@@ -339,7 +199,6 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--batch-size", type=int, default=DEFAULT_BATCH_SIZE)
     parser.add_argument("--scheduled", action="store_true")
-    parser.add_argument("--chrome-wait-minutes", type=int, default=0)
     args = parser.parse_args()
 
     if args.scheduled:
@@ -348,19 +207,18 @@ def main() -> int:
             print(f"NOOP: ora locale {now:%H:%M}, finestra automatica prevista alle 23:xx Europe/Rome")
             return 0
 
-    wait_minutes = args.chrome_wait_minutes
-    if args.scheduled and wait_minutes <= 0:
-        wait_minutes = 120
-
     try:
-        return run(max(1, args.batch_size), chrome_wait_minutes=max(0, wait_minutes))
+        return run(max(1, args.batch_size))
     except Exception as exc:
-        start_inbox_server()
+        try:
+            start_inbox_server()
+        except Exception:
+            pass
         write_last_run(
             "ERRORE",
-            chrome_mode="NORMAL",
             error=f"{type(exc).__name__}: {exc}",
             completed_at=datetime.now(ROME).isoformat(timespec="seconds"),
+            browser_mode="normal-chrome-ui",
         )
         raise
 
