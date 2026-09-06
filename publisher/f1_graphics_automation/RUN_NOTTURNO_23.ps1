@@ -68,7 +68,7 @@ try {
 }
 
 $depsOk = $true
-python -c "import selenium, flask, tzdata" 2>$null
+python -c "import pyautogui, pyperclip, pygetwindow, uiautomation, flask, tzdata" 2>$null
 if ($LASTEXITCODE -ne 0) { $depsOk = $false }
 if (-not $depsOk) {
     Write-Log 'Installazione dipendenze Python mancanti.'
