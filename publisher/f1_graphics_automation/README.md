@@ -1,66 +1,85 @@
 # F1 Grafiche automatiche ore 23:00
 
-## Obiettivo
-Ogni giorno alle 23:00 Windows avvia automaticamente il sistema grafico F1.
+## Flusso operativo
 
-Flusso operativo:
-
-1. Windows avvia `RUN_NOTTURNO_23.ps1`.
-2. Parte la Inbox locale su `http://127.0.0.1:8765/`.
-3. Viene aperto Google Chrome con l'ultimo profilo Chrome utilizzato, salvo override `F1_CHROME_PROFILE`.
-4. Chrome apre Google e poi il GPT:
+1. Doppio clic su `F1 GRAFICHE` oppure avvio automatico Windows alle 23:00.
+2. Viene utilizzato il normale Google Chrome dell'utente, senza profilo dedicato e senza Selenium.
+3. Si apre il GPT F1:
    `https://chatgpt.com/g/g-6a9c210485488191b072eb694c2f114c-generatore-grafica-f1`
-5. Le query di `publisher/github_graphics/queries.json` vengono inviate una alla volta.
-6. Il sistema aspetta la fine della generazione prima di inviare la query successiva.
-7. Il batch normale contiene 4 query.
-8. A fine ciclo viene aperta la schermata:
-   `http://127.0.0.1:8765/ready`
-9. La mattina l'operatore scarica le immagini dal GPT e le trascina nella pagina Raccolta Grafiche.
-10. Dopo approvazione esplicita, i file vengono salvati in GitHub e aggiunti a `publisher/final_content_queue.json` con stato `READY`.
+4. Le query arrivano da `publisher/github_graphics/queries.json`.
+5. Ogni query viene trasformata esclusivamente in:
+   `Genera un'immagine ultrarealistica, cerchiamo [QUERY].`
+6. Il composer viene identificato tramite Windows UI Automation/accessibility tree.
+7. Prima di usare Ctrl+A/Backspace viene verificato che il focus sia realmente nel composer.
+8. Il testo inserito viene riletto e confrontato con il prompt atteso.
+9. Dopo Enter viene verificato l'invio osservando la UI.
+10. La generazione viene monitorata; un semplice timeout non viene considerato successo.
+11. La query diventa `COMPLETED` solo dopo rilevamento e salvataggio di una nuova immagine.
+12. L'immagine viene salvata in `publisher/final_assets/chatgpt_generated/YYYYMMDD/`.
+13. La Raccolta F1 su `http://127.0.0.1:8877/` mostra automaticamente le immagini salvate.
+14. L'operatore controlla e approva; solo allora il file entra in GitHub e nella coda `READY`.
 
-## Installazione una volta sola
-Dalla cartella principale del repository eseguire:
+## Stato per query
+
+`QUERY_CARICATA → PROMPT_COSTRUITO → COMPOSER_TROVATO → TESTO_INSERITO → TESTO_VERIFICATO → PROMPT_INVIATO → INVIO_VERIFICATO → GENERAZIONE_IN_CORSO → GENERAZIONE_TERMINATA → IMMAGINE_RILEVATA → IMMAGINE_SALVATA → COMPLETED`
+
+`next_index` avanza esclusivamente dopo `COMPLETED` con `image_path` valido.
+
+## Stato finale batch
+
+`GRAFICHE_PRONTE` richiede che tutte le query previste siano `COMPLETED` e che tutte le immagini siano state salvate. In caso contrario lo stato è `PARZIALE` oppure `ERRORE`.
+
+## Installazione
+
+Dalla cartella principale del repository:
 
 `INSTALLA_F1_GRAFICHE_23.bat`
 
-L'installatore:
+L'installatore si eleva come amministratore, installa le dipendenze, registra e verifica:
 
-- installa Selenium e Flask;
-- registra `F1_Grafiche_23` in Utilità di pianificazione alle 23:00;
-- abilita `WakeToRun`;
-- abilita `StartWhenAvailable`;
-- registra `F1_Inbox_Logon` all'accesso Windows;
-- crea sul desktop `F1 - Raccolta Grafiche`;
-- crea sul desktop `F1 - Prova Automazione Grafiche`.
+- `F1_Grafiche_23` ogni giorno alle 23:00;
+- `F1_Inbox_Logon` all'accesso Windows;
+- `WakeToRun` e `StartWhenAvailable`;
+- comando PowerShell, working directory e trigger 23:00;
+- health check della Raccolta F1 sulla porta 8877;
+- collegamenti desktop.
 
-## Pagine locali
+## Collegamenti Desktop
 
-- Raccolta Grafiche: `http://127.0.0.1:8765/`
-- Schermata mattutina: `http://127.0.0.1:8765/ready`
-- Stato ultima esecuzione: `http://127.0.0.1:8765/api/run-status`
+- `F1 GRAFICHE` — produzione normale/recovery, 4 query.
+- `F1 - Prova 1 Query` — nuovo test end-to-end con una query.
+- `F1 - Prova 4 Query` — nuovo test end-to-end con quattro query.
+- `F1 - Raccolta Grafiche` — apre solo la Raccolta F1.
 
-## Test immediato
-Usare il collegamento desktop `F1 - Prova Automazione Grafiche` oppure eseguire:
+## Raccolta F1
 
-`publisher/f1_graphics_automation/PROVA_ORA.bat`
+- Raccolta: `http://127.0.0.1:8877/`
+- Stato mattutino: `http://127.0.0.1:8877/ready`
+- Health: `http://127.0.0.1:8877/api/health`
+- Stato ultima esecuzione: `http://127.0.0.1:8877/api/run-status`
+- Grafiche automatiche: `http://127.0.0.1:8877/api/generated`
 
-Il test invia una sola query.
+La porta 8765 non viene usata da F1.
 
-## Requisiti operativi
+## Retry e recovery
 
-- Windows deve avere una sessione utente aperta per consentire a Selenium di interagire con Chrome.
-- Il PC può essere in sospensione: l'attività pianificata usa `WakeToRun`.
-- Se il PC è spento alle 23:00, `StartWhenAvailable` consente il recupero quando il sistema torna disponibile.
-- Chrome deve essere autenticato a ChatGPT nel profilo utilizzato.
-- Il programma rileva automaticamente l'ultimo profilo Chrome utilizzato. È possibile forzarlo tramite variabile `F1_CHROME_PROFILE`.
-- Se lo stesso profilo Chrome è già aperto e viene bloccato da Chrome, Selenium può non riuscire ad avviarsi; in questo caso la schermata mattutina mostrerà `ERRORE`.
+Ogni query dispone di retry limitati. In caso di errore vengono salvati stato, errore, screenshot e accessibility tree. Un batch incompleto viene ripreso al successivo avvio normale; i vecchi record creati dalla precedente logica non verificata non vengono considerati completamenti attendibili.
 
-## Log
-I log locali vengono salvati in:
+## Percorsi locali
 
-`publisher/f1_graphics_automation/logs/`
+- Stato: `publisher/chatgpt_query_runner/state.json`
+- Ultima esecuzione: `publisher/chatgpt_query_runner/last_run.json`
+- Immagini automatiche: `publisher/final_assets/chatgpt_generated/YYYYMMDD/`
+- Log: `publisher/f1_graphics_automation/logs/`
+- Screenshot errori: `publisher/f1_graphics_automation/logs/screenshots/`
+- Accessibility diagnostics: `publisher/f1_graphics_automation/logs/accessibility/`
 
-Questa cartella è ignorata da Git.
+Questi dati di runtime sono ignorati da Git fino all'approvazione umana.
+
+## Vincoli reali
+
+L'automazione grafica richiede una sessione Windows interattiva perché controlla il normale Chrome dell'utente. `WakeToRun` può riattivare il PC dalla sospensione se Windows/hardware consentono i wake timer; non può eseguire Chrome se il computer è completamente spento. Il normale profilo Chrome deve essere già autenticato a ChatGPT.
 
 ## GitHub Actions
-Il precedente scheduling notturno GitHub è stato disattivato per evitare doppie partenze. Il workflow `F1 ChatGPT Query Manual Recovery` resta disponibile solo come recovery manuale sul runner Windows.
+
+`F1 Project Deploy Validation` esegue compilazione, unit test della state machine, verifica del formato prompt, coda e contratti dei launcher. Questi test non sostituiscono la prova end-to-end sul Chrome reale Windows.
