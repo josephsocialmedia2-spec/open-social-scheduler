@@ -28,13 +28,13 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r publisher/requirements.txt
-          pip install Pillow==11.3.0
 
       - name: Compile production pipeline
         run: |
           python -m py_compile publisher/final_asset_publisher.py
           python -m py_compile publisher/buffer_twice_daily.py
-          python -m py_compile publisher/github_graphics/generate_batch.py
+          python -m py_compile publisher/chatgpt_query_runner/worker.py
+          python -m py_compile publisher/manual_asset_inbox/server.py
 
       - name: Validate production queue
         run: |
@@ -50,7 +50,7 @@ jobs:
           print('Queue schema OK')
           PY
 
-      - name: Validate GitHub graphics source
+      - name: Validate query source and manual inbox
         run: |
           python - <<'PY'
           import json
@@ -59,13 +59,15 @@ jobs:
           assert q.exists(), 'publisher/github_graphics/queries.json missing'
           data = json.loads(q.read_text(encoding='utf-8'))
           assert isinstance(data.get('queries'), list) and data['queries'], 'queries list is empty'
-          print(f"GitHub graphics source OK: {len(data['queries'])} queries")
+          assert Path('publisher/manual_asset_inbox/index.html').exists(), 'manual inbox HTML missing'
+          assert Path('publisher/manual_asset_inbox/morning_notice.html').exists(), 'morning notice missing'
+          print(f"ChatGPT query source OK: {len(data['queries'])} queries")
           PY
 
       - name: Deployment summary
         run: |
           echo 'F1 deployment validation completed successfully.'
-          echo 'Graphics production mode: GitHub-native only.'
-          echo 'No external graphic-engine adapter is part of production.'
+          echo 'Graphics flow: queries -> ChatGPT browser -> manual download -> local inbox -> GitHub -> Buffer.'
+          echo 'No graphic rendering engine is used in production.'
           echo 'Repository: josephsocialmedia2-spec/open-social-scheduler'
           echo 'Branch: main'
