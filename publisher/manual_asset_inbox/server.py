@@ -16,6 +16,7 @@ HERE = Path(__file__).resolve().parent
 ASSET_ROOT = ROOT / "publisher" / "final_assets" / "manual_inbox"
 QUEUE_PATH = ROOT / "publisher" / "final_content_queue.json"
 QUERY_FILE = ROOT / "publisher" / "github_graphics" / "queries.json"
+GPT_URL = "https://chatgpt.com/g/g-6a9c210485488191b072eb694c2f114c-generatore-grafica-f1"
 ROME = ZoneInfo("Europe/Rome")
 
 app = Flask(__name__)
@@ -91,6 +92,11 @@ def index():
     return send_from_directory(HERE, "index.html")
 
 
+@app.get("/api/health")
+def api_health():
+    return jsonify({"ok": True, "service": "f1-manual-asset-inbox"})
+
+
 @app.get("/api/queries")
 def api_queries():
     if not QUERY_FILE.exists():
@@ -112,7 +118,6 @@ def ingest():
     if len(metadata) != len(files):
         return jsonify({"ok": False, "error": "Numero file e metadata non coincide"}), 400
 
-    # Update first, so queue edits are based on latest main.
     status = run_git("status", "--porcelain")
     if status.stdout.strip():
         return jsonify({"ok": False, "error": "Repository locale con modifiche non salvate. Fai commit o ripristina prima di inviare."}), 409
@@ -161,7 +166,8 @@ def ingest():
             "hashtags": [],
             "scheduled_at": scheduled_at,
             "status": "READY",
-            "source": "manual-chatgpt-download",
+            "source": "manual-f1-custom-gpt",
+            "generator_url": GPT_URL,
             "query_id": query_id,
             "query": query,
             "family": family,
