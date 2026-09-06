@@ -4,6 +4,7 @@ $Root = (Resolve-Path (Join-Path $PSScriptRoot '..\..')).Path
 $NightScript = Join-Path $PSScriptRoot 'RUN_NOTTURNO_23.ps1'
 $InboxScript = Join-Path $PSScriptRoot 'START_INBOX.ps1'
 $OpenBat = Join-Path $PSScriptRoot 'APRI_RACCOLTA_GRAFICHE.bat'
+$ManualBat = Join-Path $PSScriptRoot 'AVVIA_F1_GRAFICHE_ORA.bat'
 $TestBat = Join-Path $PSScriptRoot 'PROVA_ORA.bat'
 $User = [System.Security.Principal.WindowsIdentity]::GetCurrent().Name
 
@@ -21,8 +22,9 @@ if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
 Set-Location $Root
 Write-Host 'Installazione dipendenze Python...'
 python -m pip install -r publisher\chatgpt_query_runner\requirements.txt
+if ($LASTEXITCODE -ne 0) { throw 'Installazione dipendenze runner fallita.' }
 python -m pip install -r publisher\manual_asset_inbox\requirements.txt
-if ($LASTEXITCODE -ne 0) { throw 'Installazione dipendenze fallita.' }
+if ($LASTEXITCODE -ne 0) { throw 'Installazione dipendenze Inbox fallita.' }
 
 $PsExe = "$env:SystemRoot\System32\WindowsPowerShell\v1.0\powershell.exe"
 $NightArgs = "-NoProfile -ExecutionPolicy Bypass -File `"$NightScript`""
@@ -59,27 +61,41 @@ $InboxSettings = New-ScheduledTaskSettingsSet `
 
 Register-ScheduledTask `
     -TaskName 'F1_Inbox_Logon' `
-    -Description 'Mantiene disponibile la pagina locale F1 Raccolta Grafiche.' `
+    -Description 'Mantiene disponibile la pagina locale F1 Raccolta Grafiche sulla porta 8877.' `
     -Action $InboxAction `
     -Trigger $InboxTrigger `
     -Principal $Principal `
     -Settings $InboxSettings `
     -Force | Out-Null
 
-# Avvia subito la Inbox.
 & $InboxScript
+if ($LASTEXITCODE -ne 0) { throw 'F1 Inbox non avviata.' }
 
-# Collegamenti sul desktop.
 $Desktop = [Environment]::GetFolderPath('Desktop')
 $Shell = New-Object -ComObject WScript.Shell
 
-$Shortcut = $Shell.CreateShortcut((Join-Path $Desktop 'F1 - Raccolta Grafiche.lnk'))
-$Shortcut.TargetPath = $OpenBat
-$Shortcut.WorkingDirectory = $Root
-$Shortcut.Description = 'Apri F1 Raccolta Grafiche'
-$Shortcut.Save()
+# Elimina i vecchi collegamenti che potevano puntare solo alla Inbox.
+Remove-Item (Join-Path $Desktop 'F1 GRAFICHE.lnk') -Force -ErrorAction SilentlyContinue
+Remove-Item (Join-Path $Desktop 'F1 - Raccolta Grafiche.lnk') -Force -ErrorAction SilentlyContinue
+Remove-Item (Join-Path $Desktop 'F1 - Prova Automazione Grafiche.lnk') -Force -ErrorAction SilentlyContinue
 
-$TestShortcut = $Shell.CreateShortcut((Join-Path $Desktop 'F1 - Prova Automazione Grafiche.lnk'))
+# Icona principale: avvia davvero Chrome + GPT + 4 query.
+$MainShortcut = $Shell.CreateShortcut((Join-Path $Desktop 'F1 GRAFICHE.lnk'))
+$MainShortcut.TargetPath = $ManualBat
+$MainShortcut.WorkingDirectory = $Root
+$MainShortcut.Description = 'Avvia produzione F1: Chrome, GPT e 4 query'
+$MainShortcut.IconLocation = "$env:SystemRoot\System32\shell32.dll,167"
+$MainShortcut.Save()
+
+# Icona secondaria: solo caricamento immagini.
+$InboxShortcut = $Shell.CreateShortcut((Join-Path $Desktop 'F1 - Raccolta Grafiche.lnk'))
+$InboxShortcut.TargetPath = $OpenBat
+$InboxShortcut.WorkingDirectory = $Root
+$InboxShortcut.Description = 'Apri F1 Raccolta Grafiche'
+$InboxShortcut.Save()
+
+# Test singola query.
+$TestShortcut = $Shell.CreateShortcut((Join-Path $Desktop 'F1 - Prova 1 Query.lnk'))
 $TestShortcut.TargetPath = $TestBat
 $TestShortcut.WorkingDirectory = $Root
 $TestShortcut.Description = 'Esegue una query di prova immediata'
@@ -87,12 +103,12 @@ $TestShortcut.Save()
 
 Write-Host ''
 Write-Host 'INSTALLAZIONE COMPLETATA.' -ForegroundColor Green
-Write-Host 'Attività: F1_Grafiche_23 -> ogni giorno alle 23:00' -ForegroundColor White
-Write-Host 'Attività: F1_Inbox_Logon -> avvio della pagina locale a ogni accesso Windows' -ForegroundColor White
-Write-Host 'Pagina raccolta: http://127.0.0.1:8765/' -ForegroundColor Cyan
-Write-Host 'Schermata mattutina: http://127.0.0.1:8765/ready' -ForegroundColor Cyan
+Write-Host 'F1 GRAFICHE -> avvia subito Chrome + GPT + 4 query' -ForegroundColor White
+Write-Host 'F1 - Raccolta Grafiche -> apre solo la pagina di caricamento' -ForegroundColor White
+Write-Host 'F1_Grafiche_23 -> partenza automatica ogni giorno alle 23:00' -ForegroundColor White
+Write-Host 'Pagina raccolta: http://127.0.0.1:8877/' -ForegroundColor Cyan
+Write-Host 'Schermata mattutina: http://127.0.0.1:8877/ready' -ForegroundColor Cyan
 Write-Host ''
-Write-Host 'REQUISITO: Windows deve avere una sessione utente aperta. Il PC può essere in sospensione: WakeToRun è attivo.' -ForegroundColor Yellow
-Write-Host 'Per usare il profilo Chrome già autenticato, alle 23:00 Chrome non deve bloccare lo stesso profilo usato dall automazione.' -ForegroundColor Yellow
+Write-Host 'Per usare il profilo Chrome già autenticato, Chrome deve essere chiuso quando parte Selenium.' -ForegroundColor Yellow
 Write-Host ''
 Read-Host 'Premi INVIO per chiudere'
