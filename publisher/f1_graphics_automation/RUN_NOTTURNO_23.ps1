@@ -33,9 +33,12 @@ if (-not (Get-Command python -ErrorAction SilentlyContinue)) {
     throw 'Python non trovato nel PATH.'
 }
 
+$env:F1_QUERY_BATCH_SIZE = '4'
+$env:F1_INBOX_PORT = '8877'
+
 try {
     & $StartInbox
-    Write-Log 'Inbox locale disponibile su http://127.0.0.1:8765/.'
+    Write-Log 'Inbox locale disponibile su http://127.0.0.1:8877/.'
 } catch {
     Write-Log "ERRORE Inbox: $($_.Exception.Message)"
     throw
@@ -53,24 +56,21 @@ try {
 }
 
 $depsOk = $true
-python -c "import selenium, flask" 2>$null
+python -c "import selenium, flask, tzdata" 2>$null
 if ($LASTEXITCODE -ne 0) { $depsOk = $false }
 if (-not $depsOk) {
     Write-Log 'Installazione dipendenze Python mancanti.'
     python -m pip install -r publisher\chatgpt_query_runner\requirements.txt 2>&1 | ForEach-Object { Write-Log $_ }
-    if ($LASTEXITCODE -ne 0) { throw 'Installazione Selenium fallita.' }
+    if ($LASTEXITCODE -ne 0) { throw 'Installazione dipendenze runner fallita.' }
     python -m pip install -r publisher\manual_asset_inbox\requirements.txt 2>&1 | ForEach-Object { Write-Log $_ }
-    if ($LASTEXITCODE -ne 0) { throw 'Installazione Flask fallita.' }
+    if ($LASTEXITCODE -ne 0) { throw 'Installazione dipendenze Inbox fallita.' }
 }
 
-$env:F1_QUERY_BATCH_SIZE = '4'
-$env:F1_INBOX_PORT = '8765'
-
 if ($Test) {
-    Write-Log 'Modalità TEST: una sola query.'
+    Write-Log 'Modalita TEST: una sola query.'
     & python $Worker --batch-size 1 2>&1 | Write-NativeOutput
 } else {
-    Write-Log 'Modalità automatica 23:00: batch da quattro query.'
+    Write-Log 'Modalita automatica 23:00: batch da quattro query.'
     & python $Worker --scheduled --batch-size 4 2>&1 | Write-NativeOutput
 }
 $WorkerExit = $LASTEXITCODE
@@ -79,7 +79,7 @@ if ($WorkerExit -eq 0) {
     Write-Log 'Produzione completata. Schermata mattutina pronta.'
 } else {
     Write-Log "Produzione terminata con errore codice $WorkerExit."
-    Start-Process 'http://127.0.0.1:8765/ready'
+    Start-Process 'http://127.0.0.1:8877/ready'
     exit $WorkerExit
 }
 
