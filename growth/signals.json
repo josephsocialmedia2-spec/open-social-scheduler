@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-05T09:15:08+00:00",
+  "updated_at": "2026-09-06T09:36:20+00:00",
   "signals": [
     {
       "id": "FBS-64D8E3A2C4",
@@ -193,6 +193,102 @@
       "source_query": "site:facebook.com/groups \"Giaveno\" \"cerco casa\"",
       "status": "NEW",
       "discovered_at": "2026-09-05T09:10:52+00:00"
+    },
+    {
+      "id": "FBS-14A5C476B5",
+      "brand": "f1-immobiliare",
+      "territory": "Trana",
+      "group_url": "https://www.facebook.com/groups/961933100593974/",
+      "source_url": "https://www.facebook.com/groups/961933100593974/permalink/26505487152478551/",
+      "title": "Sei Di Trana Se ... | Vendesi casa indipendente coazze centro ...",
+      "snippet": "Vendesi casa indipendente coazze centro vicino alle scuole due camere servizi cortile giardino privato recintato telefono 3383762906 € 65000",
+      "source_query": "site:facebook.com/groups \"Trana\" \"vendesi casa\"",
+      "status": "NEW",
+      "discovered_at": "2026-09-06T09:29:08+00:00"
+    },
+    {
+      "id": "FBS-CA63992B4F",
+      "brand": "f1-immobiliare",
+      "territory": "Bruino",
+      "group_url": "https://www.facebook.com/groups/vendoecomproabruinoedintorni/",
+      "source_url": "https://www.facebook.com/groups/vendoecomproabruinoedintorni/posts/3638515566403432/",
+      "title": "...Vendo, compro a Bruino e dintorni... | Cerco urgentemente ...",
+      "snippet": "Cerco urgentemente garage/box / magazzino in Trana,Avigliana,Sangano,Bruino,Reano,grazie",
+      "source_query": "site:facebook.com/groups \"Bruino\" \"vendo compro\"",
+      "status": "NEW",
+      "discovered_at": "2026-09-06T09:29:18+00:00"
+    },
+    {
+      "id": "FBS-6D91640FAF",
+      "brand": "f1-immobiliare",
+      "territory": "Bruino",
+      "group_url": "https://www.facebook.com/groups/seidibruinose/",
+      "source_url": "https://www.facebook.com/groups/seidibruinose/posts/4455272068039823/",
+      "title": "Sei di Bruino se... | Buonasera,cerco in affitto mono ...",
+      "snippet": "Buonasera,cerco in affitto mono/bilocale per un ragazzo. Con contratto indetterminato. Grazie",
+      "source_query": "site:facebook.com/groups \"Bruino\" \"cerco affitto\"",
+      "status": "NEW",
+      "discovered_at": "2026-09-06T09:29:28+00:00"
+    },
+    {
+      "id": "FBS-80A983C261",
+      "brand": "f1-immobiliare",
+      "territory": "Rubiana",
+      "group_url": "https://www.facebook.com/groups/363225840487171/",
+      "source_url": "https://www.facebook.com/groups/363225840487171/posts/2332800246863044/",
+      "title": "Sei di Rubiana se... | Buonasera qualcuno ha da affittare una ...",
+      "snippet": "Buonasera qualcuno ha da affittare una casa a Rubiana per 2/3 giorni per capodanno 6/7 posti letto contattatemi in privato grazie mille",
+      "source_query": "site:facebook.com/groups \"Rubiana\" \"vendesi casa\"",
+      "status": "NEW",
+      "discovered_at": "2026-09-06T09:30:16+00:00"
+    },
+    {
+      "id": "FBS-BC52E9D88B",
+      "brand": "f1-immobiliare",
+      "territory": "Condove",
+      "group_url": "https://www.facebook.com/groups/comunedicondove/",
+      "source_url": "https://www.facebook.com/groups/comunedicondove/permalink/27941951625442744/",
+      "title": "Sei di Condove se... | Ciao a tutti! Sono un'insegnante ...",
+      "snippet": "Jul 20, 2026 · Ciao a tutti! Sono un'insegnante appena entrata di ruolo e lavorerò a Condove. Sto cercando un bilocale arredato in zona. Se qualcuno avesse notizie o conoscesse qualcuno che affitta, mi farebbe un...",
+      "source_query": "site:facebook.com/groups \"Condove\" \"sei di\"",
+      "status": "NEW",
+      "discovered_at": "2026-09-06T09:31:15+00:00"
+    },
+    {
+      "id": "FBS-477EF4EF35",
+      "brand": "f1-immobiliare",
+      "territory": "Condove",
+      "group_url": "https://www.facebook.com/groups/comunedicondove/",
+      "source_url": "https://www.facebook.com/groups/comunedicondove/permalink/27531474226490488/",
+      "title": "Sei di Condove se... | Facebook",
+      "snippet": "Cuccioli border collie nati il 15/5/2026 Condove Cercano casa con giardino per info 3920296322 Giulia Nurisso and 42 others 43",
+      "source_query": "site:facebook.com/groups \"Condove\" \"sei di\"",
+      "status": "NEW",
+      "discovered_at": "2026-09-06T09:31:15+00:00"
+    },
+    {
+      "id": "FBS-E0F698F1B4",
+      "brand": "f1-immobiliare",
+      "territory": "Condove",
+      "group_url": "https://www.facebook.com/groups/comunedicondove/",
+      "source_url": "https://www.facebook.com/groups/comunedicondove/posts/6785135698217644/",
+      "title": "Sei di Condove se... | Cerco in affitto box in condove.",
+      "snippet": "Cerco in affitto box in condove.",
+      "source_query": "site:facebook.com/groups \"Condove\" \"cerco affitto\"",
+      "status": "NEW",
+      "discovered_at": "2026-09-06T09:31:47+00:00"
+    },
+    {
+      "id": "FBS-A45A6E600E",
+      "brand": "f1-immobiliare",
+      "territory": "Condove",
+      "group_url": "https://www.facebook.com/groups/comunedicondove/",
+      "source_url": "https://www.facebook.com/groups/comunedicondove/posts/24601254992845774/",
+      "title": "Sei di Condove se... | Buongiorno, chiedo aiuto nella ricerca ...",
+      "snippet": "Buongiorno, chiedo aiuto nella ricerca di un appartamento per mia mamma in quanto vive già a Condove ma deve lasciare la casa in cui sta perché è stata messa in vendita.. abbiamo poco tempo...",
+      "source_query": "site:facebook.com/groups \"Condove\" \"vendesi casa\"",
+      "status": "NEW",
+      "discovered_at": "2026-09-06T09:32:01+00:00"
     }
   ]
 }
