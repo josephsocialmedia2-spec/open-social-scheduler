@@ -16,6 +16,11 @@ postiz-stack/windows/offline-backups/
 publisher/media/generated/
 publisher/reports/
 
+# F1 local graphics automation runtime state
+publisher/chatgpt_query_runner/state.json
+publisher/chatgpt_query_runner/last_run.json
+publisher/f1_graphics_automation/logs/
+
 # Python
 __pycache__/
 *.pyc
