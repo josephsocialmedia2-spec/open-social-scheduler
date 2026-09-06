@@ -16,7 +16,7 @@ permissions:
 
 concurrency:
   group: f1-chatgpt-query-nightly
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   submit-queries:
