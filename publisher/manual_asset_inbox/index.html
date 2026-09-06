@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>F1 Immobiliare — Raccolta Grafiche</title>
+  <style>
+    :root{--g:#4E9E15;--gb:#64C800;--d:#0A0D0A;--w:#fff;--m:#e9eee6;--t:#5a6257}
+    *{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f4f6f2;color:var(--d)}
+    header{background:var(--d);color:#fff;padding:22px 28px;display:flex;justify-content:space-between;align-items:center;gap:20px}
+    header b{font-size:24px} header span{color:var(--gb);font-weight:700}
+    main{max-width:1220px;margin:28px auto;padding:0 22px 60px}
+    .hero{display:grid;grid-template-columns:1.2fr .8fr;gap:20px;margin-bottom:22px}
+    .panel{background:#fff;border:1px solid #dfe5dc;border-radius:18px;padding:22px;box-shadow:0 8px 28px rgba(10,13,10,.05)}
+    h1{margin:0 0 8px;font-size:34px;line-height:1.05}h2{margin:0 0 14px;font-size:20px}.muted{color:var(--t)}
+    .notice{background:#eef8e8;border-left:5px solid var(--g);padding:14px 16px;border-radius:10px;font-weight:700}
+    .drop{border:2px dashed #9eb792;border-radius:18px;padding:32px;text-align:center;background:#fbfdf9;cursor:pointer;transition:.2s}
+    .drop.drag{border-color:var(--g);background:#eef8e8}.drop strong{font-size:22px;display:block;margin-bottom:8px}
+    input[type=file]{display:none}
+    .actions{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0}
+    button,a.btn{border:0;border-radius:12px;padding:13px 18px;font-weight:800;cursor:pointer;text-decoration:none;display:inline-block}
+    .primary{background:var(--g);color:#fff}.dark{background:var(--d);color:#fff}.light{background:#e7eee3;color:var(--d)}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-top:18px}
+    .card{background:#fff;border:1px solid #dfe5dc;border-radius:16px;overflow:hidden;box-shadow:0 6px 20px rgba(10,13,10,.05)}
+    .thumb{width:100%;aspect-ratio:4/5;object-fit:cover;background:#e8ece6}.card-body{padding:14px}.tag{display:inline-block;background:#edf6e8;color:#2f6c0a;padding:5px 9px;border-radius:999px;font-size:12px;font-weight:800;margin-bottom:8px}
+    label{display:block;font-size:12px;font-weight:800;margin:10px 0 5px;color:#3f463d}select,input[type=text],input[type=datetime-local],textarea{width:100%;border:1px solid #cfd8cb;border-radius:10px;padding:10px;font:inherit;background:#fff}
+    textarea{min-height:108px;resize:vertical}.small{font-size:12px;color:#6a7167}.status{padding:12px 14px;border-radius:10px;margin-top:14px;display:none;white-space:pre-wrap}.status.ok{display:block;background:#eaf7e3;color:#245c06}.status.err{display:block;background:#fdeaea;color:#8b1616}
+    .counter{font-weight:800;font-size:22px}.query-list{max-height:280px;overflow:auto;border:1px solid #e1e6df;border-radius:12px}.query-row{padding:10px 12px;border-bottom:1px solid #edf0eb}.query-row:last-child{border-bottom:0}.query-row b{display:block;font-size:13px}.query-row span{font-size:12px;color:#666}
+    @media(max-width:800px){.hero{grid-template-columns:1fr}h1{font-size:28px}}
+  </style>
+</head>
+<body>
+<header>
+  <b>F1 IMMOBILIARE <span>RACCOLTA GRAFICHE</span></b>
+  <div>ChatGPT → GitHub → Buffer → Social</div>
+</header>
+<main>
+  <section class="hero">
+    <div class="panel">
+      <h1>Scarica le immagini da ChatGPT e trascinale qui</h1>
+      <p class="muted">La pagina le associa alle query, controlla i duplicati e le invia al repository. Dopo il push vengono inserite nella coda <b>READY</b> per la pubblicazione.</p>
+      <div class="notice">MATTINA: scarica le grafiche dalla chat → trascinale qui → controlla l'ordine → premi “Invia a GitHub e pubblicazione”.</div>
+      <div class="actions">
+        <a class="btn dark" href="https://chatgpt.com/c/6a9af32f-d574-83ed-9232-2b4025e3893c" target="_blank">APRI CHAT GRAFICHE</a>
+        <button class="light" id="clearBtn">SVUOTA RACCOLTA</button>
+      </div>
+    </div>
+    <div class="panel">
+      <h2>Query disponibili</h2>
+      <div class="counter"><span id="queryCount">0</span> query</div>
+      <p class="small">Le immagini vengono abbinate in ordine alle query mostrate sotto. Puoi cambiare l'associazione su ogni scheda.</p>
+      <div id="queryList" class="query-list"></div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <label class="drop" id="dropZone" for="fileInput">
+      <strong>TRASCINA QUI LE GRAFICHE</strong>
+      PNG, JPG, JPEG o WEBP — puoi selezionarle tutte insieme
+    </label>
+    <input id="fileInput" type="file" accept="image/png,image/jpeg,image/webp" multiple />
+    <div class="actions">
+      <button class="primary" id="sendBtn">INVIA A GITHUB E PUBBLICAZIONE</button>
+      <button class="light" id="autoBtn">RIASSEGNA QUERY IN ORDINE</button>
+    </div>
+    <div id="status" class="status"></div>
+    <div id="cards" class="grid"></div>
+  </section>
+</main>
+<script>
+const filesState=[]; let queries=[];
+const $=id=>document.getElementById(id);
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]))}
+async function loadQueries(){
+  try{const r=await fetch('/api/queries'); const d=await r.json(); queries=d.queries||[];}catch(e){queries=[]}
+  $('queryCount').textContent=queries.length;
+  $('queryList').innerHTML=queries.map((q,i)=>`<div class="query-row"><b>${i+1}. ${esc(q.id||'')}</b><span>${esc(q.query||'')}</span></div>`).join('')||'<div class="query-row">Nessuna query caricata</div>';
+}
+function nextSchedule(){
+  const d=new Date(), m=new Date(d); const hh=d.getHours();
+  if(hh<10){m.setHours(10,30,0,0)} else if(hh<18){m.setHours(18,30,0,0)} else {m.setDate(m.getDate()+1);m.setHours(10,30,0,0)}
+  const off=m.getTimezoneOffset(); const local=new Date(m.getTime()-off*60000); return local.toISOString().slice(0,16);
+}
+function addFiles(list){
+  for(const f of list){if(!f.type.startsWith('image/'))continue; filesState.push({file:f,queryIndex:filesState.length<queries.length?filesState.length:0,caption:'',scheduled_at:nextSchedule()});}
+  render();
+}
+function render(){
+  $('cards').innerHTML=filesState.map((item,i)=>{
+    const q=queries[item.queryIndex]||{}; const url=URL.createObjectURL(item.file);
+    return `<article class="card"><img class="thumb" src="${url}" alt="preview"><div class="card-body"><span class="tag">GRAFICA ${i+1}</span><div class="small">${esc(item.file.name)} · ${(item.file.size/1024).toFixed(0)} KB</div>
+      <label>Query associata</label><select data-i="${i}" data-k="queryIndex">${queries.map((x,qi)=>`<option value="${qi}" ${qi===item.queryIndex?'selected':''}>${esc(x.id||'')} — ${esc(x.query||'')}</option>`).join('')}</select>
+      <label>Data/ora pubblicazione</label><input data-i="${i}" data-k="scheduled_at" type="datetime-local" value="${esc(item.scheduled_at)}">
+      <label>Caption <span class="small">(facoltativa: se vuota viene creata automaticamente)</span></label><textarea data-i="${i}" data-k="caption" placeholder="Lascia vuoto per caption automatica">${esc(item.caption)}</textarea>
+      <button class="light" data-remove="${i}" style="margin-top:10px;width:100%">RIMUOVI</button></div></article>`
+  }).join('');
+  document.querySelectorAll('[data-k]').forEach(el=>el.addEventListener('change',()=>{const i=+el.dataset.i,k=el.dataset.k;filesState[i][k]=k==='queryIndex'?+el.value:el.value;if(k==='queryIndex')render()}));
+  document.querySelectorAll('[data-remove]').forEach(el=>el.addEventListener('click',()=>{filesState.splice(+el.dataset.remove,1);render()}));
+}
+function autoAssign(){filesState.forEach((x,i)=>x.queryIndex=queries.length?i%queries.length:0);render()}
+async function send(){
+  const st=$('status'); st.className='status'; st.textContent='';
+  if(!filesState.length){st.className='status err';st.textContent='Carica almeno una grafica.';return}
+  const fd=new FormData(), meta=[];
+  filesState.forEach((item,i)=>{const q=queries[item.queryIndex]||{};fd.append('files',item.file,item.file.name);meta.push({query_id:q.id||'',query:q.query||item.file.name,family:q.family||'property',caption:item.caption||'',scheduled_at:item.scheduled_at?new Date(item.scheduled_at).toISOString():''})});
+  fd.append('metadata',JSON.stringify(meta)); $('sendBtn').disabled=true; $('sendBtn').textContent='INVIO IN CORSO…';
+  try{const r=await fetch('/api/ingest',{method:'POST',body:fd});const d=await r.json();if(!r.ok||!d.ok)throw new Error(d.error+(d.details?`\n${d.details}`:''));st.className='status ok';st.textContent=`OK — ${d.created.length} grafiche inviate a GitHub e messe in coda READY.`;filesState.length=0;render()}catch(e){st.className='status err';st.textContent=`ERRORE — ${e.message}`}
+  finally{$('sendBtn').disabled=false;$('sendBtn').textContent='INVIA A GITHUB E PUBBLICAZIONE'}
+}
+$('fileInput').addEventListener('change',e=>addFiles(e.target.files));
+['dragenter','dragover'].forEach(ev=>$('dropZone').addEventListener(ev,e=>{e.preventDefault();$('dropZone').classList.add('drag')}));
+['dragleave','drop'].forEach(ev=>$('dropZone').addEventListener(ev,e=>{e.preventDefault();$('dropZone').classList.remove('drag')}));
+$('dropZone').addEventListener('drop',e=>addFiles(e.dataTransfer.files));
+$('clearBtn').addEventListener('click',()=>{filesState.length=0;render()});$('autoBtn').addEventListener('click',autoAssign);$('sendBtn').addEventListener('click',send);
+loadQueries();
+</script>
+</body>
+</html>
