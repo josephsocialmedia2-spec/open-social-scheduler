@@ -1,63 +1,58 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import socket
 import subprocess
 import sys
 import time
-from collections import deque
+import urllib.request
 from datetime import datetime
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
-import pyautogui
-import pygetwindow as gw
-import pyperclip
-import uiautomation as auto
-
 ROOT = Path(__file__).resolve().parents[2]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from publisher.chatgpt_query_runner.core import (  # noqa: E402
+    advance_after_completed,
+    atomic_write_json,
+    build_prompt,
+    create_run,
+    deterministic_image_name,
+    finalize_run,
+    get_or_create_run,
+    load_state,
+    run_counts,
+    save_state,
+    transition,
+)
+from publisher.chatgpt_query_runner.ui_driver import ChromeChatGPTDriver, GPT_URL  # noqa: E402
+
 QUERY_FILE = ROOT / "publisher" / "github_graphics" / "queries.json"
 STATE_FILE = ROOT / "publisher" / "chatgpt_query_runner" / "state.json"
 LAST_RUN_FILE = ROOT / "publisher" / "chatgpt_query_runner" / "last_run.json"
-GPT_URL = "https://chatgpt.com/g/g-6a9c210485488191b072eb694c2f114c-generatore-grafica-f1"
+OUTPUT_ROOT = ROOT / "publisher" / "final_assets" / "chatgpt_generated"
+AUTOMATION_ROOT = ROOT / "publisher" / "f1_graphics_automation"
+LOG_ROOT = AUTOMATION_ROOT / "logs"
 ROME = ZoneInfo("Europe/Rome")
-DEFAULT_BATCH_SIZE = int(os.getenv("F1_QUERY_BATCH_SIZE", "4"))
 INBOX_HOST = "127.0.0.1"
 INBOX_PORT = int(os.getenv("F1_INBOX_PORT", "8877"))
-GENERATION_WAIT = int(os.getenv("F1_GENERATION_WAIT_SECONDS", "150"))
-PROMPT_NAMES = (
-    "message chatgpt",
-    "ask anything",
-    "chiedi qualsiasi cosa",
-    "invia un messaggio",
-    "scrivi un messaggio",
-    "messaggio chatgpt",
-)
+DEFAULT_BATCH_SIZE = int(os.getenv("F1_QUERY_BATCH_SIZE", "4"))
+MAX_ATTEMPTS = max(1, int(os.getenv("F1_MAX_ATTEMPTS", "3")))
+
+LOG_ROOT.mkdir(parents=True, exist_ok=True)
+RUN_LOG = LOG_ROOT / f"worker-{datetime.now(ROME):%Y%m%d-%H%M%S}.log"
 
 
-def write_last_run(status: str, **extra) -> None:
-    payload = {
-        "status": status,
-        "updated_at": datetime.now(ROME).isoformat(timespec="seconds"),
-        "gpt_url": GPT_URL,
-        "inbox_url": f"http://{INBOX_HOST}:{INBOX_PORT}/",
-        **extra,
-    }
-    LAST_RUN_FILE.parent.mkdir(parents=True, exist_ok=True)
-    LAST_RUN_FILE.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-
-
-def load_state() -> dict:
-    if STATE_FILE.exists():
-        return json.loads(STATE_FILE.read_text(encoding="utf-8"))
-    return {"next_index": 0, "completed": []}
-
-
-def save_state(state: dict) -> None:
-    STATE_FILE.parent.mkdir(parents=True, exist_ok=True)
-    STATE_FILE.write_text(json.dumps(state, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+def log(message: str) -> None:
+    line = f"[{datetime.now(ROME):%H:%M:%S}] {message}"
+    print(line, flush=True)
+    with RUN_LOG.open("a", encoding="utf-8") as handle:
+        handle.write(line + "\n")
 
 
 def load_queries() -> list[dict]:
@@ -68,19 +63,16 @@ def load_queries() -> list[dict]:
     return rows
 
 
-def chrome_binary() -> str:
-    candidates = [
-        os.path.expandvars(r"%ProgramFiles%\Google\Chrome\Application\chrome.exe"),
-        os.path.expandvars(r"%ProgramFiles(x86)%\Google\Chrome\Application\chrome.exe"),
-        os.path.expandvars(r"%LocalAppData%\Google\Chrome\Application\chrome.exe"),
-    ]
-    for candidate in candidates:
-        if candidate and Path(candidate).exists():
-            return candidate
-    return "chrome.exe"
+def _health_ok() -> bool:
+    try:
+        with urllib.request.urlopen(f"http://{INBOX_HOST}:{INBOX_PORT}/api/health", timeout=2) as response:
+            payload = json.loads(response.read().decode("utf-8"))
+        return bool(payload.get("ok")) and payload.get("service") == "f1-manual-asset-inbox"
+    except Exception:
+        return False
 
 
-def inbox_is_up() -> bool:
+def _port_open() -> bool:
     try:
         with socket.create_connection((INBOX_HOST, INBOX_PORT), timeout=1):
             return True
@@ -89,12 +81,17 @@ def inbox_is_up() -> bool:
 
 
 def start_inbox_server() -> None:
-    if inbox_is_up():
+    if _health_ok():
         return
+    if _port_open():
+        raise RuntimeError(f"Porta {INBOX_PORT} occupata da un servizio che non è F1 Raccolta Grafiche.")
     server = ROOT / "publisher" / "manual_asset_inbox" / "server.py"
+    if not server.exists():
+        raise RuntimeError(f"Server Raccolta F1 non trovato: {server}")
     env = os.environ.copy()
+    env.pop("RUNNER_TRACKING_ID", None)
     env["F1_INBOX_PORT"] = str(INBOX_PORT)
-    kwargs = {
+    kwargs: dict = {
         "cwd": ROOT,
         "env": env,
         "stdout": subprocess.DEVNULL,
@@ -103,308 +100,261 @@ def start_inbox_server() -> None:
     if os.name == "nt":
         kwargs["creationflags"] = subprocess.DETACHED_PROCESS | subprocess.CREATE_NEW_PROCESS_GROUP
     subprocess.Popen([sys.executable, str(server)], **kwargs)
-    for _ in range(30):
-        if inbox_is_up():
+    for _ in range(40):
+        if _health_ok():
             return
         time.sleep(0.5)
-    raise RuntimeError(f"F1 Inbox non disponibile su porta {INBOX_PORT}")
+    raise RuntimeError(f"F1 Raccolta Grafiche non disponibile su http://{INBOX_HOST}:{INBOX_PORT}/")
 
 
-def _chrome_windows():
-    windows = []
+def sha256_file(path: Path) -> str:
+    h = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def epoch_iso(value: float) -> str:
+    return datetime.fromtimestamp(value, ROME).isoformat(timespec="seconds")
+
+
+def relative_path(path: Path) -> str:
     try:
-        for window in gw.getAllWindows():
-            title = (window.title or "").lower()
-            if "chrome" in title:
-                windows.append(window)
+        return path.resolve().relative_to(ROOT.resolve()).as_posix()
     except Exception:
-        pass
-    return windows
+        return str(path)
 
 
-def activate_chrome() -> None:
-    activated = False
-    for window in reversed(_chrome_windows()):
-        try:
-            if window.isMinimized:
-                window.restore()
-            window.activate()
-            try:
-                window.maximize()
-            except Exception:
-                pass
-            activated = True
-            break
-        except Exception:
-            continue
-
-    if not activated and os.name == "nt":
-        cmd = (
-            "$ws=New-Object -ComObject WScript.Shell; "
-            "$ok=$ws.AppActivate('Google Chrome'); "
-            "if(-not $ok){$ok=$ws.AppActivate('Chrome')}; "
-            "if(-not $ok){exit 1}"
-        )
-        subprocess.run(
-            ["powershell.exe", "-NoProfile", "-Command", cmd],
-            check=False,
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL,
-        )
-    time.sleep(1)
+def last_run_payload(state: dict, run: dict, status: str | None = None, error: str | None = None) -> dict:
+    counts = run_counts(run)
+    return {
+        "status": status or run.get("status") or "RUNNING",
+        "updated_at": datetime.now(ROME).isoformat(timespec="seconds"),
+        "gpt_url": GPT_URL,
+        "inbox_url": f"http://{INBOX_HOST}:{INBOX_PORT}/",
+        "run_id": run.get("run_id"),
+        "batch_size": run.get("batch_size"),
+        "next_index": state.get("next_index", 0),
+        "counts": counts,
+        "processed_count": counts["query_riuscite"],
+        "jobs": run.get("jobs") or [],
+        "completed_at": run.get("completed_at"),
+        "error": error or run.get("error"),
+        "log_path": relative_path(RUN_LOG),
+        "browser_mode": "normal-chrome-accessibility-ui",
+    }
 
 
-def open_normal_chrome() -> None:
-    subprocess.Popen(
-        [chrome_binary(), "--force-renderer-accessibility", GPT_URL],
-        stdout=subprocess.DEVNULL,
-        stderr=subprocess.DEVNULL,
-    )
-    time.sleep(8)
-    activate_chrome()
-    pyautogui.hotkey("win", "up")
-    time.sleep(1)
-    pyautogui.hotkey("ctrl", "l")
-    pyperclip.copy(GPT_URL)
-    pyautogui.hotkey("ctrl", "v")
-    pyautogui.press("enter")
-    time.sleep(10)
+def persist(state: dict, run: dict, *, status: str | None = None, error: str | None = None) -> None:
+    save_state(STATE_FILE, state)
+    atomic_write_json(LAST_RUN_FILE, last_run_payload(state, run, status=status, error=error))
 
 
-def _find_chrome_uia_window():
-    root = auto.GetRootControl()
-    candidates = []
+def mark(state: dict, run: dict, job: dict, status: str, **fields) -> None:
+    transition(job, status, **fields)
+    persist(state, run)
+    log(f"Query {job['sequence']}/{run['batch_size']} [{job['query_id']}] -> {status}")
+
+
+def job_image_exists(job: dict) -> bool:
+    value = str(job.get("image_path") or "").strip()
+    if not value:
+        return False
+    path = Path(value)
+    if not path.is_absolute():
+        path = ROOT / path
     try:
-        for child in root.GetChildren():
-            try:
-                name = (child.Name or "").lower()
-                class_name = (child.ClassName or "").lower()
-                if "chrome_widgetwin" in class_name or "google chrome" in name:
-                    candidates.append(child)
-            except Exception:
-                continue
-    except Exception:
-        return None
-    return candidates[-1] if candidates else None
+        return path.is_file() and path.stat().st_size > 10_000
+    except OSError:
+        return False
 
 
-def _walk_controls(root, max_nodes: int = 5000, max_depth: int = 15):
-    queue = deque([(root, 0)])
-    seen = 0
-    while queue and seen < max_nodes:
-        control, depth = queue.popleft()
-        seen += 1
-        yield control
-        if depth >= max_depth:
-            continue
-        try:
-            children = control.GetChildren()
-        except Exception:
-            children = []
-        for child in children:
-            queue.append((child, depth + 1))
+def _output_stem(run: dict, job: dict) -> Path:
+    run_date = str(run.get("started_at") or datetime.now(ROME).isoformat())[:10].replace("-", "")
+    filename = deterministic_image_name(run_date, int(job["sequence"]), str(job["query"]), ".png")
+    return OUTPUT_ROOT / run_date / Path(filename).stem
 
 
-def _looks_like_prompt(control) -> bool:
-    try:
-        automation_id = (control.AutomationId or "").strip().lower()
-    except Exception:
-        automation_id = ""
-    try:
-        name = (control.Name or "").strip().lower()
-    except Exception:
-        name = ""
-    try:
-        control_type = (control.ControlTypeName or "").strip().lower()
-    except Exception:
-        control_type = ""
-
-    if automation_id == "prompt-textarea":
+def process_job(driver: ChromeChatGPTDriver, state: dict, run: dict, job: dict, total_queries: int) -> bool:
+    if job.get("status") == "COMPLETED" and job_image_exists(job):
+        log(f"Query {job['sequence']}/{run['batch_size']} già COMPLETED con immagine valida: skip")
         return True
-    if any(token in name for token in PROMPT_NAMES):
-        return any(kind in control_type for kind in ("edit", "document", "pane", "group", "custom"))
-    return False
+    if job.get("status") == "COMPLETED" and not job_image_exists(job):
+        mark(state, run, job, "ERRORE", error="Stato COMPLETED trovato ma image_path manca o non è valido.")
 
+    prompt = build_prompt(str(job.get("query") or ""))
+    job["prompt"] = prompt
+    persist(state, run)
 
-def _uia_prompt(timeout: int = 25):
-    deadline = time.time() + timeout
-    while time.time() < deadline:
-        window = _find_chrome_uia_window()
-        if window is not None:
-            for control in _walk_controls(window):
-                if _looks_like_prompt(control):
-                    return control
-        time.sleep(1)
-    return None
+    initial_retry = int(job.get("retry_count") or 0)
+    for attempt in range(initial_retry + 1, MAX_ATTEMPTS + 1):
+        stage = "QUERY_CARICATA"
+        try:
+            if attempt > 1 or job.get("status") in {"ERRORE", "RETRY"}:
+                mark(state, run, job, "RETRY", retry_count=attempt - 1, error=None)
+                driver.open_gpt()
 
+            log(f"Query {job['sequence']}/{run['batch_size']} caricata: {job['query']}")
+            mark(state, run, job, "QUERY_CARICATA", retry_count=attempt - 1, error=None)
+            stage = "PROMPT_COSTRUITO"
+            mark(state, run, job, "PROMPT_COSTRUITO", prompt=prompt)
+            log(f"Prompt: {prompt}")
 
-def _verify_focused_textbox_with_probe() -> bool:
-    probe = "__F1_PROMPT_FOCUS_TEST_7A91__"
-    sentinel = "__F1_CLIPBOARD_SENTINEL__"
-    try:
-        pyautogui.hotkey("ctrl", "a")
-        pyautogui.press("backspace")
-        pyperclip.copy(probe)
-        pyautogui.hotkey("ctrl", "v")
-        time.sleep(0.4)
+            baseline = driver.snapshot()
 
-        pyperclip.copy(sentinel)
-        pyautogui.hotkey("ctrl", "a")
-        pyautogui.hotkey("ctrl", "c")
-        time.sleep(0.3)
-        copied = pyperclip.paste()
+            stage = "COMPOSER_TROVATO"
+            driver.wait_composer(timeout=40)
+            mark(state, run, job, "COMPOSER_TROVATO")
 
-        if copied == probe:
-            pyautogui.press("backspace")
+            stage = "TESTO_INSERITO"
+            focus_method = driver.set_and_verify_prompt(prompt)
+            mark(state, run, job, "TESTO_INSERITO", focus_method=focus_method)
+            stage = "TESTO_VERIFICATO"
+            mark(state, run, job, "TESTO_VERIFICATO", focus_method=focus_method)
+
+            stage = "PROMPT_INVIATO"
+            submitted_at = datetime.now(ROME).isoformat(timespec="seconds")
+            driver.send_and_verify(prompt)
+            mark(state, run, job, "PROMPT_INVIATO", submitted_at=submitted_at)
+            stage = "INVIO_VERIFICATO"
+            mark(state, run, job, "INVIO_VERIFICATO", submitted_at=submitted_at)
+
+            stage = "GENERAZIONE_IN_CORSO"
+            result = driver.wait_generation(baseline)
+            mark(
+                state,
+                run,
+                job,
+                "GENERAZIONE_IN_CORSO",
+                generation_started_at=epoch_iso(result.started_at),
+            )
+            stage = "GENERAZIONE_TERMINATA"
+            mark(
+                state,
+                run,
+                job,
+                "GENERAZIONE_TERMINATA",
+                generation_completed_at=epoch_iso(result.completed_at),
+            )
+            stage = "IMMAGINE_RILEVATA"
+            mark(state, run, job, "IMMAGINE_RILEVATA")
+
+            stage = "IMMAGINE_SALVATA"
+            saved_path, capture_mode = driver.save_image(result, _output_stem(run, job))
+            digest = sha256_file(saved_path)
+            mark(
+                state,
+                run,
+                job,
+                "IMMAGINE_SALVATA",
+                image_path=relative_path(saved_path),
+                image_sha256=digest,
+                capture_mode=capture_mode,
+            )
+
+            stage = "COMPLETED"
+            mark(state, run, job, "COMPLETED", error=None)
+            advance_after_completed(state, job, total_queries)
+            persist(state, run)
+            log(f"Query {job['sequence']} COMPLETED: {relative_path(saved_path)}")
             return True
 
-        pyautogui.press("backspace")
-    except Exception:
-        pass
+        except Exception as exc:
+            error = f"{type(exc).__name__}: {exc}"
+            diagnostics = {}
+            try:
+                diagnostics = driver.save_diagnostics(
+                    stage=stage,
+                    query=str(job.get("query") or ""),
+                    retry_count=attempt,
+                    error=error,
+                )
+            except Exception as diag_exc:
+                diagnostics = {"diagnostic_error": str(diag_exc)}
+            mark(
+                state,
+                run,
+                job,
+                "ERRORE",
+                retry_count=attempt,
+                error=error,
+                diagnostics=diagnostics,
+            )
+            log(f"ERRORE query {job['sequence']} tentativo {attempt}/{MAX_ATTEMPTS}: {error}")
+            if attempt >= MAX_ATTEMPTS:
+                return False
+            time.sleep(min(5 * attempt, 15))
     return False
 
 
-def focus_prompt() -> str:
-    activate_chrome()
-
-    control = _uia_prompt(timeout=20)
-    if control is not None:
-        try:
-            control.SetFocus()
-            time.sleep(0.5)
-            if _verify_focused_textbox_with_probe():
-                return "uia"
-        except Exception:
-            pass
-
-    width, height = pyautogui.size()
-    points = [
-        (int(width * 0.50), max(50, height - 130)),
-        (int(width * 0.50), max(50, height - 165)),
-        (int(width * 0.50), int(height * 0.88)),
-        (int(width * 0.50), int(height * 0.82)),
-        (int(width * 0.58), max(50, height - 130)),
-        (int(width * 0.42), max(50, height - 130)),
-    ]
-    for x, y in points:
-        activate_chrome()
-        pyautogui.click(x, y)
-        time.sleep(0.5)
-        if _verify_focused_textbox_with_probe():
-            return f"verified-click:{x},{y}"
-
-    raise RuntimeError(
-        "La chat F1 è aperta ma non riesco a mettere il cursore nel campo del messaggio. "
-        "La query NON è stata segnata come eseguita."
-    )
-
-
-def send_query(query: str) -> str:
-    focus_method = focus_prompt()
-
-    pyperclip.copy(query)
-    pyautogui.hotkey("ctrl", "v")
-    time.sleep(0.5)
-
-    sentinel = "__F1_QUERY_VERIFY_SENTINEL__"
-    pyperclip.copy(sentinel)
-    pyautogui.hotkey("ctrl", "a")
-    pyautogui.hotkey("ctrl", "c")
-    time.sleep(0.3)
-    copied = pyperclip.paste()
-
-    if copied.strip() != query.strip():
-        pyautogui.press("esc")
-        raise RuntimeError(
-            "Il campo ChatGPT è stato individuato, ma la query non risulta incollata correttamente. "
-            "Invio annullato."
-        )
-
-    pyautogui.press("right")
-    time.sleep(0.2)
-    pyautogui.press("enter")
-    return focus_method
-
-
-def open_morning_notice() -> None:
-    activate_chrome()
-    pyautogui.hotkey("ctrl", "l")
-    pyperclip.copy(f"http://{INBOX_HOST}:{INBOX_PORT}/ready")
-    pyautogui.hotkey("ctrl", "v")
-    pyautogui.press("enter")
-
-
-def run(batch_size: int) -> int:
-    pyautogui.FAILSAFE = True
+def run(batch_size: int, *, fresh_run: bool = False) -> int:
     start_inbox_server()
     queries = load_queries()
-    state = load_state()
-    start = int(state.get("next_index", 0))
-    if start >= len(queries):
-        start = 0
+    state = load_state(STATE_FILE)
+    if fresh_run:
+        run = create_run(state, queries, batch_size)
+    else:
+        run = get_or_create_run(state, queries, batch_size)
+    run["status"] = "RUNNING"
+    run["completed_at"] = None
+    persist(state, run, status="RUNNING")
 
-    write_last_run("RUNNING", batch_size=batch_size, start_index=start, browser_mode="normal-chrome-ui-verified")
-    open_normal_chrome()
+    log(f"RUN START {run['run_id']} - batch {run['batch_size']}")
+    driver = ChromeChatGPTDriver(log=log, diagnostic_root=LOG_ROOT)
+    try:
+        driver.open_gpt()
+    except Exception as exc:
+        run["error"] = f"{type(exc).__name__}: {exc}"
+        final_status = finalize_run(state)
+        persist(state, run, status=final_status, error=run["error"])
+        try:
+            driver.save_diagnostics(stage="APERTURA_GPT", query="", retry_count=0, error=run["error"])
+        except Exception:
+            pass
+        raise
 
-    processed = []
-    for offset in range(batch_size):
-        idx = start + offset
-        if idx >= len(queries):
-            break
-        row = queries[idx]
-        query = str(row.get("query") or "").strip()
-        if not query:
-            continue
+    success = 0
+    for job in run.get("jobs") or []:
+        if process_job(driver, state, run, job, len(queries)):
+            success += 1
 
-        focus_method = send_query(query)
-        item = {"index": idx, "id": row.get("id"), "query": query, "focus_method": focus_method}
-        processed.append(item)
-        state.setdefault("completed", []).append(
-            {**item, "submitted_at": datetime.now(ROME).isoformat(timespec="seconds")}
-        )
-        state["next_index"] = idx + 1
-        save_state(state)
-        write_last_run("RUNNING", processed=processed, next_index=state.get("next_index"), browser_mode="normal-chrome-ui-verified")
-        time.sleep(GENERATION_WAIT)
-
-    write_last_run(
-        "GRAFICHE_PRONTE",
-        processed=processed,
-        processed_count=len(processed),
-        next_index=state.get("next_index"),
-        completed_at=datetime.now(ROME).isoformat(timespec="seconds"),
-        browser_mode="normal-chrome-ui-verified",
+    final_status = finalize_run(state)
+    persist(state, run, status=final_status)
+    counts = run_counts(run)
+    log(
+        "RUN END "
+        f"status={final_status} previste={counts['query_previste']} "
+        f"riuscite={counts['query_riuscite']} immagini_salvate={counts['immagini_salvate']}"
     )
-    open_morning_notice()
-    return 0
+
+    # Raccolta e chat restano separate: apre la schermata mattutina in una nuova scheda.
+    try:
+        driver.open_new_tab(f"http://{INBOX_HOST}:{INBOX_PORT}/ready")
+    except Exception as exc:
+        log(f"Impossibile aprire automaticamente la schermata mattutina: {exc}")
+
+    return 0 if final_status == "GRAFICHE_PRONTE" else 2
 
 
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--batch-size", type=int, default=DEFAULT_BATCH_SIZE)
     parser.add_argument("--scheduled", action="store_true")
+    parser.add_argument("--fresh-run", action="store_true", help="Avvia un nuovo batch senza riprendere quello precedente")
     args = parser.parse_args()
 
     if args.scheduled:
         now = datetime.now(ROME)
         if now.hour != 23:
-            print(f"NOOP: ora locale {now:%H:%M}, finestra automatica prevista alle 23:xx Europe/Rome")
+            print(f"NOOP: ora locale {now:%H:%M}; esecuzione automatica ammessa alle 23:xx Europe/Rome")
             return 0
 
     try:
-        return run(max(1, args.batch_size))
+        return run(max(1, args.batch_size), fresh_run=args.fresh_run)
     except Exception as exc:
-        try:
-            start_inbox_server()
-        except Exception:
-            pass
-        write_last_run(
-            "ERRORE",
-            error=f"{type(exc).__name__}: {exc}",
-            completed_at=datetime.now(ROME).isoformat(timespec="seconds"),
-            browser_mode="normal-chrome-ui-verified",
-        )
-        raise
+        log(f"FATAL: {type(exc).__name__}: {exc}")
+        return 1
 
 
 if __name__ == "__main__":
