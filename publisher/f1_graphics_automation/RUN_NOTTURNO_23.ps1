@@ -48,7 +48,7 @@ $env:F1_QUERY_BATCH_SIZE = '4'
 $env:F1_INBOX_PORT = '8877'
 $env:F1_MAX_ATTEMPTS = '3'
 
-# Prima aggiorna il codice, poi avvia il server: evita processi Flask con codice vecchio.
+# Prima aggiorna il codice, poi riavvia il server: nessun processo Flask resta con codice vecchio.
 try {
     $dirty = git status --porcelain
     if (-not $dirty) {
@@ -72,8 +72,8 @@ if (-not $depsOk) {
 }
 
 try {
-    & $StartInbox
-    Write-Log 'Raccolta F1 disponibile su http://127.0.0.1:8877/.'
+    & $StartInbox -Restart
+    Write-Log 'Raccolta F1 aggiornata e disponibile su http://127.0.0.1:8877/.'
 } catch {
     Write-Log "ERRORE Raccolta: $($_.Exception.Message)"
     throw
