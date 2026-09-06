@@ -4,6 +4,9 @@ on:
   schedule:
     - cron: '17 * * * *'
   workflow_dispatch:
+  push:
+    paths:
+      - '.f1-chatgpt-query-test-trigger'
 
 permissions:
   contents: write
@@ -40,6 +43,8 @@ jobs:
         run: |
           if ('${{ github.event_name }}' -eq 'schedule') {
             python publisher/chatgpt_query_runner/worker.py --scheduled
+          } elseif ('${{ github.event_name }}' -eq 'push') {
+            python publisher/chatgpt_query_runner/worker.py --batch-size 1
           } else {
             python publisher/chatgpt_query_runner/worker.py
           }
