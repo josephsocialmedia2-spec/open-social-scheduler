@@ -37,10 +37,7 @@ class CoreTests(unittest.TestCase):
         )
 
     def test_prompt_normalizes_only_whitespace(self):
-        self.assertEqual(
-            normalize_query("  immobili   in vendita\n a Susa  "),
-            "immobili in vendita a Susa",
-        )
+        self.assertEqual(normalize_query("  immobili   in vendita\n a Susa  "), "immobili in vendita a Susa")
         self.assertEqual(
             build_prompt("  immobili   in vendita\n a Susa  "),
             "Genera un'immagine ultrarealistica, cerchiamo immobili in vendita a Susa.",
@@ -56,18 +53,24 @@ class CoreTests(unittest.TestCase):
 
     def test_create_run_builds_four_prompts(self):
         state = blank_state()
-        run = create_run(
-            state,
-            QUERIES,
-            4,
-            now=datetime(2026, 9, 6, 23, 0, tzinfo=timezone.utc),
-        )
+        run = create_run(state, QUERIES, 4, now=datetime(2026, 9, 6, 23, 0, tzinfo=timezone.utc))
         self.assertEqual(len(run["jobs"]), 4)
         self.assertTrue(all(job["status"] == "QUERY_CARICATA" for job in run["jobs"]))
         self.assertEqual(
             run["jobs"][2]["prompt"],
             "Genera un'immagine ultrarealistica, cerchiamo lavoro agenzia immobiliare Susa prima esperienza.",
         )
+
+    def test_fresh_run_preserves_previous_active_run_in_history(self):
+        state = blank_state()
+        old_run = create_run(state, QUERIES, 4)
+        old_id = old_run["run_id"]
+        old_run["jobs"][0]["status"] = "ERRORE"
+        new_run = create_run(state, QUERIES, 1)
+        self.assertNotEqual(new_run["run_id"], old_id)
+        self.assertEqual(state["runs"][-1]["run_id"], old_id)
+        self.assertEqual(state["runs"][-1]["status"], "ANNULLATO")
+        self.assertIn("fresh-run", state["runs"][-1]["error"])
 
     def test_next_index_cannot_advance_before_completed(self):
         state = blank_state()
