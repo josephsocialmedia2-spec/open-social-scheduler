@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-07T10:31:32+00:00",
+  "updated_at": "2026-09-07T18:31:08+00:00",
   "signals": [
     {
       "id": "FBS-64D8E3A2C4",
@@ -301,6 +301,18 @@
       "source_query": "site:facebook.com/groups \"Avigliana\" \"vendo compro\"",
       "status": "NEW",
       "discovered_at": "2026-09-07T10:21:02+00:00"
+    },
+    {
+      "id": "FBS-B7E05E3484",
+      "brand": "f1-immobiliare",
+      "territory": "Condove",
+      "group_url": "https://www.facebook.com/groups/comunedicondove/",
+      "source_url": "https://www.facebook.com/groups/comunedicondove/permalink/26591787893792464/",
+      "title": "Sei di Condove se... | Cerco casa rustico libera su 4 lati ...",
+      "snippet": "Cerco casa rustico libera su 4 lati possibile se ha terreno in borgata",
+      "source_query": "site:facebook.com/groups \"Condove\" \"cerco casa\"",
+      "status": "NEW",
+      "discovered_at": "2026-09-07T18:19:16+00:00"
     }
   ]
 }
