@@ -1,0 +1,58 @@
+name: F1 Property Preview
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'publisher/property_job_preview.json'
+      - 'publisher/render_property_preview.py'
+      - 'publisher/f1_premium_renderer.py'
+      - '.github/workflows/property-preview.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  render-property-preview:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          ref: main
+
+      - name: Python 3.12
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y fonts-dejavu-core
+          python -m pip install --disable-pip-version-check -r publisher/requirements.txt
+
+      - name: Render property preview with Python
+        run: python publisher/render_property_preview.py
+
+      - name: Validate output
+        run: |
+          python - <<'PY'
+          from PIL import Image
+          p='property-preview/latest.jpg'
+          im=Image.open(p)
+          assert im.size == (1080,1350), im.size
+          print('PROPERTY PREVIEW VALIDATED', im.size)
+          PY
+
+      - name: Commit preview to main
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add property-preview/latest.jpg property-preview/meta.json
+          if git diff --cached --quiet; then
+            echo 'No preview changes to commit'
+          else
+            git commit -m 'Generate F1 property preview [skip ci]'
+            git push origin main
+          fi
