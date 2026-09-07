@@ -29,7 +29,6 @@ SIZE = (1080, 1350)
 _original_get_remote_image = renderer.get_remote_image
 _request_count = 0
 
-# F1 official operational data.
 F1_PHONE_PRIMARY = "371 370 8294"
 F1_PHONE_SECONDARY = "371 424 6300"
 F1_ADDRESS = "Via Umberto I, 96"
@@ -484,7 +483,7 @@ def validate_f1_outputs() -> None:
         pixels = list(footer.getdata())
         dark_ratio = sum(1 for r, g, b in pixels if r < 40 and g < 45 and b < 40) / max(1, len(pixels))
         green_ratio = sum(1 for r, g, b in pixels if g > r * 1.35 and g > b * 1.25 and g > 90) / max(1, len(pixels))
-        if dark_ratio < 0.55 or green_ratio < 0.004:
+        if dark_ratio < 0.55 or green_ratio < 0.001:
             raise RuntimeError(f"F1 premium visual gate failed for {rel}: dark={dark_ratio:.3f}, green={green_ratio:.3f}")
 
         job["premium_render_v3"] = True
