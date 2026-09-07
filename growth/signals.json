@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-06T09:36:20+00:00",
+  "updated_at": "2026-09-07T10:31:32+00:00",
   "signals": [
     {
       "id": "FBS-64D8E3A2C4",
@@ -183,18 +183,6 @@
       "discovered_at": "2026-09-05T09:10:52+00:00"
     },
     {
-      "id": "FBS-883E36D6D7",
-      "brand": "f1-immobiliare",
-      "territory": "Giaveno",
-      "group_url": "https://www.facebook.com/groups/216130891909846/",
-      "source_url": "https://www.facebook.com/groups/216130891909846/permalink/3111046119084961/",
-      "title": "c'è ancora coda nella strada Giaveno Avigliana ? | Facebook",
-      "snippet": "Jul 8, 2026 · 🏡 CERCO CASA IN AFFITTO A GIAVENO Buonasera a tutti! 😊 Per motivi lavorativi, da settembre mi trasferirò a Giaveno e sono alla ricerca di un appartamento in affitto, in paese o nelle zone limitrofe. Cerco bilocale o trilocale, esclusivamente arredato, disponibile fino al 30 giugno. Sono una persona seria, tranquilla e referenziata.",
-      "source_query": "site:facebook.com/groups \"Giaveno\" \"cerco casa\"",
-      "status": "NEW",
-      "discovered_at": "2026-09-05T09:10:52+00:00"
-    },
-    {
       "id": "FBS-14A5C476B5",
       "brand": "f1-immobiliare",
       "territory": "Trana",
@@ -289,6 +277,30 @@
       "source_query": "site:facebook.com/groups \"Condove\" \"vendesi casa\"",
       "status": "NEW",
       "discovered_at": "2026-09-06T09:32:01+00:00"
+    },
+    {
+      "id": "FBS-FB132B1D86",
+      "brand": "f1-immobiliare",
+      "territory": "Susa",
+      "group_url": "https://www.facebook.com/groups/307179086293602/",
+      "source_url": "https://www.facebook.com/groups/307179086293602/permalink/2913819695629515/",
+      "title": "Vendo, compro, Val di Susa ( Avigliana/ Almese / Ferriera ...",
+      "snippet": "Buongiorno cercasi da settembre una signora per pulizie casa partendo da 3 ore al giorno una volta alla settimana il primo mese per poi aumentare a 2 o 3 volte a settimana tenendo compagnia ad una...",
+      "source_query": "site:facebook.com/groups \"Susa\" \"vendo compro\"",
+      "status": "NEW",
+      "discovered_at": "2026-09-07T10:20:37+00:00"
+    },
+    {
+      "id": "FBS-1C623C660D",
+      "brand": "f1-immobiliare",
+      "territory": "Avigliana",
+      "group_url": "https://www.facebook.com/groups/307179086293602/",
+      "source_url": "https://www.facebook.com/groups/307179086293602/permalink/2877727015905450/",
+      "title": "Vendo, compro, Val di Susa ( Avigliana/ Almese / Ferriera ...",
+      "snippet": "Condove REGALO già smontata in ottime condizioni cameretta 3 posti letto... veloce perché devo ristrutturare casa se no la butto in discarica",
+      "source_query": "site:facebook.com/groups \"Avigliana\" \"vendo compro\"",
+      "status": "NEW",
+      "discovered_at": "2026-09-07T10:21:02+00:00"
     }
   ]
 }

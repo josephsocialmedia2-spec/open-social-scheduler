@@ -3281,8 +3281,59 @@
       "member_at": null,
       "last_post_at": null,
       "notes": ""
+    },
+    {
+      "id": "FBG-399B88AD5B",
+      "brand": "f1-immobiliare",
+      "territory": "Sant'Ambrogio di Torino",
+      "name": "sei di Sant'ambrogio se ...",
+      "url": "https://www.facebook.com/groups/1436182543285753/",
+      "source_query": "site:facebook.com/groups \"Sant'Ambrogio di Torino\" \"sei di\"",
+      "snippet": "ata compromessa. Purtroppo le fibre del nervo ottico danneggiate non possono essere recuperate, ma una diagnosi precoce permette di intervenire tempestivamente e di proteggere la vista nel tempo. Controllareperiodicamente la pressione oculare (tonometria) e sottoporsi a una visita oculistica completa è fondamentale, soprattutto dopo i 40 anni o in presenza di fattori di rischio. Gli occhi non ...",
+      "status": "PENDING_APPROVAL",
+      "batch_id": "20260907-102029",
+      "discovered_at": "2026-09-07T10:22:15+00:00",
+      "approved_at": null,
+      "join_requested_at": null,
+      "member_at": null,
+      "last_post_at": null,
+      "notes": ""
+    },
+    {
+      "id": "FBG-476F2E3733",
+      "brand": "f1-immobiliare",
+      "territory": "Sant'Antonino di Susa",
+      "name": "Vetrina commercianti Sant’antoninodi Susa e paesi Limitrofi",
+      "url": "https://www.facebook.com/groups/2519193905060645/",
+      "source_query": "site:facebook.com/groups \"Sant'Antonino di Susa\" \"mercatino\"",
+      "snippet": "5 days ago · Vetrina Commercianti Condove e limitrofi nata per valorizzare e promuovere il commercio in generale. Senza pensare alla concorrenza, ma solo ed esclusivamente alla crescita di tutti. Sono ammessi Post ESCLUSIVAMENTE di promozione riguardanti il proprio negozio/attività e eventi condovesi Non saranno ammessi: 1. Post e commenti riguardanti la politica 2. Polemiche di qualsiasi natura 3. Post ...",
+      "status": "PENDING_APPROVAL",
+      "batch_id": "20260907-102029",
+      "discovered_at": "2026-09-07T10:23:32+00:00",
+      "approved_at": null,
+      "join_requested_at": null,
+      "member_at": null,
+      "last_post_at": null,
+      "notes": ""
+    },
+    {
+      "id": "FBG-B02CB59648",
+      "brand": "real-media-pro",
+      "territory": "Grugliasco",
+      "name": "Gruppo Storico Città di Grugliasco Milizia Paesana Compagnia ...",
+      "url": "https://www.facebook.com/groups/180108945433518/",
+      "source_query": "site:facebook.com/groups \"Grugliasco\" \"commercianti\"",
+      "snippet": "e. Per una buona organizzazione è gradita una conferma al 349 7769849",
+      "status": "PENDING_APPROVAL",
+      "batch_id": "20260907-102029",
+      "discovered_at": "2026-09-07T10:29:55+00:00",
+      "approved_at": null,
+      "join_requested_at": null,
+      "member_at": null,
+      "last_post_at": null,
+      "notes": ""
     }
   ],
-  "updated_at": "2026-09-06T09:36:19+00:00",
-  "last_batch_id": "20260906-092733"
+  "updated_at": "2026-09-07T10:31:32+00:00",
+  "last_batch_id": "20260907-102029"
 }
