@@ -1,0 +1,25 @@
+{
+  "job": {
+    "id": "f1_property_001",
+    "client_id": "f1-immobiliare",
+    "cycle_key": "2026-09-07",
+    "cycle_position": 1,
+    "service_id": "service_1_agent_pricing",
+    "title": "Vuoi vendere casa?",
+    "property": {
+      "title": "Appartamento ristrutturato in vendita",
+      "description": "Comfort, spazio e tranquillità in una posizione strategica",
+      "mq": 95,
+      "locali": 3,
+      "bagni": 2,
+      "box": "Box auto",
+      "price": "€ 189.000",
+      "location": "Rivoli (TO) – Zona comoda ai servizi"
+    }
+  },
+  "output": "property-preview/latest.jpg",
+  "size": [
+    1080,
+    1350
+  ]
+}
