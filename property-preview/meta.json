@@ -17,7 +17,19 @@
       "location": "Rivoli (TO) – Zona comoda ai servizi"
     }
   },
-  "output": "property-preview/latest.jpg",
+  "outputs": [
+    "property-preview/01.jpg",
+    "property-preview/02.jpg",
+    "property-preview/03.jpg",
+    "property-preview/04.jpg",
+    "property-preview/05.jpg",
+    "property-preview/06.jpg",
+    "property-preview/07.jpg",
+    "property-preview/08.jpg",
+    "property-preview/09.jpg",
+    "property-preview/10.jpg"
+  ],
+  "count": 10,
   "size": [
     1080,
     1350
