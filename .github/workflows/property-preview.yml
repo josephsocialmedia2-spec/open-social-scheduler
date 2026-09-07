@@ -33,28 +33,31 @@ jobs:
           sudo apt-get install -y fonts-dejavu-core
           python -m pip install --disable-pip-version-check -r publisher/requirements.txt
 
-      - name: Render property preview with Python
+      - name: Render 10 property previews with Python
         run: python publisher/render_property_preview.py
 
-      - name: Validate output
+      - name: Validate outputs
         run: |
           python - <<'PY'
+          from pathlib import Path
           from PIL import Image
-          p='property-preview/latest.jpg'
-          im=Image.open(p)
-          assert im.size == (1080,1350), im.size
-          print('PROPERTY PREVIEW VALIDATED', im.size)
+          files=[Path(f'property-preview/{i:02d}.jpg') for i in range(1,11)]
+          assert all(p.exists() for p in files), [str(p) for p in files if not p.exists()]
+          for p in files:
+              im=Image.open(p)
+              assert im.size == (1080,1350), (p,im.size)
+          print('10 PROPERTY PREVIEWS VALIDATED')
           PY
 
-      - name: Commit preview to main
+      - name: Commit previews to main
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add property-preview/latest.jpg property-preview/meta.json
+          git add property-preview/*.jpg property-preview/meta.json property-preview/README.md
           if git diff --cached --quiet; then
             echo 'No preview changes to commit'
           else
-            git commit -m 'Generate F1 property preview [skip ci]'
+            git commit -m 'Generate 10 F1 property previews [skip ci]'
             git pull --rebase origin main
             git push origin main
           fi
