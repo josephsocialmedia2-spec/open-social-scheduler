@@ -3,7 +3,11 @@
   "pipeline": "f1-final-assets",
   "brand": "F1 Immobiliare",
   "asset_policy": "immutable-final-layout",
-  "platforms": ["facebook", "instagram", "linkedin"],
+  "platforms": [
+    "facebook",
+    "instagram",
+    "linkedin"
+  ],
   "publication_requested_at": "2026-09-08T09:35:00+02:00",
   "jobs": [
     {
@@ -15,12 +19,24 @@
       "assets": [
         "publisher/final_assets/github_generated/01_susa-001_property.png"
       ],
-      "platforms": ["facebook", "instagram", "linkedin"],
+      "platforms": [
+        "facebook",
+        "instagram",
+        "linkedin"
+      ],
       "scope": "network",
       "territory": "Susa",
       "scheduled_at": "2026-09-08T09:45:00+02:00",
-      "status": "READY",
-      "hashtags": ["#F1Immobiliare", "#Susa", "#ValleDiSusa", "#VendereCasa", "#ValutazioneImmobiliare"]
+      "status": "ERROR",
+      "hashtags": [
+        "#F1Immobiliare",
+        "#Susa",
+        "#ValleDiSusa",
+        "#VendereCasa",
+        "#ValutazioneImmobiliare"
+      ],
+      "error": "Buffer facebook: Invalid post: Whoops, it looks like you've already got this one scheduled or posted around the same time. We're not able to post the same thing twice so close together."
     }
-  ]
+  ],
+  "updated_at": "2026-09-08T07:31:01+00:00"
 }
