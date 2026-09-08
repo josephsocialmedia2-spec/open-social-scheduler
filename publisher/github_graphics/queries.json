@@ -1,96 +1,16 @@
 {
-  "batch": "territori-selezionati-10-preview",
+  "batch": "territori-selezionati-10-preview-v2",
   "template": "immobili in vendita a {comune}",
   "queries": [
-    {
-      "id": "COMUNE-001",
-      "commune": "Chianocco",
-      "query": "immobili in vendita a Chianocco",
-      "family": "property",
-      "headline": "Cerchi casa a Chianocco?",
-      "subheadline": "Scopri le opportunità immobiliari nel territorio.",
-      "cta": "SCRIVI CASA SU WHATSAPP"
-    },
-    {
-      "id": "COMUNE-002",
-      "commune": "Bruzolo",
-      "query": "immobili in vendita a Bruzolo",
-      "family": "property",
-      "headline": "Cerchi casa a Bruzolo?",
-      "subheadline": "Scopri le opportunità immobiliari nel territorio.",
-      "cta": "SCRIVI CASA SU WHATSAPP"
-    },
-    {
-      "id": "COMUNE-003",
-      "commune": "San Didero",
-      "query": "immobili in vendita a San Didero",
-      "family": "property",
-      "headline": "Cerchi casa a San Didero?",
-      "subheadline": "Scopri le opportunità immobiliari nel territorio.",
-      "cta": "SCRIVI CASA SU WHATSAPP"
-    },
-    {
-      "id": "COMUNE-004",
-      "commune": "San Giorio di Susa",
-      "query": "immobili in vendita a San Giorio di Susa",
-      "family": "property",
-      "headline": "Cerchi casa a San Giorio di Susa?",
-      "subheadline": "Scopri le opportunità immobiliari nel territorio.",
-      "cta": "SCRIVI CASA SU WHATSAPP"
-    },
-    {
-      "id": "COMUNE-005",
-      "commune": "Borgone Susa",
-      "query": "immobili in vendita a Borgone Susa",
-      "family": "property",
-      "headline": "Cerchi casa a Borgone Susa?",
-      "subheadline": "Scopri le opportunità immobiliari nel territorio.",
-      "cta": "SCRIVI CASA SU WHATSAPP"
-    },
-    {
-      "id": "COMUNE-006",
-      "commune": "Villar Focchiardo",
-      "query": "immobili in vendita a Villar Focchiardo",
-      "family": "property",
-      "headline": "Cerchi casa a Villar Focchiardo?",
-      "subheadline": "Scopri le opportunità immobiliari nel territorio.",
-      "cta": "SCRIVI CASA SU WHATSAPP"
-    },
-    {
-      "id": "COMUNE-007",
-      "commune": "Condove",
-      "query": "immobili in vendita a Condove",
-      "family": "property",
-      "headline": "Cerchi casa a Condove?",
-      "subheadline": "Scopri le opportunità immobiliari nel territorio.",
-      "cta": "SCRIVI CASA SU WHATSAPP"
-    },
-    {
-      "id": "COMUNE-008",
-      "commune": "Caprie",
-      "query": "immobili in vendita a Caprie",
-      "family": "property",
-      "headline": "Cerchi casa a Caprie?",
-      "subheadline": "Scopri le opportunità immobiliari nel territorio.",
-      "cta": "SCRIVI CASA SU WHATSAPP"
-    },
-    {
-      "id": "COMUNE-009",
-      "commune": "Sant’Antonino di Susa",
-      "query": "immobili in vendita a Sant’Antonino di Susa",
-      "family": "property",
-      "headline": "Cerchi casa a Sant’Antonino di Susa?",
-      "subheadline": "Scopri le opportunità immobiliari nel territorio.",
-      "cta": "SCRIVI CASA SU WHATSAPP"
-    },
-    {
-      "id": "COMUNE-010",
-      "commune": "Vaie",
-      "query": "immobili in vendita a Vaie",
-      "family": "property",
-      "headline": "Cerchi casa a Vaie?",
-      "subheadline": "Scopri le opportunità immobiliari nel territorio.",
-      "cta": "SCRIVI CASA SU WHATSAPP"
-    }
+    {"id":"COMUNE-001","commune":"Chianocco","query":"immobili in vendita a Chianocco","family":"property","headline":"Cerchi casa a Chianocco?","subheadline":"Scopri le opportunità immobiliari nel territorio.","cta":"SCRIVI CASA SU WHATSAPP"},
+    {"id":"COMUNE-002","commune":"Bruzolo","query":"immobili in vendita a Bruzolo","family":"property","headline":"Cerchi casa a Bruzolo?","subheadline":"Scopri le opportunità immobiliari nel territorio.","cta":"SCRIVI CASA SU WHATSAPP"},
+    {"id":"COMUNE-003","commune":"San Didero","query":"immobili in vendita a San Didero","family":"property","headline":"Cerchi casa a San Didero?","subheadline":"Scopri le opportunità immobiliari nel territorio.","cta":"SCRIVI CASA SU WHATSAPP"},
+    {"id":"COMUNE-004","commune":"San Giorio di Susa","query":"immobili in vendita a San Giorio di Susa","family":"property","headline":"Cerchi casa a San Giorio di Susa?","subheadline":"Scopri le opportunità immobiliari nel territorio.","cta":"SCRIVI CASA SU WHATSAPP"},
+    {"id":"COMUNE-005","commune":"Borgone Susa","query":"immobili in vendita a Borgone Susa","family":"property","headline":"Cerchi casa a Borgone Susa?","subheadline":"Scopri le opportunità immobiliari nel territorio.","cta":"SCRIVI CASA SU WHATSAPP"},
+    {"id":"COMUNE-006","commune":"Villar Focchiardo","query":"immobili in vendita a Villar Focchiardo","family":"property","headline":"Cerchi casa a Villar Focchiardo?","subheadline":"Scopri le opportunità immobiliari nel territorio.","cta":"SCRIVI CASA SU WHATSAPP"},
+    {"id":"COMUNE-007","commune":"Condove","query":"immobili in vendita a Condove","family":"property","headline":"Cerchi casa a Condove?","subheadline":"Scopri le opportunità immobiliari nel territorio.","cta":"SCRIVI CASA SU WHATSAPP"},
+    {"id":"COMUNE-008","commune":"Caprie","query":"immobili in vendita a Caprie","family":"property","headline":"Cerchi casa a Caprie?","subheadline":"Scopri le opportunità immobiliari nel territorio.","cta":"SCRIVI CASA SU WHATSAPP"},
+    {"id":"COMUNE-009","commune":"Sant’Antonino di Susa","query":"immobili in vendita a Sant’Antonino di Susa","family":"property","headline":"Cerchi casa a Sant’Antonino di Susa?","subheadline":"Scopri le opportunità immobiliari nel territorio.","cta":"SCRIVI CASA SU WHATSAPP"},
+    {"id":"COMUNE-010","commune":"Vaie","query":"immobili in vendita a Vaie","family":"property","headline":"Cerchi casa a Vaie?","subheadline":"Scopri le opportunità immobiliari nel territorio.","cta":"SCRIVI CASA SU WHATSAPP"}
   ]
 }
