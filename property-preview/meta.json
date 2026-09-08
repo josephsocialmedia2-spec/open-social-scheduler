@@ -6,7 +6,7 @@
     1350
   ],
   "fault_tolerant": true,
-  "visual_rule": "APPARTAMENTO or VILLA + municipality -> sunset -> lights on; continue on every source/render error",
+  "visual_rule": "APPARTAMENTO or VILLA + PRIVATO + municipality; reject agency-branded sources; sunset + lights on",
   "outputs": [
     {
       "index": 1,
@@ -14,11 +14,14 @@
       "commune": "Chianocco",
       "query": "immobili in vendita a Chianocco",
       "source": {
-        "query": "Appartamento \"Chianocco\"",
-        "url": "https://pwm.im-cdn.it/image/1791930107/m-c.jpg",
-        "title": "Vendita Appartamento Chianocco. Quadrilocale in frazione Vernetto ..."
+        "query": "synthetic fallback",
+        "url": "",
+        "title": "Fallback residenziale neutro - Chianocco",
+        "fallback": true,
+        "errors": [],
+        "reason": "no verified private-listing image; agency-branded sources rejected"
       },
-      "fallback": false,
+      "fallback": true,
       "output": "property-preview/01.jpg"
     },
     {
@@ -27,11 +30,14 @@
       "commune": "Bruzolo",
       "query": "immobili in vendita a Bruzolo",
       "source": {
-        "query": "Appartamento \"Bruzolo\"",
-        "url": "https://pwm.im-cdn.it/image/1812762835/m-c.jpg",
-        "title": "Vendita Appartamento Bruzolo. Trilocale in via dei Mille 25. Ottimo ..."
+        "query": "synthetic fallback",
+        "url": "",
+        "title": "Fallback residenziale neutro - Bruzolo",
+        "fallback": true,
+        "errors": [],
+        "reason": "no verified private-listing image; agency-branded sources rejected"
       },
-      "fallback": false,
+      "fallback": true,
       "output": "property-preview/02.jpg"
     },
     {
@@ -40,11 +46,14 @@
       "commune": "San Didero",
       "query": "immobili in vendita a San Didero",
       "source": {
-        "query": "Villa \"San Didero\"",
-        "url": "https://www.valsusaoggi.it/wp-content/uploads/2020/06/Villa-Vendita-San-Didero-07.jpg",
-        "title": "Villa Vendita San Didero (07) | ValsusaOggi"
+        "query": "synthetic fallback",
+        "url": "",
+        "title": "Fallback residenziale neutro - San Didero",
+        "fallback": true,
+        "errors": [],
+        "reason": "no verified private-listing image; agency-branded sources rejected"
       },
-      "fallback": false,
+      "fallback": true,
       "output": "property-preview/03.jpg"
     },
     {
@@ -53,11 +62,14 @@
       "commune": "San Giorio di Susa",
       "query": "immobili in vendita a San Giorio di Susa",
       "source": {
-        "query": "Appartamento \"San Giorio di Susa\"",
-        "url": "https://pwm.im-cdn.it/image/1341124438/m-c.jpg",
-        "title": "Vendita Appartamento San Giorio di Susa. Trilocale in via Don Cesare ..."
+        "query": "synthetic fallback",
+        "url": "",
+        "title": "Fallback residenziale neutro - San Giorio di Susa",
+        "fallback": true,
+        "errors": [],
+        "reason": "no verified private-listing image; agency-branded sources rejected"
       },
-      "fallback": false,
+      "fallback": true,
       "output": "property-preview/04.jpg"
     },
     {
@@ -66,10 +78,12 @@
       "commune": "Borgone Susa",
       "query": "immobili in vendita a Borgone Susa",
       "source": {
-        "query": "F1 safe fallback",
-        "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Villa_Cantamerlo_Avigliana02.JPG",
-        "title": "Avigliana · Villa Cantamerlo · pubblico dominio",
-        "fallback": true
+        "query": "synthetic fallback",
+        "url": "",
+        "title": "Fallback residenziale neutro - Borgone Susa",
+        "fallback": true,
+        "errors": [],
+        "reason": "no verified private-listing image; agency-branded sources rejected"
       },
       "fallback": true,
       "output": "property-preview/05.jpg"
@@ -80,10 +94,12 @@
       "commune": "Villar Focchiardo",
       "query": "immobili in vendita a Villar Focchiardo",
       "source": {
-        "query": "F1 safe fallback",
-        "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Villa_Cantamerlo_Avigliana02.JPG",
-        "title": "Avigliana · Villa Cantamerlo · pubblico dominio",
-        "fallback": true
+        "query": "synthetic fallback",
+        "url": "",
+        "title": "Fallback residenziale neutro - Villar Focchiardo",
+        "fallback": true,
+        "errors": [],
+        "reason": "no verified private-listing image; agency-branded sources rejected"
       },
       "fallback": true,
       "output": "property-preview/06.jpg"
@@ -94,9 +110,9 @@
       "commune": "Condove",
       "query": "immobili in vendita a Condove",
       "source": {
-        "query": "Appartamento \"Condove\"",
-        "url": "https://pwm.im-cdn.it/image/1814814531/m-c.jpg",
-        "title": "Affitto Appartamento Collegno. Quadrilocale in via Condove 2. Buono ..."
+        "query": "Villa da privato \"Condove\"",
+        "url": "https://media.clickcase.it/image/i-a5184091-b7a9-4339-82e8-dff670a0f103/noresize.jpg",
+        "title": "Bellissima casa in montagna - Vendita Villetta a schiera da Privato a ..."
       },
       "fallback": false,
       "output": "property-preview/07.jpg"
@@ -107,11 +123,14 @@
       "commune": "Caprie",
       "query": "immobili in vendita a Caprie",
       "source": {
-        "query": "Appartamento \"Caprie\"",
-        "url": "https://pwm.im-cdn.it/image/1844414809/m-c.jpg",
-        "title": "Vendita Appartamento Caprie. Trilocale in via Attilio Cinato. Da ..."
+        "query": "synthetic fallback",
+        "url": "",
+        "title": "Fallback residenziale neutro - Caprie",
+        "fallback": true,
+        "errors": [],
+        "reason": "no verified private-listing image; agency-branded sources rejected"
       },
-      "fallback": false,
+      "fallback": true,
       "output": "property-preview/08.jpg"
     },
     {
@@ -120,11 +139,14 @@
       "commune": "Sant’Antonino di Susa",
       "query": "immobili in vendita a Sant’Antonino di Susa",
       "source": {
-        "query": "Appartamento \"Sant’Antonino di Susa\"",
-        "url": "https://cdn5.gestim.biz/custom/02597/foto/20241002153215-11.jpg",
-        "title": "Appartamento in vendita a Sant'Antonino di Susa Cod. 34221002-911"
+        "query": "synthetic fallback",
+        "url": "",
+        "title": "Fallback residenziale neutro - Sant’Antonino di Susa",
+        "fallback": true,
+        "errors": [],
+        "reason": "no verified private-listing image; agency-branded sources rejected"
       },
-      "fallback": false,
+      "fallback": true,
       "output": "property-preview/09.jpg"
     },
     {
@@ -133,11 +155,14 @@
       "commune": "Vaie",
       "query": "immobili in vendita a Vaie",
       "source": {
-        "query": "Appartamento \"Vaie\"",
-        "url": "https://pwm.im-cdn.it/image/1737504406/m-c.jpg",
-        "title": "Vendita Appartamento Vaie. Monolocale in piazza del Priore. Ottimo ..."
+        "query": "synthetic fallback",
+        "url": "",
+        "title": "Fallback residenziale neutro - Vaie",
+        "fallback": true,
+        "errors": [],
+        "reason": "no verified private-listing image; agency-branded sources rejected"
       },
-      "fallback": false,
+      "fallback": true,
       "output": "property-preview/10.jpg"
     }
   ]

@@ -1,6 +1,6 @@
 # F1 · 10 grafiche query
 
-Generazione fault-tolerant: ogni errore viene saltato; il batch continua fino a 10 output.
+Ricerca immagini: Appartamento/Villa + PRIVATO + comune. Fonti di agenzie concorrenti escluse; fallback neutro se necessario.
 
 ## 01 · immobili in vendita a Chianocco
 
