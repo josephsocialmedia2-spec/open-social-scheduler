@@ -1,6 +1,6 @@
 {
-  "batch": "susa-first-4",
-  "count": 4,
+  "batch": "territori-selezionati-10-preview",
+  "count": 10,
   "size": [
     1080,
     1350
@@ -9,14 +9,14 @@
   "outputs": [
     {
       "index": 1,
-      "id": "SUSA-001",
-      "query": "immobili in vendita a Susa",
+      "id": "COMUNE-001",
+      "query": "immobili in vendita a Chianocco",
       "brief": {
-        "query": "immobili in vendita a Susa",
+        "query": "immobili in vendita a Chianocco",
         "family": "property",
-        "headline": "Immobili in vendita a Susa",
-        "subheadline": "Scopri le opportunità immobiliari nel territorio di Susa.",
-        "cta": "SCOPRI LE OPPORTUNITÀ",
+        "headline": "Cerchi casa a Chianocco?",
+        "subheadline": "Scopri le opportunità immobiliari nel territorio.",
+        "cta": "SCRIVI CASA SU WHATSAPP",
         "visual_type": "residential_exterior",
         "layout": "left_overlay",
         "ollama_used": false,
@@ -26,14 +26,14 @@
     },
     {
       "index": 2,
-      "id": "SUSA-002",
-      "query": "case in vendita a Susa",
+      "id": "COMUNE-002",
+      "query": "immobili in vendita a Bruzolo",
       "brief": {
-        "query": "case in vendita a Susa",
+        "query": "immobili in vendita a Bruzolo",
         "family": "property",
-        "headline": "Case in vendita a Susa",
-        "subheadline": "Soluzioni per chi vuole vivere, investire o trasferirsi a Susa.",
-        "cta": "CERCA LA TUA CASA",
+        "headline": "Cerchi casa a Bruzolo?",
+        "subheadline": "Scopri le opportunità immobiliari nel territorio.",
+        "cta": "SCRIVI CASA SU WHATSAPP",
         "visual_type": "residential_exterior",
         "layout": "left_overlay",
         "ollama_used": false,
@@ -43,15 +43,15 @@
     },
     {
       "index": 3,
-      "id": "SUSA-003",
-      "query": "lavoro agenzia immobiliare Susa prima esperienza",
+      "id": "COMUNE-003",
+      "query": "immobili in vendita a San Didero",
       "brief": {
-        "query": "lavoro agenzia immobiliare Susa prima esperienza",
-        "family": "recruiting",
-        "headline": "Inizia nel settore immobiliare",
-        "subheadline": "Prima esperienza? Formazione, affiancamento e territorio.",
-        "cta": "CANDIDATI ORA",
-        "visual_type": "professional_real_estate_team",
+        "query": "immobili in vendita a San Didero",
+        "family": "property",
+        "headline": "Cerchi casa a San Didero?",
+        "subheadline": "Scopri le opportunità immobiliari nel territorio.",
+        "cta": "SCRIVI CASA SU WHATSAPP",
+        "visual_type": "residential_exterior",
         "layout": "left_overlay",
         "ollama_used": false,
         "ollama_error": "<urlopen error [Errno 111] Connection refused>"
@@ -60,20 +60,122 @@
     },
     {
       "index": 4,
-      "id": "SUSA-004",
-      "query": "appartamenti in vendita a Susa",
+      "id": "COMUNE-004",
+      "query": "immobili in vendita a San Giorio di Susa",
       "brief": {
-        "query": "appartamenti in vendita a Susa",
+        "query": "immobili in vendita a San Giorio di Susa",
         "family": "property",
-        "headline": "Appartamenti in vendita a Susa",
-        "subheadline": "Trova la soluzione più adatta alle tue esigenze nel cuore della Valle di Susa.",
-        "cta": "SCOPRI GLI APPARTAMENTI",
+        "headline": "Cerchi casa a San Giorio di Susa?",
+        "subheadline": "Scopri le opportunità immobiliari nel territorio.",
+        "cta": "SCRIVI CASA SU WHATSAPP",
         "visual_type": "residential_exterior",
         "layout": "left_overlay",
         "ollama_used": false,
         "ollama_error": "<urlopen error [Errno 111] Connection refused>"
       },
       "output": "property-preview/04.jpg"
+    },
+    {
+      "index": 5,
+      "id": "COMUNE-005",
+      "query": "immobili in vendita a Borgone Susa",
+      "brief": {
+        "query": "immobili in vendita a Borgone Susa",
+        "family": "property",
+        "headline": "Cerchi casa a Borgone Susa?",
+        "subheadline": "Scopri le opportunità immobiliari nel territorio.",
+        "cta": "SCRIVI CASA SU WHATSAPP",
+        "visual_type": "residential_exterior",
+        "layout": "left_overlay",
+        "ollama_used": false,
+        "ollama_error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      "output": "property-preview/05.jpg"
+    },
+    {
+      "index": 6,
+      "id": "COMUNE-006",
+      "query": "immobili in vendita a Villar Focchiardo",
+      "brief": {
+        "query": "immobili in vendita a Villar Focchiardo",
+        "family": "property",
+        "headline": "Cerchi casa a Villar Focchiardo?",
+        "subheadline": "Scopri le opportunità immobiliari nel territorio.",
+        "cta": "SCRIVI CASA SU WHATSAPP",
+        "visual_type": "residential_exterior",
+        "layout": "left_overlay",
+        "ollama_used": false,
+        "ollama_error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      "output": "property-preview/06.jpg"
+    },
+    {
+      "index": 7,
+      "id": "COMUNE-007",
+      "query": "immobili in vendita a Condove",
+      "brief": {
+        "query": "immobili in vendita a Condove",
+        "family": "property",
+        "headline": "Cerchi casa a Condove?",
+        "subheadline": "Scopri le opportunità immobiliari nel territorio.",
+        "cta": "SCRIVI CASA SU WHATSAPP",
+        "visual_type": "residential_exterior",
+        "layout": "left_overlay",
+        "ollama_used": false,
+        "ollama_error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      "output": "property-preview/07.jpg"
+    },
+    {
+      "index": 8,
+      "id": "COMUNE-008",
+      "query": "immobili in vendita a Caprie",
+      "brief": {
+        "query": "immobili in vendita a Caprie",
+        "family": "property",
+        "headline": "Cerchi casa a Caprie?",
+        "subheadline": "Scopri le opportunità immobiliari nel territorio.",
+        "cta": "SCRIVI CASA SU WHATSAPP",
+        "visual_type": "residential_exterior",
+        "layout": "left_overlay",
+        "ollama_used": false,
+        "ollama_error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      "output": "property-preview/08.jpg"
+    },
+    {
+      "index": 9,
+      "id": "COMUNE-009",
+      "query": "immobili in vendita a Sant’Antonino di Susa",
+      "brief": {
+        "query": "immobili in vendita a Sant’Antonino di Susa",
+        "family": "property",
+        "headline": "Cerchi casa a Sant’Antonino di Susa?",
+        "subheadline": "Scopri le opportunità immobiliari nel territorio.",
+        "cta": "SCRIVI CASA SU WHATSAPP",
+        "visual_type": "residential_exterior",
+        "layout": "left_overlay",
+        "ollama_used": false,
+        "ollama_error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      "output": "property-preview/09.jpg"
+    },
+    {
+      "index": 10,
+      "id": "COMUNE-010",
+      "query": "immobili in vendita a Vaie",
+      "brief": {
+        "query": "immobili in vendita a Vaie",
+        "family": "property",
+        "headline": "Cerchi casa a Vaie?",
+        "subheadline": "Scopri le opportunità immobiliari nel territorio.",
+        "cta": "SCRIVI CASA SU WHATSAPP",
+        "visual_type": "residential_exterior",
+        "layout": "left_overlay",
+        "ollama_used": false,
+        "ollama_error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      "output": "property-preview/10.jpg"
     }
   ]
 }
