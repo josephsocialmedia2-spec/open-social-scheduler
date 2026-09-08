@@ -8,14 +8,24 @@ from pathlib import Path
 from PIL import Image, ImageDraw, ImageEnhance, ImageFont, ImageOps
 
 import f1_premium_renderer as f1
+from ollama_graphics_bridge import enrich_queries
 
 ROOT = Path(__file__).resolve().parents[1]
-INPUT = ROOT / "publisher" / "property_job_preview.json"
+QUERIES = ROOT / "publisher" / "github_graphics" / "queries.json"
 OUTPUT_DIR = ROOT / "property-preview"
 META = OUTPUT_DIR / "meta.json"
 README = OUTPUT_DIR / "README.md"
 SIZE = (1080, 1350)
-COUNT = 10
+MAX_COUNT = 10
+
+FORBIDDEN = (
+    "owl", "gufo", "bird", "uccello", "cat", "gatto", "dog", "cane",
+    "food", "cibo", "car", "auto", "animal", "animale"
+)
+REAL_ESTATE_MARKERS = (
+    "house", "home", "residential", "apartment", "villa", "building",
+    "interior", "estate", "property", "immobil", "casa", "local", "territory"
+)
 
 
 def font(size: int, bold: bool = False):
@@ -28,135 +38,163 @@ def font(size: int, bold: bool = False):
 
 def wrap(draw: ImageDraw.ImageDraw, text: str, width: int, size: int, max_lines: int, bold: bool = True):
     words = str(text or "").split()
-    for s in range(size, 27, -2):
+    for s in range(size, 25, -2):
         ft = font(s, bold)
         lines, line = [], ""
-        for w in words:
-            test = (line + " " + w).strip()
+        for word in words:
+            test = (line + " " + word).strip()
             if draw.textbbox((0, 0), test, font=ft)[2] <= width:
                 line = test
             else:
                 if line:
                     lines.append(line)
-                line = w
+                line = word
         if line:
             lines.append(line)
         if len(lines) <= max_lines:
             return ft, lines
-    return font(28, bold), [" ".join(words)]
+    return font(26, bold), [" ".join(words)]
 
 
-def choose_preview_images() -> list[Image.Image]:
+def _source_text(item: dict) -> str:
+    return " ".join(str(v) for v in item.values()).lower()
+
+
+def valid_source(item: dict, visual_type: str) -> bool:
+    text = _source_text(item)
+    if any(marker in text for marker in FORBIDDEN):
+        return False
+    if not any(marker in text for marker in REAL_ESTATE_MARKERS):
+        return False
+    if visual_type == "professional_real_estate_team":
+        return any(x in text for x in ("team", "office", "agent", "professional", "person", "presenter"))
+    if visual_type == "local_territory":
+        return any(x in text for x in ("local", "territory", "valle", "susa", "avigliana", "town", "landscape"))
+    return True
+
+
+def choose_image(brief: dict, index: int) -> Image.Image:
     cfg = f1.load_json(f1.F1_CFG, {})
     sources = [x for x in cfg.get("brand", {}).get("photo_sources", []) if isinstance(x, dict) and x.get("url")]
-    ranked = sorted(sources, key=lambda x: ("residential" not in f1.source_kind(x), "local" not in f1.source_kind(x)))
-    loaded: list[Image.Image] = []
+    visual = str(brief.get("visual_type") or "residential_exterior")
+    candidates = [x for x in sources if valid_source(x, visual)]
+    if not candidates:
+        candidates = [x for x in sources if not any(m in _source_text(x) for m in FORBIDDEN)]
+    if not candidates:
+        raise RuntimeError("Nessuna sorgente fotografica immobiliare valida configurata")
+
     errors = []
-    for item in ranked:
+    for offset in range(len(candidates)):
+        item = candidates[(index + offset) % len(candidates)]
         try:
-            loaded.append(f1.robust_local_get(str(item["url"])))
+            return f1.robust_local_get(str(item["url"]))
         except Exception as exc:
             errors.append(str(exc))
-    if not loaded:
-        raise RuntimeError("No preview image available: " + " | ".join(errors[-3:]))
-    return [loaded[i % len(loaded)].copy() for i in range(COUNT)]
+    raise RuntimeError("Nessuna immagine caricabile: " + " | ".join(errors[-3:]))
 
 
-def render(job: dict, image: Image.Image, index: int) -> Image.Image:
-    prop = job.get("property") or {}
+def render(brief: dict, image: Image.Image, index: int) -> Image.Image:
     canvas = ImageOps.fit(image.convert("RGB"), SIZE, Image.Resampling.LANCZOS)
-    canvas = ImageEnhance.Contrast(canvas).enhance(1.02 + (index % 3) * 0.02)
+    canvas = ImageEnhance.Contrast(canvas).enhance(1.05)
 
     overlay = Image.new("RGBA", SIZE, (0, 0, 0, 0))
     od = ImageDraw.Draw(overlay)
-    # Alternate the visual rhythm while preserving the F1 identity.
-    if index % 2:
-        od.rectangle((0, 0, 1080, 165), fill=(7, 9, 7, 218))
-        od.rectangle((0, 620, 1080, 1165), fill=(7, 9, 7, 234))
-    else:
-        od.rectangle((0, 0, 1080, 190), fill=(7, 9, 7, 225))
-        od.rectangle((0, 680, 1080, 1165), fill=(7, 9, 7, 236))
+    od.rectangle((0, 0, 1080, 175), fill=(7, 9, 7, 224))
+    od.rectangle((0, 610, 1080, 1165), fill=(7, 9, 7, 238))
     canvas = Image.alpha_composite(canvas.convert("RGBA"), overlay).convert("RGB")
     d = ImageDraw.Draw(canvas)
 
     f1.draw_brand(d, 48, 48)
-    d.rounded_rectangle((810, 52, 1025, 104), radius=14, fill=f1.GREEN)
-    d.text((838, 67), f"PROPOSTA {index:02d}", font=font(18, True), fill=f1.BLACK)
+    d.rounded_rectangle((805, 52, 1025, 104), radius=14, fill=f1.GREEN)
+    d.text((840, 67), f"QUERY {index:02d}", font=font(18, True), fill=f1.BLACK)
 
-    top_y = 655 if index % 2 else 705
-    d.text((58, top_y), str(job.get("title") or "IMMOBILE IN VENDITA").upper(), font=font(24, True), fill=f1.GREEN)
+    family = str(brief.get("family") or "property").upper()
+    d.text((58, 650), family, font=font(24, True), fill=f1.GREEN)
 
-    title = str(prop.get("title") or "Immobile in vendita")
-    ft, lines = wrap(d, title.upper(), 900, 64, 2, True)
-    y = top_y + 48
+    headline = str(brief.get("headline") or brief.get("query") or "").strip()
+    ft, lines = wrap(d, headline.upper(), 930, 63, 3, True)
+    y = 700
     for line in lines:
         d.text((58, y), line, font=ft, fill=f1.WHITE)
-        y += int(getattr(ft, "size", 50) * 1.04)
+        y += int(getattr(ft, "size", 50) * 1.06)
 
-    desc = str(prop.get("description") or "")
-    if desc:
-        fd, dlines = wrap(d, desc, 900, 30, 2, False)
-        y += 10
-        for line in dlines:
-            d.text((58, y), line, font=fd, fill=f1.MUTED)
-            y += int(getattr(fd, "size", 28) * 1.22)
+    sub = str(brief.get("subheadline") or "").strip()
+    if sub:
+        fs, sub_lines = wrap(d, sub, 900, 30, 3, False)
+        y += 14
+        for line in sub_lines:
+            d.text((58, y), line, font=fs, fill=f1.MUTED)
+            y += int(getattr(fs, "size", 28) * 1.25)
 
-    price = str(prop.get("price") or "")
-    if price:
-        d.text((58, 930), price, font=font(54, True), fill=f1.GREEN)
+    cta = str(brief.get("cta") or "CONTATTACI").strip().upper()
+    d.rounded_rectangle((58, 1015, 530, 1082), radius=18, fill=f1.GREEN)
+    cta_font, cta_lines = wrap(d, cta, 420, 26, 1, True)
+    d.text((82, 1035), cta_lines[0], font=cta_font, fill=f1.BLACK)
 
-    specs = [
-        f"{prop.get('mq')} m²" if prop.get("mq") else "",
-        f"{prop.get('locali')} locali" if prop.get("locali") else "",
-        f"{prop.get('bagni')} bagni" if prop.get("bagni") else "",
-        str(prop.get("box") or ""),
-    ]
-    specs = [x for x in specs if x]
-    sx = 58
-    for item in specs[:4]:
-        box_w = max(145, d.textbbox((0, 0), item, font=font(20, True))[2] + 44)
-        d.rounded_rectangle((sx, 1010, sx + box_w, 1062), radius=13, fill=(20, 28, 20), outline=f1.GREEN, width=2)
-        d.text((sx + 20, 1025), item, font=font(20, True), fill=f1.WHITE)
-        sx += box_w + 14
+    # Audit trail: the exact user-selected query is printed without reinterpretation.
+    query = str(brief.get("query") or "").strip()
+    fq, qlines = wrap(d, f"Query: {query}", 930, 18, 2, False)
+    qy = 1100
+    for line in qlines:
+        d.text((58, qy), line, font=fq, fill=f1.MUTED)
+        qy += 22
 
-    location = str(prop.get("location") or "")
-    if location:
-        d.text((58, 1092), location, font=font(22, True), fill=f1.WHITE)
-
-    d.text((58, 1130), "Mockup grafico: sostituire con la fotografia reale dell'immobile prima della pubblicazione.", font=font(15), fill=f1.MUTED)
     f1.draw_footer(canvas)
     return canvas
 
 
 def main() -> int:
-    payload = json.loads(INPUT.read_text(encoding="utf-8"))
-    jobs = payload.get("jobs") or []
-    if len(jobs) != 1:
-        raise RuntimeError("Property preview expects exactly one job")
-    job = jobs[0]
-    prop = job.get("property") or {}
-    required = ["title", "description", "mq", "locali", "bagni", "price", "location"]
-    missing = [k for k in required if not prop.get(k)]
-    if missing:
-        raise RuntimeError(f"Missing property fields: {', '.join(missing)}")
+    payload = json.loads(QUERIES.read_text(encoding="utf-8"))
+    selected = payload.get("queries") or []
+    if not selected:
+        raise RuntimeError("queries.json non contiene query selezionate")
+    if len(selected) > MAX_COUNT:
+        selected = selected[:MAX_COUNT]
+
+    # Ollama enriches the selected queries, but the bridge hard-locks the original query text.
+    briefs = enrich_queries(selected)
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    images = choose_preview_images()
+    for old in OUTPUT_DIR.glob("[0-9][0-9].jpg"):
+        old.unlink()
+
     outputs = []
-    for i, source in enumerate(images, 1):
+    for i, brief in enumerate(briefs, 1):
+        image = choose_image(brief, i - 1)
         out = OUTPUT_DIR / f"{i:02d}.jpg"
-        render(job, source, i).save(out, "JPEG", quality=94, optimize=True)
-        outputs.append(str(out.relative_to(ROOT)))
+        render(brief, image, i).save(out, "JPEG", quality=94, optimize=True)
+        outputs.append({
+            "index": i,
+            "id": selected[i - 1].get("id"),
+            "query": selected[i - 1].get("query"),
+            "brief": brief,
+            "output": str(out.relative_to(ROOT)),
+        })
 
     shutil.copyfile(OUTPUT_DIR / "01.jpg", OUTPUT_DIR / "latest.jpg")
-    META.write_text(json.dumps({"job": job, "outputs": outputs, "count": COUNT, "size": SIZE}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    META.write_text(json.dumps({
+        "batch": payload.get("batch"),
+        "count": len(outputs),
+        "size": SIZE,
+        "source": "publisher/github_graphics/queries.json",
+        "outputs": outputs,
+    }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
     repo = "https://raw.githubusercontent.com/josephsocialmedia2-spec/open-social-scheduler/main/property-preview"
-    lines = ["# F1 · 10 proposte grafiche generate dal nuovo Python", "", "Tutte le immagini sono 1080 × 1350 e derivano dal JSON immobile corrente.", ""]
-    for i in range(1, COUNT + 1):
-        lines += [f"## Proposta {i:02d}", "", f"![Proposta {i:02d}]({repo}/{i:02d}.jpg)", ""]
+    lines = [
+        "# F1 · Grafiche generate dalle query selezionate",
+        "",
+        "Ogni JPG corrisponde, nello stesso ordine, a una query presente in `publisher/github_graphics/queries.json`.",
+        "Ollama può arricchire il brief ma non può modificare la query originale.",
+        "",
+    ]
+    for item in outputs:
+        i = item["index"]
+        lines += [f"## {i:02d} · {item['query']}", "", f"![Query {i:02d}]({repo}/{i:02d}.jpg)", ""]
     README.write_text("\n".join(lines) + "\n", encoding="utf-8")
-    print(f"PROPERTY PREVIEWS READY: {COUNT}")
+    print(f"F1 QUERY PREVIEWS READY: {len(outputs)}")
+    for item in outputs:
+        print(f"{item['index']:02d} | {item['query']} | ollama={item['brief'].get('ollama_used')}")
     return 0
 
 
