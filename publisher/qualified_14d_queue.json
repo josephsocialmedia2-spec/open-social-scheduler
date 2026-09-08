@@ -1,9 +1,9 @@
 {
   "version": 2,
   "name": "F1 Qualified Seller 14-Day Queue",
-  "generated_at": "2026-09-05T14:44:08+02:00",
-  "window_start": "2026-08-23",
-  "window_end": "2026-09-05",
+  "generated_at": "2026-09-08T09:30:55+02:00",
+  "window_start": "2026-08-26",
+  "window_end": "2026-09-08",
   "goal": "qualified_seller_leads",
   "count": 28,
   "formats": {
@@ -20,13 +20,13 @@
   },
   "jobs": [
     {
-      "id": "f1-qualified-2026-08-23-r01",
+      "id": "f1-qualified-2026-08-26-r01",
       "source_item_id": "R01",
       "client_id": "f1-immobiliare",
       "client_name": "F1 Immobiliare",
       "regeneration_batch": "qualified-14d",
-      "content_date": "2026-08-23",
-      "scheduled_at": "2026-08-23T10:00:00+02:00",
+      "content_date": "2026-08-26",
+      "scheduled_at": "2026-08-26T10:00:00+02:00",
       "scheduled_at_role": "production_order_only",
       "publication_time_verified": false,
       "recommended_publish_day": null,
@@ -69,7 +69,7 @@
         "motivazione"
       ],
       "cta": "Scrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere.",
-      "media": "publisher/media/generated/f1-qualified-14d/2026-08-23/r01.mp4",
+      "media": "publisher/media/generated/f1-qualified-14d/2026-08-26/r01.mp4",
       "enabled": true,
       "status": "awaiting_manual_approval",
       "gate_status": "PASSED",
@@ -132,8 +132,8 @@
           "passed": true,
           "checks": [
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-23/r01.mp4",
-              "bytes": 4364512,
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-26/r01.mp4",
+              "bytes": 4364666,
               "video": {
                 "codec_name": "h264",
                 "width": 1080,
@@ -179,8 +179,8 @@
                   "color_buckets": 54.0
                 },
                 "right": {
-                  "white_ratio": 0.0573,
-                  "dark_ratio": 0.1347,
+                  "white_ratio": 0.0574,
+                  "dark_ratio": 0.1346,
                   "green_ratio": 0.0353,
                   "mean_luminance": 125.55,
                   "color_buckets": 69.0
@@ -214,13 +214,13 @@
       }
     },
     {
-      "id": "f1-qualified-2026-08-23-c01",
+      "id": "f1-qualified-2026-08-26-c01",
       "source_item_id": "C01",
       "client_id": "f1-immobiliare",
       "client_name": "F1 Immobiliare",
       "regeneration_batch": "qualified-14d",
-      "content_date": "2026-08-23",
-      "scheduled_at": "2026-08-23T18:00:00+02:00",
+      "content_date": "2026-08-26",
+      "scheduled_at": "2026-08-26T18:00:00+02:00",
       "scheduled_at_role": "production_order_only",
       "publication_time_verified": false,
       "recommended_publish_day": null,
@@ -267,16 +267,16 @@
       ],
       "cta": "Scrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere.",
       "media": [
-        "publisher/media/generated/f1-qualified-14d/2026-08-23/c01/slide-01.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-23/c01/slide-02.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-23/c01/slide-03.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-23/c01/slide-04.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-23/c01/slide-05.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-23/c01/slide-06.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-23/c01/slide-07.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-23/c01/slide-08.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-23/c01/slide-09.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-23/c01/slide-10.jpg"
+        "publisher/media/generated/f1-qualified-14d/2026-08-26/c01/slide-01.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-08-26/c01/slide-02.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-08-26/c01/slide-03.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-08-26/c01/slide-04.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-08-26/c01/slide-05.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-08-26/c01/slide-06.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-08-26/c01/slide-07.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-08-26/c01/slide-08.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-08-26/c01/slide-09.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-08-26/c01/slide-10.jpg"
       ],
       "enabled": true,
       "status": "awaiting_manual_approval",
@@ -338,7 +338,7 @@
           "passed": true,
           "checks": [
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-23/c01/slide-01.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-26/c01/slide-01.jpg",
               "bytes": 208388,
               "dimensions": [
                 1080,
@@ -346,7 +346,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-23/c01/slide-02.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-26/c01/slide-02.jpg",
               "bytes": 202097,
               "dimensions": [
                 1080,
@@ -354,7 +354,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-23/c01/slide-03.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-26/c01/slide-03.jpg",
               "bytes": 205901,
               "dimensions": [
                 1080,
@@ -362,7 +362,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-23/c01/slide-04.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-26/c01/slide-04.jpg",
               "bytes": 208787,
               "dimensions": [
                 1080,
@@ -370,7 +370,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-23/c01/slide-05.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-26/c01/slide-05.jpg",
               "bytes": 210869,
               "dimensions": [
                 1080,
@@ -378,7 +378,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-23/c01/slide-06.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-26/c01/slide-06.jpg",
               "bytes": 207724,
               "dimensions": [
                 1080,
@@ -386,7 +386,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-23/c01/slide-07.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-26/c01/slide-07.jpg",
               "bytes": 208556,
               "dimensions": [
                 1080,
@@ -394,7 +394,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-23/c01/slide-08.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-26/c01/slide-08.jpg",
               "bytes": 201823,
               "dimensions": [
                 1080,
@@ -402,7 +402,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-23/c01/slide-09.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-26/c01/slide-09.jpg",
               "bytes": 205437,
               "dimensions": [
                 1080,
@@ -410,7 +410,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-23/c01/slide-10.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-26/c01/slide-10.jpg",
               "bytes": 203689,
               "dimensions": [
                 1080,
@@ -868,13 +868,13 @@
       }
     },
     {
-      "id": "f1-qualified-2026-08-24-r02",
+      "id": "f1-qualified-2026-08-27-r02",
       "source_item_id": "R02",
       "client_id": "f1-immobiliare",
       "client_name": "F1 Immobiliare",
       "regeneration_batch": "qualified-14d",
-      "content_date": "2026-08-24",
-      "scheduled_at": "2026-08-24T10:00:00+02:00",
+      "content_date": "2026-08-27",
+      "scheduled_at": "2026-08-27T10:00:00+02:00",
       "scheduled_at_role": "production_order_only",
       "publication_time_verified": false,
       "recommended_publish_day": null,
@@ -917,7 +917,7 @@
         "motivazione"
       ],
       "cta": "Scrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere.",
-      "media": "publisher/media/generated/f1-qualified-14d/2026-08-24/r02.mp4",
+      "media": "publisher/media/generated/f1-qualified-14d/2026-08-27/r02.mp4",
       "enabled": true,
       "status": "awaiting_manual_approval",
       "gate_status": "PASSED",
@@ -980,8 +980,8 @@
           "passed": true,
           "checks": [
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-24/r02.mp4",
-              "bytes": 3439962,
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-27/r02.mp4",
+              "bytes": 3444124,
               "video": {
                 "codec_name": "h264",
                 "width": 1080,
@@ -1024,14 +1024,14 @@
                   "dark_ratio": 0.0831,
                   "green_ratio": 0.0951,
                   "mean_luminance": 219.92,
-                  "color_buckets": 51.0
+                  "color_buckets": 50.0
                 },
                 "right": {
-                  "white_ratio": 0.074,
+                  "white_ratio": 0.0739,
                   "dark_ratio": 0.5338,
                   "green_ratio": 0.0393,
-                  "mean_luminance": 78.16,
-                  "color_buckets": 195.0
+                  "mean_luminance": 78.17,
+                  "color_buckets": 194.0
                 },
                 "bottom": {
                   "white_ratio": 0.2993,
@@ -1062,13 +1062,13 @@
       }
     },
     {
-      "id": "f1-qualified-2026-08-24-c02",
+      "id": "f1-qualified-2026-08-27-c02",
       "source_item_id": "C02",
       "client_id": "f1-immobiliare",
       "client_name": "F1 Immobiliare",
       "regeneration_batch": "qualified-14d",
-      "content_date": "2026-08-24",
-      "scheduled_at": "2026-08-24T18:00:00+02:00",
+      "content_date": "2026-08-27",
+      "scheduled_at": "2026-08-27T18:00:00+02:00",
       "scheduled_at_role": "production_order_only",
       "publication_time_verified": false,
       "recommended_publish_day": null,
@@ -1115,16 +1115,16 @@
       ],
       "cta": "Scrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere.",
       "media": [
-        "publisher/media/generated/f1-qualified-14d/2026-08-24/c02/slide-01.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-24/c02/slide-02.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-24/c02/slide-03.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-24/c02/slide-04.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-24/c02/slide-05.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-24/c02/slide-06.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-24/c02/slide-07.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-24/c02/slide-08.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-24/c02/slide-09.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-24/c02/slide-10.jpg"
+        "publisher/media/generated/f1-qualified-14d/2026-08-27/c02/slide-01.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-08-27/c02/slide-02.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-08-27/c02/slide-03.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-08-27/c02/slide-04.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-08-27/c02/slide-05.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-08-27/c02/slide-06.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-08-27/c02/slide-07.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-08-27/c02/slide-08.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-08-27/c02/slide-09.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-08-27/c02/slide-10.jpg"
       ],
       "enabled": true,
       "status": "awaiting_manual_approval",
@@ -1186,7 +1186,7 @@
           "passed": true,
           "checks": [
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-24/c02/slide-01.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-27/c02/slide-01.jpg",
               "bytes": 233019,
               "dimensions": [
                 1080,
@@ -1194,7 +1194,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-24/c02/slide-02.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-27/c02/slide-02.jpg",
               "bytes": 227414,
               "dimensions": [
                 1080,
@@ -1202,7 +1202,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-24/c02/slide-03.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-27/c02/slide-03.jpg",
               "bytes": 227308,
               "dimensions": [
                 1080,
@@ -1210,7 +1210,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-24/c02/slide-04.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-27/c02/slide-04.jpg",
               "bytes": 226987,
               "dimensions": [
                 1080,
@@ -1218,7 +1218,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-24/c02/slide-05.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-27/c02/slide-05.jpg",
               "bytes": 237715,
               "dimensions": [
                 1080,
@@ -1226,7 +1226,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-24/c02/slide-06.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-27/c02/slide-06.jpg",
               "bytes": 236597,
               "dimensions": [
                 1080,
@@ -1234,7 +1234,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-24/c02/slide-07.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-27/c02/slide-07.jpg",
               "bytes": 231547,
               "dimensions": [
                 1080,
@@ -1242,7 +1242,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-24/c02/slide-08.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-27/c02/slide-08.jpg",
               "bytes": 235382,
               "dimensions": [
                 1080,
@@ -1250,7 +1250,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-24/c02/slide-09.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-27/c02/slide-09.jpg",
               "bytes": 234550,
               "dimensions": [
                 1080,
@@ -1258,7 +1258,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-24/c02/slide-10.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-27/c02/slide-10.jpg",
               "bytes": 228448,
               "dimensions": [
                 1080,
@@ -1716,13 +1716,13 @@
       }
     },
     {
-      "id": "f1-qualified-2026-08-25-r03",
+      "id": "f1-qualified-2026-08-28-r03",
       "source_item_id": "R03",
       "client_id": "f1-immobiliare",
       "client_name": "F1 Immobiliare",
       "regeneration_batch": "qualified-14d",
-      "content_date": "2026-08-25",
-      "scheduled_at": "2026-08-25T10:00:00+02:00",
+      "content_date": "2026-08-28",
+      "scheduled_at": "2026-08-28T10:00:00+02:00",
       "scheduled_at_role": "production_order_only",
       "publication_time_verified": false,
       "recommended_publish_day": null,
@@ -1765,7 +1765,7 @@
         "motivazione"
       ],
       "cta": "Scrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere.",
-      "media": "publisher/media/generated/f1-qualified-14d/2026-08-25/r03.mp4",
+      "media": "publisher/media/generated/f1-qualified-14d/2026-08-28/r03.mp4",
       "enabled": true,
       "status": "awaiting_manual_approval",
       "gate_status": "PASSED",
@@ -1828,8 +1828,8 @@
           "passed": true,
           "checks": [
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-25/r03.mp4",
-              "bytes": 3829295,
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-28/r03.mp4",
+              "bytes": 3827006,
               "video": {
                 "codec_name": "h264",
                 "width": 1080,
@@ -1856,7 +1856,7 @@
                 "full": {
                   "white_ratio": 0.4813,
                   "dark_ratio": 0.1698,
-                  "green_ratio": 0.0535,
+                  "green_ratio": 0.0536,
                   "mean_luminance": 178.1,
                   "color_buckets": 134.0
                 },
@@ -1868,9 +1868,9 @@
                   "color_buckets": 47.0
                 },
                 "left": {
-                  "white_ratio": 0.7585,
+                  "white_ratio": 0.7584,
                   "dark_ratio": 0.0876,
-                  "green_ratio": 0.0909,
+                  "green_ratio": 0.091,
                   "mean_luminance": 218.93,
                   "color_buckets": 52.0
                 },
@@ -1878,13 +1878,13 @@
                   "white_ratio": 0.0913,
                   "dark_ratio": 0.3176,
                   "green_ratio": 0.0365,
-                  "mean_luminance": 115.89,
+                  "mean_luminance": 115.9,
                   "color_buckets": 144.0
                 },
                 "bottom": {
                   "white_ratio": 0.3033,
                   "dark_ratio": 0.0457,
-                  "green_ratio": 0.1407,
+                  "green_ratio": 0.1408,
                   "mean_luminance": 175.96,
                   "color_buckets": 95.0
                 }
@@ -1910,13 +1910,13 @@
       }
     },
     {
-      "id": "f1-qualified-2026-08-25-c03",
+      "id": "f1-qualified-2026-08-28-c03",
       "source_item_id": "C03",
       "client_id": "f1-immobiliare",
       "client_name": "F1 Immobiliare",
       "regeneration_batch": "qualified-14d",
-      "content_date": "2026-08-25",
-      "scheduled_at": "2026-08-25T18:00:00+02:00",
+      "content_date": "2026-08-28",
+      "scheduled_at": "2026-08-28T18:00:00+02:00",
       "scheduled_at_role": "production_order_only",
       "publication_time_verified": false,
       "recommended_publish_day": null,
@@ -1963,16 +1963,16 @@
       ],
       "cta": "Scrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere.",
       "media": [
-        "publisher/media/generated/f1-qualified-14d/2026-08-25/c03/slide-01.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-25/c03/slide-02.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-25/c03/slide-03.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-25/c03/slide-04.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-25/c03/slide-05.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-25/c03/slide-06.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-25/c03/slide-07.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-25/c03/slide-08.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-25/c03/slide-09.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-25/c03/slide-10.jpg"
+        "publisher/media/generated/f1-qualified-14d/2026-08-28/c03/slide-01.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-08-28/c03/slide-02.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-08-28/c03/slide-03.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-08-28/c03/slide-04.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-08-28/c03/slide-05.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-08-28/c03/slide-06.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-08-28/c03/slide-07.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-08-28/c03/slide-08.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-08-28/c03/slide-09.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-08-28/c03/slide-10.jpg"
       ],
       "enabled": true,
       "status": "awaiting_manual_approval",
@@ -2034,7 +2034,7 @@
           "passed": true,
           "checks": [
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-25/c03/slide-01.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-28/c03/slide-01.jpg",
               "bytes": 255542,
               "dimensions": [
                 1080,
@@ -2042,7 +2042,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-25/c03/slide-02.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-28/c03/slide-02.jpg",
               "bytes": 256407,
               "dimensions": [
                 1080,
@@ -2050,7 +2050,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-25/c03/slide-03.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-28/c03/slide-03.jpg",
               "bytes": 251123,
               "dimensions": [
                 1080,
@@ -2058,7 +2058,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-25/c03/slide-04.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-28/c03/slide-04.jpg",
               "bytes": 241921,
               "dimensions": [
                 1080,
@@ -2066,7 +2066,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-25/c03/slide-05.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-28/c03/slide-05.jpg",
               "bytes": 247614,
               "dimensions": [
                 1080,
@@ -2074,7 +2074,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-25/c03/slide-06.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-28/c03/slide-06.jpg",
               "bytes": 258070,
               "dimensions": [
                 1080,
@@ -2082,7 +2082,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-25/c03/slide-07.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-28/c03/slide-07.jpg",
               "bytes": 246009,
               "dimensions": [
                 1080,
@@ -2090,7 +2090,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-25/c03/slide-08.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-28/c03/slide-08.jpg",
               "bytes": 253184,
               "dimensions": [
                 1080,
@@ -2098,7 +2098,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-25/c03/slide-09.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-28/c03/slide-09.jpg",
               "bytes": 260055,
               "dimensions": [
                 1080,
@@ -2106,7 +2106,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-25/c03/slide-10.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-28/c03/slide-10.jpg",
               "bytes": 253031,
               "dimensions": [
                 1080,
@@ -2564,13 +2564,13 @@
       }
     },
     {
-      "id": "f1-qualified-2026-08-26-r04",
+      "id": "f1-qualified-2026-08-29-r04",
       "source_item_id": "R04",
       "client_id": "f1-immobiliare",
       "client_name": "F1 Immobiliare",
       "regeneration_batch": "qualified-14d",
-      "content_date": "2026-08-26",
-      "scheduled_at": "2026-08-26T10:00:00+02:00",
+      "content_date": "2026-08-29",
+      "scheduled_at": "2026-08-29T10:00:00+02:00",
       "scheduled_at_role": "production_order_only",
       "publication_time_verified": false,
       "recommended_publish_day": null,
@@ -2613,7 +2613,7 @@
         "motivazione"
       ],
       "cta": "Scrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere.",
-      "media": "publisher/media/generated/f1-qualified-14d/2026-08-26/r04.mp4",
+      "media": "publisher/media/generated/f1-qualified-14d/2026-08-29/r04.mp4",
       "enabled": true,
       "status": "awaiting_manual_approval",
       "gate_status": "PASSED",
@@ -2676,8 +2676,8 @@
           "passed": true,
           "checks": [
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-26/r04.mp4",
-              "bytes": 4724481,
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-29/r04.mp4",
+              "bytes": 4724121,
               "video": {
                 "codec_name": "h264",
                 "width": 1080,
@@ -2758,13 +2758,13 @@
       }
     },
     {
-      "id": "f1-qualified-2026-08-26-c04",
+      "id": "f1-qualified-2026-08-29-c04",
       "source_item_id": "C04",
       "client_id": "f1-immobiliare",
       "client_name": "F1 Immobiliare",
       "regeneration_batch": "qualified-14d",
-      "content_date": "2026-08-26",
-      "scheduled_at": "2026-08-26T18:00:00+02:00",
+      "content_date": "2026-08-29",
+      "scheduled_at": "2026-08-29T18:00:00+02:00",
       "scheduled_at_role": "production_order_only",
       "publication_time_verified": false,
       "recommended_publish_day": null,
@@ -2811,16 +2811,16 @@
       ],
       "cta": "Scrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere.",
       "media": [
-        "publisher/media/generated/f1-qualified-14d/2026-08-26/c04/slide-01.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-26/c04/slide-02.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-26/c04/slide-03.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-26/c04/slide-04.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-26/c04/slide-05.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-26/c04/slide-06.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-26/c04/slide-07.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-26/c04/slide-08.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-26/c04/slide-09.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-26/c04/slide-10.jpg"
+        "publisher/media/generated/f1-qualified-14d/2026-08-29/c04/slide-01.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-08-29/c04/slide-02.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-08-29/c04/slide-03.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-08-29/c04/slide-04.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-08-29/c04/slide-05.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-08-29/c04/slide-06.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-08-29/c04/slide-07.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-08-29/c04/slide-08.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-08-29/c04/slide-09.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-08-29/c04/slide-10.jpg"
       ],
       "enabled": true,
       "status": "awaiting_manual_approval",
@@ -2882,7 +2882,7 @@
           "passed": true,
           "checks": [
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-26/c04/slide-01.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-29/c04/slide-01.jpg",
               "bytes": 268279,
               "dimensions": [
                 1080,
@@ -2890,7 +2890,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-26/c04/slide-02.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-29/c04/slide-02.jpg",
               "bytes": 266518,
               "dimensions": [
                 1080,
@@ -2898,7 +2898,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-26/c04/slide-03.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-29/c04/slide-03.jpg",
               "bytes": 266842,
               "dimensions": [
                 1080,
@@ -2906,7 +2906,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-26/c04/slide-04.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-29/c04/slide-04.jpg",
               "bytes": 273802,
               "dimensions": [
                 1080,
@@ -2914,7 +2914,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-26/c04/slide-05.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-29/c04/slide-05.jpg",
               "bytes": 268200,
               "dimensions": [
                 1080,
@@ -2922,7 +2922,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-26/c04/slide-06.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-29/c04/slide-06.jpg",
               "bytes": 267213,
               "dimensions": [
                 1080,
@@ -2930,7 +2930,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-26/c04/slide-07.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-29/c04/slide-07.jpg",
               "bytes": 271390,
               "dimensions": [
                 1080,
@@ -2938,7 +2938,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-26/c04/slide-08.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-29/c04/slide-08.jpg",
               "bytes": 265952,
               "dimensions": [
                 1080,
@@ -2946,7 +2946,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-26/c04/slide-09.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-29/c04/slide-09.jpg",
               "bytes": 260113,
               "dimensions": [
                 1080,
@@ -2954,7 +2954,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-26/c04/slide-10.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-29/c04/slide-10.jpg",
               "bytes": 261266,
               "dimensions": [
                 1080,
@@ -3412,13 +3412,13 @@
       }
     },
     {
-      "id": "f1-qualified-2026-08-27-r05",
+      "id": "f1-qualified-2026-08-30-r05",
       "source_item_id": "R05",
       "client_id": "f1-immobiliare",
       "client_name": "F1 Immobiliare",
       "regeneration_batch": "qualified-14d",
-      "content_date": "2026-08-27",
-      "scheduled_at": "2026-08-27T10:00:00+02:00",
+      "content_date": "2026-08-30",
+      "scheduled_at": "2026-08-30T10:00:00+02:00",
       "scheduled_at_role": "production_order_only",
       "publication_time_verified": false,
       "recommended_publish_day": null,
@@ -3461,7 +3461,7 @@
         "motivazione"
       ],
       "cta": "Scrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere.",
-      "media": "publisher/media/generated/f1-qualified-14d/2026-08-27/r05.mp4",
+      "media": "publisher/media/generated/f1-qualified-14d/2026-08-30/r05.mp4",
       "enabled": true,
       "status": "awaiting_manual_approval",
       "gate_status": "PASSED",
@@ -3524,8 +3524,8 @@
           "passed": true,
           "checks": [
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-27/r05.mp4",
-              "bytes": 3142778,
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-30/r05.mp4",
+              "bytes": 3134958,
               "video": {
                 "codec_name": "h264",
                 "width": 1080,
@@ -3565,7 +3565,7 @@
                 },
                 "left": {
                   "white_ratio": 0.7509,
-                  "dark_ratio": 0.0895,
+                  "dark_ratio": 0.0896,
                   "green_ratio": 0.0936,
                   "mean_luminance": 217.9,
                   "color_buckets": 50.0
@@ -3606,13 +3606,13 @@
       }
     },
     {
-      "id": "f1-qualified-2026-08-27-c05",
+      "id": "f1-qualified-2026-08-30-c05",
       "source_item_id": "C05",
       "client_id": "f1-immobiliare",
       "client_name": "F1 Immobiliare",
       "regeneration_batch": "qualified-14d",
-      "content_date": "2026-08-27",
-      "scheduled_at": "2026-08-27T18:00:00+02:00",
+      "content_date": "2026-08-30",
+      "scheduled_at": "2026-08-30T18:00:00+02:00",
       "scheduled_at_role": "production_order_only",
       "publication_time_verified": false,
       "recommended_publish_day": null,
@@ -3659,16 +3659,16 @@
       ],
       "cta": "Scrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere.",
       "media": [
-        "publisher/media/generated/f1-qualified-14d/2026-08-27/c05/slide-01.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-27/c05/slide-02.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-27/c05/slide-03.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-27/c05/slide-04.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-27/c05/slide-05.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-27/c05/slide-06.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-27/c05/slide-07.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-27/c05/slide-08.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-27/c05/slide-09.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-27/c05/slide-10.jpg"
+        "publisher/media/generated/f1-qualified-14d/2026-08-30/c05/slide-01.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-08-30/c05/slide-02.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-08-30/c05/slide-03.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-08-30/c05/slide-04.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-08-30/c05/slide-05.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-08-30/c05/slide-06.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-08-30/c05/slide-07.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-08-30/c05/slide-08.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-08-30/c05/slide-09.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-08-30/c05/slide-10.jpg"
       ],
       "enabled": true,
       "status": "awaiting_manual_approval",
@@ -3730,7 +3730,7 @@
           "passed": true,
           "checks": [
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-27/c05/slide-01.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-30/c05/slide-01.jpg",
               "bytes": 262109,
               "dimensions": [
                 1080,
@@ -3738,7 +3738,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-27/c05/slide-02.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-30/c05/slide-02.jpg",
               "bytes": 247597,
               "dimensions": [
                 1080,
@@ -3746,7 +3746,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-27/c05/slide-03.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-30/c05/slide-03.jpg",
               "bytes": 248818,
               "dimensions": [
                 1080,
@@ -3754,7 +3754,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-27/c05/slide-04.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-30/c05/slide-04.jpg",
               "bytes": 248025,
               "dimensions": [
                 1080,
@@ -3762,7 +3762,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-27/c05/slide-05.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-30/c05/slide-05.jpg",
               "bytes": 250414,
               "dimensions": [
                 1080,
@@ -3770,7 +3770,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-27/c05/slide-06.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-30/c05/slide-06.jpg",
               "bytes": 254989,
               "dimensions": [
                 1080,
@@ -3778,7 +3778,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-27/c05/slide-07.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-30/c05/slide-07.jpg",
               "bytes": 250741,
               "dimensions": [
                 1080,
@@ -3786,7 +3786,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-27/c05/slide-08.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-30/c05/slide-08.jpg",
               "bytes": 256544,
               "dimensions": [
                 1080,
@@ -3794,7 +3794,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-27/c05/slide-09.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-30/c05/slide-09.jpg",
               "bytes": 255319,
               "dimensions": [
                 1080,
@@ -3802,7 +3802,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-27/c05/slide-10.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-30/c05/slide-10.jpg",
               "bytes": 254736,
               "dimensions": [
                 1080,
@@ -4260,13 +4260,13 @@
       }
     },
     {
-      "id": "f1-qualified-2026-08-28-r06",
+      "id": "f1-qualified-2026-08-31-r06",
       "source_item_id": "R06",
       "client_id": "f1-immobiliare",
       "client_name": "F1 Immobiliare",
       "regeneration_batch": "qualified-14d",
-      "content_date": "2026-08-28",
-      "scheduled_at": "2026-08-28T10:00:00+02:00",
+      "content_date": "2026-08-31",
+      "scheduled_at": "2026-08-31T10:00:00+02:00",
       "scheduled_at_role": "production_order_only",
       "publication_time_verified": false,
       "recommended_publish_day": null,
@@ -4309,7 +4309,7 @@
         "motivazione"
       ],
       "cta": "Scrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere.",
-      "media": "publisher/media/generated/f1-qualified-14d/2026-08-28/r06.mp4",
+      "media": "publisher/media/generated/f1-qualified-14d/2026-08-31/r06.mp4",
       "enabled": true,
       "status": "awaiting_manual_approval",
       "gate_status": "PASSED",
@@ -4372,8 +4372,8 @@
           "passed": true,
           "checks": [
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-28/r06.mp4",
-              "bytes": 3148160,
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-31/r06.mp4",
+              "bytes": 3148469,
               "video": {
                 "codec_name": "h264",
                 "width": 1080,
@@ -4429,7 +4429,7 @@
                   "white_ratio": 0.3028,
                   "dark_ratio": 0.043,
                   "green_ratio": 0.1407,
-                  "mean_luminance": 180.37,
+                  "mean_luminance": 180.38,
                   "color_buckets": 75.0
                 }
               },
@@ -4454,13 +4454,13 @@
       }
     },
     {
-      "id": "f1-qualified-2026-08-28-c06",
+      "id": "f1-qualified-2026-08-31-c06",
       "source_item_id": "C06",
       "client_id": "f1-immobiliare",
       "client_name": "F1 Immobiliare",
       "regeneration_batch": "qualified-14d",
-      "content_date": "2026-08-28",
-      "scheduled_at": "2026-08-28T18:00:00+02:00",
+      "content_date": "2026-08-31",
+      "scheduled_at": "2026-08-31T18:00:00+02:00",
       "scheduled_at_role": "production_order_only",
       "publication_time_verified": false,
       "recommended_publish_day": null,
@@ -4507,16 +4507,16 @@
       ],
       "cta": "Scrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere.",
       "media": [
-        "publisher/media/generated/f1-qualified-14d/2026-08-28/c06/slide-01.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-28/c06/slide-02.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-28/c06/slide-03.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-28/c06/slide-04.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-28/c06/slide-05.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-28/c06/slide-06.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-28/c06/slide-07.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-28/c06/slide-08.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-28/c06/slide-09.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-28/c06/slide-10.jpg"
+        "publisher/media/generated/f1-qualified-14d/2026-08-31/c06/slide-01.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-08-31/c06/slide-02.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-08-31/c06/slide-03.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-08-31/c06/slide-04.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-08-31/c06/slide-05.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-08-31/c06/slide-06.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-08-31/c06/slide-07.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-08-31/c06/slide-08.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-08-31/c06/slide-09.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-08-31/c06/slide-10.jpg"
       ],
       "enabled": true,
       "status": "awaiting_manual_approval",
@@ -4578,7 +4578,7 @@
           "passed": true,
           "checks": [
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-28/c06/slide-01.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-31/c06/slide-01.jpg",
               "bytes": 279838,
               "dimensions": [
                 1080,
@@ -4586,7 +4586,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-28/c06/slide-02.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-31/c06/slide-02.jpg",
               "bytes": 285542,
               "dimensions": [
                 1080,
@@ -4594,7 +4594,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-28/c06/slide-03.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-31/c06/slide-03.jpg",
               "bytes": 272579,
               "dimensions": [
                 1080,
@@ -4602,7 +4602,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-28/c06/slide-04.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-31/c06/slide-04.jpg",
               "bytes": 272339,
               "dimensions": [
                 1080,
@@ -4610,7 +4610,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-28/c06/slide-05.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-31/c06/slide-05.jpg",
               "bytes": 274461,
               "dimensions": [
                 1080,
@@ -4618,7 +4618,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-28/c06/slide-06.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-31/c06/slide-06.jpg",
               "bytes": 275976,
               "dimensions": [
                 1080,
@@ -4626,7 +4626,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-28/c06/slide-07.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-31/c06/slide-07.jpg",
               "bytes": 284399,
               "dimensions": [
                 1080,
@@ -4634,7 +4634,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-28/c06/slide-08.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-31/c06/slide-08.jpg",
               "bytes": 283055,
               "dimensions": [
                 1080,
@@ -4642,7 +4642,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-28/c06/slide-09.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-31/c06/slide-09.jpg",
               "bytes": 282062,
               "dimensions": [
                 1080,
@@ -4650,7 +4650,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-28/c06/slide-10.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-31/c06/slide-10.jpg",
               "bytes": 287757,
               "dimensions": [
                 1080,
@@ -5108,13 +5108,13 @@
       }
     },
     {
-      "id": "f1-qualified-2026-08-29-r07",
+      "id": "f1-qualified-2026-09-01-r07",
       "source_item_id": "R07",
       "client_id": "f1-immobiliare",
       "client_name": "F1 Immobiliare",
       "regeneration_batch": "qualified-14d",
-      "content_date": "2026-08-29",
-      "scheduled_at": "2026-08-29T10:00:00+02:00",
+      "content_date": "2026-09-01",
+      "scheduled_at": "2026-09-01T10:00:00+02:00",
       "scheduled_at_role": "production_order_only",
       "publication_time_verified": false,
       "recommended_publish_day": null,
@@ -5157,7 +5157,7 @@
         "motivazione"
       ],
       "cta": "Scrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere.",
-      "media": "publisher/media/generated/f1-qualified-14d/2026-08-29/r07.mp4",
+      "media": "publisher/media/generated/f1-qualified-14d/2026-09-01/r07.mp4",
       "enabled": true,
       "status": "awaiting_manual_approval",
       "gate_status": "PASSED",
@@ -5220,8 +5220,8 @@
           "passed": true,
           "checks": [
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-29/r07.mp4",
-              "bytes": 3247808,
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-01/r07.mp4",
+              "bytes": 3247060,
               "video": {
                 "codec_name": "h264",
                 "width": 1080,
@@ -5250,7 +5250,7 @@
                   "dark_ratio": 0.0924,
                   "green_ratio": 0.055,
                   "mean_luminance": 173.64,
-                  "color_buckets": 121.0
+                  "color_buckets": 122.0
                 },
                 "top": {
                   "white_ratio": 0.7337,
@@ -5261,13 +5261,13 @@
                 },
                 "left": {
                   "white_ratio": 0.7517,
-                  "dark_ratio": 0.0873,
+                  "dark_ratio": 0.0874,
                   "green_ratio": 0.0959,
                   "mean_luminance": 218.16,
                   "color_buckets": 52.0
                 },
                 "right": {
-                  "white_ratio": 0.058,
+                  "white_ratio": 0.0581,
                   "dark_ratio": 0.1527,
                   "green_ratio": 0.0357,
                   "mean_luminance": 106.79,
@@ -5278,7 +5278,7 @@
                   "dark_ratio": 0.04,
                   "green_ratio": 0.1407,
                   "mean_luminance": 144.73,
-                  "color_buckets": 47.0
+                  "color_buckets": 46.0
                 }
               },
               "failed": []
@@ -5302,13 +5302,13 @@
       }
     },
     {
-      "id": "f1-qualified-2026-08-29-c07",
+      "id": "f1-qualified-2026-09-01-c07",
       "source_item_id": "C07",
       "client_id": "f1-immobiliare",
       "client_name": "F1 Immobiliare",
       "regeneration_batch": "qualified-14d",
-      "content_date": "2026-08-29",
-      "scheduled_at": "2026-08-29T18:00:00+02:00",
+      "content_date": "2026-09-01",
+      "scheduled_at": "2026-09-01T18:00:00+02:00",
       "scheduled_at_role": "production_order_only",
       "publication_time_verified": false,
       "recommended_publish_day": null,
@@ -5355,16 +5355,16 @@
       ],
       "cta": "Scrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere.",
       "media": [
-        "publisher/media/generated/f1-qualified-14d/2026-08-29/c07/slide-01.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-29/c07/slide-02.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-29/c07/slide-03.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-29/c07/slide-04.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-29/c07/slide-05.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-29/c07/slide-06.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-29/c07/slide-07.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-29/c07/slide-08.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-29/c07/slide-09.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-29/c07/slide-10.jpg"
+        "publisher/media/generated/f1-qualified-14d/2026-09-01/c07/slide-01.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-01/c07/slide-02.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-01/c07/slide-03.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-01/c07/slide-04.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-01/c07/slide-05.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-01/c07/slide-06.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-01/c07/slide-07.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-01/c07/slide-08.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-01/c07/slide-09.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-01/c07/slide-10.jpg"
       ],
       "enabled": true,
       "status": "awaiting_manual_approval",
@@ -5426,7 +5426,7 @@
           "passed": true,
           "checks": [
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-29/c07/slide-01.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-01/c07/slide-01.jpg",
               "bytes": 273166,
               "dimensions": [
                 1080,
@@ -5434,7 +5434,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-29/c07/slide-02.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-01/c07/slide-02.jpg",
               "bytes": 273874,
               "dimensions": [
                 1080,
@@ -5442,7 +5442,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-29/c07/slide-03.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-01/c07/slide-03.jpg",
               "bytes": 270977,
               "dimensions": [
                 1080,
@@ -5450,7 +5450,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-29/c07/slide-04.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-01/c07/slide-04.jpg",
               "bytes": 268382,
               "dimensions": [
                 1080,
@@ -5458,7 +5458,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-29/c07/slide-05.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-01/c07/slide-05.jpg",
               "bytes": 272437,
               "dimensions": [
                 1080,
@@ -5466,7 +5466,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-29/c07/slide-06.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-01/c07/slide-06.jpg",
               "bytes": 273955,
               "dimensions": [
                 1080,
@@ -5474,7 +5474,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-29/c07/slide-07.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-01/c07/slide-07.jpg",
               "bytes": 267308,
               "dimensions": [
                 1080,
@@ -5482,7 +5482,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-29/c07/slide-08.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-01/c07/slide-08.jpg",
               "bytes": 265107,
               "dimensions": [
                 1080,
@@ -5490,7 +5490,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-29/c07/slide-09.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-01/c07/slide-09.jpg",
               "bytes": 269787,
               "dimensions": [
                 1080,
@@ -5498,7 +5498,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-29/c07/slide-10.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-01/c07/slide-10.jpg",
               "bytes": 272858,
               "dimensions": [
                 1080,
@@ -5956,13 +5956,13 @@
       }
     },
     {
-      "id": "f1-qualified-2026-08-30-r08",
+      "id": "f1-qualified-2026-09-02-r08",
       "source_item_id": "R08",
       "client_id": "f1-immobiliare",
       "client_name": "F1 Immobiliare",
       "regeneration_batch": "qualified-14d",
-      "content_date": "2026-08-30",
-      "scheduled_at": "2026-08-30T10:00:00+02:00",
+      "content_date": "2026-09-02",
+      "scheduled_at": "2026-09-02T10:00:00+02:00",
       "scheduled_at_role": "production_order_only",
       "publication_time_verified": false,
       "recommended_publish_day": null,
@@ -6005,7 +6005,7 @@
         "motivazione"
       ],
       "cta": "Scrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere.",
-      "media": "publisher/media/generated/f1-qualified-14d/2026-08-30/r08.mp4",
+      "media": "publisher/media/generated/f1-qualified-14d/2026-09-02/r08.mp4",
       "enabled": true,
       "status": "awaiting_manual_approval",
       "gate_status": "PASSED",
@@ -6068,8 +6068,8 @@
           "passed": true,
           "checks": [
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-30/r08.mp4",
-              "bytes": 4205532,
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-02/r08.mp4",
+              "bytes": 4206007,
               "video": {
                 "codec_name": "h264",
                 "width": 1080,
@@ -6150,13 +6150,13 @@
       }
     },
     {
-      "id": "f1-qualified-2026-08-30-c08",
+      "id": "f1-qualified-2026-09-02-c08",
       "source_item_id": "C08",
       "client_id": "f1-immobiliare",
       "client_name": "F1 Immobiliare",
       "regeneration_batch": "qualified-14d",
-      "content_date": "2026-08-30",
-      "scheduled_at": "2026-08-30T18:00:00+02:00",
+      "content_date": "2026-09-02",
+      "scheduled_at": "2026-09-02T18:00:00+02:00",
       "scheduled_at_role": "production_order_only",
       "publication_time_verified": false,
       "recommended_publish_day": null,
@@ -6203,16 +6203,16 @@
       ],
       "cta": "Scrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere.",
       "media": [
-        "publisher/media/generated/f1-qualified-14d/2026-08-30/c08/slide-01.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-30/c08/slide-02.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-30/c08/slide-03.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-30/c08/slide-04.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-30/c08/slide-05.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-30/c08/slide-06.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-30/c08/slide-07.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-30/c08/slide-08.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-30/c08/slide-09.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-30/c08/slide-10.jpg"
+        "publisher/media/generated/f1-qualified-14d/2026-09-02/c08/slide-01.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-02/c08/slide-02.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-02/c08/slide-03.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-02/c08/slide-04.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-02/c08/slide-05.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-02/c08/slide-06.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-02/c08/slide-07.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-02/c08/slide-08.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-02/c08/slide-09.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-02/c08/slide-10.jpg"
       ],
       "enabled": true,
       "status": "awaiting_manual_approval",
@@ -6274,7 +6274,7 @@
           "passed": true,
           "checks": [
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-30/c08/slide-01.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-02/c08/slide-01.jpg",
               "bytes": 265907,
               "dimensions": [
                 1080,
@@ -6282,7 +6282,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-30/c08/slide-02.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-02/c08/slide-02.jpg",
               "bytes": 248693,
               "dimensions": [
                 1080,
@@ -6290,7 +6290,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-30/c08/slide-03.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-02/c08/slide-03.jpg",
               "bytes": 259691,
               "dimensions": [
                 1080,
@@ -6298,7 +6298,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-30/c08/slide-04.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-02/c08/slide-04.jpg",
               "bytes": 256802,
               "dimensions": [
                 1080,
@@ -6306,7 +6306,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-30/c08/slide-05.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-02/c08/slide-05.jpg",
               "bytes": 251970,
               "dimensions": [
                 1080,
@@ -6314,7 +6314,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-30/c08/slide-06.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-02/c08/slide-06.jpg",
               "bytes": 249686,
               "dimensions": [
                 1080,
@@ -6322,7 +6322,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-30/c08/slide-07.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-02/c08/slide-07.jpg",
               "bytes": 259477,
               "dimensions": [
                 1080,
@@ -6330,7 +6330,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-30/c08/slide-08.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-02/c08/slide-08.jpg",
               "bytes": 248796,
               "dimensions": [
                 1080,
@@ -6338,7 +6338,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-30/c08/slide-09.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-02/c08/slide-09.jpg",
               "bytes": 251954,
               "dimensions": [
                 1080,
@@ -6346,7 +6346,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-30/c08/slide-10.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-02/c08/slide-10.jpg",
               "bytes": 258590,
               "dimensions": [
                 1080,
@@ -6804,13 +6804,13 @@
       }
     },
     {
-      "id": "f1-qualified-2026-08-31-r09",
+      "id": "f1-qualified-2026-09-03-r09",
       "source_item_id": "R09",
       "client_id": "f1-immobiliare",
       "client_name": "F1 Immobiliare",
       "regeneration_batch": "qualified-14d",
-      "content_date": "2026-08-31",
-      "scheduled_at": "2026-08-31T10:00:00+02:00",
+      "content_date": "2026-09-03",
+      "scheduled_at": "2026-09-03T10:00:00+02:00",
       "scheduled_at_role": "production_order_only",
       "publication_time_verified": false,
       "recommended_publish_day": null,
@@ -6853,7 +6853,7 @@
         "motivazione"
       ],
       "cta": "Scrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere.",
-      "media": "publisher/media/generated/f1-qualified-14d/2026-08-31/r09.mp4",
+      "media": "publisher/media/generated/f1-qualified-14d/2026-09-03/r09.mp4",
       "enabled": true,
       "status": "awaiting_manual_approval",
       "gate_status": "PASSED",
@@ -6916,8 +6916,8 @@
           "passed": true,
           "checks": [
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-31/r09.mp4",
-              "bytes": 4028329,
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-03/r09.mp4",
+              "bytes": 4029245,
               "video": {
                 "codec_name": "h264",
                 "width": 1080,
@@ -6963,7 +6963,7 @@
                   "color_buckets": 53.0
                 },
                 "right": {
-                  "white_ratio": 0.0711,
+                  "white_ratio": 0.071,
                   "dark_ratio": 0.0813,
                   "green_ratio": 0.034,
                   "mean_luminance": 155.24,
@@ -6998,13 +6998,13 @@
       }
     },
     {
-      "id": "f1-qualified-2026-08-31-c09",
+      "id": "f1-qualified-2026-09-03-c09",
       "source_item_id": "C09",
       "client_id": "f1-immobiliare",
       "client_name": "F1 Immobiliare",
       "regeneration_batch": "qualified-14d",
-      "content_date": "2026-08-31",
-      "scheduled_at": "2026-08-31T18:00:00+02:00",
+      "content_date": "2026-09-03",
+      "scheduled_at": "2026-09-03T18:00:00+02:00",
       "scheduled_at_role": "production_order_only",
       "publication_time_verified": false,
       "recommended_publish_day": null,
@@ -7051,16 +7051,16 @@
       ],
       "cta": "Scrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere.",
       "media": [
-        "publisher/media/generated/f1-qualified-14d/2026-08-31/c09/slide-01.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-31/c09/slide-02.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-31/c09/slide-03.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-31/c09/slide-04.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-31/c09/slide-05.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-31/c09/slide-06.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-31/c09/slide-07.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-31/c09/slide-08.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-31/c09/slide-09.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-08-31/c09/slide-10.jpg"
+        "publisher/media/generated/f1-qualified-14d/2026-09-03/c09/slide-01.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-03/c09/slide-02.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-03/c09/slide-03.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-03/c09/slide-04.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-03/c09/slide-05.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-03/c09/slide-06.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-03/c09/slide-07.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-03/c09/slide-08.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-03/c09/slide-09.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-03/c09/slide-10.jpg"
       ],
       "enabled": true,
       "status": "awaiting_manual_approval",
@@ -7122,7 +7122,7 @@
           "passed": true,
           "checks": [
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-31/c09/slide-01.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-03/c09/slide-01.jpg",
               "bytes": 258938,
               "dimensions": [
                 1080,
@@ -7130,7 +7130,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-31/c09/slide-02.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-03/c09/slide-02.jpg",
               "bytes": 259068,
               "dimensions": [
                 1080,
@@ -7138,7 +7138,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-31/c09/slide-03.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-03/c09/slide-03.jpg",
               "bytes": 257104,
               "dimensions": [
                 1080,
@@ -7146,7 +7146,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-31/c09/slide-04.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-03/c09/slide-04.jpg",
               "bytes": 257877,
               "dimensions": [
                 1080,
@@ -7154,7 +7154,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-31/c09/slide-05.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-03/c09/slide-05.jpg",
               "bytes": 260482,
               "dimensions": [
                 1080,
@@ -7162,7 +7162,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-31/c09/slide-06.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-03/c09/slide-06.jpg",
               "bytes": 258545,
               "dimensions": [
                 1080,
@@ -7170,7 +7170,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-31/c09/slide-07.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-03/c09/slide-07.jpg",
               "bytes": 261869,
               "dimensions": [
                 1080,
@@ -7178,7 +7178,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-31/c09/slide-08.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-03/c09/slide-08.jpg",
               "bytes": 258691,
               "dimensions": [
                 1080,
@@ -7186,7 +7186,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-31/c09/slide-09.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-03/c09/slide-09.jpg",
               "bytes": 259091,
               "dimensions": [
                 1080,
@@ -7194,7 +7194,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-08-31/c09/slide-10.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-03/c09/slide-10.jpg",
               "bytes": 260047,
               "dimensions": [
                 1080,
@@ -7652,13 +7652,13 @@
       }
     },
     {
-      "id": "f1-qualified-2026-09-01-r10",
+      "id": "f1-qualified-2026-09-04-r10",
       "source_item_id": "R10",
       "client_id": "f1-immobiliare",
       "client_name": "F1 Immobiliare",
       "regeneration_batch": "qualified-14d",
-      "content_date": "2026-09-01",
-      "scheduled_at": "2026-09-01T10:00:00+02:00",
+      "content_date": "2026-09-04",
+      "scheduled_at": "2026-09-04T10:00:00+02:00",
       "scheduled_at_role": "production_order_only",
       "publication_time_verified": false,
       "recommended_publish_day": null,
@@ -7701,7 +7701,7 @@
         "motivazione"
       ],
       "cta": "Scrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere.",
-      "media": "publisher/media/generated/f1-qualified-14d/2026-09-01/r10.mp4",
+      "media": "publisher/media/generated/f1-qualified-14d/2026-09-04/r10.mp4",
       "enabled": true,
       "status": "awaiting_manual_approval",
       "gate_status": "PASSED",
@@ -7764,8 +7764,8 @@
           "passed": true,
           "checks": [
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-01/r10.mp4",
-              "bytes": 3594912,
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-04/r10.mp4",
+              "bytes": 3594158,
               "video": {
                 "codec_name": "h264",
                 "width": 1080,
@@ -7807,7 +7807,7 @@
                   "white_ratio": 0.7477,
                   "dark_ratio": 0.0892,
                   "green_ratio": 0.0945,
-                  "mean_luminance": 217.76,
+                  "mean_luminance": 217.75,
                   "color_buckets": 48.0
                 },
                 "right": {
@@ -7846,13 +7846,13 @@
       }
     },
     {
-      "id": "f1-qualified-2026-09-01-c10",
+      "id": "f1-qualified-2026-09-04-c10",
       "source_item_id": "C10",
       "client_id": "f1-immobiliare",
       "client_name": "F1 Immobiliare",
       "regeneration_batch": "qualified-14d",
-      "content_date": "2026-09-01",
-      "scheduled_at": "2026-09-01T18:00:00+02:00",
+      "content_date": "2026-09-04",
+      "scheduled_at": "2026-09-04T18:00:00+02:00",
       "scheduled_at_role": "production_order_only",
       "publication_time_verified": false,
       "recommended_publish_day": null,
@@ -7899,16 +7899,16 @@
       ],
       "cta": "Scrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere.",
       "media": [
-        "publisher/media/generated/f1-qualified-14d/2026-09-01/c10/slide-01.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-09-01/c10/slide-02.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-09-01/c10/slide-03.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-09-01/c10/slide-04.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-09-01/c10/slide-05.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-09-01/c10/slide-06.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-09-01/c10/slide-07.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-09-01/c10/slide-08.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-09-01/c10/slide-09.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-09-01/c10/slide-10.jpg"
+        "publisher/media/generated/f1-qualified-14d/2026-09-04/c10/slide-01.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-04/c10/slide-02.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-04/c10/slide-03.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-04/c10/slide-04.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-04/c10/slide-05.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-04/c10/slide-06.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-04/c10/slide-07.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-04/c10/slide-08.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-04/c10/slide-09.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-04/c10/slide-10.jpg"
       ],
       "enabled": true,
       "status": "awaiting_manual_approval",
@@ -7970,7 +7970,7 @@
           "passed": true,
           "checks": [
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-01/c10/slide-01.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-04/c10/slide-01.jpg",
               "bytes": 265334,
               "dimensions": [
                 1080,
@@ -7978,7 +7978,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-01/c10/slide-02.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-04/c10/slide-02.jpg",
               "bytes": 268053,
               "dimensions": [
                 1080,
@@ -7986,7 +7986,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-01/c10/slide-03.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-04/c10/slide-03.jpg",
               "bytes": 265306,
               "dimensions": [
                 1080,
@@ -7994,7 +7994,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-01/c10/slide-04.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-04/c10/slide-04.jpg",
               "bytes": 268822,
               "dimensions": [
                 1080,
@@ -8002,7 +8002,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-01/c10/slide-05.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-04/c10/slide-05.jpg",
               "bytes": 271338,
               "dimensions": [
                 1080,
@@ -8010,7 +8010,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-01/c10/slide-06.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-04/c10/slide-06.jpg",
               "bytes": 266176,
               "dimensions": [
                 1080,
@@ -8018,7 +8018,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-01/c10/slide-07.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-04/c10/slide-07.jpg",
               "bytes": 259545,
               "dimensions": [
                 1080,
@@ -8026,7 +8026,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-01/c10/slide-08.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-04/c10/slide-08.jpg",
               "bytes": 260652,
               "dimensions": [
                 1080,
@@ -8034,7 +8034,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-01/c10/slide-09.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-04/c10/slide-09.jpg",
               "bytes": 261136,
               "dimensions": [
                 1080,
@@ -8042,7 +8042,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-01/c10/slide-10.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-04/c10/slide-10.jpg",
               "bytes": 266278,
               "dimensions": [
                 1080,
@@ -8500,13 +8500,13 @@
       }
     },
     {
-      "id": "f1-qualified-2026-09-02-r11",
+      "id": "f1-qualified-2026-09-05-r11",
       "source_item_id": "R11",
       "client_id": "f1-immobiliare",
       "client_name": "F1 Immobiliare",
       "regeneration_batch": "qualified-14d",
-      "content_date": "2026-09-02",
-      "scheduled_at": "2026-09-02T10:00:00+02:00",
+      "content_date": "2026-09-05",
+      "scheduled_at": "2026-09-05T10:00:00+02:00",
       "scheduled_at_role": "production_order_only",
       "publication_time_verified": false,
       "recommended_publish_day": null,
@@ -8549,7 +8549,7 @@
         "motivazione"
       ],
       "cta": "Scrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere.",
-      "media": "publisher/media/generated/f1-qualified-14d/2026-09-02/r11.mp4",
+      "media": "publisher/media/generated/f1-qualified-14d/2026-09-05/r11.mp4",
       "enabled": true,
       "status": "awaiting_manual_approval",
       "gate_status": "PASSED",
@@ -8612,8 +8612,8 @@
           "passed": true,
           "checks": [
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-02/r11.mp4",
-              "bytes": 3779494,
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-05/r11.mp4",
+              "bytes": 3780896,
               "video": {
                 "codec_name": "h264",
                 "width": 1080,
@@ -8694,13 +8694,13 @@
       }
     },
     {
-      "id": "f1-qualified-2026-09-02-c11",
+      "id": "f1-qualified-2026-09-05-c11",
       "source_item_id": "C11",
       "client_id": "f1-immobiliare",
       "client_name": "F1 Immobiliare",
       "regeneration_batch": "qualified-14d",
-      "content_date": "2026-09-02",
-      "scheduled_at": "2026-09-02T18:00:00+02:00",
+      "content_date": "2026-09-05",
+      "scheduled_at": "2026-09-05T18:00:00+02:00",
       "scheduled_at_role": "production_order_only",
       "publication_time_verified": false,
       "recommended_publish_day": null,
@@ -8747,16 +8747,16 @@
       ],
       "cta": "Scrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere.",
       "media": [
-        "publisher/media/generated/f1-qualified-14d/2026-09-02/c11/slide-01.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-09-02/c11/slide-02.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-09-02/c11/slide-03.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-09-02/c11/slide-04.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-09-02/c11/slide-05.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-09-02/c11/slide-06.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-09-02/c11/slide-07.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-09-02/c11/slide-08.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-09-02/c11/slide-09.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-09-02/c11/slide-10.jpg"
+        "publisher/media/generated/f1-qualified-14d/2026-09-05/c11/slide-01.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-05/c11/slide-02.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-05/c11/slide-03.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-05/c11/slide-04.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-05/c11/slide-05.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-05/c11/slide-06.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-05/c11/slide-07.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-05/c11/slide-08.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-05/c11/slide-09.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-05/c11/slide-10.jpg"
       ],
       "enabled": true,
       "status": "awaiting_manual_approval",
@@ -8818,7 +8818,7 @@
           "passed": true,
           "checks": [
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-02/c11/slide-01.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-05/c11/slide-01.jpg",
               "bytes": 209438,
               "dimensions": [
                 1080,
@@ -8826,7 +8826,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-02/c11/slide-02.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-05/c11/slide-02.jpg",
               "bytes": 206530,
               "dimensions": [
                 1080,
@@ -8834,7 +8834,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-02/c11/slide-03.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-05/c11/slide-03.jpg",
               "bytes": 203154,
               "dimensions": [
                 1080,
@@ -8842,7 +8842,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-02/c11/slide-04.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-05/c11/slide-04.jpg",
               "bytes": 205875,
               "dimensions": [
                 1080,
@@ -8850,7 +8850,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-02/c11/slide-05.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-05/c11/slide-05.jpg",
               "bytes": 209672,
               "dimensions": [
                 1080,
@@ -8858,7 +8858,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-02/c11/slide-06.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-05/c11/slide-06.jpg",
               "bytes": 204617,
               "dimensions": [
                 1080,
@@ -8866,7 +8866,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-02/c11/slide-07.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-05/c11/slide-07.jpg",
               "bytes": 210827,
               "dimensions": [
                 1080,
@@ -8874,7 +8874,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-02/c11/slide-08.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-05/c11/slide-08.jpg",
               "bytes": 209452,
               "dimensions": [
                 1080,
@@ -8882,7 +8882,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-02/c11/slide-09.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-05/c11/slide-09.jpg",
               "bytes": 212390,
               "dimensions": [
                 1080,
@@ -8890,7 +8890,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-02/c11/slide-10.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-05/c11/slide-10.jpg",
               "bytes": 206697,
               "dimensions": [
                 1080,
@@ -9348,13 +9348,13 @@
       }
     },
     {
-      "id": "f1-qualified-2026-09-03-r12",
+      "id": "f1-qualified-2026-09-06-r12",
       "source_item_id": "R12",
       "client_id": "f1-immobiliare",
       "client_name": "F1 Immobiliare",
       "regeneration_batch": "qualified-14d",
-      "content_date": "2026-09-03",
-      "scheduled_at": "2026-09-03T10:00:00+02:00",
+      "content_date": "2026-09-06",
+      "scheduled_at": "2026-09-06T10:00:00+02:00",
       "scheduled_at_role": "production_order_only",
       "publication_time_verified": false,
       "recommended_publish_day": null,
@@ -9397,7 +9397,7 @@
         "motivazione"
       ],
       "cta": "Scrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere.",
-      "media": "publisher/media/generated/f1-qualified-14d/2026-09-03/r12.mp4",
+      "media": "publisher/media/generated/f1-qualified-14d/2026-09-06/r12.mp4",
       "enabled": true,
       "status": "awaiting_manual_approval",
       "gate_status": "PASSED",
@@ -9460,8 +9460,8 @@
           "passed": true,
           "checks": [
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-03/r12.mp4",
-              "bytes": 3208370,
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-06/r12.mp4",
+              "bytes": 3208042,
               "video": {
                 "codec_name": "h264",
                 "width": 1080,
@@ -9487,7 +9487,7 @@
               "stats": {
                 "full": {
                   "white_ratio": 0.4732,
-                  "dark_ratio": 0.0864,
+                  "dark_ratio": 0.0865,
                   "green_ratio": 0.0475,
                   "mean_luminance": 185.68,
                   "color_buckets": 121.0
@@ -9501,8 +9501,8 @@
                 },
                 "left": {
                   "white_ratio": 0.7721,
-                  "dark_ratio": 0.0903,
-                  "green_ratio": 0.0777,
+                  "dark_ratio": 0.0902,
+                  "green_ratio": 0.0776,
                   "mean_luminance": 219.62,
                   "color_buckets": 49.0
                 },
@@ -9542,13 +9542,13 @@
       }
     },
     {
-      "id": "f1-qualified-2026-09-03-c12",
+      "id": "f1-qualified-2026-09-06-c12",
       "source_item_id": "C12",
       "client_id": "f1-immobiliare",
       "client_name": "F1 Immobiliare",
       "regeneration_batch": "qualified-14d",
-      "content_date": "2026-09-03",
-      "scheduled_at": "2026-09-03T18:00:00+02:00",
+      "content_date": "2026-09-06",
+      "scheduled_at": "2026-09-06T18:00:00+02:00",
       "scheduled_at_role": "production_order_only",
       "publication_time_verified": false,
       "recommended_publish_day": null,
@@ -9595,16 +9595,16 @@
       ],
       "cta": "Scrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere.",
       "media": [
-        "publisher/media/generated/f1-qualified-14d/2026-09-03/c12/slide-01.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-09-03/c12/slide-02.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-09-03/c12/slide-03.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-09-03/c12/slide-04.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-09-03/c12/slide-05.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-09-03/c12/slide-06.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-09-03/c12/slide-07.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-09-03/c12/slide-08.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-09-03/c12/slide-09.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-09-03/c12/slide-10.jpg"
+        "publisher/media/generated/f1-qualified-14d/2026-09-06/c12/slide-01.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-06/c12/slide-02.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-06/c12/slide-03.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-06/c12/slide-04.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-06/c12/slide-05.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-06/c12/slide-06.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-06/c12/slide-07.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-06/c12/slide-08.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-06/c12/slide-09.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-06/c12/slide-10.jpg"
       ],
       "enabled": true,
       "status": "awaiting_manual_approval",
@@ -9666,7 +9666,7 @@
           "passed": true,
           "checks": [
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-03/c12/slide-01.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-06/c12/slide-01.jpg",
               "bytes": 280711,
               "dimensions": [
                 1080,
@@ -9674,7 +9674,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-03/c12/slide-02.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-06/c12/slide-02.jpg",
               "bytes": 272716,
               "dimensions": [
                 1080,
@@ -9682,7 +9682,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-03/c12/slide-03.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-06/c12/slide-03.jpg",
               "bytes": 273376,
               "dimensions": [
                 1080,
@@ -9690,7 +9690,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-03/c12/slide-04.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-06/c12/slide-04.jpg",
               "bytes": 273807,
               "dimensions": [
                 1080,
@@ -9698,7 +9698,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-03/c12/slide-05.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-06/c12/slide-05.jpg",
               "bytes": 273479,
               "dimensions": [
                 1080,
@@ -9706,7 +9706,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-03/c12/slide-06.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-06/c12/slide-06.jpg",
               "bytes": 274865,
               "dimensions": [
                 1080,
@@ -9714,7 +9714,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-03/c12/slide-07.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-06/c12/slide-07.jpg",
               "bytes": 283823,
               "dimensions": [
                 1080,
@@ -9722,7 +9722,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-03/c12/slide-08.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-06/c12/slide-08.jpg",
               "bytes": 280389,
               "dimensions": [
                 1080,
@@ -9730,7 +9730,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-03/c12/slide-09.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-06/c12/slide-09.jpg",
               "bytes": 282655,
               "dimensions": [
                 1080,
@@ -9738,7 +9738,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-03/c12/slide-10.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-06/c12/slide-10.jpg",
               "bytes": 277943,
               "dimensions": [
                 1080,
@@ -10196,13 +10196,13 @@
       }
     },
     {
-      "id": "f1-qualified-2026-09-04-r13",
+      "id": "f1-qualified-2026-09-07-r13",
       "source_item_id": "R13",
       "client_id": "f1-immobiliare",
       "client_name": "F1 Immobiliare",
       "regeneration_batch": "qualified-14d",
-      "content_date": "2026-09-04",
-      "scheduled_at": "2026-09-04T10:00:00+02:00",
+      "content_date": "2026-09-07",
+      "scheduled_at": "2026-09-07T10:00:00+02:00",
       "scheduled_at_role": "production_order_only",
       "publication_time_verified": false,
       "recommended_publish_day": null,
@@ -10245,7 +10245,7 @@
         "motivazione"
       ],
       "cta": "Scrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere.",
-      "media": "publisher/media/generated/f1-qualified-14d/2026-09-04/r13.mp4",
+      "media": "publisher/media/generated/f1-qualified-14d/2026-09-07/r13.mp4",
       "enabled": true,
       "status": "awaiting_manual_approval",
       "gate_status": "PASSED",
@@ -10308,8 +10308,8 @@
           "passed": true,
           "checks": [
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-04/r13.mp4",
-              "bytes": 3705723,
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-07/r13.mp4",
+              "bytes": 3705617,
               "video": {
                 "codec_name": "h264",
                 "width": 1080,
@@ -10349,7 +10349,7 @@
                 },
                 "left": {
                   "white_ratio": 0.7607,
-                  "dark_ratio": 0.0915,
+                  "dark_ratio": 0.0916,
                   "green_ratio": 0.085,
                   "mean_luminance": 218.34,
                   "color_buckets": 52.0
@@ -10390,13 +10390,13 @@
       }
     },
     {
-      "id": "f1-qualified-2026-09-04-c13",
+      "id": "f1-qualified-2026-09-07-c13",
       "source_item_id": "C13",
       "client_id": "f1-immobiliare",
       "client_name": "F1 Immobiliare",
       "regeneration_batch": "qualified-14d",
-      "content_date": "2026-09-04",
-      "scheduled_at": "2026-09-04T18:00:00+02:00",
+      "content_date": "2026-09-07",
+      "scheduled_at": "2026-09-07T18:00:00+02:00",
       "scheduled_at_role": "production_order_only",
       "publication_time_verified": false,
       "recommended_publish_day": null,
@@ -10443,16 +10443,16 @@
       ],
       "cta": "Scrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere.",
       "media": [
-        "publisher/media/generated/f1-qualified-14d/2026-09-04/c13/slide-01.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-09-04/c13/slide-02.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-09-04/c13/slide-03.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-09-04/c13/slide-04.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-09-04/c13/slide-05.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-09-04/c13/slide-06.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-09-04/c13/slide-07.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-09-04/c13/slide-08.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-09-04/c13/slide-09.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-09-04/c13/slide-10.jpg"
+        "publisher/media/generated/f1-qualified-14d/2026-09-07/c13/slide-01.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-07/c13/slide-02.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-07/c13/slide-03.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-07/c13/slide-04.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-07/c13/slide-05.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-07/c13/slide-06.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-07/c13/slide-07.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-07/c13/slide-08.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-07/c13/slide-09.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-07/c13/slide-10.jpg"
       ],
       "enabled": true,
       "status": "awaiting_manual_approval",
@@ -10514,7 +10514,7 @@
           "passed": true,
           "checks": [
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-04/c13/slide-01.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-07/c13/slide-01.jpg",
               "bytes": 244285,
               "dimensions": [
                 1080,
@@ -10522,7 +10522,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-04/c13/slide-02.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-07/c13/slide-02.jpg",
               "bytes": 241689,
               "dimensions": [
                 1080,
@@ -10530,7 +10530,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-04/c13/slide-03.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-07/c13/slide-03.jpg",
               "bytes": 245143,
               "dimensions": [
                 1080,
@@ -10538,7 +10538,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-04/c13/slide-04.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-07/c13/slide-04.jpg",
               "bytes": 246635,
               "dimensions": [
                 1080,
@@ -10546,7 +10546,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-04/c13/slide-05.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-07/c13/slide-05.jpg",
               "bytes": 245896,
               "dimensions": [
                 1080,
@@ -10554,7 +10554,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-04/c13/slide-06.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-07/c13/slide-06.jpg",
               "bytes": 245597,
               "dimensions": [
                 1080,
@@ -10562,7 +10562,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-04/c13/slide-07.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-07/c13/slide-07.jpg",
               "bytes": 245902,
               "dimensions": [
                 1080,
@@ -10570,7 +10570,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-04/c13/slide-08.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-07/c13/slide-08.jpg",
               "bytes": 243525,
               "dimensions": [
                 1080,
@@ -10578,7 +10578,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-04/c13/slide-09.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-07/c13/slide-09.jpg",
               "bytes": 245447,
               "dimensions": [
                 1080,
@@ -10586,7 +10586,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-04/c13/slide-10.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-07/c13/slide-10.jpg",
               "bytes": 236880,
               "dimensions": [
                 1080,
@@ -11044,13 +11044,13 @@
       }
     },
     {
-      "id": "f1-qualified-2026-09-05-r14",
+      "id": "f1-qualified-2026-09-08-r14",
       "source_item_id": "R14",
       "client_id": "f1-immobiliare",
       "client_name": "F1 Immobiliare",
       "regeneration_batch": "qualified-14d",
-      "content_date": "2026-09-05",
-      "scheduled_at": "2026-09-05T10:00:00+02:00",
+      "content_date": "2026-09-08",
+      "scheduled_at": "2026-09-08T10:00:00+02:00",
       "scheduled_at_role": "production_order_only",
       "publication_time_verified": false,
       "recommended_publish_day": null,
@@ -11093,7 +11093,7 @@
         "motivazione"
       ],
       "cta": "Scrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere.",
-      "media": "publisher/media/generated/f1-qualified-14d/2026-09-05/r14.mp4",
+      "media": "publisher/media/generated/f1-qualified-14d/2026-09-08/r14.mp4",
       "enabled": true,
       "status": "awaiting_manual_approval",
       "gate_status": "PASSED",
@@ -11156,8 +11156,8 @@
           "passed": true,
           "checks": [
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-05/r14.mp4",
-              "bytes": 5157176,
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-08/r14.mp4",
+              "bytes": 5156094,
               "video": {
                 "codec_name": "h264",
                 "width": 1080,
@@ -11200,7 +11200,7 @@
                   "dark_ratio": 0.0869,
                   "green_ratio": 0.0986,
                   "mean_luminance": 218.31,
-                  "color_buckets": 51.0
+                  "color_buckets": 52.0
                 },
                 "right": {
                   "white_ratio": 0.0593,
@@ -11238,13 +11238,13 @@
       }
     },
     {
-      "id": "f1-qualified-2026-09-05-c14",
+      "id": "f1-qualified-2026-09-08-c14",
       "source_item_id": "C14",
       "client_id": "f1-immobiliare",
       "client_name": "F1 Immobiliare",
       "regeneration_batch": "qualified-14d",
-      "content_date": "2026-09-05",
-      "scheduled_at": "2026-09-05T18:00:00+02:00",
+      "content_date": "2026-09-08",
+      "scheduled_at": "2026-09-08T18:00:00+02:00",
       "scheduled_at_role": "production_order_only",
       "publication_time_verified": false,
       "recommended_publish_day": null,
@@ -11291,16 +11291,16 @@
       ],
       "cta": "Scrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere.",
       "media": [
-        "publisher/media/generated/f1-qualified-14d/2026-09-05/c14/slide-01.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-09-05/c14/slide-02.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-09-05/c14/slide-03.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-09-05/c14/slide-04.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-09-05/c14/slide-05.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-09-05/c14/slide-06.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-09-05/c14/slide-07.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-09-05/c14/slide-08.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-09-05/c14/slide-09.jpg",
-        "publisher/media/generated/f1-qualified-14d/2026-09-05/c14/slide-10.jpg"
+        "publisher/media/generated/f1-qualified-14d/2026-09-08/c14/slide-01.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-08/c14/slide-02.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-08/c14/slide-03.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-08/c14/slide-04.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-08/c14/slide-05.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-08/c14/slide-06.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-08/c14/slide-07.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-08/c14/slide-08.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-08/c14/slide-09.jpg",
+        "publisher/media/generated/f1-qualified-14d/2026-09-08/c14/slide-10.jpg"
       ],
       "enabled": true,
       "status": "awaiting_manual_approval",
@@ -11362,7 +11362,7 @@
           "passed": true,
           "checks": [
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-05/c14/slide-01.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-08/c14/slide-01.jpg",
               "bytes": 240014,
               "dimensions": [
                 1080,
@@ -11370,7 +11370,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-05/c14/slide-02.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-08/c14/slide-02.jpg",
               "bytes": 230329,
               "dimensions": [
                 1080,
@@ -11378,7 +11378,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-05/c14/slide-03.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-08/c14/slide-03.jpg",
               "bytes": 230928,
               "dimensions": [
                 1080,
@@ -11386,7 +11386,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-05/c14/slide-04.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-08/c14/slide-04.jpg",
               "bytes": 238113,
               "dimensions": [
                 1080,
@@ -11394,7 +11394,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-05/c14/slide-05.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-08/c14/slide-05.jpg",
               "bytes": 237787,
               "dimensions": [
                 1080,
@@ -11402,7 +11402,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-05/c14/slide-06.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-08/c14/slide-06.jpg",
               "bytes": 239865,
               "dimensions": [
                 1080,
@@ -11410,7 +11410,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-05/c14/slide-07.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-08/c14/slide-07.jpg",
               "bytes": 243361,
               "dimensions": [
                 1080,
@@ -11418,7 +11418,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-05/c14/slide-08.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-08/c14/slide-08.jpg",
               "bytes": 241575,
               "dimensions": [
                 1080,
@@ -11426,7 +11426,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-05/c14/slide-09.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-08/c14/slide-09.jpg",
               "bytes": 238844,
               "dimensions": [
                 1080,
@@ -11434,7 +11434,7 @@
               ]
             },
             {
-              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-05/c14/slide-10.jpg",
+              "path": "/home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/f1-qualified-14d/2026-09-08/c14/slide-10.jpg",
               "bytes": 239870,
               "dimensions": [
                 1080,
