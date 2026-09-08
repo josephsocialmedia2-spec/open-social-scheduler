@@ -4,8 +4,9 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - 'publisher/property_job_preview.json'
+      - 'publisher/github_graphics/queries.json'
       - 'publisher/render_property_preview.py'
+      - 'publisher/ollama_graphics_bridge.py'
       - 'publisher/f1_premium_renderer.py'
       - '.github/workflows/property-preview.yml'
 
@@ -15,6 +16,11 @@ permissions:
 jobs:
   render-property-preview:
     runs-on: ubuntu-latest
+    env:
+      # GitHub-hosted runners cannot reach Ollama running on Joseph's PC.
+      # The renderer therefore uses the deterministic fallback in CI.
+      # On the local PC set F1_OLLAMA_STRICT=1 to require the local Ollama service.
+      F1_OLLAMA_STRICT: '0'
     steps:
       - name: Checkout
         uses: actions/checkout@v5
@@ -33,31 +39,40 @@ jobs:
           sudo apt-get install -y fonts-dejavu-core
           python -m pip install --disable-pip-version-check -r publisher/requirements.txt
 
-      - name: Render 10 property previews with Python
+      - name: Render selected-query previews with Python
         run: python publisher/render_property_preview.py
 
-      - name: Validate outputs
+      - name: Validate outputs against selected queries
         run: |
           python - <<'PY'
+          import json
           from pathlib import Path
           from PIL import Image
-          files=[Path(f'property-preview/{i:02d}.jpg') for i in range(1,11)]
-          assert all(p.exists() for p in files), [str(p) for p in files if not p.exists()]
+
+          queries=json.loads(Path('publisher/github_graphics/queries.json').read_text(encoding='utf-8')).get('queries') or []
+          expected=min(len(queries),10)
+          meta=json.loads(Path('property-preview/meta.json').read_text(encoding='utf-8'))
+          assert meta['count'] == expected, (meta['count'], expected)
+          files=[Path(f'property-preview/{i:02d}.jpg') for i in range(1,expected+1)]
+          assert files and all(p.exists() for p in files), [str(p) for p in files if not p.exists()]
           for p in files:
               im=Image.open(p)
               assert im.size == (1080,1350), (p,im.size)
-          print('10 PROPERTY PREVIEWS VALIDATED')
+          meta_queries=[x['query'] for x in meta['outputs']]
+          selected_queries=[x['query'] for x in queries[:expected]]
+          assert meta_queries == selected_queries, (meta_queries, selected_queries)
+          print(f'{expected} F1 QUERY PREVIEWS VALIDATED')
           PY
 
       - name: Commit previews to main
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add property-preview/*.jpg property-preview/meta.json property-preview/README.md
+          git add -A property-preview
           if git diff --cached --quiet; then
             echo 'No preview changes to commit'
           else
-            git commit -m 'Generate 10 F1 property previews [skip ci]'
+            git commit -m 'Generate F1 previews from selected queries [skip ci]'
             git pull --rebase origin main
             git push origin main
           fi
