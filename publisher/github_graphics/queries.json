@@ -1,5 +1,5 @@
 {
-  "batch": "territori-selezionati-10-preview-v2",
+  "batch": "territori-selezionati-10-preview-v3",
   "template": "immobili in vendita a {comune}",
   "queries": [
     {"id":"COMUNE-001","commune":"Chianocco","query":"immobili in vendita a Chianocco","family":"property","headline":"Cerchi casa a Chianocco?","subheadline":"Scopri le opportunità immobiliari nel territorio.","cta":"SCRIVI CASA SU WHATSAPP"},
