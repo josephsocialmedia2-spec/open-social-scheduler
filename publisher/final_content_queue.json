@@ -4,5 +4,22 @@
   "brand": "F1 Immobiliare",
   "asset_policy": "immutable-final-layout",
   "platforms": ["facebook", "instagram", "linkedin"],
-  "jobs": []
+  "jobs": [
+    {
+      "id": "SUSA-001-2026-09-08",
+      "title": "Cerchiamo immobili in vendita a Susa",
+      "caption": "Hai un immobile a Susa e stai pensando di venderlo? F1 Immobiliare analizza il posizionamento dell’immobile rispetto al mercato, alla concorrenza e alla domanda locale per costruire una strategia di vendita più consapevole.\n\nCLICCA SUL LINK 👉\nhttps://www.agentpricing.com/j.malafronte\n🏡“Contattaci per una Valutazione Strategica e di Posizionamento del tuo immobile: analizziamo prezzo, concorrenza e strategia di vendita per aumentare le possibilità di vendere meglio e in tempi più efficienti.”",
+      "cta": "https://www.agentpricing.com/j.malafronte",
+      "format": "photo",
+      "assets": [
+        "publisher/final_assets/github_generated/01_susa-001_property.png"
+      ],
+      "platforms": ["facebook", "instagram", "linkedin"],
+      "scope": "network",
+      "territory": "Susa",
+      "scheduled_at": "2026-09-08T09:45:00+02:00",
+      "status": "READY",
+      "hashtags": ["#F1Immobiliare", "#Susa", "#ValleDiSusa", "#VendereCasa", "#ValutazioneImmobiliare"]
+    }
+  ]
 }
