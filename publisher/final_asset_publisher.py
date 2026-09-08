@@ -92,10 +92,28 @@ def validate_job(job: dict[str, Any]) -> None:
         raise base.BufferAutomationError(f"{job.get('id')}: territory missing")
 
 
+def _recoverable_error(job: dict[str, Any]) -> bool:
+    if str(job.get("status")) != "ERROR":
+        return False
+    err = str(job.get("error") or "").casefold()
+    markers = (
+        "no buffer channels matched territory",
+        "partial buffer mapping",
+        "timeout",
+        "temporarily unavailable",
+        "rate limit",
+        "429",
+    )
+    return any(m in err for m in markers)
+
+
 def next_ready(queue: dict[str, Any]) -> dict[str, Any] | None:
-    ready = [j for j in queue.get("jobs", []) if str(j.get("status")) == "READY"]
-    ready.sort(key=lambda j: (str(j.get("scheduled_at") or ""), str(j.get("id") or "")))
-    return ready[0] if ready else None
+    candidates = [
+        j for j in queue.get("jobs", [])
+        if str(j.get("status")) == "READY" or _recoverable_error(j)
+    ]
+    candidates.sort(key=lambda j: (str(j.get("scheduled_at") or ""), str(j.get("id") or "")))
+    return candidates[0] if candidates else None
 
 
 def prepare_job(job: dict[str, Any]) -> tuple[dict[str, Any], list[Path]]:
@@ -154,7 +172,7 @@ def main() -> int:
     queue = load_queue()
     job = next_ready(queue)
     if not job:
-        print("NOOP: no READY immutable final assets")
+        print("NOOP: no READY or recoverable ERROR immutable final assets")
         return 0
 
     try:
