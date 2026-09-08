@@ -17,9 +17,6 @@ jobs:
   render-property-preview:
     runs-on: ubuntu-latest
     env:
-      # GitHub-hosted runners cannot reach Ollama running on Joseph's PC.
-      # The renderer therefore uses the deterministic fallback in CI.
-      # On the local PC set F1_OLLAMA_STRICT=1 to require the local Ollama service.
       F1_OLLAMA_STRICT: '0'
     steps:
       - name: Checkout
@@ -33,13 +30,13 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Install dependencies
+      - name: Install graphics engine
         run: |
           sudo apt-get update
           sudo apt-get install -y fonts-dejavu-core
           python -m pip install --disable-pip-version-check -r publisher/requirements.txt
 
-      - name: Render selected-query previews with Python
+      - name: Render 10 premium municipality previews
         run: python publisher/render_property_preview.py
 
       - name: Validate outputs against selected queries
@@ -54,13 +51,12 @@ jobs:
           meta=json.loads(Path('property-preview/meta.json').read_text(encoding='utf-8'))
           assert meta['count'] == expected, (meta['count'], expected)
           files=[Path(f'property-preview/{i:02d}.jpg') for i in range(1,expected+1)]
-          assert files and all(p.exists() for p in files), [str(p) for p in files if not p.exists()]
+          assert files and all(p.exists() for p in files)
+          assert Path('property-preview/index.html').exists()
           for p in files:
-              im=Image.open(p)
-              assert im.size == (1080,1350), (p,im.size)
-          meta_queries=[x['query'] for x in meta['outputs']]
-          selected_queries=[x['query'] for x in queries[:expected]]
-          assert meta_queries == selected_queries, (meta_queries, selected_queries)
+              with Image.open(p) as im:
+                  assert im.size == (1080,1350), (p,im.size)
+          assert [x['query'] for x in meta['outputs']] == [x['query'] for x in queries[:expected]]
           print(f'{expected} F1 QUERY PREVIEWS VALIDATED')
           PY
 
@@ -72,7 +68,7 @@ jobs:
           if git diff --cached --quiet; then
             echo 'No preview changes to commit'
           else
-            git commit -m 'Generate F1 previews from selected queries [skip ci]'
+            git commit -m 'Generate F1 municipality query previews'
             git pull --rebase origin main
             git push origin main
           fi
