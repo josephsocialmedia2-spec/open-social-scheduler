@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "brand": "F1 Immobiliare",
+  "default_scope": "territory",
+  "corporate_scope": "network",
+  "territories": {
+    "villar-dora": {
+      "label": "Villar Dora",
+      "enabled": true,
+      "channel_match": {
+        "facebook": ["villar dora", "f1 immobiliare villar dora"],
+        "instagram": ["villar dora", "f1 immobiliare villar dora"],
+        "linkedin": []
+      }
+    }
+  }
+}
