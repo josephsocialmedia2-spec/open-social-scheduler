@@ -21,7 +21,7 @@ OUT = ROOT / "property-preview"
 SIZE = (1080, 1350)
 UA = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/126 Safari/537.36"
 BAD = ("owl","gufo","bird","uccello","cat","gatto","dog","cane","food","cibo","etsy","pinterest","cnn","banner","young ssbbw","dnyaneshwar")
-PROPERTY = ("casa","case","villa","ville","appartamento","appartamenti","immobile","immobili","vendita","property","house","real estate","terratetto","residen")
+PROPERTY = ("villa","ville","appartamento","appartamenti")
 
 
 def norm(s: str) -> str:
@@ -70,18 +70,14 @@ def result_is_relevant(row, commune):
 
 
 def web_home(commune, idx):
+    # Regola F1: la ricerca visuale usa esclusivamente APPARTAMENTO o VILLA + COMUNE.
     searches = [
-        f'"{commune}" casa vendita',
-        f'"{commune}" immobiliare vendita',
-        f'"{commune}" villa appartamento',
-        f'"{commune}" site:immobiliare.it',
-        f'"{commune}" site:casa.it',
-        f'"{commune}" site:idealista.it',
-        f'"{commune}" site:valsusaoggi.it casa',
+        f'Appartamento "{commune}"',
+        f'Villa "{commune}"',
     ]
     errors=[]
     for q in searches:
-        try: rows=list(DDGS().images(q, region="it-it", safesearch="moderate", max_results=25))
+        try: rows=list(DDGS().images(q, region="it-it", safesearch="moderate", max_results=40))
         except Exception as e:
             errors.append(str(e)); continue
         random.Random(8800+idx).shuffle(rows)
@@ -101,7 +97,7 @@ def web_home(commune, idx):
         try:
             return f1.robust_local_get(str(item["url"])), {"query":"F1 safe fallback","url":str(item["url"]),"title":str(item.get("credit",""))}
         except Exception as e: errors.append(str(e))
-    raise RuntimeError("No valid real-estate image: "+" | ".join(errors[-3:]))
+    raise RuntimeError("No valid apartment/villa image: "+" | ".join(errors[-3:]))
 
 
 def twilight(im):
@@ -152,7 +148,7 @@ def render(item, image):
 
 def build_index(outputs):
     cards="".join(f'<article><img src="{x["index"]:02d}.jpg"><h2>{x["query"]}</h2><a href="{x["index"]:02d}.jpg" target="_blank">Apri grafica</a></article>' for x in outputs)
-    html=f'''<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>F1 · Anteprima grafiche</title><style>body{{margin:0;background:#070907;color:#f7f7f4;font-family:Arial}}header{{padding:28px 5vw;border-bottom:1px solid #c8a15a}}h1{{color:#c8a15a}}main{{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px;padding:28px 5vw}}article{{background:#101610;padding:14px;border-radius:18px;border:1px solid #303730}}img{{width:100%;border-radius:12px}}h2{{font-size:16px}}a{{display:inline-block;background:#c8a15a;color:#070907;padding:10px 14px;border-radius:9px;text-decoration:none;font-weight:700}}</style></head><body><header><h1>F1 IMMOBILIARE · 10 GRAFICHE QUERY</h1><p>Stesso modello di ricerca, cambia soltanto il comune. Foto immobiliari pertinenti + trattamento tramonto e luci accese.</p></header><main>{cards}</main></body></html>'''
+    html=f'''<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>F1 · Anteprima grafiche</title><style>body{{margin:0;background:#070907;color:#f7f7f4;font-family:Arial}}header{{padding:28px 5vw;border-bottom:1px solid #c8a15a}}h1{{color:#c8a15a}}main{{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px;padding:28px 5vw}}article{{background:#101610;padding:14px;border-radius:18px;border:1px solid #303730}}img{{width:100%;border-radius:12px}}h2{{font-size:16px}}a{{display:inline-block;background:#c8a15a;color:#070907;padding:10px 14px;border-radius:9px;text-decoration:none;font-weight:700}}</style></head><body><header><h1>F1 IMMOBILIARE · 10 GRAFICHE QUERY</h1><p>Stesso modello di ricerca, cambia soltanto il comune. Foto Appartamento/Villa pertinenti + trattamento tramonto e luci accese.</p></header><main>{cards}</main></body></html>'''
     (OUT/"index.html").write_text(html,encoding="utf-8")
 
 
@@ -166,9 +162,9 @@ def main():
         out=OUT/f"{i:02d}.jpg"; render(item,image).save(out,"JPEG",quality=94,optimize=True)
         outputs.append({"index":i,"id":item.get("id"),"commune":item["commune"],"query":item["query"],"source":source,"output":str(out.relative_to(ROOT))})
     shutil.copyfile(OUT/"01.jpg",OUT/"latest.jpg")
-    (OUT/"meta.json").write_text(json.dumps({"batch":data.get("batch"),"count":len(outputs),"size":SIZE,"visual_rule":"strict municipality real-estate web image -> sunset -> lights on","outputs":outputs},ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+    (OUT/"meta.json").write_text(json.dumps({"batch":data.get("batch"),"count":len(outputs),"size":SIZE,"visual_rule":"APPARTAMENTO or VILLA + municipality -> sunset -> lights on","outputs":outputs},ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     raw="https://raw.githubusercontent.com/josephsocialmedia2-spec/open-social-scheduler/main/property-preview"
-    md=["# F1 · 10 grafiche query","","Query bloccata: cambia solo il nome del comune.",""]
+    md=["# F1 · 10 grafiche query","","Query contenuto bloccata: cambia solo il nome del comune. Ricerca immagini: Appartamento/Villa + comune.",""]
     for x in outputs: md += [f'## {x["index"]:02d} · {x["query"]}',"",f'![{x["query"]}]({raw}/{x["index"]:02d}.jpg)',""]
     (OUT/"README.md").write_text("\n".join(md),encoding="utf-8"); build_index(outputs)
     print("READY",len(outputs))
