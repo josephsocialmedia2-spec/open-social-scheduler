@@ -1,7 +1,6 @@
-# F1 · Grafiche generate dalle query selezionate
+# F1 · 10 grafiche query
 
-Ogni JPG corrisponde, nello stesso ordine, a una query presente in `publisher/github_graphics/queries.json`.
-Ollama può arricchire il brief ma non può modificare la query originale.
+Le query sono bloccate: cambia soltanto il nome del comune.
 
 ## 01 · immobili in vendita a Chianocco
 
