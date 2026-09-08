@@ -5,29 +5,17 @@
     1080,
     1350
   ],
-  "source": "publisher/github_graphics/queries.json",
-  "visual_rule": "web residence -> sunset -> lights on",
+  "visual_rule": "strict municipality real-estate web image -> sunset -> lights on",
   "outputs": [
     {
       "index": 1,
       "id": "COMUNE-001",
       "commune": "Chianocco",
       "query": "immobili in vendita a Chianocco",
-      "brief": {
-        "query": "immobili in vendita a Chianocco",
-        "family": "property",
-        "headline": "Cerchi casa a Chianocco?",
-        "subheadline": "Scopri le opportunità immobiliari nel territorio.",
-        "cta": "SCRIVI CASA SU WHATSAPP",
-        "visual_type": "residential_exterior",
-        "layout": "left_overlay",
-        "ollama_used": false,
-        "ollama_error": "<urlopen error [Errno 111] Connection refused>"
-      },
       "source": {
-        "search_query": "\"Chianocco\" Piemonte casa abitazione villa",
-        "source_url": "https://www.h3platform.com/uploads/content/d30ef902-8797-e241-fd85-0e13571d2596.png",
-        "source_title": "Blog | H3 Platform"
+        "query": "F1 safe fallback",
+        "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Villa_Cantamerlo_Avigliana02.JPG",
+        "title": "Avigliana · Villa Cantamerlo · pubblico dominio"
       },
       "output": "property-preview/01.jpg"
     },
@@ -36,21 +24,10 @@
       "id": "COMUNE-002",
       "commune": "Bruzolo",
       "query": "immobili in vendita a Bruzolo",
-      "brief": {
-        "query": "immobili in vendita a Bruzolo",
-        "family": "property",
-        "headline": "Cerchi casa a Bruzolo?",
-        "subheadline": "Scopri le opportunità immobiliari nel territorio.",
-        "cta": "SCRIVI CASA SU WHATSAPP",
-        "visual_type": "residential_exterior",
-        "layout": "left_overlay",
-        "ollama_used": false,
-        "ollama_error": "<urlopen error [Errno 111] Connection refused>"
-      },
       "source": {
-        "search_query": "\"Bruzolo\" Piemonte casa abitazione villa",
-        "source_url": "https://i.servimg.com/u/f38/15/64/81/38/14222310.jpg",
-        "source_title": "Young SSBBW - Page 2"
+        "query": "F1 safe fallback",
+        "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Villa_Cantamerlo_Avigliana02.JPG",
+        "title": "Avigliana · Villa Cantamerlo · pubblico dominio"
       },
       "output": "property-preview/02.jpg"
     },
@@ -59,21 +36,10 @@
       "id": "COMUNE-003",
       "commune": "San Didero",
       "query": "immobili in vendita a San Didero",
-      "brief": {
-        "query": "immobili in vendita a San Didero",
-        "family": "property",
-        "headline": "Cerchi casa a San Didero?",
-        "subheadline": "Scopri le opportunità immobiliari nel territorio.",
-        "cta": "SCRIVI CASA SU WHATSAPP",
-        "visual_type": "residential_exterior",
-        "layout": "left_overlay",
-        "ollama_used": false,
-        "ollama_error": "<urlopen error [Errno 111] Connection refused>"
-      },
       "source": {
-        "search_query": "\"San Didero\" Piemonte casa abitazione villa",
-        "source_url": "https://www.housesinpiedmont.com/wp-content/uploads/2024/11/20241115_115128-Grande.jpg",
-        "source_title": "Casa in Piemonte in vendita - Houses In Piedmont"
+        "query": "F1 safe fallback",
+        "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Villa_Cantamerlo_Avigliana02.JPG",
+        "title": "Avigliana · Villa Cantamerlo · pubblico dominio"
       },
       "output": "property-preview/03.jpg"
     },
@@ -82,21 +48,10 @@
       "id": "COMUNE-004",
       "commune": "San Giorio di Susa",
       "query": "immobili in vendita a San Giorio di Susa",
-      "brief": {
-        "query": "immobili in vendita a San Giorio di Susa",
-        "family": "property",
-        "headline": "Cerchi casa a San Giorio di Susa?",
-        "subheadline": "Scopri le opportunità immobiliari nel territorio.",
-        "cta": "SCRIVI CASA SU WHATSAPP",
-        "visual_type": "residential_exterior",
-        "layout": "left_overlay",
-        "ollama_used": false,
-        "ollama_error": "<urlopen error [Errno 111] Connection refused>"
-      },
       "source": {
-        "search_query": "\"San Giorio di Susa\" Piemonte residential house",
-        "source_url": "https://pwm.im-cdn.it/image/1553247629/m-c.jpg",
-        "source_title": "Vendita Terratetto plurifamiliare in frazione Martinetti San Giorio di ..."
+        "query": "F1 safe fallback",
+        "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Villa_Cantamerlo_Avigliana02.JPG",
+        "title": "Avigliana · Villa Cantamerlo · pubblico dominio"
       },
       "output": "property-preview/04.jpg"
     },
@@ -105,21 +60,10 @@
       "id": "COMUNE-005",
       "commune": "Borgone Susa",
       "query": "immobili in vendita a Borgone Susa",
-      "brief": {
-        "query": "immobili in vendita a Borgone Susa",
-        "family": "property",
-        "headline": "Cerchi casa a Borgone Susa?",
-        "subheadline": "Scopri le opportunità immobiliari nel territorio.",
-        "cta": "SCRIVI CASA SU WHATSAPP",
-        "visual_type": "residential_exterior",
-        "layout": "left_overlay",
-        "ollama_used": false,
-        "ollama_error": "<urlopen error [Errno 111] Connection refused>"
-      },
       "source": {
-        "search_query": "\"Borgone Susa\" Piemonte casa abitazione villa",
-        "source_url": "https://i.etsystatic.com/9816884/r/il/a4086a/3349370872/il_fullxfull.3349370872_780r.jpg",
-        "source_title": "Good Luck Banner, Personalised Name Bunting, Custom Banner, Bon Voyage ..."
+        "query": "F1 safe fallback",
+        "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Villa_Cantamerlo_Avigliana02.JPG",
+        "title": "Avigliana · Villa Cantamerlo · pubblico dominio"
       },
       "output": "property-preview/05.jpg"
     },
@@ -128,21 +72,10 @@
       "id": "COMUNE-006",
       "commune": "Villar Focchiardo",
       "query": "immobili in vendita a Villar Focchiardo",
-      "brief": {
-        "query": "immobili in vendita a Villar Focchiardo",
-        "family": "property",
-        "headline": "Cerchi casa a Villar Focchiardo?",
-        "subheadline": "Scopri le opportunità immobiliari nel territorio.",
-        "cta": "SCRIVI CASA SU WHATSAPP",
-        "visual_type": "residential_exterior",
-        "layout": "left_overlay",
-        "ollama_used": false,
-        "ollama_error": "<urlopen error [Errno 111] Connection refused>"
-      },
       "source": {
-        "search_query": "\"Villar Focchiardo\" Piemonte casa abitazione villa",
-        "source_url": "https://www.valsusaoggi.it/wp-content/uploads/2020/07/Casa-Vendita-Villar-Focchiardo-03.jpg",
-        "source_title": "Casa Vendita Villar Focchiardo (03) | ValsusaOggi"
+        "query": "F1 safe fallback",
+        "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Villa_Cantamerlo_Avigliana02.JPG",
+        "title": "Avigliana · Villa Cantamerlo · pubblico dominio"
       },
       "output": "property-preview/06.jpg"
     },
@@ -151,21 +84,10 @@
       "id": "COMUNE-007",
       "commune": "Condove",
       "query": "immobili in vendita a Condove",
-      "brief": {
-        "query": "immobili in vendita a Condove",
-        "family": "property",
-        "headline": "Cerchi casa a Condove?",
-        "subheadline": "Scopri le opportunità immobiliari nel territorio.",
-        "cta": "SCRIVI CASA SU WHATSAPP",
-        "visual_type": "residential_exterior",
-        "layout": "left_overlay",
-        "ollama_used": false,
-        "ollama_error": "<urlopen error [Errno 111] Connection refused>"
-      },
       "source": {
-        "search_query": "\"Condove\" Piemonte casa abitazione villa",
-        "source_url": "https://pwm.im-cdn.it/image/1885564724/m-c.jpg",
-        "source_title": "Vendita Villa unifamiliare San Donà di Piave. Ottimo stato, con ..."
+        "query": "F1 safe fallback",
+        "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Villa_Cantamerlo_Avigliana02.JPG",
+        "title": "Avigliana · Villa Cantamerlo · pubblico dominio"
       },
       "output": "property-preview/07.jpg"
     },
@@ -174,21 +96,10 @@
       "id": "COMUNE-008",
       "commune": "Caprie",
       "query": "immobili in vendita a Caprie",
-      "brief": {
-        "query": "immobili in vendita a Caprie",
-        "family": "property",
-        "headline": "Cerchi casa a Caprie?",
-        "subheadline": "Scopri le opportunità immobiliari nel territorio.",
-        "cta": "SCRIVI CASA SU WHATSAPP",
-        "visual_type": "residential_exterior",
-        "layout": "left_overlay",
-        "ollama_used": false,
-        "ollama_error": "<urlopen error [Errno 111] Connection refused>"
-      },
       "source": {
-        "search_query": "\"Caprie\" Piemonte casa abitazione villa",
-        "source_url": "https://images-1.casa.it/800x600/listing/0/97/ce/03/696695819.jpg",
-        "source_title": "Casa bifamiliare, trifamiliare in Vendita in Via Longobardi 7 a Caprie ..."
+        "query": "F1 safe fallback",
+        "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Architecture-villa-house-building-home-construction-542165.jpg",
+        "title": "Immagine residenziale · CC0"
       },
       "output": "property-preview/08.jpg"
     },
@@ -197,21 +108,10 @@
       "id": "COMUNE-009",
       "commune": "Sant’Antonino di Susa",
       "query": "immobili in vendita a Sant’Antonino di Susa",
-      "brief": {
-        "query": "immobili in vendita a Sant’Antonino di Susa",
-        "family": "property",
-        "headline": "Cerchi casa a Sant’Antonino di Susa?",
-        "subheadline": "Scopri le opportunità immobiliari nel territorio.",
-        "cta": "SCRIVI CASA SU WHATSAPP",
-        "visual_type": "residential_exterior",
-        "layout": "left_overlay",
-        "ollama_used": false,
-        "ollama_error": "<urlopen error [Errno 111] Connection refused>"
-      },
       "source": {
-        "search_query": "\"Sant’Antonino di Susa\" Piemonte casa abitazione villa",
-        "source_url": "https://i.pinimg.com/originals/e3/ef/8b/e3ef8b5fe9abb0eaf13d0e564180d816.png",
-        "source_title": "Sant Dnyaneshwar Images at Sara Lourdes blog"
+        "query": "F1 safe fallback",
+        "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Architecture-villa-house-building-home-construction-542165.jpg",
+        "title": "Immagine residenziale · CC0"
       },
       "output": "property-preview/09.jpg"
     },
@@ -220,21 +120,10 @@
       "id": "COMUNE-010",
       "commune": "Vaie",
       "query": "immobili in vendita a Vaie",
-      "brief": {
-        "query": "immobili in vendita a Vaie",
-        "family": "property",
-        "headline": "Cerchi casa a Vaie?",
-        "subheadline": "Scopri le opportunità immobiliari nel territorio.",
-        "cta": "SCRIVI CASA SU WHATSAPP",
-        "visual_type": "residential_exterior",
-        "layout": "left_overlay",
-        "ollama_used": false,
-        "ollama_error": "<urlopen error [Errno 111] Connection refused>"
-      },
       "source": {
-        "search_query": "\"Vaie\" Piemonte casa abitazione villa",
-        "source_url": "https://media.cnn.com/api/v1/images/stellar/prod/gettyimages-2222125519.jpg?c=original&q=w_1182,c_fill",
-        "source_title": "Best destinations to visit around the world in 2026 | CNN"
+        "query": "F1 safe fallback",
+        "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Architecture-villa-house-building-home-construction-542165.jpg",
+        "title": "Immagine residenziale · CC0"
       },
       "output": "property-preview/10.jpg"
     }
