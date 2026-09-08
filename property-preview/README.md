@@ -1,6 +1,6 @@
 # F1 · 10 grafiche query
 
-Query bloccata: cambia solo il nome del comune.
+Generazione fault-tolerant: ogni errore viene saltato; il batch continua fino a 10 output.
 
 ## 01 · immobili in vendita a Chianocco
 

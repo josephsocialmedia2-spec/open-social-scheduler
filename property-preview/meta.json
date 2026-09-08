@@ -1,11 +1,12 @@
 {
-  "batch": "territori-selezionati-10-preview-v2",
+  "batch": "territori-selezionati-10-preview-v3",
   "count": 10,
   "size": [
     1080,
     1350
   ],
-  "visual_rule": "strict municipality real-estate web image -> sunset -> lights on",
+  "fault_tolerant": true,
+  "visual_rule": "APPARTAMENTO or VILLA + municipality -> sunset -> lights on; continue on every source/render error",
   "outputs": [
     {
       "index": 1,
@@ -13,10 +14,11 @@
       "commune": "Chianocco",
       "query": "immobili in vendita a Chianocco",
       "source": {
-        "query": "F1 safe fallback",
-        "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Villa_Cantamerlo_Avigliana02.JPG",
-        "title": "Avigliana · Villa Cantamerlo · pubblico dominio"
+        "query": "Appartamento \"Chianocco\"",
+        "url": "https://pwm.im-cdn.it/image/1791930107/m-c.jpg",
+        "title": "Vendita Appartamento Chianocco. Quadrilocale in frazione Vernetto ..."
       },
+      "fallback": false,
       "output": "property-preview/01.jpg"
     },
     {
@@ -25,10 +27,11 @@
       "commune": "Bruzolo",
       "query": "immobili in vendita a Bruzolo",
       "source": {
-        "query": "F1 safe fallback",
-        "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Villa_Cantamerlo_Avigliana02.JPG",
-        "title": "Avigliana · Villa Cantamerlo · pubblico dominio"
+        "query": "Appartamento \"Bruzolo\"",
+        "url": "https://pwm.im-cdn.it/image/1812762835/m-c.jpg",
+        "title": "Vendita Appartamento Bruzolo. Trilocale in via dei Mille 25. Ottimo ..."
       },
+      "fallback": false,
       "output": "property-preview/02.jpg"
     },
     {
@@ -37,10 +40,11 @@
       "commune": "San Didero",
       "query": "immobili in vendita a San Didero",
       "source": {
-        "query": "F1 safe fallback",
-        "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Villa_Cantamerlo_Avigliana02.JPG",
-        "title": "Avigliana · Villa Cantamerlo · pubblico dominio"
+        "query": "Villa \"San Didero\"",
+        "url": "https://www.valsusaoggi.it/wp-content/uploads/2020/06/Villa-Vendita-San-Didero-07.jpg",
+        "title": "Villa Vendita San Didero (07) | ValsusaOggi"
       },
+      "fallback": false,
       "output": "property-preview/03.jpg"
     },
     {
@@ -49,10 +53,11 @@
       "commune": "San Giorio di Susa",
       "query": "immobili in vendita a San Giorio di Susa",
       "source": {
-        "query": "F1 safe fallback",
-        "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Villa_Cantamerlo_Avigliana02.JPG",
-        "title": "Avigliana · Villa Cantamerlo · pubblico dominio"
+        "query": "Appartamento \"San Giorio di Susa\"",
+        "url": "https://pwm.im-cdn.it/image/1341124438/m-c.jpg",
+        "title": "Vendita Appartamento San Giorio di Susa. Trilocale in via Don Cesare ..."
       },
+      "fallback": false,
       "output": "property-preview/04.jpg"
     },
     {
@@ -63,8 +68,10 @@
       "source": {
         "query": "F1 safe fallback",
         "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Villa_Cantamerlo_Avigliana02.JPG",
-        "title": "Avigliana · Villa Cantamerlo · pubblico dominio"
+        "title": "Avigliana · Villa Cantamerlo · pubblico dominio",
+        "fallback": true
       },
+      "fallback": true,
       "output": "property-preview/05.jpg"
     },
     {
@@ -75,8 +82,10 @@
       "source": {
         "query": "F1 safe fallback",
         "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Villa_Cantamerlo_Avigliana02.JPG",
-        "title": "Avigliana · Villa Cantamerlo · pubblico dominio"
+        "title": "Avigliana · Villa Cantamerlo · pubblico dominio",
+        "fallback": true
       },
+      "fallback": true,
       "output": "property-preview/06.jpg"
     },
     {
@@ -85,10 +94,11 @@
       "commune": "Condove",
       "query": "immobili in vendita a Condove",
       "source": {
-        "query": "F1 safe fallback",
-        "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Villa_Cantamerlo_Avigliana02.JPG",
-        "title": "Avigliana · Villa Cantamerlo · pubblico dominio"
+        "query": "Appartamento \"Condove\"",
+        "url": "https://pwm.im-cdn.it/image/1814814531/m-c.jpg",
+        "title": "Affitto Appartamento Collegno. Quadrilocale in via Condove 2. Buono ..."
       },
+      "fallback": false,
       "output": "property-preview/07.jpg"
     },
     {
@@ -97,10 +107,11 @@
       "commune": "Caprie",
       "query": "immobili in vendita a Caprie",
       "source": {
-        "query": "F1 safe fallback",
-        "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Architecture-villa-house-building-home-construction-542165.jpg",
-        "title": "Immagine residenziale · CC0"
+        "query": "Appartamento \"Caprie\"",
+        "url": "https://pwm.im-cdn.it/image/1844414809/m-c.jpg",
+        "title": "Vendita Appartamento Caprie. Trilocale in via Attilio Cinato. Da ..."
       },
+      "fallback": false,
       "output": "property-preview/08.jpg"
     },
     {
@@ -109,10 +120,11 @@
       "commune": "Sant’Antonino di Susa",
       "query": "immobili in vendita a Sant’Antonino di Susa",
       "source": {
-        "query": "F1 safe fallback",
-        "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Architecture-villa-house-building-home-construction-542165.jpg",
-        "title": "Immagine residenziale · CC0"
+        "query": "Appartamento \"Sant’Antonino di Susa\"",
+        "url": "https://cdn5.gestim.biz/custom/02597/foto/20241002153215-11.jpg",
+        "title": "Appartamento in vendita a Sant'Antonino di Susa Cod. 34221002-911"
       },
+      "fallback": false,
       "output": "property-preview/09.jpg"
     },
     {
@@ -121,10 +133,11 @@
       "commune": "Vaie",
       "query": "immobili in vendita a Vaie",
       "source": {
-        "query": "F1 safe fallback",
-        "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Architecture-villa-house-building-home-construction-542165.jpg",
-        "title": "Immagine residenziale · CC0"
+        "query": "Appartamento \"Vaie\"",
+        "url": "https://pwm.im-cdn.it/image/1737504406/m-c.jpg",
+        "title": "Vendita Appartamento Vaie. Monolocale in piazza del Priore. Ottimo ..."
       },
+      "fallback": false,
       "output": "property-preview/10.jpg"
     }
   ]
