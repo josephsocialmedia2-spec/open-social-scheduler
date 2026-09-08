@@ -1,37 +1,79 @@
 {
-  "job": {
-    "id": "f1_property_001",
-    "client_id": "f1-immobiliare",
-    "cycle_key": "2026-09-07",
-    "cycle_position": 1,
-    "service_id": "service_1_agent_pricing",
-    "title": "Vuoi vendere casa?",
-    "property": {
-      "title": "Appartamento ristrutturato in vendita",
-      "description": "Comfort, spazio e tranquillità in una posizione strategica",
-      "mq": 95,
-      "locali": 3,
-      "bagni": 2,
-      "box": "Box auto",
-      "price": "€ 189.000",
-      "location": "Rivoli (TO) – Zona comoda ai servizi"
-    }
-  },
-  "outputs": [
-    "property-preview/01.jpg",
-    "property-preview/02.jpg",
-    "property-preview/03.jpg",
-    "property-preview/04.jpg",
-    "property-preview/05.jpg",
-    "property-preview/06.jpg",
-    "property-preview/07.jpg",
-    "property-preview/08.jpg",
-    "property-preview/09.jpg",
-    "property-preview/10.jpg"
-  ],
-  "count": 10,
+  "batch": "susa-first-4",
+  "count": 4,
   "size": [
     1080,
     1350
+  ],
+  "source": "publisher/github_graphics/queries.json",
+  "outputs": [
+    {
+      "index": 1,
+      "id": "SUSA-001",
+      "query": "immobili in vendita a Susa",
+      "brief": {
+        "query": "immobili in vendita a Susa",
+        "family": "property",
+        "headline": "Immobili in vendita a Susa",
+        "subheadline": "Scopri le opportunità immobiliari nel territorio di Susa.",
+        "cta": "SCOPRI LE OPPORTUNITÀ",
+        "visual_type": "residential_exterior",
+        "layout": "left_overlay",
+        "ollama_used": false,
+        "ollama_error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      "output": "property-preview/01.jpg"
+    },
+    {
+      "index": 2,
+      "id": "SUSA-002",
+      "query": "case in vendita a Susa",
+      "brief": {
+        "query": "case in vendita a Susa",
+        "family": "property",
+        "headline": "Case in vendita a Susa",
+        "subheadline": "Soluzioni per chi vuole vivere, investire o trasferirsi a Susa.",
+        "cta": "CERCA LA TUA CASA",
+        "visual_type": "residential_exterior",
+        "layout": "left_overlay",
+        "ollama_used": false,
+        "ollama_error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      "output": "property-preview/02.jpg"
+    },
+    {
+      "index": 3,
+      "id": "SUSA-003",
+      "query": "lavoro agenzia immobiliare Susa prima esperienza",
+      "brief": {
+        "query": "lavoro agenzia immobiliare Susa prima esperienza",
+        "family": "recruiting",
+        "headline": "Inizia nel settore immobiliare",
+        "subheadline": "Prima esperienza? Formazione, affiancamento e territorio.",
+        "cta": "CANDIDATI ORA",
+        "visual_type": "professional_real_estate_team",
+        "layout": "left_overlay",
+        "ollama_used": false,
+        "ollama_error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      "output": "property-preview/03.jpg"
+    },
+    {
+      "index": 4,
+      "id": "SUSA-004",
+      "query": "appartamenti in vendita a Susa",
+      "brief": {
+        "query": "appartamenti in vendita a Susa",
+        "family": "property",
+        "headline": "Appartamenti in vendita a Susa",
+        "subheadline": "Trova la soluzione più adatta alle tue esigenze nel cuore della Valle di Susa.",
+        "cta": "SCOPRI GLI APPARTAMENTI",
+        "visual_type": "residential_exterior",
+        "layout": "left_overlay",
+        "ollama_used": false,
+        "ollama_error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      "output": "property-preview/04.jpg"
+    }
   ]
 }

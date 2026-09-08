@@ -1,44 +1,21 @@
-# F1 · 10 proposte grafiche generate dal nuovo Python
+# F1 · Grafiche generate dalle query selezionate
 
-Tutte le immagini sono 1080 × 1350 e derivano dal JSON immobile corrente.
+Ogni JPG corrisponde, nello stesso ordine, a una query presente in `publisher/github_graphics/queries.json`.
+Ollama può arricchire il brief ma non può modificare la query originale.
 
-## Proposta 01
+## 01 · immobili in vendita a Susa
 
-![Proposta 01](https://raw.githubusercontent.com/josephsocialmedia2-spec/open-social-scheduler/main/property-preview/01.jpg)
+![Query 01](https://raw.githubusercontent.com/josephsocialmedia2-spec/open-social-scheduler/main/property-preview/01.jpg)
 
-## Proposta 02
+## 02 · case in vendita a Susa
 
-![Proposta 02](https://raw.githubusercontent.com/josephsocialmedia2-spec/open-social-scheduler/main/property-preview/02.jpg)
+![Query 02](https://raw.githubusercontent.com/josephsocialmedia2-spec/open-social-scheduler/main/property-preview/02.jpg)
 
-## Proposta 03
+## 03 · lavoro agenzia immobiliare Susa prima esperienza
 
-![Proposta 03](https://raw.githubusercontent.com/josephsocialmedia2-spec/open-social-scheduler/main/property-preview/03.jpg)
+![Query 03](https://raw.githubusercontent.com/josephsocialmedia2-spec/open-social-scheduler/main/property-preview/03.jpg)
 
-## Proposta 04
+## 04 · appartamenti in vendita a Susa
 
-![Proposta 04](https://raw.githubusercontent.com/josephsocialmedia2-spec/open-social-scheduler/main/property-preview/04.jpg)
-
-## Proposta 05
-
-![Proposta 05](https://raw.githubusercontent.com/josephsocialmedia2-spec/open-social-scheduler/main/property-preview/05.jpg)
-
-## Proposta 06
-
-![Proposta 06](https://raw.githubusercontent.com/josephsocialmedia2-spec/open-social-scheduler/main/property-preview/06.jpg)
-
-## Proposta 07
-
-![Proposta 07](https://raw.githubusercontent.com/josephsocialmedia2-spec/open-social-scheduler/main/property-preview/07.jpg)
-
-## Proposta 08
-
-![Proposta 08](https://raw.githubusercontent.com/josephsocialmedia2-spec/open-social-scheduler/main/property-preview/08.jpg)
-
-## Proposta 09
-
-![Proposta 09](https://raw.githubusercontent.com/josephsocialmedia2-spec/open-social-scheduler/main/property-preview/09.jpg)
-
-## Proposta 10
-
-![Proposta 10](https://raw.githubusercontent.com/josephsocialmedia2-spec/open-social-scheduler/main/property-preview/10.jpg)
+![Query 04](https://raw.githubusercontent.com/josephsocialmedia2-spec/open-social-scheduler/main/property-preview/04.jpg)
 
