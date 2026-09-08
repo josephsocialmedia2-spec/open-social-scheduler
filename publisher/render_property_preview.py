@@ -22,6 +22,8 @@ SIZE = (1080, 1350)
 UA = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/126 Safari/537.36"
 BAD = ("owl","gufo","bird","uccello","cat","gatto","dog","cane","food","cibo","etsy","pinterest","cnn","banner","young ssbbw","dnyaneshwar")
 PROPERTY = ("villa","ville","appartamento","appartamenti")
+PRIVATE = ("privato","privati","da privato","proprietario","proprietaria")
+AGENCY = ("tecnocasa","tecnorete","tempocasa","remax","re/max","gabetti","frimm","iad italia","grimaldi immobiliare","engel volkers","professionecasa","solo affitti","agenzia immobiliare")
 
 
 def norm(s: str) -> str:
@@ -65,8 +67,10 @@ def result_is_relevant(row, commune):
     distinctive = [x for x in c.split() if len(x) >= 4 and x not in {"susa","torino","della","delle"}]
     place_ok = c in text or any(x in text for x in distinctive)
     property_ok = any(norm(x) in text for x in PROPERTY)
+    private_ok = any(norm(x) in text for x in PRIVATE)
     bad = any(norm(x) in text for x in BAD)
-    return place_ok and property_ok and not bad
+    agency = any(norm(x) in text for x in AGENCY)
+    return place_ok and property_ok and private_ok and not bad and not agency
 
 
 def synthetic_home(commune, idx):
@@ -79,9 +83,7 @@ def synthetic_home(commune, idx):
         g = int(124*(1-t) + 36*t)
         b = int(68*(1-t) + 62*t)
         d.line((0,y,SIZE[0],y), fill=(r,g,b))
-    # mountain silhouettes
     d.polygon([(0,620),(170,430),(340,610),(520,390),(700,600),(890,420),(1080,590),(1080,900),(0,900)], fill=(22,35,48))
-    # apartment/villa silhouette with warm windows
     x0=100+(idx%3)*35; y0=500
     d.rectangle((x0,y0,820,1120), fill=(35,35,32))
     d.polygon([(x0-45,y0),(460,330),(865,y0)], fill=(28,29,29))
@@ -94,11 +96,17 @@ def synthetic_home(commune, idx):
 
 
 def web_home(commune, idx):
-    searches = [f'Appartamento "{commune}"', f'Villa "{commune}"']
+    # Ricerca visuale F1: solo annunci/immagini riconducibili a PRIVATI.
+    searches = [
+        f'Appartamento privato "{commune}"',
+        f'Villa privato "{commune}"',
+        f'Appartamento da privato "{commune}"',
+        f'Villa da privato "{commune}"',
+    ]
     errors=[]
     for q in searches:
         try:
-            rows=list(DDGS().images(q, region="it-it", safesearch="moderate", max_results=30))
+            rows=list(DDGS().images(q, region="it-it", safesearch="moderate", max_results=35))
         except Exception as e:
             errors.append(f"search {q}: {e}")
             continue
@@ -114,24 +122,11 @@ def web_home(commune, idx):
             except Exception as e:
                 errors.append(f"download: {e}")
                 continue
-    # configured F1 sources
-    try:
-        cfg=f1.load_json(f1.F1_CFG,{})
-        for item in cfg.get("brand",{}).get("photo_sources",[]):
-            if not isinstance(item,dict) or not item.get("url"):
-                continue
-            txt=norm(" ".join(str(v) for v in item.values()))
-            if any(norm(x) in txt for x in BAD):
-                continue
-            try:
-                return f1.robust_local_get(str(item["url"])), {"query":"F1 safe fallback","url":str(item["url"]),"title":str(item.get("credit","")),"fallback":True}
-            except Exception as e:
-                errors.append(f"f1 fallback: {e}")
-                continue
-    except Exception as e:
-        errors.append(f"f1 config: {e}")
+    # Se non troviamo un'immagine chiaramente da privato, NON usiamo fonti di agenzie:
+    # passiamo direttamente al fallback neutro senza marchi concorrenti.
     image, source = synthetic_home(commune, idx)
     source["errors"] = errors[-5:]
+    source["reason"] = "no verified private-listing image; agency-branded sources rejected"
     return image, source
 
 
@@ -182,8 +177,8 @@ def render(item, image):
 
 
 def build_index(outputs):
-    cards="".join(f'<article><img src="{x["index"]:02d}.jpg"><h2>{x["query"]}</h2><p>{"Fallback grafico" if x.get("fallback") else "Immagine web pertinente"}</p><a href="{x["index"]:02d}.jpg" target="_blank">Apri grafica</a></article>' for x in outputs)
-    html=f'''<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>F1 · Anteprima grafiche</title><style>body{{margin:0;background:#070907;color:#f7f7f4;font-family:Arial}}header{{padding:28px 5vw;border-bottom:1px solid #c8a15a}}h1{{color:#c8a15a}}main{{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px;padding:28px 5vw}}article{{background:#101610;padding:14px;border-radius:18px;border:1px solid #303730}}img{{width:100%;border-radius:12px}}h2{{font-size:16px}}p{{color:#c7cdc8}}a{{display:inline-block;background:#c8a15a;color:#070907;padding:10px 14px;border-radius:9px;text-decoration:none;font-weight:700}}</style></head><body><header><h1>F1 IMMOBILIARE · 10 GRAFICHE QUERY</h1><p>Ricerca immagini: Appartamento/Villa + comune. Gli errori di singole fonti non interrompono più il lotto.</p></header><main>{cards}</main></body></html>'''
+    cards="".join(f'<article><img src="{x["index"]:02d}.jpg"><h2>{x["query"]}</h2><p>{"Fallback neutro" if x.get("fallback") else "Immagine da annuncio privato"}</p><a href="{x["index"]:02d}.jpg" target="_blank">Apri grafica</a></article>' for x in outputs)
+    html=f'''<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>F1 · Anteprima grafiche</title><style>body{{margin:0;background:#070907;color:#f7f7f4;font-family:Arial}}header{{padding:28px 5vw;border-bottom:1px solid #c8a15a}}h1{{color:#c8a15a}}main{{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px;padding:28px 5vw}}article{{background:#101610;padding:14px;border-radius:18px;border:1px solid #303730}}img{{width:100%;border-radius:12px}}h2{{font-size:16px}}p{{color:#c7cdc8}}a{{display:inline-block;background:#c8a15a;color:#070907;padding:10px 14px;border-radius:9px;text-decoration:none;font-weight:700}}</style></head><body><header><h1>F1 IMMOBILIARE · 10 GRAFICHE QUERY</h1><p>Ricerca immagini: Appartamento/Villa + PRIVATO + comune. Fonti riconducibili ad agenzie concorrenti vengono escluse.</p></header><main>{cards}</main></body></html>'''
     (OUT/"index.html").write_text(html,encoding="utf-8")
 
 
@@ -207,16 +202,15 @@ def main():
             try:
                 render(item,image).save(out,"JPEG",quality=94,optimize=True)
             except Exception as e2:
-                # Last-resort valid JPG: never stop the remaining batch.
                 emergency=Image.new("RGB",SIZE,(12,16,18)); d=ImageDraw.Draw(emergency)
                 d.text((70,580),f"F1 IMMOBILIARE\n{item['commune'].upper()}",font=font(48,True),fill=(247,247,244))
                 emergency.save(out,"JPEG",quality=90)
                 source["emergency_error"] = str(e2)
             outputs.append({"index":i,"id":item.get("id"),"commune":item["commune"],"query":item["query"],"source":source,"fallback":True,"output":str(out.relative_to(ROOT))})
     if outputs and (OUT/"01.jpg").exists(): shutil.copyfile(OUT/"01.jpg",OUT/"latest.jpg")
-    (OUT/"meta.json").write_text(json.dumps({"batch":data.get("batch"),"count":len(outputs),"size":SIZE,"fault_tolerant":True,"visual_rule":"APPARTAMENTO or VILLA + municipality -> sunset -> lights on; continue on every source/render error","outputs":outputs},ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+    (OUT/"meta.json").write_text(json.dumps({"batch":data.get("batch"),"count":len(outputs),"size":SIZE,"fault_tolerant":True,"visual_rule":"APPARTAMENTO or VILLA + PRIVATO + municipality; reject agency-branded sources; sunset + lights on","outputs":outputs},ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     raw="https://raw.githubusercontent.com/josephsocialmedia2-spec/open-social-scheduler/main/property-preview"
-    md=["# F1 · 10 grafiche query","","Generazione fault-tolerant: ogni errore viene saltato; il batch continua fino a 10 output.",""]
+    md=["# F1 · 10 grafiche query","","Ricerca immagini: Appartamento/Villa + PRIVATO + comune. Fonti di agenzie concorrenti escluse; fallback neutro se necessario.",""]
     for x in outputs: md += [f'## {x["index"]:02d} · {x["query"]}',"",f'![{x["query"]}]({raw}/{x["index"]:02d}.jpg)',""]
     (OUT/"README.md").write_text("\n".join(md),encoding="utf-8"); build_index(outputs)
     print("READY",len(outputs))
