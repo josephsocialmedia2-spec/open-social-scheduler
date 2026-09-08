@@ -24,6 +24,11 @@ except ImportError:
     from adapters.static_svg_adapter import StaticSvgAdapter
     from visual_compliance import visual_compliance_gate
 
+try:
+    from publisher.f1_mandatory_cta import apply_graphic_cta
+except ImportError:
+    from f1_mandatory_cta import apply_graphic_cta
+
 ROOT = Path(__file__).resolve().parents[2]
 STATIC_TYPES = {"static", "photo", "carousel"}
 VIDEO_TYPES = {"reel", "video", "story", "ugc"}
@@ -62,6 +67,8 @@ def normalize_spec(raw: dict[str, Any]) -> dict[str, Any]:
     spec.setdefault("captions", {"enabled": False, "items": []})
     if not spec.get("format"):
         spec["format"] = "9:16" if kind in VIDEO_TYPES else "4:5"
+    if str(brand.get("name") or "").upper().startswith("F1"):
+        apply_graphic_cta(spec)
     return spec
 
 
