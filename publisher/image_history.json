@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-11T10:21:16Z",
+  "updated_at": "2026-09-11T14:45:45Z",
   "brands": {
     "f1-immobiliare": {
       "recent": [
@@ -3086,38 +3086,6 @@
           "source_type": "f1-approved-local-valle-susa"
         },
         {
-          "key": "https://commons.wikimedia.org/wiki/special:redirect/file/centro_storico_avigliana.jpg",
-          "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Centro_Storico_Avigliana.JPG",
-          "used_at": "2026-09-10T22:09:14Z",
-          "job_id": "f1-immobiliare-2026-09-11-c00-03-03-g1-tre-agenzie",
-          "output_type": "static-photo",
-          "source_type": "f1-approved-local-valle-susa"
-        },
-        {
-          "key": "https://commons.wikimedia.org/wiki/special:redirect/file/avigliana_centro_storico_tramonto.jpg",
-          "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Avigliana_Centro_Storico_Tramonto.JPG",
-          "used_at": "2026-09-10T22:09:18Z",
-          "job_id": "f1-immobiliare-2026-09-11-c00-04-04-g2-tre-prezzi",
-          "output_type": "static-photo",
-          "source_type": "f1-approved-local-valle-susa"
-        },
-        {
-          "key": "https://commons.wikimedia.org/wiki/special:redirect/file/villa_cantamerlo_avigliana02.jpg",
-          "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Villa_Cantamerlo_Avigliana02.JPG",
-          "used_at": "2026-09-11T10:20:40Z",
-          "job_id": "f1-immobiliare-2026-09-11-c12-01-06-g4-quattro-controlli-fermo",
-          "output_type": "static-photo",
-          "source_type": "f1-approved-local-valle-susa"
-        },
-        {
-          "key": "https://commons.wikimedia.org/wiki/special:redirect/file/avigliana_centro_storico.jpg",
-          "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Avigliana_Centro_Storico.JPG",
-          "used_at": "2026-09-11T10:20:43Z",
-          "job_id": "f1-immobiliare-2026-09-11-c12-02-07-g5-domanda-agente",
-          "output_type": "static-photo",
-          "source_type": "f1-approved-local-valle-susa"
-        },
-        {
           "key": "https://commons.wikimedia.org/wiki/special:redirect/file/avigliana%2c_italy_%28unsplash%29.jpg",
           "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Avigliana%2C_Italy_%28Unsplash%29.jpg",
           "used_at": "2026-09-11T10:20:58Z",
@@ -3134,10 +3102,42 @@
           "source_type": "f1-approved-local-valle-susa"
         },
         {
+          "key": "https://commons.wikimedia.org/wiki/special:redirect/file/villa_cantamerlo_avigliana02.jpg",
+          "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Villa_Cantamerlo_Avigliana02.JPG",
+          "used_at": "2026-09-11T14:45:10Z",
+          "job_id": "f1-immobiliare-2026-09-11-c16-01-01-g6-vendita-privata-verifiche",
+          "output_type": "static-photo",
+          "source_type": "f1-approved-local-valle-susa"
+        },
+        {
+          "key": "https://commons.wikimedia.org/wiki/special:redirect/file/avigliana_centro_storico.jpg",
+          "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Avigliana_Centro_Storico.JPG",
+          "used_at": "2026-09-11T14:45:14Z",
+          "job_id": "f1-immobiliare-2026-09-11-c16-02-02-g7-comparabile-escluso",
+          "output_type": "static-photo",
+          "source_type": "f1-approved-local-valle-susa"
+        },
+        {
+          "key": "https://commons.wikimedia.org/wiki/special:redirect/file/centro_storico_avigliana.jpg",
+          "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Centro_Storico_Avigliana.JPG",
+          "used_at": "2026-09-11T14:45:27Z",
+          "job_id": "f1-immobiliare-2026-09-11-c16-03-03-g1-tre-agenzie",
+          "output_type": "static-photo",
+          "source_type": "f1-approved-local-valle-susa"
+        },
+        {
+          "key": "https://commons.wikimedia.org/wiki/special:redirect/file/avigliana_centro_storico_tramonto.jpg",
+          "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Avigliana_Centro_Storico_Tramonto.JPG",
+          "used_at": "2026-09-11T14:45:31Z",
+          "job_id": "f1-immobiliare-2026-09-11-c16-04-04-g2-tre-prezzi",
+          "output_type": "static-photo",
+          "source_type": "f1-approved-local-valle-susa"
+        },
+        {
           "key": "https://commons.wikimedia.org/wiki/special:redirect/file/architecture-villa-house-building-home-construction-542165.jpg",
           "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Architecture-villa-house-building-home-construction-542165.jpg",
-          "used_at": "2026-09-11T10:21:16Z",
-          "job_id": "f1-immobiliare-2026-09-11-c12-05-10-g1-quanto-vale-davvero",
+          "used_at": "2026-09-11T14:45:44Z",
+          "job_id": "f1-immobiliare-2026-09-11-c16-05-05-g3-cinquecento-metri",
           "output_type": "static-photo",
           "source_type": "f1-approved-local-valle-susa"
         }
@@ -6229,40 +6229,40 @@
         {
           "key": "https://themes.shopify.com/themes/shapes/presets/shapes?locale=it",
           "url": "https://themes.shopify.com/themes/shapes/presets/shapes?locale=it",
-          "used_at": "2026-09-11T10:21:16Z",
-          "job_id": "real-media-pro-2026-09-11-c12-01-06-seo-servizio",
+          "used_at": "2026-09-11T14:45:44Z",
+          "job_id": "real-media-pro-2026-09-11-c16-01-01-shopify-che-converte",
           "output_type": "static-photo",
           "source_type": "shopify-theme-store-description-only"
         },
         {
           "key": "https://themes.shopify.com/themes/broadcast/presets/broadcast?locale=it",
           "url": "https://themes.shopify.com/themes/broadcast/presets/broadcast?locale=it",
-          "used_at": "2026-09-11T10:21:16Z",
-          "job_id": "real-media-pro-2026-09-11-c12-02-07-meta-ads-creative",
+          "used_at": "2026-09-11T14:45:44Z",
+          "job_id": "real-media-pro-2026-09-11-c16-02-02-crm-followup",
           "output_type": "static-photo",
           "source_type": "shopify-theme-store-description-only"
         },
         {
           "key": "https://themes.shopify.com/themes/prestige/presets/prestige?locale=it",
           "url": "https://themes.shopify.com/themes/prestige/presets/prestige?locale=it",
-          "used_at": "2026-09-11T10:21:16Z",
-          "job_id": "real-media-pro-2026-09-11-c12-03-08-shopify-product-page",
+          "used_at": "2026-09-11T14:45:44Z",
+          "job_id": "real-media-pro-2026-09-11-c16-03-03-analisi-gratuita",
           "output_type": "static-photo",
           "source_type": "shopify-theme-store-description-only"
         },
         {
           "key": "https://themes.shopify.com/themes/allure/presets/allure?locale=it",
           "url": "https://themes.shopify.com/themes/allure/presets/allure?locale=it",
-          "used_at": "2026-09-11T10:21:16Z",
-          "job_id": "real-media-pro-2026-09-11-c12-04-09-advertising-sistema",
+          "used_at": "2026-09-11T14:45:44Z",
+          "job_id": "real-media-pro-2026-09-11-c16-04-04-seo-ai-search",
           "output_type": "static-photo",
           "source_type": "shopify-theme-store-description-only"
         },
         {
           "key": "https://themes.shopify.com/themes/vivid/presets/vivid?locale=it",
           "url": "https://themes.shopify.com/themes/vivid/presets/vivid?locale=it",
-          "used_at": "2026-09-11T10:21:16Z",
-          "job_id": "real-media-pro-2026-09-11-c12-05-10-sito-che-perde-lead",
+          "used_at": "2026-09-11T14:45:45Z",
+          "job_id": "real-media-pro-2026-09-11-c16-05-05-creative-testing",
           "output_type": "static-photo",
           "source_type": "shopify-theme-store-description-only"
         }
