@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#07111f">
+<title>AVP · Gruppi Facebook Piemonte</title>
+<style>
+:root{--bg:#07111f;--panel:#0d1b2d;--line:#29415e;--txt:#f5f8fc;--mut:#afc0d5;--blue:#2d7ff9;--gold:#d2a33b;--green:#25b86b;--red:#b64646;--orange:#d9822b}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#06101c,#0a1626);color:var(--txt);font-family:Arial,sans-serif}.wrap{max-width:1250px;margin:auto;padding:18px 14px 70px}.hero,.panel,.card{background:var(--panel);border:1px solid var(--line);border-radius:18px}.hero{padding:20px;margin-bottom:14px}.brand{color:var(--gold);font-size:11px;font-weight:900;letter-spacing:.12em}.hero h1{margin:7px 0 8px;font-size:clamp(28px,6vw,48px)}.muted,.small{color:var(--mut);font-size:12px;line-height:1.5}.notice{margin-top:13px;padding:12px;border-left:3px solid var(--gold);background:#101c2d;border-radius:8px;font-size:12px;line-height:1.5}.stats{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:14px}.stat{padding:12px;background:#101f33;border-radius:12px;text-align:center;font-size:11px}.stat b{display:block;font-size:22px;color:#fff}.toolbar{display:flex;gap:7px;flex-wrap:wrap;margin:14px 0}.btn,.toolbar button{border:1px solid var(--line);background:#17304d;color:#fff;border-radius:9px;padding:10px 12px;cursor:pointer;font-weight:800;font-size:12px;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}.btn.primary{background:var(--blue)}.btn.gold{background:#4b3a13;border-color:#80621d;color:#ffd978}.btn.green{background:#124b31;border-color:#25764f;color:#77e2aa}.btn.red{background:#4b1f1f;border-color:#713030;color:#ffaaaa}.btn.orange{background:#4c311a;border-color:#80511f;color:#ffbd7d}.toolbar button.active{background:var(--blue)}.filters{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}.field{width:100%;padding:11px 12px;border-radius:10px;border:1px solid var(--line);background:#0b1727;color:#fff;font:inherit}.panel{padding:15px}.queue{display:grid;gap:10px}.card{padding:14px}.row{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.name{font-size:17px;font-weight:900;margin:8px 0 4px}.meta{font-size:11px;color:var(--mut)}.badge{display:inline-block;padding:5px 8px;border-radius:999px;background:#17304d;font-size:9px;font-weight:900}.badge.approved{color:#b9d5ff}.badge.opened{color:#ffcf92;background:#4c311a}.badge.requested{color:#ffd978;background:#4b3a13}.badge.member{color:#77e2aa;background:#124b31}.badge.blocked{color:#ffaaaa;background:#4b1f1f}.actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.progress{height:8px;background:#0a1422;border-radius:999px;overflow:hidden;margin-top:10px}.progress span{display:block;height:100%;background:linear-gradient(90deg,var(--blue),var(--green));width:0}.footer{position:fixed;bottom:0;left:0;right:0;background:#06101cf3;border-top:1px solid var(--line);padding:8px}.footerin{max-width:1250px;margin:auto;display:flex;gap:8px;justify-content:center}.footer a{color:#fff;text-decoration:none;background:#142338;padding:9px 12px;border-radius:9px;font-size:11px;font-weight:800}
+@media(max-width:850px){.stats{grid-template-columns:repeat(3,1fr)}.filters{grid-template-columns:1fr}.actions .btn{flex:1}.row{display:block}}@media(max-width:520px){.stats{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<section class="hero">
+<div class="brand">ATTIVITÀ IN VENDITA PIEMONTE · FACEBOOK GROUP ENGINE</div>
+<h1>ISCRIZIONE GRUPPI</h1>
+<p class="muted">Usa il database gruppi già costruito per Valle di Susa e Provincia di Torino. La dashboard apre i gruppi uno alla volta, conserva lo stato e prepara la sequenza di iscrizione della Pagina <b>Attività in Vendita Piemonte</b>.</p>
+<div class="notice"><b>IMPORTANTE:</b> GitHub gestisce ricerca, ordine, apertura e tracciamento. Il click finale “Iscriviti al gruppo” resta su Facebook perché richiede la sessione autenticata e perché alcuni gruppi non consentono l'ingresso alle Pagine.</div>
+<div class="stats" id="stats"></div>
+<div class="progress"><span id="progressBar"></span></div>
+</section>
+
+<section class="panel">
+<div class="toolbar">
+<button class="active" data-status="ALL">TUTTI</button>
+<button data-status="APPROVED">DA ISCRIVERE</button>
+<button data-status="OPENED">APERTI</button>
+<button data-status="JOIN_REQUESTED">RICHIESTA INVIATA</button>
+<button data-status="MEMBER">ISCRITTO</button>
+<button data-status="PAGE_NOT_ALLOWED">PAGINA NON AMMESSA</button>
+<button data-status="REJECTED">SCARTATI</button>
+</div>
+<div class="filters">
+<input id="search" class="field" placeholder="Cerca gruppo o comune...">
+<select id="territory" class="field"><option value="ALL">Tutti i comuni</option></select>
+</div>
+<div class="actions" style="margin-bottom:14px">
+<button class="btn primary" id="nextBtn">APRI PROSSIMO GRUPPO</button>
+<button class="btn gold" id="openFiveBtn">PREPARA PROSSIMI 5</button>
+<button class="btn" id="resetFiltersBtn">AZZERA FILTRI</button>
+</div>
+<div class="small" id="queueInfo"></div>
+<div id="cards" class="queue"></div>
+</section>
+</main>
+
+<div class="footer"><div class="footerin"><a href="groups.html">GRUPPI F1</a><a href="https://josephsocialmedia2-spec.github.io/launcher-dashboard/facebook-network-radar.html">NETWORK RADAR</a></div></div>
+
+<script>
+const DATA_URL='growth/groups.json';
+const STATUS_KEY='avpFacebookGroupStatusV1';
+const ORDER=['APPROVED','OPENED','JOIN_REQUESTED','MEMBER','PAGE_NOT_ALLOWED','REJECTED'];
+const LABELS={APPROVED:'DA ISCRIVERE',OPENED:'APERTO',JOIN_REQUESTED:'RICHIESTA INVIATA',MEMBER:'ISCRITTO',PAGE_NOT_ALLOWED:'PAGINA NON AMMESSA',REJECTED:'SCARTATO'};
+let all=[],current='ALL';
+const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+const norm=s=>String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').replace(/\s+/g,' ').trim();
+function saved(){try{return JSON.parse(localStorage.getItem(STATUS_KEY)||'{}')}catch(e){return{}}}
+function saveStatus(id,status){const m=saved();m[id]=status;localStorage.setItem(STATUS_KEY,JSON.stringify(m));const i=all.findIndex(x=>x.id===id);if(i>=0)all[i].avp_status=status;render()}
+function effectiveStatus(g){const m=saved();if(m[g.id])return m[g.id];if(g.status==='REJECTED')return 'REJECTED';return 'APPROVED'}
+function cleanName(n){return String(n||'').replace(/\s*[-|]\s*Facebook\s*$/i,'').trim()}
+function cleanRows(rows){const seen=new Set();return rows.filter(g=>{if(!g||!g.url||!g.id)return false;const key=g.url.replace(/\/$/,'');if(seen.has(key))return false;seen.add(key);return true}).map(g=>({...g,name:cleanName(g.name),avp_status:effectiveStatus(g)}))}
+function statusClass(s){return s==='MEMBER'?'member':s==='JOIN_REQUESTED'?'requested':s==='OPENED'?'opened':s==='PAGE_NOT_ALLOWED'||s==='REJECTED'?'blocked':'approved'}
+function openGroupById(id){const g=all.find(x=>x.id===id);if(!g)return;saveStatus(g.id,'OPENED');window.open(g.url,'_blank','noopener');}
+function requestSent(id){saveStatus(id,'JOIN_REQUESTED')}
+function member(id){saveStatus(id,'MEMBER')}
+function pageBlocked(id){saveStatus(id,'PAGE_NOT_ALLOWED')}
+function reject(id){saveStatus(id,'REJECTED')}
+function resetGroup(id){saveStatus(id,'APPROVED')}
+function filtered(){const q=norm(document.getElementById('search').value);const terr=document.getElementById('territory').value;return all.filter(g=>{if(current!=='ALL'&&g.avp_status!==current)return false;if(terr!=='ALL'&&g.territory!==terr)return false;if(q&&!norm(`${g.name} ${g.territory}`).includes(q))return false;return true})}
+function nextCandidate(){return all.find(g=>g.avp_status==='APPROVED')||all.find(g=>g.avp_status==='OPENED')}
+function render(){const counts=Object.fromEntries(ORDER.map(s=>[s,all.filter(g=>g.avp_status===s).length]));const total=all.length,done=(counts.MEMBER||0)+(counts.JOIN_REQUESTED||0)+(counts.PAGE_NOT_ALLOWED||0)+(counts.REJECTED||0);document.getElementById('stats').innerHTML=`<div class="stat"><b>${total}</b>gruppi</div><div class="stat"><b>${counts.APPROVED||0}</b>da iscrivere</div><div class="stat"><b>${counts.JOIN_REQUESTED||0}</b>richieste</div><div class="stat"><b>${counts.MEMBER||0}</b>iscritto</div><div class="stat"><b>${counts.PAGE_NOT_ALLOWED||0}</b>no Pagine</div><div class="stat"><b>${counts.REJECTED||0}</b>scartati</div>`;document.getElementById('progressBar').style.width=(total?Math.min(100,done/total*100):0)+'%';const rows=filtered();document.getElementById('queueInfo').textContent=`${rows.length} gruppi visualizzati · Pagina da usare: Attività in Vendita Piemonte`;document.getElementById('cards').innerHTML=rows.length?rows.map(g=>`<article class="card"><div class="row"><div><span class="badge ${statusClass(g.avp_status)}">${esc(LABELS[g.avp_status]||g.avp_status)}</span><div class="name">${esc(g.name)}</div><div class="meta">${esc(g.territory||'')} · ${esc(g.id)}</div></div></div><div class="actions">${g.avp_status==='APPROVED'?`<button class="btn primary" onclick="openGroupById('${g.id}')">APRI GRUPPO</button>`:''}${g.avp_status==='OPENED'?`<a class="btn primary" target="_blank" rel="noopener" href="${esc(g.url)}">RIAPRI</a><button class="btn gold" onclick="requestSent('${g.id}')">HO CHIESTO ISCRIZIONE</button><button class="btn orange" onclick="member('${g.id}')">ERO GIÀ ISCRITTO</button><button class="btn red" onclick="pageBlocked('${g.id}')">NON ACCETTA PAGINE</button>`:''}${g.avp_status==='JOIN_REQUESTED'?`<a class="btn" target="_blank" rel="noopener" href="${esc(g.url)}">CONTROLLA</a><button class="btn green" onclick="member('${g.id}')">ACCETTATO / ISCRITTO</button>`:''}${g.avp_status==='MEMBER'?`<a class="btn green" target="_blank" rel="noopener" href="${esc(g.url)}">APRI GRUPPO</a>`:''}${['PAGE_NOT_ALLOWED','REJECTED'].includes(g.avp_status)?`<button class="btn" onclick="resetGroup('${g.id}')">RIPRISTINA</button>`:''}${g.avp_status!=='REJECTED'?`<button class="btn red" onclick="reject('${g.id}')">SCARTA</button>`:''}</div></article>`).join(''):'<div class="card muted">Nessun gruppo con questi filtri.</div>'}
+async function init(){try{const r=await fetch(DATA_URL,{cache:'no-store'});const j=await r.json();all=cleanRows(Array.isArray(j)?j:(j.groups||[]));const territories=[...new Set(all.map(g=>g.territory).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'it'));document.getElementById('territory').innerHTML='<option value="ALL">Tutti i comuni</option>'+territories.map(t=>`<option>${esc(t)}</option>`).join('');render()}catch(e){document.getElementById('cards').innerHTML='<div class="card">Errore nel caricamento di growth/groups.json</div>'}}
+document.querySelectorAll('.toolbar button[data-status]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.toolbar button[data-status]').forEach(x=>x.classList.remove('active'));b.classList.add('active');current=b.dataset.status;render()}));document.getElementById('search').addEventListener('input',render);document.getElementById('territory').addEventListener('change',render);document.getElementById('resetFiltersBtn').addEventListener('click',()=>{document.getElementById('search').value='';document.getElementById('territory').value='ALL';current='ALL';document.querySelectorAll('.toolbar button[data-status]').forEach((x,i)=>x.classList.toggle('active',i===0));render()});document.getElementById('nextBtn').addEventListener('click',()=>{const g=nextCandidate();if(!g)return alert('Nessun gruppo da iscrivere.');openGroupById(g.id)});document.getElementById('openFiveBtn').addEventListener('click',()=>{const rows=all.filter(g=>g.avp_status==='APPROVED').slice(0,5);if(!rows.length)return alert('Nessun gruppo da preparare.');const m=saved();rows.forEach(g=>{g.avp_status='OPENED';m[g.id]='OPENED'});localStorage.setItem(STATUS_KEY,JSON.stringify(m));render();alert('I prossimi 5 sono marcati APERTI. Aprili uno alla volta per evitare blocchi Facebook.');});
+init();
+</script>
+</body>
+</html>
