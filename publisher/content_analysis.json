@@ -1,6 +1,6 @@
 {
   "version": 3,
-  "generated_at": "2026-09-10T22:08:55Z",
+  "generated_at": "2026-09-11T10:20:38Z",
   "policy": "ANALISI PRIMA DELLA CREAZIONE DEL POST + INSTAGRAM FEED/REELS + INSTAGRAM CREATORS BEST PRACTICES",
   "instagram_policy_file": "publisher/instagram_distribution_policy.json",
   "instagram_creators_policy_file": "publisher/instagram_creators_best_practices.json",
@@ -22,31 +22,9 @@
       },
       "comparable_previous_posts": [
         {
-          "title": "Siamo alla ricerca di immobili in Valle di Susa",
-          "format": "reel",
-          "category": null,
-          "visual_source": null,
-          "caption": "SIAMO ALLA RICERCA DI IMMOBILI IN VALLE DI SUSA.\n\nSe stai pensando di vendere casa, il primo passo non è pubblicare un annuncio con un prezzo scelto a sensazione. È capire quanto può valere realmente il tuo immobile e quale strategia può portarlo sul mercato nel modo corretto.\n\nF1 Immobiliare parte da una VALUTAZIONE PROFESSIONALE A 3 LIVELLI: valore minimo, valore centrale e valore massimo sostenibile. Analizziamo microzona, caratteristiche dell'immobile, concorrenza e target potenziale. Solo dopo costruiamo il Piano Marketing F1: valorizzazione degli ambienti, fotografie professionali, Reel e video verticali, copy dell'annuncio, grandi portali, sito F1, campagne Facebook/Instagram/Google e",
-          "likes": null,
-          "comments": null,
-          "shares": null,
-          "saves": null,
-          "cta_clicks": null,
-          "profile_visits": null,
-          "direct_shares": null,
-          "dwell_time_seconds": null,
-          "skip_rate": null,
-          "carousel_completion_rate": null,
-          "average_watch_time_seconds": null,
-          "three_second_view_rate": null,
-          "ten_second_view_rate": null,
-          "audio_on_rate": null,
-          "metrics_status": "NOT_AVAILABLE_IN_QUEUE"
-        },
-        {
           "title": "BONUS CASA: PRIMA LE FONTI UFFICIALI",
           "format": "photo",
-          "category": "data",
+          "category": "error",
           "visual_source": "f1-approved-local-valle-susa",
           "caption": "BONUS, AGEVOLAZIONI E PRIMA CASA: LE REGOLE CAMBIANO.\n\nPer questo F1 Immobiliare non pubblica aliquote, soglie ISEE, requisiti o scadenze copiandoli da vecchi articoli o da fonti non istituzionali.\n\nI contenuti informativi del Servizio 3 devono essere verificati sulle pagine ufficiali dell'Agenzia delle Entrate prima della pubblicazione. Finché il controllo giornaliero non conferma un dato, quel dato non viene pubblicato.\n\nFonte istituzionale di riferimento:\nhttps://www.agenziaentrate.gov.it/portale/aree-tematiche/casa\n\nInformarsi bene prima di comprare casa è parte di una scelta consapevole.\n\n371 370 8294 · 371 424 6300\n\n#ValleDiSusa #Avigliana #Susa #Condove #Almese #Bussoleno",
           "likes": null,
@@ -68,7 +46,7 @@
         {
           "title": "CERCHIAMO UNA COORDINATRICE D'UFFICIO",
           "format": "photo",
-          "category": "proof",
+          "category": "data",
           "visual_source": "f1-approved-local-valle-susa",
           "caption": "F1 IMMOBILIARE AMPLIA IL TEAM.\n\nCerchiamo una Coordinatrice d'Ufficio: una figura centrale nell'organizzazione dell'agenzia, non una semplice receptionist.\n\nIl ruolo comprende front office, gestione della banca dati, agenda, richiami, telemarketing operativo, fissazione degli appuntamenti e supporto quotidiano alla squadra.\n\nCerchiamo precisione, organizzazione, capacità comunicative e dimestichezza con gli strumenti digitali. L'esperienza immobiliare può essere utile, ma non è necessariamente indispensabile se il profilo è adatto al ruolo.\n\nCANDIDATI:\n371 370 8294 · 371 424 6300\n\n#ValleDiSusa #Avigliana #Susa #Condove #Almese #Bussoleno",
           "likes": null,
@@ -90,7 +68,7 @@
         {
           "title": "CERCHIAMO TALENTO, NON ESPERIENZA.",
           "format": "photo",
-          "category": "error",
+          "category": "proof",
           "visual_source": "f1-approved-local-valle-susa",
           "caption": "F1 IMMOBILIARE CERCA COLLABORATORI / AGENTI IMMOBILIARI JUNIOR.\n\nVivi in Valle di Susa e vuoi costruire un percorso professionale nel settore immobiliare? Selezioniamo giovani neodiplomati, neolaureati e candidati anche alla prima esperienza.\n\nNon cerchiamo qualcuno che sappia già fare tutto. Cerchiamo persone da formare con un metodo operativo, una zona assegnata e obiettivi chiari.\n\nIl percorso di crescita può svilupparsi da Collaboratore Junior ad Agente, Team Leader e Responsabile. Per i profili che maturano competenze, risultati e responsabilità adeguate può aprirsi anche la possibilità di partecipare allo sviluppo di una nuova sede F1 Immobiliare.\n\nNessuna promessa automatica: la cresc",
           "likes": null,
@@ -112,7 +90,7 @@
         {
           "title": "NON UN ANNUNCIO. UN PIANO DI VENDITA.",
           "format": "photo",
-          "category": "data",
+          "category": "error",
           "visual_source": "f1-approved-local-valle-susa",
           "caption": "LA TUA CASA NON HA BISOGNO DI UN SEMPLICE ANNUNCIO.\n\nQuando prendiamo in carico un immobile costruiamo un piano di marketing dedicato alla proprietà.\n\nPrepariamo servizio fotografico, video, Reel, planimetrie, descrizione commerciale, cartello, scheda immobile e materiali per le visite. Poi sviluppiamo la presenza online sui principali portali, sul sito F1 e sui nostri canali social, attiviamo banca dati, email, WhatsApp e rete di collaboratori.\n\nSul territorio possiamo pianificare fino a 2.500 volantini dedicati, con distribuzione progressiva registrata e monitorata. Quando previsto, il piano comprende anche un Open House.\n\nFotografie, video, portali, social, sito, territorio, banca dati, W",
           "likes": null,
@@ -134,7 +112,7 @@
         {
           "title": "QUANTO VALE DAVVERO CASA TUA?",
           "format": "photo",
-          "category": "proof",
+          "category": "data",
           "visual_source": "f1-approved-local-valle-susa",
           "caption": "QUANTO VALE DAVVERO CASA TUA?\n\nUna valutazione professionale non nasce da una sensazione. Con Agent Pricing analizziamo dati, immobili comparabili, microzona, concorrenza, domanda e caratteristiche reali della proprietà per costruire una strategia di prezzo comprensibile.\n\nIl nostro obiettivo non è darti il numero che vuoi sentirti dire: è aiutarti a capire su quali elementi si basa la valutazione.\n\nRichiedi una valutazione professionale:\nhttps://www.agentpricing.com/j.malafronte\n\n371 370 8294 · 371 424 6300\n\n#ValleDiSusa #Avigliana #Susa #Condove #Almese #Bussoleno",
           "likes": null,
@@ -156,7 +134,7 @@
         {
           "title": "BONUS CASA: PRIMA LE FONTI UFFICIALI",
           "format": "photo",
-          "category": "error",
+          "category": "data",
           "visual_source": "f1-approved-local-valle-susa",
           "caption": "BONUS, AGEVOLAZIONI E PRIMA CASA: LE REGOLE CAMBIANO.\n\nPer questo F1 Immobiliare non pubblica aliquote, soglie ISEE, requisiti o scadenze copiandoli da vecchi articoli o da fonti non istituzionali.\n\nI contenuti informativi del Servizio 3 devono essere verificati sulle pagine ufficiali dell'Agenzia delle Entrate prima della pubblicazione. Finché il controllo giornaliero non conferma un dato, quel dato non viene pubblicato.\n\nFonte istituzionale di riferimento:\nhttps://www.agenziaentrate.gov.it/portale/aree-tematiche/casa\n\nInformarsi bene prima di comprare casa è parte di una scelta consapevole.\n\n371 370 8294 · 371 424 6300\n\n#ValleDiSusa #Avigliana #Susa #Condove #Almese #Bussoleno",
           "likes": null,
@@ -178,7 +156,7 @@
         {
           "title": "CERCHIAMO UNA COORDINATRICE D'UFFICIO",
           "format": "photo",
-          "category": "data",
+          "category": "proof",
           "visual_source": "f1-approved-local-valle-susa",
           "caption": "F1 IMMOBILIARE AMPLIA IL TEAM.\n\nCerchiamo una Coordinatrice d'Ufficio: una figura centrale nell'organizzazione dell'agenzia, non una semplice receptionist.\n\nIl ruolo comprende front office, gestione della banca dati, agenda, richiami, telemarketing operativo, fissazione degli appuntamenti e supporto quotidiano alla squadra.\n\nCerchiamo precisione, organizzazione, capacità comunicative e dimestichezza con gli strumenti digitali. L'esperienza immobiliare può essere utile, ma non è necessariamente indispensabile se il profilo è adatto al ruolo.\n\nCANDIDATI:\n371 370 8294 · 371 424 6300\n\n#ValleDiSusa #Avigliana #Susa #Condove #Almese #Bussoleno",
           "likes": null,
@@ -200,7 +178,7 @@
         {
           "title": "CERCHIAMO TALENTO, NON ESPERIENZA.",
           "format": "photo",
-          "category": "proof",
+          "category": "error",
           "visual_source": "f1-approved-local-valle-susa",
           "caption": "F1 IMMOBILIARE CERCA COLLABORATORI / AGENTI IMMOBILIARI JUNIOR.\n\nVivi in Valle di Susa e vuoi costruire un percorso professionale nel settore immobiliare? Selezioniamo giovani neodiplomati, neolaureati e candidati anche alla prima esperienza.\n\nNon cerchiamo qualcuno che sappia già fare tutto. Cerchiamo persone da formare con un metodo operativo, una zona assegnata e obiettivi chiari.\n\nIl percorso di crescita può svilupparsi da Collaboratore Junior ad Agente, Team Leader e Responsabile. Per i profili che maturano competenze, risultati e responsabilità adeguate può aprirsi anche la possibilità di partecipare allo sviluppo di una nuova sede F1 Immobiliare.\n\nNessuna promessa automatica: la cresc",
           "likes": null,
@@ -222,7 +200,7 @@
         {
           "title": "NON UN ANNUNCIO. UN PIANO DI VENDITA.",
           "format": "photo",
-          "category": "error",
+          "category": "data",
           "visual_source": "f1-approved-local-valle-susa",
           "caption": "LA TUA CASA NON HA BISOGNO DI UN SEMPLICE ANNUNCIO.\n\nQuando prendiamo in carico un immobile costruiamo un piano di marketing dedicato alla proprietà.\n\nPrepariamo servizio fotografico, video, Reel, planimetrie, descrizione commerciale, cartello, scheda immobile e materiali per le visite. Poi sviluppiamo la presenza online sui principali portali, sul sito F1 e sui nostri canali social, attiviamo banca dati, email, WhatsApp e rete di collaboratori.\n\nSul territorio possiamo pianificare fino a 2.500 volantini dedicati, con distribuzione progressiva registrata e monitorata. Quando previsto, il piano comprende anche un Open House.\n\nFotografie, video, portali, social, sito, territorio, banca dati, W",
           "likes": null,
@@ -244,7 +222,7 @@
         {
           "title": "QUANTO VALE DAVVERO CASA TUA?",
           "format": "photo",
-          "category": "data",
+          "category": "proof",
           "visual_source": "f1-approved-local-valle-susa",
           "caption": "QUANTO VALE DAVVERO CASA TUA?\n\nUna valutazione professionale non nasce da una sensazione. Con Agent Pricing analizziamo dati, immobili comparabili, microzona, concorrenza, domanda e caratteristiche reali della proprietà per costruire una strategia di prezzo comprensibile.\n\nIl nostro obiettivo non è darti il numero che vuoi sentirti dire: è aiutarti a capire su quali elementi si basa la valutazione.\n\nRichiedi una valutazione professionale:\nhttps://www.agentpricing.com/j.malafronte\n\n371 370 8294 · 371 424 6300\n\n#ValleDiSusa #Avigliana #Susa #Condove #Almese #Bussoleno",
           "likes": null,
@@ -825,7 +803,7 @@
         {
           "title": "SEZIONI MODULARI PER VENDERE MEGLIO",
           "format": "photo",
-          "category": "attract",
+          "category": "nurture",
           "visual_source": "shopify-theme-store-description-only",
           "caption": "SEZIONI MODULARI PER VENDERE MEGLIO.\n\nVivid mette insieme struttura pulita, personalizzazione, ricerca, filtri e sezioni dedicate alla scoperta dei prodotti.\n\nPer Real Media Pro il punto non è replicare il tema: è utilizzare queste logiche per progettare un'esperienza originale che aiuti l'utente a trovare, capire e scegliere più facilmente.\n\nNessuna immagine del Theme Store viene riutilizzata.\n\nAnalisi strategica gratuita: 371 370 8294",
           "likes": null,
@@ -847,7 +825,7 @@
         {
           "title": "SITI WEB CHE VALORIZZANO IL BRAND",
           "format": "photo",
-          "category": "convert",
+          "category": "attract",
           "visual_source": "shopify-theme-store-description-only",
           "caption": "SITI WEB CHE VALORIZZANO IL BRAND.\n\nAllure unisce semplicità, impatto visivo, scoperta dei prodotti e una struttura pensata per sostenere la vendita. È un riferimento utile per capire quanto design e percorso commerciale debbano lavorare insieme.\n\nNoi partiamo da questi principi per creare un sito originale, coerente con il brand e costruito attorno ai suoi prodotti e clienti.\n\nNessuna immagine Shopify viene copiata.\n\nAnalisi strategica gratuita: 371 370 8294",
           "likes": null,
@@ -869,7 +847,7 @@
         {
           "title": "DESIGN PREMIUM, PRESTAZIONI VELOCI",
           "format": "photo",
-          "category": "nurture",
+          "category": "convert",
           "visual_source": "shopify-theme-store-description-only",
           "caption": "DESIGN PREMIUM, PRESTAZIONI VELOCI.\n\nPrestige mostra come un e-commerce premium possa combinare immagine di marca, prodotto, sezioni configurabili, velocità e accessibilità.\n\nReal Media Pro traduce questi principi in un progetto originale costruito sull'identità del cliente: nessuna copia del tema, ma una struttura pensata per far percepire valore e facilitare l'acquisto.\n\nAnalisi strategica gratuita: 371 370 8294",
           "likes": null,
@@ -891,7 +869,7 @@
         {
           "title": "MOBILE FIRST, PERCORSO CHIARO",
           "format": "photo",
-          "category": "attract",
+          "category": "nurture",
           "visual_source": "shopify-theme-store-description-only",
           "caption": "MOBILE FIRST, PERCORSO CHIARO.\n\nIl tema Shopify Broadcast mette al centro sezioni personalizzabili, velocità, mobile, acquisto rapido e strumenti che accompagnano il cliente verso la vendita.\n\nDa questa logica costruiamo un concept Real Media Pro completamente originale: gerarchia chiara, CTA visibili, navigazione veloce e meno attrito da smartphone.\n\nNessuna immagine del tema viene copiata o ripubblicata.\n\nAnalisi strategica gratuita: 371 370 8294",
           "likes": null,
@@ -913,7 +891,7 @@
         {
           "title": "SHOPIFY: DAL PRODOTTO ALLA CONVERSIONE",
           "format": "photo",
-          "category": "convert",
+          "category": "attract",
           "visual_source": "shopify-theme-store-description-only",
           "caption": "SHOPIFY: DAL PRODOTTO ALLA CONVERSIONE.\n\nUn e-commerce deve rendere semplice capire il prodotto, confrontare le alternative e arrivare all'azione. Prendiamo ispirazione dalle logiche del tema Shopify Shapes: struttura creativa, sezioni modulari, quick buy e percorso di scoperta chiaro.\n\nLa grafica che mostriamo è originale: non copiamo immagini o creatività del tema.\n\nReal Media Pro progetta siti Shopify orientati a navigazione, prodotto e conversione.\n\nAnalisi strategica gratuita: 371 370 8294",
           "likes": null,
@@ -935,7 +913,7 @@
         {
           "title": "SEZIONI MODULARI PER VENDERE MEGLIO",
           "format": "photo",
-          "category": "nurture",
+          "category": "attract",
           "visual_source": "shopify-theme-store-description-only",
           "caption": "SEZIONI MODULARI PER VENDERE MEGLIO.\n\nVivid mette insieme struttura pulita, personalizzazione, ricerca, filtri e sezioni dedicate alla scoperta dei prodotti.\n\nPer Real Media Pro il punto non è replicare il tema: è utilizzare queste logiche per progettare un'esperienza originale che aiuti l'utente a trovare, capire e scegliere più facilmente.\n\nNessuna immagine del Theme Store viene riutilizzata.\n\nAnalisi strategica gratuita: 371 370 8294",
           "likes": null,
@@ -957,7 +935,7 @@
         {
           "title": "SITI WEB CHE VALORIZZANO IL BRAND",
           "format": "photo",
-          "category": "attract",
+          "category": "convert",
           "visual_source": "shopify-theme-store-description-only",
           "caption": "SITI WEB CHE VALORIZZANO IL BRAND.\n\nAllure unisce semplicità, impatto visivo, scoperta dei prodotti e una struttura pensata per sostenere la vendita. È un riferimento utile per capire quanto design e percorso commerciale debbano lavorare insieme.\n\nNoi partiamo da questi principi per creare un sito originale, coerente con il brand e costruito attorno ai suoi prodotti e clienti.\n\nNessuna immagine Shopify viene copiata.\n\nAnalisi strategica gratuita: 371 370 8294",
           "likes": null,
@@ -979,7 +957,7 @@
         {
           "title": "DESIGN PREMIUM, PRESTAZIONI VELOCI",
           "format": "photo",
-          "category": "convert",
+          "category": "nurture",
           "visual_source": "shopify-theme-store-description-only",
           "caption": "DESIGN PREMIUM, PRESTAZIONI VELOCI.\n\nPrestige mostra come un e-commerce premium possa combinare immagine di marca, prodotto, sezioni configurabili, velocità e accessibilità.\n\nReal Media Pro traduce questi principi in un progetto originale costruito sull'identità del cliente: nessuna copia del tema, ma una struttura pensata per far percepire valore e facilitare l'acquisto.\n\nAnalisi strategica gratuita: 371 370 8294",
           "likes": null,
@@ -1001,7 +979,7 @@
         {
           "title": "MOBILE FIRST, PERCORSO CHIARO",
           "format": "photo",
-          "category": "nurture",
+          "category": "attract",
           "visual_source": "shopify-theme-store-description-only",
           "caption": "MOBILE FIRST, PERCORSO CHIARO.\n\nIl tema Shopify Broadcast mette al centro sezioni personalizzabili, velocità, mobile, acquisto rapido e strumenti che accompagnano il cliente verso la vendita.\n\nDa questa logica costruiamo un concept Real Media Pro completamente originale: gerarchia chiara, CTA visibili, navigazione veloce e meno attrito da smartphone.\n\nNessuna immagine del tema viene copiata o ripubblicata.\n\nAnalisi strategica gratuita: 371 370 8294",
           "likes": null,
@@ -1023,7 +1001,7 @@
         {
           "title": "SHOPIFY: DAL PRODOTTO ALLA CONVERSIONE",
           "format": "photo",
-          "category": "attract",
+          "category": "convert",
           "visual_source": "shopify-theme-store-description-only",
           "caption": "SHOPIFY: DAL PRODOTTO ALLA CONVERSIONE.\n\nUn e-commerce deve rendere semplice capire il prodotto, confrontare le alternative e arrivare all'azione. Prendiamo ispirazione dalle logiche del tema Shopify Shapes: struttura creativa, sezioni modulari, quick buy e percorso di scoperta chiaro.\n\nLa grafica che mostriamo è originale: non copiamo immagini o creatività del tema.\n\nReal Media Pro progetta siti Shopify orientati a navigazione, prodotto e conversione.\n\nAnalisi strategica gratuita: 371 370 8294",
           "likes": null,
