@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>AVP · Post pubblico</title>
+<style>
+:root{--bg:#07111f;--panel:#0d1b2d;--line:#29415e;--txt:#f5f8fc;--mut:#afc0d5;--blue:#2d7ff9;--gold:#d2a33b;--green:#25b86b}*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#06101c,#0a1626);color:var(--txt);font-family:Arial,sans-serif}.wrap{max-width:950px;margin:auto;padding:18px 14px 60px}.panel{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:14px}.brand{color:var(--gold);font-size:11px;font-weight:900;letter-spacing:.12em}h1{font-size:clamp(28px,6vw,44px);margin:7px 0 8px}.muted{color:var(--mut);font-size:12px;line-height:1.5}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.field,textarea,select{width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:#0b1727;color:#fff;font:inherit}.full{grid-column:1/-1}textarea{min-height:360px;line-height:1.5}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.btn{border:1px solid var(--line);background:#17304d;color:#fff;border-radius:9px;padding:10px 12px;cursor:pointer;font-weight:800;font-size:12px;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}.btn.primary{background:var(--blue)}.btn.green{background:#124b31;border-color:#25764f;color:#77e2aa}.status{margin-top:10px;color:#77e2aa;font-size:12px;font-weight:800}.preview{white-space:pre-wrap;background:#091522;border:1px solid var(--line);border-radius:12px;padding:14px;line-height:1.55;font-size:14px}.small{font-size:11px;color:var(--mut)}@media(max-width:650px){.grid{grid-template-columns:1fr}.full{grid-column:auto}.actions .btn{flex:1}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<section class="panel">
+<div class="brand">ATTIVITÀ IN VENDITA PIEMONTE · POST MASTER</div>
+<h1>POST PUBBLICO</h1>
+<p class="muted">Non devi riscriverlo ogni volta. Il testo resta salvato nel browser. Scegli il gruppo/comune, copia il post e pubblicalo.</p>
+</section>
+<section class="panel">
+<div class="grid">
+<select id="groupSelect" class="field full"><option value="">Nessun gruppo selezionato</option></select>
+<input id="territory" class="field" value="Avigliana" placeholder="Comune">
+<input id="price" class="field" value="€150.000" placeholder="Prezzo">
+<input id="rent" class="field" value="€2.500/mese" placeholder="Canone">
+<input id="campaign" class="field" value="bar_avigliana_2026" placeholder="Campagna">
+<textarea id="template" class="full">🏪 ATTIVITÀ STORICA IN VENDITA AD AVIGLIANA
+
+Dopo oltre 30 anni di attività, per raggiungimento dell’età pensionabile del titolare, viene ceduta un’attività commerciale già avviata che riunisce:
+
+☕ Bar
+🍽️ Ristorazione
+🚬 Tabacchi
+🎯 Lotto
+
+📍 Avigliana – Torino
+💰 Richiesta: €150.000
+💶 Canone di locazione: €2.500/mese
+✅ Attrezzature comprese
+✅ Attività già operativa
+✅ Clientela consolidata
+
+Un’opportunità interessante per chi vuole avviare un nuovo progetto imprenditoriale o per chi gestisce già un Bar, una Tabaccheria o un’attività nel settore e sta valutando un ampliamento o una seconda attività.
+
+👉 Scopri tutti i dettagli e contatta direttamente il referente su WhatsApp:
+{{LINK}}</textarea>
+</div>
+<div class="actions"><button class="btn primary" id="copyBtn">COPIA POST</button><button class="btn" id="saveBtn">SALVA TESTO MASTER</button><button class="btn" id="restoreBtn">RIPRISTINA TESTO</button><a class="btn green" id="openGroupBtn" target="_blank" rel="noopener" style="display:none">APRI GRUPPO</a><a class="btn" href="attivita-piemonte-groups.html">TORNA AI GRUPPI</a></div>
+<div id="status" class="status"></div>
+</section>
+<section class="panel"><div class="brand">ANTEPRIMA</div><div id="preview" class="preview"></div><p class="small">Il link viene generato con UTM Facebook + codice del gruppo selezionato, così puoi distinguere da quale gruppo arriva il traffico.</p></section>
+</main>
+<script>
+const DATA_URL='growth/groups.json';
+const KEY='avpPublicPostMasterV1';
+const DEFAULT=document.getElementById('template').value;
+const el=id=>document.getElementById(id);
+function selectedGroup(){const s=el('groupSelect');return s.selectedOptions[0]?.dataset||{};}
+function buildLink(){const g=selectedGroup();const u=new URL('https://lasacraimmobiliare.it/products/attivita-bar-ristorante-tabacchi-lotto');u.searchParams.set('view','attivita-commerciale');u.searchParams.set('utm_source','facebook');u.searchParams.set('utm_medium','organic');u.searchParams.set('utm_campaign',el('campaign').value||'bar_avigliana_2026');u.searchParams.set('utm_content',g.id?('gruppo_'+g.id):'post_pubblico');if(g.territory)u.searchParams.set('utm_term',g.territory);return u.toString();}
+function render(){let t=el('template').value;t=t.replaceAll('€150.000',el('price').value).replaceAll('€2.500/mese',el('rent').value).replaceAll('Avigliana',el('territory').value||'Avigliana').replace('{{LINK}}',buildLink());el('preview').textContent=t;const g=selectedGroup();if(g.url){el('openGroupBtn').href=g.url;el('openGroupBtn').style.display='inline-flex'}else el('openGroupBtn').style.display='none';}
+async function init(){const saved=localStorage.getItem(KEY);if(saved)el('template').value=saved;try{const r=await fetch(DATA_URL,{cache:'no-store'});const j=await r.json();const rows=(j.groups||[]).filter(x=>x.url&&x.status!=='REJECTED');rows.sort((a,b)=>String(a.territory).localeCompare(String(b.territory),'it')||String(a.name).localeCompare(String(b.name),'it'));el('groupSelect').innerHTML='<option value="">Nessun gruppo selezionato</option>'+rows.map(g=>`<option data-id="${g.id}" data-territory="${g.territory||''}" data-url="${g.url}" value="${g.id}">${g.territory||''} · ${g.name||''}</option>`).join('');}catch(e){}render();}
+el('groupSelect').addEventListener('change',()=>{const g=selectedGroup();if(g.territory)el('territory').value=g.territory;render()});['territory','price','rent','campaign','template'].forEach(id=>el(id).addEventListener('input',render));el('saveBtn').addEventListener('click',()=>{localStorage.setItem(KEY,el('template').value);el('status').textContent='Testo master salvato.'});el('restoreBtn').addEventListener('click',()=>{el('template').value=DEFAULT;localStorage.removeItem(KEY);render();el('status').textContent='Testo ripristinato.'});el('copyBtn').addEventListener('click',async()=>{await navigator.clipboard.writeText(el('preview').textContent);el('status').textContent='Post copiato. Ora incollalo nel gruppo Facebook.'});init();
+</script>
+</body></html>
