@@ -310,9 +310,6 @@
       "editorial_slot": "08:30",
       "scheduled_at": "2026-09-12T08:30:00+02:00",
       "status": "ERROR",
-      "cta": "https://www.agentpricing.com/j.malafronte",
-      "graphic_cta": "CLICCA SUL LINK 👉\nhttps://www.agentpricing.com/j.malafronte\n🏡“Contattaci per una Valutazione Strategica e di Posizionamento del tuo immobile: analizziamo prezzo, concorrenza e strategia di vendita per aumentare le possibilità di vendere meglio e in tempi più efficienti.”",
-      "graphic_body": "Mercato locale e strategia immobiliare.",
       "buffer_posts": [
         {
           "service": "facebook",
@@ -335,7 +332,7 @@
       "pillar": "Patrimonio",
       "source_name": "Comune - Luoghi",
       "source_url": "https://www.comune.villardora.to.it/Luoghi",
-      "caption": "",
+      "caption": "Chiesa dei Santi Vincenzo e Anastasio\n\nConoscere Villar Dora significa capire il territorio in cui si sceglie di vivere: servizi, comunità, patrimonio locale e qualità della vita fanno parte della decisione immobiliare, insieme alla casa.\n\nFonte di riferimento: Comune - Luoghi. Informazioni da verificare alla data di pubblicazione.\n\nCLICCA SUL LINK 👉\nhttps://www.agentpricing.com/j.malafronte\n🏡“Contattaci per una Valutazione Strategica e di Posizionamento del tuo immobile: analizziamo prezzo, concorrenza e strategia di vendita per aumentare le possibilità di vendere meglio e in tempi più efficienti.”",
       "format": "photo",
       "assets": [
         "publisher/final_assets/generated_villar_dora/VD-005-C-20260912-1830.png"
@@ -348,7 +345,24 @@
       "territory": "Villar Dora",
       "editorial_slot": "18:30",
       "scheduled_at": "2026-09-12T18:30:00+02:00",
-      "status": "READY"
+      "status": "ERROR",
+      "cta": "https://www.agentpricing.com/j.malafronte",
+      "graphic_cta": "CLICCA SUL LINK 👉\nhttps://www.agentpricing.com/j.malafronte\n🏡“Contattaci per una Valutazione Strategica e di Posizionamento del tuo immobile: analizziamo prezzo, concorrenza e strategia di vendita per aumentare le possibilità di vendere meglio e in tempi più efficienti.”",
+      "graphic_body": "Territorio, servizi e vita locale.",
+      "buffer_posts": [
+        {
+          "service": "facebook",
+          "channel_id": "6a9afff8065799be468ade7a",
+          "post_id": "6aa51f0508ad749275542da1",
+          "buffer_status": "scheduled",
+          "due_at": "2026-09-12T16:30:00.000Z",
+          "created_at": "2026-09-12T09:44:37+00:00"
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "facebook"
+      ],
+      "error": "Buffer instagram: Invalid post: Instagram does not support the 'carousel' post type. Valid types are post, story, or reel."
     },
     {
       "id": "VD-006-S-20260913-0830",
@@ -6731,5 +6745,5 @@
       "status": "READY"
     }
   ],
-  "updated_at": "2026-09-11T18:52:22+00:00"
+  "updated_at": "2026-09-12T09:44:37+00:00"
 }
