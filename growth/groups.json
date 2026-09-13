@@ -3842,8 +3842,25 @@
       "member_at": null,
       "last_post_at": null,
       "notes": ""
+    },
+    {
+      "id": "FBG-9CCC9FE19D",
+      "brand": "real-media-pro",
+      "territory": "Torino",
+      "name": "Startup Torino: news, eventi, risorse per startupper",
+      "url": "https://www.facebook.com/groups/startupturin/",
+      "source_query": "site:facebook.com/groups \"Torino\" \"networking\"",
+      "snippet": "Startup Torino è la community torinese di appassionati di startup e nasce con lo scopo di favorire l'incontro tra i membri e dar vita a nuove...",
+      "status": "PENDING_APPROVAL",
+      "batch_id": "20260913-101913",
+      "discovered_at": "2026-09-13T10:27:21+00:00",
+      "approved_at": null,
+      "join_requested_at": null,
+      "member_at": null,
+      "last_post_at": null,
+      "notes": ""
     }
   ],
-  "updated_at": "2026-09-12T09:32:51+00:00",
-  "last_batch_id": "20260911-094321"
+  "updated_at": "2026-09-13T10:30:52+00:00",
+  "last_batch_id": "20260913-101913"
 }
