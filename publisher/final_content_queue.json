@@ -562,9 +562,6 @@
       "editorial_slot": "18:30",
       "scheduled_at": "2026-09-15T18:30:00+02:00",
       "status": "ERROR",
-      "cta": "https://www.agentpricing.com/j.malafronte",
-      "graphic_cta": "CLICCA SUL LINK 👉\nhttps://www.agentpricing.com/j.malafronte\n🏡“Contattaci per una Valutazione Strategica e di Posizionamento del tuo immobile: analizziamo prezzo, concorrenza e strategia di vendita per aumentare le possibilità di vendere meglio e in tempi più efficienti.”",
-      "graphic_body": "Territorio, servizi e vita locale.",
       "buffer_posts": [
         {
           "service": "facebook",
@@ -587,7 +584,7 @@
       "pillar": "Mercato / acquisizione",
       "source_name": "Dati F1 + fonte mercato",
       "source_url": "https://www.immobiliare.it/mercato-immobiliare/piemonte/villar-dora/",
-      "caption": "",
+      "caption": "Valutazione immobiliare: perché i comparabili devono essere davvero comparabili per zona, tipologia e stato.\n\nA Villar Dora una strategia di vendita efficace parte dalla lettura del mercato locale, dalla concorrenza attiva e dalle caratteristiche specifiche dell’immobile. F1 Immobiliare lavora sul posizionamento prima di decidere come presentare la casa al mercato.\n\nFonte di riferimento: Dati F1 + fonte mercato. Informazioni da verificare alla data di pubblicazione.\n\nCLICCA SUL LINK 👉\nhttps://www.agentpricing.com/j.malafronte\n🏡“Contattaci per una Valutazione Strategica e di Posizionamento del tuo immobile: analizziamo prezzo, concorrenza e strategia di vendita per aumentare le possibilità di vendere meglio e in tempi più efficienti.”",
       "format": "photo",
       "assets": [
         "publisher/final_assets/generated_villar_dora/VD-009-S-20260916-0830.png"
@@ -600,7 +597,24 @@
       "territory": "Villar Dora",
       "editorial_slot": "08:30",
       "scheduled_at": "2026-09-16T08:30:00+02:00",
-      "status": "READY"
+      "status": "ERROR",
+      "cta": "https://www.agentpricing.com/j.malafronte",
+      "graphic_cta": "CLICCA SUL LINK 👉\nhttps://www.agentpricing.com/j.malafronte\n🏡“Contattaci per una Valutazione Strategica e di Posizionamento del tuo immobile: analizziamo prezzo, concorrenza e strategia di vendita per aumentare le possibilità di vendere meglio e in tempi più efficienti.”",
+      "graphic_body": "Mercato locale e strategia immobiliare.",
+      "buffer_posts": [
+        {
+          "service": "facebook",
+          "channel_id": "6a9afff8065799be468ade7a",
+          "post_id": "6aa99ab34757b791d942c5b4",
+          "buffer_status": "scheduled",
+          "due_at": "2026-09-16T06:30:00.000Z",
+          "created_at": "2026-09-15T19:21:23+00:00"
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "facebook"
+      ],
+      "error": "Buffer instagram: Invalid post: Instagram does not support the 'carousel' post type. Valid types are post, story, or reel."
     },
     {
       "id": "VD-009-C-20260916-1830",
@@ -6829,5 +6843,5 @@
       "status": "READY"
     }
   ],
-  "updated_at": "2026-09-15T10:38:52+00:00"
+  "updated_at": "2026-09-15T19:21:23+00:00"
 }
