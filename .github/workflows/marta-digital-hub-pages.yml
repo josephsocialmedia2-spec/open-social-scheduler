@@ -1,0 +1,50 @@
+name: Publish Marta Digital Hub
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - 'marta-digital-hub/**'
+      - '.github/workflows/marta-digital-hub-pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: "marta-digital-hub-pages"
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Stage Marta Digital Hub
+        shell: bash
+        run: |
+          rm -rf /tmp/marta-digital-hub
+          cp -R marta-digital-hub /tmp/marta-digital-hub
+
+      - name: Sync to gh-pages
+        shell: bash
+        run: |
+          git fetch origin gh-pages:refs/remotes/origin/gh-pages
+          git switch -C gh-pages origin/gh-pages
+          rm -rf marta-digital-hub
+          cp -R /tmp/marta-digital-hub ./marta-digital-hub
+          touch .nojekyll
+          git config user.name 'marta-digital-hub-pages'
+          git config user.email 'marta-digital-hub-pages@users.noreply.github.com'
+          git add -A marta-digital-hub .nojekyll
+          if git diff --cached --quiet; then
+            echo 'Marta Digital Hub already synchronized.'
+            exit 0
+          fi
+          git commit -m 'Publish Marta Digital Hub entry'
+          git push origin HEAD:gh-pages
