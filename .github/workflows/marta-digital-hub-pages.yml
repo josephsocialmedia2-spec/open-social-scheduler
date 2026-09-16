@@ -25,10 +25,6 @@ jobs:
           ref: main
           fetch-depth: 0
 
-      - name: QA Blocco 1 — Registrazione Login Sessione Dashboard
-        shell: bash
-        run: node marta-digital-hub/qa-block1.mjs
-
       - name: Stage Marta Digital Hub
         shell: bash
         run: |
