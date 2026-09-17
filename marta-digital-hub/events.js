@@ -23,9 +23,6 @@ $('#uploadForm').onsubmit=async e=>{
    const safe=martaSafeStorageFilename(f.name,f.type);
    sp=`${S.user.id}/${c.id}/${Date.now()}-${safe}`;
 
-   // Persist the intended object path before transferring bytes. If the browser
-   // loses the connection, the recovery record remains visible instead of
-   // leaving an invisible storage object.
    await db(`contents?id=eq.${c.id}`,{method:'PATCH',body:{storage_path:sp}});
 
    $('#upState').innerHTML='<p>Upload in corso…</p><div class=progress><i id=bar></i></div>';
@@ -66,3 +63,4 @@ $('#costForm').onsubmit=async e=>{e.preventDefault();await db('service_costs',{m
 $('#settingsForm').onsubmit=async e=>{e.preventDefault();await Promise.all([db(`editorial_profiles?owner_id=eq.${S.user.id}`,{method:'PATCH',body:{name:$('#setName').value,voice:$('#setVoice').value,forbidden_claims:$('#setForbidden').value}}),db(`profiles?id=eq.${S.user.id}`,{method:'PATCH',body:{site_url:$('#setSite').value||null}})]);toast('Impostazioni salvate')};
 window.addEventListener('storage',e=>{if(e.key==='mr_session'&&!e.newValue)location.replace('./accesso.html?v=12')});
 (async()=>{if(!validSession()){clearSession();location.replace('./accesso.html?v=12');return}try{await enter()}catch(e){console.error(e);clearSession();location.replace('./accesso.html?v=12&reason=session')}})();
+import('./content-hardening.js?v=13').catch(e=>console.error('content hardening',e));
