@@ -1,0 +1,43 @@
+name: Marta Digital Hub QA
+
+on:
+  pull_request:
+    paths:
+      - 'marta-digital-hub/**'
+      - '.github/workflows/marta-digital-hub-qa.yml'
+  push:
+    branches:
+      - 'qa-upload-storage-hardening'
+    paths:
+      - 'marta-digital-hub/**'
+      - '.github/workflows/marta-digital-hub-qa.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: JavaScript syntax
+        shell: bash
+        run: |
+          node --check marta-digital-hub/core.js
+          node --check marta-digital-hub/upload.js
+          node --check marta-digital-hub/content.js
+          node --check marta-digital-hub/events.js
+
+      - name: Upload and storage edge cases
+        run: node marta-digital-hub/tests/upload-storage-qa.mjs
+
+      - name: Public frontend safety checks
+        shell: bash
+        run: |
+          grep -q './upload.js?v=12' marta-digital-hub/app.html
+          ! grep -R -n -E 'service_role|sb_secret_' marta-digital-hub --exclude='*.md' --exclude='*.sql'
+          grep -q 'marta-content-originals' marta-digital-hub/upload.js
+          grep -q 'MARTA_MAX_VIDEO_BYTES' marta-digital-hub/upload.js
