@@ -8,6 +8,7 @@ on:
   push:
     branches:
       - 'qa-upload-storage-hardening'
+      - 'qa-content-approval-hardening'
     paths:
       - 'marta-digital-hub/**'
       - '.github/workflows/marta-digital-hub-qa.yml'
@@ -29,10 +30,14 @@ jobs:
           node --check marta-digital-hub/core.js
           node --check marta-digital-hub/upload.js
           node --check marta-digital-hub/content.js
+          node --check marta-digital-hub/content-hardening.js
           node --check marta-digital-hub/events.js
 
       - name: Upload and storage edge cases
         run: node marta-digital-hub/tests/upload-storage-qa.mjs
+
+      - name: Content and approval edge cases
+        run: node marta-digital-hub/tests/content-approval-qa.mjs
 
       - name: Public frontend safety checks
         shell: bash
@@ -41,3 +46,4 @@ jobs:
           ! grep -R -n -E 'service_role|sb_secret_' marta-digital-hub --exclude='*.md' --exclude='*.sql'
           grep -q 'marta-content-originals' marta-digital-hub/upload.js
           grep -q 'MARTA_MAX_VIDEO_BYTES' marta-digital-hub/upload.js
+          grep -q 'content-hardening.js?v=13' marta-digital-hub/events.js
