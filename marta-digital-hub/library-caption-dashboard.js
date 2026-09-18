@@ -262,8 +262,8 @@ async function mrLogs(){
   const [audit,publish,jobs]=await Promise.all([db('audit_logs?select=*&order=created_at.desc&limit=80'),db('marta_publish_logs?select=*&order=created_at.desc&limit=80'),db('marta_processing_jobs?select=*&order=created_at.desc&limit=80')]);
   const rows=[
     ...audit.map(x=>({at:x.created_at,label:`${x.module||'audit'} · ${x.action||''}`,status:x.outcome||'OK',error:x.error})),
-    ...publish.map(x=>({at:x.created_at,label:`social · ${x.platform||''}`,status:x.outcome||x.status||'INFO',error:x.error||x.last_error})),
-    ...jobs.map(x=>({at:x.created_at,label:`job · ${x.job_type||x.type||'processing'}`,status:x.status||'INFO',error:x.error||x.last_error}))
+    ...publish.map(x=>({at:x.created_at,label:`social · ${x.platform||''}`,status:x.outcome||'INFO',error:x.message})),
+    ...jobs.map(x=>({at:x.created_at,label:`job · ${x.kind||'processing'}`,status:x.status||'INFO',error:x.last_error}))
   ].sort((a,b)=>new Date(b.at)-new Date(a.at)).slice(0,150);
   host.innerHTML=rows.length?rows.map(x=>`<div class="item"><div><b>${esc(x.label)}</b><p>${fmt(x.at)}${x.error?' · '+esc(x.error):''}</p></div><span class="status ${x.status==='ERRORE'?'ERRORE':''}">${esc(x.status)}</span></div>`).join(''):'<p class="hint">Nessun log operativo.</p>';
 }
