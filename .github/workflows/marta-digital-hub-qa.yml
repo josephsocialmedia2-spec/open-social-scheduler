@@ -53,7 +53,7 @@ jobs:
       - name: Public frontend safety checks
         shell: bash
         run: |
-          grep -q './upload.js?v=12' marta-digital-hub/app.html
+          grep -q './upload.js?v=15' marta-digital-hub/app.html
           ! grep -R -n -E 'service_role|sb_secret_' marta-digital-hub --exclude='*.md' --exclude='*.sql'
           grep -q 'marta-content-originals' marta-digital-hub/upload.js
           grep -q 'MARTA_MAX_VIDEO_BYTES' marta-digital-hub/upload.js
