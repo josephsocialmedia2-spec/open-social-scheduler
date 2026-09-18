@@ -65,7 +65,6 @@ jobs:
           grep -q 'MARTA_MAX_VIDEO_BYTES' marta-digital-hub/upload.js
           grep -q 'content-hardening.js?v=13' marta-digital-hub/events.js
           grep -q 'calendar-leads-hardening.js?v=14' marta-digital-hub/events.js
-          grep -q './events.js?v=15' marta-digital-hub/app.html
           grep -q 'backup.js?v=15' marta-digital-hub/events.js
           grep -q 'library-caption-dashboard.js?v=16' marta-digital-hub/events.js
           grep -q './events.js?v=16' marta-digital-hub/app.html
