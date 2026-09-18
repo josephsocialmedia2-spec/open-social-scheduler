@@ -44,6 +44,16 @@ Deno.serve(async(req:Request)=>{
   let admin;
   try{admin=adminClient()}catch(err){return json({error:err instanceof Error?err.message:"Backend non disponibile"},500)}
 
+  if(action==="peek"){
+    const cutoff=new Date(Date.now()-120*60*1000).toISOString();
+    const [queued,stale]=await Promise.all([
+      admin.from("marta_processing_jobs").select("id",{count:"exact",head:true}).eq("kind","PROCESS_MEDIA").eq("status","IN_CODA"),
+      admin.from("marta_processing_jobs").select("id",{count:"exact",head:true}).eq("kind","PROCESS_MEDIA").eq("status","IN_CORSO").lt("started_at",cutoff)
+    ]);
+    if(queued.error||stale.error)return json({error:queued.error?.message||stale.error?.message||"Errore coda"},500);
+    return json({count:(queued.count||0)+(stale.count||0),batch_max:16});
+  }
+
   if(action==="claim"){
     const requested=Number(body?.limit||16),limit=Math.min(16,Math.max(1,Number.isFinite(requested)?requested:16));
     const {data:jobs,error}=await admin.rpc("marta_claim_processing_batch",{p_limit:limit});
@@ -99,6 +109,13 @@ Deno.serve(async(req:Request)=>{
 
   if(action==="fail"){
     if(!body?.job_id)return json({error:"job_id mancante"},400);
+    if(body?.audio_path){
+      const {data:job}=await admin.from("marta_processing_jobs").select("owner_id").eq("id",body.job_id).maybeSingle();
+      const audioPath=String(body.audio_path);
+      if(job?.owner_id&&audioPath.startsWith(job.owner_id+"/")){
+        await admin.storage.from("marta-content-derived").remove([audioPath]);
+      }
+    }
     const {error}=await admin.rpc("marta_fail_processing_job",{
       p_job_id:body.job_id,
       p_error:String(body?.error||"Errore worker").slice(0,2000)
