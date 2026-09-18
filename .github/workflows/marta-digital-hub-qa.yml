@@ -9,6 +9,7 @@ on:
     branches:
       - 'qa-upload-storage-hardening'
       - 'qa-content-approval-hardening'
+      - 'qa-calendar-leads-hardening'
     paths:
       - 'marta-digital-hub/**'
       - '.github/workflows/marta-digital-hub-qa.yml'
@@ -31,6 +32,7 @@ jobs:
           node --check marta-digital-hub/upload.js
           node --check marta-digital-hub/content.js
           node --check marta-digital-hub/content-hardening.js
+          node --check marta-digital-hub/calendar-leads-hardening.js
           node --check marta-digital-hub/events.js
 
       - name: Upload and storage edge cases
@@ -38,6 +40,9 @@ jobs:
 
       - name: Content and approval edge cases
         run: node marta-digital-hub/tests/content-approval-qa.mjs
+
+      - name: Calendar, Autopilot and Lead edge cases
+        run: node marta-digital-hub/tests/calendar-leads-qa.mjs
 
       - name: Public frontend safety checks
         shell: bash
@@ -47,3 +52,5 @@ jobs:
           grep -q 'marta-content-originals' marta-digital-hub/upload.js
           grep -q 'MARTA_MAX_VIDEO_BYTES' marta-digital-hub/upload.js
           grep -q 'content-hardening.js?v=13' marta-digital-hub/events.js
+          grep -q 'calendar-leads-hardening.js?v=14' marta-digital-hub/events.js
+          grep -q './events.js?v=14' marta-digital-hub/app.html
