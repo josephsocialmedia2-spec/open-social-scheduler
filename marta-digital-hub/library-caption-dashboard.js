@@ -1,6 +1,7 @@
 import {buildLocalCaptionPack} from './caption-local.mjs?v=16';
 
 const MR_PLATFORMS=['instagram','facebook','tiktok','youtube','linkedin'];
+const MR_BATCH_MAX=16;
 let mrPreviewObjectUrl=null,mrLocalPreviewUrls=[],mrContentRows=[],mrBatchBusy=false;
 const mrBaseOpen=globalThis.openContent;
 
@@ -40,6 +41,7 @@ function mrRenderSelectedFiles(){
   const input=document.querySelector('#upFile'),host=document.querySelector('#uploadPreview');if(!input||!host)return;
   mrClearLocalPreviews();
   const files=[...input.files];
+  if(files.length>MR_BATCH_MAX){input.value='';host.innerHTML='<p class="danger">Massimo 16 video per volta.</p>';toast('Seleziona al massimo 16 video per volta.',true);return}
   host.innerHTML=files.length?files.map(f=>{
     const url=URL.createObjectURL(f);mrLocalPreviewUrls.push(url);
     return `<div class="item"><video controls muted preload="metadata" src="${url}" style="width:120px;max-height:90px;border-radius:9px;background:#111"></video><div style="flex:1"><b>${esc(f.name)}</b><p>${mrBytes(f.size)} · ${esc(f.type||'tipo sconosciuto')}</p></div></div>`;
@@ -48,7 +50,7 @@ function mrRenderSelectedFiles(){
 function mrInstallMultiUpload(){
   const input=document.querySelector('#upFile'),form=document.querySelector('#uploadForm');if(!input||!form)return;
   input.multiple=true;
-  const label=input.closest('.drop');if(label)label.childNodes[0].textContent='Video MP4 / MOV / WEBM, uno o più file, max 50 MB ciascuno ';
+  const label=input.closest('.drop');if(label)label.childNodes[0].textContent='Video MP4 / MOV / WEBM, massimo 16 per volta, max 50 MB ciascuno ';
   if(!document.querySelector('#uploadPreview')){
     const preview=document.createElement('div');preview.id='uploadPreview';preview.className='stack';label?.insertAdjacentElement('afterend',preview);
     const queue=document.createElement('div');queue.id='uploadQueue';queue.className='stack';preview.insertAdjacentElement('afterend',queue);
@@ -59,6 +61,7 @@ function mrInstallMultiUpload(){
     const files=[...input.files],baseTitle=document.querySelector('#upTitle').value.trim(),category=document.querySelector('#upCat').value.trim(),notes=document.querySelector('#upNotes').value.trim();
     const queue=document.querySelector('#uploadQueue'),button=document.querySelector('#uploadSubmit');
     if(!files.length){toast('Scegli almeno un video.',true);return}
+    if(files.length>MR_BATCH_MAX){toast('Massimo 16 video per volta.',true);return}
     if(!baseTitle||baseTitle.length>200){toast('Inserisci un titolo valido.',true);return}
     mrBatchBusy=true;if(button)button.disabled=true;queue.innerHTML='';
     let ok=0,failed=0;
@@ -76,7 +79,7 @@ function mrInstallMultiUpload(){
         text.textContent='Upload nel cloud…';badge.textContent='UPLOAD';
         await martaUploadOriginal(file,sp,p=>{bar.style.width=p+'%';text.textContent=`Upload nel cloud… ${p}%`});
         await db(`contents?id=eq.${c.id}`,{method:'PATCH',body:{status:'CARICATO'}});
-        text.textContent=`✓ Salvato${duration?' · '+mrFmtDuration(duration):''}`;badge.textContent='CARICATO';badge.className='status PRONTO';ok++;
+        text.textContent=`✓ Salvato${duration?' · '+mrFmtDuration(duration):''} · in coda per audio, trascrizione e caption`;badge.textContent='IN CODA';badge.className='status IN_ELABORAZIONE';ok++;
       }catch(err){
         failed++;badge.textContent='ERRORE';badge.className='status ERRORE';text.textContent=err.message;text.className='qtext danger';
         if(c?.id&&sp){try{await martaDeleteStorageObject('marta-content-originals',sp)}catch{storageClean=false}}
@@ -159,13 +162,15 @@ async function mrGenerateCaptions(id,c){
 }
 async function mrOpenContent(id){
   await mrBaseOpen(id);
-  const [rows,links]=await Promise.all([db(`contents?id=eq.${id}&select=*`),db(`marta_tracking_links?content_id=eq.${id}&select=*&order=platform`)]);
+  const [rows,links,jobs]=await Promise.all([db(`contents?id=eq.${id}&select=*`),db(`marta_tracking_links?content_id=eq.${id}&select=*&order=platform`),db(`marta_processing_jobs?content_id=eq.${id}&select=id,status,attempts,last_error,created_at,started_at,finished_at&order=created_at.desc&limit=1`)]);
   const c=rows[0];if(!c)return;
   const body=document.querySelector('#dlgBody');
   const meta=document.createElement('div');meta.id='mrContentMeta';meta.className='panel';
+  const latestJob=jobs?.[0]||null;
   meta.innerHTML=`<div class="row"><label>Titolo<input id="mrTitle" maxlength="200" value="${esc(c.title)}"></label><button id="mrSaveTitle" type="button">Salva titolo</button></div>
   <p class="hint">File: ${esc(c.original_filename||'—')} · ${mrBytes(c.file_size)} · durata ${mrFmtDuration(c.duration_seconds)}<br>Percorso privato: <code>${esc(c.storage_path||'—')}</code></p>
-  <div class="actions"><button id="mrPreviewBtn" type="button" class="ghost">Anteprima video</button><button id="mrDuplicateBtn" type="button" class="ghost">Duplica contenuto</button><button id="mrUtmBtn" type="button" class="ghost">Genera link UTM</button></div>
+  ${latestJob?`<p class="hint"><b>Lavorazione automatica:</b> ${esc(latestJob.status)} · tentativo ${Number(latestJob.attempts||0)}${latestJob.last_error?' · '+esc(latestJob.last_error):''}</p>`:''}
+  <div class="actions"><button id="mrPreviewBtn" type="button" class="ghost">Anteprima video</button><button id="mrDuplicateBtn" type="button" class="ghost">Duplica contenuto</button><button id="mrUtmBtn" type="button" class="ghost">Genera link UTM</button>${c.status==='ERRORE'?'<button id="mrRetryProcess" type="button" class="ghost">Riprova lavorazione</button>':''}</div>
   <div id="mrVideoPreview" style="margin-top:12px"></div><h3>Link tracciati</h3><div id="mrTracking" class="stack"></div>`;
   body.prepend(meta);mrRenderTracking(links);
   document.querySelector('#mrSaveTitle').onclick=async()=>{
@@ -199,6 +204,7 @@ async function mrOpenContent(id){
     }finally{e.currentTarget.disabled=false}
   };
   document.querySelector('#mrUtmBtn').onclick=async e=>{e.currentTarget.disabled=true;try{const r=await mrGenerateTracking(id);mrRenderTracking(r);toast('Link UTM aggiornati')}catch(err){toast(err.message,true)}finally{e.currentTarget.disabled=false}};
+  const retry=document.querySelector('#mrRetryProcess');if(retry)retry.onclick=async e=>{e.currentTarget.disabled=true;try{await db('rpc/marta_retry_processing',{method:'POST',body:{p_content_id:id}});toast('Lavorazione rimessa in coda');await mrOpenContent(id);await mrDash()}catch(err){toast(err.message,true);e.currentTarget.disabled=false}};
   const ai=document.querySelector('#aiInfo');if(ai){ai.textContent='Crea 5 caption dal testo (€0)';ai.onclick=async()=>{ai.disabled=true;try{await mrGenerateCaptions(id,c);toast('5 caption create: restano da approvare');await mrOpenContent(id);await Promise.allSettled([mrContents(),mrDash()])}catch(err){toast(err.message,true)}finally{ai.disabled=false}}}
   mrInstallPostPreview();
 }
