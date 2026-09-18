@@ -15,7 +15,7 @@ assert.ok(ui.includes("autoSlot3"));
 assert.ok(ui.includes("['instagram','facebook','tiktok','youtube','linkedin']"));
 assert.ok(ui.includes("Inserisci almeno nome oppure contatto"));
 assert.ok(events.includes("calendar-leads-hardening.js?v=14"));
-assert.ok(app.includes("./events.js?v=16"));
+assert.ok(app.includes("./events.js?v=17"));
 
 assert.ok(migration.includes('marta_schedules_content_platform_once_idx'));
 assert.ok(migration.includes("pg_advisory_xact_lock(hashtext('marta_schedule:"));

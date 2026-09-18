@@ -1,0 +1,31 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+
+const ui=fs.readFileSync(new URL('../library-caption-dashboard.js',import.meta.url),'utf8');
+const worker=fs.readFileSync(new URL('../worker/process_batch.py',import.meta.url),'utf8');
+const edge=fs.readFileSync(new URL('../edge/marta-media-worker/index.ts',import.meta.url),'utf8');
+const workflow=fs.readFileSync(new URL('../../.github/workflows/marta-media-pipeline.yml',import.meta.url),'utf8');
+const migration=fs.readFileSync(new URL('../migrations/20260918_auto_media_pipeline.sql',import.meta.url),'utf8');
+const fix=fs.readFileSync(new URL('../migrations/20260918_auto_media_pipeline_fix.sql',import.meta.url),'utf8');
+
+assert.ok(ui.includes('MR_BATCH_MAX=16'));
+assert.ok(ui.includes('Massimo 16 video per volta'));
+assert.ok(ui.includes('Riprova lavorazione'));
+assert.ok(worker.includes('BATCH_MAX=16'));
+assert.ok(worker.includes('WhisperModel'));
+assert.ok(worker.includes('ffmpeg'));
+assert.ok(worker.includes('"action":"complete"'));
+assert.ok(edge.includes('EXPECTED_REPO="josephsocialmedia2-spec/open-social-scheduler"'));
+assert.ok(edge.includes('EXPECTED_REF="refs/heads/main"'));
+assert.ok(edge.includes('audience:EXPECTED_AUD'));
+assert.ok(edge.includes('batch_max:16'));
+assert.ok(workflow.includes("cron: '*/5 * * * *'"));
+assert.ok(workflow.includes('id-token: write'));
+assert.ok(workflow.includes('Process up to 16 videos'));
+assert.ok(migration.includes('marta_enqueue_processing_job'));
+assert.ok(migration.includes('marta_finish_processing_job'));
+assert.ok(fix.includes('limit p_limit'));
+assert.ok(!ui.includes('service_role'));
+assert.ok(!worker.includes('SUPABASE_SERVICE_ROLE_KEY'));
+assert.ok(!workflow.includes('SUPABASE_SERVICE_ROLE_KEY'));
+console.log('Marta automatic media pipeline QA: PASS');

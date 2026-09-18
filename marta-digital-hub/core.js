@@ -15,7 +15,7 @@ async function auth(endpoint,body){let r=await fetch(SUPA+'/auth/v1/'+endpoint,{
 async function login(){let d=await auth('token?grant_type=password',{email:$('#email').value.trim(),password:$('#password').value});saveSession(d);await enter()}
 async function profileExists(){if(!validSession())throw Error('Sessione non valida');return !!(await db(`profiles?id=eq.${S.user.id}&select=id`))?.length}
 async function enter(){if(!validSession())throw Error('Sessione non valida');if(!await profileExists()){await db('rpc/initialize_user',{method:'POST',body:{}});if(!await profileExists())throw Error('Account non autorizzato per Marta Digital Hub')}$('#login').hidden=true;$('#claim').hidden=true;$('#app').hidden=false;await all()}
-async function logout(){let old=S;clearSession();if(old?.access_token){try{await fetch(SUPA+'/auth/v1/logout',{method:'POST',headers:{apikey:KEY,Authorization:'Bearer '+old.access_token},keepalive:true})}catch{}}location.replace('./accesso.html?v=15')}
+async function logout(){let old=S;clearSession();if(old?.access_token){try{await fetch(SUPA+'/auth/v1/logout',{method:'POST',headers:{apikey:KEY,Authorization:'Bearer '+old.access_token},keepalive:true})}catch{}}location.replace('./accesso.html?v=17')}
 function view(v){$$('.view').forEach(x=>x.classList.toggle('active',x.id===v));$$('#nav button').forEach(x=>x.classList.toggle('active',x.dataset.v===v));let b=$(`#nav button[data-v="${v}"]`);$('#title').textContent=b?.textContent||'Digital Hub'}
 async function quota(){
  const DERIVED_RESERVE=57671680,budget=800000000;

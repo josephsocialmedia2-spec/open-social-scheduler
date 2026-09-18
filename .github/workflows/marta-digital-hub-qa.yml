@@ -12,6 +12,7 @@ on:
       - 'qa-calendar-leads-hardening'
       - 'qa-entry-security-backup'
       - 'qa-library-caption-dashboard'
+      - 'qa-cloud-scheduler-fallback'
     paths:
       - 'marta-digital-hub/**'
       - '.github/workflows/marta-digital-hub-qa.yml'
@@ -40,6 +41,7 @@ jobs:
           node --check marta-digital-hub/library-caption-dashboard.js
           node --check marta-digital-hub/caption-local.mjs
           node --check marta-digital-hub/events.js
+          python -m py_compile marta-digital-hub/worker/process_batch.py
 
       - name: Upload and storage edge cases
         run: node marta-digital-hub/tests/upload-storage-qa.mjs
@@ -56,6 +58,9 @@ jobs:
       - name: Library, caption, UTM and dashboard
         run: node marta-digital-hub/tests/library-caption-qa.mjs
 
+      - name: Automatic media pipeline batch 16
+        run: node marta-digital-hub/tests/media-pipeline-qa.mjs
+
       - name: Public frontend safety checks
         shell: bash
         run: |
@@ -66,6 +71,6 @@ jobs:
           grep -q 'content-hardening.js?v=13' marta-digital-hub/events.js
           grep -q 'calendar-leads-hardening.js?v=14' marta-digital-hub/events.js
           grep -q 'backup.js?v=15' marta-digital-hub/events.js
-          grep -q 'library-caption-dashboard.js?v=16' marta-digital-hub/events.js
-          grep -q './events.js?v=16' marta-digital-hub/app.html
+          grep -q 'library-caption-dashboard.js?v=17' marta-digital-hub/events.js
+          grep -q './events.js?v=17' marta-digital-hub/app.html
           ! grep -n 'marta_claim_owner' marta-digital-hub/*.js marta-digital-hub/*.mjs marta-digital-hub/*.html
