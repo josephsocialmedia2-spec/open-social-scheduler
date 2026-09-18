@@ -64,3 +64,5 @@ $('#settingsForm').onsubmit=async e=>{e.preventDefault();await Promise.all([db(`
 window.addEventListener('storage',e=>{if(e.key==='mr_session'&&!e.newValue)location.replace('./accesso.html?v=12')});
 (async()=>{if(!validSession()){clearSession();location.replace('./accesso.html?v=12');return}try{await enter()}catch(e){console.error(e);clearSession();location.replace('./accesso.html?v=12&reason=session')}})();
 import('./content-hardening.js?v=13').catch(e=>console.error('content hardening',e));
+
+import('./calendar-leads-hardening.js?v=14').catch(e=>console.error('calendar/leads hardening',e));
