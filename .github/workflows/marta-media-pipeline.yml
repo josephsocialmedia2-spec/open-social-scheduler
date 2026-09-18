@@ -1,0 +1,74 @@
+name: Marta Media Pipeline
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: marta-media-pipeline
+  cancel-in-progress: false
+
+jobs:
+  media:
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check Marta processing queue
+        id: peek
+        shell: bash
+        env:
+          MARTA_EDGE_URL: https://nqnmlsmeiynxbdojeyjt.supabase.co/functions/v1/marta-media-worker
+        run: |
+          set -euo pipefail
+          OIDC="$(curl -fsS -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN"             "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=marta-digital-hub" | jq -r '.value')"
+          RESPONSE="$(curl -fsS -X POST "$MARTA_EDGE_URL"             -H "Authorization: Bearer $OIDC"             -H "Content-Type: application/json"             --data '{"action":"peek"}')"
+          COUNT="$(jq -r '.count // 0' <<<"$RESPONSE")"
+          echo "Coda Marta: $COUNT"
+          echo "count=$COUNT" >> "$GITHUB_OUTPUT"
+
+      - name: Set up Python
+        if: steps.peek.outputs.count != '0'
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: marta-digital-hub/worker/requirements.txt
+
+      - name: Cache Whisper model
+        if: steps.peek.outputs.count != '0'
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface
+          key: marta-whisper-base-v1
+
+      - name: Ensure ffmpeg
+        if: steps.peek.outputs.count != '0'
+        shell: bash
+        run: |
+          set -e
+          if ! command -v ffmpeg >/dev/null 2>&1; then
+            sudo apt-get update
+            sudo apt-get install -y ffmpeg
+          fi
+          ffmpeg -version | head -n 1
+
+      - name: Install Whisper worker
+        if: steps.peek.outputs.count != '0'
+        run: python -m pip install --disable-pip-version-check -r marta-digital-hub/worker/requirements.txt
+
+      - name: Process up to 16 videos
+        if: steps.peek.outputs.count != '0'
+        env:
+          MARTA_EDGE_URL: https://nqnmlsmeiynxbdojeyjt.supabase.co/functions/v1/marta-media-worker
+          MARTA_WHISPER_MODEL: base
+          HF_HUB_DISABLE_TELEMETRY: '1'
+          TOKENIZERS_PARALLELISM: 'false'
+        run: python marta-digital-hub/worker/process_batch.py
