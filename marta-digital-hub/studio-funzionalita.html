@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Studio Funzionalità · Marta Ruffino Digital Hub</title>
+<style>
+:root{font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;--ink:#182942;--blue:#294a78;--rose:#d9a7b9;--bg:#f5f7fb;--line:#e1e6ef;--muted:#6c778d;--ok:#237158;--warn:#9a6517;--bad:#a13848}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#172033}button,input,textarea,select{font:inherit}button{border:0;border-radius:10px;background:var(--blue);color:#fff;padding:.72rem .9rem;font-weight:750;cursor:pointer}button.ghost{background:#fff;color:var(--blue);border:1px solid var(--line)}button.danger{background:#fff;color:var(--bad);border:1px solid #edcdd3}button:disabled{opacity:.55;cursor:not-allowed}
+.app{display:grid;grid-template-columns:235px 1fr;min-height:100vh}.side{background:var(--ink);color:white;padding:18px 14px;position:sticky;top:0;height:100vh}.brand{display:flex;gap:10px;align-items:center;padding:5px 7px 18px}.mark{width:42px;height:42px;border-radius:13px;background:#efd9e1;color:#432c36;display:grid;place-items:center;font:700 18px Georgia}.brand small{display:block;opacity:.68}.nav{display:grid;gap:5px}.nav button{background:transparent;text-align:left;color:#dfe7f2}.nav button.active{background:#ffffff16}.main{padding:24px 28px 60px;min-width:0}.top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:18px}.top h1{margin:0}.top p{margin:5px 0;color:var(--muted)}.study{background:#fff2d7;color:#7e5512;border:1px solid #edd69f;padding:.55rem .75rem;border-radius:999px;font-weight:800;font-size:12px}.view{display:none}.view.active{display:block}
+.panel,.card{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 8px 28px #26395b0a}.panel{padding:18px;margin-bottom:15px}.panel h2{margin:0 0 13px;font-size:18px}.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:11px}.card{padding:15px}.card small{color:var(--muted)}.card b{display:block;font-size:26px;margin-top:6px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}.stack{display:grid;gap:9px}.item{border:1px solid var(--line);border-radius:12px;padding:11px 13px;display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.item p{margin:4px 0;color:var(--muted);font-size:13px}.actions{display:flex;gap:7px;flex-wrap:wrap}.small{padding:.47rem .62rem;font-size:12px}.status{font-size:11px;font-weight:800;padding:.3rem .5rem;border-radius:99px;background:#eef1f6}.status.ok{background:#e6f4ed;color:var(--ok)}.status.warn{background:#fff2d7;color:var(--warn)}.status.bad{background:#fae9ec;color:var(--bad)}
+label{display:grid;gap:6px;font-weight:650;margin-bottom:10px}input,textarea,select{width:100%;padding:.72rem;border:1px solid var(--line);border-radius:10px;background:#fff}.row{display:flex;gap:9px;align-items:center;flex-wrap:wrap}.row>*{flex:1}.drop{border:1.5px dashed #aab5c6;padding:25px;border-radius:14px;text-align:center;background:#fafbfe}.hint{color:var(--muted);font-size:13px}.warnbox{background:#fff8e8;border:1px solid #f0dfb9;padding:11px;border-radius:11px;color:#795311}.okbox{background:#eaf6f1;border:1px solid #cce8dc;padding:11px;border-radius:11px;color:#275d4b}.progress{height:7px;background:#edf0f5;border-radius:99px;overflow:hidden;margin-top:7px}.progress i{display:block;height:100%;background:var(--blue);width:0}.tabs{display:flex;gap:6px;flex-wrap:wrap}.tabs button{background:#eef1f7;color:#33415e}.tabs button.active{background:var(--blue);color:#fff}.toast{position:fixed;right:18px;bottom:18px;background:#14233b;color:white;padding:12px 15px;border-radius:11px;z-index:50;max-width:420px}.table{width:100%;border-collapse:collapse}.table th,.table td{padding:9px 7px;border-bottom:1px solid var(--line);text-align:left;font-size:13px}.table th{color:var(--muted)}dialog{width:min(900px,calc(100vw - 28px));border:0;border-radius:18px;padding:20px;box-shadow:0 25px 80px #0005}dialog::backdrop{background:#10203a99}
+@media(max-width:900px){.app{grid-template-columns:1fr}.side{position:static;height:auto}.nav{display:flex;overflow:auto}.nav button{white-space:nowrap}.main{padding:16px}.cards{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}}@media(max-width:560px){.cards{grid-template-columns:1fr}.top{display:block}.study{display:inline-block;margin-top:10px}.item{flex-wrap:wrap}}
+</style>
+</head>
+<body>
+<div id="toast" class="toast" hidden></div>
+<div class="app">
+<aside class="side">
+  <div class="brand"><div class="mark">MR</div><div><b>Studio Hub</b><small>Marta Ruffino</small></div></div>
+  <nav id="nav" class="nav">
+    <button data-v="dashboard" class="active">Dashboard</button>
+    <button data-v="upload">Carica video</button>
+    <button data-v="archive">Archivio contenuti</button>
+    <button data-v="calendar">Calendario</button>
+    <button data-v="autopilot">Autopilot</button>
+    <button data-v="leads">Lead</button>
+    <button data-v="analytics">Analytics</button>
+    <button data-v="integrations">Integrazioni</button>
+    <button data-v="logs">Log</button>
+  </nav>
+</aside>
+
+<main class="main">
+<header class="top">
+  <div><h1 id="pageTitle">Dashboard</h1><p>Laboratorio funzionale prima della messa online definitiva.</p></div>
+  <span class="study">MODALITÀ STUDIO · NESSUNA PUBBLICAZIONE REALE</span>
+</header>
+
+<section id="dashboard" class="view active">
+  <div id="kpis" class="cards"></div>
+  <div class="grid2" style="margin-top:14px">
+    <article class="panel"><h2>Da approvare</h2><div id="dashApprovals" class="stack"></div></article>
+    <article class="panel"><h2>Prossime programmazioni</h2><div id="dashSchedules" class="stack"></div></article>
+  </div>
+  <article class="panel"><h2>Obiettivo di questo HTML</h2><p class="hint">Qui studiamo il comportamento del prodotto. Tutto resta nel browser tramite localStorage. Quando flusso, testi e pulsanti sono definitivi, trasferiamo le stesse funzioni nel progetto online.</p></article>
+</section>
+
+<section id="upload" class="view">
+  <article class="panel">
+    <h2>Carica video</h2>
+    <p class="warnbox"><b>Studio:</b> scegli fino a 16 video. Non vengono inviati su Internet. Il sistema simula automaticamente coda → audio → trascrizione → 5 caption.</p>
+    <label>Categoria <input id="upCategory" maxlength="120" placeholder="Es. pavimento pelvico"></label>
+    <label>Note <textarea id="upNotes" maxlength="2000" placeholder="Facoltative"></textarea></label>
+    <label class="drop">Scegli fino a 16 video MP4 / MOV / WEBM
+      <input id="upFiles" type="file" accept="video/mp4,video/quicktime,video/webm" multiple>
+    </label>
+    <div id="uploadPreview" class="stack" style="margin-top:12px"></div>
+    <div id="uploadQueue" class="stack" style="margin-top:12px"></div>
+  </article>
+</section>
+
+<section id="archive" class="view">
+  <article class="panel">
+    <div class="row">
+      <div><h2>Archivio contenuti</h2><p id="refreshInfo" class="hint">Mai aggiornato in questa sessione.</p></div>
+      <button id="refreshArchive" class="ghost small" type="button">Aggiorna</button>
+    </div>
+    <div class="row" style="margin-bottom:12px">
+      <input id="search" placeholder="Cerca titolo, categoria o note">
+      <select id="statusFilter"><option value="">Tutti gli stati</option><option>IN_CODA</option><option>IN_ELABORAZIONE</option><option>DA_APPROVARE</option><option>APPROVATO</option><option>PROGRAMMATO</option><option>PUBBLICATO</option><option>ERRORE</option></select>
+    </div>
+    <div id="archiveList" class="stack"></div>
+  </article>
+</section>
+
+<section id="calendar" class="view">
+  <article class="panel"><h2>Calendario editoriale</h2><div id="calendarList" class="stack"></div></article>
+</section>
+
+<section id="autopilot" class="view">
+  <div class="grid2">
+    <article class="panel">
+      <h2>Autopilot</h2>
+      <label><span><input id="autoEnabled" type="checkbox" style="width:auto"> Attivo</span></label>
+      <label>Post al giorno<select id="autoPosts"><option>1</option><option>2</option><option>3</option></select></label>
+      <label>Orario 1<input id="auto1" type="time" value="09:00"></label>
+      <label>Orario 2<input id="auto2" type="time" value="18:00"></label>
+      <label>Orario 3<input id="auto3" type="time" value="20:30"></label>
+      <button id="saveAuto">Salva impostazioni</button>
+    </article>
+    <article class="panel">
+      <h2>Simulazione</h2>
+      <p class="hint">Usa soltanto contenuti APPROVATI. Non approva mai al posto tuo.</p>
+      <button id="fillCalendar">Riempi calendario demo</button>
+      <p id="autoInfo" class="hint"></p>
+    </article>
+  </div>
+</section>
+
+<section id="leads" class="view">
+  <div class="grid2">
+    <article class="panel">
+      <h2>Nuovo lead</h2>
+      <form id="leadForm">
+        <label>Nome <input id="leadName"></label>
+        <label>Contatto <input id="leadContact"></label>
+        <label>Fonte <input id="leadSource"></label>
+        <label>Richiesta <textarea id="leadRequest"></textarea></label>
+        <button>Registra</button>
+      </form>
+    </article>
+    <article class="panel"><h2>Lead recenti</h2><div id="leadList" class="stack"></div></article>
+  </div>
+</section>
+
+<section id="analytics" class="view">
+  <div id="analyticsCards" class="cards"></div>
+  <article class="panel" style="margin-top:14px"><h2>Nota</h2><p class="hint">In modalità studio le metriche derivano solo dai dati demo inseriti qui. Nessuna metrica social reale viene inventata.</p></article>
+</section>
+
+<section id="integrations" class="view">
+  <article class="panel"><h2>Social</h2><p class="hint">In studio restano volutamente scollegati. Nella versione online servirà OAuth reale.</p><div id="integrationList" class="stack"></div></article>
+</section>
+
+<section id="logs" class="view">
+  <article class="panel"><div class="row"><h2>Log funzionali</h2><button id="clearLogs" class="ghost small">Svuota</button></div><div id="logList" class="stack"></div></article>
+</section>
+</main>
+</div>
+
+<dialog id="dlg">
+  <div class="row"><h2 id="dlgTitle">Contenuto</h2><button id="dlgClose" class="ghost small">Chiudi</button></div>
+  <div id="dlgBody"></div>
+</dialog>
+
+<script>
+const KEY='marta_studio_funzioni_v1';
+const PLATFORMS=['instagram','facebook','tiktok','youtube','linkedin'];
+let previewUrls=[];
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const nowIso=()=>new Date().toISOString();
+const uid=()=>crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2);
+const esc=(v='')=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt=v=>v?new Date(v).toLocaleString('it-IT',{dateStyle:'short',timeStyle:'short'}):'—';
+
+function defaultState(){return {contents:[],schedules:[],leads:[],logs:[],autopilot:{enabled:false,posts:2,slots:['09:00','18:00','20:30']}}}
+function load(){try{return {...defaultState(),...JSON.parse(localStorage.getItem(KEY)||'{}')}}catch{return defaultState()}}
+let state=load();
+function save(){localStorage.setItem(KEY,JSON.stringify(state))}
+function toast(msg,bad=false){const e=$('#toast');e.textContent=msg;e.style.background=bad?'#8b3040':'#14233b';e.hidden=false;clearTimeout(window.__tt);window.__tt=setTimeout(()=>e.hidden=true,3200)}
+function log(action,detail=''){state.logs.unshift({id:uid(),at:nowIso(),action,detail});state.logs=state.logs.slice(0,200);save();renderLogs()}
+function statusClass(s){return ['APPROVATO','PUBBLICATO'].includes(s)?'ok':['ERRORE'].includes(s)?'bad':'warn'}
+function titleFromFile(name){return String(name||'Video').replace(/\.[^.]+$/,'').replace(/[_-]+/g,' ').replace(/\s+/g,' ').trim().slice(0,200)||'Video'}
+function clean(s){return String(s||'').replace(/\s+/g,' ').trim()}
+function clip(s,n){s=clean(s);return s.length<=n?s:s.slice(0,n-1).trim()+'…'}
+function makeCaptions(c){
+  const transcript=c.transcript||('Contenuto demo ricavato dal video '+c.title+'. Qui verrà inserita la trascrizione reale generata dal sistema.');
+  const hook=clip(transcript,150),cta='Per approfondire, scrivimi in privato.';
+  return Object.fromEntries(PLATFORMS.map(p=>[p,{platform:p,text:(p==='youtube'?c.title+'\n\n':'')+hook+'\n\n'+clip(transcript,p==='tiktok'?700:1800)+'\n\n'+cta,status:'DA_APPROVARE'}]));
+}
+function processDemo(id){
+  const c=state.contents.find(x=>x.id===id);if(!c||!['IN_CODA','IN_ELABORAZIONE'].includes(c.status))return;
+  c.status='IN_ELABORAZIONE';c.processing='Estrazione audio';save();renderAll();log('AUDIO',c.title);
+  setTimeout(()=>{
+    const x=state.contents.find(y=>y.id===id);if(!x)return;
+    x.processing='Trascrizione';save();renderAll();log('TRASCRIZIONE',x.title);
+    setTimeout(()=>{
+      const y=state.contents.find(z=>z.id===id);if(!y)return;
+      y.transcript='Trascrizione demo del video "'+y.title+'". Nella versione online questo testo arriverà dalla trascrizione automatica del parlato.';
+      y.captions=makeCaptions(y);y.status='DA_APPROVARE';y.processing='Completato';save();renderAll();log('CAPTION','Create 5 caption per '+y.title);
+    },700);
+  },700);
+}
+
+function renderNav(){ $$('#nav button').forEach(b=>b.onclick=()=>{const v=b.dataset.v;$$('.view').forEach(x=>x.classList.toggle('active',x.id===v));$$('#nav button').forEach(x=>x.classList.toggle('active',x===b));$('#pageTitle').textContent=b.textContent;if(v==='archive')renderArchive();if(v==='calendar')renderCalendar();if(v==='analytics')renderAnalytics()})}
+function renderDashboard(){
+  const c=state.contents,s=state.schedules,l=state.leads;
+  const cards=[['Contenuti',c.length],['In lavorazione',c.filter(x=>['IN_CODA','IN_ELABORAZIONE'].includes(x.status)).length],['Da approvare',c.filter(x=>x.status==='DA_APPROVARE').length],['Approvati',c.filter(x=>x.status==='APPROVATO').length],['Programm.',s.filter(x=>x.status==='PROGRAMMATO').length],['Lead',l.length],['Errori',c.filter(x=>x.status==='ERRORE').length],['Social collegati','0/5']];
+  $('#kpis').innerHTML=cards.map(([a,b])=>'<div class="card"><small>'+esc(a)+'</small><b>'+esc(b)+'</b></div>').join('');
+  const a=c.filter(x=>x.status==='DA_APPROVARE').slice(0,6);$('#dashApprovals').innerHTML=a.length?a.map(contentItem).join(''):'<p class="hint">Niente in attesa.</p>';
+  const u=s.filter(x=>x.status==='PROGRAMMATO').sort((a,b)=>new Date(a.when)-new Date(b.when)).slice(0,6);$('#dashSchedules').innerHTML=u.length?u.map(scheduleItem).join(''):'<p class="hint">Nessuna programmazione.</p>';
+}
+function contentItem(c){return '<div class="item"><div><b>'+esc(c.title)+'</b><p>'+esc(c.category||'Senza categoria')+' · '+fmt(c.created_at)+'</p></div><div class="actions"><span class="status '+statusClass(c.status)+'">'+esc(c.status)+'</span><button class="ghost small openContent" data-id="'+c.id+'">Apri</button></div></div>'}
+function scheduleItem(s){const c=state.contents.find(x=>x.id===s.content_id);return '<div class="item"><div><b>'+esc(c?.title||'Contenuto')+'</b><p>'+esc(s.platform)+' · '+fmt(s.when)+'</p></div><span class="status '+statusClass(s.status)+'">'+esc(s.status)+'</span></div>'}
+function renderArchive(){
+  const q=clean($('#search')?.value).toLowerCase(),st=$('#statusFilter')?.value||'';
+  let rows=[...state.contents].sort((a,b)=>new Date(b.created_at)-new Date(a.created_at)).filter(c=>(!st||c.status===st)&&(!q||[c.title,c.category,c.notes].join(' ').toLowerCase().includes(q)));
+  $('#archiveList').innerHTML=rows.length?rows.map(contentItem).join(''):'<p class="hint">Archivio vuoto.</p>';
+  $('#refreshInfo').textContent='Ultimo aggiornamento: '+new Date().toLocaleTimeString('it-IT');
+  bindOpen();
+}
+function renderCalendar(){const rows=[...state.schedules].sort((a,b)=>new Date(a.when)-new Date(b.when));$('#calendarList').innerHTML=rows.length?rows.map(scheduleItem).join(''):'<p class="hint">Nessuna programmazione.</p>'}
+function renderLeads(){const rows=[...state.leads].sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));$('#leadList').innerHTML=rows.length?rows.map(l=>'<div class="item"><div><b>'+esc(l.name||'Lead')+'</b><p>'+esc(l.contact||'')+' · '+esc(l.source||'')+' · '+esc(l.request||'')+'</p></div><span class="status warn">'+esc(l.status)+'</span></div>').join(''):'<p class="hint">Nessun lead.</p>'}
+function renderAnalytics(){const c=state.contents,l=state.leads,s=state.schedules;const cards=[['Contenuti',c.length],['Da approvare',c.filter(x=>x.status==='DA_APPROVARE').length],['Approvati',c.filter(x=>x.status==='APPROVATO').length],['Programm.',s.filter(x=>x.status==='PROGRAMMATO').length],['Pubblicati demo',s.filter(x=>x.status==='PUBBLICATO').length],['Lead',l.length],['Clienti',l.filter(x=>x.status==='CLIENTE').length],['Metriche social reali','—']];$('#analyticsCards').innerHTML=cards.map(([a,b])=>'<div class="card"><small>'+esc(a)+'</small><b>'+esc(b)+'</b></div>').join('')}
+function renderIntegrations(){$('#integrationList').innerHTML=PLATFORMS.map(p=>'<div class="item"><div><b>'+p+'</b><p>OAuth non collegato in modalità studio</p></div><span class="status warn">DA COLLEGARE</span></div>').join('')}
+function renderLogs(){$('#logList').innerHTML=state.logs.length?state.logs.map(x=>'<div class="item"><div><b>'+esc(x.action)+'</b><p>'+fmt(x.at)+' · '+esc(x.detail)+'</p></div></div>').join(''):'<p class="hint">Nessun log.</p>'}
+function renderAuto(){const a=state.autopilot;$('#autoEnabled').checked=!!a.enabled;$('#autoPosts').value=String(a.posts||2);$('#auto1').value=a.slots?.[0]||'09:00';$('#auto2').value=a.slots?.[1]||'18:00';$('#auto3').value=a.slots?.[2]||'20:30';$('#autoInfo').textContent=a.enabled?'Autopilot demo attivo.':'Autopilot demo disattivato.'}
+function renderAll(){renderDashboard();renderArchive();renderCalendar();renderLeads();renderAnalytics();renderIntegrations();renderLogs();renderAuto();bindOpen()}
+
+function bindOpen(){$$('.openContent').forEach(b=>b.onclick=()=>openContent(b.dataset.id))}
+function openContent(id){
+  const c=state.contents.find(x=>x.id===id);if(!c)return;
+  $('#dlgTitle').textContent=c.title;
+  const cap=c.captions||{};
+  $('#dlgBody').innerHTML='<p><span class="status '+statusClass(c.status)+'">'+esc(c.status)+'</span> '+esc(c.processing||'')+'</p><p class="hint">'+esc(c.notes||'')+'</p><hr><h3>Trascrizione</h3><textarea id="dlgTranscript" rows="6">'+esc(c.transcript||'')+'</textarea><button id="saveTranscript" class="ghost small">Salva trascrizione</button><hr><h3>Caption social</h3><div id="capTabs" class="tabs">'+PLATFORMS.map((p,i)=>'<button class="'+(i?'':'active')+'" data-p="'+p+'">'+p+'</button>').join('')+'</div><div id="capBox" style="margin-top:10px"></div><hr><div class="actions"><button id="approveContent">Approva contenuto</button><input id="scheduleWhen" type="datetime-local" style="max-width:240px"><button id="scheduleContent" class="ghost">Programma</button><button id="deleteContent" class="danger">Elimina</button></div>';
+  function showCap(p){
+    const v=cap[p]||{text:'',status:'DA_APPROVARE'};
+    $('#capBox').innerHTML='<label>Testo<textarea id="capText" rows="7">'+esc(v.text||'')+'</textarea></label><div class="actions"><button id="saveCap" class="ghost">Salva</button><button id="approveCap">Approva caption</button><span class="status '+statusClass(v.status)+'">'+esc(v.status)+'</span></div>';
+    $('#saveCap').onclick=()=>{c.captions=c.captions||{};c.captions[p]={...v,text:$('#capText').value,status:'DA_APPROVARE'};save();toast('Caption salvata');log('CAPTION_SALVATA',c.title+' · '+p);showCap(p)};
+    $('#approveCap').onclick=()=>{c.captions=c.captions||{};c.captions[p]={...v,text:$('#capText').value,status:'APPROVATO'};save();toast('Caption approvata');log('CAPTION_APPROVATA',c.title+' · '+p);showCap(p)};
+  }
+  $$('#capTabs button').forEach(b=>b.onclick=()=>{$$('#capTabs button').forEach(x=>x.classList.toggle('active',x===b));showCap(b.dataset.p)});showCap('instagram');
+  $('#saveTranscript').onclick=()=>{c.transcript=$('#dlgTranscript').value;c.captions=makeCaptions(c);c.status='DA_APPROVARE';save();toast('Trascrizione salvata e caption rigenerate');log('TRASCRIZIONE_MODIFICATA',c.title);openContent(id);renderAll()};
+  $('#approveContent').onclick=()=>{const values=Object.values(c.captions||{});if(values.length!==5||values.some(v=>v.status!=='APPROVATO')){toast('Approva prima tutte le 5 caption.',true);return}c.status='APPROVATO';save();toast('Contenuto approvato');log('CONTENUTO_APPROVATO',c.title);openContent(id);renderAll()};
+  $('#scheduleContent').onclick=()=>{if(c.status!=='APPROVATO'){toast('Il contenuto deve essere APPROVATO.',true);return}const v=$('#scheduleWhen').value;if(!v||new Date(v)<=new Date()){toast('Scegli una data futura.',true);return}PLATFORMS.forEach(p=>state.schedules.push({id:uid(),content_id:c.id,platform:p,when:new Date(v).toISOString(),status:'PROGRAMMATO'}));c.status='PROGRAMMATO';save();toast('Programmazione demo creata');log('PROGRAMMATO',c.title);renderAll();openContent(id)};
+  $('#deleteContent').onclick=()=>{if(!confirm('Eliminare questo contenuto demo?'))return;state.contents=state.contents.filter(x=>x.id!==id);state.schedules=state.schedules.filter(x=>x.content_id!==id);save();$('#dlg').close();toast('Contenuto eliminato');renderAll()};
+  if(!$('#dlg').open)$('#dlg').showModal();
+}
+
+$('#dlgClose').onclick=()=>$('#dlg').close();
+$('#refreshArchive').onclick=()=>{renderArchive();renderDashboard();toast('Archivio aggiornato');log('AGGIORNA_ARCHIVIO','Riletti i dati locali')};
+$('#search').addEventListener('input',renderArchive);$('#statusFilter').addEventListener('change',renderArchive);
+$('#upFiles').addEventListener('change',()=>{
+  previewUrls.forEach(URL.revokeObjectURL);previewUrls=[];
+  const files=[...$('#upFiles').files];if(!files.length)return;
+  if(files.length>16){$('#upFiles').value='';$('#uploadPreview').innerHTML='<p class="warnbox">Massimo 16 video per volta.</p>';toast('Massimo 16 video per volta.',true);return}
+  $('#uploadPreview').innerHTML=files.map(f=>{const url=URL.createObjectURL(f);previewUrls.push(url);return '<div class="item"><video muted controls preload="metadata" src="'+url+'" style="width:120px;max-height:85px;border-radius:9px;background:#111"></video><div><b>'+esc(f.name)+'</b><p>'+(f.size/1024/1024).toFixed(1)+' MB</p></div></div>'}).join('');
+  const category=clean($('#upCategory').value),notes=clean($('#upNotes').value);
+  files.forEach((f,i)=>{const c={id:uid(),title:titleFromFile(f.name),filename:f.name,size:f.size,category,notes,created_at:nowIso(),status:'IN_CODA',processing:'In attesa',captions:{}};state.contents.push(c);save();log('CARICATO_STUDIO',c.title);setTimeout(()=>processDemo(c.id),350+i*120)});
+  $('#uploadQueue').innerHTML='<p class="okbox"><b>'+files.length+' video acquisiti.</b> La simulazione della lavorazione è partita automaticamente.</p>';
+  $('#upFiles').value='';renderAll();
+});
+$('#saveAuto').onclick=()=>{state.autopilot={enabled:$('#autoEnabled').checked,posts:Number($('#autoPosts').value),slots:[$('#auto1').value,$('#auto2').value,$('#auto3').value]};save();renderAuto();toast('Autopilot demo salvato');log('AUTOPILOT',state.autopilot.enabled?'Attivato':'Disattivato')};
+$('#fillCalendar').onclick=()=>{if(!state.autopilot.enabled){toast('Attiva prima Autopilot.',true);return}const approved=state.contents.filter(c=>c.status==='APPROVATO');if(!approved.length){toast('Nessun contenuto APPROVATO.',true);return}let added=0;approved.slice(0,7).forEach((c,idx)=>{const d=new Date();d.setDate(d.getDate()+idx+1);const slot=state.autopilot.slots[idx%state.autopilot.slots.length]||'09:00';const [h,m]=slot.split(':');d.setHours(+h,+m,0,0);PLATFORMS.forEach(p=>state.schedules.push({id:uid(),content_id:c.id,platform:p,when:d.toISOString(),status:'PROGRAMMATO'}));c.status='PROGRAMMATO';added++});save();renderAll();toast(added+' contenuti programmati in demo');log('AUTOPILOT_RIEMPI',String(added))};
+$('#leadForm').onsubmit=e=>{e.preventDefault();const name=clean($('#leadName').value),contact=clean($('#leadContact').value);if(!name&&!contact){toast('Inserisci almeno nome o contatto.',true);return}state.leads.push({id:uid(),name,contact,source:clean($('#leadSource').value),request:clean($('#leadRequest').value),status:'NUOVO',created_at:nowIso()});save();e.target.reset();renderAll();toast('Lead demo registrato');log('LEAD','Nuovo lead')};
+$('#clearLogs').onclick=()=>{state.logs=[];save();renderLogs();toast('Log studio svuotati')};
+
+renderNav();renderAll();
+</script>
+</body>
+</html>
