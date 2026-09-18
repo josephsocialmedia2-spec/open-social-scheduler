@@ -68,3 +68,5 @@ import('./content-hardening.js?v=13').catch(e=>console.error('content hardening'
 import('./calendar-leads-hardening.js?v=14').catch(e=>console.error('calendar/leads hardening',e));
 
 import('./backup.js?v=15').catch(e=>console.error('backup',e));
+
+import('./library-caption-dashboard.js?v=16').catch(e=>console.error('library/caption/dashboard',e));
