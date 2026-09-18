@@ -71,6 +71,6 @@ jobs:
           grep -q 'content-hardening.js?v=13' marta-digital-hub/events.js
           grep -q 'calendar-leads-hardening.js?v=14' marta-digital-hub/events.js
           grep -q 'backup.js?v=15' marta-digital-hub/events.js
-          grep -q 'library-caption-dashboard.js?v=17' marta-digital-hub/events.js
-          grep -q './events.js?v=17' marta-digital-hub/app.html
+          grep -q 'library-caption-dashboard.js?v=18' marta-digital-hub/events.js
+          grep -q './events.js?v=18' marta-digital-hub/app.html
           ! grep -n 'marta_claim_owner' marta-digital-hub/*.js marta-digital-hub/*.mjs marta-digital-hub/*.html
