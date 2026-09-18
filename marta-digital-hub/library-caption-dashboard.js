@@ -55,15 +55,14 @@ function mrInstallMultiUpload(){
     const preview=document.createElement('div');preview.id='uploadPreview';preview.className='stack';label?.insertAdjacentElement('afterend',preview);
     const queue=document.createElement('div');queue.id='uploadQueue';queue.className='stack';preview.insertAdjacentElement('afterend',queue);
   }
-  input.addEventListener('change',mrRenderSelectedFiles);
+  input.addEventListener('change',()=>{mrRenderSelectedFiles();if(input.files?.length&&input.files.length<=MR_BATCH_MAX)form.requestSubmit()});
   form.onsubmit=async e=>{
     e.preventDefault();if(mrBatchBusy)return;
-    const files=[...input.files],baseTitle=document.querySelector('#upTitle').value.trim(),category=document.querySelector('#upCat').value.trim(),notes=document.querySelector('#upNotes').value.trim();
-    const queue=document.querySelector('#uploadQueue'),button=document.querySelector('#uploadSubmit');
+    const files=[...input.files],category=document.querySelector('#upCat').value.trim(),notes=document.querySelector('#upNotes').value.trim();
+    const queue=document.querySelector('#uploadQueue');
     if(!files.length){toast('Scegli almeno un video.',true);return}
     if(files.length>MR_BATCH_MAX){toast('Massimo 16 video per volta.',true);return}
-    if(!baseTitle||baseTitle.length>200){toast('Inserisci un titolo valido.',true);return}
-    mrBatchBusy=true;if(button)button.disabled=true;queue.innerHTML='';
+    mrBatchBusy=true;input.disabled=true;queue.innerHTML='';
     let ok=0,failed=0;
     for(let i=0;i<files.length;i++){
       const file=files[i],row=document.createElement('div');row.className='item';
@@ -72,7 +71,7 @@ function mrInstallMultiUpload(){
       let c=null,sp=null,storageClean=true;
       try{
         await mrValidateVideo(file);const duration=await mrVideoDuration(file);
-        const title=(files.length>1?`${baseTitle} ${i+1}`:baseTitle).slice(0,200);
+        const title=(String(file.name||'video').replace(/\.[^.]+$/,'').replace(/[_-]+/g,' ').replace(/\s+/g,' ').trim()||`Video ${i+1}`).slice(0,200);
         c=await martaReserveUpload({title,category,notes,filename:martaDisplayFilename(file.name),mime:file.type,size:file.size});
         sp=`${S.user.id}/${c.id}/${Date.now()}-${martaSafeStorageFilename(file.name,file.type)}`;
         await db(`contents?id=eq.${c.id}`,{method:'PATCH',body:{storage_path:sp,...(duration?{duration_seconds:Number(duration.toFixed(3))}:{})}});
@@ -86,7 +85,7 @@ function mrInstallMultiUpload(){
         if(c?.id&&storageClean)await martaTryDeleteReservation(c.id);
       }
     }
-    mrBatchBusy=false;if(button)button.disabled=false;
+    mrBatchBusy=false;input.disabled=false;
     if(ok){form.reset();mrClearLocalPreviews();document.querySelector('#uploadPreview').innerHTML='';toast(`${ok} video caricati${failed?' · '+failed+' non caricati':''}`,!!failed)}
     else toast('Nessun video caricato.',true);
     await Promise.allSettled([mrContents(),mrDash()]);
