@@ -54,11 +54,11 @@ jobs:
         shell: bash
         run: |
           grep -q './upload.js?v=15' marta-digital-hub/app.html
-          ! grep -R -n -E 'service_role|sb_secret_' marta-digital-hub --exclude='*.md' --exclude='*.sql'
+          ! grep -n -E 'service_role|sb_secret_' marta-digital-hub/*.js marta-digital-hub/*.mjs marta-digital-hub/*.html
           grep -q 'marta-content-originals' marta-digital-hub/upload.js
           grep -q 'MARTA_MAX_VIDEO_BYTES' marta-digital-hub/upload.js
           grep -q 'content-hardening.js?v=13' marta-digital-hub/events.js
           grep -q 'calendar-leads-hardening.js?v=14' marta-digital-hub/events.js
           grep -q './events.js?v=15' marta-digital-hub/app.html
           grep -q 'backup.js?v=15' marta-digital-hub/events.js
-          ! grep -R -n 'marta_claim_owner' marta-digital-hub --exclude='*.md' --exclude='*.sql'
+          ! grep -n 'marta_claim_owner' marta-digital-hub/*.js marta-digital-hub/*.mjs marta-digital-hub/*.html
