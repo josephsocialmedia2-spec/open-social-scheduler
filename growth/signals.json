@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-16T10:08:38+00:00",
+  "updated_at": "2026-09-19T09:39:17+00:00",
   "signals": [
     {
       "id": "FBS-64D8E3A2C4",
@@ -229,18 +229,6 @@
       "source_query": "site:facebook.com/groups \"Rubiana\" \"vendesi casa\"",
       "status": "NEW",
       "discovered_at": "2026-09-06T09:30:16+00:00"
-    },
-    {
-      "id": "FBS-BC52E9D88B",
-      "brand": "f1-immobiliare",
-      "territory": "Condove",
-      "group_url": "https://www.facebook.com/groups/comunedicondove/",
-      "source_url": "https://www.facebook.com/groups/comunedicondove/permalink/27941951625442744/",
-      "title": "Sei di Condove se... | Ciao a tutti! Sono un'insegnante ...",
-      "snippet": "Jul 20, 2026 · Ciao a tutti! Sono un'insegnante appena entrata di ruolo e lavorerò a Condove. Sto cercando un bilocale arredato in zona. Se qualcuno avesse notizie o conoscesse qualcuno che affitta, mi farebbe un...",
-      "source_query": "site:facebook.com/groups \"Condove\" \"sei di\"",
-      "status": "NEW",
-      "discovered_at": "2026-09-06T09:31:15+00:00"
     },
     {
       "id": "FBS-477EF4EF35",
