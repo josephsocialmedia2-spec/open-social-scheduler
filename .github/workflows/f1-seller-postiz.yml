@@ -30,7 +30,6 @@ jobs:
       - name: Checkout social scheduler
         uses: actions/checkout@v4
         with:
-          path: social
           fetch-depth: 0
       - name: Checkout F1 Seller source
         uses: actions/checkout@v4
@@ -38,11 +37,6 @@ jobs:
           repository: josephsocialmedia2-spec/launcher-dashboard
           ref: main
           path: seller-source
-      - name: Normalize workspace paths
-        shell: bash
-        run: |
-          cp -a social/. .
-          rm -rf social
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
