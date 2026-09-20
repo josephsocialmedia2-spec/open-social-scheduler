@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "base_url": "",
+  "base_url": "https://joseph-socialmedia2--ugc-avatar-studio-web.modal.run",
   "live_enabled": false,
   "publisher": "buffer",
   "client_id": "f1-immobiliare",
@@ -9,5 +9,6 @@
     "instagram",
     "linkedin"
   ],
-  "note": "base_url is filled with the verified Modal public URL after deployment; live_enabled becomes true only after a successful dry-run."
+  "note": "Verified Modal public URL. Live publishing remains disabled until the bridge dry-run validates Modal handoff, Cloudinary and Buffer.",
+  "verified_at": "2026-09-20"
 }
