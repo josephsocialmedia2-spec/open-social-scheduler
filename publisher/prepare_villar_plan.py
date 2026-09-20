@@ -10,12 +10,14 @@ DATA='eNrtXdtu20gS/ZVGHvZlYpvdpG4BgsBxPLsBYk/WTjIYDOahTbWVBihS4UUe+Gv2dT9hn/NjW0
 def main():
     rows=json.loads(zlib.decompress(base64.b64decode(DATA)).decode('utf-8'))
     old={}
+    previous={'jobs':[]}
     if QUEUE.exists():
         try:
             previous=json.loads(QUEUE.read_text(encoding='utf-8'))
             old={str(j.get('id')):j for j in previous.get('jobs',[])}
         except Exception:
             old={}
+            previous={'jobs':[]}
     jobs=[]
     for day,dt,tm,obj,pillar,theme,source,url in rows:
         slot='09:30' if int(day)==1 and tm=='08:30' else tm
@@ -32,10 +34,12 @@ def main():
         for key in ('buffer_posts','buffer_scheduled_platforms','resolved_channels','published_asset_sha256','scheduled_via','error','updated_at'):
             if key in prev: job[key]=prev[key]
         jobs.append(job)
+    generated_ids={str(j.get('id')) for j in jobs}
+    extras=[j for j in previous.get('jobs',[]) if str(j.get('id')) not in generated_ids]
     q={'version':3,'pipeline':'f1-final-assets','brand':'F1 Immobiliare','asset_policy':'immutable-final-layout',
        'platforms':['facebook','instagram'],'territory_plan':{'territory':'Villar Dora','days':150,'posts_per_day':2,'total':300},
-       'jobs':jobs}
+       'jobs':jobs+extras}
     QUEUE.write_text(json.dumps(q,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-    print(f'VILLAR DORA PLAN READY: {len(jobs)} jobs')
+    print(f'VILLAR DORA PLAN READY: {len(jobs)} territory jobs + {len(extras)} preserved external jobs')
     return 0
 if __name__=='__main__': raise SystemExit(main())
