@@ -11,15 +11,15 @@
 <body>
 <div class="box">
   <div class="eyebrow">F1 IMMOBILIARE · PRODUZIONE AUTOMATICA ORE 23:00</div>
-  <h1 id="title">CONTROLLO GRAFICHE</h1>
+  <h1 id="title">STATO AUTOPUBLISHER</h1>
   <p class="lead" id="lead">Verifico l'esito dell'ultima produzione.</p>
-  <p class="sub">Una grafica viene dichiarata pronta solo dopo invio verificato, generazione completata, immagine rilevata e file salvato.</p>
+  <p class="sub">Il processo continua automaticamente dopo la generazione: immagine verificata, coda, Buffer e controllo dello stato di pubblicazione.</p>
   <div id="runStatus" class="status"><strong>Stato:</strong> controllo ultima esecuzione…</div>
-  <a class="primary" href="http://127.0.0.1:8877/">APRI RACCOLTA F1</a>
+  <a class="primary" href="http://127.0.0.1:8877/">APRI AUTOPUBLISHER F1</a>
   <div class="steps">
-    <div class="step"><b>1. CONTROLLA</b><span>Apri la Raccolta: le immagini salvate automaticamente sono già visibili.</span></div>
-    <div class="step"><b>2. VERIFICA</b><span>Controlla grafica, query, caption e orario.</span></div>
-    <div class="step"><b>3. APPROVA</b><span>Solo dopo la tua conferma entrano in GitHub e nella coda READY.</span></div>
+    <div class="step"><b>1. GENERA</b><span>ChatGPT crea e salva la grafica dal comunicato.</span></div>
+    <div class="step"><b>2. PUBBLICA</b><span>Il sistema invia automaticamente il contenuto al publisher configurato.</span></div>
+    <div class="step"><b>3. VERIFICA</b><span>Lo stato diventa PUBLISHED solo dopo la conferma del provider.</span></div>
   </div>
   <div class="row"><a class="chat" href="https://chatgpt.com/g/g-6a9c210485488191b072eb694c2f114c-generatore-grafica-f1" target="_blank">APRI GENERATORE F1</a><a class="inbox" href="http://127.0.0.1:8877/" target="_blank">APRI RACCOLTA GRAFICHE</a></div>
 </div>
@@ -30,14 +30,14 @@ async function refreshStatus(){
     const r=await fetch('/api/run-status',{cache:'no-store'}),d=await r.json(),c=d.counts||{};
     const summary=`previste ${c.query_previste||0} · inviate ${c.query_inviate||0} · riuscite ${c.query_riuscite||0} · immagini salvate ${c.immagini_salvate||0}`;
     if(d.status==='GRAFICHE_PRONTE'){
-      title.textContent='GRAFICHE PRONTE';lead.textContent='Le immagini sono state realmente generate e salvate. Apri la Raccolta F1 per approvarle.';box.className='status';box.innerHTML=`<strong>ULTIMA ESECUZIONE OK</strong><br>${summary}`;
+      title.textContent='GRAFICHE PRONTE';lead.textContent='Le immagini sono state realmente generate e salvate. Il sistema prosegue automaticamente verso la pubblicazione.';box.className='status';box.innerHTML=`<strong>ULTIMA ESECUZIONE OK</strong><br>${summary}`;
     }else if(d.status==='PARZIALE'){
       title.textContent='PRODUZIONE PARZIALE';lead.textContent='Alcune grafiche sono pronte, altre no. Il sistema non le considera completate.';box.className='status warn';box.innerHTML=`<strong>PARZIALE</strong><br>${summary}<br>${d.error||''}`;
     }else if(d.status==='ERRORE'){
       title.textContent='ERRORE PRODUZIONE';lead.textContent='La produzione non ha raggiunto i criteri di completamento.';box.className='status error';box.innerHTML=`<strong>ERRORE NELL'ESECUZIONE</strong><br>${summary}<br>${String(d.error||'controllare i log')}`;
     }else if(d.status==='RUNNING'){
       title.textContent='PRODUZIONE IN CORSO';lead.textContent='Il sistema sta elaborando le query.';box.className='status';box.innerHTML=`<strong>IN CORSO</strong><br>${summary}`;
-    }else{title.textContent='CONTROLLO GRAFICHE';lead.textContent='Nessuna produzione verificata disponibile.';box.className='status';box.innerHTML=`<strong>STATO</strong> · ${String(d.status||'non disponibile')}`}
+    }else{title.textContent='CONTROLLO GRAFICHE';lead.textContent='Nessuna produzione verificata disponibile. Inserisci un comunicato nell'Autopublisher.';box.className='status';box.innerHTML=`<strong>STATO</strong> · ${String(d.status||'non disponibile')}`}
   }catch(e){box.className='status error';box.innerHTML='<strong>RACCOLTA NON RAGGIUNGIBILE</strong> · avvia F1 Raccolta Grafiche.'}
 }
 refreshStatus();setInterval(refreshStatus,15000);
