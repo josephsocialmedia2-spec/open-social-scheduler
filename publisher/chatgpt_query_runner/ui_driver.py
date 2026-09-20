@@ -15,6 +15,7 @@ import pyautogui
 import pygetwindow as gw
 import pyperclip
 import uiautomation as auto
+from PIL import Image, UnidentifiedImageError
 
 GPT_URL = "https://chatgpt.com/g/g-6a9c210485488191b072eb694c2f114c-generatore-grafica-f1"
 
@@ -574,6 +575,28 @@ class ChromeChatGPTDriver:
             time.sleep(2.5)
         raise RuntimeError("Timeout: generazione immagine non completata entro il limite massimo.")
 
+    @staticmethod
+    def _validate_image_file(path: Path) -> tuple[int, int, str]:
+        if not path.exists() or not path.is_file():
+            raise RuntimeError(f"File immagine non trovato: {path}")
+        size = path.stat().st_size
+        if size < 10_000:
+            raise RuntimeError(f"File immagine troppo piccolo: {size} byte")
+        try:
+            with Image.open(path) as image:
+                image.verify()
+            with Image.open(path) as image:
+                width, height = image.size
+                fmt = str(image.format or "").upper()
+        except (UnidentifiedImageError, OSError, ValueError) as exc:
+            raise RuntimeError(f"File scaricato non è un'immagine leggibile: {path.name}: {exc}") from exc
+        if fmt not in {"PNG", "JPEG", "WEBP"}:
+            raise RuntimeError(f"Formato immagine non ammesso: {fmt or 'sconosciuto'}")
+        if width < 180 or height < 180:
+            raise RuntimeError(f"Dimensioni immagine non plausibili: {width}x{height}")
+        return width, height, fmt
+
+
     def _downloads_dir(self) -> Path:
         return Path(os.path.expandvars(r"%USERPROFILE%\Downloads"))
 
@@ -630,9 +653,9 @@ class ChromeChatGPTDriver:
                     ext = downloaded.suffix.lower() if downloaded.suffix else ".png"
                     target = destination_without_ext.with_suffix(ext)
                     shutil.copy2(downloaded, target)
-                    if target.stat().st_size > 10_000:
-                        self.log(f"Immagine salvata dal download: {target}")
-                        return target, "download"
+                    width, height, fmt = self._validate_image_file(target)
+                    self.log(f"Immagine salvata e verificata dal download: {target} ({width}x{height} {fmt})")
+                    return target, "download"
             except Exception as exc:
                 self.log(f"Download UI non riuscito, provo fallback: {exc}")
         control = result.image_control
@@ -650,9 +673,8 @@ class ChromeChatGPTDriver:
         target = destination_without_ext.with_suffix(".png")
         shot = pyautogui.screenshot(region=(left, top, width, height))
         shot.save(target)
-        if not target.exists() or target.stat().st_size < 10_000:
-            raise RuntimeError("Fallback screenshot creato ma file immagine non valido.")
-        self.log(f"Immagine salvata da screenshot verificato: {target}")
+        width, height, fmt = self._validate_image_file(target)
+        self.log(f"Immagine salvata da screenshot e verificata: {target} ({width}x{height} {fmt})")
         return target, "screenshot"
 
     def open_new_tab(self, url: str) -> None:
