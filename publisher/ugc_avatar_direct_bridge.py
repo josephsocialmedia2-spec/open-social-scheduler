@@ -61,10 +61,19 @@ def configured_platforms(job: dict[str, Any], client: dict[str, Any]) -> tuple[l
     return ready, blocked
 
 
-def process(base: str, dry_run: bool, max_jobs: int) -> dict[str, Any]:
+def process(base: str, dry_run: bool, max_jobs: int, modal_job_id: str | None = None) -> dict[str, Any]:
     compat.core.PUBLISHERS["tiktok"] = compat.tiktok_publish_fixed
-    payload = get_json(f"{base}/api/outbox?limit={max_jobs}")
-    rows = payload.get("jobs") or []
+    if modal_job_id:
+        detail = get_json(f"{base}/api/jobs/{modal_job_id}")
+        row = dict(detail.get("publisher_job") or {})
+        if not row:
+            raise RuntimeError(f"Modal job {modal_job_id} has no publisher_job")
+        row["modal_job_id"] = modal_job_id
+        row["video_url"] = f"/api/jobs/{modal_job_id}/video"
+        rows = [row]
+    else:
+        payload = get_json(f"{base}/api/outbox?limit={max_jobs}")
+        rows = payload.get("jobs") or []
     report: list[dict[str, Any]] = []
 
     for row in rows[:max_jobs]:
@@ -126,9 +135,12 @@ def main() -> int:
     parser.add_argument("--url", default=os.getenv("UGC_AVATAR_MODAL_URL", DEFAULT_URL))
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--max-jobs", type=int, default=10)
+    parser.add_argument("--modal-job-id", help="Validate/publish one exact Modal job, including TEST_ONLY jobs")
     args = parser.parse_args()
     base = args.url.rstrip("/")
-    result = process(base, args.dry_run, max(1, min(args.max_jobs, 50)))
+    if args.modal_job_id and not args.dry_run:
+        raise SystemExit("--modal-job-id is restricted to --dry-run for safe certification")
+    result = process(base, args.dry_run, max(1, min(args.max_jobs, 50)), args.modal_job_id)
     print(json.dumps(result, ensure_ascii=False, indent=2))
     failures = [
         x for x in result["report"]
