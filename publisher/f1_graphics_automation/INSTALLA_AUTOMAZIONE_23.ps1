@@ -102,7 +102,7 @@ if (-not $Health.ok -or $Health.service -ne 'f1-manual-asset-inbox') { throw 'He
 
 $Desktop = [Environment]::GetFolderPath('Desktop')
 $Shell = New-Object -ComObject WScript.Shell
-foreach ($oldName in @('F1 GRAFICHE.lnk','F1 - Raccolta Grafiche.lnk','F1 - Prova Automazione Grafiche.lnk','F1 - Prova 1 Query.lnk','F1 - Prova 4 Query.lnk')) {
+foreach ($oldName in @('F1 AUTOPUBLISHER.lnk','F1 GRAFICHE.lnk','F1 - Raccolta Grafiche.lnk','F1 - Prova Automazione Grafiche.lnk','F1 - Prova 1 Query.lnk','F1 - Prova 4 Query.lnk')) {
     Remove-Item (Join-Path $Desktop $oldName) -Force -ErrorAction SilentlyContinue
 }
 
@@ -117,14 +117,12 @@ function New-F1Shortcut {
     if (-not (Test-Path (Join-Path $Desktop $Name))) { throw "Collegamento Desktop non creato: $Name" }
 }
 
-New-F1Shortcut -Name 'F1 GRAFICHE.lnk' -Target $ManualBat -Description 'Avvia F1 Grafiche: Chrome normale + 4 query verificate' -Icon "$env:SystemRoot\System32\shell32.dll,167"
-New-F1Shortcut -Name 'F1 - Prova 1 Query.lnk' -Target $Test1Bat -Description 'Test end-to-end reale con una query'
-New-F1Shortcut -Name 'F1 - Prova 4 Query.lnk' -Target $Test4Bat -Description 'Test end-to-end reale con quattro query'
-New-F1Shortcut -Name 'F1 - Raccolta Grafiche.lnk' -Target $OpenBat -Description 'Apri F1 Autopublisher - inserimento comunicati'
+New-F1Shortcut -Name 'F1 AUTOPUBLISHER.lnk' -Target $OpenBat -Description 'Inserisci il comunicato: F1 gestisce grafica, pubblicazione e verifica' -Icon "$env:SystemRoot\System32\shell32.dll,167"
 
 Write-Host ''
 Write-Host 'INSTALLAZIONE VERIFICATA.' -ForegroundColor Green
-Write-Host 'Desktop: F1 GRAFICHE, Prova 1 Query, Prova 4 Query, Raccolta Grafiche' -ForegroundColor White
+Write-Host 'Desktop: F1 AUTOPUBLISHER' -ForegroundColor White
+Write-Host 'I launcher di test restano disponibili nella cartella tecnica, non sul Desktop.' -ForegroundColor DarkGray
 Write-Host 'F1_Grafiche_23: ogni giorno alle 23:00 recupera comunicati incompleti, sessione Windows interattiva' -ForegroundColor White
 Write-Host "Prossima esecuzione Task Scheduler: $($TaskInfo.NextRunTime)" -ForegroundColor Cyan
 Write-Host 'Autopublisher: http://127.0.0.1:8877/' -ForegroundColor Cyan
