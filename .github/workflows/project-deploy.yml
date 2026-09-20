@@ -82,17 +82,25 @@ jobs:
           from pathlib import Path
           server = Path('publisher/manual_asset_inbox/server.py').read_text(encoding='utf-8')
           worker = Path('publisher/chatgpt_query_runner/worker.py').read_text(encoding='utf-8')
+          driver = Path('publisher/chatgpt_query_runner/ui_driver.py').read_text(encoding='utf-8')
+          runner_requirements = Path('publisher/chatgpt_query_runner/requirements.txt').read_text(encoding='utf-8')
           installer = Path('publisher/f1_graphics_automation/INSTALLA_AUTOMAZIONE_23.ps1').read_text(encoding='utf-8')
           assert '8877' in server
           assert '/api/generated' in server
           assert '/api/communications' in server
           assert 'chatgpt_generated' in server
           assert 'COMMUNICATIONS_FILE' in server
+          assert '_communication_hash' in server and '_recent_duplicate' in server
+          assert '"communication_hash": digest' in server
           assert 'IMMAGINE_SALVATA' in worker and 'advance_after_completed' in worker
           assert 'auto_ingest_completed_run' in worker
           assert '--communication-id' in worker
           assert 'Selenium' not in worker
+          assert '_validate_image_file' in driver
+          assert 'Image.open(path)' in driver
+          assert 'Pillow==11.3.0' in runner_requirements
           assert "New-ScheduledTaskTrigger -Daily -At 23:00" in installer
+          assert "F1 AUTOPUBLISHER.lnk" in installer
           for path in [
               'publisher/f1_graphics_automation/AVVIA_F1_GRAFICHE_ORA.bat',
               'publisher/f1_graphics_automation/PROVA_ORA.bat',
