@@ -209,6 +209,7 @@ def _provider_snapshot(job: dict[str, Any]) -> str:
         "published_at": job.get("published_at"),
         "published_urls": job.get("published_urls") or [],
         "error": job.get("error"),
+        "last_verification_error": job.get("last_verification_error"),
     }
     return json.dumps(relevant, ensure_ascii=False, sort_keys=True)
 
@@ -220,6 +221,7 @@ def refresh_publication_status(job: dict[str, Any], api_key: str) -> bool:
         return False
 
     before = _provider_snapshot(job)
+    job.pop("last_verification_error", None)
     refreshed: list[dict[str, Any]] = []
     states: list[str] = []
     urls: list[str] = []
