@@ -325752,9 +325752,166 @@
           "bytes": "4364512"
         }
       ]
+    },
+    {
+      "id": "f1-feed-C01",
+      "client_id": "f1-immobiliare",
+      "created_by": "buffer-feed-production",
+      "source_item_id": "C01",
+      "source_feed_id": "f1-qualified-2026-08-23-c01",
+      "source_feed_run_id": null,
+      "title": "7 dati che servono per valutare casa senza tirare a indovinare",
+      "caption": "7 DATI CHE SERVONO PER VALUTARE CASA SENZA TIRARE A INDOVINARE.\n\nUna valutazione seria parte da dati verificabili: microzona, tipologia, metratura, stato, piano/esposizione, comparabili e domanda.\n\nScrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere. F1 Immobiliare · 371 370 8294.\n\n#F1Immobiliare #ValleDiSusa #VendereCasa #ValutazioneImmobiliare",
+      "cta": "Scrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere.",
+      "format": "carousel",
+      "media": [
+        "publisher/media/generated/buffer-feed-production/C01-slide-01.jpg",
+        "publisher/media/generated/buffer-feed-production/C01-slide-02.jpg",
+        "publisher/media/generated/buffer-feed-production/C01-slide-03.jpg",
+        "publisher/media/generated/buffer-feed-production/C01-slide-04.jpg",
+        "publisher/media/generated/buffer-feed-production/C01-slide-05.jpg",
+        "publisher/media/generated/buffer-feed-production/C01-slide-06.jpg",
+        "publisher/media/generated/buffer-feed-production/C01-slide-07.jpg",
+        "publisher/media/generated/buffer-feed-production/C01-slide-08.jpg",
+        "publisher/media/generated/buffer-feed-production/C01-slide-09.jpg",
+        "publisher/media/generated/buffer-feed-production/C01-slide-10.jpg"
+      ],
+      "scheduled_at": "2026-09-20T18:30:00+02:00",
+      "platforms": [
+        {
+          "platform": "facebook",
+          "integration_id": "buffer"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "buffer"
+        },
+        {
+          "platform": "linkedin",
+          "integration_id": "buffer"
+        }
+      ],
+      "status": "scheduled_in_buffer",
+      "buffer_posts": [
+        {
+          "service": "facebook",
+          "channel_id": "6a9afff8065799be468ade7a",
+          "post_id": "6ab027bcc88b75a7de29467d",
+          "buffer_status": "sending",
+          "due_at": "2026-09-20T18:36:44.829Z",
+          "created_at": "2026-09-20T18:36:55+00:00"
+        },
+        {
+          "service": "instagram",
+          "channel_id": "6a9b0034065799be468adfe4",
+          "post_id": "6ab027c79a5eadd2b1c9a260",
+          "buffer_status": "sending",
+          "due_at": "2026-09-20T18:36:55.661Z",
+          "created_at": "2026-09-20T18:37:05+00:00"
+        },
+        {
+          "service": "linkedin",
+          "channel_id": "6a9b0062065799be468ae0b1",
+          "post_id": "6ab027d2ca3da65443571d2e",
+          "buffer_status": "sending",
+          "due_at": "2026-09-20T18:37:06.469Z",
+          "created_at": "2026-09-20T18:37:16+00:00"
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "facebook",
+        "instagram",
+        "linkedin"
+      ],
+      "approval_required": false,
+      "manual_approval_required": false,
+      "autonomous_publish": true,
+      "production_source": "f1-feed-latest.json",
+      "quality_gate_passed": true,
+      "video_made_with_ai": false,
+      "buffer_organization_id": "6a9aff970f059f084a2c8a6d",
+      "buffer_channels": {
+        "facebook": {
+          "id": "6a9afff8065799be468ade7a",
+          "name": "F1immobiliare",
+          "service": "facebook"
+        },
+        "instagram": {
+          "id": "6a9b0034065799be468adfe4",
+          "name": "joseph_malafronte",
+          "service": "instagram"
+        },
+        "linkedin": {
+          "id": "6a9b0062065799be468ae0b1",
+          "name": "Joseph Malafronte",
+          "service": "linkedin"
+        }
+      },
+      "cloudinary_assets": [
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1789929396/f1-buffer/f1-feed-C01/slide-01.jpg",
+          "public_id": "f1-buffer/f1-feed-C01/slide-01",
+          "resource_type": "image",
+          "bytes": "208388"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1789929396/f1-buffer/f1-feed-C01/slide-02.jpg",
+          "public_id": "f1-buffer/f1-feed-C01/slide-02",
+          "resource_type": "image",
+          "bytes": "202097"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1789929397/f1-buffer/f1-feed-C01/slide-03.jpg",
+          "public_id": "f1-buffer/f1-feed-C01/slide-03",
+          "resource_type": "image",
+          "bytes": "205901"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1789929398/f1-buffer/f1-feed-C01/slide-04.jpg",
+          "public_id": "f1-buffer/f1-feed-C01/slide-04",
+          "resource_type": "image",
+          "bytes": "208787"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1789929399/f1-buffer/f1-feed-C01/slide-05.jpg",
+          "public_id": "f1-buffer/f1-feed-C01/slide-05",
+          "resource_type": "image",
+          "bytes": "210869"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1789929399/f1-buffer/f1-feed-C01/slide-06.jpg",
+          "public_id": "f1-buffer/f1-feed-C01/slide-06",
+          "resource_type": "image",
+          "bytes": "207724"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1789929400/f1-buffer/f1-feed-C01/slide-07.jpg",
+          "public_id": "f1-buffer/f1-feed-C01/slide-07",
+          "resource_type": "image",
+          "bytes": "208556"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1789929401/f1-buffer/f1-feed-C01/slide-08.jpg",
+          "public_id": "f1-buffer/f1-feed-C01/slide-08",
+          "resource_type": "image",
+          "bytes": "201823"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1789929402/f1-buffer/f1-feed-C01/slide-09.jpg",
+          "public_id": "f1-buffer/f1-feed-C01/slide-09",
+          "resource_type": "image",
+          "bytes": "205437"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1789929403/f1-buffer/f1-feed-C01/slide-10.jpg",
+          "public_id": "f1-buffer/f1-feed-C01/slide-10",
+          "resource_type": "image",
+          "bytes": "203689"
+        }
+      ]
     }
   ],
-  "updated_at": "2026-09-19T18:31:58+00:00",
+  "updated_at": "2026-09-20T18:37:16+00:00",
   "updated_by": "Approved 5+5 publication renderer",
   "current_cycle": "2026-09-19T16:00",
   "history_days": 14,
