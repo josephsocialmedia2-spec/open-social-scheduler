@@ -10,7 +10,10 @@ on:
         type: boolean
   schedule:
     - cron: '0 6,16 * * *'
+    - cron: '7,22,37,52 * * * *'
   push:
+    branches:
+      - main
     paths:
       - '.github/workflows/f1-final-assets-publisher.yml'
       - 'publisher/final_asset_publisher.py'
@@ -18,7 +21,9 @@ on:
       - 'publisher/generate_next_villar_asset.py'
       - 'publisher/territory_router.py'
       - 'publisher/territory_channels.json'
+      - 'publisher/buffer_twice_daily.py'
       - 'publisher/final_content_queue.json'
+      - 'publisher/final_assets/manual_inbox/**'
 
 permissions:
   contents: write
@@ -34,6 +39,7 @@ jobs:
     env:
       BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
       CLOUDINARY_URL: ${{ secrets.CLOUDINARY_URL }}
+      F1_PUBLISH_MAX_ATTEMPTS: '5'
 
     steps:
       - name: Checkout main
@@ -52,16 +58,28 @@ jobs:
       - name: Install dependencies
         run: python -m pip install --disable-pip-version-check -r publisher/requirements.txt
 
-      - name: Prepare Villar Dora 150-day queue
-        run: python publisher/prepare_villar_plan.py
-
-      - name: Validate Villar Dora territory pipeline
+      - name: Compile autonomous and territory publishers
         shell: bash
         run: |
           set -euxo pipefail
-          python -m py_compile publisher/final_asset_publisher.py publisher/prepare_villar_plan.py publisher/generate_next_villar_asset.py publisher/territory_router.py publisher/buffer_twice_daily.py
+          python -m py_compile \
+            publisher/final_asset_publisher.py \
+            publisher/prepare_villar_plan.py \
+            publisher/generate_next_villar_asset.py \
+            publisher/territory_router.py \
+            publisher/buffer_twice_daily.py
           python -m json.tool publisher/final_content_queue.json >/dev/null
           python -m json.tool publisher/territory_channels.json >/dev/null
+
+      - name: Prepare Villar Dora 150-day queue
+        if: github.event_name == 'workflow_dispatch' || github.event.schedule == '0 6,16 * * *'
+        run: python publisher/prepare_villar_plan.py
+
+      - name: Validate Villar Dora territory pipeline
+        if: github.event_name == 'workflow_dispatch' || github.event.schedule == '0 6,16 * * *'
+        shell: bash
+        run: |
+          set -euxo pipefail
           python - <<'PY'
           import json
           q=json.load(open('publisher/final_content_queue.json',encoding='utf-8'))
@@ -70,23 +88,41 @@ jobs:
           assert q.get('asset_policy')=='immutable-final-layout'
           assert q.get('brand')=='F1 Immobiliare'
           assert q.get('territory_plan',{}).get('territory')=='Villar Dora'
-          assert len(q.get('jobs',[]))==300
+          vd=[j for j in q.get('jobs',[]) if str(j.get('id') or '').startswith('VD-')]
+          assert len(vd)==300, len(vd)
           assert t.get('territories',{}).get('villar-dora',{}).get('enabled') is True
-          print('F1 VILLAR DORA 150-DAY PIPELINE VALIDATED')
+          print(f'F1 VILLAR DORA PIPELINE VALIDATED: {len(vd)} territory jobs; {len(q.get("jobs",[]))-len(vd)} external jobs preserved')
           PY
 
-      - name: Generate immutable graphic for next READY job
+      - name: Generate immutable graphic for next Villar READY job
+        if: github.event_name == 'workflow_dispatch' || github.event.schedule == '0 6,16 * * *'
         run: python publisher/generate_next_villar_asset.py
 
-      - name: Publish next READY final asset
+      - name: Publish next Villar final asset
+        if: github.event_name == 'workflow_dispatch' || github.event.schedule == '0 6,16 * * *'
         shell: bash
         run: |
           set -euo pipefail
           DRY='${{ inputs.dry_run }}'
           if [ "$DRY" = "true" ]; then
-            python publisher/final_asset_publisher.py --dry-run
+            python publisher/final_asset_publisher.py --exclude-communications --dry-run
           else
-            python publisher/final_asset_publisher.py
+            python publisher/final_asset_publisher.py --exclude-communications
+          fi
+
+      - name: Publish and verify autonomous client communications
+        shell: bash
+        run: |
+          set -euo pipefail
+          DRY='${{ inputs.dry_run }}'
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "$DRY" = "true" ]; then
+            python publisher/final_asset_publisher.py --communications-only --dry-run
+          else
+            python publisher/final_asset_publisher.py \
+              --communications-only \
+              --drain \
+              --verify \
+              --max-jobs 25
           fi
 
       - name: Persist final asset queue state
@@ -101,14 +137,22 @@ jobs:
             echo 'No final queue state changes to persist.'
             exit 0
           fi
-          git commit -m 'Persist F1 Villar Dora publication state'
+          git commit -m 'Persist F1 publication state'
           git pull --rebase origin main
           git push origin HEAD:main
 
       - name: Status
         if: always()
+        shell: bash
         run: |
-          echo 'Territory: Villar Dora'
-          echo 'Plan: 150 days / 300 posts / Facebook + Instagram'
-          echo 'Graphic: F1 text-only with mandatory AgentPricing CTA'
-          echo 'Checks: before 08:30 and 18:30 Europe/Rome slots'
+          python - <<'PY'
+          import json
+          q=json.load(open('publisher/final_content_queue.json',encoding='utf-8'))
+          communications=[j for j in q.get('jobs',[]) if str(j.get('communication_id') or '').startswith('COMM-')]
+          counts={}
+          for job in communications:
+              counts[job.get('status','UNKNOWN')]=counts.get(job.get('status','UNKNOWN'),0)+1
+          print('Territory: Villar Dora legacy schedule preserved')
+          print('Autonomous communications:', len(communications), counts)
+          print('Completion rule: PUBLISHED only after Buffer status=sent for every target service')
+          PY
