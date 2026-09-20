@@ -116,6 +116,10 @@ jobs:
           assert 'communications-only' in final_publisher
           assert 'exclude-communications' in final_publisher
           assert 'refresh_publication_status' in final_publisher
+          assert 'mark_job' in final_publisher
+          assert '"attempt_count"' in final_publisher
+          assert '"last_step"' in final_publisher
+          assert '"last_error"' in final_publisher
           assert '"PUBLISHED"' in final_publisher
           assert 'get_buffer_post' in buffer_base
           assert 'post_type = "reel" if is_reel else "post"' in buffer_base
