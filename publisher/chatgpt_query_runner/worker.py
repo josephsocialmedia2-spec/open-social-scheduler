@@ -33,6 +33,7 @@ from publisher.chatgpt_query_runner.core import (  # noqa: E402
 from publisher.chatgpt_query_runner.ui_driver import ChromeChatGPTDriver, GPT_URL  # noqa: E402
 
 QUERY_FILE = ROOT / "publisher" / "github_graphics" / "queries.json"
+COMMUNICATIONS_FILE = ROOT / "publisher" / "chatgpt_query_runner" / "communications.local.json"
 STATE_FILE = ROOT / "publisher" / "chatgpt_query_runner" / "state.json"
 LAST_RUN_FILE = ROOT / "publisher" / "chatgpt_query_runner" / "last_run.json"
 OUTPUT_ROOT = ROOT / "publisher" / "final_assets" / "chatgpt_generated"
@@ -55,7 +56,56 @@ def log(message: str) -> None:
         handle.write(line + "\n")
 
 
-def load_queries() -> list[dict]:
+def _load_communications() -> dict:
+    if not COMMUNICATIONS_FILE.exists():
+        return {"version": 1, "items": []}
+    try:
+        payload = json.loads(COMMUNICATIONS_FILE.read_text(encoding="utf-8"))
+    except Exception:
+        payload = {"version": 1, "items": []}
+    payload.setdefault("version", 1)
+    payload.setdefault("items", [])
+    return payload
+
+
+def _save_communications(payload: dict) -> None:
+    atomic_write_json(COMMUNICATIONS_FILE, payload)
+
+
+def set_communication_status(communication_id: str | None, status: str, error: str | None = None) -> None:
+    if not communication_id:
+        return
+    payload = _load_communications()
+    for item in payload.get("items") or []:
+        if str(item.get("id") or "") != communication_id:
+            continue
+        item["status"] = status
+        item["updated_at"] = datetime.now(ROME).isoformat(timespec="seconds")
+        item["last_error"] = error
+        _save_communications(payload)
+        return
+
+
+def load_queries(communication_id: str | None = None) -> list[dict]:
+    if communication_id:
+        payload = _load_communications()
+        for item in payload.get("items") or []:
+            if str(item.get("id") or "") == communication_id:
+                return [{
+                    "id": communication_id,
+                    "query": str(item.get("query") or item.get("communication") or "").strip(),
+                    "communication": str(item.get("communication") or "").strip(),
+                    "prompt": str(item.get("prompt") or "").strip(),
+                    "caption": str(item.get("caption") or item.get("communication") or "").strip(),
+                    "client": str(item.get("client") or "F1 Immobiliare").strip(),
+                    "territory": str(item.get("territory") or "").strip(),
+                    "scope": str(item.get("scope") or ("territory" if item.get("territory") else "network")).strip(),
+                    "platforms": list(item.get("platforms") or ["facebook", "instagram"]),
+                    "scheduled_at": str(item.get("scheduled_at") or datetime.now(ROME).isoformat(timespec="seconds")),
+                    "source": "client-communication",
+                }]
+        raise RuntimeError(f"Comunicato non trovato: {communication_id}")
+
     payload = json.loads(QUERY_FILE.read_text(encoding="utf-8"))
     rows = list(payload.get("queries") or [])
     if not rows:
@@ -183,7 +233,7 @@ def process_job(driver: ChromeChatGPTDriver, state: dict, run: dict, job: dict, 
     if job.get("status") == "COMPLETED" and not job_image_exists(job):
         mark(state, run, job, "ERRORE", error="Stato COMPLETED trovato ma image_path manca o non è valido.")
 
-    prompt = build_prompt(str(job.get("query") or ""))
+    prompt = str(job.get("prompt") or "").strip() or build_prompt(str(job.get("query") or ""))
     job["prompt"] = prompt
     persist(state, run)
 
@@ -288,9 +338,58 @@ def process_job(driver: ChromeChatGPTDriver, state: dict, run: dict, job: dict, 
     return False
 
 
-def run(batch_size: int, *, fresh_run: bool = False) -> int:
+def auto_ingest_completed_run(run: dict) -> dict:
+    items = []
+    for job in run.get("jobs") or []:
+        if job.get("status") != "COMPLETED" or not job_image_exists(job):
+            continue
+        items.append({
+            "image_path": job.get("image_path"),
+            "query_id": job.get("query_id"),
+            "query": job.get("query"),
+            "family": "property",
+            "caption": job.get("caption") or job.get("communication") or job.get("query"),
+            "scheduled_at": job.get("scheduled_at") or datetime.now(ROME).isoformat(timespec="seconds"),
+            "territory": job.get("territory"),
+            "scope": job.get("scope") or ("territory" if job.get("territory") else "network"),
+            "platforms": job.get("platforms") or ["facebook", "instagram"],
+            "client": job.get("client") or "F1 Immobiliare",
+            "communication_id": job.get("query_id") if str(job.get("query_id") or "").startswith("COMM-") else "",
+        })
+    if not items:
+        raise RuntimeError("Nessuna immagine COMPLETED disponibile per l'invio automatico alla pubblicazione")
+
+    body = json.dumps({"items": items}, ensure_ascii=False).encode("utf-8")
+    request = urllib.request.Request(
+        f"http://{INBOX_HOST}:{INBOX_PORT}/api/ingest-generated",
+        data=body,
+        headers={"Content-Type": "application/json"},
+        method="POST",
+    )
+    last_error: Exception | None = None
+    for attempt in range(1, 4):
+        try:
+            with urllib.request.urlopen(request, timeout=120) as response:
+                payload = json.loads(response.read().decode("utf-8"))
+            if not payload.get("ok"):
+                raise RuntimeError(str(payload.get("error") or "Ingest automatico non riuscito"))
+            log(f"AUTO INGEST OK: {len(payload.get('created') or [])} contenuti in coda READY")
+            return payload
+        except Exception as exc:
+            last_error = exc
+            log(f"AUTO INGEST tentativo {attempt}/3 fallito: {type(exc).__name__}: {exc}")
+            if attempt < 3:
+                time.sleep(5 * attempt)
+    raise RuntimeError(f"Auto ingest fallito dopo 3 tentativi: {last_error}")
+
+
+def run(batch_size: int, *, fresh_run: bool = False, communication_id: str | None = None) -> int:
     start_inbox_server()
-    queries = load_queries()
+    queries = load_queries(communication_id)
+    if communication_id:
+        batch_size = 1
+        fresh_run = True
+        set_communication_status(communication_id, "PROCESSING")
     state = load_state(STATE_FILE)
     if fresh_run:
         run = create_run(state, queries, batch_size)
@@ -328,13 +427,26 @@ def run(batch_size: int, *, fresh_run: bool = False) -> int:
         f"riuscite={counts['query_riuscite']} immagini_salvate={counts['immagini_salvate']}"
     )
 
-    # Raccolta e chat restano separate: apre la schermata mattutina in una nuova scheda.
-    try:
-        driver.open_new_tab(f"http://{INBOX_HOST}:{INBOX_PORT}/ready")
-    except Exception as exc:
-        log(f"Impossibile aprire automaticamente la schermata mattutina: {exc}")
+    if final_status != "GRAFICHE_PRONTE":
+        set_communication_status(communication_id, "ERROR", run.get("error") or final_status)
+        return 2
 
-    return 0 if final_status == "GRAFICHE_PRONTE" else 2
+    try:
+        ingest = auto_ingest_completed_run(run)
+        run["autonomous_ingest"] = ingest
+        run["status"] = "IN_CODA_PUBBLICAZIONE"
+        persist(state, run, status="IN_CODA_PUBBLICAZIONE")
+        set_communication_status(communication_id, "QUEUED_FOR_PUBLISH")
+        log("PIPELINE LOCALE COMPLETA: grafica verificata -> GitHub -> coda READY -> publisher automatico")
+        return 0
+    except Exception as exc:
+        error = f"{type(exc).__name__}: {exc}"
+        run["error"] = error
+        run["status"] = "ERRORE_PUBBLICAZIONE"
+        persist(state, run, status="ERRORE_PUBBLICAZIONE", error=error)
+        set_communication_status(communication_id, "ERROR", error)
+        log(f"ERRORE passaggio automatico alla pubblicazione: {error}")
+        return 2
 
 
 def main() -> int:
@@ -342,16 +454,17 @@ def main() -> int:
     parser.add_argument("--batch-size", type=int, default=DEFAULT_BATCH_SIZE)
     parser.add_argument("--scheduled", action="store_true")
     parser.add_argument("--fresh-run", action="store_true", help="Avvia un nuovo batch senza riprendere quello precedente")
+    parser.add_argument("--communication-id", help="Elabora un singolo comunicato inserito dall'utente")
     args = parser.parse_args()
 
-    if args.scheduled:
+    if args.scheduled and not args.communication_id:
         now = datetime.now(ROME)
         if now.hour != 23:
             print(f"NOOP: ora locale {now:%H:%M}; esecuzione automatica ammessa alle 23:xx Europe/Rome")
             return 0
 
     try:
-        return run(max(1, args.batch_size), fresh_run=args.fresh_run)
+        return run(max(1, args.batch_size), fresh_run=args.fresh_run, communication_id=args.communication_id)
     except Exception as exc:
         log(f"FATAL: {type(exc).__name__}: {exc}")
         return 1
