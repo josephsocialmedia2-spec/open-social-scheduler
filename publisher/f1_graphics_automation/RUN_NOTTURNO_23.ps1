@@ -91,7 +91,7 @@ if ($Test) {
     Write-Log 'Modalita MANUALE: quattro query, con recovery di eventuale batch incompleto.'
     $WorkerArgs = @($Worker, '--batch-size', '4')
 } else {
-    Write-Log 'Modalita AUTOMATICA 23:00: quattro query, con recovery di eventuale batch incompleto.'
+    Write-Log 'Modalita AUTOMATICA 23:00: recupero fino a 4 comunicati NEW/ERROR/stale rimasti incompleti.'
     $WorkerArgs = @($Worker, '--scheduled', '--batch-size', '4')
 }
 
@@ -113,7 +113,7 @@ Show-WorkerLogs
 $WorkerExit = $Process.ExitCode
 
 if ($WorkerExit -eq 0) {
-    Write-Log 'RUN END - GRAFICHE_PRONTE verificato dal worker.'
+    Write-Log 'RUN END - ciclo worker completato/verificato.'
     exit 0
 }
 
