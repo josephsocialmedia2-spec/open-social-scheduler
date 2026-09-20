@@ -32,6 +32,7 @@ jobs:
       - name: Compile production pipeline
         run: |
           python -m py_compile publisher/final_asset_publisher.py
+          python -m py_compile publisher/persist_final_queue_github.py
           python -m py_compile publisher/buffer_twice_daily.py
           python -m py_compile publisher/chatgpt_query_runner/core.py
           python -m py_compile publisher/chatgpt_query_runner/ui_driver.py
@@ -110,6 +111,8 @@ jobs:
           assert '"PUBLISHED"' in final_publisher
           assert 'get_buffer_post' in buffer_base
           assert 'post_type = "reel" if is_reel else "post"' in buffer_base
+          persistence = Path('publisher/persist_final_queue_github.py').read_text(encoding='utf-8')
+          assert 'merge_queue' in persistence and 'MAX_ATTEMPTS = 5' in persistence
           workflow = Path('.github/workflows/f1-final-assets-publisher.yml').read_text(encoding='utf-8')
           prepare = Path('publisher/prepare_villar_plan.py').read_text(encoding='utf-8')
           generator = Path('publisher/generate_next_villar_asset.py').read_text(encoding='utf-8')
