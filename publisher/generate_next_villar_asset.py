@@ -26,7 +26,12 @@ def wrap(draw,text,f,maxw):
     return lines
 
 def next_ready(data):
-    ready=[j for j in data.get('jobs',[]) if str(j.get('status'))=='READY']
+    ready=[
+        j for j in data.get('jobs',[])
+        if str(j.get('status'))=='READY'
+        and str(j.get('id') or '').startswith('VD-')
+        and str(j.get('territory') or '')=='Villar Dora'
+    ]
     ready.sort(key=lambda j:(str(j.get('scheduled_at') or ''),str(j.get('id') or '')))
     return ready[0] if ready else None
 
