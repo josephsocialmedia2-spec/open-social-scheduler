@@ -117,12 +117,18 @@ def _recoverable_error(job: dict[str, Any]) -> bool:
     return any(m in err for m in markers)
 
 
-def next_ready(queue: dict[str, Any], *, communications_only: bool = False) -> dict[str, Any] | None:
+def next_ready(
+    queue: dict[str, Any],
+    *,
+    communications_only: bool = False,
+    exclude_communications: bool = False,
+) -> dict[str, Any] | None:
     candidates = [
         j
         for j in queue.get("jobs", [])
         if (str(j.get("status")) == "READY" or _recoverable_error(j))
         and (not communications_only or is_communication_job(j))
+        and (not exclude_communications or not is_communication_job(j))
     ]
     candidates.sort(key=lambda j: (str(j.get("scheduled_at") or ""), str(j.get("id") or "")))
     return candidates[0] if candidates else None
@@ -398,12 +404,23 @@ def main() -> int:
         action="store_true",
         help="Touch only jobs created from the autonomous client communication flow",
     )
+    parser.add_argument(
+        "--exclude-communications",
+        action="store_true",
+        help="Legacy/territory mode: never select autonomous communication jobs",
+    )
     parser.add_argument("--max-jobs", type=int, default=25)
     args = parser.parse_args()
 
     queue = load_queue()
+    if args.communications_only and args.exclude_communications:
+        parser.error("--communications-only and --exclude-communications are mutually exclusive")
 
-    need_publish = next_ready(queue, communications_only=args.communications_only) is not None
+    need_publish = next_ready(
+        queue,
+        communications_only=args.communications_only,
+        exclude_communications=args.exclude_communications,
+    ) is not None
     need_verify = args.verify and any(
         str(j.get("status") or "") == "SCHEDULED"
         and (not args.communications_only or is_communication_job(j))
@@ -424,7 +441,11 @@ def main() -> int:
     limit = max(1, args.max_jobs)
 
     while processed < limit:
-        job = next_ready(queue, communications_only=args.communications_only)
+        job = next_ready(
+            queue,
+            communications_only=args.communications_only,
+            exclude_communications=args.exclude_communications,
+        )
         if not job:
             break
         code = publish_job(queue, job, api_key, cloudinary_url, dry_run=args.dry_run)
@@ -446,6 +467,7 @@ def main() -> int:
         "verified": verified,
         "verification_changes": changed,
         "communications_only": args.communications_only,
+        "exclude_communications": args.exclude_communications,
         "exit_code": exit_code,
     }, ensure_ascii=False))
     return exit_code
