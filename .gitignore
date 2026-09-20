@@ -19,6 +19,7 @@ publisher/reports/
 # F1 local graphics automation runtime state
 publisher/chatgpt_query_runner/state.json
 publisher/chatgpt_query_runner/last_run.json
+publisher/chatgpt_query_runner/communications.local.json
 publisher/f1_graphics_automation/logs/
 publisher/final_assets/chatgpt_generated/
 
