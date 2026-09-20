@@ -305,7 +305,10 @@ def gql_metadata(service: str, job: dict[str, Any]) -> str:
     if service == "facebook":
         return "{ facebook: { type: " + ("reel" if is_reel else "post") + " } }"
     if service == "instagram":
-        post_type = "reel" if is_reel else "carousel"
+        # Buffer/Instagram expects the channel type "post" for feed images,
+        # including multi-image posts; "carousel" is not a valid Instagram
+        # channel post type in the current Buffer API.
+        post_type = "reel" if is_reel else "post"
         return (
             "{ instagram: { type: "
             + post_type
@@ -314,6 +317,35 @@ def gql_metadata(service: str, job: dict[str, Any]) -> str:
             + " } }"
         )
     return ""
+
+
+def get_buffer_post(api_key: str, post_id: str) -> dict[str, Any]:
+    data = buffer_request(
+        api_key,
+        f"""
+        query F1PostStatus {{
+          post(input: {{ id: {gql_quote(post_id)} }}) {{
+            id
+            status
+            dueAt
+            sentAt
+            externalLink
+            channelId
+          }}
+        }}
+        """,
+    )
+    post = data.get("post")
+    if not isinstance(post, dict) or not post.get("id"):
+        raise BufferAutomationError(f"Buffer post not found: {post_id}")
+    return {
+        "post_id": str(post.get("id") or post_id),
+        "buffer_status": str(post.get("status") or ""),
+        "due_at": post.get("dueAt"),
+        "sent_at": post.get("sentAt"),
+        "external_link": post.get("externalLink"),
+        "channel_id": str(post.get("channelId") or ""),
+    }
 
 
 def create_buffer_post(
