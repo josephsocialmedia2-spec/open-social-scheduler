@@ -22,11 +22,21 @@
   </style>
 </head>
 <body>
-<header><b>F1 IMMOBILIARE <span>RACCOLTA GRAFICHE</span></b><div>ChatGPT → Verifica → Approvazione → GitHub → Pubblicazione</div></header>
+<header><b>F1 IMMOBILIARE <span>AUTOPUBLISHER</span></b><div>Comunicato → Grafica → Pubblicazione automatica</div></header>
 <main>
+  <section class="panel" id="autonomousPanel">
+    <h1>Nuovo comunicato</h1>
+    <p class="muted">Inserisci il testo da comunicare alla clientela. Da questo momento il sistema procede autonomamente: crea la grafica, la verifica, la inserisce nella coda di pubblicazione, la invia ai social configurati e controlla l'esito.</p>
+    <label class="field" for="communicationInput">COMUNICATO</label>
+    <textarea id="communicationInput" style="min-height:170px;font-size:18px;line-height:1.5" placeholder="Scrivi qui il comunicato per la clientela..."></textarea>
+    <div class="actions"><button class="primary" id="publishCommunicationBtn">PUBBLICA</button></div>
+    <div id="communicationStatus" class="status"></div>
+    <div id="communicationHistory" class="summary"></div>
+  </section>
+
   <section class="panel">
-    <h1>Grafiche F1</h1>
-    <p class="muted">Le immagini generate e salvate automaticamente compaiono qui. Il passaggio in pubblicazione resta manuale: controlli la grafica e premi Approva.</p>
+    <h2>Raccolta tecnica — fallback</h2>
+    <p class="muted">Questa sezione non è necessaria nel flusso normale. Serve solo per diagnosi o recupero manuale se un'automazione esterna non può completare il ciclo.</p>
     <div class="notice">Se il ciclo notturno è riuscito, non devi scaricare e ricaricare i file: sono già disponibili nella sezione “Generate automaticamente”. Il trascinamento manuale resta come fallback.</div>
     <div class="summary">
       <span class="pill"><span id="generatedCount">0</span> generate automaticamente</span>
@@ -37,7 +47,7 @@
   </section>
 
   <section class="panel">
-    <h2>Generate automaticamente</h2>
+    <h2>Generate automaticamente — fallback tecnico</h2>
     <p class="muted">Vengono mostrate solo immagini che il worker ha realmente rilevato e salvato su disco.</p>
     <div id="generatedGrid" class="grid"></div>
     <div class="approval"><input id="approveGenerated" type="checkbox"><label for="approveGenerated">Ho controllato le grafiche selezionate, gli abbinamenti e gli orari. Autorizzo l'invio a GitHub e l'inserimento nella coda READY.</label></div>
@@ -58,6 +68,45 @@
 <script>
 let queries=[], generated=[], manual=[];
 const $=id=>document.getElementById(id);
+
+async function loadCommunications(){
+  const box=$('communicationHistory');
+  try{
+    const r=await fetch('/api/communications',{cache:'no-store'}),d=await r.json();
+    const items=(d.items||[]).slice().reverse().slice(0,5);
+    if(!items.length){box.innerHTML='<span class="pill">Nessun comunicato ancora inviato</span>';return}
+    box.innerHTML=items.map(x=>{
+      const status=String(x.status||'N/D');
+      const cls=status==='PUBLISHED'?'good':(status==='ERROR'?'warn':'');
+      const links=(x.published_urls||[]).map(u=>'<a href="'+esc(u)+'" target="_blank">POST</a>').join(' · ');
+      return '<span class="pill '+cls+'">'+esc(x.id)+' · '+esc(status)+(links?' · '+links:'')+'</span>';
+    }).join('');
+  }catch(e){box.innerHTML='<span class="pill warn">Stato pubblicazione non disponibile</span>'}
+}
+
+async function publishCommunication(){
+  const input=$('communicationInput'),st=$('communicationStatus'),btn=$('publishCommunicationBtn');
+  const communication=String(input.value||'').trim();
+  st.className='status';st.textContent='';
+  if(!communication){st.className='status err';st.textContent='Inserisci il comunicato.';return}
+  btn.disabled=true;
+  try{
+    const r=await fetch('/api/communications',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({communication})
+    });
+    const d=await r.json();
+    if(!r.ok||!d.ok)throw new Error(d.error||'Avvio non riuscito');
+    input.value='';
+    st.className='status ok';
+    st.textContent='AVVIATO — '+d.id+'. Il sistema procede automaticamente fino alla pubblicazione.';
+    await loadCommunications();
+  }catch(e){
+    st.className='status err';
+    st.textContent='ERRORE — '+e.message;
+  }finally{btn.disabled=false}
+}
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
 function nextSchedule(){const d=new Date(),m=new Date(d);if(d.getHours()<10)m.setHours(10,30,0,0);else if(d.getHours()<18)m.setHours(18,30,0,0);else{m.setDate(m.getDate()+1);m.setHours(10,30,0,0)}const off=m.getTimezoneOffset();return new Date(m.getTime()-off*60000).toISOString().slice(0,16)}
 function qrow(id){return queries.find(q=>String(q.id||'')===String(id||''))||{}}
@@ -84,7 +133,8 @@ async function sendGenerated(){
 function addManual(list){for(const f of list){if(!f.type.startsWith('image/'))continue;manual.push({file:f,queryIndex:manual.length<queries.length?manual.length:0,caption:'',scheduled_at:nextSchedule()})}$('approveManual').checked=false;renderManual()}
 function renderManual(){$('manualCount').textContent=manual.length;if(!manual.length){$('manualGrid').innerHTML='';return}$('manualGrid').innerHTML=manual.map((x,i)=>{const u=URL.createObjectURL(x.file);return `<article class="card"><img class="thumb" src="${u}"><div class="card-body"><span class="tag">MANUALE ${i+1}</span><div class="small">${esc(x.file.name)}</div><label class="field">Query</label><select data-mq="${i}">${queries.map((q,qi)=>`<option value="${qi}" ${qi===x.queryIndex?'selected':''}>${esc(q.id)} — ${esc(q.query)}</option>`).join('')}</select><label class="field">Data/ora</label><input type="datetime-local" data-ms="${i}" value="${esc(x.scheduled_at)}"><label class="field">Caption</label><textarea data-mc="${i}">${esc(x.caption)}</textarea><button class="light" data-mr="${i}" style="margin-top:10px;width:100%">RIMUOVI</button></div></article>`}).join('');document.querySelectorAll('[data-mq]').forEach(el=>el.onchange=()=>{manual[+el.dataset.mq].queryIndex=+el.value;$('approveManual').checked=false});document.querySelectorAll('[data-ms]').forEach(el=>el.onchange=()=>{manual[+el.dataset.ms].scheduled_at=el.value;$('approveManual').checked=false});document.querySelectorAll('[data-mc]').forEach(el=>el.oninput=()=>{manual[+el.dataset.mc].caption=el.value;$('approveManual').checked=false});document.querySelectorAll('[data-mr]').forEach(el=>el.onclick=()=>{manual.splice(+el.dataset.mr,1);$('approveManual').checked=false;renderManual()})}
 async function sendManual(){const st=$('manualStatus');st.className='status';st.textContent='';if(!manual.length){st.className='status err';st.textContent='Carica almeno una grafica.';return}if(!$('approveManual').checked){st.className='status err';st.textContent='Spunta la conferma di approvazione.';return}const used=manual.map(x=>x.queryIndex);if(new Set(used).size!==used.length){st.className='status err';st.textContent='Due file sono associati alla stessa query.';return}const fd=new FormData(),meta=[];manual.forEach(x=>{const q=queries[x.queryIndex]||{};fd.append('files',x.file,x.file.name);meta.push({query_id:q.id||'',query:q.query||x.file.name,family:q.family||'property',caption:x.caption,scheduled_at:x.scheduled_at?new Date(x.scheduled_at).toISOString():''})});fd.append('metadata',JSON.stringify(meta));$('sendManualBtn').disabled=true;try{const r=await fetch('/api/ingest',{method:'POST',body:fd});const d=await r.json();if(!r.ok||!d.ok)throw new Error(d.error||'Errore');st.className='status ok';st.textContent=`OK — ${d.created.length} grafiche inviate a GitHub e messe in coda READY.`;manual=[];$('approveManual').checked=false;renderManual()}catch(e){st.className='status err';st.textContent=`ERRORE — ${e.message}`}finally{$('sendManualBtn').disabled=false}}
-$('refreshBtn').onclick=()=>loadAll().catch(e=>alert(e.message));$('sendGeneratedBtn').onclick=sendGenerated;$('sendManualBtn').onclick=sendManual;$('clearManualBtn').onclick=()=>{manual=[];$('approveManual').checked=false;renderManual()};$('fileInput').onchange=e=>addManual(e.target.files);['dragenter','dragover'].forEach(ev=>$('dropZone').addEventListener(ev,e=>{e.preventDefault()}));$('dropZone').addEventListener('drop',e=>{e.preventDefault();addManual(e.dataTransfer.files)});loadAll().catch(e=>{$('generatedGrid').innerHTML=`<div class="empty">Errore caricamento: ${esc(e.message)}</div>`});renderManual();
+$('publishCommunicationBtn').onclick=publishCommunication;
+$('refreshBtn').onclick=()=>loadAll().catch(e=>alert(e.message));$('sendGeneratedBtn').onclick=sendGenerated;$('sendManualBtn').onclick=sendManual;$('clearManualBtn').onclick=()=>{manual=[];$('approveManual').checked=false;renderManual()};$('fileInput').onchange=e=>addManual(e.target.files);['dragenter','dragover'].forEach(ev=>$('dropZone').addEventListener(ev,e=>{e.preventDefault()}));$('dropZone').addEventListener('drop',e=>{e.preventDefault();addManual(e.dataTransfer.files)});loadAll().catch(e=>{$('generatedGrid').innerHTML=`<div class="empty">Errore caricamento: ${esc(e.message)}</div>`});renderManual();loadCommunications();setInterval(loadCommunications,30000);
 </script>
 </body>
 </html>
