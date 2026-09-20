@@ -7,6 +7,8 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
+from PIL import Image
+
 ROOT = Path(__file__).resolve().parents[3]
 PUBLISHER = ROOT / "publisher"
 if str(PUBLISHER) not in sys.path:
@@ -41,7 +43,7 @@ class AutonomousPipelineTests(unittest.TestCase):
 
         with tempfile.TemporaryDirectory(dir=ROOT / "publisher" / "final_assets") as tmp:
             asset = Path(tmp) / "comm-e2e-test.png"
-            asset.write_bytes(b"F1" * 6000)
+            Image.new("RGB", (1080, 1350), (255, 255, 255)).save(asset, "PNG")
             rel = asset.relative_to(ROOT).as_posix()
             queue_path = Path(tmp) / "queue.json"
             job = {
