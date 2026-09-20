@@ -9,7 +9,7 @@ import subprocess
 import sys
 import time
 import urllib.request
-from datetime import datetime
+from datetime import datetime, timedelta
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
@@ -44,6 +44,7 @@ INBOX_HOST = "127.0.0.1"
 INBOX_PORT = int(os.getenv("F1_INBOX_PORT", "8877"))
 DEFAULT_BATCH_SIZE = int(os.getenv("F1_QUERY_BATCH_SIZE", "4"))
 MAX_ATTEMPTS = max(1, int(os.getenv("F1_MAX_ATTEMPTS", "3")))
+MAX_COMMUNICATION_ATTEMPTS = max(1, int(os.getenv("F1_COMM_MAX_ATTEMPTS", "5")))
 
 LOG_ROOT.mkdir(parents=True, exist_ok=True)
 RUN_LOG = LOG_ROOT / f"worker-{datetime.now(ROME):%Y%m%d-%H%M%S}.log"
@@ -82,8 +83,38 @@ def set_communication_status(communication_id: str | None, status: str, error: s
         item["status"] = status
         item["updated_at"] = datetime.now(ROME).isoformat(timespec="seconds")
         item["last_error"] = error
+        if status == "PROCESSING":
+            item["attempt_count"] = int(item.get("attempt_count") or 0) + 1
         _save_communications(payload)
         return
+
+
+def pending_communication_ids(limit: int) -> list[str]:
+    payload = _load_communications()
+    now = datetime.now(ROME)
+    result: list[str] = []
+    for item in payload.get("items") or []:
+        communication_id = str(item.get("id") or "")
+        if not communication_id:
+            continue
+        attempts = int(item.get("attempt_count") or 0)
+        if attempts >= MAX_COMMUNICATION_ATTEMPTS:
+            continue
+        status = str(item.get("status") or "NEW").upper()
+        eligible = status in {"NEW", "ERROR"}
+        if status == "PROCESSING":
+            try:
+                updated = datetime.fromisoformat(str(item.get("updated_at") or ""))
+                if updated.tzinfo is None:
+                    updated = updated.replace(tzinfo=ROME)
+                eligible = now - updated.astimezone(ROME) >= timedelta(minutes=20)
+            except Exception:
+                eligible = True
+        if eligible:
+            result.append(communication_id)
+        if len(result) >= max(1, int(limit)):
+            break
+    return result
 
 
 def load_queries(communication_id: str | None = None) -> list[dict]:
@@ -431,6 +462,10 @@ def run(batch_size: int, *, fresh_run: bool = False, communication_id: str | Non
         set_communication_status(communication_id, "ERROR", run.get("error") or final_status)
         return 2
 
+    if not communication_id:
+        log("Batch grafico statico completato: nessuna pubblicazione automatica; il flusso autonomo usa esclusivamente COMM-*.")
+        return 0
+
     try:
         ingest = auto_ingest_completed_run(run)
         run["autonomous_ingest"] = ingest
@@ -462,6 +497,19 @@ def main() -> int:
         if now.hour != 23:
             print(f"NOOP: ora locale {now:%H:%M}; esecuzione automatica ammessa alle 23:xx Europe/Rome")
             return 0
+        pending = pending_communication_ids(max(1, args.batch_size))
+        if not pending:
+            print("NOOP: nessun comunicato NEW/ERROR/stale da recuperare alle 23:00")
+            return 0
+        code = 0
+        for communication_id in pending:
+            try:
+                code = max(code, run(1, fresh_run=True, communication_id=communication_id))
+            except Exception as exc:
+                set_communication_status(communication_id, "ERROR", f"{type(exc).__name__}: {exc}")
+                log(f"RECOVERY FATAL {communication_id}: {type(exc).__name__}: {exc}")
+                code = max(code, 1)
+        return code
 
     try:
         return run(max(1, args.batch_size), fresh_run=args.fresh_run, communication_id=args.communication_id)
