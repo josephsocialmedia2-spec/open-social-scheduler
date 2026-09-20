@@ -43,7 +43,7 @@ class AutonomousPipelineTests(unittest.TestCase):
 
         with tempfile.TemporaryDirectory(dir=ROOT / "publisher" / "final_assets") as tmp:
             asset = Path(tmp) / "comm-e2e-test.png"
-            Image.new("RGB", (1080, 1350), (255, 255, 255)).save(asset, "PNG")
+            Image.new("RGB", (1080, 1350), (255, 255, 255)).save(asset, "PNG", compress_level=0)
             rel = asset.relative_to(ROOT).as_posix()
             queue_path = Path(tmp) / "queue.json"
             job = {
