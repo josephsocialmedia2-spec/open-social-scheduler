@@ -43,12 +43,13 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          HTTP=$(curl -sS --max-time 1250 -o /tmp/render.json -w '%{http_code}' \
+          HTTP=$(curl -sS -L --post301 --post302 --post303 --max-time 1250 -D /tmp/render.headers -o /tmp/render.json -w '%{http_code}' \
             -F 'photo=@/tmp/avatar.jpg;type=image/jpeg' \
             -F 'script=Ciao, questo è un test automatico del sistema avatar e pubblicazione social.' \
             -F 'test_mode=true' \
             "$UGC_URL/api/render")
           echo "HTTP=$HTTP"
+          cat /tmp/render.headers
           cat /tmp/render.json
           test "$HTTP" = "200"
           python - <<'PY' >> "$GITHUB_OUTPUT"
