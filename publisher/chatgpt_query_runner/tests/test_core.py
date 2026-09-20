@@ -61,6 +61,29 @@ class CoreTests(unittest.TestCase):
             PREFIX + "lavoro agenzia immobiliare Susa prima esperienza.",
         )
 
+    def test_communication_job_preserves_autonomous_metadata(self):
+        state = blank_state()
+        rows = [{
+            "id": "COMM-TEST",
+            "query": "Apertura straordinaria domenica",
+            "prompt": "PROMPT PERSONALIZZATO",
+            "communication": "Apertura straordinaria domenica",
+            "caption": "Apertura straordinaria domenica",
+            "client": "F1 Immobiliare",
+            "scope": "network",
+            "platforms": ["facebook", "instagram"],
+            "scheduled_at": "2026-09-20T12:00:00+02:00",
+            "source": "client-communication",
+        }]
+        run = create_run(state, rows, 1)
+        job = run["jobs"][0]
+        self.assertEqual(job["prompt"], "PROMPT PERSONALIZZATO")
+        self.assertEqual(job["communication"], "Apertura straordinaria domenica")
+        self.assertEqual(job["caption"], "Apertura straordinaria domenica")
+        self.assertEqual(job["scope"], "network")
+        self.assertEqual(job["platforms"], ["facebook", "instagram"])
+        self.assertEqual(job["source"], "client-communication")
+
     def test_fresh_run_preserves_previous_active_run_in_history(self):
         state = blank_state()
         old_run = create_run(state, QUERIES, 4)
