@@ -258,10 +258,22 @@ def commit_prepared(prepared: list[dict], queue: dict) -> list[dict]:
     commit = run_git("commit", "-m", f"Ingest {len(created)} ChatGPT final assets", check=False)
     if commit.returncode != 0:
         raise RuntimeError(f"Commit Git fallito: {commit.stderr.strip() or commit.stdout.strip()}")
-    push = run_git("push", "origin", "main", check=False)
-    if push.returncode != 0:
-        raise RuntimeError(f"File salvati e commit creato, ma push GitHub fallito: {push.stderr.strip()}")
-    return created
+    last_push_error = ""
+    for attempt in range(1, 4):
+        push = run_git("push", "origin", "main", check=False)
+        if push.returncode == 0:
+            return created
+        last_push_error = push.stderr.strip() or push.stdout.strip()
+        if attempt >= 3:
+            break
+        pull = run_git("pull", "--rebase", "origin", "main", check=False)
+        if pull.returncode != 0:
+            run_git("rebase", "--abort", check=False)
+            raise RuntimeError(
+                "Push GitHub concorrente e rebase automatico non riuscito: "
+                + (pull.stderr.strip() or pull.stdout.strip())
+            )
+    raise RuntimeError(f"File salvati e commit creato, ma push GitHub fallito dopo 3 tentativi: {last_push_error}")
 
 
 def _load_communications() -> dict:
