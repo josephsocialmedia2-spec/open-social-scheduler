@@ -138,8 +138,20 @@ jobs:
             exit 0
           fi
           git commit -m 'Persist F1 publication state'
-          git pull --rebase origin main
-          git push origin HEAD:main
+          for ATTEMPT in 1 2 3; do
+            if ! git pull --rebase origin main; then
+              git rebase --abort || true
+              echo "Automatic rebase failed on attempt $ATTEMPT."
+              exit 1
+            fi
+            if git push origin HEAD:main; then
+              echo "Publication state pushed on attempt $ATTEMPT."
+              exit 0
+            fi
+            echo "Concurrent main update detected; retrying ($ATTEMPT/3)."
+          done
+          echo 'Unable to persist publication state after 3 push attempts.'
+          exit 1
 
       - name: Status
         if: always()
