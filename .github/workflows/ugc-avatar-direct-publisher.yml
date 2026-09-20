@@ -1,0 +1,86 @@
+name: UGC Avatar Direct API Consumer
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Validate UGC outbox and social credentials without publishing'
+        required: true
+        default: true
+        type: boolean
+      max_jobs:
+        description: 'Maximum UGC jobs to process'
+        required: true
+        default: '10'
+        type: string
+  schedule:
+    - cron: '7,22,37,52 * * * *'
+  push:
+    paths:
+      - 'publisher/ugc_avatar_direct_bridge.py'
+      - '.github/workflows/ugc-avatar-direct-publisher.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ugc-avatar-direct-api
+  cancel-in-progress: false
+
+jobs:
+  consume:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    env:
+      UGC_AVATAR_MODAL_URL: https://joseph-socialmedia2--ugc-avatar-studio-web.modal.run
+      GITHUB_TOKEN: ${{ github.token }}
+      META_GRAPH_VERSION: ${{ vars.META_GRAPH_VERSION || 'v23.0' }}
+      LINKEDIN_VERSION: ${{ vars.LINKEDIN_VERSION || '202604' }}
+      TIKTOK_PRIVACY_LEVEL: ${{ vars.TIKTOK_PRIVACY_LEVEL || 'SELF_ONLY' }}
+      YOUTUBE_PRIVACY_STATUS: ${{ vars.YOUTUBE_PRIVACY_STATUS || 'private' }}
+      YOUTUBE_CATEGORY_ID: ${{ vars.YOUTUBE_CATEGORY_ID || '22' }}
+      F1_FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.F1_FACEBOOK_PAGE_ACCESS_TOKEN }}
+      F1_INSTAGRAM_ACCESS_TOKEN: ${{ secrets.F1_INSTAGRAM_ACCESS_TOKEN }}
+      F1_INSTAGRAM_USER_ID: ${{ secrets.F1_INSTAGRAM_USER_ID }}
+      F1_TIKTOK_ACCESS_TOKEN: ${{ secrets.F1_TIKTOK_ACCESS_TOKEN }}
+      F1_LINKEDIN_ACCESS_TOKEN: ${{ secrets.F1_LINKEDIN_ACCESS_TOKEN }}
+      F1_LINKEDIN_AUTHOR_URN: ${{ secrets.F1_LINKEDIN_AUTHOR_URN }}
+      F1_YOUTUBE_CLIENT_ID: ${{ secrets.F1_YOUTUBE_CLIENT_ID }}
+      F1_YOUTUBE_CLIENT_SECRET: ${{ secrets.F1_YOUTUBE_CLIENT_SECRET }}
+      F1_YOUTUBE_REFRESH_TOKEN: ${{ secrets.F1_YOUTUBE_REFRESH_TOKEN }}
+      F1_PINTEREST_ACCESS_TOKEN: ${{ secrets.F1_PINTEREST_ACCESS_TOKEN }}
+      F1_PINTEREST_BOARD_ID: ${{ secrets.F1_PINTEREST_BOARD_ID }}
+      F1_PINTEREST_LINK: ${{ vars.F1_PINTEREST_LINK || 'https://f1immobiliare.com/' }}
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: pip install -r publisher/requirements.txt
+      - name: Compile bridge
+        run: python -m py_compile publisher/ugc_avatar_direct_bridge.py
+      - name: Verify Modal endpoint
+        run: |
+          python - <<'PY'
+          import json, os, urllib.request
+          base=os.environ["UGC_AVATAR_MODAL_URL"].rstrip("/")
+          with urllib.request.urlopen(base+"/health",timeout=30) as r:
+              data=json.load(r)
+              print(json.dumps(data,ensure_ascii=False))
+              assert r.status==200 and data.get("status")=="ok"
+          PY
+      - name: Consume UGC outbox
+        run: |
+          DRY="false"
+          MAX="10"
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            DRY="${{ inputs.dry_run }}"
+            MAX="${{ inputs.max_jobs }}"
+          elif [ "${{ github.event_name }}" = "push" ]; then
+            DRY="true"
+          fi
+          ARGS=(--max-jobs "$MAX")
+          if [ "$DRY" = "true" ]; then ARGS+=(--dry-run); fi
+          python publisher/ugc_avatar_direct_bridge.py "${ARGS[@]}"
