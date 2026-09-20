@@ -5,6 +5,8 @@ import json
 import os
 import re
 import subprocess
+import sys
+import uuid
 from datetime import datetime, timedelta
 from pathlib import Path
 from zoneinfo import ZoneInfo
@@ -18,6 +20,8 @@ GENERATED_ROOT = ROOT / "publisher" / "final_assets" / "chatgpt_generated"
 QUEUE_PATH = ROOT / "publisher" / "final_content_queue.json"
 QUERY_FILE = ROOT / "publisher" / "github_graphics" / "queries.json"
 LAST_RUN_FILE = ROOT / "publisher" / "chatgpt_query_runner" / "last_run.json"
+COMMUNICATIONS_FILE = ROOT / "publisher" / "chatgpt_query_runner" / "communications.local.json"
+WORKER_FILE = ROOT / "publisher" / "chatgpt_query_runner" / "worker.py"
 GPT_URL = "https://chatgpt.com/g/g-6a9c210485488191b072eb694c2f114c-generatore-grafica-f1"
 ROME = ZoneInfo("Europe/Rome")
 
@@ -169,6 +173,11 @@ def _prepare_records(items: list[dict], queue: dict) -> list[dict]:
         family = str(meta.get("family") or row.get("family") or "property").strip()
         caption = str(meta.get("caption") or "").strip() or auto_caption(query, family)
         scheduled_at = str(meta.get("scheduled_at") or "").strip() or next_slot()
+        territory = str(meta.get("territory") or row.get("commune") or "").strip()
+        scope = str(meta.get("scope") or ("territory" if territory else "network")).strip()
+        platforms = [str(x).lower() for x in (meta.get("platforms") or ["facebook", "instagram"])]
+        client = str(meta.get("client") or "F1 Immobiliare").strip()
+        communication_id = str(meta.get("communication_id") or "").strip()
 
         ext = Path(original_name).suffix.lower()
         if ext not in {".png", ".jpg", ".jpeg", ".webp"}:
@@ -186,6 +195,11 @@ def _prepare_records(items: list[dict], queue: dict) -> list[dict]:
                 "scheduled_at": scheduled_at,
                 "source": str(meta.get("source") or "manual-f1-custom-gpt"),
                 "generator_path": str(meta.get("generator_path") or ""),
+                "territory": territory,
+                "scope": scope,
+                "platforms": platforms,
+                "client": client,
+                "communication_id": communication_id,
             }
         )
         seen_hashes.add(digest.lower())
@@ -224,6 +238,14 @@ def commit_prepared(prepared: list[dict], queue: dict) -> list[dict]:
             "query_id": row["query_id"],
             "query": row["query"],
             "family": row["family"],
+            "client": row["client"],
+            "communication_id": row["communication_id"],
+            "platforms": row["platforms"],
+            "scope": row["scope"],
+            "territory": row["territory"],
+            "approval_required": False,
+            "manual_approval_required": False,
+            "autonomous_publish": True,
         }
         queue.setdefault("jobs", []).append(job)
         created.append(job)
@@ -240,6 +262,105 @@ def commit_prepared(prepared: list[dict], queue: dict) -> list[dict]:
     if push.returncode != 0:
         raise RuntimeError(f"File salvati e commit creato, ma push GitHub fallito: {push.stderr.strip()}")
     return created
+
+
+def _load_communications() -> dict:
+    if not COMMUNICATIONS_FILE.exists():
+        return {"version": 1, "items": []}
+    try:
+        payload = json.loads(COMMUNICATIONS_FILE.read_text(encoding="utf-8"))
+    except Exception:
+        payload = {"version": 1, "items": []}
+    payload.setdefault("version", 1)
+    payload.setdefault("items", [])
+    return payload
+
+
+def _save_communications(payload: dict) -> None:
+    COMMUNICATIONS_FILE.parent.mkdir(parents=True, exist_ok=True)
+    tmp = COMMUNICATIONS_FILE.with_suffix(".json.tmp")
+    tmp.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    tmp.replace(COMMUNICATIONS_FILE)
+
+
+def _communication_prompt(text: str) -> str:
+    clean = re.sub(r"\s+", " ", text).strip()
+    return (
+        "Genera una grafica social professionale e ultrarealistica usando i modelli che abbiamo già caricato. "
+        "Rappresenta fedelmente questo comunicato per la clientela, senza inventare prezzi, date, indirizzi, "
+        "promozioni, disponibilità, contatti o caratteristiche non presenti nel testo. "
+        f"Comunicato: {clean}"
+    )
+
+
+def _launch_communication_worker(communication_id: str) -> None:
+    env = os.environ.copy()
+    env["F1_INBOX_PORT"] = str(int(os.getenv("F1_INBOX_PORT", "8877")))
+    kwargs: dict = {
+        "cwd": ROOT,
+        "env": env,
+        "stdout": subprocess.DEVNULL,
+        "stderr": subprocess.DEVNULL,
+    }
+    if os.name == "nt":
+        kwargs["creationflags"] = subprocess.DETACHED_PROCESS | subprocess.CREATE_NEW_PROCESS_GROUP
+    subprocess.Popen(
+        [sys.executable, str(WORKER_FILE), "--communication-id", communication_id, "--batch-size", "1", "--fresh-run"],
+        **kwargs,
+    )
+
+
+@app.get("/api/communications")
+def api_communications():
+    payload = _load_communications()
+    return jsonify({"items": payload.get("items") or []})
+
+
+@app.post("/api/communications")
+def create_communication():
+    body = request.get_json(silent=True) or {}
+    communication = re.sub(r"\s+", " ", str(body.get("communication") or "")).strip()
+    if not communication:
+        return jsonify({"ok": False, "error": "Inserisci il comunicato"}), 400
+    now = datetime.now(ROME)
+    communication_id = f"COMM-{now:%Y%m%d-%H%M%S}-{uuid.uuid4().hex[:8]}"
+    territory = str(body.get("territory") or "").strip()
+    platforms = [str(x).lower() for x in (body.get("platforms") or ["facebook", "instagram"])]
+    platforms = [x for x in platforms if x in {"facebook", "instagram", "linkedin"}]
+    if not platforms:
+        platforms = ["facebook", "instagram"]
+    item = {
+        "id": communication_id,
+        "client": str(body.get("client") or "F1 Immobiliare").strip() or "F1 Immobiliare",
+        "communication": communication,
+        "query": communication,
+        "prompt": _communication_prompt(communication),
+        "caption": communication,
+        "territory": territory,
+        "scope": "territory" if territory else "network",
+        "platforms": platforms,
+        "scheduled_at": str(body.get("scheduled_at") or now.isoformat(timespec="seconds")),
+        "source": "client-communication",
+        "status": "NEW",
+        "created_at": now.isoformat(timespec="seconds"),
+        "updated_at": now.isoformat(timespec="seconds"),
+        "last_error": None,
+    }
+    payload = _load_communications()
+    payload.setdefault("items", []).append(item)
+    _save_communications(payload)
+    try:
+        _launch_communication_worker(communication_id)
+        item["status"] = "PROCESSING"
+        item["updated_at"] = datetime.now(ROME).isoformat(timespec="seconds")
+        _save_communications(payload)
+    except Exception as exc:
+        item["status"] = "ERROR"
+        item["last_error"] = str(exc)
+        item["updated_at"] = datetime.now(ROME).isoformat(timespec="seconds")
+        _save_communications(payload)
+        return jsonify({"ok": False, "id": communication_id, "error": str(exc)}), 500
+    return jsonify({"ok": True, "id": communication_id, "status": item["status"]})
 
 
 @app.get("/")
@@ -305,6 +426,11 @@ def ingest_generated():
                 "family": item.get("family"),
                 "caption": item.get("caption"),
                 "scheduled_at": item.get("scheduled_at"),
+                "territory": item.get("territory"),
+                "scope": item.get("scope"),
+                "platforms": item.get("platforms"),
+                "client": item.get("client"),
+                "communication_id": item.get("communication_id"),
                 "source": "verified-f1-custom-gpt",
                 "generator_path": path.relative_to(ROOT).as_posix(),
             }
