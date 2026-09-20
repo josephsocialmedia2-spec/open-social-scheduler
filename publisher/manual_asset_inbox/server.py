@@ -295,6 +295,39 @@ def _save_communications(payload: dict) -> None:
     tmp.replace(COMMUNICATIONS_FILE)
 
 
+def _communication_hash(
+    communication: str,
+    client: str,
+    territory: str,
+    platforms: list[str],
+) -> str:
+    payload = "\n".join([
+        re.sub(r"\\s+", " ", communication).strip().casefold(),
+        client.strip().casefold(),
+        territory.strip().casefold(),
+        ",".join(sorted(set(platforms))),
+    ])
+    return hashlib.sha256(payload.encode("utf-8")).hexdigest()
+
+
+def _recent_duplicate(payload: dict, digest: str, now: datetime, window_minutes: int = 15) -> dict | None:
+    cutoff = now - timedelta(minutes=max(1, window_minutes))
+    for item in reversed(payload.get("items") or []):
+        if str(item.get("communication_hash") or "") != digest:
+            continue
+        try:
+            created = datetime.fromisoformat(str(item.get("created_at") or ""))
+            if created.tzinfo is None:
+                created = created.replace(tzinfo=ROME)
+        except Exception:
+            continue
+        if created.astimezone(ROME) < cutoff:
+            continue
+        if str(item.get("status") or "").upper() not in {"FAILED", "CANCELLED"}:
+            return item
+    return None
+
+
 def _communication_prompt(text: str) -> str:
     clean = re.sub(r"\s+", " ", text).strip()
     return (
@@ -371,16 +404,29 @@ def create_communication():
     if not communication:
         return jsonify({"ok": False, "error": "Inserisci il comunicato"}), 400
     now = datetime.now(ROME)
-    communication_id = f"COMM-{now:%Y%m%d-%H%M%S}-{uuid.uuid4().hex[:8]}"
     territory = str(body.get("territory") or "").strip()
     platforms = [str(x).lower() for x in (body.get("platforms") or ["facebook", "instagram"])]
     platforms = [x for x in platforms if x in {"facebook", "instagram", "linkedin"}]
     if not platforms:
         platforms = ["facebook", "instagram"]
+    client = str(body.get("client") or "F1 Immobiliare").strip() or "F1 Immobiliare"
+    digest = _communication_hash(communication, client, territory, platforms)
+    payload = _load_communications()
+    duplicate = _recent_duplicate(payload, digest, now)
+    if duplicate:
+        return jsonify({
+            "ok": True,
+            "id": duplicate.get("id"),
+            "status": duplicate.get("status"),
+            "duplicate": True,
+            "message": "Comunicato identico già acquisito recentemente: riuso il job esistente.",
+        })
+    communication_id = f"COMM-{now:%Y%m%d-%H%M%S}-{uuid.uuid4().hex[:8]}"
     item = {
         "id": communication_id,
-        "client": str(body.get("client") or "F1 Immobiliare").strip() or "F1 Immobiliare",
+        "client": client,
         "communication": communication,
+        "communication_hash": digest,
         "query": communication,
         "prompt": _communication_prompt(communication),
         "caption": communication,
@@ -395,7 +441,6 @@ def create_communication():
         "updated_at": now.isoformat(timespec="seconds"),
         "last_error": None,
     }
-    payload = _load_communications()
     payload.setdefault("items", []).append(item)
     item["status"] = "PROCESSING"
     item["updated_at"] = datetime.now(ROME).isoformat(timespec="seconds")
