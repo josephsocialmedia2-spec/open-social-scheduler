@@ -108,13 +108,22 @@ def save_state(path: Path, state: dict[str, Any]) -> None:
 
 def _new_job(row: dict[str, Any], query_index: int, sequence: int) -> dict[str, Any]:
     query = normalize_query(row.get("query") or "")
+    custom_prompt = str(row.get("prompt") or "").strip()
     stamp = now_iso()
     return {
         "sequence": sequence,
         "query_index": query_index,
         "query_id": str(row.get("id") or f"QUERY-{query_index + 1:03d}"),
         "query": query,
-        "prompt": build_prompt(query),
+        "prompt": custom_prompt or build_prompt(query),
+        "communication": str(row.get("communication") or "").strip(),
+        "client": str(row.get("client") or "").strip(),
+        "territory": str(row.get("territory") or row.get("commune") or "").strip(),
+        "scope": str(row.get("scope") or "").strip(),
+        "caption": str(row.get("caption") or "").strip(),
+        "scheduled_at": str(row.get("scheduled_at") or "").strip(),
+        "platforms": list(row.get("platforms") or []),
+        "source": str(row.get("source") or "").strip(),
         "status": "QUERY_CARICATA",
         "retry_count": 0,
         "submitted_at": None,
