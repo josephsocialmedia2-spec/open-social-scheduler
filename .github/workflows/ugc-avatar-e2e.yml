@@ -1,0 +1,118 @@
+name: UGC Avatar End-to-End Safe Test
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/ugc-avatar-e2e.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  e2e-safe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    env:
+      UGC_URL: https://joseph-socialmedia2--ugc-avatar-studio-web.modal.run
+      BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+      CLOUDINARY_URL: ${{ secrets.CLOUDINARY_URL }}
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      - name: Install bridge dependencies and ffmpeg
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+          python -m pip install --disable-pip-version-check -r publisher/requirements.txt
+
+      - name: Decode authorized presenter image
+        run: |
+          base64 -d publisher/assets/francesca_presenter.jpg.b64 > /tmp/avatar.jpg
+          test -s /tmp/avatar.jpg
+          file /tmp/avatar.jpg
+
+      - name: Generate safe Modal test job
+        id: render
+        shell: bash
+        run: |
+          set -euo pipefail
+          HTTP=$(curl -sS --max-time 1250 -o /tmp/render.json -w '%{http_code}' \
+            -F 'photo=@/tmp/avatar.jpg;type=image/jpeg' \
+            -F 'script=Ciao, questo è un test automatico del sistema avatar e pubblicazione social.' \
+            -F 'test_mode=true' \
+            "$UGC_URL/api/render")
+          echo "HTTP=$HTTP"
+          cat /tmp/render.json
+          test "$HTTP" = "200"
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import json
+          data=json.load(open('/tmp/render.json',encoding='utf-8'))
+          assert data.get('state') == 'ready_for_buffer', data
+          print('job_id='+data['job_id'])
+          print('video_url='+data['video_url'])
+          PY
+
+      - name: Verify generated MP4
+        shell: bash
+        env:
+          JOB_ID: ${{ steps.render.outputs.job_id }}
+          VIDEO_URL: ${{ steps.render.outputs.video_url }}
+        run: |
+          set -euo pipefail
+          case "$VIDEO_URL" in
+            http*) URL="$VIDEO_URL" ;;
+            *) URL="${UGC_URL%/}/$VIDEO_URL" ;;
+          esac
+          curl -fsSL --max-time 300 "$URL" -o /tmp/ugc.mp4
+          test "$(stat -c%s /tmp/ugc.mp4)" -gt 15000
+          ffprobe -v error -show_streams -show_format -of json /tmp/ugc.mp4 > /tmp/probe.json
+          python - <<'PY'
+          import json
+          d=json.load(open('/tmp/probe.json'))
+          streams=d.get('streams',[])
+          v=next((x for x in streams if x.get('codec_type')=='video'),None)
+          a=next((x for x in streams if x.get('codec_type')=='audio'),None)
+          assert v and a, 'missing audio/video stream'
+          assert int(v.get('width',0))==1080 and int(v.get('height',0))==1920, v
+          assert float(d.get('format',{}).get('duration') or 0)>0
+          print('MP4_OK 1080x1920 AUDIO_OK')
+          PY
+
+      - name: Verify test_mode in Modal outbox
+        shell: bash
+        env:
+          JOB_ID: ${{ steps.render.outputs.job_id }}
+        run: |
+          curl -fsSL "$UGC_URL/api/outbox" -o /tmp/outbox.json
+          python - <<'PY'
+          import json, os
+          d=json.load(open('/tmp/outbox.json'))
+          row=next(x for x in d.get('jobs',[]) if x.get('job_id')==os.environ['JOB_ID'])
+          assert row.get('test_mode') is True, row
+          print('OUTBOX_TEST_MODE_OK')
+          PY
+
+      - name: Validate Modal to Cloudinary to Buffer handoff without publishing
+        shell: bash
+        env:
+          JOB_ID: ${{ steps.render.outputs.job_id }}
+        run: |
+          set -euo pipefail
+          test -n "$BUFFER_API_KEY"
+          test -n "$CLOUDINARY_URL"
+          python publisher/ugc_avatar_buffer_bridge.py \
+            --source-url "$UGC_URL" \
+            --job-id "$JOB_ID" \
+            --dry-run | tee /tmp/bridge.json
+          grep -q 'ugc_buffer_dry_run_ok' /tmp/bridge.json
+          grep -q '"facebook"' /tmp/bridge.json
+          grep -q '"instagram"' /tmp/bridge.json
+          grep -q '"linkedin"' /tmp/bridge.json
+          echo "E2E_SAFE_OK"
