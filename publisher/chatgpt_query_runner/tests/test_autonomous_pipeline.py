@@ -122,6 +122,10 @@ class AutonomousPipelineTests(unittest.TestCase):
 
             self.assertEqual(code, 0)
             self.assertEqual(job["status"], "PUBLISHED")
+            self.assertEqual(job["attempt_count"], 1)
+            self.assertEqual(job["last_step"], "PUBLISHED")
+            self.assertIsNone(job["last_error"])
+            self.assertTrue(str(job.get("updated_at") or ""))
             self.assertEqual(created_services, ["facebook", "instagram"])
             self.assertEqual(
                 set(job["buffer_scheduled_platforms"]),
