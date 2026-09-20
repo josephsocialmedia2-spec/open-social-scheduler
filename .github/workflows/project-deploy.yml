@@ -99,16 +99,23 @@ jobs:
               'publisher/f1_graphics_automation/APRI_RACCOLTA_GRAFICHE.bat',
               'publisher/manual_asset_inbox/index.html',
               'publisher/manual_asset_inbox/morning_notice.html',
-              '.github/workflows/final-assets-autopublish.yml',
+              '.github/workflows/f1-final-assets-publisher.yml',
           ]:
               assert Path(path).exists(), path
           final_publisher = Path('publisher/final_asset_publisher.py').read_text(encoding='utf-8')
           buffer_base = Path('publisher/buffer_twice_daily.py').read_text(encoding='utf-8')
           assert 'communications-only' in final_publisher
+          assert 'exclude-communications' in final_publisher
           assert 'refresh_publication_status' in final_publisher
           assert '"PUBLISHED"' in final_publisher
           assert 'get_buffer_post' in buffer_base
           assert 'post_type = "reel" if is_reel else "post"' in buffer_base
+          workflow = Path('.github/workflows/f1-final-assets-publisher.yml').read_text(encoding='utf-8')
+          prepare = Path('publisher/prepare_villar_plan.py').read_text(encoding='utf-8')
+          generator = Path('publisher/generate_next_villar_asset.py').read_text(encoding='utf-8')
+          assert '--communications-only' in workflow and '--verify' in workflow
+          assert 'extras=' in prepare and 'preserved external jobs' in prepare
+          assert "startswith('VD-')" in generator
           print('F1 autonomous publication contract OK')
           PY
 
