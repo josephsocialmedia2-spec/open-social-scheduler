@@ -378,18 +378,18 @@ def create_communication():
         "scheduled_at": str(body.get("scheduled_at") or now.isoformat(timespec="seconds")),
         "source": "client-communication",
         "status": "NEW",
+        "attempt_count": 0,
         "created_at": now.isoformat(timespec="seconds"),
         "updated_at": now.isoformat(timespec="seconds"),
         "last_error": None,
     }
     payload = _load_communications()
     payload.setdefault("items", []).append(item)
+    item["status"] = "PROCESSING"
+    item["updated_at"] = datetime.now(ROME).isoformat(timespec="seconds")
     _save_communications(payload)
     try:
         _launch_communication_worker(communication_id)
-        item["status"] = "PROCESSING"
-        item["updated_at"] = datetime.now(ROME).isoformat(timespec="seconds")
-        _save_communications(payload)
     except Exception as exc:
         item["status"] = "ERROR"
         item["last_error"] = str(exc)
