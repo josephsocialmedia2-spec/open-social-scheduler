@@ -17,6 +17,7 @@ on:
     paths:
       - '.github/workflows/f1-final-assets-publisher.yml'
       - 'publisher/final_asset_publisher.py'
+      - 'publisher/persist_final_queue_github.py'
       - 'publisher/prepare_villar_plan.py'
       - 'publisher/generate_next_villar_asset.py'
       - 'publisher/territory_router.py'
@@ -47,6 +48,10 @@ jobs:
         with:
           ref: main
           fetch-depth: 0
+
+      - name: Snapshot queue before publishing
+        shell: bash
+        run: cp publisher/final_content_queue.json /tmp/f1-final-content-queue-before.json
 
       - name: Python 3.12
         uses: actions/setup-python@v6
@@ -125,33 +130,16 @@ jobs:
               --max-jobs 25
           fi
 
-      - name: Persist final asset queue state
+      - name: Persist final asset queue state atomically
         if: always()
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         shell: bash
         run: |
           set -euo pipefail
-          git config user.name 'f1-final-assets-publisher'
-          git config user.email 'f1-final-assets-publisher@users.noreply.github.com'
-          git add publisher/final_content_queue.json
-          if git diff --cached --quiet; then
-            echo 'No final queue state changes to persist.'
-            exit 0
-          fi
-          git commit -m 'Persist F1 publication state'
-          for ATTEMPT in 1 2 3; do
-            if ! git pull --rebase origin main; then
-              git rebase --abort || true
-              echo "Automatic rebase failed on attempt $ATTEMPT."
-              exit 1
-            fi
-            if git push origin HEAD:main; then
-              echo "Publication state pushed on attempt $ATTEMPT."
-              exit 0
-            fi
-            echo "Concurrent main update detected; retrying ($ATTEMPT/3)."
-          done
-          echo 'Unable to persist publication state after 3 push attempts.'
-          exit 1
+          python publisher/persist_final_queue_github.py \
+            --before /tmp/f1-final-content-queue-before.json \
+            --after publisher/final_content_queue.json
 
       - name: Status
         if: always()
