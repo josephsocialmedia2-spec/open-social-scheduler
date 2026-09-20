@@ -1,0 +1,102 @@
+name: UGC Avatar Buffer Publisher
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/ugc-avatar-buffer-publisher.yml'
+      - 'publisher/ugc_avatar_buffer_bridge.py'
+      - 'publisher/ugc_avatar_source.json'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Validate Modal handoff, Cloudinary and Buffer without creating posts'
+        required: true
+        default: true
+        type: boolean
+  schedule:
+    - cron: '*/15 * * * *'
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/ugc-avatar-buffer-publisher.yml'
+      - 'publisher/ugc_avatar_buffer_bridge.py'
+      - 'publisher/ugc_avatar_source.json'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ugc-avatar-buffer-publisher
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    env:
+      BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+      CLOUDINARY_URL: ${{ secrets.CLOUDINARY_URL }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Python 3.12
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: publisher/requirements.txt
+
+      - name: Install dependencies
+        run: python -m pip install --disable-pip-version-check -r publisher/requirements.txt
+
+      - name: Validate bridge
+        run: python -m py_compile publisher/ugc_avatar_buffer_bridge.py publisher/buffer_twice_daily.py
+
+      - name: Resolve source configuration
+        id: source
+        shell: bash
+        run: |
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import json
+          cfg=json.load(open('publisher/ugc_avatar_source.json',encoding='utf-8'))
+          print("base_url="+str(cfg.get("base_url") or "").strip())
+          print("live_enabled="+("true" if cfg.get("live_enabled") else "false"))
+          PY
+
+      - name: Process Modal UGC outbox
+        if: steps.source.outputs.base_url != ''
+        shell: bash
+        env:
+          SOURCE_URL: ${{ steps.source.outputs.base_url }}
+          LIVE_ENABLED: ${{ steps.source.outputs.live_enabled }}
+        run: |
+          set -euo pipefail
+          DRY=true
+          if [ "${{ github.event_name }}" = "schedule" ] && [ "$LIVE_ENABLED" = "true" ]; then
+            DRY=false
+          elif [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.dry_run }}" = "false" ] && [ "$LIVE_ENABLED" = "true" ]; then
+            DRY=false
+          fi
+          ARGS=(--source-url "$SOURCE_URL")
+          if [ "$DRY" = "true" ]; then ARGS+=(--dry-run); fi
+          python publisher/ugc_avatar_buffer_bridge.py "${ARGS[@]}"
+
+      - name: No source configured
+        if: steps.source.outputs.base_url == ''
+        run: echo "UGC_MODAL_URL_NOT_CONFIGURED"
+
+      - name: Persist UGC publication state
+        if: always()
+        shell: bash
+        run: |
+          if git diff --quiet -- publisher/queue.json; then exit 0; fi
+          git config user.name 'ugc-avatar-buffer-publisher'
+          git config user.email 'ugc-avatar-buffer-publisher@users.noreply.github.com'
+          git add publisher/queue.json
+          git commit -m 'Persist UGC Avatar Buffer publication state'
+          git pull --rebase origin main
+          git push origin HEAD:main
