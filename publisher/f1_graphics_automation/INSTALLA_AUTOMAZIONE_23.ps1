@@ -53,7 +53,7 @@ $NightSettings = New-ScheduledTaskSettingsSet `
 Write-Host 'Registrazione F1_Grafiche_23...'
 Register-ScheduledTask `
     -TaskName 'F1_Grafiche_23' `
-    -Description 'F1 Grafiche: usa il Chrome normale dell utente e produce fino a 4 grafiche verificate ogni giorno alle 23:00.' `
+    -Description 'F1 Autopublisher: alle 23:00 recupera fino a 4 comunicati rimasti incompleti usando il Chrome normale dell utente.' `
     -Action $NightAction `
     -Trigger $NightTrigger `
     -Principal $Principal `
@@ -71,7 +71,7 @@ $InboxSettings = New-ScheduledTaskSettingsSet `
 
 Register-ScheduledTask `
     -TaskName 'F1_Inbox_Logon' `
-    -Description 'Mantiene disponibile F1 Raccolta Grafiche su 127.0.0.1:8877.' `
+    -Description 'Mantiene disponibile F1 Autopublisher su 127.0.0.1:8877.' `
     -Action $InboxAction `
     -Trigger $InboxTrigger `
     -Principal $Principal `
@@ -120,14 +120,14 @@ function New-F1Shortcut {
 New-F1Shortcut -Name 'F1 GRAFICHE.lnk' -Target $ManualBat -Description 'Avvia F1 Grafiche: Chrome normale + 4 query verificate' -Icon "$env:SystemRoot\System32\shell32.dll,167"
 New-F1Shortcut -Name 'F1 - Prova 1 Query.lnk' -Target $Test1Bat -Description 'Test end-to-end reale con una query'
 New-F1Shortcut -Name 'F1 - Prova 4 Query.lnk' -Target $Test4Bat -Description 'Test end-to-end reale con quattro query'
-New-F1Shortcut -Name 'F1 - Raccolta Grafiche.lnk' -Target $OpenBat -Description 'Apri F1 Raccolta Grafiche'
+New-F1Shortcut -Name 'F1 - Raccolta Grafiche.lnk' -Target $OpenBat -Description 'Apri F1 Autopublisher - inserimento comunicati'
 
 Write-Host ''
 Write-Host 'INSTALLAZIONE VERIFICATA.' -ForegroundColor Green
 Write-Host 'Desktop: F1 GRAFICHE, Prova 1 Query, Prova 4 Query, Raccolta Grafiche' -ForegroundColor White
-Write-Host 'F1_Grafiche_23: ogni giorno alle 23:00, sessione Windows interattiva' -ForegroundColor White
+Write-Host 'F1_Grafiche_23: ogni giorno alle 23:00 recupera comunicati incompleti, sessione Windows interattiva' -ForegroundColor White
 Write-Host "Prossima esecuzione Task Scheduler: $($TaskInfo.NextRunTime)" -ForegroundColor Cyan
-Write-Host 'Raccolta: http://127.0.0.1:8877/' -ForegroundColor Cyan
+Write-Host 'Autopublisher: http://127.0.0.1:8877/' -ForegroundColor Cyan
 Write-Host ''
 Write-Host 'Il browser usato dal worker è il Chrome normale. Non viene creato alcun profilo Chrome dedicato.' -ForegroundColor Yellow
 Write-Host ''
