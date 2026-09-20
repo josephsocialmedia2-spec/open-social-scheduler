@@ -958,11 +958,6 @@
       "editorial_slot": "08:30",
       "scheduled_at": "2026-09-21T08:30:00+02:00",
       "status": "ERROR",
-      "cta": "https://www.agentpricing.com/j.malafronte",
-      "graphic_cta": "CLICCA SUL LINK 👉\nhttps://www.agentpricing.com/j.malafronte\n🏡“Contattaci per una Valutazione Strategica e di Posizionamento del tuo immobile: analizziamo prezzo, concorrenza e strategia di vendita per aumentare le possibilità di vendere meglio e in tempi più efficienti.”",
-      "graphic_body": "Mercato locale e strategia immobiliare.",
-      "publish_attempts": 1,
-      "last_publish_attempt_at": "2026-09-20T10:23:16+00:00",
       "error": "BufferAutomationError: Buffer facebook: Invalid post: Whoops, it looks like you've already got this one scheduled or posted around the same time. We're not able to post the same thing twice so close together."
     },
     {
@@ -972,7 +967,7 @@
       "pillar": "Eventi",
       "source_name": "Comune - Tempo libero",
       "source_url": "https://www.comune.villardora.to.it/Dettaglioargomenti?IDCategoria=16565",
-      "caption": "",
+      "caption": "San Rocco\n\nConoscere Villar Dora significa capire il territorio in cui si sceglie di vivere: servizi, comunità, patrimonio locale e qualità della vita fanno parte della decisione immobiliare, insieme alla casa.\n\nFonte di riferimento: Comune - Tempo libero. Informazioni da verificare alla data di pubblicazione.\n\nCLICCA SUL LINK 👉\nhttps://www.agentpricing.com/j.malafronte\n🏡“Contattaci per una Valutazione Strategica e di Posizionamento del tuo immobile: analizziamo prezzo, concorrenza e strategia di vendita per aumentare le possibilità di vendere meglio e in tempi più efficienti.”",
       "format": "photo",
       "assets": [
         "publisher/final_assets/generated_villar_dora/VD-014-C-20260921-1830.png"
@@ -985,7 +980,17 @@
       "territory": "Villar Dora",
       "editorial_slot": "18:30",
       "scheduled_at": "2026-09-21T18:30:00+02:00",
-      "status": "READY"
+      "status": "ERROR",
+      "cta": "https://www.agentpricing.com/j.malafronte",
+      "graphic_cta": "CLICCA SUL LINK 👉\nhttps://www.agentpricing.com/j.malafronte\n🏡“Contattaci per una Valutazione Strategica e di Posizionamento del tuo immobile: analizziamo prezzo, concorrenza e strategia di vendita per aumentare le possibilità di vendere meglio e in tempi più efficienti.”",
+      "graphic_body": "Territorio, servizi e vita locale.",
+      "publish_attempts": 1,
+      "attempt_count": 1,
+      "last_publish_attempt_at": "2026-09-20T18:22:20+00:00",
+      "last_step": "ERROR_RECOVERABLE",
+      "updated_at": "2026-09-20T18:22:22+00:00",
+      "last_error": "BufferAutomationError: Buffer facebook: Invalid post: Whoops, it looks like you've already got this one scheduled or posted around the same time. We're not able to post the same thing twice so close together.",
+      "error": "BufferAutomationError: Buffer facebook: Invalid post: Whoops, it looks like you've already got this one scheduled or posted around the same time. We're not able to post the same thing twice so close together."
     },
     {
       "id": "VD-015-S-20260922-0830",
@@ -6972,5 +6977,5 @@
       "status": "READY"
     }
   ],
-  "updated_at": "2026-09-20T10:23:16+00:00"
+  "updated_at": "2026-09-20T18:22:22+00:00"
 }
