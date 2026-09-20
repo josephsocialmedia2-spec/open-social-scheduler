@@ -3,3 +3,4 @@ pyperclip==1.9.0
 pygetwindow==0.0.9
 uiautomation>=2.0.20
 tzdata>=2025.2
+Pillow==11.3.0
