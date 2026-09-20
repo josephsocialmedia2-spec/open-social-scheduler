@@ -46,6 +46,15 @@ def persist_queue(queue: dict[str, Any]) -> None:
     QUEUE_PATH.write_text(json.dumps(queue, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
+def mark_job(job: dict[str, Any], step: str, *, error: str | None = None) -> None:
+    job["last_step"] = step
+    job["updated_at"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
+    if error:
+        job["last_error"] = error
+    else:
+        job["last_error"] = None
+
+
 def local_asset(path_value: str) -> Path:
     path = (ROOT / path_value).resolve()
     final_root = (ROOT / "publisher" / "final_assets").resolve()
@@ -260,6 +269,7 @@ def refresh_publication_status(job: dict[str, Any], api_key: str) -> bool:
     if hard_error:
         job["status"] = "ERROR"
         job["error"] = f"Buffer provider state requires recovery: {hard_error}"
+        mark_job(job, "ERROR_RECOVERABLE", error=job["error"])
     elif target_services and target_services.issubset(sent_services):
         job["status"] = "PUBLISHED"
         sent_times = [str(x.get("sent_at") or "") for x in refreshed if x.get("sent_at")]
@@ -267,10 +277,12 @@ def refresh_publication_status(job: dict[str, Any], api_key: str) -> bool:
         job["published_urls"] = sorted(set(urls))
         job["provider"] = "buffer"
         job.pop("error", None)
+        mark_job(job, "PUBLISHED")
     else:
         job["status"] = "SCHEDULED"
         job["scheduled_via"] = "buffer"
         job.pop("error", None)
+        mark_job(job, "VERIFYING_PUBLICATION")
 
     return before != _provider_snapshot(job)
 
@@ -295,6 +307,7 @@ def verify_scheduled_jobs(
         except Exception as exc:
             previous = _provider_snapshot(job)
             job["last_verification_error"] = f"{type(exc).__name__}: {exc}"
+            mark_job(job, "VERIFY_RETRY", error=job["last_verification_error"])
             # Do not downgrade an already scheduled post because a status check
             # had a transient transport failure.
             if previous != _provider_snapshot(job):
@@ -314,7 +327,9 @@ def publish_job(
 ) -> int:
     try:
         job["publish_attempts"] = int(job.get("publish_attempts") or 0) + 1
+        job["attempt_count"] = int(job.get("attempt_count") or 0) + 1
         job["last_publish_attempt_at"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
+        mark_job(job, "PUBLISHING")
         if not dry_run:
             job["status"] = "PUBLISHING"
             persist_queue(queue)
@@ -357,6 +372,7 @@ def publish_job(
             job.setdefault("buffer_scheduled_platforms", []).append(service)
             scheduled.add(service)
             results.append(result)
+            mark_job(job, f"PROVIDER_ACCEPTED_{service.upper()}")
             # Idempotency: persist every successful provider post ID before the
             # next platform is attempted.
             persist_queue(queue)
@@ -369,6 +385,7 @@ def publish_job(
         job["resolved_channels"] = channels
         job["published_asset_sha256"] = buffer_job["asset_sha256"]
         job.pop("error", None)
+        mark_job(job, "SCHEDULED")
         persist_queue(queue)
 
         # shareNow can become "sent" immediately. Verify once now; scheduled
@@ -386,6 +403,7 @@ def publish_job(
     except Exception as exc:
         job["status"] = "ERROR"
         job["error"] = f"{type(exc).__name__}: {exc}"
+        mark_job(job, "ERROR_RECOVERABLE", error=job["error"])
         persist_queue(queue)
         print(json.dumps({
             "id": job.get("id"),
