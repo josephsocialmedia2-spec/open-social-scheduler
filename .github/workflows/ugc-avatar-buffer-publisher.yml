@@ -1,6 +1,11 @@
 name: UGC Avatar Buffer Publisher
 
 on:
+  pull_request:
+    paths:
+      - '.github/workflows/ugc-avatar-buffer-publisher.yml'
+      - 'publisher/ugc_avatar_buffer_bridge.py'
+      - 'publisher/ugc_avatar_source.json'
   workflow_dispatch:
     inputs:
       dry_run:
@@ -33,10 +38,9 @@ jobs:
       BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
       CLOUDINARY_URL: ${{ secrets.CLOUDINARY_URL }}
     steps:
-      - name: Checkout main
+      - name: Checkout
         uses: actions/checkout@v5
         with:
-          ref: main
           fetch-depth: 0
 
       - name: Python 3.12
