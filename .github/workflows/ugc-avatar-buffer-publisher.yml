@@ -68,7 +68,7 @@ jobs:
           PY
 
       - name: Process Modal UGC outbox
-        if: steps.source.outputs.base_url != ''
+        if: github.event_name != 'pull_request' && steps.source.outputs.base_url != ''
         shell: bash
         env:
           SOURCE_URL: ${{ steps.source.outputs.base_url }}
@@ -86,7 +86,7 @@ jobs:
           python publisher/ugc_avatar_buffer_bridge.py "${ARGS[@]}"
 
       - name: No source configured
-        if: steps.source.outputs.base_url == ''
+        if: github.event_name != 'pull_request' && steps.source.outputs.base_url == ''
         run: echo "UGC_MODAL_URL_NOT_CONFIGURED"
 
       - name: Persist UGC publication state
