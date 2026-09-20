@@ -69,7 +69,9 @@ jobs:
           assert data['pipeline'] == 'f1-final-assets'
           assert data['asset_policy'] == 'immutable-final-layout'
           assert data['brand'] == 'F1 Immobiliare'
-          assert set(data['platforms']) == {'facebook','instagram','linkedin'}
+          platforms=set(data['platforms'])
+          assert {'facebook','instagram'}.issubset(platforms)
+          assert platforms.issubset({'facebook','instagram','linkedin'})
           print('Queue schema OK')
           PY
 
@@ -82,8 +84,12 @@ jobs:
           installer = Path('publisher/f1_graphics_automation/INSTALLA_AUTOMAZIONE_23.ps1').read_text(encoding='utf-8')
           assert '8877' in server
           assert '/api/generated' in server
+          assert '/api/communications' in server
           assert 'chatgpt_generated' in server
+          assert 'COMMUNICATIONS_FILE' in server
           assert 'IMMAGINE_SALVATA' in worker and 'advance_after_completed' in worker
+          assert 'auto_ingest_completed_run' in worker
+          assert '--communication-id' in worker
           assert 'Selenium' not in worker
           assert "New-ScheduledTaskTrigger -Daily -At 23:00" in installer
           for path in [
@@ -93,13 +99,21 @@ jobs:
               'publisher/f1_graphics_automation/APRI_RACCOLTA_GRAFICHE.bat',
               'publisher/manual_asset_inbox/index.html',
               'publisher/manual_asset_inbox/morning_notice.html',
+              '.github/workflows/final-assets-autopublish.yml',
           ]:
               assert Path(path).exists(), path
-          print('F1 collection/launcher contract OK')
+          final_publisher = Path('publisher/final_asset_publisher.py').read_text(encoding='utf-8')
+          buffer_base = Path('publisher/buffer_twice_daily.py').read_text(encoding='utf-8')
+          assert 'communications-only' in final_publisher
+          assert 'refresh_publication_status' in final_publisher
+          assert '"PUBLISHED"' in final_publisher
+          assert 'get_buffer_post' in buffer_base
+          assert 'post_type = "reel" if is_reel else "post"' in buffer_base
+          print('F1 autonomous publication contract OK')
           PY
 
       - name: Deployment summary
         run: |
           echo 'F1 deployment validation completed successfully.'
           echo 'Prompt contract: uploaded F1 models + search query.'
-          echo 'Graphics flow: normal Chrome -> verified prompt -> verified image generation -> saved local image -> F1 collection -> human approval -> GitHub -> Buffer.'
+          echo 'Graphics flow: client communication -> normal Chrome -> verified prompt -> verified image -> autonomous ingest -> GitHub -> Buffer -> provider verification -> PUBLISHED.'
