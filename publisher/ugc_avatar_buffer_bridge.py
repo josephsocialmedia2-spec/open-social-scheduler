@@ -58,11 +58,13 @@ def existing_job(queue: dict[str, Any], source_job_id: str) -> dict[str, Any] | 
     return None
 
 
-def download_video(row: dict[str, Any]) -> Path:
+def download_video(row: dict[str, Any], base_url: str) -> Path:
+    from urllib.parse import urljoin
     job_id = str(row.get("job_id") or "").strip()
-    url = str(row.get("video_url") or "").strip()
+    raw_url = str(row.get("video_url") or "").strip()
+    url = urljoin(base_url.rstrip("/") + "/", raw_url)
     if not job_id or not url.startswith("https://"):
-        raise RuntimeError("UGC outbox row is missing job_id or https video_url")
+        raise RuntimeError("UGC outbox row is missing job_id or a valid video_url")
     path = MEDIA_DIR / f"{job_id}.mp4"
     path.parent.mkdir(parents=True, exist_ok=True)
     response = requests.get(url, timeout=300, stream=True, headers={"User-Agent": "F1-UGC-Avatar-Bridge/1.0"})
@@ -116,6 +118,7 @@ def process_row(
     organization_id: str,
     channels: dict[str, dict[str, str]],
     dry_run: bool,
+    base_url: str,
 ) -> dict[str, Any]:
     source_job_id = str(row.get("job_id") or "").strip()
     if not source_job_id:
@@ -130,7 +133,7 @@ def process_row(
     if bool(row.get("test_mode")) and not dry_run:
         return {"job_id": source_job_id, "status": "test_mode_skipped_live"}
 
-    path = download_video(row)
+    path = download_video(row, base_url)
     try:
         template = make_job(row, path)
         if old:
@@ -235,7 +238,7 @@ def main() -> int:
     for row in rows:
         try:
             result = process_row(
-                row, queue, api_key, cloudinary_url, organization_id, channels, args.dry_run
+                row, queue, api_key, cloudinary_url, organization_id, channels, args.dry_run, args.source_url
             )
             report.append(result)
             if result.get("status") in {"buffer_retry_required", "buffer_partially_scheduled"}:
