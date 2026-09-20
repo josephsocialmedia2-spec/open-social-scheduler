@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "base_url": "",
+  "live_enabled": false,
+  "publisher": "buffer",
+  "client_id": "f1-immobiliare",
+  "targets": [
+    "facebook",
+    "instagram",
+    "linkedin"
+  ],
+  "note": "base_url is filled with the verified Modal public URL after deployment; live_enabled becomes true only after a successful dry-run."
+}
