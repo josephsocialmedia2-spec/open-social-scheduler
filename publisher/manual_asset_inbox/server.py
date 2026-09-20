@@ -312,8 +312,44 @@ def _launch_communication_worker(communication_id: str) -> None:
 
 @app.get("/api/communications")
 def api_communications():
+    # Pull publication-state commits made by GitHub Actions only when the local
+    # working tree is clean. A dirty tree is never modified by this status endpoint.
+    try:
+        status = run_git("status", "--porcelain", check=False)
+        if status.returncode == 0 and not status.stdout.strip():
+            run_git("pull", "--ff-only", "origin", "main", check=False)
+    except Exception:
+        pass
+
     payload = _load_communications()
-    return jsonify({"items": payload.get("items") or []})
+    final_by_communication: dict[str, dict] = {}
+    try:
+        queue = load_queue()
+        for job in queue.get("jobs") or []:
+            communication_id = str(job.get("communication_id") or "")
+            if communication_id:
+                final_by_communication[communication_id] = job
+    except Exception:
+        final_by_communication = {}
+
+    items = []
+    for item in payload.get("items") or []:
+        merged = dict(item)
+        final = final_by_communication.get(str(item.get("id") or ""))
+        if final:
+            merged["publication_status"] = final.get("status")
+            merged["published_at"] = final.get("published_at")
+            merged["published_urls"] = final.get("published_urls") or []
+            merged["buffer_posts"] = final.get("buffer_posts") or []
+            merged["publication_error"] = final.get("error")
+            if final.get("status") == "PUBLISHED":
+                merged["status"] = "PUBLISHED"
+            elif final.get("status") == "SCHEDULED":
+                merged["status"] = "SCHEDULED"
+            elif final.get("status") == "ERROR":
+                merged["status"] = "ERROR"
+        items.append(merged)
+    return jsonify({"items": items})
 
 
 @app.post("/api/communications")
