@@ -3,9 +3,11 @@ param()
 $ErrorActionPreference = 'Stop'
 $Root = (Resolve-Path (Join-Path $PSScriptRoot '..\..')).Path
 $QueueSnapshot = Join-Path $Root 'publisher\news\f1_news_browser_queue.runtime.local.json'
+$CreativeControlSnapshot = Join-Path $Root 'publisher\chatgpt_query_runner\f1_daily_creative_control.runtime.local.json'
 $FinalSnapshot = Join-Path $Root 'publisher\news\f1_news_final_queue.runtime.local.json'
 $LockPath = Join-Path $Root 'publisher\news\f1_news_browser_poller.lock.json'
 $Runner = Join-Path $PSScriptRoot 'RUN_F1_NEWS_SLOT.ps1'
+$CreativeRunner = Join-Path $PSScriptRoot 'RUN_F1_DAILY_CREATIVE_TEST.ps1'
 $Now = Get-Date
 $Minutes = ($Now.Hour * 60) + $Now.Minute
 
@@ -23,6 +25,7 @@ if ($LASTEXITCODE -ne 0) { exit 0 }
 
 if (-not (Refresh-JsonFromOrigin 'publisher/news/f1_news_browser_queue.json' $QueueSnapshot)) { exit 0 }
 if (-not (Refresh-JsonFromOrigin 'publisher/final_content_queue.json' $FinalSnapshot)) { exit 0 }
+$CreativeControlAvailable = Refresh-JsonFromOrigin 'publisher/chatgpt_query_runner/f1_daily_creative_control.json' $CreativeControlSnapshot
 
 $Queue = Get-Content $QueueSnapshot -Raw | ConvertFrom-Json
 $Final = Get-Content $FinalSnapshot -Raw | ConvertFrom-Json
@@ -40,6 +43,32 @@ if (Test-Path $LockPath) {
         if ((([DateTimeOffset]::Now - $started).TotalMinutes) -lt 50) { exit 0 }
     } catch {}
     Remove-Item $LockPath -Force -ErrorAction SilentlyContinue
+}
+
+# Priority 1: one-shot visible ChatGPT creative requested by GitHub.
+if ($CreativeControlAvailable -and (Test-Path $CreativeControlSnapshot)) {
+    try {
+        $Creative = Get-Content $CreativeControlSnapshot -Raw | ConvertFrom-Json
+        $expectedCid = [string]$Creative.expected_communication_id
+        $forceCreative = [bool]$Creative.force_immediate
+        $existingFinal = @($Final.jobs) | Where-Object { [string]$_.communication_id -eq $expectedCid } | Select-Object -First 1
+
+        if ($forceCreative -and $expectedCid -and -not $existingFinal) {
+            @{
+                job_id = [string]$Creative.target_query_id
+                communication_id = $expectedCid
+                mode = 'daily-creative'
+                started_at = [DateTimeOffset]::Now.ToString('o')
+            } | ConvertTo-Json | Set-Content -Path $LockPath -Encoding UTF8
+
+            try {
+                & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $CreativeRunner
+                exit $LASTEXITCODE
+            } finally {
+                Remove-Item $LockPath -Force -ErrorAction SilentlyContinue
+            }
+        }
+    } catch {}
 }
 
 $candidates = @($Queue.items) | Where-Object {
