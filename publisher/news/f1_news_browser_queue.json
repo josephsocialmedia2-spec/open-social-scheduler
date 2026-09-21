@@ -44,6 +44,42 @@
       "status": "QUEUED_FOR_PC",
       "created_at": "2026-09-21T19:39:20+02:00",
       "updated_at": "2026-09-21T19:39:20+02:00"
+    },
+    {
+      "id": "COMM-NEWS-20260921-EVENING-E6871421",
+      "communication_id": "COMM-NEWS-20260921-EVENING-E6871421",
+      "query": "AVIGLIANA: 3 MILIONI PER L'EFFICIENZA",
+      "communication": "AVIGLIANA: OLTRE 3 MILIONI PER L'EFFICIENZA ENERGETICA\n\nIl Comune di Avigliana comunica di aver ottenuto finanziamenti dal GSE per oltre 3 milioni di euro destinati alla riqualificazione energetica di tre edifici pubblici: la scuola Defendente Ferrari, l'Anna Frank e La Fabrica.\n\nPer chi vive, vende, compra o cambia casa in Valle di Susa, la riqualificazione del patrimonio edilizio pubblico è una notizia di territorio da seguire: descrive investimenti, qualità degli edifici e trasformazioni locali. Non significa automaticamente un aumento del valore di ogni immobile della zona: per quello servono dati specifici sul singolo bene e sulla microzona.\n\nFonte: Città di Avigliana.\nhttps://www.comune.avigliana.to.it/it-it/novita/avvisi/2026/efficientamento-energetico-tre-milioni-di-euro-dal-gse-400092-1-f573c105290622c3df6458b4ff130640\n\nNon a sensazione. Con i dati.\n\nValutazione immobile: https://www.agentpricing.com/j.malafronte\nContatto F1 Immobiliare: https://wa.me/393713708294",
+      "caption": "AVIGLIANA: OLTRE 3 MILIONI PER L'EFFICIENZA ENERGETICA\n\nIl Comune di Avigliana comunica di aver ottenuto finanziamenti dal GSE per oltre 3 milioni di euro destinati alla riqualificazione energetica di tre edifici pubblici: la scuola Defendente Ferrari, l'Anna Frank e La Fabrica.\n\nPer chi vive, vende, compra o cambia casa in Valle di Susa, la riqualificazione del patrimonio edilizio pubblico è una notizia di territorio da seguire: descrive investimenti, qualità degli edifici e trasformazioni locali. Non significa automaticamente un aumento del valore di ogni immobile della zona: per quello servono dati specifici sul singolo bene e sulla microzona.\n\nFonte: Città di Avigliana.\nhttps://www.comune.avigliana.to.it/it-it/novita/avvisi/2026/efficientamento-energetico-tre-milioni-di-euro-dal-gse-400092-1-f573c105290622c3df6458b4ff130640\n\nNon a sensazione. Con i dati.\n\nValutazione immobile: https://www.agentpricing.com/j.malafronte\nContatto F1 Immobiliare: https://wa.me/393713708294",
+      "prompt": "Crea un visual fotografico editoriale real-estate per una notizia F1 Immobiliare. Argomento: Avigliana, oltre 3 milioni di euro per l'efficientamento energetico di tre edifici pubblici. Categoria: riqualificazione ed efficienza energetica. Area: Avigliana / Valle di Susa. Rappresenta in modo realistico un edificio pubblico piemontese riqualificato o in fase di efficientamento energetico, inserito in un contesto urbano credibile di Avigliana/Valle di Susa, con luce naturale, atmosfera positiva e concreta, fotografia premium ma autentica. Composizione verticale social-first 4:5, soggetto/edificio principale sulla destra e spazio negativo pulito sulla sinistra per il copy successivo. Nessun testo, titolo, logo, CTA, numero, URL, cartello leggibile o watermark. Evita look stock, icone, infografiche, card nere, template piatti, prospettive impossibili e artefatti AI.",
+      "client": "F1 Immobiliare",
+      "territory": "Valle di Susa",
+      "scope": "network",
+      "platforms": [
+        "facebook",
+        "instagram"
+      ],
+      "source": "f1-news-browser-control",
+      "news_id": "AVIGLIANA-EFFICIENZA-20260901",
+      "headline": "AVIGLIANA: 3 MILIONI PER L'EFFICIENZA",
+      "cta": "SCOPRI COSA CAMBIA",
+      "category": "riqualificazione ed efficienza energetica",
+      "source_name": "Città di Avigliana",
+      "source_url": "https://www.comune.avigliana.to.it/it-it/novita/avvisi/2026/efficientamento-energetico-tre-milioni-di-euro-dal-gse-400092-1-f573c105290622c3df6458b4ff130640",
+      "source_hash": "e6871421b5d2c8f3ca7fe98c5e1f24c23ac2a95c2247c6737e2607af363d558c",
+      "source_published_at": "2026-09-01",
+      "source_verification": {
+        "http_status": 200,
+        "final_url": "https://www.comune.avigliana.to.it/it-it/novita/avvisi/2026/efficientamento-energetico-tre-milioni-di-euro-dal-gse-400092-1-f573c105290622c3df6458b4ff130640",
+        "domain": "www.comune.avigliana.to.it",
+        "verification_method": "official_public_source_preverified",
+        "verified_at": "2026-09-21T17:42:30+00:00"
+      },
+      "editorial_slot": "evening",
+      "slot_key": "2026-09-21|EVENING",
+      "status": "QUEUED_FOR_PC",
+      "created_at": "2026-09-21T19:42:30+02:00",
+      "updated_at": "2026-09-21T19:42:30+02:00"
     }
   ],
   "rejected": [
@@ -54,5 +90,5 @@
       "error": "ConnectTimeout: HTTPSConnectionPool(host='www.regione.piemonte.it', port=443): Max retries exceeded with url: /web/amministrazione/autonomie-locali/notiziario-per-amministrazioni-locali/notiziario-per-amministrazioni-locali-n-31-3-settembre-2026 (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.regione.piemonte.it', port=443) at 0x7f0ef94c3bc0>, 'Connection to www.regione.piemonte.it timed out. (connect timeout=8)'))"
     }
   ],
-  "updated_at": "2026-09-21T19:39:20+02:00"
+  "updated_at": "2026-09-21T19:42:30+02:00"
 }
