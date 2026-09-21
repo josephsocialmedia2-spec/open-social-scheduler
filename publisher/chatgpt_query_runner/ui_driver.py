@@ -798,6 +798,34 @@ class ChromeChatGPTDriver:
             except Exception as exc:
                 self.log(f"Download UI non riuscito, provo fallback: {exc}")
         control = result.image_control
+
+        # ChatGPT spesso mostra un pulsante circolare di download sovrapposto
+        # in basso al centro dell'immagine senza esporlo bene a UI Automation.
+        # Se l'immagine e' visibile, prova quel controllo visivo prima dello
+        # screenshot fallback.
+        if control is not None:
+            try:
+                control.ScrollIntoView()
+                time.sleep(0.6)
+            except Exception:
+                pass
+            left0, top0, right0, bottom0 = _rect(control)
+            w0, h0 = right0-left0, bottom0-top0
+            if w0 >= 180 and h0 >= 180:
+                try:
+                    clicked_at = time.time()
+                    pyautogui.click(left0 + w0 // 2, max(top0 + 20, bottom0 - min(42, max(24, h0 // 18))))
+                    downloaded = self._wait_download(clicked_at, timeout=10)
+                    if downloaded:
+                        ext = downloaded.suffix.lower() if downloaded.suffix else ".png"
+                        target = destination_without_ext.with_suffix(ext)
+                        shutil.copy2(downloaded, target)
+                        width, height, fmt = self._validate_image_file(target)
+                        self.log(f"Immagine salvata dal pulsante overlay ChatGPT: {target} ({width}x{height} {fmt})")
+                        return target, "overlay-download"
+                except Exception as exc:
+                    self.log(f"Overlay download non riuscito, continuo con fallback: {exc}")
+
         # UIA can expose the download button before the image control, or a
         # previously captured control can become stale after the page updates.
         # Rescan the active conversation before giving up.
