@@ -896,9 +896,6 @@ class ChromeChatGPTDriver:
         )
         return target, "screenshot"
 
-    def open_new_tab(self, url: str) -> None:
-        subprocess.Popen([self.chrome_binary(), "--new-tab", url], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-
     def current_url(self) -> str | None:
         try:
             self.activate_chrome()
