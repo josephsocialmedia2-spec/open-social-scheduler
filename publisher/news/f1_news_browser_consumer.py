@@ -43,11 +43,12 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--slot", choices=["auto", "midday", "evening", "immediate"], default="auto")
     parser.add_argument("--output", default=str(DEFAULT_OUTPUT))
+    parser.add_argument("--queue", default=str(QUEUE_PATH))
     args = parser.parse_args()
 
     now = datetime.now(ROME)
     slot_name, slot_key = resolve_slot(now, args.slot)
-    queue = load_json(QUEUE_PATH, {"items": []})
+    queue = load_json(Path(args.queue), {"items": []})
 
     candidates = [
         row
