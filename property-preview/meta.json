@@ -1,79 +1,169 @@
 {
-  "batch": "susa-first-4",
-  "count": 4,
+  "batch": "territori-selezionati-10-preview-v3",
+  "count": 10,
   "size": [
     1080,
     1350
   ],
-  "source": "publisher/github_graphics/queries.json",
+  "fault_tolerant": true,
+  "visual_rule": "APPARTAMENTO or VILLA + PRIVATO + municipality; reject agency-branded sources; sunset + lights on",
   "outputs": [
     {
       "index": 1,
-      "id": "SUSA-001",
-      "query": "immobili in vendita a Susa",
-      "brief": {
-        "query": "immobili in vendita a Susa",
-        "family": "property",
-        "headline": "Immobili in vendita a Susa",
-        "subheadline": "Scopri le opportunità immobiliari nel territorio di Susa.",
-        "cta": "SCOPRI LE OPPORTUNITÀ",
-        "visual_type": "residential_exterior",
-        "layout": "left_overlay",
-        "ollama_used": false,
-        "ollama_error": "<urlopen error [Errno 111] Connection refused>"
+      "id": "COMUNE-001",
+      "commune": "Chianocco",
+      "query": "immobili in vendita a Chianocco",
+      "source": {
+        "query": "synthetic fallback",
+        "url": "",
+        "title": "Fallback residenziale neutro - Chianocco",
+        "fallback": true,
+        "errors": [],
+        "reason": "no verified private-listing image; agency-branded sources rejected"
       },
+      "fallback": true,
       "output": "property-preview/01.jpg"
     },
     {
       "index": 2,
-      "id": "SUSA-002",
-      "query": "case in vendita a Susa",
-      "brief": {
-        "query": "case in vendita a Susa",
-        "family": "property",
-        "headline": "Case in vendita a Susa",
-        "subheadline": "Soluzioni per chi vuole vivere, investire o trasferirsi a Susa.",
-        "cta": "CERCA LA TUA CASA",
-        "visual_type": "residential_exterior",
-        "layout": "left_overlay",
-        "ollama_used": false,
-        "ollama_error": "<urlopen error [Errno 111] Connection refused>"
+      "id": "COMUNE-002",
+      "commune": "Bruzolo",
+      "query": "immobili in vendita a Bruzolo",
+      "source": {
+        "query": "synthetic fallback",
+        "url": "",
+        "title": "Fallback residenziale neutro - Bruzolo",
+        "fallback": true,
+        "errors": [],
+        "reason": "no verified private-listing image; agency-branded sources rejected"
       },
+      "fallback": true,
       "output": "property-preview/02.jpg"
     },
     {
       "index": 3,
-      "id": "SUSA-003",
-      "query": "lavoro agenzia immobiliare Susa prima esperienza",
-      "brief": {
-        "query": "lavoro agenzia immobiliare Susa prima esperienza",
-        "family": "recruiting",
-        "headline": "Inizia nel settore immobiliare",
-        "subheadline": "Prima esperienza? Formazione, affiancamento e territorio.",
-        "cta": "CANDIDATI ORA",
-        "visual_type": "professional_real_estate_team",
-        "layout": "left_overlay",
-        "ollama_used": false,
-        "ollama_error": "<urlopen error [Errno 111] Connection refused>"
+      "id": "COMUNE-003",
+      "commune": "San Didero",
+      "query": "immobili in vendita a San Didero",
+      "source": {
+        "query": "synthetic fallback",
+        "url": "",
+        "title": "Fallback residenziale neutro - San Didero",
+        "fallback": true,
+        "errors": [],
+        "reason": "no verified private-listing image; agency-branded sources rejected"
       },
+      "fallback": true,
       "output": "property-preview/03.jpg"
     },
     {
       "index": 4,
-      "id": "SUSA-004",
-      "query": "appartamenti in vendita a Susa",
-      "brief": {
-        "query": "appartamenti in vendita a Susa",
-        "family": "property",
-        "headline": "Appartamenti in vendita a Susa",
-        "subheadline": "Trova la soluzione più adatta alle tue esigenze nel cuore della Valle di Susa.",
-        "cta": "SCOPRI GLI APPARTAMENTI",
-        "visual_type": "residential_exterior",
-        "layout": "left_overlay",
-        "ollama_used": false,
-        "ollama_error": "<urlopen error [Errno 111] Connection refused>"
+      "id": "COMUNE-004",
+      "commune": "San Giorio di Susa",
+      "query": "immobili in vendita a San Giorio di Susa",
+      "source": {
+        "query": "synthetic fallback",
+        "url": "",
+        "title": "Fallback residenziale neutro - San Giorio di Susa",
+        "fallback": true,
+        "errors": [],
+        "reason": "no verified private-listing image; agency-branded sources rejected"
       },
+      "fallback": true,
       "output": "property-preview/04.jpg"
+    },
+    {
+      "index": 5,
+      "id": "COMUNE-005",
+      "commune": "Borgone Susa",
+      "query": "immobili in vendita a Borgone Susa",
+      "source": {
+        "query": "synthetic fallback",
+        "url": "",
+        "title": "Fallback residenziale neutro - Borgone Susa",
+        "fallback": true,
+        "errors": [],
+        "reason": "no verified private-listing image; agency-branded sources rejected"
+      },
+      "fallback": true,
+      "output": "property-preview/05.jpg"
+    },
+    {
+      "index": 6,
+      "id": "COMUNE-006",
+      "commune": "Villar Focchiardo",
+      "query": "immobili in vendita a Villar Focchiardo",
+      "source": {
+        "query": "synthetic fallback",
+        "url": "",
+        "title": "Fallback residenziale neutro - Villar Focchiardo",
+        "fallback": true,
+        "errors": [],
+        "reason": "no verified private-listing image; agency-branded sources rejected"
+      },
+      "fallback": true,
+      "output": "property-preview/06.jpg"
+    },
+    {
+      "index": 7,
+      "id": "COMUNE-007",
+      "commune": "Condove",
+      "query": "immobili in vendita a Condove",
+      "source": {
+        "query": "Villa da privato \"Condove\"",
+        "url": "https://media.clickcase.it/image/i-a5184091-b7a9-4339-82e8-dff670a0f103/noresize.jpg",
+        "title": "Bellissima casa in montagna - Vendita Villetta a schiera da Privato a ..."
+      },
+      "fallback": false,
+      "output": "property-preview/07.jpg"
+    },
+    {
+      "index": 8,
+      "id": "COMUNE-008",
+      "commune": "Caprie",
+      "query": "immobili in vendita a Caprie",
+      "source": {
+        "query": "synthetic fallback",
+        "url": "",
+        "title": "Fallback residenziale neutro - Caprie",
+        "fallback": true,
+        "errors": [],
+        "reason": "no verified private-listing image; agency-branded sources rejected"
+      },
+      "fallback": true,
+      "output": "property-preview/08.jpg"
+    },
+    {
+      "index": 9,
+      "id": "COMUNE-009",
+      "commune": "Sant’Antonino di Susa",
+      "query": "immobili in vendita a Sant’Antonino di Susa",
+      "source": {
+        "query": "synthetic fallback",
+        "url": "",
+        "title": "Fallback residenziale neutro - Sant’Antonino di Susa",
+        "fallback": true,
+        "errors": [],
+        "reason": "no verified private-listing image; agency-branded sources rejected"
+      },
+      "fallback": true,
+      "output": "property-preview/09.jpg"
+    },
+    {
+      "index": 10,
+      "id": "COMUNE-010",
+      "commune": "Vaie",
+      "query": "immobili in vendita a Vaie",
+      "source": {
+        "query": "synthetic fallback",
+        "url": "",
+        "title": "Fallback residenziale neutro - Vaie",
+        "fallback": true,
+        "errors": [],
+        "reason": "no verified private-listing image; agency-branded sources rejected"
+      },
+      "fallback": true,
+      "output": "property-preview/10.jpg"
     }
   ]
 }
