@@ -1,0 +1,141 @@
+{
+  "version": 1,
+  "brand": "F1 Immobiliare",
+  "territory": "Valle di Susa",
+  "generated_from": "previous F1 query research; no invented volumes",
+  "rules": {
+    "creative_engine": "ChatGPT/OpenAI image generation",
+    "legacy_creative_final_output": false,
+    "one_visual_one_message": true,
+    "headline_max_words": 7,
+    "variants": [
+      "A",
+      "B"
+    ]
+  },
+  "clusters": [
+    {
+      "query": "quanto vale casa mia",
+      "audience": "venditore",
+      "intent": [
+        "informational",
+        "commercial_investigation",
+        "problem_aware"
+      ],
+      "need": "capire il valore prima di decidere se vendere",
+      "hook": "QUANTO VALE DAVVERO?",
+      "cta": "SCRIVI VALUTAZIONE"
+    },
+    {
+      "query": "casa ereditata",
+      "audience": "venditore",
+      "intent": [
+        "informational",
+        "problem_aware"
+      ],
+      "need": "capire cosa verificare prima della vendita",
+      "hook": "HAI EREDITATO CASA?",
+      "cta": "PARLIAMONE"
+    },
+    {
+      "query": "vendere o affittare",
+      "audience": "venditore",
+      "intent": [
+        "commercial_investigation",
+        "solution_aware"
+      ],
+      "need": "confrontare le due alternative",
+      "hook": "VENDERE O AFFITTARE?",
+      "cta": "CONFRONTA LE DUE STRADE"
+    },
+    {
+      "query": "casa vuota",
+      "audience": "venditore",
+      "intent": [
+        "problem_aware"
+      ],
+      "need": "decidere cosa fare di un immobile inutilizzato",
+      "hook": "CASA VUOTA?",
+      "cta": "VALUTA LE OPZIONI"
+    },
+    {
+      "query": "cerco casa in Valle di Susa",
+      "audience": "acquirente",
+      "intent": [
+        "local",
+        "transactional"
+      ],
+      "need": "trovare casa coerente con zona e caratteristiche",
+      "hook": "CERCHI CASA QUI?",
+      "cta": "DICCI COSA CERCHI"
+    },
+    {
+      "query": "comprare casa con budget definito",
+      "audience": "acquirente",
+      "intent": [
+        "commercial_investigation",
+        "transactional"
+      ],
+      "need": "capire cosa è realistico acquistare nel budget",
+      "hook": "CHE CASA COMPRA IL TUO BUDGET?",
+      "cta": "DEFINISCI LA RICERCA"
+    },
+    {
+      "query": "casa troppo grande",
+      "audience": "venditore",
+      "intent": [
+        "problem_aware"
+      ],
+      "need": "valutare downsizing e vendita",
+      "hook": "CASA TROPPO GRANDE?",
+      "cta": "VALUTA IL CAMBIO"
+    },
+    {
+      "query": "mutuo troppo alto",
+      "audience": "venditore",
+      "intent": [
+        "problem_aware"
+      ],
+      "need": "valutare sostenibilità e alternative immobiliari",
+      "hook": "IL MUTUO PESA?",
+      "cta": "VALUTA LE OPZIONI"
+    },
+    {
+      "query": "ristrutturare o vendere",
+      "audience": "venditore",
+      "intent": [
+        "commercial_investigation"
+      ],
+      "need": "confrontare costo lavori e vendita nello stato attuale",
+      "hook": "RISTRUTTURARE O VENDERE?",
+      "cta": "CONFRONTA I NUMERI"
+    },
+    {
+      "query": "vendo casa da privato",
+      "audience": "venditore",
+      "intent": [
+        "transactional"
+      ],
+      "need": "capire come vendere e quali passaggi affrontare",
+      "hook": "STAI VENDENDO DA PRIVATO?",
+      "cta": "CONTROLLA LA STRATEGIA"
+    }
+  ],
+  "historical_metrics": [
+    {
+      "query": "vendere casa",
+      "country": "Italia",
+      "volume": 8100,
+      "cpc_eur": 0.67,
+      "seo_difficulty": 32,
+      "source": "previous Ubersuggest research",
+      "note": "historical research value; do not treat as live"
+    },
+    {
+      "query": "vendere casa Torino",
+      "volume": 2400,
+      "source": "previous Ubersuggest research",
+      "note": "historical research value; do not treat as live"
+    }
+  ]
+}
