@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "target_query_id": "F1-SELLER-001-A",
+  "expected_communication_id": "COMM-F1-20260921-F1-SELLER-001-A",
+  "requested_at": "2026-09-21T21:16:00+02:00",
+  "force_immediate": true,
+  "status": "QUEUED_FOR_PC",
+  "max_generation_attempts": 1,
+  "max_download_attempts": 3,
+  "max_publish_retries": 3,
+  "max_chatgpt_tabs": 1,
+  "query_file": "publisher/chatgpt_query_runner/one_shot/f1_browser_creative_queries.json",
+  "state_file": "publisher/chatgpt_query_runner/f1_daily_test_state.local.json",
+  "last_run_file": "publisher/chatgpt_query_runner/f1_daily_test_last_run.local.json"
+}
