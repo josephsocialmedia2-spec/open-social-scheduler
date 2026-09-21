@@ -200,11 +200,10 @@ def _asset_from_record(record: dict[str, Any], field: str) -> Path | None:
     return path if _valid_image(path) else None
 
 
-def candidate_items(
-    config: dict[str, Any],
+def _excluded_source_hashes(
     state: dict[str, Any],
     queue: dict[str, Any],
-) -> list[dict[str, Any]]:
+) -> set[str]:
     excluded = {
         str(job.get("source_hash") or "").strip().lower()
         for job in queue.get("jobs") or []
@@ -215,27 +214,20 @@ def candidate_items(
         for job in (state.get("jobs") or {}).values()
         if str(job.get("source_hash") or "").strip()
     }
+    return excluded
 
-    featured = [
+
+def featured_candidates(
+    config: dict[str, Any],
+    excluded: set[str],
+) -> list[dict[str, Any]]:
+    items = [
         dict(row)
         for row in config.get("featured") or []
         if source_hash(row).lower() not in excluded
     ]
-    featured.sort(key=lambda x: str(x.get("published_at") or ""), reverse=True)
-
-    known = {source_hash(x).lower() for x in featured}
-    scanned = scan_sources(config, excluded | known)
-    candidates = featured + scanned
-
-    result: list[dict[str, Any]] = []
-    seen: set[str] = set()
-    for item in candidates:
-        digest = source_hash(item).lower()
-        if digest in seen or digest in excluded:
-            continue
-        seen.add(digest)
-        result.append(item)
-    return result
+    items.sort(key=lambda x: str(x.get("published_at") or ""), reverse=True)
+    return items
 
 
 def record_source_rejection(
@@ -455,14 +447,17 @@ def run(forced_slot: str, output_path: str | None) -> int:
         job = existing
     else:
         config = load_json(CONFIG_PATH, {})
-        candidates = candidate_items(config, state, queue)
-        if not candidates:
-            _emit(output_path, {"status": "NOOP_NO_RELEVANT_NEWS", "job_id": "", "slot_key": slot_key})
-            return 0
+        excluded = _excluded_source_hashes(state, queue)
+        featured = featured_candidates(config, excluded)
 
         item = None
         verified = None
-        for candidate in candidates[:25]:
+        checked = 0
+
+        # Try curated official items first. Only if all fail do the more
+        # expensive cross-source discovery scan.
+        for candidate in featured:
+            checked += 1
             try:
                 verified_candidate = verify_source(candidate)
                 item = candidate
@@ -470,7 +465,19 @@ def run(forced_slot: str, output_path: str | None) -> int:
                 break
             except Exception as exc:
                 record_source_rejection(state, candidate, slot_key, exc)
-                continue
+
+        if item is None:
+            known = excluded | {source_hash(x).lower() for x in featured}
+            scanned = scan_sources(config, known)
+            for candidate in scanned[:25]:
+                checked += 1
+                try:
+                    verified_candidate = verify_source(candidate)
+                    item = candidate
+                    verified = verified_candidate
+                    break
+                except Exception as exc:
+                    record_source_rejection(state, candidate, slot_key, exc)
 
         if item is None or verified is None:
             _emit(
@@ -479,7 +486,7 @@ def run(forced_slot: str, output_path: str | None) -> int:
                     "status": "NOOP_NO_VERIFIABLE_SOURCE",
                     "job_id": "",
                     "slot_key": slot_key,
-                    "checked_candidates": min(len(candidates), 25),
+                    "checked_candidates": checked,
                 },
             )
             return 0
