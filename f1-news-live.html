@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="cache-control" content="no-cache">
+  <title>F1 News — Grafica live</title>
+  <style>
+    body{font-family:Arial,sans-serif;background:#070907;color:#fff;margin:0;padding:24px}
+    .wrap{max-width:860px;margin:auto}
+    .card{background:#111;border:1px solid #2a2a2a;border-radius:18px;padding:20px}
+    .badge{display:inline-block;background:#92C205;color:#070907;font-weight:800;padding:7px 11px;border-radius:999px}
+    h1{font-size:28px;margin:16px 0 8px}
+    .muted{color:#b9b9b9}
+    .status{font-size:18px;margin:18px 0}
+    img{width:100%;height:auto;border-radius:14px;display:block;margin-top:18px}
+    a{color:#b7e64a}
+    .links a{display:inline-block;margin:8px 14px 0 0}
+    code{word-break:break-all;color:#d6d6d6}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <span class="badge">F1 NEWS · LIVE</span>
+      <h1 id="headline">Caricamento…</h1>
+      <div class="muted" id="cid"></div>
+      <div class="status" id="status"></div>
+      <div id="graphic"></div>
+      <div class="links" id="links"></div>
+      <p class="muted">Controllo automatico GitHub ogni 5 minuti.</p>
+    </div>
+  </div>
+<script>
+async function load(){
+  const r=await fetch('publisher/news/f1_news_live_status.json?ts='+Date.now(),{cache:'no-store'});
+  const d=await r.json();
+  document.getElementById('headline').textContent=d.headline||'F1 News';
+  document.getElementById('cid').textContent=d.communication_id||'';
+  const effective=d.final_status && d.final_status!=='NOT_CREATED' ? d.final_status : d.browser_status;
+  document.getElementById('status').textContent='Stato: '+effective;
+  const g=document.getElementById('graphic');
+  g.innerHTML='';
+  if(d.graphic_url){
+    const a=document.createElement('a'); a.href=d.graphic_url; a.target='_blank'; a.rel='noopener';
+    const img=document.createElement('img'); img.src=d.graphic_url; img.alt='Grafica F1 News pubblicata';
+    a.appendChild(img); g.appendChild(a);
+    const p=document.createElement('p'); p.innerHTML='<a target="_blank" rel="noopener" href="'+d.graphic_url+'">APRI LA GRAFICA ORIGINALE</a>';
+    g.appendChild(p);
+  }else{
+    g.innerHTML='<p class="muted">Grafica non ancora disponibile. Questa pagina la mostrerà automaticamente appena la pipeline produce un URL reale.</p>';
+  }
+  const links=document.getElementById('links'); links.innerHTML='';
+  (d.remote_post_urls||[]).forEach((url,i)=>{
+    const a=document.createElement('a'); a.href=url; a.target='_blank'; a.rel='noopener'; a.textContent='Apri post '+(i+1); links.appendChild(a);
+  });
+  const run=d.pc_workflow||{};
+  if(run.html_url){
+    const a=document.createElement('a'); a.href=run.html_url; a.target='_blank'; a.rel='noopener'; a.textContent='Workflow PC'; links.appendChild(a);
+  }
+}
+load();
+setInterval(load,30000);
+</script>
+</body>
+</html>
