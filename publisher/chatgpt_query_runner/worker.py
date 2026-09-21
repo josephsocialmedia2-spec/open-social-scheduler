@@ -402,6 +402,57 @@ def process_job(driver: ChromeChatGPTDriver, state: dict, run: dict, job: dict, 
     job["prompt"] = prompt
     persist(state, run)
 
+    # A prompt that already reached generation must never be submitted again.
+    # Recover the visible result from the current conversation and continue with
+    # download/brand/publication only.
+    generated_without_file = (
+        bool(job.get("generation_completed_at"))
+        or str(job.get("status") or "") in {
+            "GENERAZIONE_TERMINATA", "IMMAGINE_RILEVATA", "IMAGE_READY",
+            "DOWNLOAD_PENDING", "DOWNLOADING", "FAILED_RETRYABLE"
+        }
+    ) and source_existing is None and existing is None
+    if generated_without_file:
+        recovered = driver.recover_visible_generation(prompt)
+        if recovered is None:
+            mark(
+                state,
+                run,
+                job,
+                "FAILED_RETRYABLE",
+                error="Immagine già generata ma non recuperabile dalla conversazione corrente; rigenerazione vietata.",
+            )
+            return False
+        try:
+            mark(state, run, job, "DOWNLOAD_PENDING")
+            mark(state, run, job, "DOWNLOADING")
+            saved_path, capture_mode = driver.save_image(recovered, _output_stem(run, job))
+            digest = sha256_file(saved_path)
+            mark(
+                state,
+                run,
+                job,
+                "DOWNLOADED",
+                source_image_path=relative_path(saved_path),
+                image_path=relative_path(saved_path),
+                image_sha256=digest,
+                capture_mode=capture_mode,
+            )
+            branded_path = apply_brand_to_job(state, run, job, saved_path)
+            mark(state, run, job, "COMPLETED", error=None, image_path=relative_path(branded_path))
+            advance_after_completed(state, job, total_queries)
+            persist(state, run)
+            return True
+        except Exception as exc:
+            mark(
+                state,
+                run,
+                job,
+                "FAILED_RETRYABLE",
+                error=f"{type(exc).__name__}: {exc}",
+            )
+            return False
+
     initial_retry = int(job.get("retry_count") or 0)
     for attempt in range(initial_retry + 1, MAX_ATTEMPTS + 1):
         stage = "QUERY_CARICATA"
@@ -620,6 +671,8 @@ def run(batch_size: int, *, fresh_run: bool = False, communication_id: str | Non
         run = active
         run["status"] = "RUNNING"
         run["completed_at"] = None
+    elif news_mode:
+        run = create_run(state, queries, batch_size)
     elif fresh_run:
         run = create_run(state, queries, batch_size)
     else:
@@ -638,8 +691,23 @@ def run(batch_size: int, *, fresh_run: bool = False, communication_id: str | Non
         and _valid_image_path(job.get("image_path")) is not None
         for job in (run.get("jobs") or [])
     )
+    recovery_only = bool(run.get("jobs")) and all(
+        (
+            bool(job.get("generation_completed_at"))
+            or str(job.get("status") or "") in {
+                "GENERAZIONE_TERMINATA", "IMMAGINE_RILEVATA", "IMAGE_READY",
+                "DOWNLOAD_PENDING", "DOWNLOADING", "FAILED_RETRYABLE"
+            }
+        )
+        and _valid_image_path(job.get("source_image_path")) is None
+        and _valid_image_path(job.get("image_path")) is None
+        for job in (run.get("jobs") or [])
+    )
     try:
-        if not downstream_only:
+        if recovery_only:
+            driver.activate_chrome()
+            log("Recovery browser: mantengo la conversazione corrente e cerco l'immagine già generata.")
+        elif not downstream_only:
             for job in run.get("jobs") or []:
                 if str(job.get("status") or "") not in {
                     "COMPLETED", "READY_TO_PUBLISH", "PUBLISHING", "PUBLISHED",
