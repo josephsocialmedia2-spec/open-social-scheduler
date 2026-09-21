@@ -7054,7 +7054,87 @@
       "updated_at": "2026-09-21T16:28:38+00:00",
       "last_error": "BufferAutomationError: Territory not enabled: Valle di Susa",
       "error": "BufferAutomationError: Territory not enabled: Valle di Susa"
+    },
+    {
+      "id": "F1-NEWS-20260921-1829-NOW-E7F9DA83",
+      "communication_id": "COMM-NEWS-20260921-182959-e7f9da83",
+      "title": "Varianti PRGC: approvati criteri e risorse per i Comuni",
+      "objective": "LOCAL NEWS / AUTHORITY",
+      "pillar": "F1 News Valle di Susa",
+      "source_name": "Regione Piemonte - Notiziario n. 33",
+      "source_url": "https://www.regione.piemonte.it/web/amministrazione/autonomie-locali/notiziario-per-amministrazioni-locali/notiziario-per-amministrazioni-locali-n-33-17-settembre-2026",
+      "source_hash": "e7f9da836bd94eacf89776293aa75b7e4bcef64832e2d321c4ba17e838314184",
+      "source_published_at": "2026-09-17",
+      "category": "urbanistica",
+      "caption": "VALLE DI SUSA: OCCHI SUI PIANI REGOLATORI\n\nLa Regione Piemonte ha approvato criteri, modalità e termini per assegnare risorse ai Comuni, anche in forma associata, per le varianti ai Piani Regolatori Generali Comunali (PRGC).\n\nPer chi possiede o sta valutando un immobile, il punto da seguire sono le eventuali varianti comunali: F1 monitorerà gli atti dei Comuni della Valle di Susa e segnalerà gli aggiornamenti con reale interesse immobiliare.\n\nFonte: Regione Piemonte, Notiziario n. 33 del 17/09/2026. Per gli effetti su una specifica area va sempre verificato l'atto del singolo Comune.\n\nNon a sensazione. Con i dati.\n\nValutazione immobile: https://www.agentpricing.com/j.malafronte\nContatto F1 Immobiliare: https://wa.me/393713708294",
+      "format": "photo",
+      "assets": [
+        "publisher/final_assets/news_valle_susa/F1-NEWS-20260921-1829-NOW-E7F9DA83.png"
+      ],
+      "platforms": [
+        "facebook",
+        "instagram"
+      ],
+      "scope": "network",
+      "territory": "Valle di Susa",
+      "editorial_slot": "immediate",
+      "scheduled_at": "2026-09-21T18:29:59+02:00",
+      "status": "ERROR",
+      "approval_required": false,
+      "manual_approval_required": false,
+      "autonomous_publish": true,
+      "created_by": "f1-valle-susa-news-radar",
+      "created_at": "2026-09-21T18:29:59+02:00",
+      "publish_attempts": 1,
+      "attempt_count": 1,
+      "last_publish_attempt_at": "2026-09-21T16:29:59+00:00",
+      "last_step": "ERROR_RECOVERABLE",
+      "updated_at": "2026-09-21T16:30:14+00:00",
+      "last_error": "Buffer provider state requires recovery: error",
+      "buffer_posts": [
+        {
+          "service": "facebook",
+          "channel_id": "6a9afff8065799be468ade7a",
+          "post_id": "6ab15b89d60d4acf72a3f560",
+          "buffer_status": "sent",
+          "due_at": "2026-09-21T16:30:01.640Z",
+          "created_at": "2026-09-21T16:30:09+00:00",
+          "sent_at": "2026-09-21T16:30:07.432Z",
+          "external_link": "https://facebook.com/911947508677134_122135771913205918"
+        },
+        {
+          "service": "instagram",
+          "channel_id": "6a9b0034065799be468adfe4",
+          "post_id": "6ab15b9119683122b8c8be81",
+          "buffer_status": "error",
+          "due_at": "2026-09-21T16:30:09.385Z",
+          "created_at": "2026-09-21T16:30:13+00:00"
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "facebook",
+        "instagram"
+      ],
+      "scheduled_via": "buffer",
+      "resolved_channels": {
+        "facebook": {
+          "id": "6a9afff8065799be468ade7a",
+          "name": "F1immobiliare",
+          "service": "facebook",
+          "organization_id": "6a9aff970f059f084a2c8a6d"
+        },
+        "instagram": {
+          "id": "6a9b0034065799be468adfe4",
+          "name": "joseph_malafronte",
+          "service": "instagram",
+          "organization_id": "6a9aff970f059f084a2c8a6d"
+        }
+      },
+      "published_asset_sha256": [
+        "2b989a893c8b79df6ff10c4cbd166ede29f194438521465c9217cda0affe2b26"
+      ],
+      "error": "Buffer provider state requires recovery: error"
     }
   ],
-  "updated_at": "2026-09-21T16:28:38+00:00"
+  "updated_at": "2026-09-21T16:30:14+00:00"
 }
