@@ -189,26 +189,14 @@ def excluded_hashes(queue: dict[str, Any]) -> set[str]:
     return hashes
 
 
-def candidates(config: dict[str, Any], excluded: set[str]) -> list[dict[str, Any]]:
+def featured_candidates(config: dict[str, Any], excluded: set[str]) -> list[dict[str, Any]]:
     featured = [
         dict(row)
         for row in config.get("featured") or []
         if source_hash(row).lower() not in excluded
     ]
     featured.sort(key=lambda x: str(x.get("published_at") or ""), reverse=True)
-
-    known = excluded | {source_hash(x).lower() for x in featured}
-    discovered = scan_sources(config, known)
-
-    result: list[dict[str, Any]] = []
-    seen: set[str] = set()
-    for item in featured + discovered:
-        digest = source_hash(item).lower()
-        if digest in seen or digest in excluded:
-            continue
-        seen.add(digest)
-        result.append(item)
-    return result
+    return featured
 
 
 def make_row(now: datetime, slot_name: str, slot_key: str, item: dict[str, Any], verification: dict[str, Any]) -> dict[str, Any]:
@@ -283,7 +271,10 @@ def main() -> int:
     rejected: list[dict[str, Any]] = []
     selected = None
     verification = None
-    for item in candidates(config, excluded_hashes(queue))[:25]:
+    excluded = excluded_hashes(queue)
+    featured = featured_candidates(config, excluded)
+
+    for item in featured:
         try:
             verification = verify_source(item)
             selected = item
@@ -297,6 +288,23 @@ def main() -> int:
                     "error": f"{type(exc).__name__}: {exc}"[:1000],
                 }
             )
+
+    if selected is None:
+        known = excluded | {source_hash(x).lower() for x in featured}
+        for item in scan_sources(config, known)[:25]:
+            try:
+                verification = verify_source(item)
+                selected = item
+                break
+            except Exception as exc:
+                rejected.append(
+                    {
+                        "source_url": item.get("source_url"),
+                        "source_name": item.get("source_name"),
+                        "source_hash": source_hash(item),
+                        "error": f"{type(exc).__name__}: {exc}"[:1000],
+                    }
+                )
 
     if selected is None or verification is None:
         queue.setdefault("rejected", []).extend(rejected)
