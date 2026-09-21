@@ -5,14 +5,14 @@ param(
 
 $ErrorActionPreference = 'Stop'
 $Root = (Resolve-Path (Join-Path $PSScriptRoot '..\..')).Path
-$NewsBuilder = Join-Path $Root 'publisher\news\f1_valle_susa_news.py'
-$Worker = Join-Path $Root 'publisher\chatgpt_query_runner\worker.py'
+$Consumer = Join-Path $Root 'publisher\news\f1_news_browser_consumer.py'
 $QueryFile = Join-Path $Root 'publisher\news\f1_news_current.local.json'
+$RuntimeQueue = Join-Path $Root 'publisher\news\f1_news_browser_queue.runtime.local.json'
 $StartInbox = Join-Path $PSScriptRoot 'START_INBOX.ps1'
 $LogDir = Join-Path $PSScriptRoot 'logs'
 New-Item -ItemType Directory -Force -Path $LogDir | Out-Null
 $Stamp = Get-Date -Format 'yyyyMMdd-HHmmss'
-$Log = Join-Path $LogDir "f1-news-$Slot-$Stamp.log"
+$Log = Join-Path $LogDir "f1-news-github-browser-$Slot-$Stamp.log"
 $PyOut = Join-Path $LogDir "f1-news-worker-$Stamp-out.log"
 $PyErr = Join-Path $LogDir "f1-news-worker-$Stamp-err.log"
 
@@ -21,6 +21,22 @@ function Write-Log {
     $line = "$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss') $Message"
     Add-Content -Path $Log -Value $line -Encoding UTF8
     Write-Host $line
+}
+
+function Refresh-RemoteQueue {
+    git fetch origin main 2>&1 | ForEach-Object { Write-Log $_ }
+    if ($LASTEXITCODE -ne 0) { return $false }
+
+    $jsonLines = git show origin/main:publisher/news/f1_news_browser_queue.json 2>$null
+    if ($LASTEXITCODE -ne 0 -or -not $jsonLines) { return $false }
+
+    $utf8 = New-Object System.Text.UTF8Encoding($false)
+    [System.IO.File]::WriteAllText(
+        $RuntimeQueue,
+        ($jsonLines -join [Environment]::NewLine) + [Environment]::NewLine,
+        $utf8
+    )
+    return $true
 }
 
 function Show-WorkerLogs {
@@ -39,7 +55,7 @@ function Show-WorkerLogs {
 }
 
 Set-Location $Root
-Write-Log "RUN START - F1 NEWS VALLE DI SUSA slot=$Slot"
+Write-Log "RUN START - F1 NEWS GITHUB -> CHATGPT BROWSER slot=$Slot"
 
 $PythonCmd = Get-Command python -ErrorAction SilentlyContinue
 if (-not $PythonCmd) { throw 'Python non trovato nel PATH.' }
@@ -49,12 +65,12 @@ try {
     $dirty = git status --porcelain
     if (-not $dirty) {
         git pull --ff-only origin main 2>&1 | ForEach-Object { Write-Log $_ }
-        if ($LASTEXITCODE -ne 0) { throw 'git pull fallito' }
+        if ($LASTEXITCODE -ne 0) { Write-Log 'git pull non riuscito; continuo con codice locale.' }
     } else {
-        Write-Log 'Repository con modifiche locali: uso la versione presente senza sovrascriverla.'
+        Write-Log 'Repository con modifiche locali: non sovrascrivo file locali.'
     }
 } catch {
-    Write-Log "Aggiornamento Git non riuscito: $($_.Exception.Message)"
+    Write-Log "Aggiornamento repository non riuscito: $($_.Exception.Message)"
 }
 
 $env:PYTHONPATH = $Root
@@ -71,7 +87,7 @@ $env:F1_INBOX_PORT = '8877'
 
 python -c "import pyautogui, pyperclip, pygetwindow, uiautomation, flask, requests, PIL, tzdata" 2>$null
 if ($LASTEXITCODE -ne 0) {
-    Write-Log 'Installazione dipendenze mancanti.'
+    Write-Log 'Installazione automatica dipendenze mancanti.'
     python -m pip install -r publisher\chatgpt_query_runner\requirements.txt
     if ($LASTEXITCODE -ne 0) { throw 'Installazione dipendenze browser fallita.' }
     python -m pip install -r publisher\manual_asset_inbox\requirements.txt
@@ -81,10 +97,28 @@ if ($LASTEXITCODE -ne 0) {
 }
 
 Remove-Item $QueryFile -Force -ErrorAction SilentlyContinue
-& $PythonExe $NewsBuilder --slot $Slot --write-query-file $QueryFile 2>&1 | ForEach-Object { Write-Log $_ }
-if ($LASTEXITCODE -ne 0) { throw "Preparazione F1 News fallita. Codice: $LASTEXITCODE" }
-if (-not (Test-Path $QueryFile)) {
-    Write-Log 'NOOP: nessuna notizia immobiliare nuova da pubblicare.'
+
+$JobReady = $false
+for ($i = 1; $i -le 15; $i++) {
+    Write-Log "Ricerca job GitHub $i/15..."
+    if (Refresh-RemoteQueue) {
+        & $PythonExe $Consumer --slot $Slot --queue $RuntimeQueue --output $QueryFile 2>&1 | ForEach-Object { Write-Log $_ }
+        $ConsumerCode = $LASTEXITCODE
+        if ($ConsumerCode -eq 0 -and (Test-Path $QueryFile)) {
+            $JobReady = $true
+            break
+        }
+        if ($ConsumerCode -ne 4 -and $ConsumerCode -ne 0) {
+            Write-Log "Consumer GitHub in errore: $ConsumerCode"
+        }
+    } else {
+        Write-Log 'Queue GitHub non leggibile in questo tentativo.'
+    }
+    Start-Sleep -Seconds 60
+}
+
+if (-not $JobReady) {
+    Write-Log 'NOOP: nessun job F1 News preparato da GitHub per questo slot.'
     exit 0
 }
 
@@ -97,7 +131,6 @@ try {
 }
 
 Remove-Item $PyOut,$PyErr -Force -ErrorAction SilentlyContinue
-
 $WorkerArgs = @(
     '-m',
     'publisher.chatgpt_query_runner.worker',
@@ -111,7 +144,7 @@ Show-WorkerLogs
 $WorkerExit = $Process.ExitCode
 
 if ($WorkerExit -eq 0) {
-    Write-Log 'RUN END - F1 News completata dal GPT browser fino alla verifica disponibile.'
+    Write-Log 'RUN END - job GitHub eseguito dal GPT browser e consegnato alla pipeline di pubblicazione.'
     exit 0
 }
 
