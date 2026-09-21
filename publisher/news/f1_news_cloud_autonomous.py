@@ -324,7 +324,7 @@ def _queue_job(job: dict[str, Any]) -> dict[str, Any]:
         "slot_key": job["slot_key"],
         "scheduled_at": datetime.now(ROME).isoformat(timespec="seconds"),
         "status": "READY",
-        "publisher_backend": "direct_api_cloud_news",
+        "publisher_backend": "buffer_cloud_news",
         "max_publish_attempts": MAX_PUBLISH_ATTEMPTS,
         "generation_provider": job.get("generation_provider"),
         "generation_model": job.get("generation_model"),
