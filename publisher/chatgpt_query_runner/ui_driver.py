@@ -20,6 +20,7 @@ from PIL import Image, UnidentifiedImageError
 GPT_URL = "https://chatgpt.com/g/g-6a9c210485488191b072eb694c2f114c-generatore-grafica-f1"
 MAX_DOWNLOAD_ATTEMPTS = max(1, int(os.getenv("F1_MAX_DOWNLOAD_ATTEMPTS", "3")))
 MAX_CHATGPT_TABS = max(1, int(os.getenv("F1_MAX_CHATGPT_TABS", "1")))
+FORCE_COORDINATE_COMPOSER = os.getenv("F1_FORCE_COORDINATE_COMPOSER", "0") == "1"
 
 PROMPT_NAMES = (
     "message chatgpt",
@@ -370,13 +371,22 @@ class ChromeChatGPTDriver:
 
     def _candidate_composer_points(self) -> list[tuple[int, int]]:
         left, top, width, height = self._window_geometry()
-        xs = (0.50, 0.46, 0.54)
-        ys = (0.90, 0.86, 0.82, 0.94)
-        points = []
-        for y_ratio in ys:
-            for x_ratio in xs:
-                points.append((left + int(width * x_ratio), top + int(height * y_ratio)))
-        return points
+        # Il composer ChatGPT desktop occupa la fascia centrale-bassa.
+        # Prima prova il punto che corrisponde al layout reale del Generatore F1,
+        # poi amplia progressivamente la ricerca.
+        ratios = [
+            (0.56, 0.865),
+            (0.50, 0.865),
+            (0.62, 0.865),
+            (0.56, 0.90),
+            (0.50, 0.90),
+            (0.62, 0.90),
+            (0.56, 0.82),
+            (0.50, 0.82),
+            (0.62, 0.82),
+            (0.56, 0.94),
+        ]
+        return [(left + int(width * x), top + int(height * y)) for x, y in ratios]
 
     @staticmethod
     def _clipboard_selected_text() -> str | None:
@@ -417,8 +427,14 @@ class ChromeChatGPTDriver:
         return None
 
     def wait_composer(self, timeout: int = 25):
-        # Prima prova l'albero accessibile, ma non resta bloccato 60 secondi.
-        composer = self.find_composer(timeout=min(timeout, 8))
+        # Nel test Windows reale preferiamo subito il composer a coordinate:
+        # evita che un cambiamento dell'accessibility tree lasci il programma
+        # fermo sulla home del GPT pur con il box visibile.
+        if FORCE_COORDINATE_COMPOSER:
+            point = self._probe_coordinate_composer()
+            if point is not None:
+                return point
+        composer = self.find_composer(timeout=min(timeout, 6))
         if composer is not None:
             return composer
         point = self._probe_coordinate_composer()
@@ -477,6 +493,8 @@ class ChromeChatGPTDriver:
         return "coordinate-verified+clipboard"
 
     def set_and_verify_prompt(self, prompt: str) -> str:
+        if FORCE_COORDINATE_COMPOSER:
+            return self._set_prompt_by_coordinate(prompt)
         composer = self.find_composer(timeout=5)
         if composer is None:
             return self._set_prompt_by_coordinate(prompt)
