@@ -40,7 +40,7 @@ jobs:
     env:
       BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
       CLOUDINARY_URL: ${{ secrets.CLOUDINARY_URL }}
-      F1_PUBLISH_MAX_ATTEMPTS: '5'
+      F1_PUBLISH_MAX_ATTEMPTS: '3'
 
     steps:
       - name: Checkout main
