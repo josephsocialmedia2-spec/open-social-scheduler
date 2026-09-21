@@ -29,3 +29,4 @@ __pycache__/
 .venv/
 publisher/news/f1_news_current.local.json
 publisher/news/f1_valle_susa_news_state.local.json
+publisher/news/f1_news_browser_queue.runtime.local.json
