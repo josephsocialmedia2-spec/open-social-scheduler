@@ -311,7 +311,17 @@ def refresh_publication_status(job: dict[str, Any], api_key: str) -> bool:
         job["status"] = "PUBLISHED_VERIFIED"
         sent_times = [str(x.get("sent_at") or "") for x in refreshed if x.get("sent_at")]
         job["published_at"] = max(sent_times) if sent_times else datetime.now(timezone.utc).isoformat(timespec="seconds")
-        job["published_urls"] = sorted(set(urls))
+        unique_urls = sorted(set(urls))
+        provider_ids = [
+            str(x.get("post_id") or "").strip()
+            for x in refreshed
+            if str(x.get("post_id") or "").strip()
+        ]
+        job["published_urls"] = unique_urls
+        job["remote_post_urls"] = unique_urls
+        job["remote_post_url"] = unique_urls[0] if unique_urls else ""
+        job["remote_post_ids"] = provider_ids
+        job["remote_post_id"] = provider_ids[0] if provider_ids else ""
         job["provider"] = "buffer"
         job.pop("error", None)
         mark_job(job, "PUBLISHED_VERIFIED")
