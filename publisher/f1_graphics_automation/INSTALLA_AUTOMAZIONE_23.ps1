@@ -82,7 +82,7 @@ $NewsSettings = New-ScheduledTaskSettingsSet `
 Write-Host 'Registrazione F1_News_ValleSusa alle 11:30 e 19:30...'
 Register-ScheduledTask `
     -TaskName 'F1_News_ValleSusa' `
-    -Description 'F1 News Valle di Susa: seleziona la notizia, crea caption e prompt, usa il GPT Generatore Grafica F1, scarica, brandizza, pubblica e verifica.' `
+    -Description 'F1 News Valle di Susa: GitHub prepara notizia/caption/prompt; il PC esegue il GPT browser, scarica, brandizza, pubblica e verifica.' `
     -Action $NewsAction `
     -Trigger $NewsTriggers `
     -Principal $Principal `
@@ -164,7 +164,7 @@ Write-Host 'INSTALLAZIONE VERIFICATA.' -ForegroundColor Green
 Write-Host 'Desktop: F1 AUTOPUBLISHER' -ForegroundColor White
 Write-Host 'I launcher di test restano disponibili nella cartella tecnica, non sul Desktop.' -ForegroundColor DarkGray
 Write-Host 'F1_Grafiche_23: ogni giorno alle 23:00 recupera comunicati incompleti, sessione Windows interattiva' -ForegroundColor White
-Write-Host 'F1_News_ValleSusa: ogni giorno alle 11:30 e 19:30 usa il GPT browser, non card statiche.' -ForegroundColor White
+Write-Host 'F1_News_ValleSusa: GitHub controlla la coda; alle 11:30 e 19:30 il PC esegue il GPT browser e pubblica.' -ForegroundColor White
 Write-Host "Prossima esecuzione recovery 23:00: $($TaskInfo.NextRunTime)" -ForegroundColor Cyan
 Write-Host "Prossima esecuzione F1 News: $($NewsTaskInfo.NextRunTime)" -ForegroundColor Cyan
 Write-Host 'Autopublisher: http://127.0.0.1:8877/' -ForegroundColor Cyan
