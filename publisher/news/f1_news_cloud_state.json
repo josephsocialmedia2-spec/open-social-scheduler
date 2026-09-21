@@ -43,7 +43,7 @@
       "publish_attempts": 0,
       "max_publish_attempts": 3,
       "created_at": "2026-09-21T19:22:58+02:00",
-      "updated_at": "2026-09-21T17:25:04+00:00",
+      "updated_at": "2026-09-21T17:27:56+00:00",
       "provider_error": "RuntimeError: OpenAI image API failed 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}",
       "providers_checked": {
         "openai_image": {
@@ -72,7 +72,7 @@
     "2026-09-21|IMMEDIATE": {
       "job_id": "F1NEWS-20260921-IMMEDIATE-995E438A72",
       "status": "BLOCKED_CLOUD_IMAGE_PROVIDER",
-      "updated_at": "2026-09-21T17:25:04+00:00"
+      "updated_at": "2026-09-21T17:27:56+00:00"
     }
   },
   "provider_audit": {
@@ -107,5 +107,5 @@
       "rejected_at": "2026-09-21T17:24:29+00:00"
     }
   ],
-  "updated_at": "2026-09-21T17:25:04+00:00"
+  "updated_at": "2026-09-21T17:27:56+00:00"
 }
