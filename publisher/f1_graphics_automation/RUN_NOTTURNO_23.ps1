@@ -8,6 +8,7 @@ $ErrorActionPreference = 'Stop'
 $Root = (Resolve-Path (Join-Path $PSScriptRoot '..\..')).Path
 $Worker = Join-Path $Root 'publisher\chatgpt_query_runner\worker.py'
 $StartInbox = Join-Path $PSScriptRoot 'START_INBOX.ps1'
+$EnsurePoller = Join-Path $PSScriptRoot 'ENSURE_F1_NEWS_POLLER.ps1'
 $LogDir = Join-Path $PSScriptRoot 'logs'
 New-Item -ItemType Directory -Force -Path $LogDir | Out-Null
 $Stamp = Get-Date -Format 'yyyyMMdd-HHmmss'
@@ -58,6 +59,15 @@ try {
     }
 } catch {
     Write-Log "Git pull non riuscito, continuo con la versione locale: $($_.Exception.Message)"
+}
+
+try {
+    if (Test-Path $EnsurePoller) {
+        & $EnsurePoller
+        Write-Log 'F1 News GitHub Poller verificato/installato.'
+    }
+} catch {
+    Write-Log "Installazione poller F1 News non riuscita: $($_.Exception.Message)"
 }
 
 $depsOk = $true
