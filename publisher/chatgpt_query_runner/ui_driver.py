@@ -64,6 +64,10 @@ class PageSnapshot:
     image_signatures: set[str]
     download_signatures: set[str]
     names: list[str]
+    image_count: int = 0
+    download_count: int = 0
+    max_image_bottom: int = 0
+    max_download_bottom: int = 0
 
 
 @dataclass
@@ -494,10 +498,16 @@ class ChromeChatGPTDriver:
 
     def snapshot(self) -> PageSnapshot:
         records = self._records()
+        images = [r for r in records if self._is_image_record(r)]
+        downloads = [r for r in records if self._is_download_record(r)]
         return PageSnapshot(
-            image_signatures={r["signature"] for r in records if self._is_image_record(r)},
-            download_signatures={r["signature"] for r in records if self._is_download_record(r)},
+            image_signatures={r["signature"] for r in images},
+            download_signatures={r["signature"] for r in downloads},
             names=[r["name"] for r in records if r["name"]],
+            image_count=len(images),
+            download_count=len(downloads),
+            max_image_bottom=max((r["rect"][3] for r in images), default=0),
+            max_download_bottom=max((r["rect"][3] for r in downloads), default=0),
         )
 
     def _page_contains_prompt(self, prompt: str) -> bool:
@@ -556,41 +566,120 @@ class ChromeChatGPTDriver:
                 return token
         return None
 
-    def wait_generation(self, baseline: PageSnapshot) -> GenerationResult:
-        start_deadline = time.time() + self.start_timeout
-        overall_deadline = time.time() + self.generation_timeout
+    def wait_generation(self, baseline: PageSnapshot, prompt: str | None = None) -> GenerationResult:
+        wait_started = time.time()
+        start_deadline = wait_started + self.start_timeout
+        overall_deadline = wait_started + self.generation_timeout
         started_at = 0.0
         last_scroll = 0.0
+        last_debug = 0.0
+
         while time.time() < overall_deadline:
             self.activate_chrome()
-            if time.time() - last_scroll > 8:
+            if time.time() - last_scroll > 6:
                 pyautogui.press("end")
                 last_scroll = time.time()
-                time.sleep(0.4)
+                time.sleep(0.35)
+
             records = self._records()
             error = self._error_text(records)
             if error:
                 raise RuntimeError(f"ChatGPT segnala un errore durante la generazione: {error}")
+
             generating = any(self._is_generating_record(r) for r in records)
-            images = [r for r in records if self._is_image_record(r) and r["signature"] not in baseline.image_signatures]
-            downloads = [r for r in records if self._is_download_record(r) and r["signature"] not in baseline.download_signatures]
+            all_images = [r for r in records if self._is_image_record(r)]
+            all_downloads = [r for r in records if self._is_download_record(r)]
+            new_images = [r for r in all_images if r["signature"] not in baseline.image_signatures]
+            new_downloads = [r for r in all_downloads if r["signature"] not in baseline.download_signatures]
+
+            image_count_increased = len(all_images) > baseline.image_count
+            download_count_increased = len(all_downloads) > baseline.download_count
+            max_image_bottom = max((r["rect"][3] for r in all_images), default=0)
+            max_download_bottom = max((r["rect"][3] for r in all_downloads), default=0)
+            bottom_advanced = (
+                max_image_bottom > baseline.max_image_bottom + 24
+                or max_download_bottom > baseline.max_download_bottom + 24
+            )
+            result_changed = bool(
+                new_images
+                or new_downloads
+                or image_count_increased
+                or download_count_increased
+                or bottom_advanced
+            )
+
             if generating and not started_at:
                 started_at = time.time()
                 self.log("Generazione iniziata")
-            if (images or downloads) and not started_at:
+
+            if result_changed and not started_at:
                 started_at = time.time()
-                self.log("Generazione iniziata: nuovo risultato immagine rilevato")
-            if started_at and not generating and (images or downloads):
-                self.log("Generazione terminata e immagine rilevata")
+                self.log("Generazione iniziata: risultato visuale nuovo o spostato rilevato")
+
+            # Primary completion path: generation was observed and a result exists.
+            if started_at and not generating and (all_images or all_downloads):
+                latest_image = max(all_images, key=lambda r: r["rect"][3])["control"] if all_images else None
+                latest_downloads = [
+                    r["control"]
+                    for r in sorted(all_downloads, key=lambda r: r["rect"][3])
+                ]
+                self.log(
+                    "Generazione terminata: risultato disponibile "
+                    f"(images={len(all_images)}, downloads={len(all_downloads)}, changed={result_changed})"
+                )
                 return GenerationResult(
-                    image_control=images[-1]["control"] if images else None,
-                    download_controls=[r["control"] for r in downloads],
+                    image_control=latest_image,
+                    download_controls=latest_downloads,
                     started_at=started_at,
                     completed_at=time.time(),
                 )
+
+            # Resilience path for ChatGPT UI updates that recycle the same
+            # accessibility node/signature. If the submitted prompt is present,
+            # enough time has elapsed and a large result is visible at the end of
+            # the conversation, accept the latest image even if its runtime ID
+            # did not change.
+            elapsed = time.time() - wait_started
+            if (
+                not generating
+                and elapsed >= 12
+                and (all_images or all_downloads)
+                and (prompt is None or self._page_contains_prompt(prompt))
+            ):
+                screen_h = pyautogui.size().height
+                latest_bottom = max(max_image_bottom, max_download_bottom)
+                if latest_bottom >= int(screen_h * 0.45):
+                    latest_image = max(all_images, key=lambda r: r["rect"][3])["control"] if all_images else None
+                    latest_downloads = [
+                        r["control"]
+                        for r in sorted(all_downloads, key=lambda r: r["rect"][3])
+                    ]
+                    self.log(
+                        "Generazione terminata via fallback resiliente: "
+                        "risultato visibile dopo prompt inviato"
+                    )
+                    return GenerationResult(
+                        image_control=latest_image,
+                        download_controls=latest_downloads,
+                        started_at=started_at or wait_started,
+                        completed_at=time.time(),
+                    )
+
+            if time.time() - last_debug > 10:
+                self.log(
+                    "Attesa generazione: "
+                    f"generating={generating} images={len(all_images)} "
+                    f"downloads={len(all_downloads)} changed={result_changed}"
+                )
+                last_debug = time.time()
+
             if not started_at and time.time() > start_deadline:
-                raise RuntimeError("GENERAZIONE_IN_CORSO non rilevata entro il timeout iniziale.")
-            time.sleep(2.5)
+                raise RuntimeError(
+                    "GENERAZIONE_IN_CORSO non rilevata: nessun nuovo risultato accessibile "
+                    "entro il timeout iniziale."
+                )
+            time.sleep(1.5)
+
         raise RuntimeError("Timeout: generazione immagine non completata entro il limite massimo.")
 
     @staticmethod
