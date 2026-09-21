@@ -16,15 +16,23 @@ jobs:
     env:
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
       OPENAI_IMAGE_MODEL: gpt-image-1
+      PYTHONPATH: ${{ github.workspace }}
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-python@v6
         with: {python-version: '3.12'}
       - run: python -m pip install pillow requests
       - name: Require ChatGPT/OpenAI image engine
-        run: test -n "$OPENAI_API_KEY"
+        run: |
+          if [ -z "$OPENAI_API_KEY" ]; then
+            echo "::error::OPENAI_API_KEY is not available to this workflow"
+            exit 1
+          fi
+          echo "OPENAI_API_KEY is available"
+      - name: Verify Python package imports
+        run: python -c "from publisher.rendering.openai_visual_engine import generate_visual; print('publisher import OK')"
       - name: Generate 2 variants for 6 search intents
-        run: python publisher/f1_chatgpt_creative_engine.py
+        run: python -m publisher.f1_chatgpt_creative_engine
       - name: QA generated visual files
         run: |
           python - <<'PY'
