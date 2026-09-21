@@ -77,7 +77,11 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          python -m py_compile             publisher/news/f1_news_cloud_autonomous.py             publisher/news/f1_news_cloud_publish.py             publisher/rendering/openai_visual_engine.py             publisher/chatgpt_query_runner/f1_brand_layer.py             publisher/direct_api_publish.py
+          python -m py_compile \
+            publisher/news/f1_news_cloud_autonomous.py \
+            publisher/rendering/openai_visual_engine.py \
+            publisher/chatgpt_query_runner/f1_brand_layer.py \
+            publisher/final_asset_publisher.py
           python - <<'PY'
           from pathlib import Path
           files=[
