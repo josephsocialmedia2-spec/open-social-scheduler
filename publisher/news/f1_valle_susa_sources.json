@@ -1,0 +1,134 @@
+{
+  "version": 1,
+  "timezone": "Europe/Rome",
+  "schedule_utc": [
+    "10:30",
+    "18:30"
+  ],
+  "local_windows": [
+    "11:00-13:00",
+    "19:00-21:00"
+  ],
+  "evaluation_url": "https://www.agentpricing.com/j.malafronte",
+  "contact_url": "https://wa.me/393713708294",
+  "keywords": [
+    "immobile",
+    "immobili",
+    "casa",
+    "abitazione",
+    "alloggio",
+    "locazione",
+    "affitto",
+    "vendita",
+    "asta",
+    "patrimonio",
+    "edilizia",
+    "urbanistica",
+    "piano regolatore",
+    "prgc",
+    "variante",
+    "ristrutturazione",
+    "riqualificazione",
+    "catasto",
+    "rendita catastale",
+    "prima casa",
+    "efficientamento energetico",
+    "terreno",
+    "alienazione",
+    "residenzialità"
+  ],
+  "towns": [
+    "Avigliana",
+    "Sant'Ambrogio di Torino",
+    "Almese",
+    "Villar Dora",
+    "Condove",
+    "Caprie",
+    "Chiusa di San Michele",
+    "Vaie",
+    "Bussoleno",
+    "Susa",
+    "Borgone Susa",
+    "San Didero",
+    "Rubiana",
+    "Oulx",
+    "Bardonecchia"
+  ],
+  "sources": [
+    {
+      "name": "Regione Piemonte - Notiziario amministrazioni locali",
+      "url": "https://www.regione.piemonte.it/web/amministrazione/autonomie-locali/notiziario-per-amministrazioni-locali"
+    },
+    {
+      "name": "Regione Piemonte - Casa",
+      "url": "https://www.regione.piemonte.it/web/temi/diritti-politiche-sociali/casa"
+    },
+    {
+      "name": "Bandi Regione Piemonte",
+      "url": "https://bandi.regione.piemonte.it/"
+    },
+    {
+      "name": "Unione Montana Valle Susa",
+      "url": "https://www.unionemontanavallesusa.it/"
+    },
+    {
+      "name": "Comune di Avigliana - Bandi",
+      "url": "https://www.comune.avigliana.to.it/it-it/amministrazione/bandi-di-gara"
+    },
+    {
+      "name": "Comune di Susa",
+      "url": "https://www.comune.susa.to.it/"
+    },
+    {
+      "name": "Comune di Condove",
+      "url": "https://www.comune.condove.to.it/"
+    },
+    {
+      "name": "Comune di Villar Dora",
+      "url": "https://www.comune.villardora.to.it/"
+    },
+    {
+      "name": "Sant'Ambrogio di Torino",
+      "url": "https://www.comune.santambrogioditorino.to.it/"
+    },
+    {
+      "name": "ATC Piemonte Centrale - Aste",
+      "url": "https://www.atc.torino.it/aste"
+    },
+    {
+      "name": "Tribunale di Torino - Vendite immobiliari",
+      "url": "https://www.tribunale.torino.giustizia.it/it/Aste/SearchImmobili"
+    },
+    {
+      "name": "Portale Vendite Pubbliche",
+      "url": "https://pvp.giustizia.it/pvp/"
+    }
+  ],
+  "featured": [
+    {
+      "id": "REG-PRGC-20260917",
+      "title": "Varianti PRGC: approvati criteri e risorse per i Comuni",
+      "headline": "VALLE DI SUSA: OCCHI SUI PRGC",
+      "subheadline": "Nuove risorse regionali per le varianti comunali",
+      "category": "urbanistica",
+      "area": "Piemonte / Valle di Susa",
+      "source_name": "Regione Piemonte - Notiziario n. 33",
+      "source_url": "https://www.regione.piemonte.it/web/amministrazione/autonomie-locali/notiziario-per-amministrazioni-locali/notiziario-per-amministrazioni-locali-n-33-17-settembre-2026",
+      "published_at": "2026-09-17",
+      "summary": "La Regione Piemonte ha approvato criteri, modalità e termini per erogare risorse ai Comuni, singoli o associati, per le varianti ai Piani Regolatori Generali Comunali (PRGC).",
+      "caption_override": "VALLE DI SUSA: OCCHI SUI PIANI REGOLATORI\n\nLa Regione Piemonte ha approvato criteri, modalità e termini per assegnare risorse ai Comuni, anche in forma associata, per le varianti ai Piani Regolatori Generali Comunali (PRGC).\n\nPer chi possiede o sta valutando un immobile, il punto da seguire sono le eventuali varianti comunali: F1 monitorerà gli atti dei Comuni della Valle di Susa e segnalerà gli aggiornamenti con reale interesse immobiliare.\n\nFonte: Regione Piemonte, Notiziario n. 33 del 17/09/2026. Per gli effetti su una specifica area va sempre verificato l'atto del singolo Comune.\n\nNon a sensazione. Con i dati.\n\nValutazione immobile: https://www.agentpricing.com/j.malafronte\nContatto F1 Immobiliare: https://wa.me/393713708294"
+    },
+    {
+      "id": "REG-AFFITTI-FOI-20260903",
+      "title": "Affitti: pubblicati gli indici dei prezzi al consumo di luglio 2026",
+      "headline": "AFFITTI: NUOVO INDICE ISTAT",
+      "subheadline": "Aggiornamento utile per le locazioni urbane",
+      "category": "locazione",
+      "area": "Piemonte / Valle di Susa",
+      "source_name": "Regione Piemonte - Notiziario n. 31",
+      "source_url": "https://www.regione.piemonte.it/web/amministrazione/autonomie-locali/notiziario-per-amministrazioni-locali/notiziario-per-amministrazioni-locali-n-31-3-settembre-2026",
+      "published_at": "2026-09-03",
+      "summary": "Il Notiziario regionale segnala la pubblicazione in Gazzetta Ufficiale degli indici dei prezzi al consumo per le famiglie di operai e impiegati relativi a luglio 2026, richiamati dalla disciplina delle locazioni di immobili urbani."
+    }
+  ]
+}
