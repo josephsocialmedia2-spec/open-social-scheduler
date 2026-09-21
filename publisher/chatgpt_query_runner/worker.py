@@ -46,9 +46,10 @@ INBOX_PORT = int(os.getenv("F1_INBOX_PORT", "8877"))
 DEFAULT_BATCH_SIZE = int(os.getenv("F1_QUERY_BATCH_SIZE", "4"))
 MAX_ATTEMPTS = max(1, int(os.getenv("F1_MAX_ATTEMPTS", "3")))
 MAX_COMMUNICATION_ATTEMPTS = max(1, int(os.getenv("F1_COMM_MAX_ATTEMPTS", "5")))
-MAX_PUBLISH_VERIFY_SECONDS = max(60, int(os.getenv("F1_PUBLISH_VERIFY_SECONDS", "900")))
+MAX_PUBLISH_VERIFY_SECONDS = max(60, int(os.getenv("F1_PUBLISH_VERIFY_SECONDS", "1800")))
 FINAL_QUEUE_PATH = ROOT / "publisher" / "final_content_queue.json"
 DAILY_QUERY_FILE = "f1_browser_creative_queries.json"
+NEWS_QUERY_FILE = "f1_news_current.local.json"
 
 LOG_ROOT.mkdir(parents=True, exist_ok=True)
 RUN_LOG = LOG_ROOT / f"worker-{datetime.now(ROME):%Y%m%d-%H%M%S}.log"
@@ -213,6 +214,10 @@ def relative_path(path: Path) -> str:
 
 def is_daily_f1_mode() -> bool:
     return QUERY_FILE.name.casefold() == DAILY_QUERY_FILE.casefold()
+
+
+def is_news_f1_mode() -> bool:
+    return QUERY_FILE.name.casefold() == NEWS_QUERY_FILE.casefold()
 
 
 def _resolve_job_path(value: str | None) -> Path | None:
@@ -383,7 +388,7 @@ def process_job(driver: ChromeChatGPTDriver, state: dict, run: dict, job: dict, 
         existing if existing is not None and not str(job.get("brand_path") or "").strip() else None
     )
     if source_existing is not None and job.get("status") in {
-        "IMMAGINE_SALVATA", "FILE_VALIDATED", "QA_PENDING", "QA_PASS", "BRAND_PASS"
+        "IMMAGINE_SALVATA", "DOWNLOADED", "FILE_VALIDATED", "QA_PENDING", "QA_PASS", "BRAND_PASS"
     }:
         branded = _valid_image_path(job.get("brand_path"))
         if branded is None:
@@ -545,6 +550,16 @@ def auto_ingest_completed_run(run: dict, *, daily_mode: bool = False) -> dict:
             "platforms": job.get("platforms") or ["facebook", "instagram"],
             "client": job.get("client") or "F1 Immobiliare",
             "communication_id": communication_id,
+            "news_id": job.get("news_id"),
+            "headline": job.get("headline"),
+            "cta": job.get("cta"),
+            "category": job.get("category"),
+            "source_name": job.get("source_name"),
+            "source_url": job.get("source_url"),
+            "source_hash": job.get("source_hash"),
+            "source_published_at": job.get("source_published_at"),
+            "editorial_slot": job.get("editorial_slot"),
+            "prompt": job.get("prompt"),
         })
     if not items:
         raise RuntimeError("Nessuna immagine COMPLETED disponibile per l'invio automatico alla pubblicazione")
@@ -582,15 +597,30 @@ def run(batch_size: int, *, fresh_run: bool = False, communication_id: str | Non
         set_communication_status(communication_id, "PROCESSING")
     state = load_state(STATE_FILE)
     daily_mode = is_daily_f1_mode() and not communication_id
+    news_mode = is_news_f1_mode() and not communication_id
     today = datetime.now(ROME).date().isoformat()
     if daily_mode and state.get("last_successful_date") == today:
         log(f"NOOP_ALREADY_COMPLETED_TODAY: {today}")
         return 0
-    # Daily F1 always resumes an incomplete run. --fresh-run must never cause a
-    # second generation after IMAGE_READY/DOWNLOADED.
-    if daily_mode:
+
+    # Daily/news jobs must resume downstream work instead of generating a
+    # second image after IMAGE_READY, DOWNLOADED or READY_TO_PUBLISH.
+    if daily_mode or news_mode:
         fresh_run = False
-    if fresh_run:
+
+    active = state.get("active_run")
+    news_query_id = str((queries[0] if queries else {}).get("id") or "")
+    if (
+        news_mode
+        and isinstance(active, dict)
+        and active.get("jobs")
+        and str((active.get("jobs") or [{}])[0].get("query_id") or "") == news_query_id
+        and str(active.get("status") or "") != "PUBLISHED_VERIFIED"
+    ):
+        run = active
+        run["status"] = "RUNNING"
+        run["completed_at"] = None
+    elif fresh_run:
         run = create_run(state, queries, batch_size)
     else:
         run = get_or_create_run(state, queries, batch_size)
@@ -600,8 +630,25 @@ def run(batch_size: int, *, fresh_run: bool = False, communication_id: str | Non
 
     log(f"RUN START {run['run_id']} - batch {run['batch_size']}")
     driver = ChromeChatGPTDriver(log=log, diagnostic_root=LOG_ROOT)
+    downstream_only = all(
+        str(job.get("status") or "") in {
+            "COMPLETED", "READY_TO_PUBLISH", "PUBLISHING", "PUBLISHED",
+            "VERIFYING_PUBLICATION", "PUBLISHED_VERIFIED"
+        }
+        and _valid_image_path(job.get("image_path")) is not None
+        for job in (run.get("jobs") or [])
+    )
     try:
-        driver.open_gpt()
+        if not downstream_only:
+            for job in run.get("jobs") or []:
+                if str(job.get("status") or "") not in {
+                    "COMPLETED", "READY_TO_PUBLISH", "PUBLISHING", "PUBLISHED",
+                    "VERIFYING_PUBLICATION", "PUBLISHED_VERIFIED"
+                }:
+                    mark(state, run, job, "OPENING_CHATGPT")
+            driver.open_gpt()
+        else:
+            log("Browser non riaperto: asset già generato, riprendo dalla pubblicazione.")
     except Exception as exc:
         run["error"] = f"{type(exc).__name__}: {exc}"
         final_status = finalize_run(state)
@@ -618,7 +665,8 @@ def run(batch_size: int, *, fresh_run: bool = False, communication_id: str | Non
             success += 1
 
     daily_mode = is_daily_f1_mode() and not communication_id
-    if daily_mode:
+    news_mode = is_news_f1_mode() and not communication_id
+    if daily_mode or news_mode:
         final_status = "GRAFICHE_PRONTE" if success == len(run.get("jobs") or []) else "ERRORE"
         run["status"] = final_status
         persist(state, run, status=final_status)
@@ -637,7 +685,8 @@ def run(batch_size: int, *, fresh_run: bool = False, communication_id: str | Non
         return 2
 
     daily_mode = is_daily_f1_mode()
-    if not communication_id and not daily_mode:
+    news_mode = is_news_f1_mode()
+    if not communication_id and not daily_mode and not news_mode:
         log("Batch grafico statico legacy completato: nessuna pubblicazione automatica.")
         return 0
 
@@ -648,6 +697,10 @@ def run(batch_size: int, *, fresh_run: bool = False, communication_id: str | Non
         effective_communication_id = communication_id
         if daily_mode and run.get("jobs"):
             effective_communication_id = _daily_communication_id(run["jobs"][0])
+        elif news_mode and run.get("jobs"):
+            candidate = str(run["jobs"][0].get("query_id") or "")
+            if candidate.startswith("COMM-NEWS-"):
+                effective_communication_id = candidate
         for job in run.get("jobs") or []:
             if job_image_exists(job):
                 mark(state, run, job, "READY_TO_PUBLISH", communication_id=effective_communication_id)
@@ -676,6 +729,7 @@ def run(batch_size: int, *, fresh_run: bool = False, communication_id: str | Non
                         run,
                         job,
                         "PUBLISHED_VERIFIED",
+                        remote_post_id=(remote_ids[0] if remote_ids else ""),
                         remote_post_ids=remote_ids,
                         remote_post_url=(remote_urls[0] if remote_urls else ""),
                         remote_post_urls=remote_urls,
