@@ -265,6 +265,24 @@ def instagram_publish(job: dict[str, Any], client: dict[str, Any], paths: list[P
         ig_wait_container(container_id, token)
         published = request("POST", f"{meta_graph_base()}/{ig_user_id}/media_publish", params={"creation_id": container_id, "access_token": token}).json()
         return {"container_id": container_id, "media_id": published.get("id")}
+    if len(urls) == 1:
+        created = request(
+            "POST",
+            f"{meta_graph_base()}/{ig_user_id}/media",
+            params={
+                "image_url": urls[0],
+                "caption": str(job.get("caption") or "")[:2200],
+                "access_token": token,
+            },
+        ).json()
+        container_id = str(created["id"])
+        ig_wait_container(container_id, token)
+        published = request(
+            "POST",
+            f"{meta_graph_base()}/{ig_user_id}/media_publish",
+            params={"creation_id": container_id, "access_token": token},
+        ).json()
+        return {"container_id": container_id, "media_id": published.get("id"), "mode": "single_image"}
     children: list[str] = []
     for url in urls[:10]:
         child = request("POST", f"{meta_graph_base()}/{ig_user_id}/media", params={"image_url": url, "is_carousel_item": "true", "access_token": token}).json()
