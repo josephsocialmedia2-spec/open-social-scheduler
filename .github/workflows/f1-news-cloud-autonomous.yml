@@ -40,9 +40,6 @@ jobs:
       OPENAI_IMAGE_MODEL: gpt-image-1
       BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
       CLOUDINARY_URL: ${{ secrets.CLOUDINARY_URL }}
-      F1_FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.F1_FACEBOOK_PAGE_ACCESS_TOKEN }}
-      F1_INSTAGRAM_ACCESS_TOKEN: ${{ secrets.F1_INSTAGRAM_ACCESS_TOKEN }}
-      F1_INSTAGRAM_USER_ID: ${{ secrets.F1_INSTAGRAM_USER_ID }}
 
     steps:
       - name: Checkout main
@@ -68,7 +65,7 @@ jobs:
         shell: bash
         run: |
           set +x
-          for name in OPENAI_API_KEY BUFFER_API_KEY CLOUDINARY_URL F1_FACEBOOK_PAGE_ACCESS_TOKEN F1_INSTAGRAM_ACCESS_TOKEN F1_INSTAGRAM_USER_ID; do
+          for name in OPENAI_API_KEY BUFFER_API_KEY CLOUDINARY_URL; do
             if [ -n "${!name:-}" ]; then
               echo "$name=PRESENT"
             else
@@ -85,7 +82,7 @@ jobs:
           from pathlib import Path
           files=[
               Path('publisher/news/f1_news_cloud_autonomous.py'),
-              Path('publisher/news/f1_news_cloud_publish.py'),
+              Path('publisher/final_asset_publisher.py'),
           ]
           # Build forbidden tokens in pieces so the validator does not match its
           # own source text inside the workflow.
@@ -164,6 +161,44 @@ jobs:
             fi
             sleep 20
           done
+
+      - name: Sync verified publication back to F1 News state
+        if: always() && steps.build.outputs.job_id != ''
+        shell: bash
+        run: |
+          python - "${{ steps.build.outputs.job_id }}" <<'PY'
+          import json,sys
+          from datetime import datetime, timezone
+          from pathlib import Path
+          jid=sys.argv[1]
+          qpath=Path('publisher/final_content_queue.json')
+          spath=Path('publisher/news/f1_news_cloud_state.json')
+          q=json.loads(qpath.read_text(encoding='utf-8'))
+          s=json.loads(spath.read_text(encoding='utf-8'))
+          qjob=next((x for x in q.get('jobs',[]) if str(x.get('id'))==jid),None)
+          record=(s.get('jobs') or {}).get(jid)
+          if not qjob or not record:
+              raise SystemExit(0)
+          status=str(qjob.get('status') or record.get('status') or '')
+          record['status']=status
+          record['publish_attempts']=int(qjob.get('publish_attempts') or 0)
+          record['remote_post_id']=qjob.get('remote_post_id') or ''
+          record['remote_post_ids']=qjob.get('remote_post_ids') or []
+          record['remote_post_url']=qjob.get('remote_post_url') or ''
+          record['remote_post_urls']=qjob.get('remote_post_urls') or qjob.get('published_urls') or []
+          record['published_at']=qjob.get('published_at')
+          record['updated_at']=datetime.now(timezone.utc).isoformat(timespec='seconds')
+          slot_key=str(record.get('slot_key') or '')
+          if slot_key:
+              s.setdefault('slots',{})[slot_key]={
+                  'job_id':jid,
+                  'status':status,
+                  'updated_at':record['updated_at'],
+              }
+          s['updated_at']=record['updated_at']
+          spath.write_text(json.dumps(s,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          print(json.dumps({'job_id':jid,'synced_status':status},ensure_ascii=False))
+          PY
 
       - name: Persist final queue atomically
         if: always()
