@@ -310,6 +310,7 @@ def create_job(slot: str, force: bool = False) -> tuple[dict[str, Any] | None, s
         "approval_required": False,
         "manual_approval_required": False,
         "autonomous_publish": True,
+        "max_publish_attempts": 3,
         "created_by": "f1-valle-susa-news-radar",
         "created_at": now.isoformat(timespec="seconds"),
     }
