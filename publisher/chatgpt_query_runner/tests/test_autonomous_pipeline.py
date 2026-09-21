@@ -121,7 +121,7 @@ class AutonomousPipelineTests(unittest.TestCase):
                 )
 
             self.assertEqual(code, 0)
-            self.assertEqual(job["status"], "PUBLISHED")
+            self.assertEqual(job["status"], "PUBLISHED_VERIFIED")
             self.assertEqual(job["attempt_count"], 1)
             self.assertEqual(job["last_step"], "PUBLISHED")
             self.assertIsNone(job["last_error"])
