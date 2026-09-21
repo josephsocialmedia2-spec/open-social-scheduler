@@ -129,10 +129,18 @@ REM 5) Preferisci Python 3.12, poi 3.11/3.13/3.14, infine default py -3.
 REM ------------------------------------------------------------
 set "PY_CMD="
 py -3.12 -c "import sys" >nul 2>nul && set "PY_CMD=py -3.12"
-if not defined PY_CMD py -3.11 -c "import sys" >nul 2>nul && set "PY_CMD=py -3.11"
-if not defined PY_CMD py -3.13 -c "import sys" >nul 2>nul && set "PY_CMD=py -3.13"
-if not defined PY_CMD py -3.14 -c "import sys" >nul 2>nul && set "PY_CMD=py -3.14"
-if not defined PY_CMD py -3 -c "import sys" >nul 2>nul && set "PY_CMD=py -3"
+if not defined PY_CMD (
+  py -3.11 -c "import sys" >nul 2>nul && set "PY_CMD=py -3.11"
+)
+if not defined PY_CMD (
+  py -3.13 -c "import sys" >nul 2>nul && set "PY_CMD=py -3.13"
+)
+if not defined PY_CMD (
+  py -3.14 -c "import sys" >nul 2>nul && set "PY_CMD=py -3.14"
+)
+if not defined PY_CMD (
+  py -3 -c "import sys" >nul 2>nul && set "PY_CMD=py -3"
+)
 
 if not defined PY_CMD (
   echo BLOCCO: nessun Python 3 disponibile tramite Python Launcher.
