@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "architecture": "github-actions-only",
+  "jobs": {},
+  "slots": {},
+  "provider_audit": {},
+  "rejected_sources": [],
+  "updated_at": null
+}
