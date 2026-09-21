@@ -1,45 +1,8 @@
-name: F1 Design V2 Benchmark Render
+name: F1 Design V2 (ARCHIVED - ChatGPT Creative replaces final graphics)
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - 'publisher/f1_design_v2.py'
-      - '.github/workflows/f1-design-v2.yml'
-permissions:
-  contents: write
 jobs:
-  render:
+  archived:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v5
-      - run: python -m pip install --upgrade pillow requests
-      - name: Render V2
-        run: python publisher/f1_design_v2.py
-      - name: QA
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-          from PIL import Image
-          files=list(Path('publisher/media/generated/f1-design-v2').glob('*.jpg'))
-          assert len(files)==6, files
-          for p in files:
-              im=Image.open(p)
-              assert im.size in [(1080,1350),(1080,1920)], (p,im.size)
-              assert p.stat().st_size>50000, (p,p.stat().st_size)
-              print("QA PASS",p,im.size,p.stat().st_size)
-          PY
-      - name: Publish V2 release
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          gh release delete f1-design-v2 --yes --cleanup-tag >/dev/null 2>&1 || true
-          gh release create f1-design-v2 publisher/media/generated/f1-design-v2/*.jpg --title "F1 Immobiliare · Design V2" --notes "Benchmark-driven V2 preview assets. Test assets only; not auto-published to social profiles."
-      - name: Verify HTTPS assets
-        run: |
-          for f in publisher/media/generated/f1-design-v2/*.jpg; do
-            n=$(basename "$f")
-            curl -fsIL --retry 5 --retry-delay 2 "https://github.com/${GITHUB_REPOSITORY}/releases/download/f1-design-v2/$n" >/dev/null
-            echo "HTTPS PASS $n"
-          done
+      - run: echo "ARCHIVED. Final F1 creative production now uses .github/workflows/f1-chatgpt-creative.yml"
