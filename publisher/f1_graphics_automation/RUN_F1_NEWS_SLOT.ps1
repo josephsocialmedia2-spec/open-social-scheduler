@@ -9,6 +9,7 @@ $Consumer = Join-Path $Root 'publisher\news\f1_news_browser_consumer.py'
 $QueryFile = Join-Path $Root 'publisher\news\f1_news_current.local.json'
 $RuntimeQueue = Join-Path $Root 'publisher\news\f1_news_browser_queue.runtime.local.json'
 $StartInbox = Join-Path $PSScriptRoot 'START_INBOX.ps1'
+$EnsurePoller = Join-Path $PSScriptRoot 'ENSURE_F1_NEWS_POLLER.ps1'
 $LogDir = Join-Path $PSScriptRoot 'logs'
 New-Item -ItemType Directory -Force -Path $LogDir | Out-Null
 $Stamp = Get-Date -Format 'yyyyMMdd-HHmmss'
@@ -71,6 +72,15 @@ try {
     }
 } catch {
     Write-Log "Aggiornamento repository non riuscito: $($_.Exception.Message)"
+}
+
+try {
+    if (Test-Path $EnsurePoller) {
+        & $EnsurePoller
+        Write-Log 'F1 News GitHub Poller verificato/installato.'
+    }
+} catch {
+    Write-Log "Installazione poller F1 News non riuscita: $($_.Exception.Message)"
 }
 
 $env:PYTHONPATH = $Root
