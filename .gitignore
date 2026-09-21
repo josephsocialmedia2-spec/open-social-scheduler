@@ -27,3 +27,5 @@ publisher/final_assets/chatgpt_generated/
 __pycache__/
 *.pyc
 .venv/
+publisher/news/f1_news_current.local.json
+publisher/news/f1_valle_susa_news_state.local.json
