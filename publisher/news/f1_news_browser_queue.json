@@ -1,6 +1,58 @@
 {
   "version": 1,
-  "items": [],
-  "rejected": [],
-  "updated_at": null
+  "items": [
+    {
+      "id": "COMM-NEWS-20260922-MIDDAY-995E438A",
+      "communication_id": "COMM-NEWS-20260922-MIDDAY-995E438A",
+      "query": "AVIGLIANA: SALVAGUARDATI I TERRENI",
+      "communication": "AVIGLIANA: ARCHIVIATO IL PROGETTO DELLA NUOVA STAZIONE ELETTRICA A DRUBIAGLIO\n\nIl Comune di Avigliana comunica che Terna ha chiesto l'archiviazione del procedimento autorizzativo della nuova stazione elettrica prevista a Drubiaglio; la comunicazione comunale evidenzia la salvaguardia dei terreni agricoli e l'assenza di nuovo consumo di suolo.\n\nPer chi vive, vende, compra o cambia casa in Valle di Susa, la notizia conta solo se viene tradotta in effetti concreti sul territorio. F1 la segnala e la contestualizza senza trasformare una comunicazione generale in una conclusione sul singolo immobile.\n\nFonte: Città di Avigliana.\nhttps://www.comune.avigliana.to.it/it-it/novita/avvisi/2026/scongiurata-la-nuova-stazione-elettrica-ad-avigliana-400434-1-257ecefc3f5b296a324cb9e09c866436\n\nNon a sensazione. Con i dati.\n\nValutazione immobile: https://www.agentpricing.com/j.malafronte\nContatto F1 Immobiliare: https://wa.me/393713708294",
+      "caption": "AVIGLIANA: ARCHIVIATO IL PROGETTO DELLA NUOVA STAZIONE ELETTRICA A DRUBIAGLIO\n\nIl Comune di Avigliana comunica che Terna ha chiesto l'archiviazione del procedimento autorizzativo della nuova stazione elettrica prevista a Drubiaglio; la comunicazione comunale evidenzia la salvaguardia dei terreni agricoli e l'assenza di nuovo consumo di suolo.\n\nPer chi vive, vende, compra o cambia casa in Valle di Susa, la notizia conta solo se viene tradotta in effetti concreti sul territorio. F1 la segnala e la contestualizza senza trasformare una comunicazione generale in una conclusione sul singolo immobile.\n\nFonte: Città di Avigliana.\nhttps://www.comune.avigliana.to.it/it-it/novita/avvisi/2026/scongiurata-la-nuova-stazione-elettrica-ad-avigliana-400434-1-257ecefc3f5b296a324cb9e09c866436\n\nNon a sensazione. Con i dati.\n\nValutazione immobile: https://www.agentpricing.com/j.malafronte\nContatto F1 Immobiliare: https://wa.me/393713708294",
+      "prompt": "Crea un visual fotografico editoriale real-estate per una notizia F1 Immobiliare. Argomento: Avigliana: archiviato il progetto della nuova stazione elettrica a Drubiaglio. Categoria: territorio e uso del suolo. Area: Avigliana / Valle di Susa. Contesto: Il Comune di Avigliana comunica che Terna ha chiesto l'archiviazione del procedimento autorizzativo della nuova stazione elettrica prevista a Drubiaglio; la comunicazione comunale evidenzia la salvaguardia dei terreni agricoli e l'assenza di nuovo consumo di suolo.. Trasforma la notizia in una scena fotografica plausibile e concreta, non in un volantino: architettura e territorio piemontese/Valle di Susa coerenti quando pertinenti, luce naturale, stile premium ma autentico, composizione verticale social-first 4:5, soggetto o immobile principale sulla destra e spazio negativo pulito sulla sinistra per il copy successivo. Non inserire testo, titoli, loghi, CTA, numeri, URL, documenti con testo leggibile o watermark. Evita look stock, icone, infografiche, card nere, template piatti, mani deformi, prospettive impossibili e artefatti AI. La fotografia deve essere adatta a una testata locale immobiliare autorevole.",
+      "client": "F1 Immobiliare",
+      "territory": "Valle di Susa",
+      "scope": "network",
+      "platforms": [
+        "facebook",
+        "instagram"
+      ],
+      "source": "f1-news-browser-control",
+      "news_id": "AVIGLIANA-SUOLO-20260903",
+      "headline": "AVIGLIANA: SALVAGUARDATI I TERRENI",
+      "cta": "SCOPRI COSA CAMBIA",
+      "category": "territorio e uso del suolo",
+      "source_name": "Città di Avigliana",
+      "source_url": "https://www.comune.avigliana.to.it/it-it/novita/avvisi/2026/scongiurata-la-nuova-stazione-elettrica-ad-avigliana-400434-1-257ecefc3f5b296a324cb9e09c866436",
+      "source_hash": "995e438a72c5d507ce5730716ccc25e17129750eb91704f76584db38c5ccc84b",
+      "source_published_at": "2026-09-03",
+      "source_verification": {
+        "http_status": 200,
+        "final_url": "https://www.comune.avigliana.to.it/it-it/novita/avvisi/2026/scongiurata-la-nuova-stazione-elettrica-ad-avigliana-400434-1-257ecefc3f5b296a324cb9e09c866436",
+        "domain": "www.comune.avigliana.to.it",
+        "content_sha256": "fb1af7bb9e9e28e04429714149d9913a9a72825e0858acfbff20e670b6e1a24d",
+        "matched_title_terms": [
+          "avigliana",
+          "drubiaglio",
+          "elettrica",
+          "nuova",
+          "progetto",
+          "stazione"
+        ],
+        "verified_at": "2026-09-21T17:40:49+00:00"
+      },
+      "editorial_slot": "midday",
+      "slot_key": "2026-09-22|MIDDAY",
+      "status": "QUEUED_FOR_PC",
+      "created_at": "2026-09-21T19:39:20+02:00",
+      "updated_at": "2026-09-21T19:39:20+02:00"
+    }
+  ],
+  "rejected": [
+    {
+      "source_url": "https://www.regione.piemonte.it/web/amministrazione/autonomie-locali/notiziario-per-amministrazioni-locali/notiziario-per-amministrazioni-locali-n-31-3-settembre-2026",
+      "source_name": "Regione Piemonte - Notiziario n. 31",
+      "source_hash": "b04e787a3784714fb9f7902b985807152b6489a4ed9b87760314107c85423df7",
+      "error": "ConnectTimeout: HTTPSConnectionPool(host='www.regione.piemonte.it', port=443): Max retries exceeded with url: /web/amministrazione/autonomie-locali/notiziario-per-amministrazioni-locali/notiziario-per-amministrazioni-locali-n-31-3-settembre-2026 (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.regione.piemonte.it', port=443) at 0x7f0ef94c3bc0>, 'Connection to www.regione.piemonte.it timed out. (connect timeout=8)'))"
+    }
+  ],
+  "updated_at": "2026-09-21T19:39:20+02:00"
 }
