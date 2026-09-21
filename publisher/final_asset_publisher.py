@@ -425,6 +425,11 @@ def publish_job(
         buffer_job["buffer_organization_id"] = organization_id
         buffer_job["buffer_channels"] = channels
         hosted = base.ensure_cloudinary_assets(buffer_job, cloudinary_url)
+        hosted_urls = [
+            str(item.get("url") or "").strip()
+            for item in hosted
+            if str(item.get("url") or "").strip()
+        ]
 
         if dry_run:
             print(json.dumps({
@@ -438,6 +443,11 @@ def publish_job(
                 "hosted": [x.get("url") for x in hosted],
             }, ensure_ascii=False, indent=2))
             return 0
+
+        job["hosted_asset_urls"] = hosted_urls
+        job["graphic_url"] = hosted_urls[0] if hosted_urls else ""
+        mark_job(job, "ASSET_HOSTED")
+        persist_queue(queue)
 
         target_services = list(channels.keys())
         scheduled = set(str(x) for x in job.get("buffer_scheduled_platforms") or [])
