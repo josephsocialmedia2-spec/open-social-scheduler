@@ -21,13 +21,14 @@ where git >nul 2>nul || (
 
 REM ------------------------------------------------------------
 REM 1) Cerca una working copy Git valida gia presente.
+REM Preferisci la working copy F1 gia creata: NON clonare di nuovo.
 REM ------------------------------------------------------------
-call :TRY_REPO "%~dp0."
+call :TRY_REPO "%USERPROFILE%\open-social-scheduler-f1"
 if not defined REPO_ROOT call :TRY_REPO "%USERPROFILE%\open-social-scheduler"
 if not defined REPO_ROOT call :TRY_REPO "%USERPROFILE%\Documents\open-social-scheduler"
 if not defined REPO_ROOT call :TRY_REPO "%USERPROFILE%\Desktop\open-social-scheduler"
 if not defined REPO_ROOT call :TRY_REPO "%USERPROFILE%\Downloads\open-social-scheduler"
-if not defined REPO_ROOT call :TRY_REPO "%USERPROFILE%\open-social-scheduler-f1"
+if not defined REPO_ROOT call :TRY_REPO "%~dp0."
 if not defined REPO_ROOT (
   for /L %%N in (2,1,20) do (
     if not defined REPO_ROOT call :TRY_REPO "%USERPROFILE%\open-social-scheduler-f1-%%N"
@@ -35,13 +36,11 @@ if not defined REPO_ROOT (
 )
 
 REM ------------------------------------------------------------
-REM 2) Se non esiste una repo valida, clona in una directory libera.
-REM La presenza di una cartella non-Git NON viene mai cancellata.
+REM 2) Clona SOLO se non esiste alcuna repository valida.
 REM ------------------------------------------------------------
 if not defined REPO_ROOT (
   call :CHOOSE_CLONE_TARGET
-  echo Repository Git valida non trovata.
-  echo Clonazione sicura in: !CLONE_TARGET!
+  echo Nessuna repository Git valida trovata. Prima installazione in: !CLONE_TARGET!
   git clone "%REPO_URL%" "!CLONE_TARGET!" || (
     echo ERRORE: clonazione repository fallita.
     pause
@@ -51,14 +50,15 @@ if not defined REPO_ROOT (
 )
 
 echo.
-echo === REPOSITORY TROVATO ===
+echo === REPOSITORY RIUTILIZZATO ===
 echo REPO_ROOT=!REPO_ROOT!
 git -C "!REPO_ROOT!" remote -v
 git -C "!REPO_ROOT!" rev-parse HEAD
 git -C "!REPO_ROOT!" status --short
 
 REM ------------------------------------------------------------
-REM 3) Aggiorna in modo sicuro. Mai reset --hard / clean / delete.
+REM 3) Aggiorna SOLO i file del motore F1 senza riclonare e senza
+REM toccare gli altri file locali dell'utente.
 REM ------------------------------------------------------------
 git -C "!REPO_ROOT!" fetch origin main || (
   echo ERRORE: git fetch origin main fallito.
@@ -66,32 +66,11 @@ git -C "!REPO_ROOT!" fetch origin main || (
   exit /b 12
 )
 
-set "DIRTY="
-for /f "delims=" %%S in ('git -C "!REPO_ROOT!" status --porcelain 2^>nul') do set "DIRTY=1"
-
-set "BEHIND=0"
-for /f "delims=" %%B in ('git -C "!REPO_ROOT!" rev-list --count HEAD..origin/main 2^>nul') do set "BEHIND=%%B"
-
-if defined DIRTY (
-  echo Working tree con modifiche locali: non verranno cancellate.
-  if not "!BEHIND!"=="0" (
-    echo La copia locale e anche indietro rispetto a origin/main.
-    echo Creo una working copy F1 separata e pulita per non toccare i dati locali.
-    call :CLONE_FRESH_AND_SWITCH
-  )
-) else (
-  git -C "!REPO_ROOT!" checkout main >nul 2>nul || (
-    echo Impossibile fare checkout di main nella copia corrente.
-    echo Creo una working copy F1 separata e pulita.
-    call :CLONE_FRESH_AND_SWITCH
-  )
-  if not defined SWITCHED_FRESH (
-    git -C "!REPO_ROOT!" pull --ff-only origin main || (
-      echo Pull fast-forward non possibile. Creo una working copy F1 separata.
-      call :CLONE_FRESH_AND_SWITCH
-    )
-  )
-)
+call :SYNC_ONE "publisher/chatgpt_query_runner/core.py"
+call :SYNC_ONE "publisher/chatgpt_query_runner/ui_driver.py"
+call :SYNC_ONE "publisher/chatgpt_query_runner/worker.py"
+call :SYNC_ONE "publisher/chatgpt_query_runner/f1_browser_creative_queries.json"
+call :SYNC_ONE "publisher/chatgpt_query_runner/requirements.txt"
 
 REM ------------------------------------------------------------
 REM 4) Verifica che la working copy scelta contenga il codice richiesto.
@@ -100,8 +79,20 @@ call :CHECK_REQUIRED_FILES
 if errorlevel 1 (
   echo La working copy scelta non contiene ancora tutti i file F1 richiesti.
   echo Creo una copia pulita separata senza eliminare nulla.
-  call :CLONE_FRESH_AND_SWITCH
-  call :CHECK_REQUIRED_FILES
+  call :SYNC_ONE
+set "SYNC_PATH=%~1"
+for %%D in ("!REPO_ROOT!\%~dp1.") do if not exist "%%~fD" mkdir "%%~fD" >nul 2>nul
+git -C "!REPO_ROOT!" show "origin/main:%SYNC_PATH%" > "!REPO_ROOT!\%SYNC_PATH:/=\%.tmp" || (
+  echo ERRORE: impossibile aggiornare %SYNC_PATH% da origin/main.
+  del /q "!REPO_ROOT!\%SYNC_PATH:/=\%.tmp" >nul 2>nul
+  exit /b 1
+)
+move /Y "!REPO_ROOT!\%SYNC_PATH:/=\%.tmp" "!REPO_ROOT!\%SYNC_PATH:/=\%" >nul
+echo Aggiornato: %SYNC_PATH%
+exit /b 0
+
+
+:CHECK_REQUIRED_FILES
   if errorlevel 1 (
     echo ERRORE: anche la copia fresca non contiene i file richiesti.
     pause
