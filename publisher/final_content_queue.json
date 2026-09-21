@@ -981,16 +981,8 @@
       "editorial_slot": "18:30",
       "scheduled_at": "2026-09-21T18:30:00+02:00",
       "status": "ERROR",
-      "cta": "https://www.agentpricing.com/j.malafronte",
-      "graphic_cta": "CLICCA SUL LINK 👉\nhttps://www.agentpricing.com/j.malafronte\n🏡“Contattaci per una Valutazione Strategica e di Posizionamento del tuo immobile: analizziamo prezzo, concorrenza e strategia di vendita per aumentare le possibilità di vendere meglio e in tempi più efficienti.”",
-      "graphic_body": "Territorio, servizi e vita locale.",
-      "publish_attempts": 1,
-      "attempt_count": 1,
-      "last_publish_attempt_at": "2026-09-20T18:22:20+00:00",
-      "last_step": "ERROR_RECOVERABLE",
-      "updated_at": "2026-09-20T18:22:22+00:00",
-      "last_error": "BufferAutomationError: Buffer facebook: Invalid post: Whoops, it looks like you've already got this one scheduled or posted around the same time. We're not able to post the same thing twice so close together.",
-      "error": "BufferAutomationError: Buffer facebook: Invalid post: Whoops, it looks like you've already got this one scheduled or posted around the same time. We're not able to post the same thing twice so close together."
+      "error": "BufferAutomationError: Buffer facebook: Invalid post: Whoops, it looks like you've already got this one scheduled or posted around the same time. We're not able to post the same thing twice so close together.",
+      "updated_at": "2026-09-20T18:22:22+00:00"
     },
     {
       "id": "VD-015-S-20260922-0830",
@@ -999,7 +991,7 @@
       "pillar": "Mercato / acquisizione",
       "source_name": "Dati F1 + fonte mercato",
       "source_url": "https://www.immobiliare.it/mercato-immobiliare/piemonte/villar-dora/",
-      "caption": "",
+      "caption": "Stai pensando di vendere nei prossimi 150 giorni? Spiega quali documenti preparare prima.\n\nA Villar Dora una strategia di vendita efficace parte dalla lettura del mercato locale, dalla concorrenza attiva e dalle caratteristiche specifiche dell’immobile. F1 Immobiliare lavora sul posizionamento prima di decidere come presentare la casa al mercato.\n\nFonte di riferimento: Dati F1 + fonte mercato. Informazioni da verificare alla data di pubblicazione.\n\nCLICCA SUL LINK 👉\nhttps://www.agentpricing.com/j.malafronte\n🏡“Contattaci per una Valutazione Strategica e di Posizionamento del tuo immobile: analizziamo prezzo, concorrenza e strategia di vendita per aumentare le possibilità di vendere meglio e in tempi più efficienti.”",
       "format": "photo",
       "assets": [
         "publisher/final_assets/generated_villar_dora/VD-015-S-20260922-0830.png"
@@ -1012,7 +1004,56 @@
       "territory": "Villar Dora",
       "editorial_slot": "08:30",
       "scheduled_at": "2026-09-22T08:30:00+02:00",
-      "status": "READY"
+      "status": "SCHEDULED",
+      "cta": "https://www.agentpricing.com/j.malafronte",
+      "graphic_cta": "CLICCA SUL LINK 👉\nhttps://www.agentpricing.com/j.malafronte\n🏡“Contattaci per una Valutazione Strategica e di Posizionamento del tuo immobile: analizziamo prezzo, concorrenza e strategia di vendita per aumentare le possibilità di vendere meglio e in tempi più efficienti.”",
+      "graphic_body": "Mercato locale e strategia immobiliare.",
+      "publish_attempts": 1,
+      "attempt_count": 1,
+      "last_publish_attempt_at": "2026-09-21T11:21:55+00:00",
+      "last_step": "SCHEDULED",
+      "updated_at": "2026-09-21T11:21:57+00:00",
+      "last_error": null,
+      "buffer_posts": [
+        {
+          "service": "facebook",
+          "channel_id": "6a9afff8065799be468ade7a",
+          "post_id": "6ab11354ca3714eb5599ae52",
+          "buffer_status": "scheduled",
+          "due_at": "2026-09-22T06:30:00.000Z",
+          "created_at": "2026-09-21T11:21:57+00:00"
+        },
+        {
+          "service": "instagram",
+          "channel_id": "6a9b0034065799be468adfe4",
+          "post_id": "6ab1135572aeda4693ee9f1f",
+          "buffer_status": "scheduled",
+          "due_at": "2026-09-22T06:30:00.000Z",
+          "created_at": "2026-09-21T11:21:57+00:00"
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "facebook",
+        "instagram"
+      ],
+      "scheduled_via": "buffer",
+      "resolved_channels": {
+        "facebook": {
+          "id": "6a9afff8065799be468ade7a",
+          "name": "F1immobiliare",
+          "service": "facebook",
+          "organization_id": "6a9aff970f059f084a2c8a6d"
+        },
+        "instagram": {
+          "id": "6a9b0034065799be468adfe4",
+          "name": "joseph_malafronte",
+          "service": "instagram",
+          "organization_id": "6a9aff970f059f084a2c8a6d"
+        }
+      },
+      "published_asset_sha256": [
+        "fc7051bd6dd5a173746ed22ba108e34496b90cb8589f2a20864cffdfd1e9b53b"
+      ]
     },
     {
       "id": "VD-015-C-20260922-1830",
@@ -6977,5 +7018,5 @@
       "status": "READY"
     }
   ],
-  "updated_at": "2026-09-20T18:22:22+00:00"
+  "updated_at": "2026-09-21T11:21:57+00:00"
 }
