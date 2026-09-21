@@ -8,10 +8,11 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
-STATE_VERSION = 2
+STATE_VERSION = 3
 MAX_RUN_HISTORY = 30
 
 STAGES = (
+    # Legacy browser stages kept for compatibility with existing diagnostics/tests.
     "QUERY_CARICATA",
     "PROMPT_COSTRUITO",
     "COMPOSER_TROVATO",
@@ -23,9 +24,35 @@ STAGES = (
     "GENERAZIONE_TERMINATA",
     "IMMAGINE_RILEVATA",
     "IMMAGINE_SALVATA",
+    # Definitive daily-cycle states.
+    "QUEUED",
+    "OPENING_CHATGPT",
+    "PROMPT_SUBMITTED",
+    "GENERATING",
+    "IMAGE_READY",
+    "DOWNLOAD_PENDING",
+    "DOWNLOADING",
+    "DOWNLOADED",
+    "FILE_VALIDATED",
+    "QA_PENDING",
+    "QA_PASS",
+    "BRAND_PASS",
+    "READY_TO_PUBLISH",
+    "PUBLISHING",
+    "PUBLISHED",
+    "VERIFYING_PUBLICATION",
+    "PUBLISHED_VERIFIED",
     "COMPLETED",
 )
-TERMINAL_RUN_STATUSES = {"GRAFICHE_PRONTE", "ANNULLATO"}
+POST_GENERATION_STATUSES = {
+    "COMPLETED",
+    "READY_TO_PUBLISH",
+    "PUBLISHING",
+    "PUBLISHED",
+    "VERIFYING_PUBLICATION",
+    "PUBLISHED_VERIFIED",
+}
+TERMINAL_RUN_STATUSES = {"GRAFICHE_PRONTE", "PUBLISHED_VERIFIED", "ANNULLATO"}
 
 
 def now_iso(now: datetime | None = None) -> str:
@@ -66,6 +93,7 @@ def blank_state() -> dict[str, Any]:
         "active_run": None,
         "runs": [],
         "legacy_unverified": [],
+        "last_successful_date": None,
     }
 
 
@@ -78,6 +106,7 @@ def migrate_state(payload: Any) -> dict[str, Any]:
         state.setdefault("active_run", None)
         state.setdefault("runs", [])
         state.setdefault("legacy_unverified", [])
+        state.setdefault("last_successful_date", None)
         return state
     state = blank_state()
     old_completed = payload.get("completed") or []
@@ -196,7 +225,7 @@ def get_or_create_run(
 ) -> dict[str, Any]:
     active = state.get("active_run")
     if isinstance(active, dict):
-        incomplete = any(job.get("status") != "COMPLETED" for job in active.get("jobs") or [])
+        incomplete = any(job.get("status") not in POST_GENERATION_STATUSES for job in active.get("jobs") or [])
         if incomplete and active.get("status") not in TERMINAL_RUN_STATUSES:
             active["status"] = "RUNNING"
             active["completed_at"] = None
@@ -236,7 +265,7 @@ def run_counts(run: dict[str, Any]) -> dict[str, int]:
     return {
         "query_previste": len(jobs),
         "query_inviate": sum(1 for j in jobs if j.get("submitted_at")),
-        "query_riuscite": sum(1 for j in jobs if j.get("status") == "COMPLETED"),
+        "query_riuscite": sum(1 for j in jobs if j.get("status") in POST_GENERATION_STATUSES),
         "immagini_generate": sum(1 for j in jobs if j.get("generation_completed_at")),
         "immagini_salvate": sum(1 for j in jobs if j.get("image_path")),
     }
