@@ -1,3 +1,7 @@
+param(
+    [switch]$NonInteractive
+)
+
 $ErrorActionPreference = 'Stop'
 
 $Root = (Resolve-Path (Join-Path $PSScriptRoot '..\..')).Path
@@ -167,4 +171,4 @@ Write-Host 'Autopublisher: http://127.0.0.1:8877/' -ForegroundColor Cyan
 Write-Host ''
 Write-Host 'Il browser usato dal worker è il Chrome normale. Non viene creato alcun profilo Chrome dedicato.' -ForegroundColor Yellow
 Write-Host ''
-Read-Host 'Premi INVIO per chiudere'
+if (-not $NonInteractive) { Read-Host 'Premi INVIO per chiudere' | Out-Null }
