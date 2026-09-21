@@ -1,0 +1,25 @@
+{
+  "batch": "f1-daily-creative-one-shot-v1",
+  "backend": "chatgpt_browser",
+  "test_mode": true,
+  "strategy": "QUANTO VALE CASA MIA",
+  "queries": [
+    {
+      "id": "F1-SELLER-001-A",
+      "query": "Quanto vale casa mia",
+      "search_intent": "valutazione immobiliare",
+      "audience": "seller",
+      "variant": "A",
+      "territory": "Valle di Susa",
+      "scope": "network",
+      "platforms": [
+        "facebook",
+        "instagram"
+      ],
+      "headline": "Quanto vale davvero casa tua?",
+      "cta": "RICHIEDI UNA VALUTAZIONE",
+      "caption": "Quanto vale davvero casa tua? Scopri il valore reale del tuo immobile con una valutazione professionale e senza impegno. Scrivi VALUTAZIONE in privato. #F1Immobiliare #ValleDiSusa #ValutazioneImmobiliare #VendereCasa",
+      "prompt": "Crea un visual fotografico editoriale real-estate per il bisogno QUANTO VALE CASA MIA. Variante A: proprietario adulto in una casa italiana curata, osserva gli ambienti con atteggiamento riflessivo mentre valuta il futuro dell'immobile; niente telefono in mano, niente documenti con testo leggibile. Atmosfera autentica, luce naturale del mattino, architettura piemontese contemporanea plausibile, fotografia premium ma non stock. Composizione verticale social-first con soggetto/immobile sulla destra e spazio negativo pulito sulla sinistra per copy successivo. Nessun testo, logo, CTA, numero, URL o watermark. Evita mani deformi, pelle plastificata, prospettive impossibili, stanze irreali e artefatti AI."
+    }
+  ]
+}
