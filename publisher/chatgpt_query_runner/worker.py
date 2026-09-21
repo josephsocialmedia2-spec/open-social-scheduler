@@ -31,6 +31,7 @@ from publisher.chatgpt_query_runner.core import (  # noqa: E402
     transition,
 )
 from publisher.chatgpt_query_runner.ui_driver import ChromeChatGPTDriver, GPT_URL  # noqa: E402
+from publisher.chatgpt_query_runner.f1_brand_layer import apply_f1_brand_layer  # noqa: E402
 
 QUERY_FILE = Path(os.getenv("F1_QUERY_FILE", str(ROOT / "publisher" / "github_graphics" / "queries.json")))
 COMMUNICATIONS_FILE = ROOT / "publisher" / "chatgpt_query_runner" / "communications.local.json"
@@ -45,6 +46,9 @@ INBOX_PORT = int(os.getenv("F1_INBOX_PORT", "8877"))
 DEFAULT_BATCH_SIZE = int(os.getenv("F1_QUERY_BATCH_SIZE", "4"))
 MAX_ATTEMPTS = max(1, int(os.getenv("F1_MAX_ATTEMPTS", "3")))
 MAX_COMMUNICATION_ATTEMPTS = max(1, int(os.getenv("F1_COMM_MAX_ATTEMPTS", "5")))
+MAX_PUBLISH_VERIFY_SECONDS = max(60, int(os.getenv("F1_PUBLISH_VERIFY_SECONDS", "900")))
+FINAL_QUEUE_PATH = ROOT / "publisher" / "final_content_queue.json"
+DAILY_QUERY_FILE = "f1_browser_creative_queries.json"
 
 LOG_ROOT.mkdir(parents=True, exist_ok=True)
 RUN_LOG = LOG_ROOT / f"worker-{datetime.now(ROME):%Y%m%d-%H%M%S}.log"
@@ -207,6 +211,110 @@ def relative_path(path: Path) -> str:
         return str(path)
 
 
+def is_daily_f1_mode() -> bool:
+    return QUERY_FILE.name.casefold() == DAILY_QUERY_FILE.casefold()
+
+
+def _resolve_job_path(value: str | None) -> Path | None:
+    raw = str(value or "").strip()
+    if not raw:
+        return None
+    path = Path(raw)
+    if not path.is_absolute():
+        path = ROOT / path
+    return path
+
+
+def _valid_image_path(value: str | None) -> Path | None:
+    path = _resolve_job_path(value)
+    if path is None:
+        return None
+    try:
+        return path if path.is_file() and path.stat().st_size > 10_000 else None
+    except OSError:
+        return None
+
+
+def _daily_communication_id(job: dict) -> str:
+    today = datetime.now(ROME).strftime("%Y%m%d")
+    query_id = str(job.get("query_id") or "F1-DAILY").replace(" ", "-")
+    return f"COMM-F1-{today}-{query_id}"
+
+
+def _brand_path_for(source: Path) -> Path:
+    return source.with_name(source.stem + "-brand.png")
+
+
+def apply_brand_to_job(state: dict, run: dict, job: dict, source: Path) -> Path:
+    destination = _brand_path_for(source)
+    result = apply_f1_brand_layer(
+        source,
+        destination,
+        headline=str(job.get("headline") or "QUANTO VALE CASA MIA?"),
+        cta=str(job.get("cta") or "RICHIEDI UNA VALUTAZIONE"),
+        territory=str(job.get("territory") or "VALLE DI SUSA"),
+    )
+    branded = ROOT / result["path"]
+    job["source_image_path"] = relative_path(source)
+    job["brand_path"] = result["path"]
+    job["image_path"] = result["path"]
+    job["image_sha256"] = result["sha256"]
+    job["brand_qa"] = result["brand_qa"]
+    job["visual_qa"] = result["visual_qa"]
+    mark(state, run, job, "FILE_VALIDATED", image_path=result["path"], image_sha256=result["sha256"])
+    mark(state, run, job, "QA_PENDING")
+    mark(state, run, job, "QA_PASS", visual_qa=result["visual_qa"])
+    mark(state, run, job, "BRAND_PASS", brand_qa=result["brand_qa"])
+    return branded
+
+
+def _origin_queue() -> dict:
+    fetch = subprocess.run(
+        ["git", "-C", str(ROOT), "fetch", "origin", "main"],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if fetch.returncode != 0:
+        raise RuntimeError(fetch.stderr.strip() or fetch.stdout.strip() or "git fetch origin main fallito")
+    show = subprocess.run(
+        ["git", "-C", str(ROOT), "show", "origin/main:publisher/final_content_queue.json"],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if show.returncode != 0:
+        raise RuntimeError(show.stderr.strip() or "Impossibile leggere la coda remota")
+    return json.loads(show.stdout)
+
+
+def wait_for_publication_verification(communication_id: str, timeout: int = MAX_PUBLISH_VERIFY_SECONDS) -> dict:
+    deadline = time.time() + timeout
+    last_status = ""
+    while time.time() < deadline:
+        try:
+            queue = _origin_queue()
+            for item in queue.get("jobs") or []:
+                if str(item.get("communication_id") or "") != communication_id:
+                    continue
+                status = str(item.get("status") or "")
+                if status != last_status:
+                    log(f"PUBBLICAZIONE {communication_id}: {status}")
+                    last_status = status
+                if status == "PUBLISHED_VERIFIED":
+                    return item
+                if status == "ERROR":
+                    raise RuntimeError(str(item.get("error") or "Publisher remoto in errore"))
+        except RuntimeError:
+            raise
+        except Exception as exc:
+            log(f"Verifica pubblicazione transitoria: {type(exc).__name__}: {exc}")
+        time.sleep(15)
+    raise RuntimeError(
+        f"Timeout verifica remota dopo {timeout}s; ultimo stato={last_status or 'non disponibile'}"
+    )
+
+
 def last_run_payload(state: dict, run: dict, status: str | None = None, error: str | None = None) -> dict:
     counts = run_counts(run)
     return {
@@ -258,11 +366,32 @@ def _output_stem(run: dict, job: dict) -> Path:
 
 
 def process_job(driver: ChromeChatGPTDriver, state: dict, run: dict, job: dict, total_queries: int) -> bool:
-    if job.get("status") == "COMPLETED" and job_image_exists(job):
-        log(f"Query {job['sequence']}/{run['batch_size']} già COMPLETED con immagine valida: skip")
+    post_generation = {
+        "COMPLETED", "READY_TO_PUBLISH", "PUBLISHING", "PUBLISHED",
+        "VERIFYING_PUBLICATION", "PUBLISHED_VERIFIED"
+    }
+    existing = _valid_image_path(job.get("image_path"))
+    if job.get("status") in post_generation and existing is not None:
+        log(
+            f"Query {job['sequence']}/{run['batch_size']} già oltre la generazione "
+            f"({job.get('status')}): riuso {relative_path(existing)}"
+        )
         return True
-    if job.get("status") == "COMPLETED" and not job_image_exists(job):
-        mark(state, run, job, "ERRORE", error="Stato COMPLETED trovato ma image_path manca o non è valido.")
+
+    # Recovery: immagine già scaricata ma brand layer non completato.
+    source_existing = _valid_image_path(job.get("source_image_path")) or (
+        existing if existing is not None and not str(job.get("brand_path") or "").strip() else None
+    )
+    if source_existing is not None and job.get("status") in {
+        "IMMAGINE_SALVATA", "FILE_VALIDATED", "QA_PENDING", "QA_PASS", "BRAND_PASS"
+    }:
+        branded = _valid_image_path(job.get("brand_path"))
+        if branded is None:
+            branded = apply_brand_to_job(state, run, job, source_existing)
+        mark(state, run, job, "COMPLETED", error=None, image_path=relative_path(branded))
+        advance_after_completed(state, job, total_queries)
+        persist(state, run)
+        return True
 
     prompt = str(job.get("prompt") or "").strip() or build_prompt(str(job.get("query") or ""))
     job["prompt"] = prompt
@@ -298,10 +427,12 @@ def process_job(driver: ChromeChatGPTDriver, state: dict, run: dict, job: dict, 
             submitted_at = datetime.now(ROME).isoformat(timespec="seconds")
             driver.send_and_verify(prompt)
             mark(state, run, job, "PROMPT_INVIATO", submitted_at=submitted_at)
+            mark(state, run, job, "PROMPT_SUBMITTED", submitted_at=submitted_at)
             stage = "INVIO_VERIFICATO"
             mark(state, run, job, "INVIO_VERIFICATO", submitted_at=submitted_at)
 
             stage = "GENERAZIONE_IN_CORSO"
+            mark(state, run, job, "GENERATING")
             result = driver.wait_generation(baseline, prompt=prompt)
             mark(
                 state,
@@ -320,8 +451,11 @@ def process_job(driver: ChromeChatGPTDriver, state: dict, run: dict, job: dict, 
             )
             stage = "IMMAGINE_RILEVATA"
             mark(state, run, job, "IMMAGINE_RILEVATA")
+            mark(state, run, job, "IMAGE_READY")
+            mark(state, run, job, "DOWNLOAD_PENDING")
 
             stage = "IMMAGINE_SALVATA"
+            mark(state, run, job, "DOWNLOADING")
             saved_path, capture_mode = driver.save_image(result, _output_stem(run, job))
             digest = sha256_file(saved_path)
             mark(
@@ -329,16 +463,29 @@ def process_job(driver: ChromeChatGPTDriver, state: dict, run: dict, job: dict, 
                 run,
                 job,
                 "IMMAGINE_SALVATA",
+                source_image_path=relative_path(saved_path),
+                image_path=relative_path(saved_path),
+                image_sha256=digest,
+                capture_mode=capture_mode,
+            )
+            mark(
+                state,
+                run,
+                job,
+                "DOWNLOADED",
+                source_image_path=relative_path(saved_path),
                 image_path=relative_path(saved_path),
                 image_sha256=digest,
                 capture_mode=capture_mode,
             )
 
+            branded_path = apply_brand_to_job(state, run, job, saved_path)
+
             stage = "COMPLETED"
-            mark(state, run, job, "COMPLETED", error=None)
+            mark(state, run, job, "COMPLETED", error=None, image_path=relative_path(branded_path))
             advance_after_completed(state, job, total_queries)
             persist(state, run)
-            log(f"Query {job['sequence']} COMPLETED: {relative_path(saved_path)}")
+            log(f"Query {job['sequence']} COMPLETED: {relative_path(branded_path)}")
             return True
 
         except Exception as exc:
@@ -369,23 +516,35 @@ def process_job(driver: ChromeChatGPTDriver, state: dict, run: dict, job: dict, 
     return False
 
 
-def auto_ingest_completed_run(run: dict) -> dict:
+def auto_ingest_completed_run(run: dict, *, daily_mode: bool = False) -> dict:
     items = []
     for job in run.get("jobs") or []:
-        if job.get("status") != "COMPLETED" or not job_image_exists(job):
+        if job.get("status") not in {"COMPLETED", "READY_TO_PUBLISH", "PUBLISHING", "PUBLISHED", "VERIFYING_PUBLICATION", "PUBLISHED_VERIFIED"} or not job_image_exists(job):
             continue
+        communication_id = _daily_communication_id(job) if daily_mode else (
+            job.get("query_id") if str(job.get("query_id") or "").startswith("COMM-") else ""
+        )
+        caption = str(job.get("caption") or "").strip()
+        if not caption and daily_mode:
+            caption = (
+                "Quanto vale davvero casa tua? Scopri il valore reale del tuo immobile "
+                "con una valutazione professionale e senza impegno. Scrivi VALUTAZIONE in privato. "
+                "#F1Immobiliare #ValleDiSusa #ValutazioneImmobiliare #VendereCasa"
+            )
         items.append({
             "image_path": job.get("image_path"),
             "query_id": job.get("query_id"),
             "query": job.get("query"),
             "family": "property",
-            "caption": job.get("caption") or job.get("communication") or job.get("query"),
-            "scheduled_at": job.get("scheduled_at") or datetime.now(ROME).isoformat(timespec="seconds"),
+            "caption": caption or job.get("communication") or job.get("query"),
+            "scheduled_at": datetime.now(ROME).isoformat(timespec="seconds") if daily_mode else (
+                job.get("scheduled_at") or datetime.now(ROME).isoformat(timespec="seconds")
+            ),
             "territory": job.get("territory"),
             "scope": job.get("scope") or ("territory" if job.get("territory") else "network"),
             "platforms": job.get("platforms") or ["facebook", "instagram"],
             "client": job.get("client") or "F1 Immobiliare",
-            "communication_id": job.get("query_id") if str(job.get("query_id") or "").startswith("COMM-") else "",
+            "communication_id": communication_id,
         })
     if not items:
         raise RuntimeError("Nessuna immagine COMPLETED disponibile per l'invio automatico alla pubblicazione")
@@ -422,6 +581,15 @@ def run(batch_size: int, *, fresh_run: bool = False, communication_id: str | Non
         fresh_run = True
         set_communication_status(communication_id, "PROCESSING")
     state = load_state(STATE_FILE)
+    daily_mode = is_daily_f1_mode() and not communication_id
+    today = datetime.now(ROME).date().isoformat()
+    if daily_mode and state.get("last_successful_date") == today:
+        log(f"NOOP_ALREADY_COMPLETED_TODAY: {today}")
+        return 0
+    # Daily F1 always resumes an incomplete run. --fresh-run must never cause a
+    # second generation after IMAGE_READY/DOWNLOADED.
+    if daily_mode:
+        fresh_run = False
     if fresh_run:
         run = create_run(state, queries, batch_size)
     else:
@@ -449,8 +617,14 @@ def run(batch_size: int, *, fresh_run: bool = False, communication_id: str | Non
         if process_job(driver, state, run, job, len(queries)):
             success += 1
 
-    final_status = finalize_run(state)
-    persist(state, run, status=final_status)
+    daily_mode = is_daily_f1_mode() and not communication_id
+    if daily_mode:
+        final_status = "GRAFICHE_PRONTE" if success == len(run.get("jobs") or []) else "ERRORE"
+        run["status"] = final_status
+        persist(state, run, status=final_status)
+    else:
+        final_status = finalize_run(state)
+        persist(state, run, status=final_status)
     counts = run_counts(run)
     log(
         "RUN END "
@@ -462,17 +636,62 @@ def run(batch_size: int, *, fresh_run: bool = False, communication_id: str | Non
         set_communication_status(communication_id, "ERROR", run.get("error") or final_status)
         return 2
 
-    if not communication_id:
-        log("Batch grafico statico completato: nessuna pubblicazione automatica; il flusso autonomo usa esclusivamente COMM-*.")
+    daily_mode = is_daily_f1_mode()
+    if not communication_id and not daily_mode:
+        log("Batch grafico statico legacy completato: nessuna pubblicazione automatica.")
         return 0
 
     try:
-        ingest = auto_ingest_completed_run(run)
+        ingest = auto_ingest_completed_run(run, daily_mode=daily_mode)
         run["autonomous_ingest"] = ingest
-        run["status"] = "IN_CODA_PUBBLICAZIONE"
-        persist(state, run, status="IN_CODA_PUBBLICAZIONE")
+        created = list(ingest.get("created") or [])
+        effective_communication_id = communication_id
+        if daily_mode and run.get("jobs"):
+            effective_communication_id = _daily_communication_id(run["jobs"][0])
+        for job in run.get("jobs") or []:
+            if job_image_exists(job):
+                mark(state, run, job, "READY_TO_PUBLISH", communication_id=effective_communication_id)
+        run["status"] = "READY_TO_PUBLISH"
+        persist(state, run, status="READY_TO_PUBLISH")
         set_communication_status(communication_id, "QUEUED_FOR_PUBLISH")
-        log("PIPELINE LOCALE COMPLETA: grafica verificata -> GitHub -> coda READY -> publisher automatico")
+        log("PIPELINE LOCALE: grafica verificata e brandizzata -> GitHub -> coda READY")
+
+        if effective_communication_id:
+            for job in run.get("jobs") or []:
+                if job_image_exists(job):
+                    mark(state, run, job, "VERIFYING_PUBLICATION")
+            run["status"] = "VERIFYING_PUBLICATION"
+            persist(state, run, status="VERIFYING_PUBLICATION")
+            published = wait_for_publication_verification(effective_communication_id)
+            remote_ids = [
+                str(x.get("post_id") or "")
+                for x in (published.get("buffer_posts") or [])
+                if str(x.get("post_id") or "").strip()
+            ]
+            remote_urls = list(published.get("published_urls") or [])
+            for job in run.get("jobs") or []:
+                if job_image_exists(job):
+                    mark(
+                        state,
+                        run,
+                        job,
+                        "PUBLISHED_VERIFIED",
+                        remote_post_ids=remote_ids,
+                        remote_post_url=(remote_urls[0] if remote_urls else ""),
+                        remote_post_urls=remote_urls,
+                        published_at=published.get("published_at"),
+                    )
+            run["status"] = "PUBLISHED_VERIFIED"
+            run["published_at"] = published.get("published_at")
+            run["remote_post_ids"] = remote_ids
+            run["remote_post_urls"] = remote_urls
+            state["last_successful_date"] = datetime.now(ROME).date().isoformat()
+            persist(state, run, status="PUBLISHED_VERIFIED")
+            set_communication_status(communication_id, "PUBLISHED")
+            log(
+                "F1 DAILY CREATIVE COMPLETATO: download OK -> brand OK -> "
+                "pubblicazione remota verificata"
+            )
         return 0
     except Exception as exc:
         error = f"{type(exc).__name__}: {exc}"
