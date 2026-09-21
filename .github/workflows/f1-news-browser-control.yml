@@ -76,7 +76,7 @@ jobs:
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             echo "value=${{ inputs.slot }}" >> "$GITHUB_OUTPUT"
           elif [ "${{ github.event_name }}" = "push" ]; then
-            echo "value=next" >> "$GITHUB_OUTPUT"
+            echo "value=auto" >> "$GITHUB_OUTPUT"
           else
             echo "value=auto" >> "$GITHUB_OUTPUT"
           fi
