@@ -30,3 +30,7 @@ __pycache__/
 publisher/news/f1_news_current.local.json
 publisher/news/f1_valle_susa_news_state.local.json
 publisher/news/f1_news_browser_queue.runtime.local.json
+publisher/chatgpt_query_runner/f1_daily_test_state.local.json
+publisher/chatgpt_query_runner/f1_daily_test_last_run.local.json
+publisher/chatgpt_query_runner/f1_daily_test_runner.lock.json
+publisher/chatgpt_query_runner/f1_daily_creative_control.runtime.local.json
