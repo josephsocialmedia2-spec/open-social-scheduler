@@ -238,7 +238,8 @@ def facebook_publish(job: dict[str, Any], client: dict[str, Any], paths: list[Pa
         finish = request("POST", f"{meta_graph_base()}/me/video_reels", params={"access_token": token, "video_id": video_id, "upload_phase": "finish", "video_state": "PUBLISHED", "description": str(job.get("caption") or "")[:5000], "title": str(job.get("title") or "")[:255]}).json()
         return {"video_id": video_id, "finish": finish}
     with paths[0].open("rb") as fh:
-        response = request("POST", f"{meta_graph_base()}/me/photos", params={"access_token": token, "message": str(job.get("caption") or "")[:5000]}, files={"source": (paths[0].name, fh, "image/jpeg")}, timeout=180).json()
+        media_type = mimetypes.guess_type(paths[0].name)[0] or "image/jpeg"
+        response = request("POST", f"{meta_graph_base()}/me/photos", params={"access_token": token, "message": str(job.get("caption") or "")[:5000]}, files={"source": (paths[0].name, fh, media_type)}, timeout=180).json()
     return {"photo_id": response.get("id"), "post_id": response.get("post_id"), "mode": "first_slide"}
 
 
