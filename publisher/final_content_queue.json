@@ -7047,13 +7047,13 @@
       "autonomous_publish": true,
       "created_by": "f1-valle-susa-news-radar",
       "created_at": "2026-09-21T18:28:37+02:00",
-      "publish_attempts": 1,
-      "attempt_count": 1,
-      "last_publish_attempt_at": "2026-09-21T16:28:37+00:00",
+      "publish_attempts": 5,
+      "attempt_count": 5,
+      "last_publish_attempt_at": "2026-09-21T16:35:02+00:00",
       "last_step": "ERROR_RECOVERABLE",
-      "updated_at": "2026-09-21T16:28:38+00:00",
-      "last_error": "BufferAutomationError: Territory not enabled: Valle di Susa",
-      "error": "BufferAutomationError: Territory not enabled: Valle di Susa"
+      "updated_at": "2026-09-21T16:35:02+00:00",
+      "last_error": "BufferAutomationError: Missing final asset: publisher/final_assets/news_valle_susa/F1-NEWS-20260921-NOW-E7F9DA83.png",
+      "error": "BufferAutomationError: Missing final asset: publisher/final_assets/news_valle_susa/F1-NEWS-20260921-NOW-E7F9DA83.png"
     },
     {
       "id": "F1-NEWS-20260921-1829-NOW-E7F9DA83",
@@ -7085,12 +7085,12 @@
       "autonomous_publish": true,
       "created_by": "f1-valle-susa-news-radar",
       "created_at": "2026-09-21T18:29:59+02:00",
-      "publish_attempts": 1,
-      "attempt_count": 1,
-      "last_publish_attempt_at": "2026-09-21T16:29:59+00:00",
+      "publish_attempts": 5,
+      "attempt_count": 5,
+      "last_publish_attempt_at": "2026-09-21T16:35:02+00:00",
       "last_step": "ERROR_RECOVERABLE",
-      "updated_at": "2026-09-21T16:30:14+00:00",
-      "last_error": "Buffer provider state requires recovery: error",
+      "updated_at": "2026-09-21T16:35:02+00:00",
+      "last_error": "BufferAutomationError: Missing final asset: publisher/final_assets/news_valle_susa/F1-NEWS-20260921-1829-NOW-E7F9DA83.png",
       "buffer_posts": [
         {
           "service": "facebook",
@@ -7101,19 +7101,10 @@
           "created_at": "2026-09-21T16:30:09+00:00",
           "sent_at": "2026-09-21T16:30:07.432Z",
           "external_link": "https://facebook.com/911947508677134_122135771913205918"
-        },
-        {
-          "service": "instagram",
-          "channel_id": "6a9b0034065799be468adfe4",
-          "post_id": "6ab15b9119683122b8c8be81",
-          "buffer_status": "error",
-          "due_at": "2026-09-21T16:30:09.385Z",
-          "created_at": "2026-09-21T16:30:13+00:00"
         }
       ],
       "buffer_scheduled_platforms": [
-        "facebook",
-        "instagram"
+        "facebook"
       ],
       "scheduled_via": "buffer",
       "resolved_channels": {
@@ -7133,8 +7124,18 @@
       "published_asset_sha256": [
         "2b989a893c8b79df6ff10c4cbd166ede29f194438521465c9217cda0affe2b26"
       ],
-      "error": "Buffer provider state requires recovery: error"
+      "error": "BufferAutomationError: Missing final asset: publisher/final_assets/news_valle_susa/F1-NEWS-20260921-1829-NOW-E7F9DA83.png",
+      "failed_buffer_posts": [
+        {
+          "service": "instagram",
+          "channel_id": "6a9b0034065799be468adfe4",
+          "post_id": "6ab15b9119683122b8c8be81",
+          "buffer_status": "error",
+          "due_at": "2026-09-21T16:30:09.385Z",
+          "created_at": "2026-09-21T16:30:13+00:00"
+        }
+      ]
     }
   ],
-  "updated_at": "2026-09-21T16:30:14+00:00"
+  "updated_at": "2026-09-21T16:35:02+00:00"
 }
