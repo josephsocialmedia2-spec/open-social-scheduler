@@ -99,6 +99,23 @@ jobs:
           assert '_validate_image_file' in driver
           assert 'Image.open(path)' in driver
           assert 'Pillow==11.3.0' in runner_requirements
+          launcher = Path('AVVIA_F1_CREATIVE_WINDOWS.bat').read_text(encoding='utf-8')
+          query_payload = __import__('json').loads(Path('publisher/chatgpt_query_runner/f1_browser_creative_queries.json').read_text(encoding='utf-8'))
+          assert 'set "F1_QUERY_BATCH_SIZE=1"' in launcher
+          assert 'set "F1_MAX_ATTEMPTS=1"' in launcher
+          assert 'set "F1_MAX_DOWNLOAD_ATTEMPTS=3"' in launcher
+          assert 'set "F1_MAX_CHATGPT_TABS=1"' in launcher
+          assert '\\nset "F1_MAX_ATTEMPTS=1"' not in launcher
+          assert '--batch-size 1' in launcher
+          assert query_payload['queries'][0]['id'] == 'F1-SELLER-001-A'
+          assert query_payload['queries'][0]['query'] == 'Quanto vale casa mia'
+          assert query_payload['queries'][0]['variant'] == 'A'
+          assert 'MAX_DOWNLOAD_ATTEMPTS' in driver
+          assert 'F1_MAX_DOWNLOAD_ATTEMPTS' in driver
+          assert 'MAX_CHATGPT_TABS' in driver
+          assert 'F1_MAX_CHATGPT_TABS' in driver
+          assert 'for attempt in range(1, MAX_DOWNLOAD_ATTEMPTS + 1)' in driver
+          assert '"--new-tab"' not in driver
           assert "New-ScheduledTaskTrigger -Daily -At 23:00" in installer
           assert "F1 AUTOPUBLISHER.lnk" in installer
           for path in [
