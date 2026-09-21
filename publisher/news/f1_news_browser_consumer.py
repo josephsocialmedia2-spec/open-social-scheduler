@@ -19,7 +19,7 @@ def load_json(path: Path, default):
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def resolve_slot(now: datetime, requested: str) -> tuple[str, str]:
+def resolve_slot(now: datetime, requested: str) -> tuple[str, str] | None:
     if requested == "midday":
         return "MIDDAY", f"{now.date().isoformat()}|MIDDAY"
     if requested == "evening":
@@ -32,11 +32,7 @@ def resolve_slot(now: datetime, requested: str) -> tuple[str, str]:
         return "MIDDAY", f"{now.date().isoformat()}|MIDDAY"
     if 18 * 60 + 45 <= minutes <= 21 * 60:
         return "EVENING", f"{now.date().isoformat()}|EVENING"
-    # Scheduled task normally lands exactly at 11:30 or 19:30. If Windows
-    # starts late, choose the nearest remaining daily slot.
-    if minutes < 15 * 60:
-        return "MIDDAY", f"{now.date().isoformat()}|MIDDAY"
-    return "EVENING", f"{now.date().isoformat()}|EVENING"
+    return None
 
 
 def main() -> int:
@@ -47,7 +43,11 @@ def main() -> int:
     args = parser.parse_args()
 
     now = datetime.now(ROME)
-    slot_name, slot_key = resolve_slot(now, args.slot)
+    slot_info = resolve_slot(now, args.slot)
+    if slot_info is None:
+        print(json.dumps({"status": "NOOP_OUTSIDE_PUBLICATION_WINDOW"}, ensure_ascii=False))
+        return 4
+    slot_name, slot_key = slot_info
     queue = load_json(Path(args.queue), {"items": []})
 
     candidates = [
