@@ -108,6 +108,7 @@ def apply_f1_brand_layer(
     territory: str = "VALLE DI SUSA",
     phone: str = "371 370 8294",
     url: str = "www.f1immobiliare.com",
+    body: str | None = None,
 ) -> dict[str, Any]:
     destination.parent.mkdir(parents=True, exist_ok=True)
     with Image.open(source) as raw:
@@ -150,9 +151,9 @@ def apply_f1_brand_layer(
         y += 96
 
     body_font = _font(37, bold=False)
-    body = "Scopri il valore reale del tuo immobile con una valutazione professionale e senza impegno."
+    body_text = body or "Scopri il valore reale del tuo immobile con una valutazione professionale e senza impegno."
     by = min(y + 36, 780)
-    for line in _wrap(draw, body, body_font, 500)[:5]:
+    for line in _wrap(draw, body_text, body_font, 500)[:5]:
         draw.text((64, by), line, font=body_font, fill=WHITE)
         by += 50
 
