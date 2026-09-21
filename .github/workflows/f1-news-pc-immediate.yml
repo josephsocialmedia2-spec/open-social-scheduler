@@ -26,7 +26,7 @@ concurrency:
 
 jobs:
   execute-browser-job:
-    runs-on: [self-hosted, Windows]
+    runs-on: self-hosted
     timeout-minutes: 45
 
     steps:
@@ -36,9 +36,10 @@ jobs:
           ref: main
           fetch-depth: 0
 
-      - name: Confirm interactive Windows session
+      - name: Confirm Windows interactive runner
         shell: powershell
         run: |
+          if ($env:OS -ne 'Windows_NT') { throw 'The connected self-hosted runner is not Windows.' }
           Write-Host "COMPUTERNAME=$env:COMPUTERNAME"
           Write-Host "USERNAME=$env:USERNAME"
           Write-Host "SESSIONNAME=$env:SESSIONNAME"
