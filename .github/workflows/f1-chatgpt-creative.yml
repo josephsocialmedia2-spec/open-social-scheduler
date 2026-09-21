@@ -1,0 +1,39 @@
+name: F1 ChatGPT Creative Engine
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  creative:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      OPENAI_IMAGE_MODEL: gpt-image-1
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with: {python-version: '3.12'}
+      - run: python -m pip install pillow requests
+      - name: Require ChatGPT/OpenAI image engine
+        run: test -n "$OPENAI_API_KEY"
+      - name: Generate 2 variants for 6 search intents
+        run: python publisher/f1_chatgpt_creative_engine.py
+      - name: QA generated visual files
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from PIL import Image
+          root=Path('publisher/media/generated/f1-chatgpt-creative-v1')
+          m=json.load(open(root/'manifest.json',encoding='utf-8'))
+          assert len(m['assets'])==12 and m['engine']=='OpenAI/ChatGPT image generation'
+          for a in m['assets']:
+            p=Path(a['visual']); im=Image.open(p); assert im.width>=900 and im.height>=1200; assert p.stat().st_size>20000
+            print('QA PASS',p,im.size)
+          PY
+      - name: Publish test visuals only
+        env: {GH_TOKEN: "${{ github.token }}"}
+        run: |
+          gh release delete f1-chatgpt-creative-v1 --yes --cleanup-tag >/dev/null 2>&1 || true
+          gh release create f1-chatgpt-creative-v1 publisher/media/generated/f1-chatgpt-creative-v1/*.jpg --title "F1 · ChatGPT Creative V1" --notes "Search-intent-driven ChatGPT/OpenAI hero visuals. TEST ONLY — not published to social."
