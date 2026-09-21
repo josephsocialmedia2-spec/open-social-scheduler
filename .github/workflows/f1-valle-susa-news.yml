@@ -123,10 +123,14 @@ jobs:
           python publisher/persist_final_queue_github.py             --before /tmp/f1-news-queue-before.json             --after publisher/final_content_queue.json
 
       - name: Persist news asset and dedup state
-        if: steps.build.outputs.job_id != ''
+        if: always()
         shell: bash
         run: |
           set -euo pipefail
+          if [ -z "${{ steps.build.outputs.job_id }}" ]; then
+            echo "No news job to persist"
+            exit 0
+          fi
           git restore publisher/final_content_queue.json || true
           git config user.name "F1 Valle Susa News"
           git config user.email "actions@users.noreply.github.com"
