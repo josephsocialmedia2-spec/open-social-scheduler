@@ -5,7 +5,7 @@ Queue: publisher/final_content_queue.json
 Assets: publisher/final_assets/*
 Delivery: Cloudinary -> Buffer -> resolved Facebook / Instagram / LinkedIn channels.
 
-A job is PUBLISHED only after Buffer reports every created target post as "sent".
+A job is PUBLISHED_VERIFIED only after Buffer reports every created target post as "sent".
 """
 from __future__ import annotations
 
@@ -23,7 +23,7 @@ import territory_router
 
 ROOT = Path(__file__).resolve().parents[1]
 QUEUE_PATH = ROOT / "publisher" / "final_content_queue.json"
-ALLOWED_STATUSES = {"READY", "PUBLISHING", "SCHEDULED", "PUBLISHED", "ERROR", "HOLD"}
+ALLOWED_STATUSES = {"READY", "PUBLISHING", "SCHEDULED", "PUBLISHED", "PUBLISHED_VERIFIED", "ERROR", "HOLD"}
 ALLOWED_FORMATS = {"photo", "carousel", "reel"}
 ALLOWED_PLATFORMS = {"facebook", "instagram", "linkedin"}
 MAX_AUTONOMOUS_ATTEMPTS = max(1, int(os.getenv("F1_PUBLISH_MAX_ATTEMPTS", "5")))
@@ -271,13 +271,13 @@ def refresh_publication_status(job: dict[str, Any], api_key: str) -> bool:
         job["error"] = f"Buffer provider state requires recovery: {hard_error}"
         mark_job(job, "ERROR_RECOVERABLE", error=job["error"])
     elif target_services and target_services.issubset(sent_services):
-        job["status"] = "PUBLISHED"
+        job["status"] = "PUBLISHED_VERIFIED"
         sent_times = [str(x.get("sent_at") or "") for x in refreshed if x.get("sent_at")]
         job["published_at"] = max(sent_times) if sent_times else datetime.now(timezone.utc).isoformat(timespec="seconds")
         job["published_urls"] = sorted(set(urls))
         job["provider"] = "buffer"
         job.pop("error", None)
-        mark_job(job, "PUBLISHED")
+        mark_job(job, "PUBLISHED_VERIFIED")
     else:
         job["status"] = "SCHEDULED"
         job["scheduled_via"] = "buffer"
