@@ -10,6 +10,7 @@ on:
       - 'publisher/manual_asset_inbox/server.py'
       - 'publisher/f1_graphics_automation/RUN_F1_NEWS_SLOT.ps1'
       - 'publisher/f1_graphics_automation/INSTALLA_AUTOMAZIONE_23.ps1'
+      - '.github/workflows/f1-news-browser-control.yml'
       - '.github/workflows/f1-valle-susa-news.yml'
 
 permissions:
@@ -31,53 +32,46 @@ jobs:
           python-version: '3.12'
 
       - name: Install validation dependencies
-        run: |
-          python -m pip install --disable-pip-version-check requests pillow
+        run: python -m pip install --disable-pip-version-check requests pillow
 
       - name: Validate Python and JSON
         run: |
-          python -m py_compile publisher/news/f1_valle_susa_news.py
-          python -m py_compile publisher/chatgpt_query_runner/core.py
-          python -m py_compile publisher/chatgpt_query_runner/worker.py
-          python -m py_compile publisher/manual_asset_inbox/server.py
+          python -m py_compile             publisher/news/f1_valle_susa_news.py             publisher/news/f1_news_browser_control.py             publisher/news/f1_news_browser_consumer.py             publisher/chatgpt_query_runner/core.py             publisher/chatgpt_query_runner/worker.py             publisher/manual_asset_inbox/server.py
           python -m json.tool publisher/news/f1_valle_susa_sources.json >/dev/null
+          python -m json.tool publisher/news/f1_news_browser_queue.json >/dev/null
 
-      - name: Assert static-card publisher is disabled
+      - name: Assert GitHub prepares and PC browser executes
         run: |
           python - <<'PY'
           from pathlib import Path
-          p = Path('publisher/news/f1_valle_susa_news.py').read_text(encoding='utf-8')
-          forbidden = ['def render_news_card(', 'ImageDraw.Draw(', 'final_assets/news_valle_susa']
-          found = [x for x in forbidden if x in p]
-          if found:
-              raise SystemExit('Static F1 news creative path still present: ' + ', '.join(found))
-          required = ['build_visual_prompt', 'f1_news_current.local.json', 'COMM-NEWS-']
-          missing = [x for x in required if x not in p]
+          control=Path('publisher/news/f1_news_browser_control.py').read_text(encoding='utf-8')
+          consumer=Path('publisher/news/f1_news_browser_consumer.py').read_text(encoding='utf-8')
+          runner=Path('publisher/f1_graphics_automation/RUN_F1_NEWS_SLOT.ps1').read_text(encoding='utf-8')
+          worker=Path('publisher/chatgpt_query_runner/worker.py').read_text(encoding='utf-8')
+
+          required={
+              'control':['QUEUED_FOR_PC','build_caption','build_visual_prompt','verify_source','slot_key'],
+              'consumer':['JOB_READY_FOR_BROWSER','f1_news_current.local.json'],
+              'runner':['origin/main:publisher/news/f1_news_browser_queue.json','chatgpt_browser','f1_news_current.local.json'],
+              'worker':['NEWS_QUERY_FILE','PUBLISHED_VERIFIED'],
+          }
+          bodies={'control':control,'consumer':consumer,'runner':runner,'worker':worker}
+          missing=[]
+          for name,tokens in required.items():
+              for token in tokens:
+                  if token not in bodies[name]:
+                      missing.append(f'{name}:{token}')
           if missing:
-              raise SystemExit('Missing GPT-browser news handoff markers: ' + ', '.join(missing))
-          print('STATIC_CARD_DISABLED_AND_GPT_HANDOFF_PRESENT')
+              raise SystemExit('Missing hybrid pipeline markers: '+', '.join(missing))
+          if 'generate_visual(' in control:
+              raise SystemExit('GitHub controller must never generate the image')
+          print('GITHUB_CONTROL_TO_CHATGPT_BROWSER_CONTRACT_OK')
           PY
 
-      - name: Build a news query payload only
-        run: |
-          python publisher/news/f1_valle_susa_news.py --slot immediate --write-query-file /tmp/f1-news-query.json
-          python - <<'PY'
-          import json
-          q=json.load(open('/tmp/f1-news-query.json',encoding='utf-8'))
-          row=(q.get('queries') or [{}])[0]
-          required=['id','prompt','caption','source_name','source_url','news_id','headline']
-          missing=[k for k in required if not str(row.get(k) or '').strip()]
-          if missing:
-              raise SystemExit('Incomplete F1 news GPT payload: ' + ', '.join(missing))
-          if not str(row['id']).startswith('COMM-NEWS-'):
-              raise SystemExit('News communication id is not deterministic COMM-NEWS-*')
-          print('NEWS_GPT_PAYLOAD_OK')
-          PY
-
-      - name: Confirm local Windows scheduler is authoritative
+      - name: Assert two daily Windows slots remain installed by same task definition
         run: |
           grep -q "F1_News_ValleSusa" publisher/f1_graphics_automation/INSTALLA_AUTOMAZIONE_23.ps1
           grep -q "11:30" publisher/f1_graphics_automation/INSTALLA_AUTOMAZIONE_23.ps1
           grep -q "19:30" publisher/f1_graphics_automation/INSTALLA_AUTOMAZIONE_23.ps1
           grep -q "RUN_F1_NEWS_SLOT.ps1" publisher/f1_graphics_automation/INSTALLA_AUTOMAZIONE_23.ps1
-          echo LOCAL_WINDOWS_GPT_SCHEDULER_CONTRACT_OK
+          echo WINDOWS_TASK_SLOTS_OK
