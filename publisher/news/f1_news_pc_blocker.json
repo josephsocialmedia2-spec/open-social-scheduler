@@ -1,0 +1,37 @@
+{
+  "status": "BLOCKED_NO_REMOTE_PC_EXECUTOR",
+  "communication_id": "COMM-NEWS-20260921-EVENING-E6871421",
+  "headline": "AVIGLIANA: 3 MILIONI PER L'EFFICIENZA",
+  "recorded_at": "2026-09-21T20:35:00+02:00",
+  "last_reached_status": "QUEUED_FOR_PC",
+  "evidence": {
+    "immediate_workflow_run": {
+      "id": 35636095473,
+      "name": "F1 News PC Immediate",
+      "status": "queued",
+      "conclusion": null,
+      "url": "https://github.com/josephsocialmedia2-spec/open-social-scheduler/actions/runs/35636095473"
+    },
+    "queue": {
+      "force_immediate": true,
+      "slot_key": "2026-09-21|EVENING",
+      "duplicated": false
+    },
+    "validations": {
+      "news_contract": "success",
+      "project_deploy": "success"
+    },
+    "remote_executor": "No self-hosted Windows executor has claimed the queued job yet; no final asset or final queue entry exists for this communication."
+  },
+  "automatic_recovery_paths_installed": [
+    ".github/workflows/f1-news-pc-immediate.yml",
+    "publisher/f1_graphics_automation/ENSURE_F1_GITHUB_RUNNER.ps1",
+    "publisher/f1_graphics_automation/ENSURE_F1_NEWS_POLLER.ps1",
+    "publisher/f1_graphics_automation/RUN_F1_NEWS_POLLER.ps1",
+    "publisher/f1_graphics_automation/RUN_NOTTURNO_23.ps1",
+    "publisher/f1_graphics_automation/RUN_F1_NEWS_SLOT.ps1",
+    "publisher/f1_graphics_automation/START_INBOX.ps1",
+    "publisher/f1_graphics_automation/INSTALLA_AUTOMAZIONE_23.ps1"
+  ],
+  "recovery_behavior": "Keep the original communication/job. When an interactive Windows executor appears, resume from the current state and continue browser generation, download, brand, ingest, publish and remote verification without creating a duplicate or regenerating after IMAGE_READY."
+}
