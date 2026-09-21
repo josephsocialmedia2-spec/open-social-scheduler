@@ -1,0 +1,113 @@
+name: F1 News Provider Recovery
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'publisher/news/RECOVER_NOW'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: f1-news-provider-recovery
+  cancel-in-progress: false
+
+jobs:
+  recover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+      CLOUDINARY_URL: ${{ secrets.CLOUDINARY_URL }}
+      F1_PUBLISH_MAX_ATTEMPTS: '3'
+
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v5
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: publisher/requirements.txt
+
+      - name: Install dependencies
+        run: python -m pip install --disable-pip-version-check -r publisher/requirements.txt
+
+      - name: Read recovery job
+        id: target
+        shell: bash
+        run: |
+          set -euo pipefail
+          JOB="$(tr -d '\r\n' < publisher/news/RECOVER_NOW)"
+          test -n "$JOB"
+          echo "job_id=$JOB" >> "$GITHUB_OUTPUT"
+
+      - name: Snapshot queue
+        run: cp publisher/final_content_queue.json /tmp/f1-news-recovery-before.json
+
+      - name: Recreate deterministic news asset
+        shell: bash
+        run: |
+          python publisher/news/f1_valle_susa_news.py             --recover-job-id "${{ steps.target.outputs.job_id }}"
+
+      - name: Retry only failed provider
+        shell: bash
+        run: |
+          set -u
+          JOB="${{ steps.target.outputs.job_id }}"
+          for i in 1 2 3 4; do
+            echo "Recovery pass $i for $JOB"
+            python publisher/final_asset_publisher.py               --communications-only               --verify               --job-id "$JOB"               --max-jobs 1 || true
+            STATUS=$(python - "$JOB" <<'PY'
+          import json,sys
+          q=json.load(open('publisher/final_content_queue.json',encoding='utf-8'))
+          j=next((x for x in q.get('jobs',[]) if str(x.get('id'))==sys.argv[1]),{})
+          print(j.get('status','MISSING'))
+          PY
+            )
+            echo "STATUS=$STATUS"
+            if [ "$STATUS" = "PUBLISHED_VERIFIED" ]; then
+              exit 0
+            fi
+            ATTEMPTS=$(python - "$JOB" <<'PY'
+          import json,sys
+          q=json.load(open('publisher/final_content_queue.json',encoding='utf-8'))
+          j=next((x for x in q.get('jobs',[]) if str(x.get('id'))==sys.argv[1]),{})
+          print(int(j.get('publish_attempts') or 0))
+          PY
+            )
+            if [ "$STATUS" = "ERROR" ] && [ "$ATTEMPTS" -ge "$F1_PUBLISH_MAX_ATTEMPTS" ]; then
+              exit 2
+            fi
+            sleep 20
+          done
+          exit 3
+
+      - name: Persist queue
+        if: always()
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          python publisher/persist_final_queue_github.py             --before /tmp/f1-news-recovery-before.json             --after publisher/final_content_queue.json
+
+      - name: Persist recreated asset
+        if: always()
+        shell: bash
+        run: |
+          git restore publisher/final_content_queue.json || true
+          git config user.name "F1 News Recovery"
+          git config user.email "actions@users.noreply.github.com"
+          git add publisher/final_assets/news_valle_susa
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git commit -m "Persist recovered F1 news asset"
+          git pull --rebase origin main
+          git push origin HEAD:main
