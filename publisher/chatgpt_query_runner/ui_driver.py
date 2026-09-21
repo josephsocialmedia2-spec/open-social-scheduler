@@ -20,7 +20,7 @@ from PIL import Image, UnidentifiedImageError
 GPT_URL = "https://chatgpt.com/g/g-6a9c210485488191b072eb694c2f114c-generatore-grafica-f1"
 MAX_DOWNLOAD_ATTEMPTS = max(1, int(os.getenv("F1_MAX_DOWNLOAD_ATTEMPTS", "3")))
 MAX_CHATGPT_TABS = max(1, int(os.getenv("F1_MAX_CHATGPT_TABS", "1")))
-FORCE_COORDINATE_COMPOSER = os.getenv("F1_FORCE_COORDINATE_COMPOSER", "0") == "1"
+FORCE_COORDINATE_COMPOSER = os.getenv("F1_FORCE_COORDINATE_COMPOSER", "1") == "1"
 
 PROMPT_NAMES = (
     "message chatgpt",
