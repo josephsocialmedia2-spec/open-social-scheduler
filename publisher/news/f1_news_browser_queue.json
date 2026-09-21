@@ -79,7 +79,9 @@
       "slot_key": "2026-09-21|EVENING",
       "status": "QUEUED_FOR_PC",
       "created_at": "2026-09-21T19:42:30+02:00",
-      "updated_at": "2026-09-21T19:42:30+02:00"
+      "updated_at": "2026-09-21T20:05:00+02:00",
+      "execution_requested_at": "2026-09-21T20:05:00+02:00",
+      "force_immediate": true
     }
   ],
   "rejected": [
@@ -90,5 +92,5 @@
       "error": "ConnectTimeout: HTTPSConnectionPool(host='www.regione.piemonte.it', port=443): Max retries exceeded with url: /web/amministrazione/autonomie-locali/notiziario-per-amministrazioni-locali/notiziario-per-amministrazioni-locali-n-31-3-settembre-2026 (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.regione.piemonte.it', port=443) at 0x7f0ef94c3bc0>, 'Connection to www.regione.piemonte.it timed out. (connect timeout=8)'))"
     }
   ],
-  "updated_at": "2026-09-21T19:42:30+02:00"
+  "updated_at": "2026-09-21T20:05:00+02:00"
 }
