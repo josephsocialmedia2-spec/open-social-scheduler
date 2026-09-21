@@ -771,6 +771,47 @@ class ChromeChatGPTDriver:
         )
         return candidates[-1]["control"]
 
+    def recover_visible_generation(self, prompt: str | None = None) -> GenerationResult | None:
+        """Recover an already-generated result from the current ChatGPT conversation.
+
+        This method never sends a prompt and never navigates away. It is used after
+        a crash between IMAGE_READY and DOWNLOADED so the same generated image is
+        downloaded instead of asking ChatGPT to create a duplicate.
+        """
+        self.activate_chrome()
+        pyautogui.press("end")
+        time.sleep(0.8)
+        records = self._records()
+        images = [r for r in records if self._is_image_record(r)]
+        downloads = [r for r in records if self._is_download_record(r)]
+        if not images and not downloads:
+            return None
+
+        if prompt:
+            expected = _norm(prompt)
+            names = "\n".join(r["name"] for r in records if r["name"])
+            haystack = _norm(names)
+            fragment = expected[:120]
+            if fragment and fragment not in haystack and expected not in haystack:
+                self.log("Recovery immagine rifiutata: il prompt atteso non è visibile nella conversazione corrente.")
+                return None
+
+        latest_image = max(images, key=lambda r: r["rect"][3])["control"] if images else None
+        latest_downloads = [
+            r["control"] for r in sorted(downloads, key=lambda r: r["rect"][3])
+        ]
+        now = time.time()
+        self.log(
+            "Recovery immagine esistente: riuso il risultato già presente senza nuovo prompt "
+            f"(images={len(images)}, downloads={len(downloads)})"
+        )
+        return GenerationResult(
+            image_control=latest_image,
+            download_controls=latest_downloads,
+            started_at=now,
+            completed_at=now,
+        )
+
     def _downloads_dir(self) -> Path:
         return Path(os.path.expandvars(r"%USERPROFILE%\Downloads"))
 
