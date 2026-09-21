@@ -7,6 +7,7 @@ import html
 import json
 import os
 import re
+import time
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -23,6 +24,7 @@ from publisher.news.f1_valle_susa_news import (
     build_visual_prompt,
     choose_item,
     load_json,
+    scan_sources,
     source_hash,
 )
 from publisher.rendering.openai_visual_engine import generate_visual
@@ -111,13 +113,24 @@ def verify_source(item: dict[str, Any]) -> dict[str, Any]:
     if not url.startswith(("http://", "https://")):
         raise RuntimeError("SOURCE_URL_INVALID")
 
-    response = requests.get(
-        url,
-        timeout=35,
-        allow_redirects=True,
-        headers={"User-Agent": UA},
-    )
-    response.raise_for_status()
+    response = None
+    last_error: Exception | None = None
+    for attempt in range(1, 3):
+        try:
+            response = requests.get(
+                url,
+                timeout=(8, 25),
+                allow_redirects=True,
+                headers={"User-Agent": UA},
+            )
+            response.raise_for_status()
+            break
+        except requests.RequestException as exc:
+            last_error = exc
+            if attempt < 2:
+                time.sleep(2)
+    if response is None:
+        raise RuntimeError(f"SOURCE_FETCH_FAILED:{type(last_error).__name__}:{last_error}")
     content_type = str(response.headers.get("content-type") or "").lower()
     if "html" not in content_type and "text" not in content_type:
         raise RuntimeError(f"SOURCE_UNSUPPORTED_CONTENT_TYPE:{content_type}")
@@ -185,6 +198,65 @@ def _asset_from_record(record: dict[str, Any], field: str) -> Path | None:
         return None
     path = ROOT / raw
     return path if _valid_image(path) else None
+
+
+def candidate_items(
+    config: dict[str, Any],
+    state: dict[str, Any],
+    queue: dict[str, Any],
+) -> list[dict[str, Any]]:
+    excluded = {
+        str(job.get("source_hash") or "").strip().lower()
+        for job in queue.get("jobs") or []
+        if str(job.get("source_hash") or "").strip()
+    }
+    excluded |= {
+        str(job.get("source_hash") or "").strip().lower()
+        for job in (state.get("jobs") or {}).values()
+        if str(job.get("source_hash") or "").strip()
+    }
+
+    featured = [
+        dict(row)
+        for row in config.get("featured") or []
+        if source_hash(row).lower() not in excluded
+    ]
+    featured.sort(key=lambda x: str(x.get("published_at") or ""), reverse=True)
+
+    known = {source_hash(x).lower() for x in featured}
+    scanned = scan_sources(config, excluded | known)
+    candidates = featured + scanned
+
+    result: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    for item in candidates:
+        digest = source_hash(item).lower()
+        if digest in seen or digest in excluded:
+            continue
+        seen.add(digest)
+        result.append(item)
+    return result
+
+
+def record_source_rejection(
+    state: dict[str, Any],
+    item: dict[str, Any],
+    slot_key: str,
+    error: Exception,
+) -> None:
+    state.setdefault("rejected_sources", []).append(
+        {
+            "slot_key": slot_key,
+            "source_url": item.get("source_url"),
+            "source_name": item.get("source_name"),
+            "title": item.get("title"),
+            "source_hash": source_hash(item),
+            "error": f"{type(error).__name__}: {error}"[:1400],
+            "rejected_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        }
+    )
+    state["rejected_sources"] = state["rejected_sources"][-100:]
+    _persist_state(state)
 
 
 def _provider_audit(state: dict[str, Any]) -> dict[str, Any]:
@@ -382,27 +454,36 @@ def run(forced_slot: str, output_path: str | None) -> int:
     if existing:
         job = existing
     else:
-        item = choose_item(load_json(CONFIG_PATH, {}))
-        if not item:
+        config = load_json(CONFIG_PATH, {})
+        candidates = candidate_items(config, state, queue)
+        if not candidates:
             _emit(output_path, {"status": "NOOP_NO_RELEVANT_NEWS", "job_id": "", "slot_key": slot_key})
             return 0
-        try:
-            verified = verify_source(item)
-        except Exception as exc:
-            rejected = {
-                "content_id": f"REJECTED-{now:%Y%m%d%H%M%S}",
-                "slot_key": slot_key,
-                "status": "SOURCE_REJECTED",
-                "error": f"{type(exc).__name__}: {exc}",
-                "source_url": item.get("source_url"),
-                "source_hash": source_hash(item),
-                "updated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-            }
-            state.setdefault("rejected_sources", []).append(rejected)
-            state["rejected_sources"] = state["rejected_sources"][-100:]
-            _persist_state(state)
-            _emit(output_path, {"status": "SOURCE_REJECTED", "job_id": "", "slot_key": slot_key, "error": rejected["error"]})
+
+        item = None
+        verified = None
+        for candidate in candidates[:25]:
+            try:
+                verified_candidate = verify_source(candidate)
+                item = candidate
+                verified = verified_candidate
+                break
+            except Exception as exc:
+                record_source_rejection(state, candidate, slot_key, exc)
+                continue
+
+        if item is None or verified is None:
+            _emit(
+                output_path,
+                {
+                    "status": "NOOP_NO_VERIFIABLE_SOURCE",
+                    "job_id": "",
+                    "slot_key": slot_key,
+                    "checked_candidates": min(len(candidates), 25),
+                },
+            )
             return 0
+
         job = _new_job(now, slot_name, slot_key, item, verified)
         state["jobs"][job["content_id"]] = job
         state["slots"][slot_key] = {"job_id": job["content_id"], "status": "SOURCE_VERIFIED"}
