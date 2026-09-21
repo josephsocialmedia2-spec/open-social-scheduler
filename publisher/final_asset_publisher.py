@@ -269,8 +269,39 @@ def refresh_publication_status(job: dict[str, Any], api_key: str) -> bool:
         None,
     )
     if hard_error:
+        # Keep already-sent services immutable and release only failed provider
+        # services for a targeted retry. This prevents a Facebook duplicate when
+        # Instagram alone fails after Buffer accepted both posts.
+        failed_rows = [
+            row for row in refreshed
+            if str(row.get("buffer_status") or "").lower() in {"error", "needs_approval"}
+        ]
+        failed_services = {
+            str(row.get("service") or "")
+            for row in failed_rows
+            if str(row.get("service") or "").strip()
+        }
+        if failed_rows:
+            archived = list(job.get("failed_buffer_posts") or [])
+            existing_ids = {str(x.get("post_id") or "") for x in archived}
+            for row in failed_rows:
+                if str(row.get("post_id") or "") not in existing_ids:
+                    archived.append(row)
+            job["failed_buffer_posts"] = archived[-20:]
+            job["buffer_posts"] = [
+                row for row in refreshed
+                if str(row.get("service") or "") not in failed_services
+            ]
+            job["buffer_scheduled_platforms"] = [
+                service
+                for service in (job.get("buffer_scheduled_platforms") or [])
+                if str(service) not in failed_services
+            ]
         job["status"] = "ERROR"
-        job["error"] = f"Buffer provider state requires recovery: {hard_error}"
+        job["error"] = (
+            f"Buffer provider state requires recovery: {hard_error}; "
+            f"retry services={','.join(sorted(failed_services)) or 'unknown'}"
+        )
         mark_job(job, "ERROR_RECOVERABLE", error=job["error"])
     elif target_services and target_services.issubset(sent_services):
         job["status"] = "PUBLISHED_VERIFIED"
