@@ -1,10 +1,6 @@
 {
   "version": 1,
   "timezone": "Europe/Rome",
-  "schedule_utc": [
-    "10:30",
-    "18:30"
-  ],
   "local_windows": [
     "11:00-13:00",
     "19:00-21:00"
@@ -130,5 +126,9 @@
       "published_at": "2026-09-03",
       "summary": "Il Notiziario regionale segnala la pubblicazione in Gazzetta Ufficiale degli indici dei prezzi al consumo per le famiglie di operai e impiegati relativi a luglio 2026, richiamati dalla disciplina delle locazioni di immobili urbani."
     }
+  ],
+  "schedule_local": [
+    "11:30",
+    "19:30"
   ]
 }
