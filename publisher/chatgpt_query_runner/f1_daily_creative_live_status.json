@@ -1,0 +1,23 @@
+{
+  "communication_id": "COMM-F1-20260921-F1-SELLER-001-A",
+  "query_id": "F1-SELLER-001-A",
+  "search_intent": "QUANTO VALE CASA MIA",
+  "variant": "A",
+  "control_status": "QUEUED_FOR_PC",
+  "final_status": "NOT_CREATED",
+  "last_step": "",
+  "graphic_ready": false,
+  "graphic_url": "",
+  "hosted_asset_urls": [],
+  "repository_asset_links": [],
+  "remote_post_ids": [],
+  "remote_post_urls": [],
+  "sha256": "",
+  "pc_workflow": {
+    "id": 35644339096,
+    "status": "queued",
+    "conclusion": null,
+    "html_url": "https://github.com/josephsocialmedia2-spec/open-social-scheduler/actions/runs/35644339096"
+  },
+  "last_changed_at": "2026-09-21T19:23:00+00:00"
+}
