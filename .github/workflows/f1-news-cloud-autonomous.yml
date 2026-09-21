@@ -181,7 +181,11 @@ jobs:
           git restore publisher/final_content_queue.json || true
           git config user.name "F1 News Cloud Autonomous"
           git config user.email "f1-news-cloud@users.noreply.github.com"
-          git add publisher/news/f1_news_cloud_state.json publisher/final_assets/f1_news 2>/dev/null || true
+          git add publisher/news/f1_news_cloud_state.json
+          if [ -d publisher/final_assets/f1_news ]; then
+            git add publisher/final_assets/f1_news
+          fi
+          git status --short
           if git diff --cached --quiet; then
             echo "No F1 News state/assets changes to persist"
             exit 0
