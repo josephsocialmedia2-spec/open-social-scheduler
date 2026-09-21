@@ -8,7 +8,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
-STATE_VERSION = 3
+STATE_VERSION = 2
 MAX_RUN_HISTORY = 30
 
 STAGES = (
@@ -100,7 +100,7 @@ def blank_state() -> dict[str, Any]:
 def migrate_state(payload: Any) -> dict[str, Any]:
     if not isinstance(payload, dict):
         return blank_state()
-    if payload.get("version") in {2, STATE_VERSION}:
+    if payload.get("version") == STATE_VERSION:
         state = deepcopy(payload)
         state["version"] = STATE_VERSION
         state.setdefault("next_index", 0)
