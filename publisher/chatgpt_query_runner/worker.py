@@ -302,7 +302,7 @@ def process_job(driver: ChromeChatGPTDriver, state: dict, run: dict, job: dict, 
             mark(state, run, job, "INVIO_VERIFICATO", submitted_at=submitted_at)
 
             stage = "GENERAZIONE_IN_CORSO"
-            result = driver.wait_generation(baseline)
+            result = driver.wait_generation(baseline, prompt=prompt)
             mark(
                 state,
                 run,
