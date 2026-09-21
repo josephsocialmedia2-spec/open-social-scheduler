@@ -280,7 +280,7 @@ def create_job(slot: str, force: bool = False) -> tuple[dict[str, Any] | None, s
 
     digest = source_hash(item)
     tag = slot.upper() if slot != "immediate" else "NOW"
-    job_id = f"F1-NEWS-{now:%Y%m%d}-{tag}-{digest[:8].upper()}"
+    job_id = f"F1-NEWS-{now:%Y%m%d-%H%M}-{tag}-{digest[:8].upper()}"
     if any(str(j.get("id") or "") == job_id for j in queue.get("jobs") or []):
         return None, "NOOP_DUPLICATE_JOB"
 
@@ -302,7 +302,7 @@ def create_job(slot: str, force: bool = False) -> tuple[dict[str, Any] | None, s
         "format": "photo",
         "assets": [asset.relative_to(ROOT).as_posix()],
         "platforms": ["facebook","instagram"],
-        "scope": "territory",
+        "scope": "network",
         "territory": "Valle di Susa",
         "editorial_slot": slot,
         "scheduled_at": now.isoformat(timespec="seconds"),
