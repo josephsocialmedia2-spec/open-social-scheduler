@@ -8,6 +8,7 @@ $Root = (Resolve-Path (Join-Path $PSScriptRoot '..\..')).Path
 $NightScript = Join-Path $PSScriptRoot 'RUN_NOTTURNO_23.ps1'
 $NewsScript = Join-Path $PSScriptRoot 'RUN_F1_NEWS_SLOT.ps1'
 $InboxScript = Join-Path $PSScriptRoot 'START_INBOX.ps1'
+$EnsurePoller = Join-Path $PSScriptRoot 'ENSURE_F1_NEWS_POLLER.ps1'
 $OpenBat = Join-Path $PSScriptRoot 'APRI_RACCOLTA_GRAFICHE.bat'
 $ManualBat = Join-Path $PSScriptRoot 'AVVIA_F1_GRAFICHE_ORA.bat'
 $Test1Bat = Join-Path $PSScriptRoot 'PROVA_ORA.bat'
@@ -130,6 +131,10 @@ if ($NewsHours -notcontains '11:30' -or $NewsHours -notcontains '19:30') {
     throw "Task F1_News_ValleSusa non configurato nei due slot richiesti: $($NewsHours -join ', ')"
 }
 $NewsTaskInfo = Get-ScheduledTaskInfo -TaskName 'F1_News_ValleSusa' -ErrorAction Stop
+
+& $EnsurePoller
+$InstalledPoller = Get-ScheduledTask -TaskName 'F1_News_GitHub_Poller' -ErrorAction Stop
+if (-not $InstalledPoller) { throw 'Task F1_News_GitHub_Poller non verificabile.' }
 
 $InstalledInbox = Get-ScheduledTask -TaskName 'F1_Inbox_Logon' -ErrorAction Stop
 if (-not $InstalledInbox) { throw 'Task F1_Inbox_Logon non verificabile.' }
