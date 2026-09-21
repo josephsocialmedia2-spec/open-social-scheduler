@@ -1,9 +1,111 @@
 {
   "version": 1,
   "architecture": "github-actions-only",
-  "jobs": {},
-  "slots": {},
-  "provider_audit": {},
-  "rejected_sources": [],
-  "updated_at": null
+  "jobs": {
+    "F1NEWS-20260921-IMMEDIATE-995E438A72": {
+      "content_id": "F1NEWS-20260921-IMMEDIATE-995E438A72",
+      "news_id": "AVIGLIANA-SUOLO-20260903",
+      "communication_id": "COMM-NEWS-20260921-IMMEDIATE-995E438A",
+      "slot": "IMMEDIATE",
+      "slot_key": "2026-09-21|IMMEDIATE",
+      "headline": "AVIGLIANA: SALVAGUARDATI I TERRENI",
+      "caption": "AVIGLIANA: ARCHIVIATO IL PROGETTO DELLA NUOVA STAZIONE ELETTRICA A DRUBIAGLIO\n\nIl Comune di Avigliana comunica che Terna ha chiesto l'archiviazione del procedimento autorizzativo della nuova stazione elettrica prevista a Drubiaglio; la comunicazione comunale evidenzia la salvaguardia dei terreni agricoli e l'assenza di nuovo consumo di suolo.\n\nPer chi vive, vende, compra o cambia casa in Valle di Susa, la notizia conta solo se viene tradotta in effetti concreti sul territorio. F1 la segnala e la contestualizza senza trasformare una comunicazione generale in una conclusione sul singolo immobile.\n\nFonte: Città di Avigliana.\nhttps://www.comune.avigliana.to.it/it-it/novita/avvisi/2026/scongiurata-la-nuova-stazione-elettrica-ad-avigliana-400434-1-257ecefc3f5b296a324cb9e09c866436\n\nNon a sensazione. Con i dati.\n\nValutazione immobile: https://www.agentpricing.com/j.malafronte\nContatto F1 Immobiliare: https://wa.me/393713708294",
+      "prompt": "Crea un visual fotografico editoriale real-estate per una notizia F1 Immobiliare. Argomento: Avigliana: archiviato il progetto della nuova stazione elettrica a Drubiaglio. Categoria: territorio e uso del suolo. Area: Avigliana / Valle di Susa. Contesto: Il Comune di Avigliana comunica che Terna ha chiesto l'archiviazione del procedimento autorizzativo della nuova stazione elettrica prevista a Drubiaglio; la comunicazione comunale evidenzia la salvaguardia dei terreni agricoli e l'assenza di nuovo consumo di suolo.. Trasforma la notizia in una scena fotografica plausibile e concreta, non in un volantino: architettura e territorio piemontese/Valle di Susa coerenti quando pertinenti, luce naturale, stile premium ma autentico, composizione verticale social-first 4:5, soggetto o immobile principale sulla destra e spazio negativo pulito sulla sinistra per il copy successivo. Non inserire testo, titoli, loghi, CTA, numeri, URL, documenti con testo leggibile o watermark. Evita look stock, icone, infografiche, card nere, template piatti, mani deformi, prospettive impossibili e artefatti AI. La fotografia deve essere adatta a una testata locale immobiliare autorevole.",
+      "source_name": "Città di Avigliana",
+      "source_url": "https://www.comune.avigliana.to.it/it-it/novita/avvisi/2026/scongiurata-la-nuova-stazione-elettrica-ad-avigliana-400434-1-257ecefc3f5b296a324cb9e09c866436",
+      "source_hash": "995e438a72c5d507ce5730716ccc25e17129750eb91704f76584db38c5ccc84b",
+      "source_published_at": "2026-09-03",
+      "source_verification": {
+        "http_status": 200,
+        "final_url": "https://www.comune.avigliana.to.it/it-it/novita/avvisi/2026/scongiurata-la-nuova-stazione-elettrica-ad-avigliana-400434-1-257ecefc3f5b296a324cb9e09c866436",
+        "domain": "www.comune.avigliana.to.it",
+        "page_title": "Scongiurata la nuova stazione elettrica ad Avigliana - Città di Avigliana",
+        "matched_title_terms": [
+          "avigliana",
+          "drubiaglio",
+          "elettrica",
+          "nuova",
+          "progetto",
+          "stazione"
+        ],
+        "content_sha256": "639401cecc58bf086f7c7b617d258e202ecd150602a9fcf2b233655356fa57ad",
+        "verified_at": "2026-09-21T17:24:30+00:00",
+        "content_excerpt": "Scongiurata la nuova stazione elettrica ad Avigliana - Città di Avigliana Questo sito utilizza i cookie per offrirti una migliore esperienza di navigazione. Cliccando su \"Accetto\" acconsenti all'utilizzo di tutti i cookies. Se rifiuti o chiudi questo banner potrai ugualmente consultare il sito ma alcune funzionalità potrebbero non essere disponibili. accetto tutti i cookies rifiuto i cookies personalizza la scelta Leggi la Cookies policy Necessari Si tratta di cookies tecnici indispensabili al funzionamento del sito Analytics e profilazione Consentono di monitorare le visite al sito (statistiche) e per farti visualizzare messaggi pubblicitari coerenti con le preferenze ed i gusti da te manif"
+      },
+      "category": "territorio e uso del suolo",
+      "territory": "Avigliana / Valle di Susa",
+      "platforms": [
+        "facebook",
+        "instagram"
+      ],
+      "status": "BLOCKED_CLOUD_IMAGE_PROVIDER",
+      "generation_attempts": 0,
+      "publish_attempts": 0,
+      "max_publish_attempts": 3,
+      "created_at": "2026-09-21T19:22:58+02:00",
+      "updated_at": "2026-09-21T17:24:31+00:00",
+      "provider_error": "RuntimeError: OpenAI image API failed 429: {\n  \"error\": {\n    \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"credit_balance_exhausted\"\n  }\n}",
+      "providers_checked": {
+        "openai_image": {
+          "configured": true,
+          "model": "gpt-image-1",
+          "status": "ERROR",
+          "error_code": "credit_balance_exhausted"
+        },
+        "modal_ugc": {
+          "configured": true,
+          "status": "INCOMPATIBLE",
+          "reason": "repository Modal endpoint renders UGC video, not a still-image news generator"
+        },
+        "other_configured_still_image_provider": {
+          "configured": false,
+          "status": "NOT_FOUND"
+        },
+        "local_chatgpt_browser": {
+          "configured": false,
+          "status": "PROHIBITED_FOR_PRODUCTION"
+        }
+      }
+    }
+  },
+  "slots": {
+    "2026-09-21|IMMEDIATE": {
+      "job_id": "F1NEWS-20260921-IMMEDIATE-995E438A72",
+      "status": "BLOCKED_CLOUD_IMAGE_PROVIDER",
+      "updated_at": "2026-09-21T17:24:31+00:00"
+    }
+  },
+  "provider_audit": {
+    "openai_image": {
+      "configured": true,
+      "model": "gpt-image-1",
+      "status": "ERROR",
+      "error_code": "credit_balance_exhausted"
+    },
+    "modal_ugc": {
+      "configured": true,
+      "status": "INCOMPATIBLE",
+      "reason": "repository Modal endpoint renders UGC video, not a still-image news generator"
+    },
+    "other_configured_still_image_provider": {
+      "configured": false,
+      "status": "NOT_FOUND"
+    },
+    "local_chatgpt_browser": {
+      "configured": false,
+      "status": "PROHIBITED_FOR_PRODUCTION"
+    }
+  },
+  "rejected_sources": [
+    {
+      "slot_key": "2026-09-21|IMMEDIATE",
+      "source_url": "https://www.regione.piemonte.it/web/amministrazione/autonomie-locali/notiziario-per-amministrazioni-locali/notiziario-per-amministrazioni-locali-n-31-3-settembre-2026",
+      "source_name": "Regione Piemonte - Notiziario n. 31",
+      "title": "Affitti: pubblicati gli indici dei prezzi al consumo di luglio 2026",
+      "source_hash": "b04e787a3784714fb9f7902b985807152b6489a4ed9b87760314107c85423df7",
+      "error": "RuntimeError: SOURCE_FETCH_FAILED:ConnectTimeout:HTTPSConnectionPool(host='www.regione.piemonte.it', port=443): Max retries exceeded with url: /web/amministrazione/autonomie-locali/notiziario-per-amministrazioni-locali/notiziario-per-amministrazioni-locali-n-31-3-settembre-2026 (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.regione.piemonte.it', port=443) at 0x7f57313bd3d0>, 'Connection to www.regione.piemonte.it timed out. (connect timeout=8)'))",
+      "rejected_at": "2026-09-21T17:24:29+00:00"
+    }
+  ],
+  "updated_at": "2026-09-21T17:24:31+00:00"
 }
