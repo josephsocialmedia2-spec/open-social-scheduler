@@ -113,7 +113,10 @@ def _recoverable_error(job: dict[str, Any]) -> bool:
     if str(job.get("status")) != "ERROR":
         return False
     if is_communication_job(job):
-        return int(job.get("publish_attempts") or 0) < MAX_AUTONOMOUS_ATTEMPTS
+        configured_limit = int(job.get("max_publish_attempts") or MAX_AUTONOMOUS_ATTEMPTS)
+        if str(job.get("created_by") or "") == "f1-valle-susa-news-radar":
+            configured_limit = min(configured_limit, 3)
+        return int(job.get("publish_attempts") or 0) < configured_limit
     err = str(job.get("error") or "").casefold()
     markers = (
         "no buffer channels matched territory",
