@@ -18,6 +18,8 @@ import uiautomation as auto
 from PIL import Image, UnidentifiedImageError
 
 GPT_URL = "https://chatgpt.com/g/g-6a9c210485488191b072eb694c2f114c-generatore-grafica-f1"
+MAX_DOWNLOAD_ATTEMPTS = max(1, int(os.getenv("F1_MAX_DOWNLOAD_ATTEMPTS", "3")))
+MAX_CHATGPT_TABS = max(1, int(os.getenv("F1_MAX_CHATGPT_TABS", "1")))
 
 PROMPT_NAMES = (
     "message chatgpt",
@@ -245,11 +247,20 @@ class ChromeChatGPTDriver:
             return
 
         self.log("Apertura GPT nel Chrome normale dell'utente")
-        subprocess.Popen(
-            [self.chrome_binary(), "--new-tab", GPT_URL],
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL,
-        )
+        windows = self._all_chrome_windows()
+        if windows:
+            # MAX_CHATGPT_TABS=1: non aprire nuove schede se Chrome è già aperto.
+            self._chrome_window = windows[-1]
+            self.activate_chrome()
+            pyautogui.hotkey("ctrl", "l")
+            pyautogui.write(GPT_URL, interval=0.001)
+            pyautogui.press("enter")
+        else:
+            subprocess.Popen(
+                [self.chrome_binary(), GPT_URL],
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+            )
         deadline = time.time() + 35
         while time.time() < deadline:
             windows = self._all_chrome_windows()
@@ -779,60 +790,81 @@ class ChromeChatGPTDriver:
 
     def save_image(self, result: GenerationResult, destination_without_ext: Path) -> tuple[Path, str]:
         destination_without_ext.parent.mkdir(parents=True, exist_ok=True)
-        for control in reversed(result.download_controls):
-            try:
-                try:
-                    control.ScrollIntoView()
-                except Exception:
-                    pass
-                clicked_at = time.time()
-                control.Click()
-                downloaded = self._wait_download(clicked_at)
-                if downloaded:
-                    ext = downloaded.suffix.lower() if downloaded.suffix else ".png"
-                    target = destination_without_ext.with_suffix(ext)
-                    shutil.copy2(downloaded, target)
-                    width, height, fmt = self._validate_image_file(target)
-                    self.log(f"Immagine salvata e verificata dal download: {target} ({width}x{height} {fmt})")
-                    return target, "download"
-            except Exception as exc:
-                self.log(f"Download UI non riuscito, provo fallback: {exc}")
         control = result.image_control
 
-        # ChatGPT spesso mostra un pulsante circolare di download sovrapposto
-        # in basso al centro dell'immagine senza esporlo bene a UI Automation.
-        # Se l'immagine e' visibile, prova quel controllo visivo prima dello
-        # screenshot fallback.
-        if control is not None:
-            try:
-                control.ScrollIntoView()
-                time.sleep(0.6)
-            except Exception:
-                pass
-            left0, top0, right0, bottom0 = _rect(control)
-            w0, h0 = right0-left0, bottom0-top0
-            if w0 >= 180 and h0 >= 180:
+        for attempt in range(1, MAX_DOWNLOAD_ATTEMPTS + 1):
+            self.log(f"Download immagine: tentativo {attempt}/{MAX_DOWNLOAD_ATTEMPTS}")
+
+            # 1) Preferisci i controlli Download esposti da UI Automation.
+            controls = list(result.download_controls)
+            if attempt > 1:
+                records = self._records()
+                controls = [r["control"] for r in records if self._is_download_record(r)]
+            for download_control in reversed(controls):
                 try:
+                    try:
+                        download_control.ScrollIntoView()
+                    except Exception:
+                        pass
                     clicked_at = time.time()
-                    pyautogui.click(left0 + w0 // 2, max(top0 + 20, bottom0 - min(42, max(24, h0 // 18))))
-                    downloaded = self._wait_download(clicked_at, timeout=10)
+                    download_control.Click()
+                    downloaded = self._wait_download(clicked_at, timeout=12)
                     if downloaded:
                         ext = downloaded.suffix.lower() if downloaded.suffix else ".png"
                         target = destination_without_ext.with_suffix(ext)
                         shutil.copy2(downloaded, target)
                         width, height, fmt = self._validate_image_file(target)
-                        self.log(f"Immagine salvata dal pulsante overlay ChatGPT: {target} ({width}x{height} {fmt})")
-                        return target, "overlay-download"
+                        self.log(
+                            f"Immagine salvata e verificata dal download: "
+                            f"{target} ({width}x{height} {fmt})"
+                        )
+                        return target, "download"
                 except Exception as exc:
-                    self.log(f"Overlay download non riuscito, continuo con fallback: {exc}")
+                    self.log(f"Download UI tentativo {attempt} non riuscito: {exc}")
 
-        # UIA can expose the download button before the image control, or a
-        # previously captured control can become stale after the page updates.
-        # Rescan the active conversation before giving up.
+            # 2) Rescan della stessa immagine e tentativo sul pulsante overlay.
+            if control is None or _rect(control) == (0, 0, 0, 0) or attempt > 1:
+                control = self._latest_image_control()
+            if control is not None:
+                try:
+                    control.ScrollIntoView()
+                    time.sleep(0.6)
+                except Exception:
+                    pass
+                left0, top0, right0, bottom0 = _rect(control)
+                w0, h0 = right0-left0, bottom0-top0
+                if w0 >= 180 and h0 >= 180:
+                    try:
+                        clicked_at = time.time()
+                        pyautogui.click(
+                            left0 + w0 // 2,
+                            max(top0 + 20, bottom0 - min(42, max(24, h0 // 18))),
+                        )
+                        downloaded = self._wait_download(clicked_at, timeout=10)
+                        if downloaded:
+                            ext = downloaded.suffix.lower() if downloaded.suffix else ".png"
+                            target = destination_without_ext.with_suffix(ext)
+                            shutil.copy2(downloaded, target)
+                            width, height, fmt = self._validate_image_file(target)
+                            self.log(
+                                f"Immagine salvata dal pulsante overlay ChatGPT: "
+                                f"{target} ({width}x{height} {fmt})"
+                            )
+                            return target, "overlay-download"
+                    except Exception as exc:
+                        self.log(f"Overlay download tentativo {attempt} non riuscito: {exc}")
+
+            if attempt < MAX_DOWNLOAD_ATTEMPTS:
+                time.sleep(1.5)
+
+        # 3) Ultima risorsa: screenshot della STESSA immagine, senza rigenerare.
         if control is None or _rect(control) == (0, 0, 0, 0):
             control = self._latest_image_control()
         if control is None:
-            raise RuntimeError("Immagine generata visibile ma nessun controllo immagine acquisibile è stato trovato dopo il rescan.")
+            raise RuntimeError(
+                "Immagine generata visibile ma nessun controllo immagine acquisibile "
+                "è stato trovato dopo i tentativi di download."
+            )
         try:
             control.ScrollIntoView()
             time.sleep(0.8)
@@ -846,7 +878,9 @@ class ChromeChatGPTDriver:
                 left, top, right, bottom = _rect(control)
                 width, height = right - left, bottom - top
         if width < 180 or height < 180:
-            raise RuntimeError(f"Rettangolo immagine non valido dopo rescan: {left},{top},{right},{bottom}")
+            raise RuntimeError(
+                f"Rettangolo immagine non valido dopo rescan: {left},{top},{right},{bottom}"
+            )
         screen = pyautogui.size()
         left = max(0, min(left, screen.width - 1))
         top = max(0, min(top, screen.height - 1))
@@ -856,7 +890,10 @@ class ChromeChatGPTDriver:
         shot = pyautogui.screenshot(region=(left, top, width, height))
         shot.save(target)
         width, height, fmt = self._validate_image_file(target)
-        self.log(f"Immagine salvata da screenshot e verificata: {target} ({width}x{height} {fmt})")
+        self.log(
+            f"Immagine salvata da screenshot e verificata: "
+            f"{target} ({width}x{height} {fmt})"
+        )
         return target, "screenshot"
 
     def open_new_tab(self, url: str) -> None:
