@@ -1,0 +1,70 @@
+name: F1 News 5 Minute Watch
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '*/5 * * * *'
+
+permissions:
+  contents: write
+  actions: read
+
+concurrency:
+  group: f1-news-five-minute-watch
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v5
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      - name: Install monitor dependency
+        run: python -m pip install --disable-pip-version-check requests
+
+      - name: Check F1 News job and graphic
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          F1_NEWS_TARGET: COMM-NEWS-20260921-EVENING-E6871421
+        run: python publisher/news/f1_news_status_monitor.py
+
+      - name: Persist status only when it changes
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "F1 News 5 Minute Watch"
+          git config user.email "f1-news-watch@users.noreply.github.com"
+          git add publisher/news/f1_news_live_status.json
+          if git diff --cached --quiet; then
+            echo "NO_CHANGE"
+            exit 0
+          fi
+          git commit -m "Update F1 News live status"
+          git pull --rebase origin main
+          git push origin HEAD:main
+
+      - name: Current links
+        if: always()
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path("publisher/news/f1_news_live_status.json")
+          if not p.exists():
+              raise SystemExit(0)
+          d=json.loads(p.read_text(encoding="utf-8"))
+          print("STATUS=", d.get("final_status") or d.get("browser_status"))
+          print("GRAPHIC_URL=", d.get("graphic_url") or "NOT_READY")
+          print("POST_URLS=", d.get("remote_post_urls") or [])
+          print("PC_WORKFLOW=", (d.get("pc_workflow") or {}).get("html_url") or "")
+          PY
