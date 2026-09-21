@@ -85,7 +85,10 @@ cd /d "!REPO_ROOT!" || (
 
 set "PYTHONPATH=!REPO_ROOT!"
 set "F1_CREATIVE_BACKEND=chatgpt_browser"
-set "F1_QUERY_BATCH_SIZE=1"\nset "F1_MAX_ATTEMPTS=1"
+set "F1_QUERY_BATCH_SIZE=1"
+set "F1_MAX_ATTEMPTS=1"
+set "F1_MAX_DOWNLOAD_ATTEMPTS=3"
+set "F1_MAX_CHATGPT_TABS=1"
 
 echo.
 echo === AMBIENTE ===
