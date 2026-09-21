@@ -160,13 +160,19 @@ class ChromeChatGPTDriver:
         *,
         log: Callable[[str], None] | None = None,
         diagnostic_root: Path | None = None,
-        generation_timeout: int = 720,
-        start_timeout: int = 75,
+        generation_timeout: int | None = None,
+        start_timeout: int | None = None,
     ) -> None:
         self.log = log or (lambda message: None)
         self.diagnostic_root = diagnostic_root or Path.cwd() / "logs"
-        self.generation_timeout = generation_timeout
-        self.start_timeout = start_timeout
+        self.generation_timeout = int(
+            generation_timeout if generation_timeout is not None
+            else os.getenv("F1_GENERATION_TIMEOUT", "180")
+        )
+        self.start_timeout = int(
+            start_timeout if start_timeout is not None
+            else os.getenv("F1_GENERATION_START_TIMEOUT", "45")
+        )
         self._chrome_window = None
         self._coordinate_composer_point: tuple[int, int] | None = None
         self._gpt_session_opened = False
@@ -620,7 +626,7 @@ class ChromeChatGPTDriver:
 
         while time.time() < overall_deadline:
             self.activate_chrome()
-            if time.time() - last_scroll > 6:
+            if time.time() - last_scroll > 3:
                 pyautogui.press("end")
                 last_scroll = time.time()
                 time.sleep(0.35)
@@ -722,7 +728,7 @@ class ChromeChatGPTDriver:
                     "GENERAZIONE_IN_CORSO non rilevata: nessun nuovo risultato accessibile "
                     "entro il timeout iniziale."
                 )
-            time.sleep(1.5)
+            time.sleep(0.8)
 
         raise RuntimeError("Timeout: generazione immagine non completata entro il limite massimo.")
 
@@ -782,7 +788,7 @@ class ChromeChatGPTDriver:
                 continue
         return sorted(result, key=lambda p: p.stat().st_mtime, reverse=True)
 
-    def _wait_download(self, since: float, timeout: int = 12) -> Path | None:
+    def _wait_download(self, since: float, timeout: int = 8) -> Path | None:
         folder = self._downloads_dir()
         deadline = time.time() + timeout
         last_size = None
@@ -826,7 +832,7 @@ class ChromeChatGPTDriver:
                         pass
                     clicked_at = time.time()
                     download_control.Click()
-                    downloaded = self._wait_download(clicked_at, timeout=12)
+                    downloaded = self._wait_download(clicked_at, timeout=8)
                     if downloaded:
                         ext = downloaded.suffix.lower() if downloaded.suffix else ".png"
                         target = destination_without_ext.with_suffix(ext)
@@ -858,7 +864,7 @@ class ChromeChatGPTDriver:
                             left0 + w0 // 2,
                             max(top0 + 20, bottom0 - min(42, max(24, h0 // 18))),
                         )
-                        downloaded = self._wait_download(clicked_at, timeout=10)
+                        downloaded = self._wait_download(clicked_at, timeout=6)
                         if downloaded:
                             ext = downloaded.suffix.lower() if downloaded.suffix else ".png"
                             target = destination_without_ext.with_suffix(ext)
