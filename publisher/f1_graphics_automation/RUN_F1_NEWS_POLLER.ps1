@@ -48,6 +48,7 @@ $candidates = @($Queue.items) | Where-Object {
     $slotKey = [string]$_.slot_key
     if (-not $cid -or $completed.ContainsKey($cid)) { return $false }
     if ($status -in @('PUBLISHED_VERIFIED','FAILED_FINAL','CANCELLED')) { return $false }
+    if ([bool]$_.force_immediate) { return $true }
     if ($slotKey -match '^([0-9]{4}-[0-9]{2}-[0-9]{2})\|(MIDDAY|EVENING|IMMEDIATE)$') {
         $datePart = $Matches[1]
         $slotPart = $Matches[2]
