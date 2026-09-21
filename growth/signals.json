@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-20T09:59:01+00:00",
+  "updated_at": "2026-09-21T10:57:56+00:00",
   "signals": [
     {
       "id": "FBS-64D8E3A2C4",
@@ -85,18 +85,6 @@
       "source_query": "site:facebook.com/groups \"Oulx\" \"vendo compro\"",
       "status": "NEW",
       "discovered_at": "2026-09-04T14:55:03+00:00"
-    },
-    {
-      "id": "FBS-187DDCA92F",
-      "brand": "f1-immobiliare",
-      "territory": "Avigliana",
-      "group_url": "https://www.facebook.com/groups/1464381056905859/",
-      "source_url": "https://www.facebook.com/groups/1464381056905859/posts/28361649843418949/",
-      "title": "bacheca annunci Avigliana Almese Caselette | **Val Sangone ...",
-      "snippet": "Jul 22, 2026 · **Val Sangone Villetta **con giardino **GIAVENO (TO)** proponiamo in vendita graziosa villetta indipendente su 4 lati, disposta su più livelli. La proprietà è composta al piano terreno dalla Taverna...",
-      "source_query": "site:facebook.com/groups \"Avigliana\" \"bacheca annunci\"",
-      "status": "NEW",
-      "discovered_at": "2026-09-05T09:06:57+00:00"
     },
     {
       "id": "FBS-0EE1B368E9",
@@ -301,6 +289,18 @@
       "source_query": "site:facebook.com/groups \"Condove\" \"cerco casa\"",
       "status": "NEW",
       "discovered_at": "2026-09-07T18:19:16+00:00"
+    },
+    {
+      "id": "FBS-4D2413AFC0",
+      "brand": "f1-immobiliare",
+      "territory": "Giaveno",
+      "group_url": "https://www.facebook.com/groups/seidigiaveno/",
+      "source_url": "https://www.facebook.com/groups/seidigiaveno/permalink/27742550578780474/",
+      "title": "Buongiorno sto cercando di comprare casa a Giaveno. - Facebook",
+      "snippet": "Other posts ‼️ URGENTE ‼️ CERCO CASA O STANZA PER UNA COLLEGA DOCENTE - COAZZE/GIAVENO Cerco casa per una mia collega docente, seria e referenziata, e cerco da subito o una stanza o un piccolo appartamento arredato in affitto. Se siete a conoscenza di soluzioni a Giaveno o Coazze o dintorni e' comunque disposta a valutarle.",
+      "source_query": "site:facebook.com/groups \"Giaveno\" \"cerco casa\"",
+      "status": "NEW",
+      "discovered_at": "2026-09-21T10:47:26+00:00"
     }
   ]
 }
