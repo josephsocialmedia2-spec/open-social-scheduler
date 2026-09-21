@@ -209,6 +209,7 @@ def _prepare_records(items: list[dict], queue: dict) -> list[dict]:
                 "source_hash": str(meta.get("source_hash") or "").strip(),
                 "source_published_at": str(meta.get("source_published_at") or "").strip(),
                 "editorial_slot": str(meta.get("editorial_slot") or "").strip(),
+                "slot_key": str(meta.get("slot_key") or "").strip(),
                 "prompt": str(meta.get("prompt") or "").strip(),
             }
         )
@@ -263,6 +264,7 @@ def commit_prepared(prepared: list[dict], queue: dict) -> list[dict]:
             "source_hash": row.get("source_hash") or "",
             "source_published_at": row.get("source_published_at") or "",
             "editorial_slot": row.get("editorial_slot") or "",
+            "slot_key": row.get("slot_key") or "",
             "prompt": row.get("prompt") or "",
             "publication_status": "READY_TO_PUBLISH",
             "platforms": row["platforms"],
@@ -560,6 +562,7 @@ def ingest_generated():
                 "source_hash": item.get("source_hash"),
                 "source_published_at": item.get("source_published_at"),
                 "editorial_slot": item.get("editorial_slot"),
+                "slot_key": item.get("slot_key"),
                 "prompt": item.get("prompt"),
                 "source": "verified-f1-custom-gpt",
                 "generator_path": path.relative_to(ROOT).as_posix(),
