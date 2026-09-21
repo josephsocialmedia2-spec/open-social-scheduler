@@ -142,6 +142,7 @@ def next_ready(
         if (str(j.get("status")) == "READY" or _recoverable_error(j))
         and (not communications_only or is_communication_job(j))
         and (not exclude_communications or not is_communication_job(j))
+        and str(j.get("publisher_backend") or "") != "direct_api_cloud_news"
         and (not job_id or str(j.get("id") or "") == job_id)
     ]
     candidates.sort(key=lambda j: (str(j.get("scheduled_at") or ""), str(j.get("id") or "")))
