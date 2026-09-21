@@ -162,6 +162,7 @@ class ChromeChatGPTDriver:
         self.start_timeout = start_timeout
         self._chrome_window = None
         self._coordinate_composer_point: tuple[int, int] | None = None
+        self._gpt_session_opened = False
         pyautogui.FAILSAFE = True
 
     def chrome_binary(self) -> str:
@@ -208,6 +209,22 @@ class ChromeChatGPTDriver:
         raise RuntimeError("Chrome è stato avviato ma non riesco ad attivare la sua finestra.")
 
     def open_gpt(self) -> None:
+        # Reuse the same ChatGPT tab/window across retries. Opening a new tab on
+        # every retry can create duplicate generations and makes UIA attach to
+        # the wrong tab.
+        if self._gpt_session_opened and self._chrome_window is not None:
+            self.log("Riutilizzo la scheda ChatGPT esistente")
+            self.activate_chrome()
+            current = self.current_url() or ""
+            if "chatgpt.com" not in current:
+                pyautogui.hotkey("ctrl", "l")
+                pyautogui.write(GPT_URL, interval=0.001)
+                pyautogui.press("enter")
+                time.sleep(3)
+            self.wait_composer(timeout=30)
+            self.log("Scheda ChatGPT riutilizzata e composer verificato")
+            return
+
         self.log("Apertura GPT nel Chrome normale dell'utente")
         subprocess.Popen(
             [self.chrome_binary(), "--new-tab", GPT_URL],
@@ -233,6 +250,7 @@ class ChromeChatGPTDriver:
         pyautogui.press("enter")
         time.sleep(5)
         self.wait_composer(timeout=25)
+        self._gpt_session_opened = True
         self.log("GPT pronto e campo messaggio verificato")
 
     def _uia_window(self):
@@ -597,6 +615,23 @@ class ChromeChatGPTDriver:
         return width, height, fmt
 
 
+    def _latest_image_control(self):
+        self.activate_chrome()
+        pyautogui.press("end")
+        time.sleep(0.6)
+        candidates = [r for r in self._records() if self._is_image_record(r)]
+        if not candidates:
+            return None
+        # Prefer the lowest/largest visible image: the latest generated result is
+        # normally the last large image in the active conversation.
+        candidates.sort(
+            key=lambda r: (
+                r["rect"][1],
+                (r["rect"][2] - r["rect"][0]) * (r["rect"][3] - r["rect"][1]),
+            )
+        )
+        return candidates[-1]["control"]
+
     def _downloads_dir(self) -> Path:
         return Path(os.path.expandvars(r"%USERPROFILE%\Downloads"))
 
@@ -614,7 +649,7 @@ class ChromeChatGPTDriver:
                 continue
         return sorted(result, key=lambda p: p.stat().st_mtime, reverse=True)
 
-    def _wait_download(self, since: float, timeout: int = 60) -> Path | None:
+    def _wait_download(self, since: float, timeout: int = 12) -> Path | None:
         folder = self._downloads_dir()
         deadline = time.time() + timeout
         last_size = None
@@ -659,8 +694,13 @@ class ChromeChatGPTDriver:
             except Exception as exc:
                 self.log(f"Download UI non riuscito, provo fallback: {exc}")
         control = result.image_control
+        # UIA can expose the download button before the image control, or a
+        # previously captured control can become stale after the page updates.
+        # Rescan the active conversation before giving up.
+        if control is None or _rect(control) == (0, 0, 0, 0):
+            control = self._latest_image_control()
         if control is None:
-            raise RuntimeError("Immagine rilevata tramite UI ma nessun controllo immagine acquisibile è disponibile.")
+            raise RuntimeError("Immagine generata visibile ma nessun controllo immagine acquisibile è stato trovato dopo il rescan.")
         try:
             control.ScrollIntoView()
             time.sleep(0.8)
@@ -669,7 +709,17 @@ class ChromeChatGPTDriver:
         left, top, right, bottom = _rect(control)
         width, height = right - left, bottom - top
         if width < 180 or height < 180:
-            raise RuntimeError(f"Rettangolo immagine non valido: {left},{top},{right},{bottom}")
+            control = self._latest_image_control()
+            if control is not None:
+                left, top, right, bottom = _rect(control)
+                width, height = right - left, bottom - top
+        if width < 180 or height < 180:
+            raise RuntimeError(f"Rettangolo immagine non valido dopo rescan: {left},{top},{right},{bottom}")
+        screen = pyautogui.size()
+        left = max(0, min(left, screen.width - 1))
+        top = max(0, min(top, screen.height - 1))
+        width = min(width, screen.width - left)
+        height = min(height, screen.height - top)
         target = destination_without_ext.with_suffix(".png")
         shot = pyautogui.screenshot(region=(left, top, width, height))
         shot.save(target)
