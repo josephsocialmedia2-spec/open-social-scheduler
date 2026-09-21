@@ -5,9 +5,19 @@ param(
 $ErrorActionPreference = 'Stop'
 $Root = (Resolve-Path (Join-Path $PSScriptRoot '..\..')).Path
 $Server = Join-Path $Root 'publisher\manual_asset_inbox\server.py'
+$EnsureRunner = Join-Path $PSScriptRoot 'ENSURE_F1_GITHUB_RUNNER.ps1'
+$EnsurePoller = Join-Path $PSScriptRoot 'ENSURE_F1_NEWS_POLLER.ps1'
 $Port = 8877
 $LogDir = Join-Path $PSScriptRoot 'logs'
 New-Item -ItemType Directory -Force -Path $LogDir | Out-Null
+
+# Bootstrap automatico F1 runner/poller ad ogni logon tramite il task F1_Inbox_Logon.
+try {
+    if (Test-Path $EnsureRunner) { & $EnsureRunner | Out-Host }
+} catch { Write-Warning "F1 runner bootstrap: $($_.Exception.Message)" }
+try {
+    if (Test-Path $EnsurePoller) { & $EnsurePoller | Out-Host }
+} catch { Write-Warning "F1 poller bootstrap: $($_.Exception.Message)" }
 $StdOutLog = Join-Path $LogDir 'inbox-stdout.log'
 $StdErrLog = Join-Path $LogDir 'inbox-stderr.log'
 
