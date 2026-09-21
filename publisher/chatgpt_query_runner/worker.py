@@ -252,12 +252,19 @@ def _brand_path_for(source: Path) -> Path:
 
 def apply_brand_to_job(state: dict, run: dict, job: dict, source: Path) -> Path:
     destination = _brand_path_for(source)
+    is_news = bool(str(job.get("source_name") or "").strip()) or str(job.get("query_id") or "").startswith("COMM-NEWS-")
+    brand_body = (
+        "Notizia immobiliare da fonte pubblica verificata. Dettagli e fonte completa nella caption."
+        if is_news
+        else None
+    )
     result = apply_f1_brand_layer(
         source,
         destination,
         headline=str(job.get("headline") or "QUANTO VALE CASA MIA?"),
         cta=str(job.get("cta") or "RICHIEDI UNA VALUTAZIONE"),
-        territory=str(job.get("territory") or "VALLE DI SUSA"),
+        territory=("F1 NEWS · VALLE DI SUSA" if is_news else str(job.get("territory") or "VALLE DI SUSA")),
+        body=brand_body,
     )
     branded = ROOT / result["path"]
     job["source_image_path"] = relative_path(source)
