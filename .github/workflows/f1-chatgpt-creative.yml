@@ -1,6 +1,12 @@
 name: F1 ChatGPT Creative Engine
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'publisher/f1_chatgpt_creative_engine.py'
+      - 'publisher/f1_search_intents.json'
+      - '.github/workflows/f1-chatgpt-creative.yml'
 permissions:
   contents: write
 jobs:
