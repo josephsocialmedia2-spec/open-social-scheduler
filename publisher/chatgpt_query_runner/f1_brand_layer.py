@@ -44,12 +44,41 @@ def _fit_cover(image: Image.Image) -> Image.Image:
     return resized.crop((left, top, left + W, top + H))
 
 
-def _draw_logo(draw: ImageDraw.ImageDraw, x: int, y: int, scale: float = 0.22) -> None:
-    # Deterministic simplified F1 wordmark. Exact text remains outside the AI image.
-    f1 = _font(round(155 * scale), bold=True)
-    brand = _font(round(66 * scale), bold=True)
-    draw.text((x, y), "F1", font=f1, fill=GREEN)
-    draw.text((x, y + round(120 * scale)), "IMMOBILIARE", font=brand, fill=WHITE)
+def _load_logo_vectors() -> dict[str, Any]:
+    try:
+        client = json.loads(CLIENT_PATH.read_text(encoding="utf-8"))
+        return dict(client.get("brand", {}).get("logo_vectors") or {})
+    except Exception:
+        return {}
+
+
+def _draw_logo(draw: ImageDraw.ImageDraw, x: int, y: int, width: int = 250) -> None:
+    """Draw the deterministic F1 Immobiliare vector mark from brand config."""
+    vectors = _load_logo_vectors()
+    viewbox = vectors.get("viewbox") or [0, 0, 500, 500]
+    vb_w = max(1, int(viewbox[2]))
+    vb_h = max(1, int(viewbox[3]))
+    scale = width / vb_w
+    height = round(vb_h * scale)
+
+    def transform(points):
+        return [(x + round(px * scale), y + round(py * scale)) for px, py in points]
+
+    green_shapes = vectors.get("green") or []
+    white_shapes = vectors.get("white") or []
+    if green_shapes or white_shapes:
+        for shape in green_shapes:
+            draw.polygon(transform(shape), fill=GREEN)
+        for shape in white_shapes:
+            draw.polygon(transform(shape), fill=WHITE)
+    else:
+        # Safe fallback if brand config is unavailable.
+        f1 = _font(82, bold=True)
+        draw.text((x, y), "F1", font=f1, fill=GREEN)
+        height = 105
+
+    brand = _font(26, bold=True)
+    draw.text((x, y + height - 36), "IMMOBILIARE", font=brand, fill=WHITE)
 
 
 def _wrap(draw: ImageDraw.ImageDraw, text: str, font: ImageFont.ImageFont, max_width: int) -> list[str]:
@@ -95,7 +124,7 @@ def apply_f1_brand_layer(
     base = Image.alpha_composite(base.convert("RGBA"), overlay)
 
     draw = ImageDraw.Draw(base)
-    _draw_logo(draw, 64, 56, 1.0)
+    _draw_logo(draw, 64, 42, 255)
 
     small = _font(34, bold=True)
     draw.text((64, 220), territory.upper(), font=small, fill=MUTED)
