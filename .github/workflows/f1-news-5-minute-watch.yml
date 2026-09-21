@@ -4,6 +4,10 @@ on:
   workflow_dispatch:
   schedule:
     - cron: '*/5 * * * *'
+  push:
+    branches: [main]
+    paths:
+      - 'publisher/news/F1_NEWS_5M_START'
 
 permissions:
   contents: write
