@@ -289,10 +289,15 @@ def main() -> int:
         destination = ROOT / destination
     write_query_file(row, destination)
 
+    try:
+        query_file_label = destination.relative_to(ROOT).as_posix()
+    except ValueError:
+        query_file_label = str(destination)
+
     output = {
         "status": "PROMPT_READY",
         "slot": slot,
-        "query_file": destination.relative_to(ROOT).as_posix(),
+        "query_file": query_file_label,
         "news_id": row["news_id"],
         "communication_id": row["id"],
         "headline": row["headline"],
