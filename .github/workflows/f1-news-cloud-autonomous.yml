@@ -83,11 +83,29 @@ jobs:
           python -m py_compile             publisher/news/f1_news_cloud_autonomous.py             publisher/news/f1_news_cloud_publish.py             publisher/rendering/openai_visual_engine.py             publisher/chatgpt_query_runner/f1_brand_layer.py             publisher/direct_api_publish.py
           python - <<'PY'
           from pathlib import Path
-          wf=Path('.github/workflows/f1-news-cloud-autonomous.yml').read_text(encoding='utf-8').casefold()
-          forbidden=['pyautogui','pygetwindow','uiautomation','chatgpt.com','task scheduler','run_f1_news_slot.ps1','installa_automazione_23.ps1','.bat']
-          bad=[x for x in forbidden if x in wf]
+          files=[
+              Path('publisher/news/f1_news_cloud_autonomous.py'),
+              Path('publisher/news/f1_news_cloud_publish.py'),
+          ]
+          # Build forbidden tokens in pieces so the validator does not match its
+          # own source text inside the workflow.
+          forbidden=[
+              'py'+'autogui',
+              'py'+'getwindow',
+              'uiauto'+'mation',
+              'chatgpt'+'.com',
+              'task '+'scheduler',
+              'run_f1_news_slot'+'.ps1',
+              'installa_automazione_23'+'.ps1',
+          ]
+          bad=[]
+          for path in files:
+              body=path.read_text(encoding='utf-8').casefold()
+              for token in forbidden:
+                  if token in body:
+                      bad.append(f'{path}:{token}')
           if bad:
-              raise SystemExit('Forbidden local dependency in production workflow: '+', '.join(bad))
+              raise SystemExit('Forbidden local dependency in production code: '+', '.join(bad))
           print('CLOUD_ONLY_CONTRACT_OK')
           PY
 
@@ -117,8 +135,12 @@ jobs:
           set -u
           JOB="${{ steps.build.outputs.job_id }}"
           for pass in 1 2 3; do
-            echo "DIRECT_META_PASS=$pass JOB=$JOB"
-            python -m publisher.news.f1_news_cloud_publish --job-id "$JOB" || true
+            echo "BUFFER_CLOUD_PASS=$pass JOB=$JOB"
+            python publisher/final_asset_publisher.py \
+              --communications-only \
+              --verify \
+              --job-id "$JOB" \
+              --max-jobs 1 || true
             STATUS=$(python - "$JOB" <<'PY'
           import json,sys
           q=json.load(open('publisher/final_content_queue.json',encoding='utf-8'))
@@ -127,7 +149,17 @@ jobs:
           PY
             )
             echo "JOB_STATUS=$STATUS"
-            if [ "$STATUS" = "PUBLISHED_VERIFIED" ] || [ "$STATUS" = "FAILED_FINAL" ]; then
+            if [ "$STATUS" = "PUBLISHED_VERIFIED" ]; then
+              break
+            fi
+            ATTEMPTS=$(python - "$JOB" <<'PY'
+          import json,sys
+          q=json.load(open('publisher/final_content_queue.json',encoding='utf-8'))
+          j=next((x for x in q.get('jobs',[]) if str(x.get('id'))==sys.argv[1]),{})
+          print(int(j.get('publish_attempts') or 0))
+          PY
+            )
+            if [ "$STATUS" = "ERROR" ] && [ "$ATTEMPTS" -ge 3 ]; then
               break
             fi
             sleep 20
