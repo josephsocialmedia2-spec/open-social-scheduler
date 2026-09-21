@@ -30,6 +30,7 @@ if errorlevel 1 (
 for %%F in (
   publisher/chatgpt_query_runner/core.py
   publisher/chatgpt_query_runner/ui_driver.py
+  publisher/chatgpt_query_runner/f1_brand_layer.py
   publisher/chatgpt_query_runner/worker.py
   publisher/chatgpt_query_runner/f1_browser_creative_queries.json
   publisher/chatgpt_query_runner/requirements.txt
