@@ -32,7 +32,7 @@ from publisher.chatgpt_query_runner.core import (  # noqa: E402
 )
 from publisher.chatgpt_query_runner.ui_driver import ChromeChatGPTDriver, GPT_URL  # noqa: E402
 
-QUERY_FILE = ROOT / "publisher" / "github_graphics" / "queries.json"
+QUERY_FILE = Path(os.getenv("F1_QUERY_FILE", str(ROOT / "publisher" / "github_graphics" / "queries.json")))
 COMMUNICATIONS_FILE = ROOT / "publisher" / "chatgpt_query_runner" / "communications.local.json"
 STATE_FILE = ROOT / "publisher" / "chatgpt_query_runner" / "state.json"
 LAST_RUN_FILE = ROOT / "publisher" / "chatgpt_query_runner" / "last_run.json"
@@ -487,10 +487,10 @@ def run(batch_size: int, *, fresh_run: bool = False, communication_id: str | Non
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--batch-size", type=int, default=DEFAULT_BATCH_SIZE)
-    parser.add_argument("--scheduled", action="store_true")
+    parser.add_argument("--query-file", help="File JSON query alternativo")\n    parser.add_argument("--scheduled", action="store_true")
     parser.add_argument("--fresh-run", action="store_true", help="Avvia un nuovo batch senza riprendere quello precedente")
     parser.add_argument("--communication-id", help="Elabora un singolo comunicato inserito dall'utente")
-    args = parser.parse_args()
+    args = parser.parse_args()\n\n    global QUERY_FILE\n    if args.query_file:\n        candidate = Path(args.query_file)\n        QUERY_FILE = candidate if candidate.is_absolute() else ROOT / candidate
 
     if args.scheduled and not args.communication_id:
         now = datetime.now(ROME)
