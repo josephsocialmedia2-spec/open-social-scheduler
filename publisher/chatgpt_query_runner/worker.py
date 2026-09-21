@@ -309,6 +309,14 @@ def wait_for_publication_verification(communication_id: str, timeout: int = MAX_
                 if status == "PUBLISHED_VERIFIED":
                     return item
                 if status == "ERROR":
+                    attempts = int(item.get("publish_attempts") or item.get("attempt_count") or 0)
+                    limit = int(item.get("max_publish_attempts") or 3)
+                    if attempts < limit:
+                        log(
+                            f"PUBBLICAZIONE {communication_id}: ERROR recuperabile "
+                            f"tentativo {attempts}/{limit}; attendo retry remoto"
+                        )
+                        break
                     raise RuntimeError(str(item.get("error") or "Publisher remoto in errore"))
         except RuntimeError:
             raise
@@ -406,7 +414,8 @@ def process_job(driver: ChromeChatGPTDriver, state: dict, run: dict, job: dict, 
     # Recover the visible result from the current conversation and continue with
     # download/brand/publication only.
     generated_without_file = (
-        bool(job.get("generation_completed_at"))
+        bool(job.get("submitted_at"))
+        or bool(job.get("generation_completed_at"))
         or str(job.get("status") or "") in {
             "GENERAZIONE_TERMINATA", "IMMAGINE_RILEVATA", "IMAGE_READY",
             "DOWNLOAD_PENDING", "DOWNLOADING", "FAILED_RETRYABLE"
@@ -693,7 +702,8 @@ def run(batch_size: int, *, fresh_run: bool = False, communication_id: str | Non
     )
     recovery_only = bool(run.get("jobs")) and all(
         (
-            bool(job.get("generation_completed_at"))
+            bool(job.get("submitted_at"))
+            or bool(job.get("generation_completed_at"))
             or str(job.get("status") or "") in {
                 "GENERAZIONE_TERMINATA", "IMMAGINE_RILEVATA", "IMAGE_READY",
                 "DOWNLOAD_PENDING", "DOWNLOADING", "FAILED_RETRYABLE"
@@ -759,9 +769,6 @@ def run(batch_size: int, *, fresh_run: bool = False, communication_id: str | Non
         return 0
 
     try:
-        ingest = auto_ingest_completed_run(run, daily_mode=daily_mode)
-        run["autonomous_ingest"] = ingest
-        created = list(ingest.get("created") or [])
         effective_communication_id = communication_id
         if daily_mode and run.get("jobs"):
             effective_communication_id = _daily_communication_id(run["jobs"][0])
@@ -769,13 +776,29 @@ def run(batch_size: int, *, fresh_run: bool = False, communication_id: str | Non
             candidate = str(run["jobs"][0].get("query_id") or "")
             if candidate.startswith("COMM-NEWS-"):
                 effective_communication_id = candidate
-        for job in run.get("jobs") or []:
-            if job_image_exists(job):
-                mark(state, run, job, "READY_TO_PUBLISH", communication_id=effective_communication_id)
-        run["status"] = "READY_TO_PUBLISH"
-        persist(state, run, status="READY_TO_PUBLISH")
-        set_communication_status(communication_id, "QUEUED_FOR_PUBLISH")
-        log("PIPELINE LOCALE: grafica verificata e brandizzata -> GitHub -> coda READY")
+
+        downstream_states = {
+            "READY_TO_PUBLISH", "PUBLISHING", "PUBLISHED",
+            "VERIFYING_PUBLICATION", "PUBLISHED_VERIFIED"
+        }
+        already_ingested = bool(run.get("jobs")) and all(
+            str(job.get("status") or "") in downstream_states
+            for job in (run.get("jobs") or [])
+            if job_image_exists(job)
+        )
+
+        if already_ingested:
+            log("PIPELINE LOCALE: asset già in coda/pubblicazione; salto ingest duplicato.")
+        else:
+            ingest = auto_ingest_completed_run(run, daily_mode=daily_mode)
+            run["autonomous_ingest"] = ingest
+            for job in run.get("jobs") or []:
+                if job_image_exists(job):
+                    mark(state, run, job, "READY_TO_PUBLISH", communication_id=effective_communication_id)
+            run["status"] = "READY_TO_PUBLISH"
+            persist(state, run, status="READY_TO_PUBLISH")
+            set_communication_status(communication_id, "QUEUED_FOR_PUBLISH")
+            log("PIPELINE LOCALE: grafica verificata e brandizzata -> GitHub -> coda READY")
 
         if effective_communication_id:
             for job in run.get("jobs") or []:
