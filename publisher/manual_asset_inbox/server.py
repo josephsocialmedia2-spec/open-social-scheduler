@@ -391,7 +391,9 @@ def api_communications():
             merged["published_urls"] = final.get("published_urls") or []
             merged["buffer_posts"] = final.get("buffer_posts") or []
             merged["publication_error"] = final.get("error")
-            if final.get("status") == "PUBLISHED":
+            if final.get("status") == "PUBLISHED_VERIFIED":
+                merged["status"] = "PUBLISHED_VERIFIED"
+            elif final.get("status") == "PUBLISHED":
                 merged["status"] = "PUBLISHED"
             elif final.get("status") == "SCHEDULED":
                 merged["status"] = "SCHEDULED"
