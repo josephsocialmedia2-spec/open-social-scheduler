@@ -216,6 +216,21 @@ class ChromeChatGPTDriver:
         # Reuse the same ChatGPT tab/window across retries. Opening a new tab on
         # every retry can create duplicate generations and makes UIA attach to
         # the wrong tab.
+        if not self._gpt_session_opened:
+            windows = self._all_chrome_windows()
+            if windows:
+                self._chrome_window = windows[-1]
+                try:
+                    self.activate_chrome()
+                    current = self.current_url() or ""
+                    if current.startswith(GPT_URL) or "chatgpt.com/g/g-6a9c210485488191b072eb694c2f114c" in current:
+                        self.log("Riutilizzo la scheda Generatore Grafica F1 già aperta")
+                        self.wait_composer(timeout=30)
+                        self._gpt_session_opened = True
+                        return
+                except Exception:
+                    pass
+
         if self._gpt_session_opened and self._chrome_window is not None:
             self.log("Riutilizzo la scheda ChatGPT esistente")
             self.activate_chrome()
