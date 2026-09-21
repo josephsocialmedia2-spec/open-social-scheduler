@@ -32,6 +32,7 @@ jobs:
   prepare-browser-job:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+
     steps:
       - name: Checkout main
         uses: actions/checkout@v5
@@ -49,7 +50,7 @@ jobs:
 
       - name: Validate GitHub to browser contract
         run: |
-          python -m py_compile             publisher/news/f1_news_browser_control.py             publisher/news/f1_news_browser_consumer.py             publisher/news/f1_valle_susa_news.py
+          python -m py_compile             publisher/news/f1_news_browser_control.py             publisher/news/f1_news_browser_consumer.py             publisher/news/persist_f1_news_browser_queue.py             publisher/news/f1_valle_susa_news.py
           python -m json.tool publisher/news/f1_news_browser_queue.json >/dev/null
           python - <<'PY'
           from pathlib import Path
@@ -58,7 +59,7 @@ jobs:
           runner=Path('publisher/f1_graphics_automation/RUN_F1_NEWS_SLOT.ps1').read_text(encoding='utf-8')
           required_control=['QUEUED_FOR_PC','build_caption','build_visual_prompt','slot_key']
           required_consumer=['JOB_READY_FOR_BROWSER','f1_news_current.local.json']
-          required_runner=['origin/main:publisher/news/f1_news_browser_queue.json','publisher.news.f1_news_current.local.json' if False else 'f1_news_current.local.json']
+          required_runner=['origin/main:publisher/news/f1_news_browser_queue.json','chatgpt_browser','f1_news_current.local.json']
           missing=[x for x in required_control if x not in control]
           missing += [x for x in required_consumer if x not in consumer]
           missing += [x for x in required_runner if x not in runner]
@@ -75,31 +76,23 @@ jobs:
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             echo "value=${{ inputs.slot }}" >> "$GITHUB_OUTPUT"
-          elif [ "${{ github.event_name }}" = "push" ]; then
-            echo "value=auto" >> "$GITHUB_OUTPUT"
           else
             echo "value=auto" >> "$GITHUB_OUTPUT"
           fi
+
+      - name: Snapshot browser queue
+        run: cp publisher/news/f1_news_browser_queue.json /tmp/f1-news-browser-queue-before.json
 
       - name: Reconcile and prepare F1 News browser job
         id: prepare
         run: |
           python -m publisher.news.f1_news_browser_control             --slot "${{ steps.slot.outputs.value }}"             --github-output "$GITHUB_OUTPUT"
 
-      - name: Persist controller queue
-        shell: bash
+      - name: Persist controller queue atomically
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: |
-          set -euo pipefail
-          git config user.name "F1 News Browser Control"
-          git config user.email "f1-news-browser@users.noreply.github.com"
-          git add publisher/news/f1_news_browser_queue.json
-          if git diff --cached --quiet; then
-            echo "No queue changes"
-            exit 0
-          fi
-          git commit -m "Prepare/reconcile F1 News browser queue"
-          git pull --rebase origin main
-          git push origin HEAD:main
+          python publisher/news/persist_f1_news_browser_queue.py             --before /tmp/f1-news-browser-queue-before.json             --after publisher/news/f1_news_browser_queue.json
 
       - name: Summary
         if: always()
