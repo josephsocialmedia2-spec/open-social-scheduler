@@ -22,7 +22,7 @@ if errorlevel 1 (
 )
 
 echo === INSTALLAZIONE TASK 11:30 / 19:30 ===
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File "publisher\f1_graphics_automation\INSTALLA_AUTOMAZIONE_23.ps1"
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File "publisher\f1_graphics_automation\INSTALLA_AUTOMAZIONE_23.ps1" -NonInteractive
 if errorlevel 1 (
   echo ERRORE: installazione automazione F1 News fallita.
   pause
