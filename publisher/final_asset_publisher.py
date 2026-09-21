@@ -353,6 +353,38 @@ def verify_scheduled_jobs(
     return checked, changed
 
 
+def release_stored_failed_services(job: dict[str, Any]) -> set[str]:
+    """Release only provider posts already known to be failed before a retry."""
+    rows = list(job.get("buffer_posts") or [])
+    failed_rows = [
+        row for row in rows
+        if str(row.get("buffer_status") or "").lower() in {"error", "needs_approval"}
+    ]
+    failed_services = {
+        str(row.get("service") or "")
+        for row in failed_rows
+        if str(row.get("service") or "").strip()
+    }
+    if not failed_services:
+        return set()
+    archived = list(job.get("failed_buffer_posts") or [])
+    existing_ids = {str(x.get("post_id") or "") for x in archived}
+    for row in failed_rows:
+        if str(row.get("post_id") or "") not in existing_ids:
+            archived.append(row)
+    job["failed_buffer_posts"] = archived[-20:]
+    job["buffer_posts"] = [
+        row for row in rows
+        if str(row.get("service") or "") not in failed_services
+    ]
+    job["buffer_scheduled_platforms"] = [
+        service
+        for service in (job.get("buffer_scheduled_platforms") or [])
+        if str(service) not in failed_services
+    ]
+    return failed_services
+
+
 def publish_job(
     queue: dict[str, Any],
     job: dict[str, Any],
@@ -362,6 +394,10 @@ def publish_job(
     dry_run: bool = False,
 ) -> int:
     try:
+        released = release_stored_failed_services(job)
+        if released:
+            mark_job(job, "RETRY_FAILED_SERVICES")
+            persist_queue(queue)
         job["publish_attempts"] = int(job.get("publish_attempts") or 0) + 1
         job["attempt_count"] = int(job.get("attempt_count") or 0) + 1
         job["last_publish_attempt_at"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
