@@ -35,8 +35,8 @@ from publisher.chatgpt_query_runner.f1_brand_layer import apply_f1_brand_layer  
 
 QUERY_FILE = Path(os.getenv("F1_QUERY_FILE", str(ROOT / "publisher" / "github_graphics" / "queries.json")))
 COMMUNICATIONS_FILE = ROOT / "publisher" / "chatgpt_query_runner" / "communications.local.json"
-STATE_FILE = ROOT / "publisher" / "chatgpt_query_runner" / "state.json"
-LAST_RUN_FILE = ROOT / "publisher" / "chatgpt_query_runner" / "last_run.json"
+STATE_FILE = Path(os.getenv("F1_STATE_FILE", str(ROOT / "publisher" / "chatgpt_query_runner" / "state.json")))
+LAST_RUN_FILE = Path(os.getenv("F1_LAST_RUN_FILE", str(ROOT / "publisher" / "chatgpt_query_runner" / "last_run.json")))
 OUTPUT_ROOT = ROOT / "publisher" / "final_assets" / "chatgpt_generated"
 AUTOMATION_ROOT = ROOT / "publisher" / "f1_graphics_automation"
 LOG_ROOT = AUTOMATION_ROOT / "logs"
