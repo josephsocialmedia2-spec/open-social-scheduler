@@ -335,15 +335,53 @@ def create_job(slot: str, force: bool = False) -> tuple[dict[str, Any] | None, s
     save_json(STATE_PATH, state)
     return job, "CREATED"
 
+def recover_existing_job(job_id: str) -> tuple[dict[str, Any], str]:
+    config = load_json(CONFIG_PATH, {})
+    queue = load_json(QUEUE_PATH, {})
+    client = load_json(CLIENT_PATH, {})
+    job = next((x for x in queue.get("jobs") or [] if str(x.get("id") or "") == job_id), None)
+    if job is None:
+        raise SystemExit(f"RECOVERY_JOB_NOT_FOUND {job_id}")
+
+    digest = str(job.get("source_hash") or "")
+    item = next(
+        (dict(x) for x in (config.get("featured") or []) if source_hash(x) == digest),
+        None,
+    )
+    if item is None:
+        item = {
+            "title": job.get("title") or "F1 News Valle di Susa",
+            "headline": job.get("title") or "F1 NEWS VALLE DI SUSA",
+            "subheadline": "Aggiornamento immobiliare da fonte pubblica",
+            "category": job.get("category") or "notizia immobiliare",
+            "source_name": job.get("source_name") or "Fonte pubblica",
+            "source_url": job.get("source_url") or "",
+            "published_at": job.get("source_published_at") or datetime.now(ROME).date().isoformat(),
+            "summary": str(job.get("title") or ""),
+        }
+
+    asset = render_news_card(job_id, item, client)
+    job["assets"] = [asset.relative_to(ROOT).as_posix()]
+    # Preserve provider history and publication state. If a previous attempt
+    # failed, publisher recovery decides which service can be retried.
+    save_json(QUEUE_PATH, queue)
+    return job, "RECOVERED_EXISTING"
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--slot", choices=["auto","midday","evening","immediate"], default="auto")
     ap.add_argument("--force", action="store_true")
+    ap.add_argument("--recover-job-id", help="Recreate the deterministic asset for an existing queue job without creating a duplicate")
     ap.add_argument("--github-output")
     args = ap.parse_args()
     now = datetime.now(ROME)
-    slot = determine_slot(args.slot, now)
-    job, status = create_job(slot, force=args.force)
+    if args.recover_job_id:
+        slot = "recovery"
+        job, status = recover_existing_job(args.recover_job_id)
+    else:
+        slot = determine_slot(args.slot, now)
+        job, status = create_job(slot, force=args.force)
     payload = {"status":status, "slot":slot, "job":job}
     print(json.dumps(payload, ensure_ascii=False, indent=2))
     if args.github_output:
