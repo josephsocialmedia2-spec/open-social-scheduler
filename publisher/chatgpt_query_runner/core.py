@@ -40,15 +40,9 @@ def normalize_query(value: str) -> str:
 
 
 def build_prompt(query: str) -> str:
-    query = normalize_query(query)
     return (
-        "Crea un visual fotografico originale per F1 Immobiliare basato sul bisogno immobiliare: "
-        f"{query}. Fotografia editoriale real-estate premium ma credibile, ambientazione italiana "
-        "plausibile, luce naturale, composizione social-first, profondità fotografica e spazio negativo "
-        "intenzionale per il copy. Il visual deve comunicare il bisogno prima ancora del testo. "
-        "Non inserire testo, headline, CTA, numeri di telefono, URL, loghi o watermark nell'immagine. "
-        "Evita look stock, pelle plastificata, mani deformi, anatomia innaturale, architetture o prospettive "
-        "impossibili, finestre incoerenti, mobili deformati e artefatti AI. Genera l'immagine finale."
+        "Genera un'immagine ultrarealistica, usa i modelli che abbiamo caricato per "
+        f"cerchiamo {normalize_query(query)}."
     )
 
 
