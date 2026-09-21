@@ -36,6 +36,7 @@ jobs:
           python -m py_compile publisher/buffer_twice_daily.py
           python -m py_compile publisher/chatgpt_query_runner/core.py
           python -m py_compile publisher/chatgpt_query_runner/ui_driver.py
+          python -m py_compile publisher/chatgpt_query_runner/f1_brand_layer.py
           python -m py_compile publisher/chatgpt_query_runner/worker.py
           python -m py_compile publisher/manual_asset_inbox/server.py
 
@@ -116,6 +117,10 @@ jobs:
           assert 'F1_MAX_CHATGPT_TABS' in driver
           assert 'for attempt in range(1, MAX_DOWNLOAD_ATTEMPTS + 1)' in driver
           assert '"--new-tab"' not in driver
+          assert 'apply_f1_brand_layer' in worker
+          assert 'wait_for_publication_verification' in worker
+          assert 'PUBLISHED_VERIFIED' in worker
+          assert Path('publisher/chatgpt_query_runner/f1_brand_layer.py').exists()
           assert "New-ScheduledTaskTrigger -Daily -At 23:00" in installer
           assert "F1 AUTOPUBLISHER.lnk" in installer
           for path in [
@@ -137,7 +142,7 @@ jobs:
           assert '"attempt_count"' in final_publisher
           assert '"last_step"' in final_publisher
           assert '"last_error"' in final_publisher
-          assert '"PUBLISHED"' in final_publisher
+          assert '"PUBLISHED_VERIFIED"' in final_publisher
           assert 'get_buffer_post' in buffer_base
           assert 'post_type = "reel" if is_reel else "post"' in buffer_base
           persistence = Path('publisher/persist_final_queue_github.py').read_text(encoding='utf-8')
