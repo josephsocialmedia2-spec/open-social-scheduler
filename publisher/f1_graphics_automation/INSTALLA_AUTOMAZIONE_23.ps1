@@ -21,7 +21,7 @@ Write-Host '----------------------------------------------------------------' -F
 
 if (-not (Get-Command python -ErrorAction SilentlyContinue)) { throw 'Python non trovato. Installa Python 3.12+ con Add Python to PATH.' }
 if (-not (Get-Command git -ErrorAction SilentlyContinue)) { throw 'Git non trovato. Installa Git for Windows.' }
-foreach ($required in @($NightScript,$NewsScript,$InboxScript,$OpenBat,$ManualBat,$Test1Bat,$Test4Bat)) {
+foreach ($required in @($NightScript,$NewsScript,$InboxScript,$EnsurePoller,$OpenBat,$ManualBat,$Test1Bat,$Test4Bat)) {
     if (-not (Test-Path $required)) { throw "File necessario non trovato: $required" }
 }
 
