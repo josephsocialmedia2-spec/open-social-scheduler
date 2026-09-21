@@ -29,6 +29,9 @@ def build_prompt(spec: dict[str, Any]) -> str:
     brand = dict(spec.get("brand") or {})
     content = dict(spec.get("content") or {})
     metadata = dict(spec.get("metadata") or {})
+    prompt_override = str(metadata.get("prompt_override") or "").strip()
+    if prompt_override:
+        return prompt_override
     family = str(metadata.get("family") or "institutional")
     title = str(content.get("cover_title") or content.get("title") or "")
     subtitle = str(content.get("subtitle") or "")
