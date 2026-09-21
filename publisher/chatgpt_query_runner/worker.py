@@ -626,6 +626,7 @@ def auto_ingest_completed_run(run: dict, *, daily_mode: bool = False) -> dict:
             "source_hash": job.get("source_hash"),
             "source_published_at": job.get("source_published_at"),
             "editorial_slot": job.get("editorial_slot"),
+            "slot_key": job.get("slot_key"),
             "prompt": job.get("prompt"),
         })
     if not items:
