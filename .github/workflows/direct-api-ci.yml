@@ -78,7 +78,7 @@ jobs:
               assert job['status']=='buffer_pending'
 
           assert 'type: post' in b.gql_metadata('facebook', morning)
-          assert 'type: carousel' in b.gql_metadata('instagram', morning)
+          assert 'type: post' in b.gql_metadata('instagram', morning)
           assert 'type: reel' in b.gql_metadata('facebook', evening)
           assert 'type: reel' in b.gql_metadata('instagram', evening)
           assert b.gql_metadata('linkedin', evening)==''
