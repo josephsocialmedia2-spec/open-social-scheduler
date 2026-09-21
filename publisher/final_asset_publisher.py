@@ -131,6 +131,7 @@ def next_ready(
     *,
     communications_only: bool = False,
     exclude_communications: bool = False,
+    job_id: str | None = None,
 ) -> dict[str, Any] | None:
     candidates = [
         j
@@ -138,6 +139,7 @@ def next_ready(
         if (str(j.get("status")) == "READY" or _recoverable_error(j))
         and (not communications_only or is_communication_job(j))
         and (not exclude_communications or not is_communication_job(j))
+        and (not job_id or str(j.get("id") or "") == job_id)
     ]
     candidates.sort(key=lambda j: (str(j.get("scheduled_at") or ""), str(j.get("id") or "")))
     return candidates[0] if candidates else None
@@ -292,6 +294,7 @@ def verify_scheduled_jobs(
     api_key: str,
     *,
     communications_only: bool = False,
+    job_id: str | None = None,
 ) -> tuple[int, int]:
     checked = 0
     changed = 0
@@ -299,6 +302,8 @@ def verify_scheduled_jobs(
         if str(job.get("status") or "") != "SCHEDULED":
             continue
         if communications_only and not is_communication_job(job):
+            continue
+        if job_id and str(job.get("id") or "") != job_id:
             continue
         checked += 1
         try:
@@ -430,6 +435,7 @@ def main() -> int:
         help="Legacy/territory mode: never select autonomous communication jobs",
     )
     parser.add_argument("--max-jobs", type=int, default=25)
+    parser.add_argument("--job-id", help="Publish/verify only this exact final queue job id")
     args = parser.parse_args()
 
     queue = load_queue()
@@ -440,10 +446,12 @@ def main() -> int:
         queue,
         communications_only=args.communications_only,
         exclude_communications=args.exclude_communications,
+        job_id=args.job_id,
     ) is not None
     need_verify = args.verify and any(
         str(j.get("status") or "") == "SCHEDULED"
         and (not args.communications_only or is_communication_job(j))
+        and (not args.job_id or str(j.get("id") or "") == args.job_id)
         for j in queue.get("jobs", [])
     )
     if not need_publish and not need_verify:
@@ -465,6 +473,7 @@ def main() -> int:
             queue,
             communications_only=args.communications_only,
             exclude_communications=args.exclude_communications,
+            job_id=args.job_id,
         )
         if not job:
             break
@@ -480,6 +489,7 @@ def main() -> int:
             queue,
             api_key,
             communications_only=args.communications_only,
+            job_id=args.job_id,
         )
 
     print(json.dumps({
@@ -488,6 +498,7 @@ def main() -> int:
         "verification_changes": changed,
         "communications_only": args.communications_only,
         "exclude_communications": args.exclude_communications,
+        "job_id": args.job_id,
         "exit_code": exit_code,
     }, ensure_ascii=False))
     return exit_code
