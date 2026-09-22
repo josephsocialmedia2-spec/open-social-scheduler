@@ -1,6 +1,6 @@
 {
   "version": 3,
-  "generated_at": "2026-09-20T22:50:37Z",
+  "generated_at": "2026-09-22T10:41:29Z",
   "policy": "ANALISI PRIMA DELLA CREAZIONE DEL POST + INSTAGRAM FEED/REELS + INSTAGRAM CREATORS BEST PRACTICES",
   "instagram_policy_file": "publisher/instagram_distribution_policy.json",
   "instagram_creators_policy_file": "publisher/instagram_creators_best_practices.json",
@@ -21,28 +21,6 @@
         "top_posts": []
       },
       "comparable_previous_posts": [
-        {
-          "title": "7 dati che servono per valutare casa senza tirare a indovinare",
-          "format": "carousel",
-          "category": null,
-          "visual_source": null,
-          "caption": "7 DATI CHE SERVONO PER VALUTARE CASA SENZA TIRARE A INDOVINARE.\n\nUna valutazione seria parte da dati verificabili: microzona, tipologia, metratura, stato, piano/esposizione, comparabili e domanda.\n\nScrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere. F1 Immobiliare · 371 370 8294.\n\n#F1Immobiliare #ValleDiSusa #VendereCasa #ValutazioneImmobiliare",
-          "likes": null,
-          "comments": null,
-          "shares": null,
-          "saves": null,
-          "cta_clicks": null,
-          "profile_visits": null,
-          "direct_shares": null,
-          "dwell_time_seconds": null,
-          "skip_rate": null,
-          "carousel_completion_rate": null,
-          "average_watch_time_seconds": null,
-          "three_second_view_rate": null,
-          "ten_second_view_rate": null,
-          "audio_on_rate": null,
-          "metrics_status": "NOT_AVAILABLE_IN_QUEUE"
-        },
         {
           "title": "Siamo alla ricerca di immobili in Valle di Susa",
           "format": "reel",
