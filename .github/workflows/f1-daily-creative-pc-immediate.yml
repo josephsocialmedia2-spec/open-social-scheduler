@@ -17,7 +17,7 @@ concurrency:
 jobs:
   execute-visible-browser:
     runs-on: self-hosted
-    timeout-minutes: 45
+    timeout-minutes: 90
 
     steps:
       - name: Checkout main
@@ -46,7 +46,7 @@ jobs:
           python -m pip install --disable-pip-version-check -r publisher\manual_asset_inbox\requirements.txt
           python -m pip install --disable-pip-version-check -r publisher\requirements.txt
 
-      - name: Open ChatGPT, generate exactly one graphic, download, brand and publish
+      - name: Generate one ultrareal F1 graphic via free provider router, QA, brand and publish
         shell: powershell
         run: |
           powershell.exe -NoProfile -ExecutionPolicy Bypass -File "publisher\f1_graphics_automation\RUN_F1_DAILY_CREATIVE_TEST.ps1"
