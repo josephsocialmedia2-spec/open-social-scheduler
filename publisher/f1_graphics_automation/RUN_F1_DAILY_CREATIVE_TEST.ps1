@@ -58,9 +58,9 @@ try {
     if (-not (Test-Path $QueryFile)) { throw "Query file non trovato: $QueryFile" }
 
     $env:PYTHONPATH = $Root
-    $env:F1_CREATIVE_BACKEND = 'chatgpt_browser'
+    $env:F1_CREATIVE_BACKEND = 'free_browser_router'
     $env:F1_QUERY_BATCH_SIZE = '1'
-    $env:F1_MAX_ATTEMPTS = '1'
+    $env:F1_MAX_ATTEMPTS = '6'
     $env:F1_MAX_DOWNLOAD_ATTEMPTS = '3'
     $env:F1_MAX_CHATGPT_TABS = '1'
     $env:F1_FORCE_COORDINATE_COMPOSER = '1'
@@ -74,7 +74,7 @@ try {
     & $StartInbox -Restart
     if ($LASTEXITCODE -ne 0) { throw 'F1 Inbox non disponibile.' }
 
-    & $PythonExe -m publisher.chatgpt_query_runner.worker --batch-size 1 --query-file 'publisher/chatgpt_query_runner/one_shot/f1_browser_creative_queries.json'
+    & $PythonExe -m publisher.chatgpt_query_runner.worker --fresh-run --batch-size 1 --query-file 'publisher/chatgpt_query_runner/one_shot/f1_browser_creative_queries.json'
     $code = $LASTEXITCODE
     if ($code -ne 0) {
         Write-Log "RUN END - ciclo non completato, worker exit=$code"
