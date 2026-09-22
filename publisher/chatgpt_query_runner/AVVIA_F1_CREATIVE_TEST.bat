@@ -10,9 +10,9 @@ if not exist "%REPO_ROOT%\publisher\chatgpt_query_runner\worker.py" (
 )
 cd /d "%REPO_ROOT%"
 set "PYTHONPATH=%REPO_ROOT%"
-set F1_CREATIVE_BACKEND=chatgpt_browser
+set F1_CREATIVE_BACKEND=free_browser_router
 set F1_QUERY_BATCH_SIZE=1
-echo F1 CHATGPT BROWSER CREATIVE - TEST E2E
+echo F1 MULTI-AI FREE ULTRAREAL CREATIVE - TEST E2E
 echo Repository: %REPO_ROOT%
 echo Primo test: QUANTO VALE CASA MIA - variante A
 py -3 -m publisher.chatgpt_query_runner.worker --fresh-run --batch-size 1 --query-file publisher/chatgpt_query_runner/f1_browser_creative_queries.json
