@@ -20,6 +20,9 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Install validation dependencies
+        run: python -m pip install pillow
+
       - name: Compile free-browser creative modules
         run: |
           python -m py_compile             publisher/chatgpt_query_runner/core.py             publisher/chatgpt_query_runner/free_provider_router.py             publisher/chatgpt_query_runner/ultrarealism.py             publisher/chatgpt_query_runner/browser_visual_qa.py             publisher/chatgpt_query_runner/worker.py
