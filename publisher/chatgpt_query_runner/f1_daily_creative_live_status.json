@@ -14,11 +14,11 @@
   "remote_post_urls": [],
   "sha256": "",
   "pc_workflow": {
-    "id": 35644339096,
+    "id": 35687276904,
     "status": "queued",
     "conclusion": null,
-    "html_url": "https://github.com/josephsocialmedia2-spec/open-social-scheduler/actions/runs/35644339096",
-    "updated_at": "2026-09-21T19:21:53Z"
+    "html_url": "https://github.com/josephsocialmedia2-spec/open-social-scheduler/actions/runs/35687276904",
+    "updated_at": "2026-09-22T04:32:36Z"
   },
-  "last_changed_at": "2026-09-21T19:24:14+00:00"
+  "last_changed_at": "2026-09-22T06:29:00+02:00"
 }
