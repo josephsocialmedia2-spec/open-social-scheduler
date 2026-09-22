@@ -1,53 +1,85 @@
-name: F1 ChatGPT Creative Engine
+name: F1 Free Browser Creative Engine - Validation
 on:
   workflow_dispatch:
   push:
     branches: [main]
     paths:
-      - 'publisher/f1_chatgpt_creative_engine.py'
-      - 'publisher/f1_search_intents.json'
+      - 'publisher/chatgpt_query_runner/**'
       - '.github/workflows/f1-chatgpt-creative.yml'
+
 permissions:
-  contents: write
+  contents: read
+
 jobs:
-  creative:
+  validate-free-browser-engine:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
-    env:
-      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-      OPENAI_IMAGE_MODEL: gpt-image-1
-      PYTHONPATH: ${{ github.workspace }}
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-python@v6
-        with: {python-version: '3.12'}
-      - run: python -m pip install pillow requests
-      - name: Require ChatGPT/OpenAI image engine
+        with:
+          python-version: '3.12'
+
+      - name: Compile free-browser creative modules
         run: |
-          if [ -z "$OPENAI_API_KEY" ]; then
-            echo "::error::OPENAI_API_KEY is not available to this workflow"
-            exit 1
-          fi
-          echo "OPENAI_API_KEY is available"
-      - name: Verify Python package imports
-        run: python -c "from publisher.rendering.openai_visual_engine import generate_visual; print('publisher import OK')"
-      - name: Generate 2 variants for 6 search intents
-        run: python -m publisher.f1_chatgpt_creative_engine
-      - name: QA generated visual files
+          python -m py_compile             publisher/chatgpt_query_runner/core.py             publisher/chatgpt_query_runner/free_provider_router.py             publisher/chatgpt_query_runner/ultrarealism.py             publisher/chatgpt_query_runner/browser_visual_qa.py             publisher/chatgpt_query_runner/worker.py
+
+      - name: Validate provider registry
         run: |
           python - <<'PY'
           import json
           from pathlib import Path
-          from PIL import Image
-          root=Path('publisher/media/generated/f1-chatgpt-creative-v1')
-          m=json.load(open(root/'manifest.json',encoding='utf-8'))
-          assert len(m['assets'])==12 and m['engine']=='OpenAI/ChatGPT image generation'
-          for a in m['assets']:
-            p=Path(a['visual']); im=Image.open(p); assert im.width>=900 and im.height>=1200; assert p.stat().st_size>20000
-            print('QA PASS',p,im.size)
+          p=Path('publisher/chatgpt_query_runner/providers.json')
+          data=json.loads(p.read_text(encoding='utf-8'))
+          assert data['default_backend']=='free_browser_router'
+          eligible=[
+              x for x in data['providers']
+              if x.get('enabled')
+              and x.get('supports_photorealism')
+              and x.get('supports_download')
+              and x.get('commercial_use_allowed') is True
+          ]
+          assert len(eligible) >= 2, eligible
+          assert all(x.get('mode')=='browser' for x in eligible)
+          print('Eligible zero-cost browser providers:', [x['name'] for x in eligible])
           PY
-      - name: Publish test visuals only
-        env: {GH_TOKEN: "${{ github.token }}"}
+
+      - name: Validate F1 intent batch and ultrarealism
         run: |
-          gh release delete f1-chatgpt-creative-v1 --yes --cleanup-tag >/dev/null 2>&1 || true
-          gh release create f1-chatgpt-creative-v1 publisher/media/generated/f1-chatgpt-creative-v1/*.jpg --title "F1 · ChatGPT Creative V1" --notes "Search-intent-driven ChatGPT/OpenAI hero visuals. TEST ONLY — not published to social."
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from publisher.chatgpt_query_runner.ultrarealism import enforce_ultrarealism_prompt
+
+          path=Path('publisher/chatgpt_query_runner/f1_browser_creative_queries.json')
+          data=json.loads(path.read_text(encoding='utf-8'))
+          rows=data['queries']
+          assert len(rows)==12
+          ids=[x['id'] for x in rows]
+          assert len(set(ids))==12
+          intents={x['query'] for x in rows}
+          assert len(intents)==6
+          for row in rows:
+              prompt=enforce_ultrarealism_prompt(row['prompt'])
+              assert 'ultra-realistic' in prompt.lower()
+              assert 'no 3d render' in prompt.lower()
+              assert 'no watermark' in prompt.lower()
+          print('6 intents / 12 variants / ultrarealism prompt gate OK')
+          PY
+
+      - name: Ensure paid OpenAI API is not required by this workflow
+        run: |
+          if grep -q 'secrets.OPENAI_API_KEY' .github/workflows/f1-chatgpt-creative.yml; then
+            echo "::error::Paid OpenAI API secret must not be required by the free browser workflow"
+            exit 1
+          fi
+          echo "OPENAI_API_KEY not required"
+
+      - name: Architecture summary
+        run: |
+          echo "Generation runtime: Windows local browser worker"
+          echo "Backend: free_browser_router"
+          echo "Providers: ChatGPT browser -> Leonardo free -> Adobe Firefly free"
+          echo "Microsoft Image Creator: disabled for F1 commercial marketing"
+          echo "Hugging Face: disabled until exact Space/model licence is verified"
+          echo "Publication safety gate: ULTRAREALISM_PASS required"
