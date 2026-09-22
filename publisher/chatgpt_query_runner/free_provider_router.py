@@ -6,6 +6,7 @@ import subprocess
 import time
 from pathlib import Path
 from typing import Any, Callable
+from datetime import datetime
 
 import pyautogui
 
@@ -18,7 +19,8 @@ from publisher.chatgpt_query_runner.ui_driver import (
 )
 
 ROOT = Path(__file__).resolve().parents[2]
-PROVIDERS_PATH = ROOT / "publisher" / "chatgpt_query_runner" / "providers.json"\nHEALTH_PATH = ROOT / "publisher" / "chatgpt_query_runner" / "provider_health.local.json"
+PROVIDERS_PATH = ROOT / "publisher" / "chatgpt_query_runner" / "providers.json"
+HEALTH_PATH = ROOT / "publisher" / "chatgpt_query_runner" / "provider_health.local.json"
 
 
 class ProviderUnavailable(RuntimeError):
