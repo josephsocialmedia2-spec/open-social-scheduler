@@ -31,6 +31,10 @@ for %%F in (
   publisher/chatgpt_query_runner/core.py
   publisher/chatgpt_query_runner/ui_driver.py
   publisher/chatgpt_query_runner/f1_brand_layer.py
+  publisher/chatgpt_query_runner/free_provider_router.py
+  publisher/chatgpt_query_runner/ultrarealism.py
+  publisher/chatgpt_query_runner/browser_visual_qa.py
+  publisher/chatgpt_query_runner/providers.json
   publisher/chatgpt_query_runner/worker.py
   publisher/chatgpt_query_runner/f1_browser_creative_queries.json
   publisher/chatgpt_query_runner/requirements.txt
@@ -45,9 +49,9 @@ for %%F in (
 )
 
 set "PYTHONPATH=%ROOT%"
-set "F1_CREATIVE_BACKEND=chatgpt_browser"
+set "F1_CREATIVE_BACKEND=free_browser_router"
 set "F1_QUERY_BATCH_SIZE=1"
-set "F1_MAX_ATTEMPTS=1"
+set "F1_MAX_ATTEMPTS=6"
 set "F1_MAX_DOWNLOAD_ATTEMPTS=3"
 set "F1_MAX_CHATGPT_TABS=1"
 set "F1_FORCE_COORDINATE_COMPOSER=1"
@@ -66,7 +70,7 @@ if errorlevel 1 (
 )
 
 echo.
-echo Avvio 1 sola grafica: QUANTO VALE CASA MIA - Variante A
+echo Avvio 1 sola grafica: QUANTO VALE CASA MIA - Variante A - router multi-provider gratuito
 echo NON usare mouse o tastiera finche il ciclo non termina.
 echo.
 
