@@ -1131,19 +1131,6 @@
       "editorial_slot": "08:30",
       "scheduled_at": "2026-09-23T08:30:00+02:00",
       "status": "SCHEDULED",
-      "cta": "https://www.agentpricing.com/j.malafronte",
-      "graphic_cta": "CLICCA SUL LINK 👉\nhttps://www.agentpricing.com/j.malafronte\n🏡“Contattaci per una Valutazione Strategica e di Posizionamento del tuo immobile: analizziamo prezzo, concorrenza e strategia di vendita per aumentare le possibilità di vendere meglio e in tempi più efficienti.”",
-      "graphic_body": "Mercato locale e strategia immobiliare.",
-      "publish_attempts": 1,
-      "attempt_count": 1,
-      "last_publish_attempt_at": "2026-09-22T10:31:31+00:00",
-      "last_step": "SCHEDULED",
-      "updated_at": "2026-09-22T10:31:34+00:00",
-      "last_error": null,
-      "hosted_asset_urls": [
-        "https://res.cloudinary.com/xqrptpae/image/upload/v1790073092/f1-buffer/f1-final-VD-016-S-20260923-0830/video.png"
-      ],
-      "graphic_url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790073092/f1-buffer/f1-final-VD-016-S-20260923-0830/video.png",
       "buffer_posts": [
         {
           "service": "facebook",
@@ -1166,7 +1153,6 @@
         "facebook",
         "instagram"
       ],
-      "scheduled_via": "buffer",
       "resolved_channels": {
         "facebook": {
           "id": "6a9afff8065799be468ade7a",
@@ -1183,7 +1169,9 @@
       },
       "published_asset_sha256": [
         "e4e3dfa79bc9a9bf9df2656c1d85c482d4b1a2dacf62f8539c46c9d26d4c9471"
-      ]
+      ],
+      "scheduled_via": "buffer",
+      "updated_at": "2026-09-22T10:31:34+00:00"
     },
     {
       "id": "VD-016-C-20260923-1830",
@@ -1192,7 +1180,7 @@
       "pillar": "Associazioni",
       "source_name": "Comune / atti 2026",
       "source_url": "https://www.servizipubblicaamministrazione.it/servizi/saturnwebaffid/Home.aspx?CE=vllrdr250&DL=33",
-      "caption": "",
+      "caption": "Pro Loco e associazioni locali\n\nConoscere Villar Dora significa capire il territorio in cui si sceglie di vivere: servizi, comunità, patrimonio locale e qualità della vita fanno parte della decisione immobiliare, insieme alla casa.\n\nFonte di riferimento: Comune / atti 2026. Informazioni da verificare alla data di pubblicazione.\n\nCLICCA SUL LINK 👉\nhttps://www.agentpricing.com/j.malafronte\n🏡“Contattaci per una Valutazione Strategica e di Posizionamento del tuo immobile: analizziamo prezzo, concorrenza e strategia di vendita per aumentare le possibilità di vendere meglio e in tempi più efficienti.”",
       "format": "photo",
       "assets": [
         "publisher/final_assets/generated_villar_dora/VD-016-C-20260923-1830.png"
@@ -1205,7 +1193,60 @@
       "territory": "Villar Dora",
       "editorial_slot": "18:30",
       "scheduled_at": "2026-09-23T18:30:00+02:00",
-      "status": "READY"
+      "status": "SCHEDULED",
+      "cta": "https://www.agentpricing.com/j.malafronte",
+      "graphic_cta": "CLICCA SUL LINK 👉\nhttps://www.agentpricing.com/j.malafronte\n🏡“Contattaci per una Valutazione Strategica e di Posizionamento del tuo immobile: analizziamo prezzo, concorrenza e strategia di vendita per aumentare le possibilità di vendere meglio e in tempi più efficienti.”",
+      "graphic_body": "Territorio, servizi e vita locale.",
+      "publish_attempts": 1,
+      "attempt_count": 1,
+      "last_publish_attempt_at": "2026-09-22T19:21:42+00:00",
+      "last_step": "SCHEDULED",
+      "updated_at": "2026-09-22T19:21:44+00:00",
+      "last_error": null,
+      "hosted_asset_urls": [
+        "https://res.cloudinary.com/xqrptpae/image/upload/v1790104902/f1-buffer/f1-final-VD-016-C-20260923-1830/video.png"
+      ],
+      "graphic_url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790104902/f1-buffer/f1-final-VD-016-C-20260923-1830/video.png",
+      "buffer_posts": [
+        {
+          "service": "facebook",
+          "channel_id": "6a9afff8065799be468ade7a",
+          "post_id": "6ab2d54752dc55ce9463c301",
+          "buffer_status": "scheduled",
+          "due_at": "2026-09-23T16:30:00.000Z",
+          "created_at": "2026-09-22T19:21:43+00:00"
+        },
+        {
+          "service": "instagram",
+          "channel_id": "6a9b0034065799be468adfe4",
+          "post_id": "6ab2d548577f0675971687c1",
+          "buffer_status": "scheduled",
+          "due_at": "2026-09-23T16:30:00.000Z",
+          "created_at": "2026-09-22T19:21:44+00:00"
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "facebook",
+        "instagram"
+      ],
+      "scheduled_via": "buffer",
+      "resolved_channels": {
+        "facebook": {
+          "id": "6a9afff8065799be468ade7a",
+          "name": "F1immobiliare",
+          "service": "facebook",
+          "organization_id": "6a9aff970f059f084a2c8a6d"
+        },
+        "instagram": {
+          "id": "6a9b0034065799be468adfe4",
+          "name": "joseph_malafronte",
+          "service": "instagram",
+          "organization_id": "6a9aff970f059f084a2c8a6d"
+        }
+      },
+      "published_asset_sha256": [
+        "1a5983f2af11c617ae7347dd3e19c9f6afe788b6cb015d4a91bd9f93b9728fec"
+      ]
     },
     {
       "id": "VD-017-S-20260924-0830",
@@ -7239,5 +7280,5 @@
       "error": "Buffer provider state requires recovery: error; retry services=instagram"
     }
   ],
-  "updated_at": "2026-09-22T10:31:34+00:00"
+  "updated_at": "2026-09-22T19:21:44+00:00"
 }
