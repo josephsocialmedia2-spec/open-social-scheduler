@@ -47,9 +47,10 @@ $PythonCmd = Get-Command python -ErrorAction SilentlyContinue
 if (-not $PythonCmd) { throw 'Python non trovato nel PATH.' }
 $PythonExe = $PythonCmd.Source
 
+$env:F1_CREATIVE_BACKEND = 'free_browser_router'
 $env:F1_QUERY_BATCH_SIZE = '4'
 $env:F1_INBOX_PORT = '8877'
-$env:F1_MAX_ATTEMPTS = '3'
+$env:F1_MAX_ATTEMPTS = '6'
 
 # Prima aggiorna il codice, poi riavvia il server: nessun processo Flask resta con codice vecchio.
 try {
@@ -84,7 +85,7 @@ try {
 }
 
 $depsOk = $true
-python -c "import pyautogui, pyperclip, pygetwindow, uiautomation, flask, tzdata" 2>$null
+python -c "import pyautogui, pyperclip, pygetwindow, uiautomation, flask, tzdata; from PIL import Image" 2>$null
 if ($LASTEXITCODE -ne 0) { $depsOk = $false }
 if (-not $depsOk) {
     Write-Log 'Installazione dipendenze Python mancanti.'
