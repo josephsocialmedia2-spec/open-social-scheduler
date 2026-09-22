@@ -550,9 +550,26 @@ def process_job(driver: ChromeChatGPTDriver, state: dict, run: dict, job: dict, 
     for attempt in range(initial_retry + 1, MAX_ATTEMPTS + 1):
         stage = "QUERY_CARICATA"
         try:
-            if attempt > 1 or job.get("status") in {"ERRORE", "RETRY"}:
+            if attempt > 1 or job.get("status") in {"ERRORE", "RETRY", "REGENERATING"}:
                 mark(state, run, job, "RETRY", retry_count=attempt - 1, error=None)
-                driver.open_gpt()
+
+            # Visual QA may have navigated Chrome away from the generator.
+            # Re-open/verify the active provider before every NEW generation attempt.
+            driver.open_gpt()
+            if hasattr(driver, "current_provider_metadata"):
+                provider_meta = driver.current_provider_metadata()
+                job["provider"] = provider_meta.get("provider")
+                job["provider_attempt"] = int(job.get("provider_attempt") or 0) + 1
+                job["provider_meta"] = provider_meta
+                mark(
+                    state,
+                    run,
+                    job,
+                    "PROVIDER_SELECTED",
+                    provider=job.get("provider"),
+                    provider_attempt=job.get("provider_attempt"),
+                    provider_meta=provider_meta,
+                )
 
             log(f"Query {job['sequence']}/{run['batch_size']} caricata: {job['query']}")
             mark(state, run, job, "QUERY_CARICATA", retry_count=attempt - 1, error=None)
