@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-21T10:57:56+00:00",
+  "updated_at": "2026-09-22T10:12:49+00:00",
   "signals": [
     {
       "id": "FBS-64D8E3A2C4",
@@ -301,6 +301,42 @@
       "source_query": "site:facebook.com/groups \"Giaveno\" \"cerco casa\"",
       "status": "NEW",
       "discovered_at": "2026-09-21T10:47:26+00:00"
+    },
+    {
+      "id": "FBS-E3A1025F00",
+      "brand": "f1-immobiliare",
+      "territory": "Almese",
+      "group_url": "https://www.facebook.com/groups/1612274875481626/",
+      "source_url": "https://www.facebook.com/groups/1612274875481626/permalink/38446512178297765/",
+      "title": "CERCO CASA ALMESE e dintorni | Facebook",
+      "snippet": "CERCO CASA ALMESE e dintorni Ciaoooooooooo Mi chiamo Anna, ho 23 anni e lavoro Sto cercando un monolocale/bilocale libero da subito o a partire da Ottobre Ad Almese o nei dintorni ⭐️ Budget Max...",
+      "source_query": "site:facebook.com/groups \"Almese\" \"cerco casa\"",
+      "status": "NEW",
+      "discovered_at": "2026-09-22T09:59:23+00:00"
+    },
+    {
+      "id": "FBS-91A856209E",
+      "brand": "f1-immobiliare",
+      "territory": "Giaveno",
+      "group_url": "https://www.facebook.com/groups/seidigiaveno/",
+      "source_url": "https://www.facebook.com/groups/seidigiaveno/permalink/27742550578780474/",
+      "title": "Buongiorno sto cercando di comprare casa a Giaveno. | Facebook",
+      "snippet": "Buongiorno sto cercando di comprare casa a Giaveno. Se avete suggerimenti li accolgo volentieri... No borgate o Coazze, no ruderi da ristrutturare, no cifre sopra 200 Mila.. Se da privati molto...",
+      "source_query": "site:facebook.com/groups \"Giaveno\" \"vendesi casa\"",
+      "status": "NEW",
+      "discovered_at": "2026-09-22T10:00:54+00:00"
+    },
+    {
+      "id": "FBS-00D2ECBEA4",
+      "brand": "f1-immobiliare",
+      "territory": "Rivoli",
+      "group_url": "https://www.facebook.com/groups/1103543330454420/",
+      "source_url": "https://www.facebook.com/groups/1103543330454420/permalink/2346007162874691/",
+      "title": "Affitto tra privati a Rivoli, Collegno, Rosta, Avigliana | ...",
+      "snippet": "Cerco casa o stanza singola a Rivoli. Da settembre a giugno. Sono un docente. Erika Reali Affitto tra privati a Rivoli, Collegno, Rosta, Avigliana Morena Bonaccolta",
+      "source_query": "site:facebook.com/groups \"Rivoli\" \"cerco casa\"",
+      "status": "NEW",
+      "discovered_at": "2026-09-22T10:01:12+00:00"
     }
   ]
 }
