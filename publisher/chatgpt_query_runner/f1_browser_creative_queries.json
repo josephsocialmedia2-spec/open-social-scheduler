@@ -1,6 +1,6 @@
 {
   "batch": "f1-chatgpt-browser-creative-v1",
-  "backend": "chatgpt_browser",
+  "backend": "free_browser_router",
   "test_mode": true,
   "strategy": "CERCO CASA + VENDO CASA",
   "queries": [
