@@ -18,7 +18,7 @@ from publisher.chatgpt_query_runner.ui_driver import (
 )
 
 ROOT = Path(__file__).resolve().parents[2]
-PROVIDERS_PATH = ROOT / "publisher" / "chatgpt_query_runner" / "providers.json"
+PROVIDERS_PATH = ROOT / "publisher" / "chatgpt_query_runner" / "providers.json"\nHEALTH_PATH = ROOT / "publisher" / "chatgpt_query_runner" / "provider_health.local.json"
 
 
 class ProviderUnavailable(RuntimeError):
@@ -188,6 +188,25 @@ class FreeProviderRouterDriver:
         self._driver = None
         self.failures: dict[str, int] = {}
 
+    def _record_health(self, provider: str, status: str, reason: str = "") -> None:
+        try:
+            payload = {"version": 1, "providers": {}}
+            if HEALTH_PATH.exists():
+                payload = json.loads(HEALTH_PATH.read_text(encoding="utf-8"))
+                payload.setdefault("version", 1)
+                payload.setdefault("providers", {})
+            payload["providers"][provider] = {
+                "status": status,
+                "reason": reason,
+                "updated_at": datetime.now().astimezone().isoformat(timespec="seconds"),
+                "failures": int(self.failures.get(provider, 0)),
+            }
+            tmp = HEALTH_PATH.with_suffix(HEALTH_PATH.suffix + ".tmp")
+            tmp.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+            tmp.replace(HEALTH_PATH)
+        except Exception:
+            pass
+
     @property
     def provider_name(self) -> str:
         return str(self.providers[self.index].get("name") or "provider")
@@ -221,10 +240,17 @@ class FreeProviderRouterDriver:
             try:
                 self.log(f"FREE_PROVIDER_ROUTER selezionato: {self.provider_name}")
                 driver.open_gpt()
+                self._record_health(self.provider_name, "AVAILABLE")
                 return
             except (ProviderLimitReached, ProviderAuthRequired, ProviderUnavailable) as exc:
                 last_error = exc
                 self.failures[self.provider_name] = self.failures.get(self.provider_name, 0) + 1
+                status = (
+                    "LIMIT_REACHED" if isinstance(exc, ProviderLimitReached)
+                    else "AUTH_REQUIRED" if isinstance(exc, ProviderAuthRequired)
+                    else "UNAVAILABLE"
+                )
+                self._record_health(self.provider_name, status, str(exc))
                 attempted += 1
                 if self.index + 1 >= len(self.providers):
                     break
@@ -238,6 +264,7 @@ class FreeProviderRouterDriver:
         hard_switch = any(token in msg for token in (
             "limit", "quota", "credits", "tokens", "auth", "sign in", "log in", "temporarily unavailable"
         ))
+        self._record_health(name, "FAILED", str(exc))
         if hard_switch or self.failures[name] >= self.max_failures:
             if self.index + 1 < len(self.providers):
                 self._advance(f"failure={type(exc).__name__}")
