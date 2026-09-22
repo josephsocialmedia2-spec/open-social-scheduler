@@ -32,6 +32,12 @@ from publisher.chatgpt_query_runner.core import (  # noqa: E402
 )
 from publisher.chatgpt_query_runner.ui_driver import ChromeChatGPTDriver, GPT_URL  # noqa: E402
 from publisher.chatgpt_query_runner.f1_brand_layer import apply_f1_brand_layer  # noqa: E402
+from publisher.chatgpt_query_runner.free_provider_router import FreeProviderRouterDriver  # noqa: E402
+from publisher.chatgpt_query_runner.browser_visual_qa import ChatGPTBrowserVisualQA  # noqa: E402
+from publisher.chatgpt_query_runner.ultrarealism import (  # noqa: E402
+    enforce_ultrarealism_prompt,
+    ultrarealism_gate,
+)
 
 QUERY_FILE = Path(os.getenv("F1_QUERY_FILE", str(ROOT / "publisher" / "github_graphics" / "queries.json")))
 COMMUNICATIONS_FILE = ROOT / "publisher" / "chatgpt_query_runner" / "communications.local.json"
@@ -47,6 +53,7 @@ DEFAULT_BATCH_SIZE = int(os.getenv("F1_QUERY_BATCH_SIZE", "4"))
 MAX_ATTEMPTS = max(1, int(os.getenv("F1_MAX_ATTEMPTS", "3")))
 MAX_COMMUNICATION_ATTEMPTS = max(1, int(os.getenv("F1_COMM_MAX_ATTEMPTS", "5")))
 MAX_PUBLISH_VERIFY_SECONDS = max(60, int(os.getenv("F1_PUBLISH_VERIFY_SECONDS", "1800")))
+CREATIVE_BACKEND = os.getenv("F1_CREATIVE_BACKEND", "free_browser_router").strip().lower()
 FINAL_QUEUE_PATH = ROOT / "publisher" / "final_content_queue.json"
 DAILY_QUERY_FILE = "f1_browser_creative_queries.json"
 NEWS_QUERY_FILE = "f1_news_current.local.json"
@@ -250,7 +257,76 @@ def _brand_path_for(source: Path) -> Path:
     return source.with_name(source.stem + "-brand.png")
 
 
+def _people_expected(job: dict) -> bool:
+    text = " ".join([
+        str(job.get("prompt") or ""),
+        str(job.get("concept_visual") or ""),
+        str(job.get("query") or ""),
+    ]).lower()
+    return any(token in text for token in (
+        "persona", "persone", "adulto", "adulta", "coppia", "proprietario",
+        "proprietaria", "eredi", "acquirente", "human", "person", "people"
+    ))
+
+
+def run_ultrarealism_qa(state: dict, run: dict, job: dict, source: Path) -> dict:
+    if job.get("ultrarealism_pass") is True and job.get("visual_qa"):
+        return {
+            "ultrarealism_pass": True,
+            "visual_qa": job.get("visual_qa"),
+            "technical_qa": job.get("technical_qa"),
+            "photorealism_score": job.get("photorealism_score"),
+            "qa_failure_reasons": job.get("qa_failure_reasons") or [],
+        }
+
+    mark(state, run, job, "QA_PENDING")
+    mark(state, run, job, "ULTRAREALISM_QA")
+    qa = ChatGPTBrowserVisualQA(log=log, diagnostic_root=LOG_ROOT)
+    visual = qa.evaluate(
+        source,
+        content_id=str(job.get("query_id") or "F1-CONTENT"),
+        brief=str(job.get("prompt") or job.get("query") or ""),
+        people_expected=_people_expected(job),
+    )
+    gate = ultrarealism_gate(source, visual, people_expected=_people_expected(job))
+    job["visual_qa"] = gate.get("visual_qa") or {}
+    job["technical_qa"] = gate.get("technical_qa") or {}
+    job["photorealism_score"] = gate.get("photorealism_score")
+    job["ultrarealism_pass"] = bool(gate.get("ultrarealism_pass"))
+    job["qa_failure_reasons"] = list(gate.get("qa_failure_reasons") or [])
+    persist(state, run)
+
+    if not job["ultrarealism_pass"]:
+        mark(
+            state,
+            run,
+            job,
+            "QA_FAILED",
+            ultrarealism_pass=False,
+            qa_failure_reasons=job["qa_failure_reasons"],
+            photorealism_score=job.get("photorealism_score"),
+        )
+        raise RuntimeError(
+            "ULTRAREALISM_QA_FAIL: " + ", ".join(job["qa_failure_reasons"] or ["unknown"])
+        )
+
+    mark(
+        state,
+        run,
+        job,
+        "ULTRAREALISM_PASS",
+        ultrarealism_pass=True,
+        photorealism_score=job.get("photorealism_score"),
+        visual_qa=job.get("visual_qa"),
+        technical_qa=job.get("technical_qa"),
+    )
+    mark(state, run, job, "QA_PASS", visual_qa=job.get("visual_qa"))
+    return gate
+
+
 def apply_brand_to_job(state: dict, run: dict, job: dict, source: Path) -> Path:
+    if job.get("ultrarealism_pass") is not True:
+        raise RuntimeError("Brand layer bloccato: ULTRAREALISM_PASS mancante")
     destination = _brand_path_for(source)
     is_news = bool(str(job.get("source_name") or "").strip()) or str(job.get("query_id") or "").startswith("COMM-NEWS-")
     brand_body = (
@@ -274,8 +350,6 @@ def apply_brand_to_job(state: dict, run: dict, job: dict, source: Path) -> Path:
     job["brand_qa"] = result["brand_qa"]
     job["visual_qa"] = result["visual_qa"]
     mark(state, run, job, "FILE_VALIDATED", image_path=result["path"], image_sha256=result["sha256"])
-    mark(state, run, job, "QA_PENDING")
-    mark(state, run, job, "QA_PASS", visual_qa=result["visual_qa"])
     mark(state, run, job, "BRAND_PASS", brand_qa=result["brand_qa"])
     return branded
 
@@ -407,6 +481,7 @@ def process_job(driver: ChromeChatGPTDriver, state: dict, run: dict, job: dict, 
     }:
         branded = _valid_image_path(job.get("brand_path"))
         if branded is None:
+            run_ultrarealism_qa(state, run, job, source_existing)
             branded = apply_brand_to_job(state, run, job, source_existing)
         mark(state, run, job, "COMPLETED", error=None, image_path=relative_path(branded))
         advance_after_completed(state, job, total_queries)
@@ -414,6 +489,7 @@ def process_job(driver: ChromeChatGPTDriver, state: dict, run: dict, job: dict, 
         return True
 
     prompt = str(job.get("prompt") or "").strip() or build_prompt(str(job.get("query") or ""))
+    prompt = enforce_ultrarealism_prompt(prompt)
     job["prompt"] = prompt
     persist(state, run)
 
@@ -454,6 +530,7 @@ def process_job(driver: ChromeChatGPTDriver, state: dict, run: dict, job: dict, 
                 image_sha256=digest,
                 capture_mode=capture_mode,
             )
+            run_ultrarealism_qa(state, run, job, saved_path)
             branded_path = apply_brand_to_job(state, run, job, saved_path)
             mark(state, run, job, "COMPLETED", error=None, image_path=relative_path(branded_path))
             advance_after_completed(state, job, total_queries)
@@ -551,6 +628,7 @@ def process_job(driver: ChromeChatGPTDriver, state: dict, run: dict, job: dict, 
                 capture_mode=capture_mode,
             )
 
+            run_ultrarealism_qa(state, run, job, saved_path)
             branded_path = apply_brand_to_job(state, run, job, saved_path)
 
             stage = "COMPLETED"
@@ -582,6 +660,21 @@ def process_job(driver: ChromeChatGPTDriver, state: dict, run: dict, job: dict, 
                 diagnostics=diagnostics,
             )
             log(f"ERRORE query {job['sequence']} tentativo {attempt}/{MAX_ATTEMPTS}: {error}")
+            if "ULTRAREALISM_QA_FAIL" in error:
+                job["regeneration_count"] = int(job.get("regeneration_count") or 0) + 1
+                mark(
+                    state,
+                    run,
+                    job,
+                    "REGENERATING",
+                    regeneration_count=job["regeneration_count"],
+                    error=error,
+                )
+            try:
+                if hasattr(driver, "handle_failure"):
+                    driver.handle_failure(exc)
+            except Exception as router_exc:
+                log(f"Provider router: {type(router_exc).__name__}: {router_exc}")
             if attempt >= MAX_ATTEMPTS:
                 return False
             time.sleep(min(5 * attempt, 15))
@@ -602,6 +695,10 @@ def auto_ingest_completed_run(run: dict, *, daily_mode: bool = False) -> dict:
                 "Quanto vale davvero casa tua? Scopri il valore reale del tuo immobile "
                 "con una valutazione professionale e senza impegno. Scrivi VALUTAZIONE in privato. "
                 "#F1Immobiliare #ValleDiSusa #ValutazioneImmobiliare #VendereCasa"
+            )
+        if job.get("ultrarealism_pass") is not True:
+            raise RuntimeError(
+                f"Safety gate: {job.get('query_id')} non pubblicabile senza ULTRAREALISM_PASS"
             )
         items.append({
             "image_path": job.get("image_path"),
@@ -699,7 +796,10 @@ def run(batch_size: int, *, fresh_run: bool = False, communication_id: str | Non
     persist(state, run, status="RUNNING")
 
     log(f"RUN START {run['run_id']} - batch {run['batch_size']}")
-    driver = ChromeChatGPTDriver(log=log, diagnostic_root=LOG_ROOT)
+    if CREATIVE_BACKEND == "free_browser_router":
+        driver = FreeProviderRouterDriver(log=log, diagnostic_root=LOG_ROOT)
+    else:
+        driver = ChromeChatGPTDriver(log=log, diagnostic_root=LOG_ROOT)
     downstream_only = all(
         str(job.get("status") or "") in {
             "COMPLETED", "READY_TO_PUBLISH", "PUBLISHING", "PUBLISHED",
