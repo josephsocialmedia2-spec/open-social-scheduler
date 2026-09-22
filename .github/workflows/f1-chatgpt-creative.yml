@@ -72,11 +72,11 @@ jobs:
 
       - name: Ensure paid OpenAI API is not required by this workflow
         run: |
-          if grep -q 'secrets.OPENAI_API_KEY' .github/workflows/f1-chatgpt-creative.yml; then
-            echo "::error::Paid OpenAI API secret must not be required by the free browser workflow"
+          if grep -R -n 'OPENAI_API_KEY' publisher/chatgpt_query_runner/providers.json publisher/chatgpt_query_runner/worker.py publisher/chatgpt_query_runner/free_provider_router.py; then
+            echo "::error::Paid OpenAI API key must not be required by the free browser runtime"
             exit 1
           fi
-          echo "OPENAI_API_KEY not required"
+          echo "Paid OpenAI API key not required by free browser runtime"
 
       - name: Architecture summary
         run: |
