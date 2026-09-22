@@ -82,6 +82,50 @@
       "updated_at": "2026-09-21T20:05:00+02:00",
       "execution_requested_at": "2026-09-21T20:05:00+02:00",
       "force_immediate": true
+    },
+    {
+      "id": "COMM-NEWS-20260922-EVENING-B04E787A",
+      "communication_id": "COMM-NEWS-20260922-EVENING-B04E787A",
+      "query": "AFFITTI: NUOVO INDICE ISTAT",
+      "communication": "AFFITTI: PUBBLICATI GLI INDICI DEI PREZZI AL CONSUMO DI LUGLIO 2026\n\nIl Notiziario regionale segnala la pubblicazione in Gazzetta Ufficiale degli indici dei prezzi al consumo per le famiglie di operai e impiegati relativi a luglio 2026, richiamati dalla disciplina delle locazioni di immobili urbani.\n\nPer chi vive, vende, compra o cambia casa in Valle di Susa, la notizia conta solo se viene tradotta in effetti concreti sul territorio. F1 la segnala e la contestualizza senza trasformare una comunicazione generale in una conclusione sul singolo immobile.\n\nFonte: Regione Piemonte - Notiziario n. 31.\nhttps://www.regione.piemonte.it/web/amministrazione/autonomie-locali/notiziario-per-amministrazioni-locali/notiziario-per-amministrazioni-locali-n-31-3-settembre-2026\n\nNon a sensazione. Con i dati.\n\nValutazione immobile: https://www.agentpricing.com/j.malafronte\nContatto F1 Immobiliare: https://wa.me/393713708294",
+      "caption": "AFFITTI: PUBBLICATI GLI INDICI DEI PREZZI AL CONSUMO DI LUGLIO 2026\n\nIl Notiziario regionale segnala la pubblicazione in Gazzetta Ufficiale degli indici dei prezzi al consumo per le famiglie di operai e impiegati relativi a luglio 2026, richiamati dalla disciplina delle locazioni di immobili urbani.\n\nPer chi vive, vende, compra o cambia casa in Valle di Susa, la notizia conta solo se viene tradotta in effetti concreti sul territorio. F1 la segnala e la contestualizza senza trasformare una comunicazione generale in una conclusione sul singolo immobile.\n\nFonte: Regione Piemonte - Notiziario n. 31.\nhttps://www.regione.piemonte.it/web/amministrazione/autonomie-locali/notiziario-per-amministrazioni-locali/notiziario-per-amministrazioni-locali-n-31-3-settembre-2026\n\nNon a sensazione. Con i dati.\n\nValutazione immobile: https://www.agentpricing.com/j.malafronte\nContatto F1 Immobiliare: https://wa.me/393713708294",
+      "prompt": "Crea un visual fotografico editoriale real-estate per una notizia F1 Immobiliare. Argomento: Affitti: pubblicati gli indici dei prezzi al consumo di luglio 2026. Categoria: locazione. Area: Piemonte / Valle di Susa. Contesto: Il Notiziario regionale segnala la pubblicazione in Gazzetta Ufficiale degli indici dei prezzi al consumo per le famiglie di operai e impiegati relativi a luglio 2026, richiamati dalla disciplina delle locazioni di immobili urbani.. Trasforma la notizia in una scena fotografica plausibile e concreta, non in un volantino: architettura e territorio piemontese/Valle di Susa coerenti quando pertinenti, luce naturale, stile premium ma autentico, composizione verticale social-first 4:5, soggetto o immobile principale sulla destra e spazio negativo pulito sulla sinistra per il copy successivo. Non inserire testo, titoli, loghi, CTA, numeri, URL, documenti con testo leggibile o watermark. Evita look stock, icone, infografiche, card nere, template piatti, mani deformi, prospettive impossibili e artefatti AI. La fotografia deve essere adatta a una testata locale immobiliare autorevole.",
+      "client": "F1 Immobiliare",
+      "territory": "Valle di Susa",
+      "scope": "network",
+      "platforms": [
+        "facebook",
+        "instagram"
+      ],
+      "source": "f1-news-browser-control",
+      "news_id": "REG-AFFITTI-FOI-20260903",
+      "headline": "AFFITTI: NUOVO INDICE ISTAT",
+      "cta": "SCOPRI COSA CAMBIA",
+      "category": "locazione",
+      "source_name": "Regione Piemonte - Notiziario n. 31",
+      "source_url": "https://www.regione.piemonte.it/web/amministrazione/autonomie-locali/notiziario-per-amministrazioni-locali/notiziario-per-amministrazioni-locali-n-31-3-settembre-2026",
+      "source_hash": "b04e787a3784714fb9f7902b985807152b6489a4ed9b87760314107c85423df7",
+      "source_published_at": "2026-09-03",
+      "source_verification": {
+        "http_status": 200,
+        "final_url": "https://www.regione.piemonte.it/web/amministrazione/autonomie-locali/notiziario-per-amministrazioni-locali/notiziario-per-amministrazioni-locali-n-31-3-settembre-2026",
+        "domain": "www.regione.piemonte.it",
+        "content_sha256": "4095d7cb16cd6eef72884155496732fbedcb434bd6f7ec7b2ccc7bb2e5ded275",
+        "matched_title_terms": [
+          "affitti",
+          "consumo",
+          "indici",
+          "luglio",
+          "prezzi",
+          "pubblicati"
+        ],
+        "verified_at": "2026-09-22T18:05:23+00:00"
+      },
+      "editorial_slot": "evening",
+      "slot_key": "2026-09-22|EVENING",
+      "status": "QUEUED_FOR_PC",
+      "created_at": "2026-09-22T20:05:20+02:00",
+      "updated_at": "2026-09-22T20:05:20+02:00"
     }
   ],
   "rejected": [
@@ -92,5 +136,5 @@
       "error": "ConnectTimeout: HTTPSConnectionPool(host='www.regione.piemonte.it', port=443): Max retries exceeded with url: /web/amministrazione/autonomie-locali/notiziario-per-amministrazioni-locali/notiziario-per-amministrazioni-locali-n-31-3-settembre-2026 (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.regione.piemonte.it', port=443) at 0x7f0ef94c3bc0>, 'Connection to www.regione.piemonte.it timed out. (connect timeout=8)'))"
     }
   ],
-  "updated_at": "2026-09-21T20:05:00+02:00"
+  "updated_at": "2026-09-22T20:05:20+02:00"
 }
