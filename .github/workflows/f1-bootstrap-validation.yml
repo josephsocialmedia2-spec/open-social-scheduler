@@ -1,0 +1,79 @@
+name: F1 Bootstrap Validation
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'F1_AUTO_REINSTALL_TEST.ps1'
+      - 'INSTALLA_RISCARICA_E_PROVA_F1.bat'
+      - 'publisher/f1_graphics_automation/START_INBOX.ps1'
+      - 'publisher/f1_graphics_automation/AVVIA_F1_ORA_E_PUBBLICA.bat'
+      - '.github/workflows/f1-bootstrap-validation.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate-bootstrap:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Parse PowerShell syntax
+        shell: pwsh
+        run: |
+          $files = @(
+            'F1_AUTO_REINSTALL_TEST.ps1',
+            'publisher/f1_graphics_automation/START_INBOX.ps1',
+            'publisher/f1_graphics_automation/RUN_F1_DAILY_CREATIVE_TEST.ps1',
+            'publisher/f1_graphics_automation/ENSURE_F1_GITHUB_RUNNER.ps1'
+          )
+          foreach ($file in $files) {
+            $tokens = $null
+            $errors = $null
+            [System.Management.Automation.Language.Parser]::ParseFile(
+              (Resolve-Path $file),
+              [ref]$tokens,
+              [ref]$errors
+            ) | Out-Null
+            if ($errors.Count -gt 0) {
+              $errors | ForEach-Object { Write-Error "$file :: $($_.Message)" }
+              exit 1
+            }
+            Write-Host "POWERSHELL_SYNTAX_OK $file"
+          }
+
+      - name: Validate bootstrap contract
+        shell: pwsh
+        run: |
+          $bootstrap = Get-Content 'F1_AUTO_REINSTALL_TEST.ps1' -Raw
+          $required = @(
+            'open-social-scheduler.git',
+            'Git.Git',
+            'Python.Python.3.12',
+            'Google.Chrome',
+            'requirements.txt',
+            'RUN_F1_DAILY_CREATIVE_TEST.ps1',
+            'F1 - AVVIA ORA E PUBBLICA.bat'
+          )
+          foreach ($needle in $required) {
+            if (-not $bootstrap.Contains($needle)) {
+              throw "Bootstrap contract missing: $needle"
+            }
+          }
+
+          $startInbox = Get-Content 'publisher/f1_graphics_automation/START_INBOX.ps1' -Raw
+          if (-not $startInbox.Contains('Continuo in modalita locale diretta')) {
+            throw 'START_INBOX still blocks local execution when runner is offline.'
+          }
+
+          foreach ($file in @(
+            'INSTALLA_RISCARICA_E_PROVA_F1.bat',
+            'publisher/f1_graphics_automation/AVVIA_F1_ORA_E_PUBBLICA.bat'
+          )) {
+            if (-not (Test-Path $file)) { throw "Missing launcher: $file" }
+          }
+
+          Write-Host 'F1_BOOTSTRAP_CONTRACT_OK'
