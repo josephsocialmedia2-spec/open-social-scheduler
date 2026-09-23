@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Social Publisher Hub Multi-Cliente</title>
+<style>
+:root{--g:#00a884;--gd:#008069;--deep:#005c4b;--bg:#eef7f3;--card:#fff;--txt:#17352d;--mut:#6a7b76;--bd:#d8e9e3;--shadow:0 12px 34px rgba(0,80,60,.08)}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:linear-gradient(180deg,#dff5ed,#f8fcfa 320px);color:var(--txt)}
+header{background:linear-gradient(135deg,var(--deep),var(--g));color:#fff;padding:25px 18px;box-shadow:0 12px 30px rgba(0,128,105,.20);position:sticky;top:0;z-index:10}
+.wrap{max-width:1200px;margin:auto}.brand{display:flex;align-items:center;gap:14px}.logo{width:58px;height:58px;border-radius:18px;background:#fff;color:var(--gd);display:grid;place-items:center;font-size:27px;font-weight:900}h1{margin:0;font-size:28px}.sub{opacity:.92;margin-top:4px}
+main{padding:22px 16px 60px}.notice{background:#fff;border:1px solid var(--bd);padding:15px 17px;border-radius:14px;box-shadow:var(--shadow);margin-bottom:16px}.notice b{color:var(--gd)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(265px,1fr));gap:14px}.client{background:#fff;border:1px solid var(--bd);border-radius:18px;padding:18px;box-shadow:var(--shadow);cursor:pointer;transition:.15s}.client:hover{transform:translateY(-2px);border-color:#9fd8c7}.client.active{outline:3px solid #bdebdc}.client-name{font-size:18px;font-weight:900}.meta{font-size:12px;color:var(--mut);line-height:1.5;margin-top:6px}.badge{display:inline-block;margin-top:10px;background:#e7f8f2;color:var(--deep);font-size:11px;font-weight:800;padding:6px 9px;border-radius:999px}
+.panel{display:none;background:#fff;border:1px solid var(--bd);border-radius:18px;padding:20px;box-shadow:var(--shadow);margin-top:18px}.panel.show{display:block}.panel h2{margin:0 0 6px}.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:15px 0}.kpi{background:#f4fbf8;border:1px solid #e0eee8;border-radius:14px;padding:13px}.kpi strong{display:block;font-size:25px;color:var(--gd)}.kpi span{font-size:11px;color:var(--mut);font-weight:800}
+.toolbar{display:flex;gap:9px;flex-wrap:wrap;margin:13px 0}button,.btn{border:0;border-radius:11px;padding:12px 15px;font-weight:800;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:7px;font-size:14px}.primary{background:var(--g);color:#fff}.dark{background:#173d34;color:#fff}.light{background:#eaf8f3;color:var(--deep);border:1px solid #cbe9df}.danger{background:#fff2ef;color:#9b2e22;border:1px solid #f0cdc7}
+.drop{margin-top:14px;border:2px dashed #92cfbd;border-radius:16px;padding:30px;text-align:center;background:#f7fcfa}.drop.drag{background:#e5f8f1}.drop strong{font-size:18px}.drop p{margin:8px 0 0;color:var(--mut);font-size:13px}
+.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}.field label{font-size:12px;font-weight:800;color:var(--mut);display:block;margin-bottom:6px}.field input,.field textarea{width:100%;border:1px solid var(--bd);border-radius:10px;padding:11px;font:inherit}.field textarea{min-height:78px;resize:vertical}.wide{grid-column:1/-1}
+.status{display:none;margin-top:12px;padding:12px 14px;border-radius:11px;background:#d9fdd3;border:1px solid #bce8b1}.warn{background:#fff6df;border-color:#ecd18c}
+.tablewrap{overflow:auto;max-height:380px;margin-top:14px}table{width:100%;border-collapse:collapse;font-size:13px}th,td{text-align:left;padding:10px;border-bottom:1px solid #edf2ef}th{background:#f4faf7;position:sticky;top:0}
+.section-title{margin:22px 0 10px;font-size:15px;color:var(--deep);font-weight:900}.small{font-size:12px;color:var(--mut);line-height:1.5}
+@media(max-width:760px){header{position:static}.kpis{grid-template-columns:1fr 1fr}.formgrid{grid-template-columns:1fr}.wide{grid-column:auto}}
+</style>
+</head>
+<body>
+<header><div class="wrap brand"><div class="logo">HUB</div><div><h1>Social Publisher Hub Multi-Cliente</h1><div class="sub">Tutti i clienti · caricamento contenuti · archivio · riutilizzo</div></div></div></header>
+<main class="wrap">
+<div class="notice"><b>Questa è la pagina centrale.</b> Clicca un cliente, collega una volta la sua cartella HUB sul PC e poi puoi inserire foto/video in blocco direttamente da questa pagina. Funziona in Google Chrome desktop.</div>
+<div class="grid" id="clients"></div>
+
+<section class="panel" id="panel">
+  <h2 id="clientTitle"></h2>
+  <div class="meta">Scheda cliente · HUB contenuti dedicato · nessun contenuto viene mescolato con gli altri clienti.</div>
+
+  <div class="kpis">
+    <div class="kpi"><strong id="kConnected">NO</strong><span>CARTELLA HUB</span></div>
+    <div class="kpi"><strong id="kLoaded">0</strong><span>FILE SELEZIONATI</span></div>
+    <div class="kpi"><strong id="kSaved">0</strong><span>IMPORTATI SESSIONE</span></div>
+    <div class="kpi"><strong id="kTotal">0</strong><span>STORICO LOCALE</span></div>
+  </div>
+
+  <div class="toolbar">
+    <button class="primary" id="connectBtn">📁 COLLEGA CARTELLA HUB</button>
+    <button class="light" id="whatsappBtn">🟢 APRI WHATSAPP WEB</button>
+    <button class="light" id="selectBtn">＋ SELEZIONA FOTO / VIDEO</button>
+    <button class="dark" id="importBtn">⬇ IMPORTA NELL'HUB</button>
+    <button class="danger" id="backBtn">← TORNA AI CLIENTI</button>
+  </div>
+
+  <input type="file" id="picker" accept="image/*,video/*,audio/*,.txt" multiple hidden>
+
+  <div class="drop" id="dropZone">
+    <strong>Trascina qui foto e video</strong>
+    <p>Puoi selezionare anche decine o centinaia di file insieme. Non devi rinominarli uno per uno.</p>
+  </div>
+
+  <div class="formgrid">
+    <div class="field wide"><label>LINK / CTA opzionale</label><input id="linkField" placeholder="https://... oppure link WhatsApp / prenotazione / prodotto"></div>
+    <div class="field"><label>PROMOZIONE opzionale</label><textarea id="promoField" placeholder="Es. Menu speciale, evento, offerta..."></textarea></div>
+    <div class="field"><label>NOTA / INDICAZIONE CAPTION opzionale</label><textarea id="captionField" placeholder="Informazioni da usare per la caption..."></textarea></div>
+  </div>
+
+  <div class="status" id="status"></div>
+
+  <div class="section-title">FILE SELEZIONATI</div>
+  <div class="tablewrap"><table><thead><tr><th>Nome</th><th>Tipo</th><th>Dimensione</th></tr></thead><tbody id="fileRows"><tr><td colspan="3">Nessun file selezionato.</td></tr></tbody></table></div>
+
+  <div class="section-title">ULTIME IMPORTAZIONI DEL CLIENTE</div>
+  <div class="tablewrap"><table><thead><tr><th>Data</th><th>File</th><th>Tipo</th></tr></thead><tbody id="historyRows"><tr><td colspan="3">Nessuna importazione registrata.</td></tr></tbody></table></div>
+</section>
+</main>
+<script>
+const CLIENTS=[
+  "LA SACRA IMMOBILIARE",
+  "F1 IMMOBILIARE",
+  "MARTA RUFFINO",
+  "ANTICA CAPPELLA",
+  "CARTOLIBRERIA 10 E LODE",
+  "REAL MEDIA PRO"
+];
+const el=id=>document.getElementById(id);
+let activeClient="", selectedFiles=[], sessionSaved=0, db;
+
+function openDB(){
+  return new Promise((resolve,reject)=>{
+    const r=indexedDB.open("socialPublisherHubDB",1);
+    r.onupgradeneeded=()=>{const d=r.result;if(!d.objectStoreNames.contains("handles"))d.createObjectStore("handles");};
+    r.onsuccess=()=>{db=r.result;resolve(db)}; r.onerror=()=>reject(r.error);
+  });
+}
+function dbPut(key,val){return new Promise((res,rej)=>{const tx=db.transaction("handles","readwrite");tx.objectStore("handles").put(val,key);tx.oncomplete=()=>res();tx.onerror=()=>rej(tx.error);});}
+function dbGet(key){return new Promise((res,rej)=>{const tx=db.transaction("handles","readonly");const q=tx.objectStore("handles").get(key);q.onsuccess=()=>res(q.result);q.onerror=()=>rej(q.error);});}
+function histKey(c){return "hubHistory:"+c}
+function getHistory(c){try{return JSON.parse(localStorage.getItem(histKey(c))||"[]")}catch{return []}}
+function setHistory(c,a){localStorage.setItem(histKey(c),JSON.stringify(a.slice(-1000)))}
+
+function renderClients(){
+  el("clients").innerHTML="";
+  CLIENTS.forEach(c=>{
+    const h=getHistory(c);
+    const d=document.createElement("div"); d.className="client";
+    d.innerHTML='<div class="client-name">'+c+'</div><div class="meta">HUB dedicato · archivio media · calendario · storico · riutilizzo</div><span class="badge">'+h.length+' contenuti importati</span>';
+    d.onclick=()=>openClient(c,d); el("clients").appendChild(d);
+  });
+}
+async function openClient(c,card){
+  activeClient=c; selectedFiles=[]; sessionSaved=0;
+  document.querySelectorAll(".client").forEach(x=>x.classList.remove("active")); card.classList.add("active");
+  el("clientTitle").textContent=c;
+  el("panel").classList.add("show");
+  el("kLoaded").textContent="0"; el("kSaved").textContent="0";
+  renderFiles(); renderHistory();
+  const handle=await dbGet(c);
+  el("kConnected").textContent=handle?"SI":"NO";
+  el("panel").scrollIntoView({behavior:"smooth",block:"start"});
+}
+function renderFiles(){
+  el("kLoaded").textContent=selectedFiles.length;
+  if(!selectedFiles.length){el("fileRows").innerHTML='<tr><td colspan="3">Nessun file selezionato.</td></tr>';return}
+  el("fileRows").innerHTML=selectedFiles.map(f=>'<tr><td><b>'+escapeHtml(f.name)+'</b></td><td>'+escapeHtml(f.type||"file")+'</td><td>'+Math.round(f.size/1024/1024*100)/100+' MB</td></tr>').join("");
+}
+function renderHistory(){
+  const h=getHistory(activeClient); el("kTotal").textContent=h.length;
+  el("historyRows").innerHTML=h.length?h.slice().reverse().slice(0,100).map(x=>'<tr><td>'+x.when+'</td><td><b>'+escapeHtml(x.name)+'</b></td><td>'+escapeHtml(x.type||"file")+'</td></tr>').join(""):'<tr><td colspan="3">Nessuna importazione registrata.</td></tr>';
+}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function addFiles(files){const arr=[...files];for(const f of arr){if(!selectedFiles.some(x=>x.name===f.name&&x.size===f.size&&x.lastModified===f.lastModified))selectedFiles.push(f)}renderFiles();}
+async function connectFolder(){
+  if(!window.showDirectoryPicker){showStatus("Questa funzione richiede Google Chrome o Microsoft Edge desktop.",true);return}
+  try{const handle=await window.showDirectoryPicker({mode:"readwrite"});await dbPut(activeClient,handle);el("kConnected").textContent="SI";showStatus("Cartella HUB collegata a "+activeClient+".");}catch(e){}
+}
+async function getWritableHandle(){
+  const h=await dbGet(activeClient); if(!h)return null;
+  const opts={mode:"readwrite"};
+  if((await h.queryPermission(opts))==="granted")return h;
+  if((await h.requestPermission(opts))==="granted")return h;
+  return null;
+}
+function baseName(name){const i=name.lastIndexOf(".");return i>0?name.slice(0,i):name}
+async function writeTextFile(dir,name,text){
+  const fh=await dir.getFileHandle(name,{create:true}); const w=await fh.createWritable(); await w.write(text); await w.close();
+}
+async function importAll(){
+  if(!activeClient){return}
+  if(!selectedFiles.length){showStatus("Seleziona prima foto/video da importare.",true);return}
+  const dir=await getWritableHandle();
+  if(!dir){showStatus("Prima premi COLLEGA CARTELLA HUB e scegli la cartella 01_NUOVI_CONTENUTI del cliente.",true);return}
+  const link=el("linkField").value.trim(), promo=el("promoField").value.trim(), cap=el("captionField").value.trim();
+  const history=getHistory(activeClient);
+  let ok=0, err=0;
+  for(const f of selectedFiles){
+    try{
+      const fh=await dir.getFileHandle(f.name,{create:true});
+      const w=await fh.createWritable(); await w.write(f); await w.close();
+      const b=baseName(f.name);
+      if(link)await writeTextFile(dir,b+".link.txt",link);
+      if(promo)await writeTextFile(dir,b+".promo.txt",promo);
+      if(cap)await writeTextFile(dir,b+".caption.txt",cap);
+      history.push({when:new Date().toLocaleString("it-IT"),name:f.name,type:f.type||"file"}); ok++;
+    }catch(e){err++}
+  }
+  setHistory(activeClient,history); sessionSaved+=ok; el("kSaved").textContent=sessionSaved; renderHistory(); renderClients();
+  showStatus("Importazione completata: "+ok+" file inseriti nell'HUB di "+activeClient+(err?"; "+err+" errori.":"."),!!err);
+  selectedFiles=[]; renderFiles();
+}
+function showStatus(msg,warn=false){const s=el("status");s.textContent=msg;s.className="status"+(warn?" warn":"");s.style.display="block";}
+el("connectBtn").onclick=connectFolder;
+el("whatsappBtn").onclick=()=>window.open("https://web.whatsapp.com/","_blank");
+el("selectBtn").onclick=()=>el("picker").click();
+el("picker").onchange=()=>addFiles(el("picker").files);
+el("importBtn").onclick=importAll;
+el("backBtn").onclick=()=>{el("panel").classList.remove("show");window.scrollTo({top:0,behavior:"smooth"});}
+const dz=el("dropZone");["dragenter","dragover"].forEach(e=>dz.addEventListener(e,x=>{x.preventDefault();dz.classList.add("drag")}));["dragleave","drop"].forEach(e=>dz.addEventListener(e,x=>{x.preventDefault();dz.classList.remove("drag")}));dz.addEventListener("drop",e=>addFiles(e.dataTransfer.files));
+openDB().then(renderClients);
+</script>
+</body></html>
