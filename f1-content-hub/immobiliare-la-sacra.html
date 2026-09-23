@@ -216,7 +216,7 @@ async function loadAll(){
   const [p,c,k]=await Promise.all([
     sb.from("f1_content_properties").select("*").eq("client_id",client.id).order("created_at",{ascending:false}),
     sb.from("f1_content_items").select("*").eq("client_id",client.id).order("created_at",{ascending:false}).limit(500),
-    sb.from("f1_content_calendar").select("*, f1_content_items(title,property_id), f1_content_properties(title)").eq("client_id",client.id).order("publication_at",{ascending:true}).limit(1000)
+    sb.from("f1_content_calendar").select("*, f1_content_items(title,property_id)").eq("client_id",client.id).order("publication_at",{ascending:true}).limit(1000)
   ]);
   if(p.error)throw p.error;if(c.error)throw c.error;
   properties=p.data||[];contents=c.data||[];calendar=k.data||[];
