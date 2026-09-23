@@ -11,12 +11,23 @@ $Port = 8877
 $LogDir = Join-Path $PSScriptRoot 'logs'
 New-Item -ItemType Directory -Force -Path $LogDir | Out-Null
 
-# Bootstrap automatico F1 runner/poller ad ogni logon tramite il task F1_Inbox_Logon.
+# Bootstrap automatico F1 runner/poller. Eseguiti in processi PowerShell separati:
+# un runner GitHub assente/offline NON deve bloccare l'esecuzione diretta locale.
 try {
-    if (Test-Path $EnsureRunner) { & $EnsureRunner | Out-Host }
+    if (Test-Path $EnsureRunner) {
+        & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $EnsureRunner | Out-Host
+        if ($LASTEXITCODE -ne 0) {
+            Write-Warning "F1 runner non disponibile (exit=$LASTEXITCODE). Continuo in modalita locale diretta."
+        }
+    }
 } catch { Write-Warning "F1 runner bootstrap: $($_.Exception.Message)" }
 try {
-    if (Test-Path $EnsurePoller) { & $EnsurePoller | Out-Host }
+    if (Test-Path $EnsurePoller) {
+        & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $EnsurePoller | Out-Host
+        if ($LASTEXITCODE -ne 0) {
+            Write-Warning "F1 poller bootstrap non completato (exit=$LASTEXITCODE). La prova diretta puo comunque continuare."
+        }
+    }
 } catch { Write-Warning "F1 poller bootstrap: $($_.Exception.Message)" }
 $StdOutLog = Join-Path $LogDir 'inbox-stdout.log'
 $StdErrLog = Join-Path $LogDir 'inbox-stderr.log'
