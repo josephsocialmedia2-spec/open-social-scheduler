@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#07111f">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="./icon.svg" type="image/svg+xml">
+<title>F1 Content Hub</title>
+<style>
+:root{--bg:#07111f;--panel:#0e1b2c;--panel2:#12243a;--line:#27405d;--text:#f5f8fc;--muted:#9eb0c7;--blue:#2d7ff9;--green:#27d17f;--amber:#f2b84b;--red:#ef5f68}
+*{box-sizing:border-box}html,body{margin:0;background:linear-gradient(145deg,#06101c,#0b1727 60%,#07111f);color:var(--text);font:14px/1.45 Arial,Helvetica,sans-serif;min-height:100%}button,input,select,textarea{font:inherit}button{cursor:pointer}.hidden{display:none!important}.app{min-height:100vh}.auth{min-height:100vh;display:grid;place-items:center;padding:20px}.auth-card{width:min(470px,100%);background:rgba(14,27,44,.98);border:1px solid var(--line);border-radius:20px;padding:24px}.brand{font-weight:1000;letter-spacing:.08em}.brand small{display:block;color:var(--green);font-size:11px;margin-bottom:5px}.auth-card h1{margin:4px 0 6px;font-size:34px}.muted{color:var(--muted)}.field{display:grid;gap:6px;margin-top:12px}.field label{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#b8c6d8;font-weight:800}.input,select,textarea{width:100%;background:#071522;border:1px solid #2b4665;color:#fff;border-radius:10px;padding:11px 12px;outline:none}.input:focus,select:focus,textarea:focus{border-color:var(--blue)}textarea{min-height:90px;resize:vertical}.row{display:flex;gap:8px;flex-wrap:wrap}.btn{border:0;border-radius:10px;padding:10px 13px;font-weight:900;color:white;background:#172a41}.btn.primary{background:var(--blue)}.btn.green{background:var(--green);color:#04150c}.btn.danger{background:#6f252c}.btn.ghost{border:1px solid var(--line);background:transparent}.btn.small{padding:7px 9px;font-size:12px}.shell{display:grid;grid-template-columns:250px 1fr;min-height:100vh}.sidebar{border-right:1px solid var(--line);background:#081522;padding:18px 14px;position:sticky;top:0;height:100vh}.sidebar .brand{font-size:19px;padding:6px 8px 16px}.nav{display:grid;gap:5px}.nav button{width:100%;text-align:left;border:0;background:transparent;color:#b8c6d8;padding:11px 12px;border-radius:10px;font-weight:800}.nav button.active,.nav button:hover{background:#13283f;color:#fff}.userbox{position:absolute;left:14px;right:14px;bottom:16px;padding:11px;border:1px solid var(--line);border-radius:12px;background:#0d1c2e;font-size:12px}.main{padding:18px 18px 50px;min-width:0}.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}.topbar h1{margin:0;font-size:28px}.top-actions{display:flex;gap:8px;flex-wrap:wrap}.panel{background:rgba(14,27,44,.97);border:1px solid var(--line);border-radius:16px;padding:15px;margin-bottom:12px}.metrics{display:grid;grid-template-columns:repeat(6,minmax(120px,1fr));gap:9px;margin-bottom:12px}.metric{background:#0f2034;border:1px solid var(--line);border-radius:14px;padding:13px}.metric b{font-size:27px;display:block}.metric span{color:var(--muted);font-size:11px;text-transform:uppercase;font-weight:900}.clients{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px}.client-card{background:#102238;border:1px solid var(--line);border-radius:14px;padding:14px;cursor:pointer;transition:.15s}.client-card:hover,.client-card.active{border-color:var(--blue);transform:translateY(-1px)}.client-card small{color:var(--muted);text-transform:uppercase}.client-card h3{margin:4px 0}.client-stats{display:flex;gap:10px;color:#b9c8da;font-size:12px}.toolbar{display:grid;grid-template-columns:minmax(220px,1fr) 180px 180px;gap:8px;margin-bottom:12px}.content-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:11px}.content-card{background:#0b1a2a;border:1px solid var(--line);border-radius:14px;overflow:hidden;min-width:0}.thumb{height:170px;background:#13283e;display:grid;place-items:center;color:#8195ae;overflow:hidden}.thumb img,.thumb video{width:100%;height:100%;object-fit:cover}.card-body{padding:12px}.card-body h3{margin:0 0 4px;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.meta{font-size:11px;color:var(--muted)}.badges{display:flex;gap:5px;flex-wrap:wrap;margin:8px 0}.badge{padding:4px 7px;border-radius:999px;border:1px solid #35516f;font-size:10px;font-weight:900}.badge.green{color:#7ef0b0;border-color:#24734b}.badge.amber{color:#f7d48a;border-color:#866521}.card-actions{display:flex;gap:6px;flex-wrap:wrap}.uploadbox{border:1px dashed #456482;border-radius:14px;padding:18px;text-align:center;background:#0a1827}.uploadbox.drag{border-color:var(--green);background:#0c241c}.uploadbox input{display:none}.forms{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.span2{grid-column:span 2}.span3{grid-column:1/-1}.calendar-list,.log-list{display:grid;gap:7px}.lineitem{display:grid;grid-template-columns:150px 1fr auto;gap:10px;align-items:center;background:#0c1b2b;border:1px solid var(--line);border-radius:11px;padding:10px}.section-title{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}.section-title h2{margin:0}.notice{padding:10px 12px;border-radius:10px;background:#102a20;border:1px solid #285f43;color:#b9efce;margin:10px 0}.warn{background:#2d2411;border-color:#725b24;color:#f5dc9e}.error{background:#35191c;border-color:#743039;color:#ffb3b8}.modal{position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;align-items:center;justify-content:center;padding:16px;z-index:50}.modal.open{display:flex}.modal-card{width:min(680px,100%);max-height:90vh;overflow:auto;background:#0e1b2c;border:1px solid #3c5a7b;border-radius:17px;padding:18px}.empty{padding:24px;text-align:center;color:var(--muted)}code{color:#b9d8ff;word-break:break-all}.mobilebar{display:none}.fab{display:none}
+@media(max-width:1100px){.metrics{grid-template-columns:repeat(3,1fr)}.forms{grid-template-columns:1fr 1fr}.span3{grid-column:1/-1}}
+@media(max-width:760px){.shell{display:block}.sidebar{display:none}.main{padding:12px 12px 92px}.topbar h1{font-size:23px}.metrics{grid-template-columns:1fr 1fr}.toolbar{grid-template-columns:1fr}.forms{grid-template-columns:1fr}.span2,.span3{grid-column:auto}.lineitem{grid-template-columns:1fr}.mobilebar{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;left:0;right:0;bottom:0;background:#081522;border-top:1px solid var(--line);z-index:40}.mobilebar button{background:transparent;border:0;color:#9fb1c7;padding:12px 4px;font-size:10px;font-weight:900}.mobilebar button.active{color:#fff;background:#102238}.fab{display:block;position:fixed;right:16px;bottom:70px;border:0;border-radius:999px;width:54px;height:54px;background:var(--green);color:#03140b;font-size:25px;font-weight:bold;z-index:39}.content-grid{grid-template-columns:1fr 1fr}.thumb{height:135px}}
+@media(max-width:480px){.content-grid{grid-template-columns:1fr}.metrics{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div id="authView" class="auth">
+  <div class="auth-card">
+    <div class="brand"><small>REAL MEDIA PRO</small>F1 CONTENT HUB</div>
+    <h1>Archivio contenuti aziende</h1>
+    <p class="muted">Clienti, foto, video, calendario e contenuti ricevuti da WhatsApp in un unico spazio online.</p>
+    <div id="authMessage"></div>
+    <div class="field"><label>Email</label><input id="authEmail" class="input" type="email" autocomplete="email"></div>
+    <div class="field"><label>Password</label><input id="authPassword" class="input" type="password" autocomplete="current-password"></div>
+    <div class="row" style="margin-top:14px">
+      <button class="btn primary" id="loginBtn">ACCEDI</button>
+      <button class="btn ghost" id="signupBtn">CREA ACCOUNT</button>
+    </div>
+  </div>
+</div>
+
+<div id="appView" class="app hidden">
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand"><small>REAL MEDIA PRO</small>F1 CONTENT HUB</div>
+    <div class="nav">
+      <button data-tab="dashboard" class="active">Dashboard</button>
+      <button data-tab="archive">Archivio</button>
+      <button data-tab="calendar">Calendario</button>
+      <button data-tab="whatsapp">WhatsApp</button>
+      <button data-tab="clients">Clienti</button>
+    </div>
+    <div class="userbox"><div id="userEmail"></div><button class="btn ghost small" style="margin-top:8px;width:100%" id="logoutBtn">ESCI</button></div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div><h1 id="pageTitle">Dashboard</h1><div class="muted" id="pageSubtitle">Controllo operativo multi-cliente</div></div>
+      <div class="top-actions">
+        <button class="btn ghost" id="refreshBtn">AGGIORNA</button>
+        <button class="btn green" id="openUploadBtn">+ CARICA CONTENUTI</button>
+      </div>
+    </div>
+
+    <section id="tab-dashboard">
+      <div class="metrics" id="metrics"></div>
+      <div class="panel">
+        <div class="section-title"><h2>Clienti</h2><button class="btn small primary" id="openClientBtn">+ NUOVO CLIENTE</button></div>
+        <div class="clients" id="clientCards"></div>
+      </div>
+      <div class="panel">
+        <div class="section-title"><h2>Ultimi contenuti</h2><span class="muted">Ricevuti e caricati di recente</span></div>
+        <div class="content-grid" id="latestGrid"></div>
+      </div>
+    </section>
+
+    <section id="tab-archive" class="hidden">
+      <div class="panel">
+        <div class="toolbar">
+          <input id="searchInput" class="input" placeholder="Cerca cliente, titolo, campagna, località, tag...">
+          <select id="clientFilter"></select>
+          <select id="statusFilter">
+            <option value="">Tutti gli stati</option>
+            <option>IN ARRIVO</option><option>DA CLASSIFICARE</option><option>DA LAVORARE</option>
+            <option>IN LAVORAZIONE</option><option>PRONTO</option><option>DA APPROVARE</option>
+            <option>APPROVATO</option><option>PROGRAMMATO</option><option>PUBBLICATO</option><option>ARCHIVIATO</option>
+          </select>
+        </div>
+        <div class="content-grid" id="archiveGrid"></div>
+      </div>
+    </section>
+
+    <section id="tab-calendar" class="hidden">
+      <div class="panel">
+        <div class="section-title"><h2>Calendario editoriale</h2><span class="muted">Programmazioni future</span></div>
+        <div class="calendar-list" id="calendarList"></div>
+      </div>
+    </section>
+
+    <section id="tab-whatsapp" class="hidden">
+      <div class="panel">
+        <div class="section-title"><h2>Ingresso WhatsApp</h2><span class="badge green">WEBHOOK CLOUD</span></div>
+        <p class="muted">Registra qui il numero WhatsApp dal quale invierai i contenuti. Il numero va inserito in formato internazionale, solo cifre, ad esempio 393XXXXXXXXX.</p>
+        <div class="forms">
+          <div class="field"><label>Numero mittente autorizzato</label><input id="waIdInput" class="input" placeholder="39..."></div>
+          <div class="field"><label>Etichetta</label><input id="waLabelInput" class="input" value="Joseph"></div>
+          <div class="field" style="align-self:end"><button class="btn green" id="saveWaSenderBtn">SALVA NUMERO</button></div>
+        </div>
+        <div class="notice warn">
+          Webhook da configurare in Meta: <code>https://nqnmlsmeiynxbdojeyjt.supabase.co/functions/v1/f1-content-whatsapp</code><br>
+          Restano da inserire come secret Supabase: <code>WHATSAPP_VERIFY_TOKEN</code>, <code>WHATSAPP_APP_SECRET</code>, <code>WHATSAPP_ACCESS_TOKEN</code>, <code>WHATSAPP_PHONE_NUMBER_ID</code>, <code>META_GRAPH_VERSION</code>.
+        </div>
+        <div id="waSenders"></div>
+      </div>
+      <div class="panel">
+        <div class="section-title"><h2>Log WhatsApp</h2><span class="muted">Ultimi 50 eventi</span></div>
+        <div id="waLogs" class="log-list"></div>
+      </div>
+    </section>
+
+    <section id="tab-clients" class="hidden">
+      <div class="panel">
+        <div class="section-title"><h2>Anagrafiche clienti</h2><button class="btn primary small" id="openClientBtn2">+ NUOVO CLIENTE</button></div>
+        <div class="clients" id="clientsAdmin"></div>
+      </div>
+      <div class="panel">
+        <div class="section-title"><h2>Importazione programma precedente</h2></div>
+        <p class="muted">Se sullo stesso browser usavi il vecchio Content & Distribution Center, questo comando legge i dati <code>rmpcc:*</code> dal browser e li porta nel nuovo database cloud.</p>
+        <button class="btn green" id="legacyImportBtn">IMPORTA DATI LOCALI PRECEDENTI</button>
+        <div id="legacyResult"></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<nav class="mobilebar">
+  <button data-tab="dashboard" class="active">HOME</button>
+  <button data-tab="archive">ARCHIVIO</button>
+  <button data-tab="calendar">CALENDARIO</button>
+  <button data-tab="whatsapp">WHATSAPP</button>
+  <button data-tab="clients">CLIENTI</button>
+</nav>
+<button class="fab" id="fabUpload">+</button>
+</div>
+
+<div class="modal" id="uploadModal">
+  <div class="modal-card">
+    <div class="section-title"><h2>Carica contenuti</h2><button class="btn ghost small" data-close="uploadModal">CHIUDI</button></div>
+    <div class="forms">
+      <div class="field"><label>Cliente</label><select id="uploadClient"></select></div>
+      <div class="field span2"><label>Titolo</label><input id="uploadTitle" class="input" placeholder="Es. Matrimonio settembre / Appartamento Valgioie"></div>
+      <div class="field"><label>Campagna</label><input id="uploadCampaign" class="input" placeholder="Facoltativa"></div>
+      <div class="field"><label>Località</label><input id="uploadLocation" class="input" placeholder="Facoltativa"></div>
+      <div class="field"><label>Tag</label><input id="uploadTags" class="input" placeholder="matrimonio, menu, reel"></div>
+      <div class="field span3"><label>Note / testo</label><textarea id="uploadNotes" placeholder="Descrizione, didascalia, idea..."></textarea></div>
+    </div>
+    <label id="dropZone" class="uploadbox" style="display:block;margin-top:12px">
+      <input id="fileInput" type="file" multiple accept="image/*,video/*,audio/*,.pdf,.doc,.docx">
+      <b>TOCCA QUI O TRASCINA I FILE</b>
+      <div class="muted" id="fileSummary">Foto, video, audio, PDF e documenti</div>
+    </label>
+    <div class="row" style="margin-top:12px"><button class="btn green" id="doUploadBtn">CARICA NELL'HUB</button></div>
+    <div id="uploadMessage"></div>
+  </div>
+</div>
+
+<div class="modal" id="clientModal">
+  <div class="modal-card">
+    <div class="section-title"><h2>Nuovo cliente</h2><button class="btn ghost small" data-close="clientModal">CHIUDI</button></div>
+    <div class="forms">
+      <div class="field"><label>Nome</label><input id="clientName" class="input"></div>
+      <div class="field"><label>Categoria</label><input id="clientCategory" class="input" placeholder="Immobiliare, Ristorazione..."></div>
+      <div class="field"><label>Telefono</label><input id="clientPhone" class="input"></div>
+      <div class="field"><label>Email</label><input id="clientEmail" class="input" type="email"></div>
+      <div class="field"><label>Sito</label><input id="clientWebsite" class="input"></div>
+      <div class="field"><label>Alias WhatsApp</label><input id="clientAliases" class="input" placeholder="LA SACRA, LASACRA"></div>
+    </div>
+    <div class="row" style="margin-top:12px"><button class="btn green" id="createClientBtn">CREA CLIENTE</button></div>
+    <div id="clientMessage"></div>
+  </div>
+</div>
+
+<script type="module">
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.0/+esm";
+
+const SUPABASE_URL = "https://nqnmlsmeiynxbdojeyjt.supabase.co";
+const SUPABASE_KEY = "sb_publishable_Clz5qPTkTtvwV0rqWTcfMQ_sCDSRgnu";
+const sb = createClient(SUPABASE_URL, SUPABASE_KEY, { auth: { persistSession: true, autoRefreshToken: true } });
+
+const SEED_CLIENTS = [
+  {name:"F1 Immobiliare",slug:"f1-immobiliare",category:"Immobiliare",aliases:["F1","F1 IMMOBILIARE"]},
+  {name:"Real Media Pro",slug:"real-media-pro",category:"Web agency",aliases:["RMP","REAL MEDIA PRO"]},
+  {name:"Marta Ruffino",slug:"marta-ruffino",category:"Salute · Riabilitazione pavimento pelvico",aliases:["MARTA","MARTA RUFFINO"]},
+  {name:"Immobiliare La Sacra",slug:"immobiliare-la-sacra",category:"Immobiliare",aliases:["LA SACRA","LASACRA","IMMOBILIARE LA SACRA"]},
+  {name:"Antica Cappella",slug:"antica-cappella",category:"Ristorazione",aliases:["ANTICA CAPPELLA","CAPPELLA"]},
+  {name:"Cartolibreria 10 e Lode",slug:"cartolibreria-10-e-lode",category:"Retail",aliases:["10 E LODE","CARTOLIBRERIA"]}
+];
+
+let user = null;
+let clients = [];
+let items = [];
+let calendar = [];
+let selectedClientId = "";
+let droppedFiles = [];
+
+const el = (id) => document.getElementById(id);
+const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, function(m){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]});
+const slugify = (s) => String(s||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+const fmt = (d) => new Date(d).toLocaleString("it-IT",{dateStyle:"short",timeStyle:"short"});
+function msg(target,text,type){el(target).innerHTML = '<div class="notice '+(type||"")+'">'+esc(text)+'</div>'}
+function openModal(id){el(id).classList.add("open")}
+function closeModal(id){el(id).classList.remove("open")}
+document.querySelectorAll("[data-close]").forEach(function(b){b.addEventListener("click",function(){closeModal(b.dataset.close)})});
+
+async function authState(){
+  const r = await sb.auth.getSession();
+  user = r.data.session ? r.data.session.user : null;
+  if(user){ await enterApp(); } else { showAuth(); }
+}
+function showAuth(){el("authView").classList.remove("hidden");el("appView").classList.add("hidden")}
+async function enterApp(){
+  el("authView").classList.add("hidden");el("appView").classList.remove("hidden");
+  el("userEmail").textContent=user.email||"";
+  await seedClients();
+  await loadAll();
+  renderAll();
+}
+el("loginBtn").onclick=async function(){
+  const email=el("authEmail").value.trim(), password=el("authPassword").value;
+  const r=await sb.auth.signInWithPassword({email:email,password:password});
+  if(r.error)return msg("authMessage",r.error.message,"error");
+  user=r.data.user;await enterApp();
+};
+el("signupBtn").onclick=async function(){
+  const email=el("authEmail").value.trim(), password=el("authPassword").value;
+  const r=await sb.auth.signUp({email:email,password:password});
+  if(r.error)return msg("authMessage",r.error.message,"error");
+  if(r.data.session){user=r.data.user;await enterApp()} else msg("authMessage","Account creato. Se richiesto da Supabase, conferma l'email e poi accedi.","");
+};
+el("logoutBtn").onclick=async function(){await sb.auth.signOut();user=null;showAuth()};
+
+async function seedClients(){
+  if(!user)return;
+  const rows=SEED_CLIENTS.map(function(c){return Object.assign({},c,{owner_id:user.id,status:"ATTIVO"})});
+  const r=await sb.from("f1_content_clients").upsert(rows,{onConflict:"owner_id,slug"});
+  if(r.error) console.error(r.error);
+}
+async function loadAll(){
+  if(!user)return;
+  const rc=await sb.from("f1_content_clients").select("*").order("name");
+  const ri=await sb.from("f1_content_items").select("*, f1_content_media(id,file_name,mime_type,storage_path,file_size,created_at), f1_content_calendar(id,platform,publication_at,status)").order("created_at",{ascending:false}).limit(300);
+  const rcal=await sb.from("f1_content_calendar").select("*, f1_content_items(title), f1_content_clients(name)").order("publication_at",{ascending:true}).limit(300);
+  if(rc.error)throw rc.error;if(ri.error)throw ri.error;if(rcal.error)throw rcal.error;
+  clients=rc.data||[];items=ri.data||[];calendar=rcal.data||[];
+  if(selectedClientId && !clients.find(function(c){return c.id===selectedClientId}))selectedClientId="";
+  fillClientSelects();
+}
+function fillClientSelects(){
+  const options='<option value="">Tutti i clienti</option>'+clients.map(function(c){return '<option value="'+c.id+'">'+esc(c.name)+'</option>'}).join("");
+  el("clientFilter").innerHTML=options;
+  el("clientFilter").value=selectedClientId||"";
+  el("uploadClient").innerHTML=clients.map(function(c){return '<option value="'+c.id+'">'+esc(c.name)+'</option>'}).join("");
+  if(selectedClientId)el("uploadClient").value=selectedClientId;
+}
+function setTab(tab){
+  ["dashboard","archive","calendar","whatsapp","clients"].forEach(function(t){el("tab-"+t).classList.toggle("hidden",t!==tab)});
+  document.querySelectorAll("[data-tab]").forEach(function(b){b.classList.toggle("active",b.dataset.tab===tab)});
+  const titles={dashboard:"Dashboard",archive:"Archivio contenuti",calendar:"Calendario editoriale",whatsapp:"WhatsApp",clients:"Clienti"};
+  el("pageTitle").textContent=titles[tab]||"F1 Content Hub";
+  if(tab==="whatsapp")loadWhatsApp(); if(tab==="calendar")renderCalendar();
+}
+document.querySelectorAll("[data-tab]").forEach(function(b){b.onclick=function(){setTab(b.dataset.tab)}});
+
+function filteredItems(limit){
+  let list=items.slice();
+  if(selectedClientId)list=list.filter(function(i){return i.client_id===selectedClientId});
+  const q=(el("searchInput").value||"").toLowerCase().trim();
+  const st=el("statusFilter").value;
+  const cf=el("clientFilter").value;
+  if(cf)list=list.filter(function(i){return i.client_id===cf});
+  if(st)list=list.filter(function(i){return i.status===st});
+  if(q)list=list.filter(function(i){
+    const c=clients.find(function(x){return x.id===i.client_id});
+    const hay=[c&&c.name,i.title,i.description,i.campaign,i.location,(i.tags||[]).join(" "),i.notes].join(" ").toLowerCase();
+    return hay.includes(q);
+  });
+  return limit?list.slice(0,limit):list;
+}
+async function signedUrl(media){
+  if(!media||!media.storage_path)return "";
+  const r=await sb.storage.from("f1-content-media").createSignedUrl(media.storage_path,3600);
+  return r.data?r.data.signedUrl:"";
+}
+async function cardHtml(item){
+  const c=clients.find(function(x){return x.id===item.client_id});
+  const media=(item.f1_content_media||[])[0];
+  let thumb='<div class="thumb">NESSUNA ANTEPRIMA</div>';
+  if(media){
+    const url=await signedUrl(media);
+    if(media.mime_type&&media.mime_type.startsWith("image/"))thumb='<div class="thumb"><img loading="lazy" src="'+esc(url)+'"></div>';
+    else if(media.mime_type&&media.mime_type.startsWith("video/"))thumb='<div class="thumb"><video src="'+esc(url)+'" muted controls></video></div>';
+    else thumb='<div class="thumb">'+esc((media.mime_type||"FILE").toUpperCase())+'</div>';
+  }
+  const options=["IN ARRIVO","DA CLASSIFICARE","DA LAVORARE","IN LAVORAZIONE","PRONTO","DA APPROVARE","APPROVATO","PROGRAMMATO","PUBBLICATO","ARCHIVIATO"].map(function(s){return '<option '+(s===item.status?"selected":"")+'>'+s+'</option>'}).join("");
+  return '<article class="content-card">'+thumb+'<div class="card-body"><div class="meta">'+esc(c?c.name:"Cliente")+' · '+esc(fmt(item.created_at))+'</div><h3 title="'+esc(item.title)+'">'+esc(item.title||"Senza titolo")+'</h3><div class="badges"><span class="badge">'+esc(item.content_type)+'</span><span class="badge '+(item.status==="PUBBLICATO"?"green":item.status==="PROGRAMMATO"?"amber":"")+'">'+esc(item.status)+'</span></div><div class="card-actions"><select class="input" style="padding:6px 7px" onchange="window.f1SetStatus(\''+item.id+'\',this.value)">'+options+'</select><button class="btn small" onclick="window.f1Reuse(\''+item.id+'\')">RIUTILIZZA</button><button class="btn small primary" onclick="window.f1Schedule(\''+item.id+'\',\''+item.client_id+'\')">PROGRAMMA</button></div></div></article>';
+}
+async function renderGrid(target,list){
+  if(!list.length){el(target).innerHTML='<div class="empty">Nessun contenuto.</div>';return}
+  const html=await Promise.all(list.map(cardHtml));el(target).innerHTML=html.join("");
+}
+function renderMetrics(){
+  const total=items.length, work=items.filter(function(i){return i.status==="DA LAVORARE"||i.status==="IN LAVORAZIONE"}).length;
+  const ready=items.filter(function(i){return i.status==="PRONTO"||i.status==="APPROVATO"}).length;
+  const planned=items.filter(function(i){return i.status==="PROGRAMMATO"}).length;
+  const pub=items.filter(function(i){return i.status==="PUBBLICATO"}).length;
+  const today=new Date().toISOString().slice(0,10);
+  const todayN=items.filter(function(i){return String(i.created_at).slice(0,10)===today}).length;
+  const data=[["CLIENTI",clients.length],["CONTENUTI",total],["DA LAVORARE",work],["PRONTI",ready],["PROGRAMMATI",planned],["RICEVUTI OGGI",todayN]];
+  el("metrics").innerHTML=data.map(function(x){return '<div class="metric"><b>'+x[1]+'</b><span>'+x[0]+'</span></div>'}).join("");
+}
+function renderClients(){
+  const counts={};items.forEach(function(i){if(!counts[i.client_id])counts[i.client_id]={all:0,work:0,plan:0};counts[i.client_id].all++;if(i.status==="DA LAVORARE")counts[i.client_id].work++;if(i.status==="PROGRAMMATO")counts[i.client_id].plan++});
+  const html=clients.map(function(c){const n=counts[c.id]||{all:0,work:0,plan:0};return '<article class="client-card '+(selectedClientId===c.id?"active":"")+'" onclick="window.f1SelectClient(\''+c.id+'\')"><small>'+esc(c.category)+'</small><h3>'+esc(c.name)+'</h3><div class="client-stats"><span>'+n.all+' contenuti</span><span>'+n.work+' da lavorare</span><span>'+n.plan+' programmati</span></div></article>'}).join("");
+  el("clientCards").innerHTML=html;el("clientsAdmin").innerHTML=html;
+}
+async function renderAll(){renderMetrics();renderClients();await renderGrid("latestGrid",filteredItems(12));await renderGrid("archiveGrid",filteredItems());renderCalendar()}
+window.f1SelectClient=function(id){selectedClientId=selectedClientId===id?"":id;el("clientFilter").value=selectedClientId;fillClientSelects();renderAll();setTab("archive")};
+window.f1SetStatus=async function(id,status){const r=await sb.from("f1_content_items").update({status:status}).eq("id",id);if(r.error)return alert(r.error.message);const it=items.find(function(i){return i.id===id});if(it)it.status=status;renderMetrics()};
+window.f1Reuse=async function(id){
+  const src=items.find(function(i){return i.id===id});if(!src)return;
+  const r=await sb.from("f1_content_items").insert({owner_id:user.id,client_id:src.client_id,title:"RIUTILIZZO · "+src.title,description:src.description,content_type:src.content_type,source:"RIUTILIZZO",status:"DA LAVORARE",priority:src.priority,campaign:src.campaign,tags:src.tags,notes:src.notes,location:src.location,reused_from:src.id}).select().single();
+  if(r.error)return alert(r.error.message);await loadAll();renderAll();alert("Nuova lavorazione creata senza duplicare il file originale.");
+};
+window.f1Schedule=async function(id,clientId){
+  const platform=(prompt("Piattaforma: Facebook, Instagram, TikTok, LinkedIn, YouTube, Google Business Profile","Instagram")||"").trim();if(!platform)return;
+  const dt=(prompt("Data e ora in formato YYYY-MM-DD HH:MM","2026-09-24 18:30")||"").trim();if(!dt)return;
+  const parsed=new Date(dt.replace(" ","T"));if(isNaN(parsed.getTime()))return alert("Data non valida.");
+  const r=await sb.from("f1_content_calendar").insert({owner_id:user.id,content_id:id,client_id:clientId,platform:platform,publication_at:parsed.toISOString(),status:"PROGRAMMATO"});
+  if(r.error)return alert(r.error.message);
+  await sb.from("f1_content_items").update({status:"PROGRAMMATO"}).eq("id",id);
+  await loadAll();renderAll();setTab("calendar");
+};
+function renderCalendar(){
+  const now=Date.now();let list=calendar.filter(function(x){return new Date(x.publication_at).getTime()>=now-86400000});
+  if(selectedClientId)list=list.filter(function(x){return x.client_id===selectedClientId});
+  if(!list.length){el("calendarList").innerHTML='<div class="empty">Nessuna programmazione.</div>';return}
+  el("calendarList").innerHTML=list.map(function(x){return '<div class="lineitem"><b>'+esc(fmt(x.publication_at))+'</b><div><b>'+esc(x.f1_content_items?x.f1_content_items.title:"Contenuto")+'</b><div class="meta">'+esc(x.f1_content_clients?x.f1_content_clients.name:"")+' · '+esc(x.platform)+'</div></div><span class="badge amber">'+esc(x.status)+'</span></div>'}).join("");
+}
+
+function filesFromInput(){return droppedFiles.length?droppedFiles:Array.from(el("fileInput").files||[])}
+function updateFileSummary(){const f=filesFromInput();el("fileSummary").textContent=f.length?f.length+" file selezionati":"Foto, video, audio, PDF e documenti"}
+el("fileInput").onchange=function(){droppedFiles=[];updateFileSummary()};
+const dz=el("dropZone");
+["dragenter","dragover"].forEach(function(ev){dz.addEventListener(ev,function(e){e.preventDefault();dz.classList.add("drag")})});
+["dragleave","drop"].forEach(function(ev){dz.addEventListener(ev,function(e){e.preventDefault();dz.classList.remove("drag")})});
+dz.addEventListener("drop",function(e){droppedFiles=Array.from(e.dataTransfer.files||[]);updateFileSummary()});
+async function doUpload(){
+  const clientId=el("uploadClient").value,title=el("uploadTitle").value.trim()||"Contenuto senza titolo";
+  const fs=filesFromInput();if(!clientId)return msg("uploadMessage","Seleziona il cliente.","error");
+  if(!fs.length&&!el("uploadNotes").value.trim())return msg("uploadMessage","Aggiungi almeno un file o una nota.","error");
+  el("doUploadBtn").disabled=true;msg("uploadMessage","Caricamento in corso...");
+  try{
+    const tags=el("uploadTags").value.split(",").map(function(x){return x.trim()}).filter(Boolean);
+    const ins=await sb.from("f1_content_items").insert({owner_id:user.id,client_id:clientId,title:title,description:el("uploadNotes").value.trim(),source_text:el("uploadNotes").value.trim(),content_type:fs.length?(fs[0].type.startsWith("image/")?"FOTO":fs[0].type.startsWith("video/")?"VIDEO":fs[0].type.startsWith("audio/")?"AUDIO":"DOCUMENTO"):"TESTO",source:"WEB",status:"DA LAVORARE",campaign:el("uploadCampaign").value.trim(),location:el("uploadLocation").value.trim(),tags:tags,notes:el("uploadNotes").value.trim()}).select().single();
+    if(ins.error)throw ins.error;
+    for(const f of fs){
+      const safe=f.name.replace(/[^a-zA-Z0-9._-]+/g,"_");
+      const path=user.id+"/"+clientId+"/"+ins.data.id+"/"+crypto.randomUUID()+"-"+safe;
+      const up=await sb.storage.from("f1-content-media").upload(path,f,{contentType:f.type||"application/octet-stream",upsert:false});
+      if(up.error)throw up.error;
+      const mr=await sb.from("f1_content_media").insert({owner_id:user.id,content_id:ins.data.id,client_id:clientId,file_name:safe,mime_type:f.type||"application/octet-stream",storage_path:path,file_size:f.size,source:"WEB"});
+      if(mr.error)throw mr.error;
+    }
+    el("uploadTitle").value="";el("uploadCampaign").value="";el("uploadLocation").value="";el("uploadTags").value="";el("uploadNotes").value="";el("fileInput").value="";droppedFiles=[];updateFileSummary();
+    await loadAll();renderAll();msg("uploadMessage","Contenuto salvato correttamente.","");setTimeout(function(){closeModal("uploadModal")},700);
+  }catch(e){msg("uploadMessage",e.message||String(e),"error")}finally{el("doUploadBtn").disabled=false}
+}
+el("doUploadBtn").onclick=doUpload;
+["openUploadBtn","fabUpload"].forEach(function(id){el(id).onclick=function(){openModal("uploadModal")}});
+el("openClientBtn").onclick=function(){openModal("clientModal")};el("openClientBtn2").onclick=function(){openModal("clientModal")};
+el("createClientBtn").onclick=async function(){
+  const name=el("clientName").value.trim();if(!name)return msg("clientMessage","Inserisci il nome.","error");
+  const aliases=el("clientAliases").value.split(",").map(function(x){return x.trim()}).filter(Boolean);
+  aliases.push(name);
+  const row={owner_id:user.id,name:name,slug:slugify(name),category:el("clientCategory").value.trim()||"Cliente",phone:el("clientPhone").value.trim(),email:el("clientEmail").value.trim(),website:el("clientWebsite").value.trim(),aliases:Array.from(new Set(aliases)),status:"ATTIVO"};
+  const r=await sb.from("f1_content_clients").upsert(row,{onConflict:"owner_id,slug"});
+  if(r.error)return msg("clientMessage",r.error.message,"error");
+  ["clientName","clientCategory","clientPhone","clientEmail","clientWebsite","clientAliases"].forEach(function(id){el(id).value=""});
+  await loadAll();renderAll();msg("clientMessage","Cliente creato.","");setTimeout(function(){closeModal("clientModal")},600);
+};
+
+async function loadWhatsApp(){
+  const rs=await sb.from("f1_whatsapp_senders").select("*").order("created_at",{ascending:false});
+  const rl=await sb.from("f1_whatsapp_logs").select("*, f1_content_clients(name)").order("created_at",{ascending:false}).limit(50);
+  el("waSenders").innerHTML=(rs.data||[]).map(function(x){return '<div class="lineitem"><b>'+esc(x.wa_id)+'</b><div>'+esc(x.label)+'</div><span class="badge green">'+(x.active?"ATTIVO":"OFF")+'</span></div>'}).join("")||'<div class="empty">Nessun numero registrato.</div>';
+  el("waLogs").innerHTML=(rl.data||[]).map(function(x){return '<div class="lineitem"><b>'+esc(fmt(x.created_at))+'</b><div><b>'+esc(x.result)+'</b><div class="meta">'+esc(x.f1_content_clients?x.f1_content_clients.name:"")+' · '+esc(x.message_type||"")+' · '+esc(x.message_text||"")+'</div>'+(x.error?'<div class="meta" style="color:#ff9ca3">'+esc(x.error)+'</div>':"")+'</div><span class="badge">'+esc(x.wa_id||"")+'</span></div>'}).join("")||'<div class="empty">Nessun evento WhatsApp.</div>';
+}
+el("saveWaSenderBtn").onclick=async function(){
+  const wa=el("waIdInput").value.replace(/\D/g,"");if(wa.length<8)return alert("Numero non valido.");
+  const r=await sb.from("f1_whatsapp_senders").upsert({owner_id:user.id,wa_id:wa,label:el("waLabelInput").value.trim()||"WhatsApp personale",active:true},{onConflict:"wa_id"});
+  if(r.error)return alert(r.error.message);el("waIdInput").value="";await loadWhatsApp();
+};
+
+async function importLegacy(){
+  const keys=Object.keys(localStorage).filter(function(k){return k.startsWith("rmpcc:")});
+  if(!keys.length)return msg("legacyResult","Non ho trovato dati rmpcc:* in questo browser.","warn");
+  msg("legacyResult","Importazione in corso...");
+  try{
+    const oldClients=JSON.parse(localStorage.getItem("rmpcc:clients")||"{}");
+    const oldToNew={};
+    for(const oldId of Object.keys(oldClients)){
+      const c=oldClients[oldId];if(!c||!c.name)continue;
+      const row={owner_id:user.id,name:c.name,slug:slugify(c.name),category:c.type||"Cliente",aliases:[c.name],status:"ATTIVO"};
+      const r=await sb.from("f1_content_clients").upsert(row,{onConflict:"owner_id,slug"}).select().single();
+      if(!r.error)oldToNew[oldId]=r.data.id;
+    }
+    await loadAll();
+    for(const k of keys.filter(function(x){return x.startsWith("rmpcc:week:")})){
+      const parts=k.split(":");const oldId=parts[2],weekStart=parts[3],clientId=oldToNew[oldId]||(clients.find(function(c){return c.slug===slugify(oldId)})||{}).id;
+      if(!clientId)continue;
+      let data;try{data=JSON.parse(localStorage.getItem(k)||"null")}catch(_){data=null}
+      if(!data||!data.slots)continue;
+      for(const sk of Object.keys(data.slots)){
+        const slot=data.slots[sk]||{};if(!(slot.note||((slot.platforms||[]).length)))continue;
+        const dp=sk.split("-").map(Number),day=dp[0],hour=dp[1];
+        const d=new Date(weekStart+"T12:00:00");d.setDate(d.getDate()+day);d.setHours(hour,0,0,0);
+        const ci=await sb.from("f1_content_items").insert({owner_id:user.id,client_id:clientId,title:slot.note||"Programmazione importata",description:slot.note||"",source_text:slot.note||"",content_type:"PIANO EDITORIALE",source:"LEGACY",status:(slot.platforms||[]).length?"PROGRAMMATO":"DA LAVORARE"}).select().single();
+        if(ci.error)continue;
+        for(const p of (slot.platforms||[]))await sb.from("f1_content_calendar").insert({owner_id:user.id,content_id:ci.data.id,client_id:clientId,platform:p,publication_at:d.toISOString(),status:"PROGRAMMATO"});
+      }
+    }
+    await sb.from("f1_content_import_log").insert({owner_id:user.id,source:"rmpcc_localstorage_v1",details:{keys:keys.length,imported_at:new Date().toISOString()}});
+    await loadAll();renderAll();msg("legacyResult","Importazione completata. Ho letto "+keys.length+" chiavi del programma precedente.","");
+  }catch(e){msg("legacyResult",e.message||String(e),"error")}
+}
+el("legacyImportBtn").onclick=importLegacy;
+el("searchInput").oninput=function(){renderGrid("archiveGrid",filteredItems())};el("statusFilter").onchange=function(){renderGrid("archiveGrid",filteredItems())};el("clientFilter").onchange=function(){selectedClientId=el("clientFilter").value;renderClients();renderGrid("archiveGrid",filteredItems())};
+el("refreshBtn").onclick=async function(){await loadAll();renderAll();if(!el("tab-whatsapp").classList.contains("hidden"))await loadWhatsApp()};
+
+if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("./sw.js").catch(function(){})})}
+authState();
+</script>
+</body>
+</html>
