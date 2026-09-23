@@ -316,7 +316,7 @@ function renderClients(){
   el("clientCards").innerHTML=html;el("clientsAdmin").innerHTML=html;
 }
 async function renderAll(){renderMetrics();renderClients();await renderGrid("latestGrid",filteredItems(12));await renderGrid("archiveGrid",filteredItems());renderCalendar()}
-window.f1SelectClient=function(id){selectedClientId=selectedClientId===id?"":id;el("clientFilter").value=selectedClientId;fillClientSelects();renderAll();setTab("archive")};
+window.f1SelectClient=function(id){const chosen=clients.find(function(x){return x.id===id});if(chosen&&chosen.slug==="immobiliare-la-sacra"){location.href="./immobiliare-la-sacra.html";return}selectedClientId=selectedClientId===id?"":id;el("clientFilter").value=selectedClientId;fillClientSelects();renderAll();setTab("archive")};
 window.f1SetStatus=async function(id,status){const r=await sb.from("f1_content_items").update({status:status}).eq("id",id);if(r.error)return alert(r.error.message);const it=items.find(function(i){return i.id===id});if(it)it.status=status;renderMetrics()};
 window.f1Reuse=async function(id){
   const src=items.find(function(i){return i.id===id});if(!src)return;
