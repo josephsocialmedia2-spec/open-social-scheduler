@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#07111f">
+<title>Immobiliare La Sacra · Social Scheduler</title>
+<style>
+:root{--bg:#07111f;--panel:#0d1b2d;--panel2:#102238;--line:#29415e;--text:#f5f8fc;--muted:#9fb1c8;--blue:#2d7ff9;--green:#20c96b;--amber:#f4ba55;--red:#d85b65}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:linear-gradient(150deg,#06101c,#0a1726 58%,#07111f);color:var(--text);font:14px/1.45 Arial,Helvetica,sans-serif}button,input,select,textarea{font:inherit}.hidden{display:none!important}.auth{min-height:100vh;display:grid;place-items:center;padding:20px}.auth-card,.panel,.metric,.property,.content-card,.calendar-row{background:rgba(13,27,45,.98);border:1px solid var(--line);border-radius:16px}.auth-card{width:min(460px,100%);padding:24px}.brand{font-weight:1000;letter-spacing:.08em}.brand small{display:block;color:var(--green);font-size:11px}.muted{color:var(--muted)}.input,select,textarea{width:100%;background:#071522;border:1px solid #2d4969;color:#fff;border-radius:9px;padding:10px 11px;outline:none}.input:focus,select:focus,textarea:focus{border-color:var(--blue)}textarea{min-height:90px;resize:vertical}.field{display:grid;gap:5px}.field label{font-size:10px;font-weight:900;letter-spacing:.08em;color:#b8c6d8;text-transform:uppercase}.btn{border:0;border-radius:9px;padding:10px 12px;font-weight:900;background:#172a41;color:#fff;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:6px}.btn.primary{background:var(--blue)}.btn.green{background:var(--green);color:#04150c}.btn.ghost{background:transparent;border:1px solid var(--line)}.btn.danger{background:#70262d}.btn.small{font-size:11px;padding:7px 9px}.row{display:flex;gap:8px;flex-wrap:wrap}.shell{display:grid;grid-template-columns:260px 1fr;min-height:100vh}.sidebar{height:100vh;position:sticky;top:0;background:#081522;border-right:1px solid var(--line);padding:16px 13px}.client-head{padding:8px 8px 15px}.client-head .logo{width:48px;height:48px;border-radius:13px;background:linear-gradient(135deg,#2d7ff9,#20c96b);display:grid;place-items:center;font-weight:1000;font-size:20px;color:#fff;margin-bottom:10px}.client-head h2{margin:3px 0;font-size:17px}.nav{display:grid;gap:5px}.nav button{border:0;background:transparent;color:#aebdd0;text-align:left;padding:11px 12px;border-radius:9px;font-weight:900}.nav button:hover,.nav button.active{background:#13283f;color:#fff}.sidebar-bottom{position:absolute;bottom:14px;left:13px;right:13px}.main{padding:18px 18px 60px;min-width:0}.topbar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:13px}.topbar h1{margin:0;font-size:28px}.top-actions{display:flex;gap:7px;flex-wrap:wrap}.metrics{display:grid;grid-template-columns:repeat(6,minmax(110px,1fr));gap:9px;margin-bottom:12px}.metric{padding:13px}.metric b{display:block;font-size:27px}.metric span{font-size:10px;font-weight:900;color:var(--muted);text-transform:uppercase}.panel{padding:15px;margin-bottom:12px}.section-title{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:10px}.section-title h2{margin:0;font-size:18px}.properties{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:10px}.property{overflow:hidden}.property-cover{height:175px;background:#13283e;display:grid;place-items:center;color:#8195ae;overflow:hidden}.property-cover img{width:100%;height:100%;object-fit:cover}.property-body{padding:12px}.property-body h3{margin:2px 0 5px;font-size:16px}.price{font-weight:1000;font-size:20px;color:#8ff2bc}.meta{font-size:11px;color:var(--muted)}.badges{display:flex;gap:5px;flex-wrap:wrap;margin:8px 0}.badge{display:inline-flex;padding:4px 7px;border:1px solid #35516f;border-radius:999px;font-size:10px;font-weight:900}.badge.green{border-color:#27734c;color:#8ff2bc}.badge.amber{border-color:#7d6226;color:#f4d991}.forms{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.span2{grid-column:span 2}.span3{grid-column:1/-1}.import-preview{display:grid;grid-template-columns:190px 1fr;gap:12px;margin-top:12px;background:#091827;border:1px solid var(--line);border-radius:13px;padding:12px}.import-preview img{width:100%;height:150px;object-fit:cover;border-radius:10px;background:#14263b}.content-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}.content-card{padding:12px}.content-card h3{margin:0 0 5px}.caption{color:#c4d1e1;font-size:12px;white-space:pre-wrap;max-height:125px;overflow:auto;background:#081624;border-radius:9px;padding:9px;margin:8px 0}.calendar-list{display:grid;gap:7px}.calendar-row{padding:10px;display:grid;grid-template-columns:150px 1fr 120px auto;gap:10px;align-items:center}.platform{font-weight:900}.facebook{color:#9fc0ff}.instagram{color:#ffc0e5}.filters{display:grid;grid-template-columns:1fr 200px 200px;gap:8px;margin-bottom:11px}.notice{margin-top:10px;padding:10px 12px;border-radius:10px;background:#102a20;border:1px solid #285f43;color:#b9efce}.warn{background:#2d2411;border-color:#725b24;color:#f5dc9e}.error{background:#35191c;border-color:#743039;color:#ffb3b8}.empty{text-align:center;color:var(--muted);padding:24px}.uploadbox{border:1px dashed #456482;border-radius:13px;padding:18px;text-align:center;background:#0a1827;display:block}.uploadbox input{display:none}.mobilebar{display:none}
+@media print{.sidebar,.top-actions,.mobilebar,.no-print{display:none!important}.shell{display:block}.main{padding:0}.panel,.calendar-row{break-inside:avoid;background:#fff;color:#000;border-color:#ddd}.muted,.meta{color:#555}.calendar-row{grid-template-columns:130px 1fr 100px auto}}
+@media(max-width:1050px){.metrics{grid-template-columns:repeat(3,1fr)}.forms{grid-template-columns:1fr 1fr}.span3{grid-column:1/-1}.calendar-row{grid-template-columns:130px 1fr 100px}}
+@media(max-width:760px){.shell{display:block}.sidebar{display:none}.main{padding:12px 12px 85px}.topbar h1{font-size:22px}.metrics{grid-template-columns:1fr 1fr}.forms,.filters{grid-template-columns:1fr}.span2,.span3{grid-column:auto}.import-preview{grid-template-columns:1fr}.calendar-row{grid-template-columns:1fr}.mobilebar{display:grid;grid-template-columns:repeat(6,1fr);position:fixed;left:0;right:0;bottom:0;background:#081522;border-top:1px solid var(--line);z-index:50}.mobilebar button{border:0;background:transparent;color:#97aac1;padding:12px 3px;font-size:9px;font-weight:900}.mobilebar button.active{background:#102238;color:#fff}}
+</style>
+</head>
+<body>
+<div id="authView" class="auth">
+  <div class="auth-card">
+    <div class="brand"><small>F1 CONTENT HUB</small>IMMOBILIARE LA SACRA</div>
+    <h1>Social Scheduler</h1>
+    <p class="muted">Accedi con lo stesso account del Content Hub.</p>
+    <div id="authMsg"></div>
+    <div class="field"><label>Email</label><input id="email" class="input" type="email"></div>
+    <div class="field" style="margin-top:9px"><label>Password</label><input id="password" class="input" type="password"></div>
+    <button id="login" class="btn primary" style="margin-top:12px;width:100%">ACCEDI</button>
+  </div>
+</div>
+
+<div id="appView" class="hidden">
+<div class="shell">
+  <aside class="sidebar">
+    <div class="client-head">
+      <div class="logo">LS</div>
+      <div class="brand"><small>CLIENTE</small>IMMOBILIARE LA SACRA</div>
+      <h2>Social Scheduler</h2>
+      <div class="muted">Scheda operativa immobiliare</div>
+    </div>
+    <div class="nav">
+      <button class="active" data-tab="dashboard">Dashboard</button>
+      <button data-tab="properties">Immobili</button>
+      <button data-tab="content">Contenuti</button>
+      <button data-tab="calendar">Calendario</button>
+      <button data-tab="publications">Pubblicazioni</button>
+      <button data-tab="settings">Impostazioni</button>
+    </div>
+    <div class="sidebar-bottom">
+      <a class="btn ghost" style="width:100%" href="./">← F1 CONTENT HUB</a>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div>
+        <h1 id="pageTitle">Immobiliare La Sacra</h1>
+        <div class="muted" id="subtitle">Dashboard cliente</div>
+      </div>
+      <div class="top-actions">
+        <button class="btn ghost" id="refresh">AGGIORNA</button>
+        <button class="btn primary" id="goImport">+ IMPORTA IMMOBILE</button>
+        <button class="btn green" id="openUpload">+ CARICA CONTENUTI</button>
+      </div>
+    </div>
+
+    <section id="tab-dashboard">
+      <div class="metrics" id="metrics"></div>
+      <div class="panel">
+        <div class="section-title"><h2>Immobili attivi</h2><button class="btn small primary" id="dashImport">+ IMPORTA LINK</button></div>
+        <div id="dashProperties" class="properties"></div>
+      </div>
+      <div class="panel">
+        <div class="section-title"><h2>Prossime pubblicazioni</h2><button class="btn ghost small" onclick="window.print()">STAMPA / PDF</button></div>
+        <div id="dashCalendar" class="calendar-list"></div>
+      </div>
+    </section>
+
+    <section id="tab-properties" class="hidden">
+      <div class="panel">
+        <div class="section-title"><h2>Importa immobile dal link</h2><span class="badge green">LINK → SCHEDA → 12 CONTENUTI</span></div>
+        <div class="row">
+          <input id="listingUrl" class="input" style="flex:1;min-width:260px" placeholder="Incolla il link dell'immobile / pagina Shopify / annuncio">
+          <button id="importUrlBtn" class="btn primary">ANALIZZA LINK</button>
+        </div>
+        <div id="importMsg"></div>
+        <div id="importPreview" class="import-preview hidden">
+          <img id="previewImage" alt="">
+          <div class="forms">
+            <div class="field span2"><label>Titolo</label><input id="propertyTitle" class="input"></div>
+            <div class="field"><label>Prezzo €</label><input id="propertyPrice" class="input" inputmode="numeric"></div>
+            <div class="field"><label>Comune</label><input id="propertyComune" class="input"></div>
+            <div class="field span2"><label>Indirizzo / zona</label><input id="propertyAddress" class="input"></div>
+            <div class="field span3"><label>Descrizione</label><textarea id="propertyDescription"></textarea></div>
+            <div class="span3 row"><button id="saveProperty" class="btn green">SALVA IMMOBILE</button></div>
+          </div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="section-title"><h2>Schede immobili</h2><span class="muted">Ogni immobile mantiene collegati contenuti e calendario</span></div>
+        <div id="propertyGrid" class="properties"></div>
+      </div>
+    </section>
+
+    <section id="tab-content" class="hidden">
+      <div class="panel">
+        <div class="filters">
+          <input id="contentSearch" class="input" placeholder="Cerca contenuti...">
+          <select id="propertyFilter"><option value="">Tutti gli immobili</option></select>
+          <select id="contentStatus">
+            <option value="">Tutti gli stati</option>
+            <option>DA LAVORARE</option><option>IN LAVORAZIONE</option><option>PRONTO</option>
+            <option>DA APPROVARE</option><option>APPROVATO</option><option>PROGRAMMATO</option>
+            <option>PUBBLICATO</option><option>ARCHIVIATO</option>
+          </select>
+        </div>
+        <div id="contentGrid" class="content-grid"></div>
+      </div>
+    </section>
+
+    <section id="tab-calendar" class="hidden">
+      <div class="panel">
+        <div class="section-title"><h2>Calendario editoriale</h2><div class="row"><span class="badge">EUROPE/ROME</span><span class="badge green">13:00 · 19:00</span><button class="btn ghost small" onclick="window.print()">STAMPA / PDF</button></div></div>
+        <div id="calendarList" class="calendar-list"></div>
+      </div>
+    </section>
+
+    <section id="tab-publications" class="hidden">
+      <div class="panel">
+        <div class="section-title"><h2>Pubblicazioni</h2><span class="muted">Programmate e pubblicate per Facebook / Instagram</span></div>
+        <div id="publicationList" class="calendar-list"></div>
+      </div>
+    </section>
+
+    <section id="tab-settings" class="hidden">
+      <div class="panel">
+        <div class="section-title"><h2>Impostazioni cliente</h2><span class="badge">IMMOBILIARE LA SACRA</span></div>
+        <div class="forms">
+          <div class="field"><label>Nome cliente</label><input id="setName" class="input"></div>
+          <div class="field"><label>Telefono</label><input id="setPhone" class="input"></div>
+          <div class="field"><label>Email</label><input id="setEmail" class="input"></div>
+          <div class="field"><label>Sito</label><input id="setWebsite" class="input"></div>
+          <div class="field"><label>Facebook</label><input id="setFacebook" class="input"></div>
+          <div class="field"><label>Instagram</label><input id="setInstagram" class="input"></div>
+          <div class="field"><label>TikTok</label><input id="setTiktok" class="input"></div>
+          <div class="field"><label>YouTube</label><input id="setYoutube" class="input"></div>
+          <div class="field"><label>Google Business</label><input id="setGoogle" class="input"></div>
+          <div class="span3 row"><button id="saveSettings" class="btn green">SALVA IMPOSTAZIONI</button></div>
+        </div>
+        <div id="settingsMsg"></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<nav class="mobilebar">
+  <button class="active" data-tab="dashboard">HOME</button>
+  <button data-tab="properties">IMMOBILI</button>
+  <button data-tab="content">CONTENUTI</button>
+  <button data-tab="calendar">CALEND.</button>
+  <button data-tab="publications">PUBBLIC.</button>
+  <button data-tab="settings">SETUP</button>
+</nav>
+</div>
+
+<div id="uploadModal" class="auth hidden" style="position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:100">
+  <div class="auth-card" style="width:min(650px,100%)">
+    <div class="section-title"><h2>Carica contenuti La Sacra</h2><button class="btn ghost small" id="closeUpload">CHIUDI</button></div>
+    <div class="forms">
+      <div class="field span2"><label>Titolo</label><input id="uploadTitle" class="input"></div>
+      <div class="field"><label>Immobile</label><select id="uploadProperty"><option value="">Nessun immobile</option></select></div>
+      <div class="field span3"><label>Note / didascalia</label><textarea id="uploadNotes"></textarea></div>
+    </div>
+    <label class="uploadbox" style="margin-top:10px"><input id="uploadFiles" type="file" multiple accept="image/*,video/*,audio/*,.pdf"><b>TOCCA QUI PER SCEGLIERE FOTO / VIDEO / FILE</b><div class="muted" id="uploadFileCount">Nessun file selezionato</div></label>
+    <button id="doUpload" class="btn green" style="margin-top:10px">CARICA NELL'ARCHIVIO LA SACRA</button>
+    <div id="uploadMsg"></div>
+  </div>
+</div>
+
+<script type="module">
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.0/+esm";
+
+const SUPABASE_URL="https://nqnmlsmeiynxbdojeyjt.supabase.co";
+const SUPABASE_KEY="sb_publishable_Clz5qPTkTtvwV0rqWTcfMQ_sCDSRgnu";
+const sb=createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{persistSession:true,autoRefreshToken:true}});
+const CLIENT_SLUG="immobiliare-la-sacra";
+const TZ="Europe/Rome";
+
+let user=null, client=null, properties=[], contents=[], calendar=[], importData=null;
+const el=id=>document.getElementById(id);
+const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
+const eur=n=>n?new Intl.NumberFormat("it-IT",{style:"currency",currency:"EUR",maximumFractionDigits:0}).format(n):"Prezzo su richiesta";
+const dt=s=>new Date(s).toLocaleString("it-IT",{timeZone:TZ,dateStyle:"short",timeStyle:"short"});
+const msg=(id,text,type="")=>el(id).innerHTML='<div class="notice '+type+'">'+esc(text)+'</div>';
+
+async function start(){
+  const s=await sb.auth.getSession();user=s.data.session?.user||null;
+  if(!user)return showAuth();
+  await enter();
+}
+function showAuth(){el("authView").classList.remove("hidden");el("appView").classList.add("hidden")}
+async function enter(){
+  el("authView").classList.add("hidden");el("appView").classList.remove("hidden");
+  let r=await sb.from("f1_content_clients").select("*").eq("slug",CLIENT_SLUG).maybeSingle();
+  if(r.error)throw r.error;
+  if(!r.data){
+    const ins=await sb.from("f1_content_clients").insert({owner_id:user.id,name:"Immobiliare La Sacra",slug:CLIENT_SLUG,category:"Immobiliare",aliases:["LA SACRA","LASACRA","IMMOBILIARE LA SACRA"],status:"ATTIVO"}).select().single();
+    if(ins.error)throw ins.error;r.data=ins.data;
+  }
+  client=r.data;await loadAll();renderAll();
+}
+el("login").onclick=async()=>{
+  const r=await sb.auth.signInWithPassword({email:el("email").value.trim(),password:el("password").value});
+  if(r.error)return msg("authMsg",r.error.message,"error");
+  user=r.data.user;await enter();
+};
+
+async function loadAll(){
+  const [p,c,k]=await Promise.all([
+    sb.from("f1_content_properties").select("*").eq("client_id",client.id).order("created_at",{ascending:false}),
+    sb.from("f1_content_items").select("*").eq("client_id",client.id).order("created_at",{ascending:false}).limit(500),
+    sb.from("f1_content_calendar").select("*, f1_content_items(title,property_id)").eq("client_id",client.id).order("publication_at",{ascending:true}).limit(1000)
+  ]);
+  if(p.error)throw p.error;if(c.error)throw c.error;
+  properties=p.data||[];contents=c.data||[];calendar=k.data||[];
+  fillFilters();fillSettings();
+}
+function setTab(tab){
+  ["dashboard","properties","content","calendar","publications","settings"].forEach(t=>el("tab-"+t).classList.toggle("hidden",t!==tab));
+  document.querySelectorAll("[data-tab]").forEach(b=>b.classList.toggle("active",b.dataset.tab===tab));
+  const t={dashboard:["Immobiliare La Sacra","Dashboard cliente"],properties:["Immobili","Schede immobili e importazione link"],content:["Contenuti","12 angolazioni, archivio e lavorazione"],calendar:["Calendario editoriale","Fasce 13:00 e 19:00 · Europe/Rome"],publications:["Pubblicazioni","Facebook e Instagram"],settings:["Impostazioni","Canali e anagrafica cliente"]};
+  el("pageTitle").textContent=t[tab][0];el("subtitle").textContent=t[tab][1];
+  if(tab==="content")renderContents();if(tab==="calendar")renderCalendar();if(tab==="publications")renderPublications();
+}
+document.querySelectorAll("[data-tab]").forEach(b=>b.onclick=()=>setTab(b.dataset.tab));
+
+function renderMetrics(){
+  const today=new Date().toISOString().slice(0,10);
+  const data=[
+    ["IMMOBILI",properties.length],
+    ["CONTENUTI",contents.length],
+    ["DA LAVORARE",contents.filter(x=>["DA LAVORARE","IN LAVORAZIONE"].includes(x.status)).length],
+    ["PRONTI",contents.filter(x=>["PRONTO","APPROVATO"].includes(x.status)).length],
+    ["PROGRAMMATI",contents.filter(x=>x.status==="PROGRAMMATO").length],
+    ["PUBBLICATI",contents.filter(x=>x.status==="PUBBLICATO").length]
+  ];
+  el("metrics").innerHTML=data.map(x=>'<div class="metric"><b>'+x[1]+'</b><span>'+x[0]+'</span></div>').join("");
+}
+function propertyCard(p){
+  const count=contents.filter(x=>x.property_id===p.id).length;
+  return '<article class="property">'+
+    '<div class="property-cover">'+(p.cover_image_url?'<img loading="lazy" src="'+esc(p.cover_image_url)+'">':'NESSUNA FOTO')+'</div>'+
+    '<div class="property-body"><div class="meta">'+esc(p.comune||"")+(p.address?" · "+esc(p.address):"")+'</div>'+
+    '<h3>'+esc(p.title||"Immobile")+'</h3><div class="price">'+eur(p.price)+'</div>'+
+    '<div class="badges"><span class="badge">'+count+' contenuti</span><span class="badge green">'+esc(p.status)+'</span></div>'+
+    '<div class="row">'+
+      '<button class="btn green small" onclick="window.gen12(\''+p.id+'\')">GENERA 12 CONTENUTI</button>'+
+      '<button class="btn primary small" onclick="window.openContentForProperty(\''+p.id+'\')">CONTENUTI</button>'+
+      '<a class="btn ghost small" target="_blank" rel="noopener" href="'+esc(p.listing_url)+'">APRI LINK</a>'+
+    '</div></div></article>';
+}
+function renderProperties(){
+  const html=properties.length?properties.map(propertyCard).join(""):'<div class="empty">Nessun immobile ancora importato.</div>';
+  el("propertyGrid").innerHTML=html;el("dashProperties").innerHTML=properties.slice(0,4).map(propertyCard).join("")||'<div class="empty">Importa il primo immobile.</div>';
+}
+function fillFilters(){
+  const opts='<option value="">Tutti gli immobili</option>'+properties.map(p=>'<option value="'+p.id+'">'+esc(p.title)+'</option>').join("");
+  el("propertyFilter").innerHTML=opts;
+  el("uploadProperty").innerHTML='<option value="">Nessun immobile</option>'+properties.map(p=>'<option value="'+p.id+'">'+esc(p.title)+'</option>').join("");
+}
+function fillSettings(){
+  el("setName").value=client.name||"";el("setPhone").value=client.phone||"";el("setEmail").value=client.email||"";
+  el("setWebsite").value=client.website||"";el("setFacebook").value=client.facebook||"";el("setInstagram").value=client.instagram||"";
+  el("setTiktok").value=client.tiktok||"";el("setYoutube").value=client.youtube||"";el("setGoogle").value=client.google_business||"";
+}
+function renderDashboardCalendar(){
+  const now=Date.now();const list=calendar.filter(x=>new Date(x.publication_at).getTime()>=now).slice(0,8);
+  el("dashCalendar").innerHTML=list.length?list.map(calendarRow).join(""):'<div class="empty">Nessuna pubblicazione futura.</div>';
+}
+function calendarRow(x){
+  const title=x.f1_content_items?.title||"Contenuto";
+  const prop=properties.find(p=>p.id===x.f1_content_items?.property_id);
+  const cls=String(x.platform).toLowerCase().includes("instagram")?"instagram":"facebook";
+  return '<div class="calendar-row"><b>'+esc(dt(x.publication_at))+'</b><div><b>'+esc(title)+'</b><div class="meta">'+esc(prop?.title||"Contenuto generale")+'</div></div><div class="platform '+cls+'">'+esc(x.platform)+'</div><span class="badge '+(x.status==="PUBBLICATO"?"green":"amber")+'">'+esc(x.status)+'</span></div>';
+}
+function renderCalendar(){
+  el("calendarList").innerHTML=calendar.length?calendar.map(calendarRow).join(""):'<div class="empty">Nessun contenuto programmato.</div>';
+}
+function renderPublications(){
+  const list=calendar.filter(x=>["PROGRAMMATO","PUBBLICATO"].includes(x.status));
+  el("publicationList").innerHTML=list.length?list.map(calendarRow).join(""):'<div class="empty">Nessuna pubblicazione.</div>';
+}
+function filteredContents(){
+  let list=contents.slice();
+  const q=el("contentSearch").value.toLowerCase().trim(), pid=el("propertyFilter").value, st=el("contentStatus").value;
+  if(pid)list=list.filter(x=>x.property_id===pid);if(st)list=list.filter(x=>x.status===st);
+  if(q)list=list.filter(x=>[x.title,x.description,x.campaign,x.location,(x.tags||[]).join(" ")].join(" ").toLowerCase().includes(q));
+  return list;
+}
+function contentCard(c){
+  const p=properties.find(x=>x.id===c.property_id);
+  return '<article class="content-card"><div class="meta">'+esc(p?.title||"Contenuto generale")+'</div><h3>'+esc(c.title||"Senza titolo")+'</h3>'+
+    '<div class="badges"><span class="badge">'+esc(c.content_type)+'</span><span class="badge '+(c.status==="PROGRAMMATO"?"amber":c.status==="PUBBLICATO"?"green":"")+'">'+esc(c.status)+'</span></div>'+
+    '<div class="caption">'+esc(c.description||"")+'</div>'+
+    '<div class="row"><button class="btn ghost small" onclick="navigator.clipboard.writeText('+JSON.stringify("PLACEHOLDER")+')">COPIA</button>'+
+    '<select class="input" style="width:auto;padding:6px 8px" onchange="window.setStatus(\''+c.id+'\',this.value)">'+["DA LAVORARE","IN LAVORAZIONE","PRONTO","DA APPROVARE","APPROVATO","PROGRAMMATO","PUBBLICATO","ARCHIVIATO"].map(s=>'<option '+(s===c.status?"selected":"")+'>'+s+'</option>').join("")+'</select></div></article>';
+}
+function renderContents(){
+  const list=filteredContents();
+  el("contentGrid").innerHTML=list.length?list.map(contentCard).join(""):'<div class="empty">Nessun contenuto.</div>';
+  document.querySelectorAll("#contentGrid .content-card").forEach((card,i)=>{
+    const c=list[i];const btn=card.querySelector("button");
+    if(btn)btn.onclick=()=>navigator.clipboard.writeText(c.description||c.title||"");
+  });
+}
+window.openContentForProperty=id=>{el("propertyFilter").value=id;setTab("content");renderContents()};
+window.setStatus=async(id,status)=>{const r=await sb.from("f1_content_items").update({status}).eq("id",id);if(r.error)return alert(r.error.message);const c=contents.find(x=>x.id===id);if(c)c.status=status;renderMetrics()};
+
+function romeIso(dateStr,timeStr){
+  const [y,m,d]=dateStr.split("-").map(Number),[hh,mm]=timeStr.split(":").map(Number);
+  const target=Date.UTC(y,m-1,d,hh,mm,0);
+  let guess=target;
+  const fmt=new Intl.DateTimeFormat("en-CA",{timeZone:TZ,year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",second:"2-digit",hourCycle:"h23"});
+  for(let i=0;i<3;i++){
+    const parts=Object.fromEntries(fmt.formatToParts(new Date(guess)).filter(p=>p.type!=="literal").map(p=>[p.type,p.value]));
+    const local=Date.UTC(+parts.year,+parts.month-1,+parts.day,+parts.hour,+parts.minute,+parts.second);
+    guess+=target-local;
+  }
+  return new Date(guess).toISOString();
+}
+function nextSlotDates(count){
+  const slots=[];let d=new Date();d.setDate(d.getDate()+1);
+  while(slots.length<count){
+    const ds=d.toLocaleDateString("en-CA",{timeZone:TZ});
+    for(const t of ["13:00","19:00"]){if(slots.length<count)slots.push(romeIso(ds,t))}
+    d.setDate(d.getDate()+1);
+  }
+  return slots;
+}
+const ANGLES=[
+  ["Presentazione immobile","Presentiamo l'immobile in modo chiaro: tipologia, posizione e caratteristiche principali."],
+  ["Punto di forza principale","Mettiamo al centro il punto di forza che può far fermare l'attenzione dell'acquirente."],
+  ["Zona giorno","Focus sugli spazi dedicati alla vita quotidiana e alla convivialità."],
+  ["Cucina e funzionalità","Una lettura pratica degli ambienti e di come possono essere vissuti ogni giorno."],
+  ["Camere e zona notte","Spazi dedicati a riposo, privacy e organizzazione della casa."],
+  ["Bagno e finiture","Dettagli, finiture e stato degli ambienti raccontati senza promesse generiche."],
+  ["Comfort e dotazioni","Impianti, comfort e dotazioni presenti nell'immobile quando indicati nella scheda."],
+  ["Posizione e zona","Dove si trova l'immobile e perché la posizione può essere rilevante per chi cerca in zona."],
+  ["Per chi è ideale","Una possibile lettura del pubblico più coerente con tipologia, dimensioni e posizione."],
+  ["Dettagli pratici","Prezzo, disponibilità e informazioni utili da verificare prima della visita."],
+  ["Perché visitarlo","Gli elementi che meritano di essere valutati dal vivo durante una visita."],
+  ["Invito alla visita","Chiusura orientata al contatto: richiedi informazioni o prenota una visita con Immobiliare La Sacra."]
+];
+function captionFor(p,angle,body,i){
+  const where=[p.comune,p.address].filter(Boolean).join(" · ");
+  const price=p.price?" Prezzo: "+eur(p.price)+".":"";
+  return (i+1)+"/12 · "+angle+"\n\n"+p.title+(where?" · "+where:"")+". "+body+price+"\n\nPer informazioni e visite: Immobiliare La Sacra.";
+}
+window.gen12=async id=>{
+  const p=properties.find(x=>x.id===id);if(!p)return;
+  const existing=contents.filter(x=>x.property_id===id&&x.source==="IMMOBILIARE_SOCIAL_SCHEDULER");
+  if(existing.length)return alert("Per questo immobile esistono già "+existing.length+" contenuti generati. Anti-duplicazione attiva: non creo una seconda serie.");
+  if(!confirm("Generare 12 contenuti e programmare Facebook + Instagram alle 13:00 e 19:00?"))return;
+  const rows=ANGLES.map((a,i)=>({owner_id:user.id,client_id:client.id,property_id:p.id,title:"POST "+(i+1)+" · "+a[0]+" · "+p.title,description:captionFor(p,a[0],a[1],i),content_type:"POST IMMOBILIARE",source:"IMMOBILIARE_SOCIAL_SCHEDULER",status:"PROGRAMMATO",campaign:p.title,tags:["immobile","la-sacra","post-"+(i+1)],location:[p.comune,p.address].filter(Boolean).join(" · ")}));
+  const ins=await sb.from("f1_content_items").insert(rows).select();
+  if(ins.error)return alert(ins.error.message);
+  const slots=nextSlotDates(ins.data.length);
+  const cal=[];
+  ins.data.forEach((c,i)=>{
+    for(const platform of ["Facebook","Instagram"])cal.push({owner_id:user.id,content_id:c.id,client_id:client.id,platform,publication_at:slots[i],status:"PROGRAMMATO"});
+  });
+  const cr=await sb.from("f1_content_calendar").insert(cal);
+  if(cr.error)return alert(cr.error.message);
+  await loadAll();renderAll();setTab("calendar");
+  alert("Creati 12 contenuti e 24 pubblicazioni (12 Facebook + 12 Instagram) nelle fasce 13:00 / 19:00.");
+};
+
+el("importUrlBtn").onclick=async()=>{
+  const url=el("listingUrl").value.trim();if(!url)return msg("importMsg","Incolla il link dell'immobile.","error");
+  msg("importMsg","Analisi del link in corso...");
+  const r=await sb.functions.invoke("f1-content-property-import",{body:{url}});
+  if(r.error)return msg("importMsg",r.error.message,"error");
+  if(r.data?.error)return msg("importMsg","Impossibile leggere la pagina: "+r.data.error,"error");
+  importData=r.data;
+  el("propertyTitle").value=r.data.title||"";el("propertyDescription").value=r.data.description||"";
+  el("propertyPrice").value=r.data.price||"";el("previewImage").src=r.data.cover_image_url||"";
+  el("importPreview").classList.remove("hidden");msg("importMsg","Dati letti. Completa Comune e indirizzo, poi salva.","");
+};
+el("saveProperty").onclick=async()=>{
+  if(!importData)return;
+  const row={owner_id:user.id,client_id:client.id,listing_url:importData.url||el("listingUrl").value.trim(),title:el("propertyTitle").value.trim()||"Immobile",comune:el("propertyComune").value.trim(),address:el("propertyAddress").value.trim(),price:Number(el("propertyPrice").value)||null,description:el("propertyDescription").value.trim(),cover_image_url:importData.cover_image_url||"",image_urls:importData.image_urls||[],raw_data:importData,status:"ATTIVO"};
+  const r=await sb.from("f1_content_properties").upsert(row,{onConflict:"owner_id,listing_url"}).select().single();
+  if(r.error)return msg("importMsg",r.error.message,"error");
+  el("listingUrl").value="";el("importPreview").classList.add("hidden");importData=null;await loadAll();renderAll();msg("importMsg","Immobile salvato nella scheda La Sacra.","");
+};
+function goProperties(){setTab("properties");setTimeout(()=>el("listingUrl").focus(),50)}
+el("goImport").onclick=goProperties;el("dashImport").onclick=goProperties;
+
+el("saveSettings").onclick=async()=>{
+  const patch={name:el("setName").value.trim(),phone:el("setPhone").value.trim(),email:el("setEmail").value.trim(),website:el("setWebsite").value.trim(),facebook:el("setFacebook").value.trim(),instagram:el("setInstagram").value.trim(),tiktok:el("setTiktok").value.trim(),youtube:el("setYoutube").value.trim(),google_business:el("setGoogle").value.trim()};
+  const r=await sb.from("f1_content_clients").update(patch).eq("id",client.id).select().single();
+  if(r.error)return msg("settingsMsg",r.error.message,"error");client=r.data;msg("settingsMsg","Impostazioni salvate.","");
+};
+
+function openUpload(){el("uploadModal").classList.remove("hidden")}
+function closeUpload(){el("uploadModal").classList.add("hidden")}
+el("openUpload").onclick=openUpload;el("closeUpload").onclick=closeUpload;
+el("uploadFiles").onchange=()=>el("uploadFileCount").textContent=(el("uploadFiles").files?.length||0)+" file selezionati";
+el("doUpload").onclick=async()=>{
+  const files=Array.from(el("uploadFiles").files||[]),notes=el("uploadNotes").value.trim();
+  if(!files.length&&!notes)return msg("uploadMsg","Seleziona almeno un file o inserisci una nota.","error");
+  const item={owner_id:user.id,client_id:client.id,property_id:el("uploadProperty").value||null,title:el("uploadTitle").value.trim()||"Contenuto La Sacra",description:notes,source_text:notes,content_type:files.length?(files[0].type.startsWith("image/")?"FOTO":files[0].type.startsWith("video/")?"VIDEO":"FILE"):"TESTO",source:"WEB",status:"DA LAVORARE"};
+  const ir=await sb.from("f1_content_items").insert(item).select().single();if(ir.error)return msg("uploadMsg",ir.error.message,"error");
+  for(const f of files){
+    const safe=f.name.replace(/[^a-zA-Z0-9._-]+/g,"_"),path=user.id+"/"+client.id+"/"+ir.data.id+"/"+crypto.randomUUID()+"-"+safe;
+    const up=await sb.storage.from("f1-content-media").upload(path,f,{contentType:f.type||"application/octet-stream",upsert:false});if(up.error)return msg("uploadMsg",up.error.message,"error");
+    await sb.from("f1_content_media").insert({owner_id:user.id,content_id:ir.data.id,client_id:client.id,file_name:safe,mime_type:f.type||"application/octet-stream",storage_path:path,file_size:f.size,source:"WEB"});
+  }
+  el("uploadTitle").value="";el("uploadNotes").value="";el("uploadFiles").value="";el("uploadFileCount").textContent="Nessun file selezionato";await loadAll();renderAll();msg("uploadMsg","Contenuto caricato.","");setTimeout(closeUpload,600);
+};
+
+el("contentSearch").oninput=renderContents;el("propertyFilter").onchange=renderContents;el("contentStatus").onchange=renderContents;
+el("refresh").onclick=async()=>{await loadAll();renderAll()};
+
+function renderAll(){renderMetrics();renderProperties();renderDashboardCalendar();renderContents();renderCalendar();renderPublications()}
+start();
+</script>
+</body>
+</html>
