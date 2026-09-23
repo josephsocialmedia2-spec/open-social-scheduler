@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Demo Cliente - Antica Cappella</title>
+<style>
+:root{
+  --green:#0f8f6f;
+  --green2:#13b486;
+  --deep:#0a4d3c;
+  --bg:#f4faf7;
+  --card:#ffffff;
+  --text:#19332c;
+  --muted:#6b7f78;
+  --line:#dceae4;
+  --soft:#e9f7f1;
+  --gold:#d5a23f;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Inter,Segoe UI,Arial,sans-serif;
+  background:linear-gradient(180deg,#dff4ec 0,#f8fcfa 260px);
+  color:var(--text);
+}
+.shell{max-width:1180px;margin:auto;padding:24px}
+.header{
+  background:linear-gradient(135deg,var(--deep),var(--green2));
+  color:#fff;
+  border-radius:24px;
+  padding:28px;
+  box-shadow:0 18px 45px rgba(14,103,80,.18);
+}
+.brandrow{display:flex;justify-content:space-between;gap:18px;align-items:center}
+.brand{display:flex;gap:16px;align-items:center}
+.logo{
+  width:66px;height:66px;border-radius:20px;
+  background:#fff;color:var(--deep);
+  display:grid;place-items:center;font-weight:900;font-size:27px;
+}
+.header h1{margin:0;font-size:32px}
+.header p{margin:6px 0 0;opacity:.9}
+.badge{
+  background:#d9fdd3;color:#164e3e;border:1px solid #b4e3aa;
+  padding:9px 13px;border-radius:999px;font-size:12px;font-weight:800;
+}
+.nav{
+  margin-top:16px;background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.2);
+  padding:10px;border-radius:14px;display:flex;gap:8px;flex-wrap:wrap;
+}
+.nav span{
+  padding:7px 10px;border-radius:10px;font-size:12px;
+  background:rgba(255,255,255,.09)
+}
+.nav span.active{background:#fff;color:var(--deep);font-weight:800}
+.stage{margin-top:18px}
+.slide{display:none}
+.slide.active{display:block}
+.card{
+  background:var(--card);border:1px solid var(--line);
+  border-radius:22px;padding:22px;margin-bottom:16px;
+  box-shadow:0 12px 32px rgba(37,93,75,.07);
+}
+.hero{
+  min-height:430px;display:grid;grid-template-columns:1.15fr .85fr;gap:22px;align-items:center;
+}
+.eyebrow{font-size:13px;font-weight:900;letter-spacing:.08em;color:var(--green);text-transform:uppercase}
+h2{font-size:34px;line-height:1.08;margin:8px 0 14px}
+.lead{font-size:18px;line-height:1.55;color:#3d5d54}
+.flow{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:18px
+}
+.flow div{
+  background:var(--soft);border:1px solid #d1eee2;border-radius:14px;padding:13px;text-align:center;font-weight:800;font-size:13px
+}
+.visual{
+  background:linear-gradient(135deg,#f0fff8,#e2f6ef);
+  border:1px solid #cfe9df;border-radius:24px;padding:20px;min-height:300px;
+}
+.mockphone{
+  width:220px;height:360px;margin:auto;background:#101b18;border-radius:34px;padding:12px;box-shadow:0 22px 55px rgba(0,0,0,.18)
+}
+.screen{height:100%;background:#f8fcfa;border-radius:26px;padding:12px;overflow:hidden}
+.chathead{height:42px;background:var(--green);border-radius:14px;color:white;display:flex;align-items:center;padding:0 12px;font-size:12px;font-weight:800}
+.bubble{background:#d9fdd3;border-radius:10px;padding:9px;margin:10px 0 0 auto;width:82%;font-size:11px}
+.thumb{height:95px;border-radius:10px;background:linear-gradient(135deg,#d8b49f,#7e3a2a);margin-top:7px;position:relative;overflow:hidden}
+.thumb:before{
+ content:""; position:absolute; inset:0;
+ background:radial-gradient(circle at 50% 40%,#ffd89c 0 14%,#d9684a 15% 27%,#f6ead1 28% 42%,#6b8c57 43% 47%,transparent 48%);
+}
+.kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-top:18px}
+.kpi{background:#f5fbf8;border:1px solid var(--line);padding:14px;border-radius:14px}
+.kpi strong{display:block;font-size:25px;color:var(--green)}
+.kpi span{font-size:11px;font-weight:800;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.media{
+  border:1px solid var(--line);border-radius:18px;overflow:hidden;background:#fff
+}
+.mediaimg{
+  height:180px;background:linear-gradient(135deg,#e5c6a8,#86543d);position:relative;
+}
+.mediaimg.food:before{
+  content:"";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:110px;height:110px;border-radius:50%;background:#f7e6bf;
+  box-shadow:0 0 0 12px #fff;
+}
+.mediaimg.food:after{
+  content:"";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:78px;height:78px;border-radius:50%;
+  background:radial-gradient(circle,#efcab1 0 25%,#d96f6d 26% 38%,#f2df9f 39% 58%,#7d9d5c 59% 67%,#efc18b 68%);
+}
+.mediaimg.room{background:linear-gradient(135deg,#d7c7ad,#8a6a4b)}
+.mediaimg.event{background:linear-gradient(135deg,#512d3a,#bc8b7d)}
+.media .meta{padding:14px}.meta b{display:block}.meta small{color:var(--muted)}
+.detail{display:grid;grid-template-columns:.9fr 1.1fr;gap:18px}
+.panel{background:#f7fbf9;border:1px solid var(--line);border-radius:18px;padding:16px}
+.row{padding:10px 0;border-bottom:1px solid #e7efeb}.row:last-child{border-bottom:0}
+.row label{display:block;font-size:10px;font-weight:900;color:var(--muted);letter-spacing:.06em}
+.row div{margin-top:4px}
+.reuse{
+  display:grid;grid-template-columns:1fr 80px 1fr;gap:14px;align-items:center
+}
+.arrow{font-size:34px;text-align:center;color:var(--green);font-weight:900}
+.pill{display:inline-flex;padding:7px 10px;border-radius:999px;background:var(--soft);border:1px solid #cce9de;font-size:11px;font-weight:900;color:var(--deep)}
+.calendar{display:grid;grid-template-columns:120px 1fr 1fr;gap:8px}
+.calendar .cell{padding:12px;border-radius:12px;background:#f6faf8;border:1px solid var(--line);font-size:13px}
+.calendar .head{background:#e8f6f0;font-weight:900}
+.timeline{display:grid;gap:10px}
+.titem{display:grid;grid-template-columns:120px 1fr;gap:12px;align-items:start}
+.date{font-weight:900;color:var(--green)}
+.box{border-left:4px solid var(--green);padding:10px 12px;background:#f7fbf9;border-radius:10px}
+.footerbar{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-top:16px}
+button{
+  border:0;border-radius:12px;padding:12px 16px;font-weight:900;cursor:pointer;font-size:14px
+}
+.primary{background:var(--green);color:#fff}
+.secondary{background:#edf7f3;color:var(--deep);border:1px solid #d3e9e0}
+.presenter{display:none;margin-top:12px;background:#fff7dc;border:1px solid #efd48d;border-radius:14px;padding:13px;line-height:1.45}
+.presenter.show{display:block}
+.bigclaim{
+  font-size:34px;font-weight:900;text-align:center;color:var(--deep);margin:30px 0
+}
+.safe{
+  display:inline-flex;align-items:center;gap:7px;padding:8px 11px;border-radius:999px;background:#e9f7f1;color:var(--deep);font-size:12px;font-weight:900;border:1px solid #cde9df
+}
+@media(max-width:850px){
+  .hero,.detail,.reuse{grid-template-columns:1fr}
+  .grid{grid-template-columns:1fr 1fr}
+  .kpis{grid-template-columns:repeat(2,1fr)}
+  .flow{grid-template-columns:repeat(2,1fr)}
+  .calendar{grid-template-columns:85px 1fr 1fr}
+}
+</style>
+</head>
+<body>
+<div class="shell">
+  <section class="header">
+    <div class="brandrow">
+      <div class="brand">
+        <div class="logo">AC</div>
+        <div>
+          <h1>Antica Cappella · HUB Contenuti</h1>
+          <p>Demo Cliente · durata 3–4 minuti</p>
+        </div>
+      </div>
+      <div class="badge">MODALITÀ DEMO SICURA</div>
+    </div>
+    <div class="nav" id="nav">
+      <span class="active">Intro</span><span>1/6</span><span>2/6</span><span>3/6</span><span>4/6</span><span>5/6</span><span>6/6</span><span>Fine</span>
+    </div>
+  </section>
+
+  <main class="stage">
+
+    <section class="slide active">
+      <div class="card hero">
+        <div>
+          <div class="eyebrow">Il tuo HUB contenuti</div>
+          <h2>Un archivio digitale che cresce nel tempo.</h2>
+          <p class="lead">Foto, video e materiali inviati su WhatsApp vengono conservati nel tuo HUB personale e possono diventare nuove pubblicazioni anche mesi dopo.</p>
+          <div class="flow">
+            <div>WhatsApp</div><div>HUB</div><div>Pubblicazione</div><div>Riutilizzo</div>
+          </div>
+          <div class="kpis">
+            <div class="kpi"><strong>190</strong><span>MEDIA</span></div>
+            <div class="kpi"><strong>132</strong><span>FOTO</span></div>
+            <div class="kpi"><strong>58</strong><span>VIDEO</span></div>
+            <div class="kpi"><strong>64</strong><span>PUBBLICATI</span></div>
+            <div class="kpi"><strong>126</strong><span>RIUTILIZZABILI</span></div>
+            <div class="kpi"><strong>18</strong><span>PROGRAMMATI</span></div>
+          </div>
+        </div>
+        <div class="visual">
+          <div class="mockphone"><div class="screen">
+            <div class="chathead">Antica Cappella · WhatsApp</div>
+            <div class="bubble">Ti mando il video della cena di sabato.</div>
+            <div class="thumb"></div>
+            <div class="bubble">E anche la foto del risotto.</div>
+            <div class="thumb"></div>
+          </div></div>
+        </div>
+      </div>
+      <div class="footerbar">
+        <span class="safe">Nessuna pubblicazione reale parte durante la demo</span>
+        <button class="primary" onclick="go(1)">INIZIA DEMO</button>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="card">
+        <div class="eyebrow">1 / 6</div>
+        <h2>Il tuo archivio contenuti</h2>
+        <p class="lead">Tutto quello che ci invii viene conservato nel tuo archivio personale.</p>
+        <div class="grid">
+          <div class="media"><div class="mediaimg food"></div><div class="meta"><b>Risotto fragole e mazzancolle</b><small>Foto · caricata 18/09/2026 · 3 utilizzi</small></div></div>
+          <div class="media"><div class="mediaimg room"></div><div class="meta"><b>Sala eventi</b><small>Foto · caricata 12/09/2026 · 2 utilizzi</small></div></div>
+          <div class="media"><div class="mediaimg event"></div><div class="meta"><b>Serata speciale</b><small>Video · caricato 08/09/2026 · 1 utilizzo</small></div></div>
+        </div>
+        <div style="margin-top:14px"><span class="pill">ARCHIVIO PERMANENTE</span></div>
+        <div class="presenter">“Questo è il tuo HUB personale. Qui non perdiamo più i contenuti: ogni foto e video resta disponibile per essere usato di nuovo.”</div>
+      </div>
+      <div class="footerbar"><button class="secondary" onclick="prev()">INDIETRO</button><button class="secondary" onclick="presenter(this)">🎤 TESTO DA DIRE</button><button class="primary" onclick="next()">AVANTI</button></div>
+    </section>
+
+    <section class="slide">
+      <div class="card">
+        <div class="eyebrow">2 / 6</div>
+        <h2>I tuoi contenuti</h2>
+        <p class="lead">Non vediamo semplicemente dei file: vediamo una libreria pronta a diventare comunicazione.</p>
+        <div class="grid">
+          <div class="media"><div class="mediaimg food"></div><div class="meta"><b>Risotto fragole e mazzancolle</b><small>Riutilizzabile</small></div></div>
+          <div class="media"><div class="mediaimg room"></div><div class="meta"><b>Sala cerimonie</b><small>Riutilizzabile</small></div></div>
+          <div class="media"><div class="mediaimg event"></div><div class="meta"><b>Evento single</b><small>Pubblicato</small></div></div>
+        </div>
+        <div class="presenter">“Ogni contenuto resta disponibile. Posso cercarlo, aprirlo e decidere quando farlo lavorare di nuovo.”</div>
+      </div>
+      <div class="footerbar"><button class="secondary" onclick="prev()">INDIETRO</button><button class="secondary" onclick="presenter(this)">🎤 TESTO DA DIRE</button><button class="primary" onclick="next()">AVANTI</button></div>
+    </section>
+
+    <section class="slide">
+      <div class="card">
+        <div class="eyebrow">3 / 6</div>
+        <h2>Ogni contenuto ha la sua storia</h2>
+        <div class="detail">
+          <div class="media"><div class="mediaimg food" style="height:260px"></div><div class="meta"><b>Risotto fragole e mazzancolle</b><small>CONTENT ID: AC-000123</small></div></div>
+          <div class="panel">
+            <div class="row"><label>DATA CARICAMENTO</label><div>18/09/2026</div></div>
+            <div class="row"><label>TRASCRIZIONE AUDIO</label><div>“Questo è il nostro risotto alle fragole e mazzancolle...”</div></div>
+            <div class="row"><label>CAPTION FACEBOOK</label><div>Una proposta elegante pensata per una serata speciale ad Avigliana...</div></div>
+            <div class="row"><label>CAPTION INSTAGRAM</label><div>Fragole, mazzancolle e una serata da ricordare. ✨</div></div>
+            <div class="row"><label>UTILIZZI</label><div>3 pubblicazioni</div></div>
+            <div class="row"><label>ULTIMA PUBBLICAZIONE</label><div>Facebook · 20/09/2026</div></div>
+          </div>
+        </div>
+        <div class="presenter">“Da ogni foto o video possiamo creare le pubblicazioni, programmarle e conservarne lo storico.”</div>
+      </div>
+      <div class="footerbar"><button class="secondary" onclick="prev()">INDIETRO</button><button class="secondary" onclick="presenter(this)">🎤 TESTO DA DIRE</button><button class="primary" onclick="next()">AVANTI</button></div>
+    </section>
+
+    <section class="slide">
+      <div class="card">
+        <div class="eyebrow">4 / 6 · PASSAGGIO CHIAVE</div>
+        <h2>Un contenuto può lavorare più volte</h2>
+        <div class="reuse">
+          <div class="panel">
+            <span class="pill">PUBBLICATO IN PASSATO</span>
+            <div class="mediaimg food" style="height:190px;border-radius:14px;margin:12px 0"></div>
+            <b>Risotto fragole e mazzancolle</b>
+            <p class="small">Caption precedente: “Presentazione del nostro risotto...”</p>
+          </div>
+          <div class="arrow">→</div>
+          <div class="panel">
+            <span class="pill">NUOVA PUBBLICAZIONE</span>
+            <div class="row"><label>NUOVA COMUNICAZIONE</label><div>Serata speciale di novembre</div></div>
+            <div class="row"><label>NUOVA CAPTION</label><div>Una nuova occasione per riscoprire uno dei piatti più apprezzati della nostra cucina...</div></div>
+            <div class="row"><label>NUOVA DATA</label><div>14/11/2026 · 19:00</div></div>
+            <div class="row"><label>PIATTAFORME</label><div>Facebook + Instagram</div></div>
+            <button class="primary" style="width:100%;margin-top:12px" onclick="alert('SIMULAZIONE SICURA: nessuna pubblicazione reale è stata creata.')">♻ RIUTILIZZA</button>
+          </div>
+        </div>
+        <div class="bigclaim">1 FOTO → MOLTE POSSIBILI PUBBLICAZIONI</div>
+        <p style="text-align:center;font-weight:800">Non devi rimandarci questa fotografia. È già nel tuo archivio.</p>
+        <div class="presenter">“Questa è la parte più importante: il contenuto non muore dopo un post. Rimane qui e può diventare una nuova comunicazione senza che tu debba rimandarcelo.”</div>
+      </div>
+      <div class="footerbar"><button class="secondary" onclick="prev()">INDIETRO</button><button class="secondary" onclick="presenter(this)">🎤 TESTO DA DIRE</button><button class="primary" onclick="next()">AVANTI</button></div>
+    </section>
+
+    <section class="slide">
+      <div class="card">
+        <div class="eyebrow">5 / 6</div>
+        <h2>Dal contenuto al calendario</h2>
+        <div class="calendar">
+          <div class="cell head">DATA / ORA</div><div class="cell head">FACEBOOK</div><div class="cell head">INSTAGRAM</div>
+          <div class="cell"><b>23/09</b><br>13:00</div><div class="cell">Risotto · Presentazione<br><span class="pill">PROGRAMMATO</span></div><div class="cell">Sala · Atmosfera<br><span class="pill">PROGRAMMATO</span></div>
+          <div class="cell"><b>23/09</b><br>19:00</div><div class="cell">Evento · Prenotazioni<br><span class="pill">DA PUBBLICARE</span></div><div class="cell">Risotto · Reel<br><span class="pill">DA PUBBLICARE</span></div>
+          <div class="cell"><b>24/09</b><br>13:00</div><div class="cell">Cerimonie · Sala<br><span class="pill">PROGRAMMATO</span></div><div class="cell">Menu · Dettaglio<br><span class="pill">PROGRAMMATO</span></div>
+        </div>
+        <div class="presenter">“Qui trasformiamo l’archivio in un calendario editoriale concreto: sai cosa esce, quando e su quale piattaforma.”</div>
+      </div>
+      <div class="footerbar"><button class="secondary" onclick="prev()">INDIETRO</button><button class="secondary" onclick="presenter(this)">🎤 TESTO DA DIRE</button><button class="primary" onclick="next()">AVANTI</button></div>
+    </section>
+
+    <section class="slide">
+      <div class="card">
+        <div class="eyebrow">6 / 6</div>
+        <h2>Nulla viene perso</h2>
+        <div class="timeline">
+          <div class="titem"><div class="date">20/09/2026</div><div class="box"><b>Facebook</b><br>Risotto fragole e mazzancolle · Presentazione del piatto · Pubblicato</div></div>
+          <div class="titem"><div class="date">21/09/2026</div><div class="box"><b>Instagram</b><br>Risotto fragole e mazzancolle · Reel · Pubblicato</div></div>
+          <div class="titem"><div class="date">14/11/2026</div><div class="box"><b>Nuovo utilizzo</b><br>Serata speciale di novembre · Simulazione</div></div>
+        </div>
+        <div class="presenter">“Quando un contenuto viene pubblicato non scompare. Rimane nell’archivio insieme alla sua storia, pronto per essere riutilizzato.”</div>
+      </div>
+      <div class="footerbar"><button class="secondary" onclick="prev()">INDIETRO</button><button class="secondary" onclick="presenter(this)">🎤 TESTO DA DIRE</button><button class="primary" onclick="next()">AVANTI</button></div>
+    </section>
+
+    <section class="slide">
+      <div class="card" style="text-align:center;padding:42px 22px">
+        <div class="eyebrow">Fine demo</div>
+        <h2>Il tuo patrimonio digitale cresce nel tempo</h2>
+        <div class="bigclaim">TU INVII IL CONTENUTO UNA VOLTA.<br>NOI POSSIAMO FARLO LAVORARE NEL TEMPO.</div>
+        <div class="flow" style="max-width:850px;margin:24px auto 0">
+          <div>WhatsApp</div><div>HUB</div><div>Archivio</div><div>Caption</div>
+          <div>Calendario</div><div>Pubblicazione</div><div>Storico</div><div>Riutilizzo</div>
+        </div>
+        <div class="presenter show" style="max-width:760px;margin:22px auto 0;text-align:left">
+          “Questo è il tuo HUB personale. Tutto quello che ci mandi su WhatsApp viene archiviato qui. Da ogni foto o video possiamo creare le pubblicazioni, programmarle e conservarne lo storico. La cosa importante è che il contenuto non viene utilizzato una sola volta: rimane nel tuo archivio e possiamo riprenderlo anche tra mesi, creando una nuova comunicazione senza chiederti di rimandarcelo.”
+        </div>
+      </div>
+      <div class="footerbar"><button class="secondary" onclick="prev()">INDIETRO</button><button class="primary" onclick="go(0)">RIPARTI DALL'INIZIO</button></div>
+    </section>
+
+  </main>
+</div>
+<script>
+let current=0;
+const slides=[...document.querySelectorAll('.slide')];
+const nav=[...document.querySelectorAll('#nav span')];
+function go(n){
+  current=Math.max(0,Math.min(slides.length-1,n));
+  slides.forEach((s,i)=>s.classList.toggle('active',i===current));
+  nav.forEach((s,i)=>s.classList.toggle('active',i===current));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function next(){go(current+1)}
+function prev(){go(current-1)}
+function presenter(btn){
+  const card=btn.closest('.footerbar').previousElementSibling;
+  const p=card.querySelector('.presenter');
+  if(p) p.classList.toggle('show');
+}
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight') next();
+  if(e.key==='ArrowLeft') prev();
+});
+</script>
+</body>
+</html>
