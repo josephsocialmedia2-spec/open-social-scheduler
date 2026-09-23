@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hub Clienti · Importa WhatsApp</title>
+<style>
+:root{--g:#00a884;--gd:#008069;--bg:#eef7f3;--card:#fff;--txt:#18352d;--mut:#6a7d76;--bd:#d7e8e1}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:linear-gradient(180deg,#daf4ea,#f8fcfa 300px);color:var(--txt)}
+header{background:linear-gradient(135deg,var(--gd),var(--g));color:#fff;padding:28px 18px;box-shadow:0 12px 30px rgba(0,128,105,.18)}
+.wrap{max-width:1180px;margin:auto}.brand{display:flex;gap:14px;align-items:center}.logo{width:58px;height:58px;border-radius:17px;background:#fff;color:var(--gd);display:grid;place-items:center;font-weight:900;font-size:26px}
+h1{margin:0;font-size:30px}.sub{margin-top:5px;opacity:.93}
+main{padding:22px 16px 60px}.card{background:var(--card);border:1px solid var(--bd);border-radius:18px;padding:18px;box-shadow:0 10px 30px rgba(0,70,50,.06)}
+.clients{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}.client{cursor:pointer;transition:.15s}.client:hover{transform:translateY(-2px);border-color:#9bd9c6}.client.active{outline:3px solid #b8eadb}
+.name{font-size:18px;font-weight:900}.meta{color:var(--mut);font-size:13px;margin-top:6px}.buttons{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+button{border:0;border-radius:10px;padding:11px 14px;font-weight:800;cursor:pointer}.primary{background:var(--g);color:#fff}.light{background:#e9f8f3;color:#005c4b;border:1px solid #cbe9df}
+.panel{margin-top:18px;display:none}.panel.show{display:block}.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:12px}.step{background:#f3fbf8;border:1px solid #dbeee7;border-radius:13px;padding:13px}.step b{display:block;color:var(--gd);margin-bottom:5px}.small{font-size:12px;color:var(--mut);line-height:1.5}.status{margin-top:12px;padding:12px;border-radius:10px;background:#d9fdd3;display:none}
+@media(max-width:760px){.flow{grid-template-columns:1fr 1fr}h1{font-size:24px}}
+</style>
+</head>
+<body>
+<header><div class="wrap brand"><div class="logo">WA</div><div><h1>HUB Clienti · Importa WhatsApp</h1><div class="sub">Entri nel cliente e importi i media senza dover scegliere di nuovo la destinazione</div></div></div></header>
+<main class="wrap">
+<div class="card" style="margin-bottom:14px">
+<b>Flusso previsto:</b> CLIENTI → apri il cliente → IMPORTA WHATSAPP → selezioni/scarichi foto e video → importazione nell'HUB del cliente.
+<div class="small" style="margin-top:6px">Questa pagina è la versione online di visualizzazione del flusso. L'accesso diretto alle cartelle Desktop resta nella versione Windows.</div>
+</div>
+<div class="clients" id="clients"></div>
+<div class="card panel" id="panel">
+  <h2 id="title" style="margin-top:0"></h2>
+  <div class="flow">
+    <div class="step"><b>1. IMPORTA WHATSAPP</b>Apri direttamente l'importazione del cliente.</div>
+    <div class="step"><b>2. FOTO E VIDEO</b>Seleziona più media insieme.</div>
+    <div class="step"><b>3. HUB CLIENTE</b>I file vengono associati al cliente aperto.</div>
+    <div class="step"><b>4. ARCHIVIO</b>Restano disponibili per riutilizzi futuri.</div>
+  </div>
+  <div class="buttons">
+    <button class="primary" id="pick">IMPORTA FOTO / VIDEO</button>
+    <button class="light" id="close">TORNA AI CLIENTI</button>
+  </div>
+  <input id="files" type="file" accept="image/*,video/*" multiple hidden>
+  <div class="status" id="status"></div>
+</div>
+</main>
+<script>
+const names=["LA SACRA IMMOBILIARE","F1 IMMOBILIARE","MARTA RUFFINO","ANTICA CAPPELLA","CARTOLIBRERIA 10 E LODE","REAL MEDIA PRO"];
+const box=document.getElementById("clients"), panel=document.getElementById("panel"), title=document.getElementById("title"), input=document.getElementById("files"), status=document.getElementById("status");
+let active="";
+names.forEach(n=>{const d=document.createElement("div");d.className="card client";d.innerHTML='<div class="name">'+n+'</div><div class="meta">HUB separato · archivio media · calendario · storico</div><div class="buttons"><button class="primary">APRI HUB</button><button class="light">IMPORTA WHATSAPP</button></div>';d.onclick=()=>{document.querySelectorAll(".client").forEach(x=>x.classList.remove("active"));d.classList.add("active");active=n;title.textContent=n+" · IMPORTA WHATSAPP";panel.classList.add("show");panel.scrollIntoView({behavior:"smooth"});};box.appendChild(d);});
+document.getElementById("pick").onclick=()=>input.click();
+input.onchange=()=>{const f=[...input.files].filter(x=>x.type.startsWith("image/")||x.type.startsWith("video/"));status.style.display="block";status.textContent=f.length+" foto/video selezionati per "+active+". Nella versione Windows questi file vengono copiati automaticamente nell'HUB del cliente.";};
+document.getElementById("close").onclick=()=>{panel.classList.remove("show");window.scrollTo({top:0,behavior:"smooth"});};
+</script>
+</body>
+</html>
