@@ -11,7 +11,7 @@
 :root{--bg:#07111f;--panel:#0e1b2c;--panel2:#12243a;--line:#27405d;--text:#f5f8fc;--muted:#9eb0c7;--blue:#2d7ff9;--green:#27d17f;--amber:#f2b84b;--red:#ef5f68}
 *{box-sizing:border-box}html,body{margin:0;background:linear-gradient(145deg,#06101c,#0b1727 60%,#07111f);color:var(--text);font:14px/1.45 Arial,Helvetica,sans-serif;min-height:100%}button,input,select,textarea{font:inherit}button{cursor:pointer}.hidden{display:none!important}.app{min-height:100vh}.auth{min-height:100vh;display:grid;place-items:center;padding:20px}.auth-card{width:min(470px,100%);background:rgba(14,27,44,.98);border:1px solid var(--line);border-radius:20px;padding:24px}.brand{font-weight:1000;letter-spacing:.08em}.brand small{display:block;color:var(--green);font-size:11px;margin-bottom:5px}.auth-card h1{margin:4px 0 6px;font-size:34px}.muted{color:var(--muted)}.field{display:grid;gap:6px;margin-top:12px}.field label{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#b8c6d8;font-weight:800}.input,select,textarea{width:100%;background:#071522;border:1px solid #2b4665;color:#fff;border-radius:10px;padding:11px 12px;outline:none}.input:focus,select:focus,textarea:focus{border-color:var(--blue)}textarea{min-height:90px;resize:vertical}.row{display:flex;gap:8px;flex-wrap:wrap}.btn{border:0;border-radius:10px;padding:10px 13px;font-weight:900;color:white;background:#172a41}.btn.primary{background:var(--blue)}.btn.green{background:var(--green);color:#04150c}.btn.danger{background:#6f252c}.btn.ghost{border:1px solid var(--line);background:transparent}.btn.small{padding:7px 9px;font-size:12px}.shell{display:grid;grid-template-columns:250px 1fr;min-height:100vh}.sidebar{border-right:1px solid var(--line);background:#081522;padding:18px 14px;position:sticky;top:0;height:100vh}.sidebar .brand{font-size:19px;padding:6px 8px 16px}.nav{display:grid;gap:5px}.nav button{width:100%;text-align:left;border:0;background:transparent;color:#b8c6d8;padding:11px 12px;border-radius:10px;font-weight:800}.nav button.active,.nav button:hover{background:#13283f;color:#fff}.userbox{position:absolute;left:14px;right:14px;bottom:16px;padding:11px;border:1px solid var(--line);border-radius:12px;background:#0d1c2e;font-size:12px}.main{padding:18px 18px 50px;min-width:0}.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}.topbar h1{margin:0;font-size:28px}.top-actions{display:flex;gap:8px;flex-wrap:wrap}.panel{background:rgba(14,27,44,.97);border:1px solid var(--line);border-radius:16px;padding:15px;margin-bottom:12px}.metrics{display:grid;grid-template-columns:repeat(6,minmax(120px,1fr));gap:9px;margin-bottom:12px}.metric{background:#0f2034;border:1px solid var(--line);border-radius:14px;padding:13px}.metric b{font-size:27px;display:block}.metric span{color:var(--muted);font-size:11px;text-transform:uppercase;font-weight:900}.clients{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px}.client-card{background:#102238;border:1px solid var(--line);border-radius:14px;padding:14px;cursor:pointer;transition:.15s}.client-card:hover,.client-card.active{border-color:var(--blue);transform:translateY(-1px)}.client-card small{color:var(--muted);text-transform:uppercase}.client-card h3{margin:4px 0}.client-stats{display:flex;gap:10px;color:#b9c8da;font-size:12px}.toolbar{display:grid;grid-template-columns:minmax(220px,1fr) 180px 180px;gap:8px;margin-bottom:12px}.content-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:11px}.content-card{background:#0b1a2a;border:1px solid var(--line);border-radius:14px;overflow:hidden;min-width:0}.thumb{height:170px;background:#13283e;display:grid;place-items:center;color:#8195ae;overflow:hidden}.thumb img,.thumb video{width:100%;height:100%;object-fit:cover}.card-body{padding:12px}.card-body h3{margin:0 0 4px;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.meta{font-size:11px;color:var(--muted)}.badges{display:flex;gap:5px;flex-wrap:wrap;margin:8px 0}.badge{padding:4px 7px;border-radius:999px;border:1px solid #35516f;font-size:10px;font-weight:900}.badge.green{color:#7ef0b0;border-color:#24734b}.badge.amber{color:#f7d48a;border-color:#866521}.card-actions{display:flex;gap:6px;flex-wrap:wrap}.uploadbox{border:1px dashed #456482;border-radius:14px;padding:18px;text-align:center;background:#0a1827}.uploadbox.drag{border-color:var(--green);background:#0c241c}.uploadbox input{display:none}.forms{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.span2{grid-column:span 2}.span3{grid-column:1/-1}.calendar-list,.log-list{display:grid;gap:7px}.lineitem{display:grid;grid-template-columns:150px 1fr auto;gap:10px;align-items:center;background:#0c1b2b;border:1px solid var(--line);border-radius:11px;padding:10px}.section-title{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}.section-title h2{margin:0}.notice{padding:10px 12px;border-radius:10px;background:#102a20;border:1px solid #285f43;color:#b9efce;margin:10px 0}.warn{background:#2d2411;border-color:#725b24;color:#f5dc9e}.error{background:#35191c;border-color:#743039;color:#ffb3b8}.modal{position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;align-items:center;justify-content:center;padding:16px;z-index:50}.modal.open{display:flex}.modal-card{width:min(680px,100%);max-height:90vh;overflow:auto;background:#0e1b2c;border:1px solid #3c5a7b;border-radius:17px;padding:18px}.empty{padding:24px;text-align:center;color:var(--muted)}code{color:#b9d8ff;word-break:break-all}.mobilebar{display:none}.fab{display:none}
 @media(max-width:1100px){.metrics{grid-template-columns:repeat(3,1fr)}.forms{grid-template-columns:1fr 1fr}.span3{grid-column:1/-1}}
-@media(max-width:760px){.shell{display:block}.sidebar{display:none}.main{padding:12px 12px 92px}.topbar h1{font-size:23px}.metrics{grid-template-columns:1fr 1fr}.toolbar{grid-template-columns:1fr}.forms{grid-template-columns:1fr}.span2,.span3{grid-column:auto}.lineitem{grid-template-columns:1fr}.mobilebar{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;left:0;right:0;bottom:0;background:#081522;border-top:1px solid var(--line);z-index:40}.mobilebar button{background:transparent;border:0;color:#9fb1c7;padding:12px 4px;font-size:10px;font-weight:900}.mobilebar button.active{color:#fff;background:#102238}.fab{display:block;position:fixed;right:16px;bottom:70px;border:0;border-radius:999px;width:54px;height:54px;background:var(--green);color:#03140b;font-size:25px;font-weight:bold;z-index:39}.content-grid{grid-template-columns:1fr 1fr}.thumb{height:135px}}
+@media(max-width:760px){.shell{display:block}.sidebar{display:none}.main{padding:12px 12px 92px}.topbar h1{font-size:23px}.metrics{grid-template-columns:1fr 1fr}.toolbar{grid-template-columns:1fr}.forms{grid-template-columns:1fr}.span2,.span3{grid-column:auto}.lineitem{grid-template-columns:1fr}.mobilebar{display:grid;grid-template-columns:repeat(6,1fr);position:fixed;left:0;right:0;bottom:0;background:#081522;border-top:1px solid var(--line);z-index:40}.mobilebar button{background:transparent;border:0;color:#9fb1c7;padding:12px 4px;font-size:10px;font-weight:900}.mobilebar button.active{color:#fff;background:#102238}.fab{display:block;position:fixed;right:16px;bottom:70px;border:0;border-radius:999px;width:54px;height:54px;background:var(--green);color:#03140b;font-size:25px;font-weight:bold;z-index:39}.content-grid{grid-template-columns:1fr 1fr}.thumb{height:135px}}
 @media(max-width:480px){.content-grid{grid-template-columns:1fr}.metrics{grid-template-columns:1fr 1fr}}
 </style>
 </head>
@@ -40,6 +40,7 @@
       <button data-tab="archive">Archivio</button>
       <button data-tab="calendar">Calendario</button>
       <button data-tab="whatsapp">WhatsApp</button>
+      <button data-tab="automation">Automazione</button>
       <button data-tab="clients">Clienti</button>
     </div>
     <div class="userbox"><div id="userEmail"></div><button class="btn ghost small" style="margin-top:8px;width:100%" id="logoutBtn">ESCI</button></div>
@@ -75,7 +76,8 @@
             <option value="">Tutti gli stati</option>
             <option>IN ARRIVO</option><option>DA CLASSIFICARE</option><option>DA LAVORARE</option>
             <option>IN LAVORAZIONE</option><option>PRONTO</option><option>DA APPROVARE</option>
-            <option>APPROVATO</option><option>PROGRAMMATO</option><option>PUBBLICATO</option><option>ARCHIVIATO</option>
+            <option>APPROVATO</option><option>PROGRAMMATO</option><option>IN PUBBLICAZIONE</option><option>PUBBLICATO</option><option>ARCHIVIATO</option>
+            <option>ERRORE_MEDIA</option><option>ERRORE_QUEUE</option><option>ERRORE_PUBBLICAZIONE</option><option>CANALE_DA_COLLEGARE</option><option>CREDENZIALI_MANCANTI</option>
           </select>
         </div>
         <div class="content-grid" id="archiveGrid"></div>
@@ -110,6 +112,21 @@
       </div>
     </section>
 
+    <section id="tab-automation" class="hidden">
+      <div class="panel">
+        <div class="section-title"><h2>Stato automazione</h2><span class="muted">Hub → calendario → queue → publisher → social</span></div>
+        <div id="automationHealth" class="calendar-list"></div>
+      </div>
+      <div class="panel">
+        <div class="section-title"><h2>Revisione ambienti / negozi · 75 giorni</h2><span class="muted">Promemoria amministrativo, non duplicazione automatica</span></div>
+        <div id="storeCycleList" class="calendar-list"></div>
+      </div>
+      <div class="panel">
+        <div class="section-title"><h2>Ultimi eventi di pubblicazione</h2><span class="muted">Coda e ritorno stato Supabase</span></div>
+        <div id="publicationEvents" class="log-list"></div>
+      </div>
+    </section>
+
     <section id="tab-clients" class="hidden">
       <div class="panel">
         <div class="section-title"><h2>Anagrafiche clienti</h2><button class="btn primary small" id="openClientBtn2">+ NUOVO CLIENTE</button></div>
@@ -130,6 +147,7 @@
   <button data-tab="archive">ARCHIVIO</button>
   <button data-tab="calendar">CALENDARIO</button>
   <button data-tab="whatsapp">WHATSAPP</button>
+  <button data-tab="automation">AUTO</button>
   <button data-tab="clients">CLIENTI</button>
 </nav>
 <button class="fab" id="fabUpload">+</button>
@@ -192,6 +210,11 @@ let user = null;
 let clients = [];
 let items = [];
 let calendar = [];
+let socialChannels = [];
+let webSources = [];
+let storeCycles = [];
+let publicationEvents = [];
+let whatsappSenders = [];
 let selectedClientId = "";
 let droppedFiles = [];
 
@@ -242,8 +265,15 @@ async function loadAll(){
   const rc=await sb.from("f1_content_clients").select("*").order("name");
   const ri=await sb.from("f1_content_items").select("*, f1_content_media(id,file_name,mime_type,storage_path,file_size,created_at), f1_content_calendar(id,platform,publication_at,status)").order("created_at",{ascending:false}).limit(300);
   const rcal=await sb.from("f1_content_calendar").select("*, f1_content_items(title), f1_content_clients(name)").order("publication_at",{ascending:true}).limit(300);
-  if(rc.error)throw rc.error;if(ri.error)throw ri.error;if(rcal.error)throw rcal.error;
+  const rch=await sb.from("f1_client_social_channels").select("*").order("platform");
+  const rws=await sb.from("f1_client_web_sources").select("id,client_id,url,canonical_url,page_type,title,last_checked_at,active").eq("active",true).order("last_checked_at",{ascending:false}).limit(1000);
+  const rsc=await sb.from("f1_client_store_cycles").select("*").order("clone_review_due_at");
+  const rpe=await sb.from("f1_publication_events").select("*, f1_content_clients(name)").order("created_at",{ascending:false}).limit(100);
+  const rwas=await sb.from("f1_whatsapp_senders").select("*").eq("active",true);
+  const errors=[rc.error,ri.error,rcal.error,rch.error,rws.error,rsc.error,rpe.error,rwas.error].filter(Boolean);
+  if(errors.length)throw errors[0];
   clients=rc.data||[];items=ri.data||[];calendar=rcal.data||[];
+  socialChannels=rch.data||[];webSources=rws.data||[];storeCycles=rsc.data||[];publicationEvents=rpe.data||[];whatsappSenders=rwas.data||[];
   if(selectedClientId && !clients.find(function(c){return c.id===selectedClientId}))selectedClientId="";
   fillClientSelects();
 }
@@ -255,11 +285,11 @@ function fillClientSelects(){
   if(selectedClientId)el("uploadClient").value=selectedClientId;
 }
 function setTab(tab){
-  ["dashboard","archive","calendar","whatsapp","clients"].forEach(function(t){el("tab-"+t).classList.toggle("hidden",t!==tab)});
+  ["dashboard","archive","calendar","whatsapp","automation","clients"].forEach(function(t){el("tab-"+t).classList.toggle("hidden",t!==tab)});
   document.querySelectorAll("[data-tab]").forEach(function(b){b.classList.toggle("active",b.dataset.tab===tab)});
-  const titles={dashboard:"Dashboard",archive:"Archivio contenuti",calendar:"Calendario editoriale",whatsapp:"WhatsApp",clients:"Clienti"};
+  const titles={dashboard:"Dashboard",archive:"Archivio contenuti",calendar:"Calendario editoriale",whatsapp:"WhatsApp",automation:"Automazione",clients:"Clienti"};
   el("pageTitle").textContent=titles[tab]||"F1 Content Hub";
-  if(tab==="whatsapp")loadWhatsApp(); if(tab==="calendar")renderCalendar();
+  if(tab==="whatsapp")loadWhatsApp(); if(tab==="calendar")renderCalendar(); if(tab==="automation")renderAutomation();
 }
 document.querySelectorAll("[data-tab]").forEach(function(b){b.onclick=function(){setTab(b.dataset.tab)}});
 
@@ -315,7 +345,7 @@ function renderClients(){
   const html=clients.map(function(c){const n=counts[c.id]||{all:0,work:0,plan:0};return '<article class="client-card '+(selectedClientId===c.id?"active":"")+'" onclick="window.f1SelectClient(\''+c.id+'\')"><small>'+esc(c.category)+'</small><h3>'+esc(c.name)+'</h3><div class="client-stats"><span>'+n.all+' contenuti</span><span>'+n.work+' da lavorare</span><span>'+n.plan+' programmati</span></div></article>'}).join("");
   el("clientCards").innerHTML=html;el("clientsAdmin").innerHTML=html;
 }
-async function renderAll(){renderMetrics();renderClients();await renderGrid("latestGrid",filteredItems(12));await renderGrid("archiveGrid",filteredItems());renderCalendar()}
+async function renderAll(){renderMetrics();renderClients();await renderGrid("latestGrid",filteredItems(12));await renderGrid("archiveGrid",filteredItems());renderCalendar();renderAutomation()}
 window.f1SelectClient=function(id){const chosen=clients.find(function(x){return x.id===id});if(chosen&&chosen.slug==="immobiliare-la-sacra"){location.href="./immobiliare-la-sacra.html";return}selectedClientId=selectedClientId===id?"":id;el("clientFilter").value=selectedClientId;fillClientSelects();renderAll();setTab("archive")};
 window.f1SetStatus=async function(id,status){const r=await sb.from("f1_content_items").update({status:status}).eq("id",id);if(r.error)return alert(r.error.message);const it=items.find(function(i){return i.id===id});if(it)it.status=status;renderMetrics()};
 window.f1Reuse=async function(id){
@@ -324,6 +354,8 @@ window.f1Reuse=async function(id){
   if(r.error)return alert(r.error.message);await loadAll();renderAll();alert("Nuova lavorazione creata senza duplicare il file originale.");
 };
 window.f1Schedule=async function(id,clientId){
+  const item=items.find(function(x){return x.id===id}), client=clients.find(function(x){return x.id===clientId});
+  if(client&&client.approval_required&&item&&!["APPROVATO","PROGRAMMATO"].includes(item.status))return alert("Questo cliente richiede approvazione. Imposta prima il contenuto su APPROVATO.");
   const platform=(prompt("Piattaforma: Facebook, Instagram, TikTok, LinkedIn, YouTube, Google Business Profile","Instagram")||"").trim();if(!platform)return;
   const dt=(prompt("Data e ora in formato YYYY-MM-DD HH:MM","2026-09-24 18:30")||"").trim();if(!dt)return;
   const parsed=new Date(dt.replace(" ","T"));if(isNaN(parsed.getTime()))return alert("Data non valida.");
@@ -338,6 +370,50 @@ function renderCalendar(){
   if(!list.length){el("calendarList").innerHTML='<div class="empty">Nessuna programmazione.</div>';return}
   el("calendarList").innerHTML=list.map(function(x){return '<div class="lineitem"><b>'+esc(fmt(x.publication_at))+'</b><div><b>'+esc(x.f1_content_items?x.f1_content_items.title:"Contenuto")+'</b><div class="meta">'+esc(x.f1_content_clients?x.f1_content_clients.name:"")+' · '+esc(x.platform)+'</div></div><span class="badge amber">'+esc(x.status)+'</span></div>'}).join("");
 }
+
+
+function daysUntil(value){
+  if(!value)return null;
+  return Math.ceil((new Date(value).getTime()-Date.now())/86400000);
+}
+function renderAutomation(){
+  const health=clients.map(function(c){
+    const ch=socialChannels.filter(function(x){return x.client_id===c.id});
+    const verified=ch.filter(function(x){return x.enabled&&x.verified});
+    const sources=webSources.filter(function(x){return x.client_id===c.id});
+    const cal=calendar.filter(function(x){return x.client_id===c.id});
+    const queued=cal.filter(function(x){return !!x.queue_job_id});
+    const blocked=cal.filter(function(x){return ["CANALE_DA_COLLEGARE","ERRORE_MEDIA","ERRORE_QUEUE","ERRORE_PUBBLICAZIONE","CREDENZIALI_MANCANTI"].includes(x.status)});
+    const website=c.website?(sources.length?"SITO OK":"SITO DA SINCRONIZZARE"):"WEBSITE MANCANTE";
+    const wa=whatsappSenders.length?"WHATSAPP ATTIVO":"WHATSAPP DA CONFIGURARE";
+    let state="CONFIGURAZIONE INCOMPLETA", cls="amber";
+    if(verified.length>0 && (c.website?sources.length>0:true) && (!cal.length || queued.length===cal.length) && !blocked.length){state="AUTOMAZIONE ATTIVA";cls="green"}
+    if(blocked.length){state="PUBBLICAZIONE BLOCCATA";cls=""}
+    return '<div class="lineitem"><b>'+esc(c.name)+'</b><div><div class="badges"><span class="badge '+cls+'">'+esc(state)+'</span><span class="badge">'+esc(website)+'</span><span class="badge">'+esc(wa)+'</span></div><div class="meta">Canali verificati: '+verified.length+'/'+ch.length+' · Calendario: '+cal.length+' · In queue: '+queued.length+' · Fonti web: '+sources.length+'</div></div><span class="badge '+(blocked.length?"":"green")+'">'+(blocked.length?blocked.length+" BLOCCATI":"OK")+'</span></div>';
+  }).join("");
+  el("automationHealth").innerHTML=health||'<div class="empty">Nessun cliente.</div>';
+
+  const cycles=storeCycles.map(function(x){
+    const c=clients.find(function(k){return k.id===x.client_id});
+    const d=daysUntil(x.clone_review_due_at);
+    let label="Revisione tra "+d+" giorni", cls="";
+    if(d===null)label="Data revisione mancante";
+    else if(d<=0){label="REVISIONE 75 GIORNI — VALUTARE NUOVO NEGOZIO / CLONE";cls="danger"}
+    else if(d<=1){label="Domani scade il ciclo di 75 giorni";cls="amber"}
+    else if(d<=5){label="Mancano "+d+" giorni alla revisione del negozio";cls="amber"}
+    else if(d<=10){label="Tra "+d+" giorni verifica rinnovo/clone del negozio";cls="amber"}
+    return '<div class="lineitem"><b>'+esc(c?c.name:"Cliente")+'</b><div><b>'+esc(label)+'</b><div class="meta">Provider: '+esc(x.provider||"DA_CONFIGURARE")+' · Scadenza: '+esc(fmt(x.clone_review_due_at))+'</div></div><button class="btn small '+(d!==null&&d<=0?"danger":"ghost")+'" onclick="window.f1CloneGuide(\''+x.client_id+'\')">APRI PROCEDURA CLONE</button></div>';
+  }).join("");
+  el("storeCycleList").innerHTML=cycles||'<div class="empty">Nessun ciclo configurato.</div>';
+
+  el("publicationEvents").innerHTML=publicationEvents.slice(0,30).map(function(x){
+    return '<div class="lineitem"><b>'+esc(fmt(x.created_at))+'</b><div><b>'+esc(x.action)+' · '+esc(x.status)+'</b><div class="meta">'+esc(x.f1_content_clients?x.f1_content_clients.name:"")+' · '+esc(x.platform||"")+' · '+esc(x.queue_job_id||"")+'</div>'+(x.error?'<div class="meta" style="color:#ff9ca3">'+esc(x.error)+'</div>':"")+'</div><span class="badge">'+esc(x.provider||"")+'</span></div>';
+  }).join("")||'<div class="empty">Nessun evento di pubblicazione.</div>';
+}
+window.f1CloneGuide=function(clientId){
+  const c=clients.find(function(x){return x.id===clientId});
+  alert("Procedura di revisione 75 giorni per "+(c?c.name:"cliente")+"\n\n1. Verifica costi e condizioni del provider.\n2. Crea un nuovo ambiente solo se consentito.\n3. Copia branding, catalogo, template e configurazioni non sensibili.\n4. NON copiare token, password, sessioni o segreti.\n5. Ricollega e verifica i canali esterni prima del passaggio.");
+};
 
 function filesFromInput(){return droppedFiles.length?droppedFiles:Array.from(el("fileInput").files||[])}
 function updateFileSummary(){const f=filesFromInput();el("fileSummary").textContent=f.length?f.length+" file selezionati":"Foto, video, audio, PDF e documenti"}
