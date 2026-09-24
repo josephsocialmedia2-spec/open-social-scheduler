@@ -176,6 +176,56 @@
       "status": "QUEUED_FOR_PC",
       "created_at": "2026-09-23T19:42:01+02:00",
       "updated_at": "2026-09-23T19:42:01+02:00"
+    },
+    {
+      "id": "COMM-NEWS-20260924-EVENING-A9F57F63",
+      "communication_id": "COMM-NEWS-20260924-EVENING-A9F57F63",
+      "query": "ASTA PUBBLICA l'affitto di terreno di proprietà comunale censito a CT ",
+      "communication": "ASTA PUBBLICA L'AFFITTO DI TERRENO DI PROPRIETÀ COMUNALE CENSITO A CT AL FOGLIO 2 PARTICELLA 448 PARTITA: 5251 DI MQ 1932 DA UTILIZZARE PER FINALITÀ AGRICOLE, CON VINCOLO A COLTURA\n\nASTA PUBBLICA l'affitto di terreno di proprietà comunale censito a CT al Foglio 2 Particella 448 Partita: 5251 di mq 1932 da utilizzare per finalità agricole, con vincolo a coltura\n\nPer chi vive, vende, compra o cambia casa in Valle di Susa, la notizia conta solo se viene tradotta in effetti concreti sul territorio. F1 la segnala e la contestualizza senza trasformare una comunicazione generale in una conclusione sul singolo immobile.\n\nFonte: Comune di Avigliana - Bandi.\nhttps://www.comune.avigliana.to.it/it-it/amministrazione/bandi-di-gara/2026/asta-pubblica-l-affitto-nbsp-di-terreno-di-proprieta-comunale-censito-a-ct-al-foglio-2-49962-1-8468873f2fb105173d68dd26a69c886c\n\nNon a sensazione. Con i dati.\n\nValutazione immobile: https://www.agentpricing.com/j.malafronte\nContatto F1 Immobiliare: https://wa.me/393713708294",
+      "caption": "ASTA PUBBLICA L'AFFITTO DI TERRENO DI PROPRIETÀ COMUNALE CENSITO A CT AL FOGLIO 2 PARTICELLA 448 PARTITA: 5251 DI MQ 1932 DA UTILIZZARE PER FINALITÀ AGRICOLE, CON VINCOLO A COLTURA\n\nASTA PUBBLICA l'affitto di terreno di proprietà comunale censito a CT al Foglio 2 Particella 448 Partita: 5251 di mq 1932 da utilizzare per finalità agricole, con vincolo a coltura\n\nPer chi vive, vende, compra o cambia casa in Valle di Susa, la notizia conta solo se viene tradotta in effetti concreti sul territorio. F1 la segnala e la contestualizza senza trasformare una comunicazione generale in una conclusione sul singolo immobile.\n\nFonte: Comune di Avigliana - Bandi.\nhttps://www.comune.avigliana.to.it/it-it/amministrazione/bandi-di-gara/2026/asta-pubblica-l-affitto-nbsp-di-terreno-di-proprieta-comunale-censito-a-ct-al-foglio-2-49962-1-8468873f2fb105173d68dd26a69c886c\n\nNon a sensazione. Con i dati.\n\nValutazione immobile: https://www.agentpricing.com/j.malafronte\nContatto F1 Immobiliare: https://wa.me/393713708294",
+      "prompt": "Crea un visual fotografico editoriale real-estate per una notizia F1 Immobiliare. Argomento: ASTA PUBBLICA l'affitto di terreno di proprietà comunale censito a CT al Foglio 2 Particella 448 Partita: 5251 di mq 1932 da utilizzare per finalità agricole, con vincolo a coltura. Categoria: notizia immobiliare. Area: Valle di Susa / Piemonte. Contesto: ASTA PUBBLICA l'affitto di terreno di proprietà comunale censito a CT al Foglio 2 Particella 448 Partita: 5251 di mq 1932 da utilizzare per finalità agricole, con vincolo a coltura. Trasforma la notizia in una scena fotografica plausibile e concreta, non in un volantino: architettura e territorio piemontese/Valle di Susa coerenti quando pertinenti, luce naturale, stile premium ma autentico, composizione verticale social-first 4:5, soggetto o immobile principale sulla destra e spazio negativo pulito sulla sinistra per il copy successivo. Non inserire testo, titoli, loghi, CTA, numeri, URL, documenti con testo leggibile o watermark. Evita look stock, icone, infografiche, card nere, template piatti, mani deformi, prospettive impossibili e artefatti AI. La fotografia deve essere adatta a una testata locale immobiliare autorevole.",
+      "client": "F1 Immobiliare",
+      "territory": "Valle di Susa",
+      "scope": "network",
+      "platforms": [
+        "facebook",
+        "instagram"
+      ],
+      "source": "f1-news-browser-control",
+      "news_id": "AUTO-6D652787B899",
+      "headline": "ASTA PUBBLICA l'affitto di terreno di proprietà comunale censito a CT ",
+      "cta": "SCOPRI COSA CAMBIA",
+      "category": "notizia immobiliare",
+      "source_name": "Comune di Avigliana - Bandi",
+      "source_url": "https://www.comune.avigliana.to.it/it-it/amministrazione/bandi-di-gara/2026/asta-pubblica-l-affitto-nbsp-di-terreno-di-proprieta-comunale-censito-a-ct-al-foglio-2-49962-1-8468873f2fb105173d68dd26a69c886c",
+      "source_hash": "a9f57f63bf1f81fa2584fc49921de0db1139f232db4b32c977d3315bc4adb24d",
+      "source_published_at": "2026-09-24",
+      "source_verification": {
+        "http_status": 200,
+        "final_url": "https://www.comune.avigliana.to.it/it-it/amministrazione/bandi-di-gara/2026/asta-pubblica-l-affitto-nbsp-di-terreno-di-proprieta-comunale-censito-a-ct-al-foglio-2-49962-1-8468873f2fb105173d68dd26a69c886c",
+        "domain": "www.comune.avigliana.to.it",
+        "content_sha256": "db8df9a14842925a6f49691a472fbdfd634fe02030b88b9b28c3a0bf4250df7d",
+        "matched_title_terms": [
+          "affitto",
+          "agricole",
+          "censito",
+          "coltura",
+          "comunale",
+          "finalità",
+          "foglio",
+          "particella",
+          "partita",
+          "proprietà",
+          "pubblica",
+          "terreno"
+        ],
+        "verified_at": "2026-09-24T17:10:45+00:00"
+      },
+      "editorial_slot": "evening",
+      "slot_key": "2026-09-24|EVENING",
+      "status": "QUEUED_FOR_PC",
+      "created_at": "2026-09-24T19:10:03+02:00",
+      "updated_at": "2026-09-24T19:10:03+02:00"
     }
   ],
   "rejected": [
@@ -186,5 +236,5 @@
       "error": "ConnectTimeout: HTTPSConnectionPool(host='www.regione.piemonte.it', port=443): Max retries exceeded with url: /web/amministrazione/autonomie-locali/notiziario-per-amministrazioni-locali/notiziario-per-amministrazioni-locali-n-31-3-settembre-2026 (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.regione.piemonte.it', port=443) at 0x7f0ef94c3bc0>, 'Connection to www.regione.piemonte.it timed out. (connect timeout=8)'))"
     }
   ],
-  "updated_at": "2026-09-23T19:42:01+02:00"
+  "updated_at": "2026-09-24T19:10:03+02:00"
 }
