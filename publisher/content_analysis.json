@@ -1,6 +1,6 @@
 {
   "version": 3,
-  "generated_at": "2026-09-24T17:37:16Z",
+  "generated_at": "2026-09-24T22:53:12Z",
   "policy": "ANALISI PRIMA DELLA CREAZIONE DEL POST + INSTAGRAM FEED/REELS + INSTAGRAM CREATORS BEST PRACTICES",
   "instagram_policy_file": "publisher/instagram_distribution_policy.json",
   "instagram_creators_policy_file": "publisher/instagram_creators_best_practices.json",
@@ -1917,11 +1917,11 @@
       },
       "comparable_previous_posts": [
         {
-          "title": "FB POST 12 · Call to action / visita · APPARTAMENTO DUE LOCALI A VALGIOIE",
+          "title": "IG POST 1 · Presentazione immobile · APPARTAMENTO DUE LOCALI A VALGIOIE",
           "format": "post",
           "category": null,
           "visual_source": null,
-          "caption": "Invito a richiedere informazioni e fissare una visita all'immobile.\n\nAnnuncio: https://lasacraimmobiliare.it/products/appartamento-due-locali-a-valgioie",
+          "caption": "Presentazione visuale dell'immobile: scopri la scheda completa e le immagini disponibili.\n\nAnnuncio: https://lasacraimmobiliare.it/products/appartamento-due-locali-a-valgioie",
           "likes": null,
           "comments": null,
           "shares": null,
@@ -1939,11 +1939,11 @@
           "metrics_status": "NOT_AVAILABLE_IN_QUEUE"
         },
         {
-          "title": "IG POST 1 · Presentazione immobile · APPARTAMENTO DUE LOCALI A VALGIOIE",
+          "title": "FB POST 12 · Call to action / visita · APPARTAMENTO DUE LOCALI A VALGIOIE",
           "format": "post",
           "category": null,
           "visual_source": null,
-          "caption": "Presentazione visuale dell'immobile: scopri la scheda completa e le immagini disponibili.\n\nAnnuncio: https://lasacraimmobiliare.it/products/appartamento-due-locali-a-valgioie",
+          "caption": "Invito a richiedere informazioni e fissare una visita all'immobile.\n\nAnnuncio: https://lasacraimmobiliare.it/products/appartamento-due-locali-a-valgioie",
           "likes": null,
           "comments": null,
           "shares": null,
@@ -2093,11 +2093,11 @@
           "metrics_status": "NOT_AVAILABLE_IN_QUEUE"
         },
         {
-          "title": "IG POST 9 · Posizione · APPARTAMENTO DUE LOCALI A VALGIOIE",
+          "title": "FB POST 8 · Comfort · APPARTAMENTO DUE LOCALI A VALGIOIE",
           "format": "post",
           "category": null,
           "visual_source": null,
-          "caption": "Dove si trova? Oggi il contenuto mette al centro la posizione dell'immobile.\n\nAnnuncio: https://lasacraimmobiliare.it/products/appartamento-due-locali-a-valgioie",
+          "caption": "Contenuto dedicato ai comfort e alle dotazioni effettivamente indicate nell'annuncio.\n\nAnnuncio: https://lasacraimmobiliare.it/products/appartamento-due-locali-a-valgioie",
           "likes": null,
           "comments": null,
           "shares": null,
@@ -2115,11 +2115,11 @@
           "metrics_status": "NOT_AVAILABLE_IN_QUEUE"
         },
         {
-          "title": "FB POST 8 · Comfort · APPARTAMENTO DUE LOCALI A VALGIOIE",
+          "title": "IG POST 9 · Posizione · APPARTAMENTO DUE LOCALI A VALGIOIE",
           "format": "post",
           "category": null,
           "visual_source": null,
-          "caption": "Contenuto dedicato ai comfort e alle dotazioni effettivamente indicate nell'annuncio.\n\nAnnuncio: https://lasacraimmobiliare.it/products/appartamento-due-locali-a-valgioie",
+          "caption": "Dove si trova? Oggi il contenuto mette al centro la posizione dell'immobile.\n\nAnnuncio: https://lasacraimmobiliare.it/products/appartamento-due-locali-a-valgioie",
           "likes": null,
           "comments": null,
           "shares": null,
