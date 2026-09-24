@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-22T10:12:49+00:00",
+  "updated_at": "2026-09-24T10:16:50+00:00",
   "signals": [
     {
       "id": "FBS-64D8E3A2C4",
@@ -337,6 +337,30 @@
       "source_query": "site:facebook.com/groups \"Rivoli\" \"cerco casa\"",
       "status": "NEW",
       "discovered_at": "2026-09-22T10:01:12+00:00"
+    },
+    {
+      "id": "FBS-584C646453",
+      "brand": "f1-immobiliare",
+      "territory": "Avigliana",
+      "group_url": "https://www.facebook.com/groups/307179086293602/",
+      "source_url": "https://www.facebook.com/groups/307179086293602/permalink/2767879050223581/",
+      "title": "Vendo, compro, Val di Susa ( Avigliana/ Almese / Ferriera ...",
+      "snippet": "Cerchiamo casa indipendente con 3 camere da letto zona Ferreira con garage e giardino. Grazie! Gradisco messaggi in privato.",
+      "source_query": "site:facebook.com/groups \"Avigliana\" \"vendesi casa\"",
+      "status": "NEW",
+      "discovered_at": "2026-09-24T10:04:18+00:00"
+    },
+    {
+      "id": "FBS-AB09370D68",
+      "brand": "f1-immobiliare",
+      "territory": "Grugliasco",
+      "group_url": "https://www.facebook.com/groups/534845537681570/",
+      "source_url": "https://www.facebook.com/groups/534845537681570/posts/1484501592715955/",
+      "title": "vendo, compro a Rivoli, Grugliasco, Collegno ecc. | album ...",
+      "snippet": "Senza esagerazione, l'ho utilizzata 1 sola volta, in casa, da lì, è sempre rimasta in scatola, non mi sono mai ricavato il tempo per dedicarmici, e ho compreso che necessiterei di un altro tipo di Looper...",
+      "source_query": "site:facebook.com/groups \"Grugliasco\" \"vendo compro\"",
+      "status": "NEW",
+      "discovered_at": "2026-09-24T10:06:26+00:00"
     }
   ]
 }
