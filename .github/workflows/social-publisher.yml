@@ -143,9 +143,15 @@ jobs:
             fi
           done
 
+          if find publisher/media/supabase -type f -print -quit 2>/dev/null | grep -q .; then
+            echo "Supabase Content Hub media is available."
+            AVAILABLE=true
+          fi
+
           echo "available=$AVAILABLE" >> "$GITHUB_OUTPUT"
 
       - name: Publish approved jobs automatically when due
+        if: steps.media.outputs.available == 'true'
         shell: bash
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
