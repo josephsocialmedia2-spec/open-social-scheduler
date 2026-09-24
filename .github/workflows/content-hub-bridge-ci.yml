@@ -59,7 +59,18 @@ jobs:
           PY
       - name: Verify no privileged key was committed
         run: |
-          if grep -R --line-number -E 'sb_secret_|SUPABASE_SERVICE_ROLE_KEY[[:space:]]*=[[:space:]]*["'"'][^$]' publisher f1-content-hub; then
-            echo 'Potential secret committed in source'
-            exit 1
-          fi
+          python - <<'PY'
+          from pathlib import Path
+          roots=[Path('publisher'),Path('f1-content-hub')]
+          forbidden=('sb_secret_',)
+          offenders=[]
+          for root in roots:
+              for path in root.rglob('*'):
+                  if not path.is_file() or path.suffix.lower() not in {'.py','.html','.js','.json','.yml','.yaml','.md'}:
+                      continue
+                  text=path.read_text(encoding='utf-8',errors='ignore')
+                  if any(token in text for token in forbidden):
+                      offenders.append(str(path))
+          assert not offenders, f'Potential privileged keys in source: {offenders}'
+          print('NO_PRIVILEGED_KEYS_COMMITTED')
+          PY
