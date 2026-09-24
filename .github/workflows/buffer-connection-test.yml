@@ -130,6 +130,18 @@ jobs:
           }, ensure_ascii=False, indent=2))
           PY
 
+      - name: Validate production Cloudinary parser
+        shell: bash
+        run: |
+          python - <<'PY'
+          import os, sys
+          sys.path.insert(0, 'publisher')
+          import buffer_twice_daily as b
+          cloud_name, api_key, api_secret = b.parse_cloudinary_url(os.getenv('CLOUDINARY_URL', ''))
+          assert cloud_name and api_key and api_secret
+          print('CLOUDINARY_PRODUCTION_PARSER_OK')
+          PY
+
       - name: Validate Immobiliare La Sacra Buffer channels without publishing
         shell: bash
         run: python publisher/buffer_queue_publish.py --verify-client immobiliare-la-sacra
