@@ -1,0 +1,49 @@
+{
+  "id": "antica-cappella",
+  "name": "Antica Cappella",
+  "active": true,
+  "timezone": "Europe/Rome",
+  "website": "https://www.anticacappella.it/",
+  "brand": {
+    "status": "configure",
+    "logo": "",
+    "background": "#17120F",
+    "primary": "#FFFFFF",
+    "accent": "#C7A56A",
+    "muted": "#C9C0B4",
+    "font_title": "DejaVu Sans Bold",
+    "font_body": "DejaVu Sans"
+  },
+  "campaign": {
+    "name": "Antica Cappella",
+    "cta": "Prenota o richiedi informazioni sull'evento",
+    "keyword": "PRENOTA",
+    "territories": [
+      "Avigliana",
+      "Valle di Susa"
+    ]
+  },
+  "publishing": {
+    "backend": "direct_api",
+    "secret_prefix": "ANTICACAPPELLA",
+    "require_media": true,
+    "slots": [
+      "11:00",
+      "18:30"
+    ],
+    "platforms": [
+      "facebook",
+      "instagram"
+    ]
+  },
+  "integrations": {
+    "facebook": {
+      "id": "direct-api",
+      "required": true
+    },
+    "instagram": {
+      "id": "direct-api",
+      "required": true
+    }
+  }
+}
