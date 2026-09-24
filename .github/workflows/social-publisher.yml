@@ -1,6 +1,10 @@
 name: Direct Social Publisher - Automatic
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - '.social-publisher-trigger'
   workflow_dispatch:
     inputs:
       job_id:
