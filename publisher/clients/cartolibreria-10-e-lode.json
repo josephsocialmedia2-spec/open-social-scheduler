@@ -1,0 +1,49 @@
+{
+  "id": "cartolibreria-10-e-lode",
+  "name": "Cartolibreria 10 e Lode",
+  "active": true,
+  "timezone": "Europe/Rome",
+  "website": "",
+  "brand": {
+    "status": "configure",
+    "logo": "",
+    "background": "#FFFFFF",
+    "primary": "#202020",
+    "accent": "#E4B93E",
+    "muted": "#777777",
+    "font_title": "DejaVu Sans Bold",
+    "font_body": "DejaVu Sans"
+  },
+  "campaign": {
+    "name": "Cartolibreria 10 e Lode",
+    "cta": "Scopri disponibilità e novità in negozio",
+    "keyword": "INFO",
+    "territories": [
+      "Susa",
+      "Valle di Susa"
+    ]
+  },
+  "publishing": {
+    "backend": "direct_api",
+    "secret_prefix": "CARTOLIBRERIA10ELODE",
+    "require_media": true,
+    "slots": [
+      "11:30",
+      "18:00"
+    ],
+    "platforms": [
+      "facebook",
+      "instagram"
+    ]
+  },
+  "integrations": {
+    "facebook": {
+      "id": "direct-api",
+      "required": true
+    },
+    "instagram": {
+      "id": "direct-api",
+      "required": true
+    }
+  }
+}
