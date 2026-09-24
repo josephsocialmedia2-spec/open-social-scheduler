@@ -78,7 +78,7 @@ jobs:
               'provider': 'buffer',
               'provider_channel_id': '6ab2b713ea19ca0bdeb8103d',
           })
-          qpath.write_text(json.dumps(q, ensure_ascii=False, indent=2) + '\\n', encoding='utf-8')
+          qpath.write_text(json.dumps(q, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
           PY
           python publisher/buffer_queue_publish.py --job-id lasacra-buffer-smoke --dry-run --strict
 
