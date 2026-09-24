@@ -114,6 +114,9 @@ create index if not exists f1_client_web_sources_checked_idx on public.f1_client
 create index if not exists f1_publication_events_calendar_idx on public.f1_publication_events(calendar_id);
 create index if not exists f1_publication_events_client_created_idx on public.f1_publication_events(client_id, created_at desc);
 create index if not exists f1_client_store_cycles_due_idx on public.f1_client_store_cycles(clone_review_due_at);
+create index if not exists f1_client_store_cycles_client_idx on public.f1_client_store_cycles(client_id);
+create index if not exists f1_publication_events_owner_idx on public.f1_publication_events(owner_id);
+create index if not exists f1_publication_events_content_idx on public.f1_publication_events(content_id);
 
 alter table public.f1_client_social_channels enable row level security;
 alter table public.f1_client_web_sources enable row level security;
