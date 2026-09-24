@@ -251,7 +251,7 @@ function propertyCard(p){
     '<h3>'+esc(p.title||"Immobile")+'</h3><div class="price">'+eur(p.price)+'</div>'+
     '<div class="badges"><span class="badge">'+count+' contenuti</span><span class="badge green">'+esc(p.status)+'</span></div>'+
     '<div class="row">'+
-      '<button class="btn green small" onclick="window.gen12(\''+p.id+'\')">GENERA 12 CONTENUTI</button>'+
+      '<button class="btn green small" onclick="window.gen12(\''+p.id+'\')">GENERA 12 TEMI / 24 PUBBLICAZIONI</button>'+
       '<button class="btn primary small" onclick="window.openContentForProperty(\''+p.id+'\')">CONTENUTI</button>'+
       '<a class="btn ghost small" target="_blank" rel="noopener" href="'+esc(p.listing_url)+'">APRI LINK</a>'+
     '</div></div></article>';
@@ -284,7 +284,7 @@ function renderCalendar(){
   el("calendarList").innerHTML=calendar.length?calendar.map(calendarRow).join(""):'<div class="empty">Nessun contenuto programmato.</div>';
 }
 function renderPublications(){
-  const list=calendar.filter(x=>["PROGRAMMATO","PUBBLICATO"].includes(x.status));
+  const list=calendar.filter(x=>["DA VERIFICARE","PROGRAMMATO","PUBBLICATO"].includes(x.status));
   el("publicationList").innerHTML=list.length?list.map(calendarRow).join(""):'<div class="empty">Nessuna pubblicazione.</div>';
 }
 function filteredContents(){
@@ -335,41 +335,101 @@ function nextSlotDates(count){
   return slots;
 }
 const ANGLES=[
-  ["Presentazione immobile","Presentiamo l'immobile in modo chiaro: tipologia, posizione e caratteristiche principali."],
-  ["Punto di forza principale","Mettiamo al centro il punto di forza che può far fermare l'attenzione dell'acquirente."],
-  ["Zona giorno","Focus sugli spazi dedicati alla vita quotidiana e alla convivialità."],
-  ["Cucina e funzionalità","Una lettura pratica degli ambienti e di come possono essere vissuti ogni giorno."],
-  ["Camere e zona notte","Spazi dedicati a riposo, privacy e organizzazione della casa."],
-  ["Bagno e finiture","Dettagli, finiture e stato degli ambienti raccontati senza promesse generiche."],
-  ["Comfort e dotazioni","Impianti, comfort e dotazioni presenti nell'immobile quando indicati nella scheda."],
-  ["Posizione e zona","Dove si trova l'immobile e perché la posizione può essere rilevante per chi cerca in zona."],
-  ["Per chi è ideale","Una possibile lettura del pubblico più coerente con tipologia, dimensioni e posizione."],
-  ["Dettagli pratici","Prezzo, disponibilità e informazioni utili da verificare prima della visita."],
-  ["Perché visitarlo","Gli elementi che meritano di essere valutati dal vivo durante una visita."],
-  ["Invito alla visita","Chiusura orientata al contatto: richiedi informazioni o prenota una visita con Immobiliare La Sacra."]
+  ["Presentazione immobile","Presentazione chiara della proposta e delle informazioni presenti nella scheda."],
+  ["Punto di forza principale","Focus sul principale elemento da valutare, senza aggiungere caratteristiche non presenti nell'annuncio."],
+  ["Soggiorno / zona giorno","Approfondimento dedicato alla zona giorno e alla fruibilità degli spazi indicati."],
+  ["Cucina","Focus sulla cucina e sull'organizzazione funzionale degli ambienti indicati nella scheda."],
+  ["Camera / zona notte","Approfondimento dedicato alla zona notte e agli spazi destinati al riposo."],
+  ["Bagno / finiture","Focus su bagno e finiture, attenendosi esclusivamente ai dettagli verificabili."],
+  ["Spazi esterni","Contenuto dedicato agli eventuali spazi esterni presenti nella scheda dell'immobile."],
+  ["Comfort","Contenuto dedicato a comfort e dotazioni effettivamente indicate nell'annuncio."],
+  ["Posizione","Focus sulla posizione dell'immobile e sul contesto territoriale indicato nella scheda."],
+  ["Per chi è adatta","Lettura editoriale del profilo potenzialmente interessato alla tipologia di immobile."],
+  ["3 motivi per visitarla","Tre elementi da valutare durante una visita, ricavati esclusivamente dalle informazioni disponibili."],
+  ["Call to action / visita","Invito a richiedere informazioni e fissare una visita all'immobile."]
 ];
-function captionFor(p,angle,body,i){
+const IG_ORDER=[1,2,3,4,5,6,7,8,9,10,11,0];
+
+function captionForPlatform(p,angle,body,postNo,platform){
   const where=[p.comune,p.address].filter(Boolean).join(" · ");
   const price=p.price?" Prezzo: "+eur(p.price)+".":"";
-  return (i+1)+"/12 · "+angle+"\n\n"+p.title+(where?" · "+where:"")+". "+body+price+"\n\nPer informazioni e visite: Immobiliare La Sacra.";
+  const link=p.listing_url||"";
+  if(platform==="Facebook"){
+    return "POST "+postNo+" · "+angle+"\n\n"+p.title+(where?" · "+where:"")+". "+body+price+
+      "\n\nPer informazioni e visite: Immobiliare La Sacra."+(link?"\n"+link:"");
+  }
+  return angle+"\n\n"+p.title+(where?" · "+where:"")+". "+body+
+    "\n\nScopri l'annuncio e contattaci per una visita."+(link?"\n"+link:"");
+}
+function nextAvailableSlots(platform,count){
+  const used=new Set(calendar.filter(x=>String(x.platform).toLowerCase()===platform.toLowerCase()).map(x=>new Date(x.publication_at).toISOString()));
+  const slots=[];let d=new Date();
+  for(let guard=0;guard<370&&slots.length<count;guard++){
+    const ds=d.toLocaleDateString("en-CA",{timeZone:TZ});
+    for(const t of ["13:00","19:00"]){
+      const iso=romeIso(ds,t);
+      if(new Date(iso).getTime()>Date.now()&&!used.has(iso)){slots.push(iso);used.add(iso);if(slots.length>=count)break}
+    }
+    d.setDate(d.getDate()+1);
+  }
+  return slots;
 }
 window.gen12=async id=>{
   const p=properties.find(x=>x.id===id);if(!p)return;
-  const existing=contents.filter(x=>x.property_id===id&&x.source==="IMMOBILIARE_SOCIAL_SCHEDULER");
-  if(existing.length)return alert("Per questo immobile esistono già "+existing.length+" contenuti generati. Anti-duplicazione attiva: non creo una seconda serie.");
-  if(!confirm("Generare 12 contenuti e programmare Facebook + Instagram alle 13:00 e 19:00?"))return;
-  const rows=ANGLES.map((a,i)=>({owner_id:user.id,client_id:client.id,property_id:p.id,title:"POST "+(i+1)+" · "+a[0]+" · "+p.title,description:captionFor(p,a[0],a[1],i),content_type:"POST IMMOBILIARE",source:"IMMOBILIARE_SOCIAL_SCHEDULER",status:"PROGRAMMATO",campaign:p.title,tags:["immobile","la-sacra","post-"+(i+1)],location:[p.comune,p.address].filter(Boolean).join(" · ")}));
+  const existing=contents.filter(x=>x.property_id===id&&String(x.source||"").startsWith("IMMOBILIARE_SOCIAL_SCHEDULER"));
+  if(existing.length)return alert("Per questo immobile esistono già "+existing.length+" varianti social. Anti-duplicazione attiva: non creo una seconda serie.");
+  if(!confirm("Generare 12 temi editoriali con 24 varianti: 12 Facebook + 12 Instagram, nelle fasce 13:00 e 19:00?"))return;
+
+  const fbSlots=nextAvailableSlots("Facebook",12);
+  const igSlots=nextAvailableSlots("Instagram",12);
+  if(fbSlots.length<12||igSlots.length<12)return alert("Non riesco a trovare 12 slot futuri liberi per entrambe le piattaforme.");
+
+  const rows=[];
+  ANGLES.forEach((a,i)=>{
+    rows.push({
+      owner_id:user.id,client_id:client.id,property_id:p.id,
+      title:"FB POST "+(i+1)+" · "+a[0]+" · "+p.title,
+      description:captionForPlatform(p,a[0],a[1],i+1,"Facebook"),
+      content_type:"POST IMMOBILIARE",source:"IMMOBILIARE_SOCIAL_SCHEDULER_V2",
+      status:"PROGRAMMATO",campaign:p.title,
+      tags:["immobile","la-sacra","facebook","post-"+(i+1)],location:[p.comune,p.address].filter(Boolean).join(" · "),
+      notes:"PLATFORM=Facebook;POST="+(i+1)
+    });
+  });
+  IG_ORDER.forEach(idx=>{
+    const a=ANGLES[idx],postNo=idx+1;
+    rows.push({
+      owner_id:user.id,client_id:client.id,property_id:p.id,
+      title:"IG POST "+postNo+" · "+a[0]+" · "+p.title,
+      description:captionForPlatform(p,a[0],a[1],postNo,"Instagram"),
+      content_type:"POST IMMOBILIARE",source:"IMMOBILIARE_SOCIAL_SCHEDULER_V2",
+      status:"PROGRAMMATO",campaign:p.title,
+      tags:["immobile","la-sacra","instagram","post-"+postNo],location:[p.comune,p.address].filter(Boolean).join(" · "),
+      notes:"PLATFORM=Instagram;POST="+postNo
+    });
+  });
+
   const ins=await sb.from("f1_content_items").insert(rows).select();
   if(ins.error)return alert(ins.error.message);
-  const slots=nextSlotDates(ins.data.length);
-  const cal=[];
-  ins.data.forEach((c,i)=>{
-    for(const platform of ["Facebook","Instagram"])cal.push({owner_id:user.id,content_id:c.id,client_id:client.id,platform,publication_at:slots[i],status:"PROGRAMMATO"});
+
+  const fbItems=ins.data.filter(x=>(x.tags||[]).includes("facebook")).sort((a,b)=>{
+    const pa=Number((a.tags||[]).find(t=>String(t).startsWith("post-"))?.split("-")[1]||0);
+    const pb=Number((b.tags||[]).find(t=>String(t).startsWith("post-"))?.split("-")[1]||0);
+    return pa-pb;
   });
+  const igItemsByPost=new Map(ins.data.filter(x=>(x.tags||[]).includes("instagram")).map(x=>{
+    const n=Number((x.tags||[]).find(t=>String(t).startsWith("post-"))?.split("-")[1]||0);return [n,x];
+  }));
+  const igItems=IG_ORDER.map(idx=>igItemsByPost.get(idx+1));
+
+  const cal=[];
+  fbItems.forEach((c,i)=>cal.push({owner_id:user.id,content_id:c.id,client_id:client.id,platform:"Facebook",publication_at:fbSlots[i],status:"PROGRAMMATO"}));
+  igItems.forEach((c,i)=>cal.push({owner_id:user.id,content_id:c.id,client_id:client.id,platform:"Instagram",publication_at:igSlots[i],status:"PROGRAMMATO"}));
+
   const cr=await sb.from("f1_content_calendar").insert(cal);
   if(cr.error)return alert(cr.error.message);
   await loadAll();renderAll();setTab("calendar");
-  alert("Creati 12 contenuti e 24 pubblicazioni (12 Facebook + 12 Instagram) nelle fasce 13:00 / 19:00.");
+  alert("Creati 12 temi editoriali e 24 pubblicazioni: 12 Facebook + 12 Instagram, con contenuti differenti.");
 };
 
 el("importUrlBtn").onclick=async()=>{
