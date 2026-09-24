@@ -25,7 +25,7 @@ import time as time_module
 from datetime import date, datetime, time, timezone
 from pathlib import Path
 from typing import Any
-from urllib.parse import urlparse
+from urllib.parse import unquote, urlparse
 from zoneinfo import ZoneInfo
 
 import requests
@@ -145,12 +145,15 @@ def discover_buffer_channels(api_key: str) -> tuple[str, dict[str, dict[str, str
 
 def parse_cloudinary_url(raw: str) -> tuple[str, str, str]:
     value = raw.strip()
+    if value.startswith("CLOUDINARY_URL="):
+        value = value.split("=", 1)[1].strip()
+    value = value.strip('"\'')
     parsed = urlparse(value)
     if parsed.scheme != "cloudinary" or not parsed.username or not parsed.password or not parsed.hostname:
         raise BufferAutomationError(
             "CLOUDINARY_URL must look like cloudinary://API_KEY:API_SECRET@CLOUD_NAME"
         )
-    return parsed.hostname, parsed.username, parsed.password
+    return parsed.hostname, unquote(parsed.username), unquote(parsed.password)
 
 
 def cloudinary_signature(params: dict[str, str], api_secret: str) -> str:
