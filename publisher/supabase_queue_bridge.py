@@ -286,7 +286,7 @@ def build_or_update_jobs(queue: dict[str, Any]) -> dict[str, int]:
             except Exception as exc:
                 reason = "ERRORE_MEDIA"
                 row["error"] = str(exc)
-            if not media_paths and platform != "linkedin-page":
+            if not media_paths:
                 reason = "ERRORE_MEDIA"
                 row["error"] = "Nessun media disponibile nel Content Hub o nella scheda immobile"
 
