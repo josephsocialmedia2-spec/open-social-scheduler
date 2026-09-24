@@ -17,6 +17,7 @@ jobs:
     timeout-minutes: 10
     env:
       BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+      LASACRA_BUFFER_API_KEY: ${{ secrets.LASACRA_BUFFER_API_KEY }}
       CLOUDINARY_URL: ${{ secrets.CLOUDINARY_URL }}
 
     steps:
@@ -128,3 +129,7 @@ jobs:
               'cloudinary_public_media_ok': True,
           }, ensure_ascii=False, indent=2))
           PY
+
+      - name: Validate Immobiliare La Sacra Buffer channels without publishing
+        shell: bash
+        run: python publisher/buffer_queue_publish.py --verify-client immobiliare-la-sacra
