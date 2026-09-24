@@ -16,6 +16,8 @@ jobs:
     env:
       SUPABASE_URL: ${{ vars.SUPABASE_URL || 'https://nqnmlsmeiynxbdojeyjt.supabase.co' }}
       SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+      LASACRA_BUFFER_API_KEY: ${{ secrets.LASACRA_BUFFER_API_KEY }}
+      CLOUDINARY_URL: ${{ secrets.CLOUDINARY_URL }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -41,6 +43,12 @@ jobs:
           assert len({j['id'] for j in hub}) == len(hub), 'Duplicate Content Hub queue IDs'
           print(f'RUNTIME_BRIDGE_OK hub_jobs={len(hub)} blocked={sum(j.get("status")=="blocked" for j in hub)}')
           PY
+      - name: Verify La Sacra Buffer queue routing without publishing
+        shell: bash
+        run: |
+          set -euo pipefail
+          python publisher/buffer_queue_publish.py --client-id immobiliare-la-sacra --dry-run --strict
+
       - name: Verify website source runtime
         shell: bash
         run: |
