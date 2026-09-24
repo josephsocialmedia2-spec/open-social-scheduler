@@ -23,7 +23,7 @@ on:
     - cron: '*/15 * * * *'
   workflow_run:
     # Also run immediately after a successful 4-hour content-production cycle.
-    workflows: ['Open Social Engine - 6 Every 4 Hours']
+    workflows: ['Open Social Engine - 10 STATIC PUBLICATIONS - 5 F1 + 5 RMP']
     types: [completed]
 
 permissions:
