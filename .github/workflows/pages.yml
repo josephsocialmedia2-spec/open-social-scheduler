@@ -23,7 +23,8 @@ on:
       - 'f1-academy/**'
       - 'f1-os-mobile/**'
       - 'f1-os-cloud/**'
-      - 'f1-os-companion/**'\n      - 'f1-content-hub/**'
+      - 'f1-os-companion/**'
+      - 'f1-content-hub/**'
       - '.github/workflows/pages.yml'
   workflow_dispatch:
 
@@ -67,7 +68,8 @@ jobs:
           if [ -d f1-academy ]; then cp -R f1-academy /tmp/open-social-pages/f1-academy; fi
           if [ -d f1-os-mobile ]; then cp -R f1-os-mobile /tmp/open-social-pages/f1-os-mobile; fi
           if [ -d f1-os-cloud ]; then cp -R f1-os-cloud /tmp/open-social-pages/f1-os-cloud; fi
-          if [ -d f1-os-companion ]; then cp -R f1-os-companion /tmp/open-social-pages/f1-os-companion; fi\n          if [ -d f1-content-hub ]; then cp -R f1-content-hub /tmp/open-social-pages/f1-content-hub; fi
+          if [ -d f1-os-companion ]; then cp -R f1-os-companion /tmp/open-social-pages/f1-os-companion; fi
+          if [ -d f1-content-hub ]; then cp -R f1-content-hub /tmp/open-social-pages/f1-content-hub; fi
 
       - name: Sync to gh-pages
         shell: bash
@@ -93,7 +95,8 @@ jobs:
           if [ -d /tmp/open-social-pages/f1-academy ]; then rm -rf f1-academy; cp -R /tmp/open-social-pages/f1-academy ./f1-academy; fi
           if [ -d /tmp/open-social-pages/f1-os-mobile ]; then rm -rf f1-os-mobile; cp -R /tmp/open-social-pages/f1-os-mobile ./f1-os-mobile; fi
           if [ -d /tmp/open-social-pages/f1-os-cloud ]; then rm -rf f1-os-cloud; cp -R /tmp/open-social-pages/f1-os-cloud ./f1-os-cloud; fi
-          if [ -d /tmp/open-social-pages/f1-os-companion ]; then rm -rf f1-os-companion; cp -R /tmp/open-social-pages/f1-os-companion ./f1-os-companion; fi\n          if [ -d /tmp/open-social-pages/f1-content-hub ]; then rm -rf f1-content-hub; cp -R /tmp/open-social-pages/f1-content-hub ./f1-content-hub; fi
+          if [ -d /tmp/open-social-pages/f1-os-companion ]; then rm -rf f1-os-companion; cp -R /tmp/open-social-pages/f1-os-companion ./f1-os-companion; fi
+          if [ -d /tmp/open-social-pages/f1-content-hub ]; then rm -rf f1-content-hub; cp -R /tmp/open-social-pages/f1-content-hub ./f1-content-hub; fi
           touch .nojekyll
           git config user.name 'open-social-pages'
           git config user.email 'open-social-pages@users.noreply.github.com'

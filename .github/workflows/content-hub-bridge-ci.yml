@@ -1,0 +1,76 @@
+name: Content Hub Multi-Client Bridge CI
+
+on:
+  pull_request:
+    paths:
+      - 'publisher/supabase_queue_bridge.py'
+      - 'publisher/supabase_website_sync.py'
+      - 'publisher/clients/**'
+      - 'publisher/queue.json'
+      - 'f1-content-hub/**'
+      - '.github/workflows/social-publisher.yml'
+      - '.github/workflows/content-hub-bridge-ci.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install minimal dependency
+        run: pip install requests==2.32.5
+      - name: Compile bridge scripts
+        run: python -m py_compile publisher/supabase_queue_bridge.py publisher/supabase_website_sync.py publisher/direct_api_entry.py publisher/direct_api_publish.py
+      - name: Validate queue and client configs
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          queue=json.loads(Path('publisher/queue.json').read_text(encoding='utf-8'))
+          assert isinstance(queue.get('jobs'), list)
+
+          required={
+              'f1-immobiliare',
+              'real-media-pro',
+              'immobiliare-la-sacra',
+              'antica-cappella',
+              'marta-ruffino',
+              'cartolibreria-10-e-lode',
+          }
+          found=set()
+          for path in Path('publisher/clients').glob('*.json'):
+              if path.name.startswith('_'):
+                  continue
+              data=json.loads(path.read_text(encoding='utf-8'))
+              if data.get('id') in required:
+                  found.add(data['id'])
+                  publishing=data.get('publishing') or {}
+                  assert publishing.get('secret_prefix'), path
+                  assert data.get('timezone') == 'Europe/Rome', path
+          assert found == required, (found, required-found)
+          print('BRIDGE_STATIC_VALIDATION_OK')
+          PY
+      - name: Verify no privileged key was committed
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          roots=[Path('publisher'),Path('f1-content-hub')]
+          forbidden=('sb_secret_',)
+          offenders=[]
+          for root in roots:
+              for path in root.rglob('*'):
+                  if not path.is_file() or path.suffix.lower() not in {'.py','.html','.js','.json','.yml','.yaml','.md'}:
+                      continue
+                  text=path.read_text(encoding='utf-8',errors='ignore')
+                  if any(token in text for token in forbidden):
+                      offenders.append(str(path))
+          assert not offenders, f'Potential privileged keys in source: {offenders}'
+          print('NO_PRIVILEGED_KEYS_COMMITTED')
+          PY

@@ -71,6 +71,20 @@ jobs:
       RMP_PINTEREST_ACCESS_TOKEN: ${{ secrets.RMP_PINTEREST_ACCESS_TOKEN }}
       RMP_PINTEREST_BOARD_ID: ${{ secrets.RMP_PINTEREST_BOARD_ID }}
       RMP_PINTEREST_LINK: ${{ vars.RMP_PINTEREST_LINK }}
+      SUPABASE_URL: ${{ vars.SUPABASE_URL || 'https://nqnmlsmeiynxbdojeyjt.supabase.co' }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+      LASACRA_FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.LASACRA_FACEBOOK_PAGE_ACCESS_TOKEN }}
+      LASACRA_INSTAGRAM_ACCESS_TOKEN: ${{ secrets.LASACRA_INSTAGRAM_ACCESS_TOKEN }}
+      LASACRA_INSTAGRAM_USER_ID: ${{ secrets.LASACRA_INSTAGRAM_USER_ID }}
+      ANTICACAPPELLA_FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.ANTICACAPPELLA_FACEBOOK_PAGE_ACCESS_TOKEN }}
+      ANTICACAPPELLA_INSTAGRAM_ACCESS_TOKEN: ${{ secrets.ANTICACAPPELLA_INSTAGRAM_ACCESS_TOKEN }}
+      ANTICACAPPELLA_INSTAGRAM_USER_ID: ${{ secrets.ANTICACAPPELLA_INSTAGRAM_USER_ID }}
+      MARTA_FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.MARTA_FACEBOOK_PAGE_ACCESS_TOKEN }}
+      MARTA_INSTAGRAM_ACCESS_TOKEN: ${{ secrets.MARTA_INSTAGRAM_ACCESS_TOKEN }}
+      MARTA_INSTAGRAM_USER_ID: ${{ secrets.MARTA_INSTAGRAM_USER_ID }}
+      CARTOLIBRERIA10ELODE_FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.CARTOLIBRERIA10ELODE_FACEBOOK_PAGE_ACCESS_TOKEN }}
+      CARTOLIBRERIA10ELODE_INSTAGRAM_ACCESS_TOKEN: ${{ secrets.CARTOLIBRERIA10ELODE_INSTAGRAM_ACCESS_TOKEN }}
+      CARTOLIBRERIA10ELODE_INSTAGRAM_USER_ID: ${{ secrets.CARTOLIBRERIA10ELODE_INSTAGRAM_USER_ID }}
 
     steps:
       - name: Checkout main state
@@ -87,6 +101,12 @@ jobs:
 
       - name: Install publisher dependencies
         run: pip install -r publisher/requirements.txt
+
+      - name: Reconcile F1 Content Hub into publisher queue
+        run: python publisher/supabase_queue_bridge.py
+
+      - name: Refresh client website sources when due
+        run: python publisher/supabase_website_sync.py
 
       - name: Download recent rendered media
         id: media
@@ -123,6 +143,11 @@ jobs:
             fi
           done
 
+          if find publisher/media/supabase -type f -print -quit 2>/dev/null | grep -q .; then
+            echo "Supabase Content Hub media is available."
+            AVAILABLE=true
+          fi
+
           echo "available=$AVAILABLE" >> "$GITHUB_OUTPUT"
 
       - name: Publish approved jobs automatically when due
@@ -144,6 +169,10 @@ jobs:
           if [ "$DRY_RUN" = "true" ]; then ARGS+=(--dry-run --strict); fi
 
           python publisher/direct_api_entry.py "${ARGS[@]}"
+
+      - name: Sync publisher result back to Content Hub
+        if: always()
+        run: python publisher/supabase_queue_bridge.py --sync-back-only
 
       - name: Persist publication state
         if: always()
