@@ -396129,6 +396129,21 @@
       "retry_count": 0,
       "created_by": "supabase-queue-bridge",
       "autonomous_publish": true,
+      "buffer_posts": [
+        {
+          "service": "instagram",
+          "channel_id": "6ab2b6e7ea19ca0bdeb80e19",
+          "post_id": "6ab563b1e065597a3de96a5e",
+          "buffer_status": "error",
+          "due_at": "2026-09-24T17:53:53.487Z",
+          "created_at": "2026-09-24T17:53:58+00:00",
+          "sent_at": null,
+          "external_link": null
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "instagram"
+      ],
       "cloudinary_assets": [
         {
           "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272424/f1-buffer/supabase-calendar-1728622a-2f89-4e92-8e51-22bc9461d9aa/slide-01.png",
@@ -396190,25 +396205,12 @@
           "resource_type": "image",
           "bytes": "3296784"
         }
-      ],
-      "buffer_posts": [
-        {
-          "service": "instagram",
-          "channel_id": "6ab2b6e7ea19ca0bdeb80e19",
-          "post_id": "6ab563b1e065597a3de96a5e",
-          "buffer_status": "error",
-          "due_at": "2026-09-24T17:53:53.487Z",
-          "created_at": "2026-09-24T17:53:58+00:00"
-        }
-      ],
-      "buffer_scheduled_platforms": [
-        "instagram"
       ]
     },
     {
       "id": "supabase-calendar-f1b70547-b053-4669-b164-3b5655853ce3",
-      "enabled": true,
-      "status": "buffer_scheduled",
+      "enabled": false,
+      "status": "published",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "FB POST 4 · Cucina · APPARTAMENTO DUE LOCALI A VALGIOIE",
@@ -396243,6 +396245,21 @@
       "retry_count": 0,
       "created_by": "supabase-queue-bridge",
       "autonomous_publish": true,
+      "buffer_posts": [
+        {
+          "service": "facebook",
+          "channel_id": "6ab2b713ea19ca0bdeb8103d",
+          "post_id": "6ab563bfba1e0b42a63eacb0",
+          "buffer_status": "sent",
+          "due_at": "2026-09-24T17:54:07.812Z",
+          "created_at": "2026-09-24T17:54:18+00:00",
+          "sent_at": "2026-09-24T17:54:31.121Z",
+          "external_link": "https://www.facebook.com/122138682843201564/posts/122140917051201564"
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "facebook"
+      ],
       "cloudinary_assets": [
         {
           "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272439/f1-buffer/supabase-calendar-f1b70547-b053-4669-b164-3b5655853ce3/slide-01.png",
@@ -396305,19 +396322,8 @@
           "bytes": "3296784"
         }
       ],
-      "buffer_posts": [
-        {
-          "service": "facebook",
-          "channel_id": "6ab2b713ea19ca0bdeb8103d",
-          "post_id": "6ab563bfba1e0b42a63eacb0",
-          "buffer_status": "sending",
-          "due_at": "2026-09-24T17:54:07.812Z",
-          "created_at": "2026-09-24T17:54:18+00:00"
-        }
-      ],
-      "buffer_scheduled_platforms": [
-        "facebook"
-      ]
+      "external_post_id": "6ab563bfba1e0b42a63eacb0",
+      "external_url": "https://www.facebook.com/122138682843201564/posts/122140917051201564"
     },
     {
       "id": "supabase-calendar-67648e42-64db-44ba-bcec-46331d640e57",
@@ -396357,6 +396363,21 @@
       "retry_count": 0,
       "created_by": "supabase-queue-bridge",
       "autonomous_publish": true,
+      "buffer_posts": [
+        {
+          "service": "instagram",
+          "channel_id": "6ab2b6e7ea19ca0bdeb80e19",
+          "post_id": "6ab563d8f2f88235921c2d32",
+          "buffer_status": "scheduled",
+          "due_at": "2026-09-25T11:00:00.000Z",
+          "created_at": "2026-09-24T17:54:32+00:00",
+          "sent_at": null,
+          "external_link": null
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "instagram"
+      ],
       "cloudinary_assets": [
         {
           "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272458/f1-buffer/supabase-calendar-67648e42-64db-44ba-bcec-46331d640e57/slide-01.png",
@@ -396418,19 +396439,6 @@
           "resource_type": "image",
           "bytes": "3296784"
         }
-      ],
-      "buffer_posts": [
-        {
-          "service": "instagram",
-          "channel_id": "6ab2b6e7ea19ca0bdeb80e19",
-          "post_id": "6ab563d8f2f88235921c2d32",
-          "buffer_status": "scheduled",
-          "due_at": "2026-09-25T11:00:00.000Z",
-          "created_at": "2026-09-24T17:54:32+00:00"
-        }
-      ],
-      "buffer_scheduled_platforms": [
-        "instagram"
       ]
     },
     {
@@ -396471,6 +396479,21 @@
       "retry_count": 0,
       "created_by": "supabase-queue-bridge",
       "autonomous_publish": true,
+      "buffer_posts": [
+        {
+          "service": "facebook",
+          "channel_id": "6ab2b713ea19ca0bdeb8103d",
+          "post_id": "6ab563e0f2f88235921c366d",
+          "buffer_status": "scheduled",
+          "due_at": "2026-09-25T11:00:00.000Z",
+          "created_at": "2026-09-24T17:54:41+00:00",
+          "sent_at": null,
+          "external_link": null
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "facebook"
+      ],
       "cloudinary_assets": [
         {
           "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272473/f1-buffer/supabase-calendar-42ef3b6a-4286-4828-a473-47f81acfa112/slide-01.png",
@@ -396532,19 +396555,6 @@
           "resource_type": "image",
           "bytes": "3296784"
         }
-      ],
-      "buffer_posts": [
-        {
-          "service": "facebook",
-          "channel_id": "6ab2b713ea19ca0bdeb8103d",
-          "post_id": "6ab563e0f2f88235921c366d",
-          "buffer_status": "scheduled",
-          "due_at": "2026-09-25T11:00:00.000Z",
-          "created_at": "2026-09-24T17:54:41+00:00"
-        }
-      ],
-      "buffer_scheduled_platforms": [
-        "facebook"
       ]
     },
     {
@@ -396585,6 +396595,21 @@
       "retry_count": 0,
       "created_by": "supabase-queue-bridge",
       "autonomous_publish": true,
+      "buffer_posts": [
+        {
+          "service": "instagram",
+          "channel_id": "6ab2b6e7ea19ca0bdeb80e19",
+          "post_id": "6ab563e97cb0c4ddfc0b4ceb",
+          "buffer_status": "scheduled",
+          "due_at": "2026-09-25T17:00:00.000Z",
+          "created_at": "2026-09-24T17:54:49+00:00",
+          "sent_at": null,
+          "external_link": null
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "instagram"
+      ],
       "cloudinary_assets": [
         {
           "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272481/f1-buffer/supabase-calendar-1ce2790b-defe-44ae-88b2-1aaddb71d1a8/slide-01.png",
@@ -396646,19 +396671,6 @@
           "resource_type": "image",
           "bytes": "3296784"
         }
-      ],
-      "buffer_posts": [
-        {
-          "service": "instagram",
-          "channel_id": "6ab2b6e7ea19ca0bdeb80e19",
-          "post_id": "6ab563e97cb0c4ddfc0b4ceb",
-          "buffer_status": "scheduled",
-          "due_at": "2026-09-25T17:00:00.000Z",
-          "created_at": "2026-09-24T17:54:49+00:00"
-        }
-      ],
-      "buffer_scheduled_platforms": [
-        "instagram"
       ]
     },
     {
@@ -396699,6 +396711,21 @@
       "retry_count": 0,
       "created_by": "supabase-queue-bridge",
       "autonomous_publish": true,
+      "buffer_posts": [
+        {
+          "service": "facebook",
+          "channel_id": "6ab2b713ea19ca0bdeb8103d",
+          "post_id": "6ab563f27cb0c4ddfc0b4dcf",
+          "buffer_status": "scheduled",
+          "due_at": "2026-09-25T17:00:00.000Z",
+          "created_at": "2026-09-24T17:54:58+00:00",
+          "sent_at": null,
+          "external_link": null
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "facebook"
+      ],
       "cloudinary_assets": [
         {
           "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272490/f1-buffer/supabase-calendar-cf27ed42-096f-4b77-a159-5187080c57fb/slide-01.png",
@@ -396760,19 +396787,6 @@
           "resource_type": "image",
           "bytes": "3296784"
         }
-      ],
-      "buffer_posts": [
-        {
-          "service": "facebook",
-          "channel_id": "6ab2b713ea19ca0bdeb8103d",
-          "post_id": "6ab563f27cb0c4ddfc0b4dcf",
-          "buffer_status": "scheduled",
-          "due_at": "2026-09-25T17:00:00.000Z",
-          "created_at": "2026-09-24T17:54:58+00:00"
-        }
-      ],
-      "buffer_scheduled_platforms": [
-        "facebook"
       ]
     },
     {
@@ -396813,6 +396827,21 @@
       "retry_count": 0,
       "created_by": "supabase-queue-bridge",
       "autonomous_publish": true,
+      "buffer_posts": [
+        {
+          "service": "instagram",
+          "channel_id": "6ab2b6e7ea19ca0bdeb80e19",
+          "post_id": "6ab563fb7cb0c4ddfc0b4e5e",
+          "buffer_status": "scheduled",
+          "due_at": "2026-09-26T11:00:00.000Z",
+          "created_at": "2026-09-24T17:55:07+00:00",
+          "sent_at": null,
+          "external_link": null
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "instagram"
+      ],
       "cloudinary_assets": [
         {
           "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272498/f1-buffer/supabase-calendar-a695de94-d98e-4ec2-8983-e0a089e625a5/slide-01.png",
@@ -396874,19 +396903,6 @@
           "resource_type": "image",
           "bytes": "3296784"
         }
-      ],
-      "buffer_posts": [
-        {
-          "service": "instagram",
-          "channel_id": "6ab2b6e7ea19ca0bdeb80e19",
-          "post_id": "6ab563fb7cb0c4ddfc0b4e5e",
-          "buffer_status": "scheduled",
-          "due_at": "2026-09-26T11:00:00.000Z",
-          "created_at": "2026-09-24T17:55:07+00:00"
-        }
-      ],
-      "buffer_scheduled_platforms": [
-        "instagram"
       ]
     },
     {
@@ -396927,6 +396943,21 @@
       "retry_count": 0,
       "created_by": "supabase-queue-bridge",
       "autonomous_publish": true,
+      "buffer_posts": [
+        {
+          "service": "facebook",
+          "channel_id": "6ab2b713ea19ca0bdeb8103d",
+          "post_id": "6ab56406f2f88235921c39dd",
+          "buffer_status": "scheduled",
+          "due_at": "2026-09-26T11:00:00.000Z",
+          "created_at": "2026-09-24T17:55:18+00:00",
+          "sent_at": null,
+          "external_link": null
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "facebook"
+      ],
       "cloudinary_assets": [
         {
           "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272508/f1-buffer/supabase-calendar-6c86e47a-2d80-46d3-a3a1-eae546481cd6/slide-01.png",
@@ -396988,19 +397019,6 @@
           "resource_type": "image",
           "bytes": "3296784"
         }
-      ],
-      "buffer_posts": [
-        {
-          "service": "facebook",
-          "channel_id": "6ab2b713ea19ca0bdeb8103d",
-          "post_id": "6ab56406f2f88235921c39dd",
-          "buffer_status": "scheduled",
-          "due_at": "2026-09-26T11:00:00.000Z",
-          "created_at": "2026-09-24T17:55:18+00:00"
-        }
-      ],
-      "buffer_scheduled_platforms": [
-        "facebook"
       ]
     },
     {
@@ -397041,6 +397059,21 @@
       "retry_count": 0,
       "created_by": "supabase-queue-bridge",
       "autonomous_publish": true,
+      "buffer_posts": [
+        {
+          "service": "facebook",
+          "channel_id": "6ab2b713ea19ca0bdeb8103d",
+          "post_id": "6ab5640ff2f88235921c3d4f",
+          "buffer_status": "scheduled",
+          "due_at": "2026-09-26T17:00:00.000Z",
+          "created_at": "2026-09-24T17:55:27+00:00",
+          "sent_at": null,
+          "external_link": null
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "facebook"
+      ],
       "cloudinary_assets": [
         {
           "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272518/f1-buffer/supabase-calendar-72a338fe-ddae-43cf-8d73-8ddd7e85e2f4/slide-01.png",
@@ -397102,19 +397135,6 @@
           "resource_type": "image",
           "bytes": "3296784"
         }
-      ],
-      "buffer_posts": [
-        {
-          "service": "facebook",
-          "channel_id": "6ab2b713ea19ca0bdeb8103d",
-          "post_id": "6ab5640ff2f88235921c3d4f",
-          "buffer_status": "scheduled",
-          "due_at": "2026-09-26T17:00:00.000Z",
-          "created_at": "2026-09-24T17:55:27+00:00"
-        }
-      ],
-      "buffer_scheduled_platforms": [
-        "facebook"
       ]
     },
     {
@@ -397155,6 +397175,21 @@
       "retry_count": 0,
       "created_by": "supabase-queue-bridge",
       "autonomous_publish": true,
+      "buffer_posts": [
+        {
+          "service": "instagram",
+          "channel_id": "6ab2b6e7ea19ca0bdeb80e19",
+          "post_id": "6ab56417f2f88235921c3dda",
+          "buffer_status": "scheduled",
+          "due_at": "2026-09-26T17:00:00.000Z",
+          "created_at": "2026-09-24T17:55:35+00:00",
+          "sent_at": null,
+          "external_link": null
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "instagram"
+      ],
       "cloudinary_assets": [
         {
           "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272528/f1-buffer/supabase-calendar-50559439-482c-45be-ae10-36b2cf22c1ba/slide-01.png",
@@ -397216,19 +397251,6 @@
           "resource_type": "image",
           "bytes": "3296784"
         }
-      ],
-      "buffer_posts": [
-        {
-          "service": "instagram",
-          "channel_id": "6ab2b6e7ea19ca0bdeb80e19",
-          "post_id": "6ab56417f2f88235921c3dda",
-          "buffer_status": "scheduled",
-          "due_at": "2026-09-26T17:00:00.000Z",
-          "created_at": "2026-09-24T17:55:35+00:00"
-        }
-      ],
-      "buffer_scheduled_platforms": [
-        "instagram"
       ]
     },
     {
@@ -397269,6 +397291,21 @@
       "retry_count": 0,
       "created_by": "supabase-queue-bridge",
       "autonomous_publish": true,
+      "buffer_posts": [
+        {
+          "service": "instagram",
+          "channel_id": "6ab2b6e7ea19ca0bdeb80e19",
+          "post_id": "6ab5641f7cb0c4ddfc0b50bc",
+          "buffer_status": "scheduled",
+          "due_at": "2026-09-27T11:00:00.000Z",
+          "created_at": "2026-09-24T17:55:43+00:00",
+          "sent_at": null,
+          "external_link": null
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "instagram"
+      ],
       "cloudinary_assets": [
         {
           "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272536/f1-buffer/supabase-calendar-dcf5e371-fcc0-46db-95ec-db54ea28b14c/slide-01.png",
@@ -397330,19 +397367,6 @@
           "resource_type": "image",
           "bytes": "3296784"
         }
-      ],
-      "buffer_posts": [
-        {
-          "service": "instagram",
-          "channel_id": "6ab2b6e7ea19ca0bdeb80e19",
-          "post_id": "6ab5641f7cb0c4ddfc0b50bc",
-          "buffer_status": "scheduled",
-          "due_at": "2026-09-27T11:00:00.000Z",
-          "created_at": "2026-09-24T17:55:43+00:00"
-        }
-      ],
-      "buffer_scheduled_platforms": [
-        "instagram"
       ]
     },
     {
@@ -397383,6 +397407,21 @@
       "retry_count": 0,
       "created_by": "supabase-queue-bridge",
       "autonomous_publish": true,
+      "buffer_posts": [
+        {
+          "service": "facebook",
+          "channel_id": "6ab2b713ea19ca0bdeb8103d",
+          "post_id": "6ab564287cb0c4ddfc0b51ee",
+          "buffer_status": "scheduled",
+          "due_at": "2026-09-27T11:00:00.000Z",
+          "created_at": "2026-09-24T17:55:52+00:00",
+          "sent_at": null,
+          "external_link": null
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "facebook"
+      ],
       "cloudinary_assets": [
         {
           "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272543/f1-buffer/supabase-calendar-564b3f1c-69d5-4c06-ad1d-e176376f248d/slide-01.png",
@@ -397444,19 +397483,6 @@
           "resource_type": "image",
           "bytes": "3296784"
         }
-      ],
-      "buffer_posts": [
-        {
-          "service": "facebook",
-          "channel_id": "6ab2b713ea19ca0bdeb8103d",
-          "post_id": "6ab564287cb0c4ddfc0b51ee",
-          "buffer_status": "scheduled",
-          "due_at": "2026-09-27T11:00:00.000Z",
-          "created_at": "2026-09-24T17:55:52+00:00"
-        }
-      ],
-      "buffer_scheduled_platforms": [
-        "facebook"
       ]
     },
     {
@@ -397497,6 +397523,21 @@
       "retry_count": 0,
       "created_by": "supabase-queue-bridge",
       "autonomous_publish": true,
+      "buffer_posts": [
+        {
+          "service": "facebook",
+          "channel_id": "6ab2b713ea19ca0bdeb8103d",
+          "post_id": "6ab56434ba1e0b42a63eb605",
+          "buffer_status": "scheduled",
+          "due_at": "2026-09-27T17:00:00.000Z",
+          "created_at": "2026-09-24T17:56:04+00:00",
+          "sent_at": null,
+          "external_link": null
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "facebook"
+      ],
       "cloudinary_assets": [
         {
           "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272553/f1-buffer/supabase-calendar-ab6f1c1b-2508-4376-89f4-ce7e6be4358f/slide-01.png",
@@ -397558,19 +397599,6 @@
           "resource_type": "image",
           "bytes": "3296784"
         }
-      ],
-      "buffer_posts": [
-        {
-          "service": "facebook",
-          "channel_id": "6ab2b713ea19ca0bdeb8103d",
-          "post_id": "6ab56434ba1e0b42a63eb605",
-          "buffer_status": "scheduled",
-          "due_at": "2026-09-27T17:00:00.000Z",
-          "created_at": "2026-09-24T17:56:04+00:00"
-        }
-      ],
-      "buffer_scheduled_platforms": [
-        "facebook"
       ]
     },
     {
@@ -397611,6 +397639,21 @@
       "retry_count": 0,
       "created_by": "supabase-queue-bridge",
       "autonomous_publish": true,
+      "buffer_posts": [
+        {
+          "service": "instagram",
+          "channel_id": "6ab2b6e7ea19ca0bdeb80e19",
+          "post_id": "6ab5643fba1e0b42a63eb67d",
+          "buffer_status": "scheduled",
+          "due_at": "2026-09-27T17:00:00.000Z",
+          "created_at": "2026-09-24T17:56:15+00:00",
+          "sent_at": null,
+          "external_link": null
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "instagram"
+      ],
       "cloudinary_assets": [
         {
           "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272564/f1-buffer/supabase-calendar-19772500-252d-4777-a223-2f920cb5f770/slide-01.png",
@@ -397672,19 +397715,6 @@
           "resource_type": "image",
           "bytes": "3296784"
         }
-      ],
-      "buffer_posts": [
-        {
-          "service": "instagram",
-          "channel_id": "6ab2b6e7ea19ca0bdeb80e19",
-          "post_id": "6ab5643fba1e0b42a63eb67d",
-          "buffer_status": "scheduled",
-          "due_at": "2026-09-27T17:00:00.000Z",
-          "created_at": "2026-09-24T17:56:15+00:00"
-        }
-      ],
-      "buffer_scheduled_platforms": [
-        "instagram"
       ]
     },
     {
@@ -397725,6 +397755,21 @@
       "retry_count": 0,
       "created_by": "supabase-queue-bridge",
       "autonomous_publish": true,
+      "buffer_posts": [
+        {
+          "service": "facebook",
+          "channel_id": "6ab2b713ea19ca0bdeb8103d",
+          "post_id": "6ab564497cb0c4ddfc0b53e7",
+          "buffer_status": "scheduled",
+          "due_at": "2026-09-28T11:00:00.000Z",
+          "created_at": "2026-09-24T17:56:25+00:00",
+          "sent_at": null,
+          "external_link": null
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "facebook"
+      ],
       "cloudinary_assets": [
         {
           "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272575/f1-buffer/supabase-calendar-9799f24b-82db-4f53-92c3-01e732b00319/slide-01.png",
@@ -397786,19 +397831,6 @@
           "resource_type": "image",
           "bytes": "3296784"
         }
-      ],
-      "buffer_posts": [
-        {
-          "service": "facebook",
-          "channel_id": "6ab2b713ea19ca0bdeb8103d",
-          "post_id": "6ab564497cb0c4ddfc0b53e7",
-          "buffer_status": "scheduled",
-          "due_at": "2026-09-28T11:00:00.000Z",
-          "created_at": "2026-09-24T17:56:25+00:00"
-        }
-      ],
-      "buffer_scheduled_platforms": [
-        "facebook"
       ]
     },
     {
@@ -397839,6 +397871,21 @@
       "retry_count": 0,
       "created_by": "supabase-queue-bridge",
       "autonomous_publish": true,
+      "buffer_posts": [
+        {
+          "service": "instagram",
+          "channel_id": "6ab2b6e7ea19ca0bdeb80e19",
+          "post_id": "6ab564534a68d8afcc59e021",
+          "buffer_status": "scheduled",
+          "due_at": "2026-09-28T11:00:00.000Z",
+          "created_at": "2026-09-24T17:56:35+00:00",
+          "sent_at": null,
+          "external_link": null
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "instagram"
+      ],
       "cloudinary_assets": [
         {
           "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272586/f1-buffer/supabase-calendar-f99ec603-678b-401f-8575-96543112dd6e/slide-01.png",
@@ -397900,19 +397947,6 @@
           "resource_type": "image",
           "bytes": "3296784"
         }
-      ],
-      "buffer_posts": [
-        {
-          "service": "instagram",
-          "channel_id": "6ab2b6e7ea19ca0bdeb80e19",
-          "post_id": "6ab564534a68d8afcc59e021",
-          "buffer_status": "scheduled",
-          "due_at": "2026-09-28T11:00:00.000Z",
-          "created_at": "2026-09-24T17:56:35+00:00"
-        }
-      ],
-      "buffer_scheduled_platforms": [
-        "instagram"
       ]
     },
     {
@@ -397953,6 +397987,21 @@
       "retry_count": 0,
       "created_by": "supabase-queue-bridge",
       "autonomous_publish": true,
+      "buffer_posts": [
+        {
+          "service": "instagram",
+          "channel_id": "6ab2b6e7ea19ca0bdeb80e19",
+          "post_id": "6ab5645cae8c244592fbc7a9",
+          "buffer_status": "scheduled",
+          "due_at": "2026-09-28T17:00:00.000Z",
+          "created_at": "2026-09-24T17:56:45+00:00",
+          "sent_at": null,
+          "external_link": null
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "instagram"
+      ],
       "cloudinary_assets": [
         {
           "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272595/f1-buffer/supabase-calendar-22b4ebc1-ab54-4eab-aa9c-3ba31ce82e2f/slide-01.png",
@@ -398014,19 +398063,6 @@
           "resource_type": "image",
           "bytes": "3296784"
         }
-      ],
-      "buffer_posts": [
-        {
-          "service": "instagram",
-          "channel_id": "6ab2b6e7ea19ca0bdeb80e19",
-          "post_id": "6ab5645cae8c244592fbc7a9",
-          "buffer_status": "scheduled",
-          "due_at": "2026-09-28T17:00:00.000Z",
-          "created_at": "2026-09-24T17:56:45+00:00"
-        }
-      ],
-      "buffer_scheduled_platforms": [
-        "instagram"
       ]
     },
     {
@@ -398067,6 +398103,21 @@
       "retry_count": 0,
       "created_by": "supabase-queue-bridge",
       "autonomous_publish": true,
+      "buffer_posts": [
+        {
+          "service": "facebook",
+          "channel_id": "6ab2b713ea19ca0bdeb8103d",
+          "post_id": "6ab56468ae8c244592fbc826",
+          "buffer_status": "scheduled",
+          "due_at": "2026-09-28T17:00:00.000Z",
+          "created_at": "2026-09-24T17:56:56+00:00",
+          "sent_at": null,
+          "external_link": null
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "facebook"
+      ],
       "cloudinary_assets": [
         {
           "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272605/f1-buffer/supabase-calendar-58985be8-4282-4b4f-8296-bebd4d5fe9db/slide-01.png",
@@ -398128,23 +398179,10 @@
           "resource_type": "image",
           "bytes": "3296784"
         }
-      ],
-      "buffer_posts": [
-        {
-          "service": "facebook",
-          "channel_id": "6ab2b713ea19ca0bdeb8103d",
-          "post_id": "6ab56468ae8c244592fbc826",
-          "buffer_status": "scheduled",
-          "due_at": "2026-09-28T17:00:00.000Z",
-          "created_at": "2026-09-24T17:56:56+00:00"
-        }
-      ],
-      "buffer_scheduled_platforms": [
-        "facebook"
       ]
     }
   ],
-  "updated_at": "2026-09-24T17:57:09+00:00",
+  "updated_at": "2026-09-24T17:58:35+00:00",
   "updated_by": "Approved 5+5 publication renderer",
   "current_cycle": "2026-09-24T16:00",
   "history_days": 14,
