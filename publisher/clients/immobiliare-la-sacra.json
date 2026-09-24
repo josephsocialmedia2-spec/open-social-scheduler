@@ -1,0 +1,49 @@
+{
+  "id": "immobiliare-la-sacra",
+  "name": "Immobiliare La Sacra",
+  "active": true,
+  "timezone": "Europe/Rome",
+  "website": "https://lasacraimmobiliare.it/",
+  "brand": {
+    "status": "configure",
+    "logo": "",
+    "background": "#0B1A2A",
+    "primary": "#FFFFFF",
+    "accent": "#20C96B",
+    "muted": "#A7B4C4",
+    "font_title": "DejaVu Sans Bold",
+    "font_body": "DejaVu Sans"
+  },
+  "campaign": {
+    "name": "Immobiliare La Sacra",
+    "cta": "Richiedi informazioni o prenota una visita",
+    "keyword": "CASA",
+    "territories": [
+      "Valle di Susa",
+      "Provincia di Torino"
+    ]
+  },
+  "publishing": {
+    "backend": "direct_api",
+    "secret_prefix": "LASACRA",
+    "require_media": true,
+    "slots": [
+      "13:00",
+      "19:00"
+    ],
+    "platforms": [
+      "facebook",
+      "instagram"
+    ]
+  },
+  "integrations": {
+    "facebook": {
+      "id": "direct-api",
+      "required": true
+    },
+    "instagram": {
+      "id": "direct-api",
+      "required": true
+    }
+  }
+}
