@@ -47,7 +47,40 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          python publisher/buffer_queue_publish.py --client-id immobiliare-la-sacra --dry-run --strict
+          python publisher/buffer_queue_publish.py --verify-client immobiliare-la-sacra
+          python - <<'PY'
+          import base64, json
+          from datetime import datetime, timedelta, timezone
+          from pathlib import Path
+
+          media = Path('publisher/media/smoke/lasacra-buffer-smoke.png')
+          media.parent.mkdir(parents=True, exist_ok=True)
+          media.write_bytes(base64.b64decode(
+              'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII='
+          ))
+          qpath = Path('publisher/queue.json')
+          q = json.loads(qpath.read_text(encoding='utf-8'))
+          q.setdefault('jobs', [])
+          q['jobs'] = [j for j in q['jobs'] if j.get('id') != 'lasacra-buffer-smoke']
+          q['jobs'].append({
+              'id': 'lasacra-buffer-smoke',
+              'enabled': True,
+              'status': 'ready',
+              'client_id': 'immobiliare-la-sacra',
+              'client_name': 'Immobiliare La Sacra',
+              'caption': 'Buffer routing smoke test - dry run only',
+              'format': 'post',
+              'media': ['publisher/media/smoke/lasacra-buffer-smoke.png'],
+              'scheduled_at': (datetime.now(timezone.utc) + timedelta(hours=1)).isoformat(),
+              'platforms': ['facebook'],
+              'published_platforms': [],
+              'source': 'SMOKE_TEST',
+              'provider': 'buffer',
+              'provider_channel_id': '6ab2b713ea19ca0bdeb8103d',
+          })
+          qpath.write_text(json.dumps(q, ensure_ascii=False, indent=2) + '\\n', encoding='utf-8')
+          PY
+          python publisher/buffer_queue_publish.py --job-id lasacra-buffer-smoke --dry-run --strict
 
       - name: Verify website source runtime
         shell: bash
