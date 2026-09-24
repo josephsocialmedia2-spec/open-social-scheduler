@@ -1,0 +1,48 @@
+{
+  "id": "marta-ruffino",
+  "name": "Marta Ruffino",
+  "active": true,
+  "timezone": "Europe/Rome",
+  "website": "",
+  "brand": {
+    "status": "configure",
+    "logo": "",
+    "background": "#F4F0EB",
+    "primary": "#202020",
+    "accent": "#B87979",
+    "muted": "#746F69",
+    "font_title": "DejaVu Sans Bold",
+    "font_body": "DejaVu Sans"
+  },
+  "campaign": {
+    "name": "Marta Ruffino",
+    "cta": "Richiedi informazioni",
+    "keyword": "INFO",
+    "territories": [
+      "Provincia di Torino"
+    ]
+  },
+  "publishing": {
+    "backend": "direct_api",
+    "secret_prefix": "MARTA",
+    "require_media": true,
+    "slots": [
+      "12:30",
+      "19:30"
+    ],
+    "platforms": [
+      "facebook",
+      "instagram"
+    ]
+  },
+  "integrations": {
+    "facebook": {
+      "id": "direct-api",
+      "required": true
+    },
+    "instagram": {
+      "id": "direct-api",
+      "required": true
+    }
+  }
+}
