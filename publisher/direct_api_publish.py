@@ -374,10 +374,22 @@ PUBLISHERS = {"facebook": facebook_publish, "instagram": instagram_publish, "tik
 
 
 def pick_jobs(queue: dict[str, Any], job_id: str | None) -> list[dict[str, Any]]:
+    def direct_eligible(job: dict[str, Any]) -> bool:
+        return str(job.get("provider") or "direct").strip().lower() != "buffer"
+
     if job_id:
-        return [job for job in queue.get("jobs", []) if job.get("id") == job_id]
+        return [
+            job for job in queue.get("jobs", [])
+            if job.get("id") == job_id and direct_eligible(job)
+        ]
     now = datetime.now(timezone.utc)
-    return [job for job in queue.get("jobs", []) if job.get("enabled", True) and job.get("status") in {"ready", "partially_published"} and iso_due(job, now)]
+    return [
+        job for job in queue.get("jobs", [])
+        if direct_eligible(job)
+        and job.get("enabled", True)
+        and job.get("status") in {"ready", "partially_published"}
+        and iso_due(job, now)
+    ]
 
 
 def publish_job(job: dict[str, Any], only: set[str] | None, dry_run: bool) -> tuple[list[dict[str, Any]], bool]:

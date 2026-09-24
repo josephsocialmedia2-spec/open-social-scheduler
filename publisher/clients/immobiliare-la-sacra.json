@@ -24,7 +24,7 @@
     ]
   },
   "publishing": {
-    "backend": "direct_api",
+    "backend": "buffer",
     "secret_prefix": "LASACRA",
     "require_media": true,
     "slots": [
@@ -34,15 +34,20 @@
     "platforms": [
       "facebook",
       "instagram"
-    ]
+    ],
+    "buffer_secret_env": "LASACRA_BUFFER_API_KEY",
+    "buffer_channels": {
+      "facebook": "6ab2b713ea19ca0bdeb8103d",
+      "instagram": "6ab2b6e7ea19ca0bdeb80e19"
+    }
   },
   "integrations": {
     "facebook": {
-      "id": "direct-api",
+      "id": "buffer:6ab2b713ea19ca0bdeb8103d",
       "required": true
     },
     "instagram": {
-      "id": "direct-api",
+      "id": "buffer:6ab2b6e7ea19ca0bdeb80e19",
       "required": true
     }
   }

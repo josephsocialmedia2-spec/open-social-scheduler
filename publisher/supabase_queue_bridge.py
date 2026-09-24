@@ -313,6 +313,8 @@ def build_or_update_jobs(queue: dict[str, Any]) -> dict[str, int]:
             "campaign": item.get("campaign"),
             "property_id": item.get("property_id"),
             "provider": (channel or {}).get("provider") or "direct",
+            "provider_channel_id": (channel or {}).get("external_channel_id"),
+            "provider_secret_prefix": (channel or {}).get("secret_prefix"),
             "retry_count": int((job or {}).get("retry_count") or 0),
             "created_by": "supabase-queue-bridge",
             "autonomous_publish": True,
@@ -329,12 +331,31 @@ def build_or_update_jobs(queue: dict[str, Any]) -> dict[str, int]:
         else:
             published_platforms = list(job.get("published_platforms") or [])
             direct_results = list(job.get("direct_api_results") or [])
+            buffer_posts = list(job.get("buffer_posts") or [])
+            buffer_scheduled_platforms = list(job.get("buffer_scheduled_platforms") or [])
+            cloudinary_assets = list(job.get("cloudinary_assets") or [])
+            external_post_id = job.get("external_post_id")
+            external_url = job.get("external_url")
             prior_status = str(job.get("status") or "")
             job.clear()
             job.update(new_job)
             job["published_platforms"] = published_platforms
             if direct_results:
                 job["direct_api_results"] = direct_results
+            if buffer_posts:
+                job["buffer_posts"] = buffer_posts
+            if buffer_scheduled_platforms:
+                job["buffer_scheduled_platforms"] = buffer_scheduled_platforms
+            if cloudinary_assets:
+                job["cloudinary_assets"] = cloudinary_assets
+            if external_post_id:
+                job["external_post_id"] = external_post_id
+            if external_url:
+                job["external_url"] = external_url
+            if buffer_posts and prior_status != "published":
+                job["status"] = "buffer_scheduled"
+                job["enabled"] = True
+                job.pop("blocked_reason", None)
             if prior_status == "published":
                 job["status"] = "published"
                 job["enabled"] = False
@@ -363,6 +384,19 @@ def build_or_update_jobs(queue: dict[str, Any]) -> dict[str, int]:
 
 
 def extract_external(job: dict[str, Any]) -> tuple[str | None, str | None]:
+    if job.get("external_post_id") or job.get("external_url"):
+        return (
+            str(job.get("external_post_id")) if job.get("external_post_id") else None,
+            str(job.get("external_url")) if job.get("external_url") else None,
+        )
+    for row in reversed(job.get("buffer_posts") or []):
+        external_id = row.get("post_id")
+        external_url = row.get("external_link")
+        if external_id or external_url:
+            return (
+                str(external_id) if external_id else None,
+                str(external_url) if external_url else None,
+            )
     results = job.get("direct_api_results") or []
     for batch in reversed(results):
         for row in reversed(batch.get("results") or []):
@@ -393,7 +427,7 @@ def sync_back(queue: dict[str, Any]) -> dict[str, int]:
             target = "PUBBLICATO"
         elif q_status == "partially_published":
             target = "IN PUBBLICAZIONE"
-        elif q_status == "ready":
+        elif q_status in {"ready", "buffer_scheduled"}:
             target = "PROGRAMMATO"
         elif q_status == "blocked":
             target = str(job.get("blocked_reason") or "ERRORE_QUEUE")

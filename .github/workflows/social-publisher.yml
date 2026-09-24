@@ -73,6 +73,8 @@ jobs:
       RMP_PINTEREST_LINK: ${{ vars.RMP_PINTEREST_LINK }}
       SUPABASE_URL: ${{ vars.SUPABASE_URL || 'https://nqnmlsmeiynxbdojeyjt.supabase.co' }}
       SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+      LASACRA_BUFFER_API_KEY: ${{ secrets.LASACRA_BUFFER_API_KEY }}
+      CLOUDINARY_URL: ${{ secrets.CLOUDINARY_URL }}
       LASACRA_FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.LASACRA_FACEBOOK_PAGE_ACCESS_TOKEN }}
       LASACRA_INSTAGRAM_ACCESS_TOKEN: ${{ secrets.LASACRA_INSTAGRAM_ACCESS_TOKEN }}
       LASACRA_INSTAGRAM_USER_ID: ${{ secrets.LASACRA_INSTAGRAM_USER_ID }}
@@ -149,6 +151,17 @@ jobs:
           fi
 
           echo "available=$AVAILABLE" >> "$GITHUB_OUTPUT"
+
+      - name: Schedule or reconcile Buffer-backed Content Hub jobs
+        if: steps.media.outputs.available == 'true'
+        shell: bash
+        run: |
+          ARGS=()
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            if [ -n "${{ inputs.job_id }}" ]; then ARGS+=(--job-id "${{ inputs.job_id }}"); fi
+            if [ "${{ inputs.dry_run }}" = "true" ]; then ARGS+=(--dry-run --strict); fi
+          fi
+          python publisher/buffer_queue_publish.py "${ARGS[@]}"
 
       - name: Publish approved jobs automatically when due
         if: steps.media.outputs.available == 'true'
