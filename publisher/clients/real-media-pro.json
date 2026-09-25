@@ -15,9 +15,25 @@
     "font_title": "DejaVu Sans Bold",
     "font_body": "DejaVu Sans",
     "renderer": "premium_photo",
-    "voice": {"enabled": true, "engine": "piper", "model": "it_IT-paola-medium"},
-    "reel": {"width": 1080, "height": 1920, "safe_top": 180, "safe_bottom": 260, "slides": 8, "seconds_per_slide": 7.5, "target_seconds": 60, "subtitles": false},
-    "carousel": {"width": 1080, "height": 1350}
+    "voice": {
+      "enabled": true,
+      "engine": "piper",
+      "model": "it_IT-paola-medium"
+    },
+    "reel": {
+      "width": 1080,
+      "height": 1920,
+      "safe_top": 180,
+      "safe_bottom": 260,
+      "slides": 8,
+      "seconds_per_slide": 7.5,
+      "target_seconds": 60,
+      "subtitles": false
+    },
+    "carousel": {
+      "width": 1080,
+      "height": 1350
+    }
   },
   "visual_pipeline": {
     "preferred_provider": "shopify_storefront_transform",
@@ -58,12 +74,50 @@
     "cta": "Richiedi un'analisi strategica gratuita",
     "keyword": "ANALISI",
     "phone": "371 370 8294",
-    "territories": ["Torino", "Rivoli", "Avigliana", "Valle di Susa"],
-    "content_pillars": ["shopify_ecommerce", "conversion_rate_optimization", "site_speed", "trust", "product_page", "mobile_experience", "content_marketing", "seo_aeo", "lead_generation", "case_study", "prima_dopo"],
+    "territories": [
+      "Torino",
+      "Rivoli",
+      "Avigliana",
+      "Valle di Susa"
+    ],
+    "content_pillars": [
+      "shopify_ecommerce",
+      "conversion_rate_optimization",
+      "site_speed",
+      "trust",
+      "product_page",
+      "mobile_experience",
+      "content_marketing",
+      "seo_aeo",
+      "lead_generation",
+      "case_study",
+      "prima_dopo"
+    ],
     "hashtag_sets": [
-      ["#RealMediaPro", "#Shopify", "#Ecommerce", "#SitiWeb", "#Torino", "#MarketingDigitale"],
-      ["#RealMediaPro", "#ShopifyItalia", "#ConversionRate", "#EcommerceItalia", "#WebDesign", "#ValleDiSusa"],
-      ["#RealMediaPro", "#SitiShopify", "#DigitalMarketing", "#LeadGeneration", "#Rivoli", "#Avigliana"]
+      [
+        "#RealMediaPro",
+        "#Shopify",
+        "#Ecommerce",
+        "#SitiWeb",
+        "#Torino",
+        "#MarketingDigitale"
+      ],
+      [
+        "#RealMediaPro",
+        "#ShopifyItalia",
+        "#ConversionRate",
+        "#EcommerceItalia",
+        "#WebDesign",
+        "#ValleDiSusa"
+      ],
+      [
+        "#RealMediaPro",
+        "#SitiShopify",
+        "#DigitalMarketing",
+        "#LeadGeneration",
+        "#Rivoli",
+        "#Avigliana"
+      ]
     ],
     "research_sources": [
       "https://www.facebook.com/business/ads/facebook-instagram-reels-ads",
@@ -98,24 +152,85 @@
       "reject_legacy_python_visuals_for_publication": true
     }
   },
-  "approval": {"required": true,"mode": "iso_week","file": "publisher/approvals/real-media-pro.json"},
-  "planning": {"horizon_days": 1, "week_view": "daily_candidates", "manual_publish_only": true},
+  "approval": {
+    "required": true,
+    "mode": "iso_week",
+    "file": "publisher/approvals/real-media-pro.json"
+  },
+  "planning": {
+    "horizon_days": 1,
+    "week_view": "daily_candidates",
+    "manual_publish_only": true
+  },
   "publishing": {
     "backend": "direct_api",
     "secret_prefix": "RMP",
     "require_media": true,
-    "slots": ["09:15", "14:15", "19:15"],
-    "categories": ["attract", "nurture", "convert"],
-    "formats": {"attract": "reel", "nurture": "carousel", "convert": "reel"},
-    "platforms": ["facebook", "instagram", "tiktok", "linkedin", "youtube", "pinterest"],
-    "platforms_by_format": {"reel": ["facebook", "instagram", "tiktok", "linkedin", "youtube"],"carousel": ["facebook", "instagram", "linkedin", "pinterest"]}
+    "slots": [
+      "09:15",
+      "14:15",
+      "19:15"
+    ],
+    "categories": [
+      "attract",
+      "nurture",
+      "convert"
+    ],
+    "formats": {
+      "attract": "reel",
+      "nurture": "carousel",
+      "convert": "reel"
+    },
+    "platforms": [
+      "facebook",
+      "instagram",
+      "tiktok",
+      "linkedin",
+      "youtube",
+      "pinterest"
+    ],
+    "platforms_by_format": {
+      "reel": [
+        "facebook",
+        "instagram",
+        "tiktok",
+        "linkedin",
+        "youtube"
+      ],
+      "carousel": [
+        "facebook",
+        "instagram",
+        "linkedin",
+        "pinterest"
+      ]
+    },
+    "buffer_secret_env": "RMP_BUFFER_API_KEY"
   },
   "integrations": {
-    "facebook": {"id": "direct-api", "required": true},
-    "instagram": {"id": "direct-api", "required": true},
-    "tiktok": {"id": "direct-api", "required": false},
-    "linkedin": {"id": "direct-api", "required": false},
-    "youtube": {"id": "direct-api", "required": false},
-    "pinterest": {"id": "direct-api", "required": false, "board": ""}
+    "facebook": {
+      "id": "direct-api",
+      "required": true
+    },
+    "instagram": {
+      "id": "direct-api",
+      "required": true
+    },
+    "tiktok": {
+      "id": "direct-api",
+      "required": false
+    },
+    "linkedin": {
+      "id": "direct-api",
+      "required": false
+    },
+    "youtube": {
+      "id": "direct-api",
+      "required": false
+    },
+    "pinterest": {
+      "id": "direct-api",
+      "required": false,
+      "board": ""
+    }
   }
 }
