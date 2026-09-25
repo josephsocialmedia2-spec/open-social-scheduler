@@ -33,7 +33,8 @@
     "platforms": [
       "facebook",
       "instagram"
-    ]
+    ],
+    "buffer_secret_env": "MARTA_BUFFER_API_KEY"
   },
   "integrations": {
     "facebook": {
