@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-25T00:54:49Z",
+  "updated_at": "2026-09-25T01:45:26Z",
   "brands": {
     "f1-immobiliare": {
       "recent": [
@@ -3104,7 +3104,7 @@
         {
           "key": "https://commons.wikimedia.org/wiki/special:redirect/file/villa_cantamerlo_avigliana02.jpg",
           "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Villa_Cantamerlo_Avigliana02.JPG",
-          "used_at": "2026-09-25T00:54:13Z",
+          "used_at": "2026-09-25T01:44:50Z",
           "job_id": "f1-immobiliare-2026-09-25-c00-01-01-g6-vendita-privata-verifiche",
           "output_type": "static-photo",
           "source_type": "f1-approved-local-valle-susa"
@@ -3112,7 +3112,7 @@
         {
           "key": "https://commons.wikimedia.org/wiki/special:redirect/file/avigliana_centro_storico.jpg",
           "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Avigliana_Centro_Storico.JPG",
-          "used_at": "2026-09-25T00:54:17Z",
+          "used_at": "2026-09-25T01:44:54Z",
           "job_id": "f1-immobiliare-2026-09-25-c00-02-02-g7-comparabile-escluso",
           "output_type": "static-photo",
           "source_type": "f1-approved-local-valle-susa"
@@ -3120,7 +3120,7 @@
         {
           "key": "https://commons.wikimedia.org/wiki/special:redirect/file/avigliana%2c_italy_%28unsplash%29.jpg",
           "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Avigliana%2C_Italy_%28Unsplash%29.jpg",
-          "used_at": "2026-09-25T00:54:31Z",
+          "used_at": "2026-09-25T01:45:08Z",
           "job_id": "f1-immobiliare-2026-09-25-c00-03-03-g1-tre-agenzie",
           "output_type": "static-photo",
           "source_type": "f1-approved-local-valle-susa"
@@ -3128,7 +3128,7 @@
         {
           "key": "https://commons.wikimedia.org/wiki/special:redirect/file/avigliana%2c_italy_%28unsplash_yhnotbw9spy%29.jpg",
           "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Avigliana%2C_Italy_%28Unsplash_yhnOTbw9SPY%29.jpg",
-          "used_at": "2026-09-25T00:54:35Z",
+          "used_at": "2026-09-25T01:45:12Z",
           "job_id": "f1-immobiliare-2026-09-25-c00-04-04-g2-tre-prezzi",
           "output_type": "static-photo",
           "source_type": "f1-approved-local-valle-susa"
@@ -3136,7 +3136,7 @@
         {
           "key": "https://commons.wikimedia.org/wiki/special:redirect/file/architecture-villa-house-building-home-construction-542165.jpg",
           "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Architecture-villa-house-building-home-construction-542165.jpg",
-          "used_at": "2026-09-25T00:54:49Z",
+          "used_at": "2026-09-25T01:45:26Z",
           "job_id": "f1-immobiliare-2026-09-25-c00-05-05-g3-cinquecento-metri",
           "output_type": "static-photo",
           "source_type": "f1-approved-local-valle-susa"
@@ -6229,7 +6229,7 @@
         {
           "key": "https://themes.shopify.com/themes/shapes/presets/shapes?locale=it",
           "url": "https://themes.shopify.com/themes/shapes/presets/shapes?locale=it",
-          "used_at": "2026-09-25T00:54:49Z",
+          "used_at": "2026-09-25T01:45:26Z",
           "job_id": "real-media-pro-2026-09-25-c00-01-01-sito-che-perde-lead",
           "output_type": "static-photo",
           "source_type": "shopify-theme-store-description-only"
@@ -6237,7 +6237,7 @@
         {
           "key": "https://themes.shopify.com/themes/broadcast/presets/broadcast?locale=it",
           "url": "https://themes.shopify.com/themes/broadcast/presets/broadcast?locale=it",
-          "used_at": "2026-09-25T00:54:49Z",
+          "used_at": "2026-09-25T01:45:26Z",
           "job_id": "real-media-pro-2026-09-25-c00-02-02-shopify-product-page",
           "output_type": "static-photo",
           "source_type": "shopify-theme-store-description-only"
@@ -6245,7 +6245,7 @@
         {
           "key": "https://themes.shopify.com/themes/prestige/presets/prestige?locale=it",
           "url": "https://themes.shopify.com/themes/prestige/presets/prestige?locale=it",
-          "used_at": "2026-09-25T00:54:49Z",
+          "used_at": "2026-09-25T01:45:26Z",
           "job_id": "real-media-pro-2026-09-25-c00-03-03-advertising-sistema",
           "output_type": "static-photo",
           "source_type": "shopify-theme-store-description-only"
@@ -6253,7 +6253,7 @@
         {
           "key": "https://themes.shopify.com/themes/allure/presets/allure?locale=it",
           "url": "https://themes.shopify.com/themes/allure/presets/allure?locale=it",
-          "used_at": "2026-09-25T00:54:49Z",
+          "used_at": "2026-09-25T01:45:26Z",
           "job_id": "real-media-pro-2026-09-25-c00-04-04-google-ads-intento",
           "output_type": "static-photo",
           "source_type": "shopify-theme-store-description-only"
@@ -6261,7 +6261,7 @@
         {
           "key": "https://themes.shopify.com/themes/vivid/presets/vivid?locale=it",
           "url": "https://themes.shopify.com/themes/vivid/presets/vivid?locale=it",
-          "used_at": "2026-09-25T00:54:49Z",
+          "used_at": "2026-09-25T01:45:26Z",
           "job_id": "real-media-pro-2026-09-25-c00-05-05-audit-digitale",
           "output_type": "static-photo",
           "source_type": "shopify-theme-store-description-only"
