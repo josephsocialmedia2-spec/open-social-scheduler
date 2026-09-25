@@ -398503,7 +398503,7 @@
         "gallery_metadata_permission_passed": null
       },
       "visual_asset_urls": [
-        "https://commons.wikimedia.org/wiki/Special:Redirect/file/Centro_Storico_Avigliana.JPG"
+        "https://commons.wikimedia.org/wiki/Special:Redirect/file/Avigliana_Centro_Storico.JPG"
       ],
       "visual_source": "f1-approved-local-valle-susa",
       "visual_transform": "f1-local-photo-plus-presenter-footer",
@@ -399695,7 +399695,7 @@
         "gallery_metadata_permission_passed": null
       },
       "visual_asset_urls": [
-        "https://commons.wikimedia.org/wiki/Special:Redirect/file/Avigliana_Centro_Storico.JPG"
+        "https://commons.wikimedia.org/wiki/Special:Redirect/file/Avigliana%2C_Italy_%28Unsplash%29.jpg"
       ],
       "visual_source": "f1-approved-local-valle-susa",
       "visual_transform": "f1-local-photo-plus-presenter-footer",
@@ -400887,7 +400887,7 @@
         "gallery_metadata_permission_passed": null
       },
       "visual_asset_urls": [
-        "https://commons.wikimedia.org/wiki/Special:Redirect/file/Avigliana_Centro_Storico_Tramonto.JPG"
+        "https://commons.wikimedia.org/wiki/Special:Redirect/file/Avigliana%2C_Italy_%28Unsplash_yhnOTbw9SPY%29.jpg"
       ],
       "visual_source": "f1-approved-local-valle-susa",
       "visual_transform": "f1-local-photo-plus-presenter-footer",
@@ -407800,7 +407800,7 @@
       "reused_visual_count": 0
     }
   ],
-  "updated_at": "2026-09-25T00:51:13+00:00",
+  "updated_at": "2026-09-25T00:53:24+00:00",
   "updated_by": "Approved 5+5 publication renderer",
   "current_cycle": "2026-09-25T00:00",
   "history_days": 14,
