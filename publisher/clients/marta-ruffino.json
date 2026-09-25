@@ -23,7 +23,7 @@
     ]
   },
   "publishing": {
-    "backend": "direct_api",
+    "backend": "buffer",
     "secret_prefix": "MARTA",
     "require_media": true,
     "slots": [
@@ -34,15 +34,19 @@
       "facebook",
       "instagram"
     ],
-    "buffer_secret_env": "MARTA_BUFFER_API_KEY"
+    "buffer_secret_env": "MARTA_BUFFER_API_KEY",
+    "buffer_channels": {
+      "instagram": "6ab5d64dea19ca0bdedefe49",
+      "facebook": "6ab5d62bea19ca0bdedefc11"
+    }
   },
   "integrations": {
     "facebook": {
-      "id": "direct-api",
+      "id": "buffer:6ab5d62bea19ca0bdedefc11",
       "required": true
     },
     "instagram": {
-      "id": "direct-api",
+      "id": "buffer:6ab5d64dea19ca0bdedefe49",
       "required": true
     }
   }
