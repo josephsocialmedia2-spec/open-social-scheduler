@@ -170,6 +170,11 @@ jobs:
         shell: bash
         run: python publisher/buffer_queue_publish.py --discover-client marta-ruffino
 
+      - name: Validate Marta Ruffino Buffer mapping without publishing
+        if: env.MARTA_BUFFER_API_KEY != ''
+        shell: bash
+        run: python publisher/buffer_queue_publish.py --verify-client marta-ruffino
+
       - name: Discover Cartolibreria 10 e Lode Buffer channels when key is present
         if: env.CARTOLIBRERIA10ELODE_BUFFER_API_KEY != ''
         shell: bash
