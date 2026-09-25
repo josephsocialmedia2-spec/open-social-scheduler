@@ -27,6 +27,14 @@ function redirect(location) {
   return new Response(null, { status: 302, headers: { location, "cache-control": "no-store" } });
 }
 function nowIso() { return new Date().toISOString(); }
+function authRequiredError(message) {
+  const err = new Error(message);
+  err.name = "AuthRequiredError";
+  return err;
+}
+function isAuthRequiredError(error) {
+  return error instanceof Error && error.name === "AuthRequiredError";
+}
 function addSeconds(seconds) { return new Date(Date.now() + Number(seconds || 0) * 1000).toISOString(); }
 function canonicalPlatform(raw) {
   const p = String(raw || "").trim().toLowerCase();
@@ -337,9 +345,7 @@ async function refreshAccess(row) {
   const refreshToken = await decrypt(row.refresh_token_ciphertext);
   if (!refreshToken) {
     await markReauth(row.owner_id, row.client_id, p, "refresh_token_missing");
-    const err = new Error("AUTH_REQUIRED");
-    err.authRequired = true;
-    throw err;
+    throw authRequiredError("AUTH_REQUIRED");
   }
   const body = new URLSearchParams();
   if (p === "tiktok") body.set("client_key", c.clientId);
@@ -351,9 +357,7 @@ async function refreshAccess(row) {
   const data = await res.json();
   if (!res.ok || data.error) {
     await markReauth(row.owner_id, row.client_id, p, "refresh_failed");
-    const err = new Error("AUTH_REQUIRED: " + JSON.stringify(data).slice(0, 600));
-    err.authRequired = true;
-    throw err;
+    throw authRequiredError("AUTH_REQUIRED: " + JSON.stringify(data).slice(0, 600));
   }
   const profile = row.metadata || {};
   await upsertToken(row.owner_id, row.client_id, p, data, profile);
@@ -366,9 +370,7 @@ async function refreshAccess(row) {
 async function usableToken(ownerId, clientId, platform) {
   const row = await tokenRow(ownerId, clientId, platform);
   if (!row || !row.access_token_ciphertext) {
-    const err = new Error("AUTH_REQUIRED");
-    err.authRequired = true;
-    throw err;
+    throw authRequiredError("AUTH_REQUIRED");
   }
   const expiry = row.expires_at ? new Date(row.expires_at).getTime() : Number.POSITIVE_INFINITY;
   if (expiry - Date.now() < 5 * 60 * 1000) return refreshAccess(row);
@@ -473,7 +475,8 @@ async function workerToken(req, url) {
       author_urn: metadata.author_urn || null
     });
   } catch (e) {
-    return respond({ error: e.authRequired ? "AUTH_REQUIRED" : "TOKEN_ERROR", detail: String(e) }, e.authRequired ? 409 : 500);
+    const authRequired = isAuthRequiredError(e);
+    return respond({ error: authRequired ? "AUTH_REQUIRED" : "TOKEN_ERROR", detail: String(e) }, authRequired ? 409 : 500);
   }
 }
 async function disconnect(req) {
