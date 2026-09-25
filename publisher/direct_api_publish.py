@@ -19,6 +19,8 @@ from typing import Any
 
 import requests
 
+import oauth_broker
+
 ROOT = Path(__file__).resolve().parents[1]
 QUEUE_PATH = ROOT / "publisher" / "queue.json"
 CLIENT_DIR = ROOT / "publisher" / "clients"
@@ -110,6 +112,8 @@ def remaining_platforms(job: dict[str, Any], only: set[str] | None = None) -> li
 
 
 def required_secrets(platform: str, client: dict[str, Any]) -> list[str]:
+    if oauth_broker.enabled() and platform in {"tiktok", "linkedin", "linkedin-page", "youtube"}:
+        return []
     by_platform = {
         "facebook": ["FACEBOOK_PAGE_ACCESS_TOKEN"],
         "instagram": ["INSTAGRAM_ACCESS_TOKEN", "INSTAGRAM_USER_ID"],
@@ -298,7 +302,10 @@ def instagram_publish(job: dict[str, Any], client: dict[str, Any], paths: list[P
 def tiktok_publish(job: dict[str, Any], client: dict[str, Any], paths: list[Path], _cache: PublicMediaCache) -> dict[str, Any]:
     if str(job.get("format") or "reel") != "reel":
         raise PublishError("TikTok direct publisher currently accepts reel/video jobs only")
-    token = secret(client, "TIKTOK_ACCESS_TOKEN")
+    if oauth_broker.enabled():
+        token = str(oauth_broker.token(client, "tiktok")["access_token"])
+    else:
+        token = secret(client, "TIKTOK_ACCESS_TOKEN")
     headers = {"Authorization": f"Bearer {token}", "Content-Type": "application/json; charset=UTF-8"}
     creator = request("POST", "https://open.tiktokapis.com/v2/post/publish/creator_info/query/", headers=headers, json={}).json()
     if creator.get("error", {}).get("code") != "ok":
@@ -329,8 +336,15 @@ def tiktok_publish(job: dict[str, Any], client: dict[str, Any], paths: list[Path
 
 
 def linkedin_publish(job: dict[str, Any], client: dict[str, Any], _paths: list[Path], _cache: PublicMediaCache) -> dict[str, Any]:
-    token = secret(client, "LINKEDIN_ACCESS_TOKEN")
-    author = secret(client, "LINKEDIN_AUTHOR_URN")
+    if oauth_broker.enabled():
+        broker = oauth_broker.token(client, "linkedin")
+        token = str(broker["access_token"])
+        author = str(broker.get("author_urn") or "").strip()
+        if not author:
+            raise oauth_broker.BrokerError("LinkedIn account selection required", auth_required=True)
+    else:
+        token = secret(client, "LINKEDIN_ACCESS_TOKEN")
+        author = secret(client, "LINKEDIN_AUTHOR_URN")
     version = os.getenv("LINKEDIN_VERSION", "202601").strip()
     response = request("POST", "https://api.linkedin.com/rest/posts", headers={"Authorization": f"Bearer {token}", "X-Restli-Protocol-Version": "2.0.0", "Linkedin-Version": version, "Content-Type": "application/json"}, json={"author": author, "commentary": str(job.get("caption") or "")[:3000], "visibility": "PUBLIC", "distribution": {"feedDistribution": "MAIN_FEED", "targetEntities": [], "thirdPartyDistributionChannels": []}, "lifecycleState": "PUBLISHED", "isReshareDisabledByAuthor": False})
     return {"post_id": response.headers.get("x-restli-id", ""), "mode": "text"}
@@ -339,11 +353,14 @@ def linkedin_publish(job: dict[str, Any], client: dict[str, Any], _paths: list[P
 def youtube_publish(job: dict[str, Any], client: dict[str, Any], paths: list[Path], _cache: PublicMediaCache) -> dict[str, Any]:
     if str(job.get("format") or "reel") != "reel":
         raise PublishError("YouTube publisher accepts video/reel jobs only")
-    client_id = secret(client, "YOUTUBE_CLIENT_ID")
-    client_secret = secret(client, "YOUTUBE_CLIENT_SECRET")
-    refresh_token = secret(client, "YOUTUBE_REFRESH_TOKEN")
-    oauth = request("POST", "https://oauth2.googleapis.com/token", data={"client_id": client_id, "client_secret": client_secret, "refresh_token": refresh_token, "grant_type": "refresh_token"}).json()
-    access_token = str(oauth["access_token"])
+    if oauth_broker.enabled():
+        access_token = str(oauth_broker.token(client, "youtube")["access_token"])
+    else:
+        client_id = secret(client, "YOUTUBE_CLIENT_ID")
+        client_secret = secret(client, "YOUTUBE_CLIENT_SECRET")
+        refresh_token = secret(client, "YOUTUBE_REFRESH_TOKEN")
+        oauth = request("POST", "https://oauth2.googleapis.com/token", data={"client_id": client_id, "client_secret": client_secret, "refresh_token": refresh_token, "grant_type": "refresh_token"}).json()
+        access_token = str(oauth["access_token"])
     path = paths[0]
     metadata = {"snippet": {"title": str(job.get("title") or job.get("client_name") or "Video")[:100], "description": str(job.get("caption") or "")[:5000], "categoryId": os.getenv("YOUTUBE_CATEGORY_ID", "22").strip()}, "status": {"privacyStatus": os.getenv("YOUTUBE_PRIVACY_STATUS", "private").strip()}}
     init = request("POST", "https://www.googleapis.com/upload/youtube/v3/videos", params={"uploadType": "resumable", "part": "snippet,status"}, headers={"Authorization": f"Bearer {access_token}", "Content-Type": "application/json; charset=UTF-8", "X-Upload-Content-Length": str(path.stat().st_size), "X-Upload-Content-Type": "video/mp4"}, data=json.dumps(metadata).encode("utf-8"))
@@ -411,6 +428,7 @@ def publish_job(job: dict[str, Any], only: set[str] | None, dry_run: bool) -> tu
         return results, True
     cache = PublicMediaCache()
     success = True
+    auth_required_platforms: set[str] = set()
     try:
         for platform in platforms:
             publisher = PUBLISHERS.get(platform)
@@ -424,6 +442,13 @@ def publish_job(job: dict[str, Any], only: set[str] | None, dry_run: bool) -> tu
                 published = set(str(x) for x in job.get("published_platforms", []))
                 published.add(platform)
                 job["published_platforms"] = sorted(published)
+            except oauth_broker.BrokerError as exc:
+                if exc.auth_required:
+                    auth_required_platforms.add(platform)
+                    results.append({"platform": platform, "status": "auth_required", "error": str(exc)})
+                else:
+                    results.append({"platform": platform, "status": "error", "error": str(exc)})
+                success = False
             except Exception as exc:
                 results.append({"platform": platform, "status": "error", "error": str(exc)})
                 success = False
@@ -434,6 +459,14 @@ def publish_job(job: dict[str, Any], only: set[str] | None, dry_run: bool) -> tu
     if expected and expected.issubset(done):
         job["status"] = "published"
         job.pop("blocked_reason", None)
+        job.pop("auth_required_platforms", None)
+    elif auth_required_platforms:
+        job["auth_required_platforms"] = sorted(auth_required_platforms)
+        if done:
+            job["status"] = "partially_published"
+        else:
+            job["status"] = "blocked"
+        job["blocked_reason"] = "AUTH_REQUIRED"
     elif done:
         job["status"] = "partially_published"
     return results, success
