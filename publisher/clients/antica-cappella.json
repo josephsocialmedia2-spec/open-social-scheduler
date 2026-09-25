@@ -34,7 +34,8 @@
     "platforms": [
       "facebook",
       "instagram"
-    ]
+    ],
+    "buffer_secret_env": "ANTICACAPPELLA_BUFFER_API_KEY"
   },
   "integrations": {
     "facebook": {
