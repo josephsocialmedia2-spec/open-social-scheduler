@@ -23,8 +23,7 @@ https://nqnmlsmeiynxbdojeyjt.supabase.co/functions/v1/f1-social-oauth/callback/l
 
 ## Secret Supabase da configurare soltanto nella fase OAuth finale
 
-Obbligatorio:
-- F1_OAUTH_ENCRYPTION_KEY
+La chiave interna di cifratura non richiede intervento: viene generata e conservata in Supabase Vault. La variabile F1_OAUTH_ENCRYPTION_KEY resta solo un override opzionale.
 
 Google:
 - GOOGLE_OAUTH_CLIENT_ID
@@ -48,7 +47,7 @@ Opzionali:
 ## GitHub Actions
 
 Lasciare F1_OAUTH_BROKER_ENABLED=false finché:
-1. la migration è applicata;
+1. le migration sono applicate e la chiave interna è presente in Vault;
 2. la Edge Function è attiva;
 3. i client OAuth sono configurati;
 4. i callback sono registrati;

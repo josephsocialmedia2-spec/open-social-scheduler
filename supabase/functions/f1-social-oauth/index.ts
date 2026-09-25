@@ -1,7 +1,8 @@
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL") || "";
 const LEGACY_SERVICE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || "";
 const LEGACY_ANON_KEY = Deno.env.get("SUPABASE_ANON_KEY") || "";
-const ENCRYPTION_SECRET = Deno.env.get("F1_OAUTH_ENCRYPTION_KEY") || "";
+const ENV_ENCRYPTION_SECRET = Deno.env.get("F1_OAUTH_ENCRYPTION_KEY") || "";
+let ENCRYPTION_SECRET_CACHE = ENV_ENCRYPTION_SECRET;
 const HUB_URL = (Deno.env.get("F1_CONTENT_HUB_URL") || "https://josephsocialmedia2-spec.github.io/open-social-scheduler/f1-content-hub/").replace(/\/+$/, "/");
 const LINKEDIN_VERSION = Deno.env.get("LINKEDIN_VERSION") || "202608";
 
@@ -75,9 +76,20 @@ function unbase64url(value) {
   while (s.length % 4) s += "=";
   return unbase64(s);
 }
+async function encryptionSecret() {
+  if (ENCRYPTION_SECRET_CACHE) return ENCRYPTION_SECRET_CACHE;
+  const secret = await db("rpc/f1_get_oauth_encryption_secret", {
+    method: "POST",
+    body: JSON.stringify({})
+  });
+  const value = String(secret || "").trim();
+  if (!value) throw new Error("OAuth encryption secret unavailable");
+  ENCRYPTION_SECRET_CACHE = value;
+  return value;
+}
 async function cryptoKey() {
-  if (!ENCRYPTION_SECRET) throw new Error("F1_OAUTH_ENCRYPTION_KEY non configurata");
-  const hash = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(ENCRYPTION_SECRET));
+  const secret = await encryptionSecret();
+  const hash = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(secret));
   return crypto.subtle.importKey("raw", hash, { name: "AES-GCM" }, false, ["encrypt", "decrypt"]);
 }
 async function encrypt(value) {
@@ -97,11 +109,11 @@ async function decrypt(value) {
   return new TextDecoder().decode(plain);
 }
 async function signState(payload) {
-  if (!ENCRYPTION_SECRET) throw new Error("F1_OAUTH_ENCRYPTION_KEY non configurata");
+  const secret = await encryptionSecret();
   const data = new TextEncoder().encode(JSON.stringify(payload));
   const key = await crypto.subtle.importKey(
     "raw",
-    new TextEncoder().encode(ENCRYPTION_SECRET),
+    new TextEncoder().encode(secret),
     { name: "HMAC", hash: "SHA-256" },
     false,
     ["sign"]
@@ -111,11 +123,12 @@ async function signState(payload) {
 }
 async function verifyState(state) {
   const [body, sig] = String(state || "").split(".");
-  if (!body || !sig || !ENCRYPTION_SECRET) return null;
+  if (!body || !sig) return null;
+  const secret = await encryptionSecret();
   const data = unbase64url(body);
   const key = await crypto.subtle.importKey(
     "raw",
-    new TextEncoder().encode(ENCRYPTION_SECRET),
+    new TextEncoder().encode(secret),
     { name: "HMAC", hash: "SHA-256" },
     false,
     ["verify"]
@@ -267,7 +280,7 @@ function callbackUrl(platform) {
 }
 function configured(platform) {
   const c = providerConfig(platform);
-  return !!(c && c.clientId && c.clientSecret && ENCRYPTION_SECRET);
+  return !!(c && c.clientId && c.clientSecret);
 }
 async function exchangeCode(platform, code) {
   const p = canonicalPlatform(platform);
@@ -519,9 +532,11 @@ Deno.serve(async (req) => {
   const route = routeParts[0] || "health";
   try {
     if (route === "health") {
+      let encryptionReady = false;
+      try { encryptionReady = !!(await encryptionSecret()); } catch (_) {}
       return respond({
         ok: true,
-        encryption_ready: !!ENCRYPTION_SECRET,
+        encryption_ready: encryptionReady,
         providers: {
           youtube: configured("youtube"),
           tiktok: configured("tiktok"),
