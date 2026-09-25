@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-24T10:16:50+00:00",
+  "updated_at": "2026-09-25T10:23:57+00:00",
   "signals": [
     {
       "id": "FBS-64D8E3A2C4",
@@ -361,6 +361,18 @@
       "source_query": "site:facebook.com/groups \"Grugliasco\" \"vendo compro\"",
       "status": "NEW",
       "discovered_at": "2026-09-24T10:06:26+00:00"
+    },
+    {
+      "id": "FBS-F5C147C954",
+      "brand": "f1-immobiliare",
+      "territory": "Giaveno",
+      "group_url": "https://www.facebook.com/groups/216130891909846/",
+      "source_url": "https://www.facebook.com/groups/216130891909846/permalink/2805078743015035/",
+      "title": "sei di giaveno o sei stato a giaveno se... | Trovato in ...",
+      "snippet": "Trovato in discarica , maschio affettuoso, ha il codino storto, cerca casa!",
+      "source_query": "site:facebook.com/groups \"Giaveno\" \"vendesi casa\"",
+      "status": "NEW",
+      "discovered_at": "2026-09-25T10:14:33+00:00"
     }
   ]
 }
