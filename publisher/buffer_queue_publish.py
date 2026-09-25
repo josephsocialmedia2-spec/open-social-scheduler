@@ -78,8 +78,16 @@ def buffer_config(client: dict[str, Any]) -> tuple[str, dict[str, str]]:
     return secret_env, channels
 
 
+def buffer_secret_env(client: dict[str, Any]) -> str:
+    publishing = client.get("publishing") or {}
+    secret_env = str(publishing.get("buffer_secret_env") or "").strip()
+    if not secret_env:
+        raise BufferQueueError(f"{client.get('id')}: buffer_secret_env is missing")
+    return secret_env
+
+
 def secret_for_client(client: dict[str, Any]) -> str:
-    secret_env, _ = buffer_config(client)
+    secret_env = buffer_secret_env(client)
     value = os.getenv(secret_env, "").strip()
     if not value:
         raise BufferQueueError(f"Missing GitHub Actions secret: {secret_env}")
@@ -137,6 +145,30 @@ def discover_buffer_channels(api_key: str) -> dict[str, dict[str, str]]:
                 "organization_name": str(org.get("name") or ""),
             }
     return discovered
+
+
+def discover_client(client_id: str) -> dict[str, Any]:
+    client = load_client(client_id)
+    secret_env = buffer_secret_env(client)
+    api_key = secret_for_client(client)
+    discovered = discover_buffer_channels(api_key)
+
+    grouped: dict[str, list[dict[str, str]]] = {}
+    for row in discovered.values():
+        service = str(row.get("service") or "")
+        grouped.setdefault(service, []).append({
+            "id": str(row.get("id") or ""),
+            "name": str(row.get("name") or ""),
+            "organization_name": str(row.get("organization_name") or ""),
+        })
+
+    return {
+        "client_id": client_id,
+        "secret_env": secret_env,
+        "publishing_backend": str((client.get("publishing") or {}).get("backend") or ""),
+        "channels": grouped,
+        "channel_count": len(discovered),
+    }
 
 
 def verify_client(client_id: str) -> dict[str, Any]:
@@ -345,9 +377,18 @@ def main() -> int:
     parser.add_argument("--job-id")
     parser.add_argument("--client-id")
     parser.add_argument("--verify-client")
+    parser.add_argument("--discover-client")
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--strict", action="store_true")
     args = parser.parse_args()
+
+    if args.discover_client:
+        try:
+            print(json.dumps(discover_client(args.discover_client), ensure_ascii=False, indent=2))
+            return 0
+        except Exception as exc:
+            print(json.dumps({"status": "BUFFER_DISCOVERY_FAILED", "error": str(exc)}, ensure_ascii=False, indent=2))
+            return 2
 
     if args.verify_client:
         try:
