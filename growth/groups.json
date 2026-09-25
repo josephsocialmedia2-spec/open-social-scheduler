@@ -4114,8 +4114,25 @@
       "member_at": null,
       "last_post_at": null,
       "notes": ""
+    },
+    {
+      "id": "FBG-7E8508054A",
+      "brand": "real-media-pro",
+      "territory": "Pianezza",
+      "name": "PIANEZZA CULTURA",
+      "url": "https://www.facebook.com/groups/716603300219777/",
+      "source_query": "site:facebook.com/groups \"Pianezza\" \"networking\"",
+      "snippet": "Pianezza Cristina Sara 1w · Public Siamo tornati dopo la pausa estiva e vi aspettiamo da domenica 20 settembre#pianezza#bibliotecastorica#pianezzacultura Antonio De Pra' and 7 others 8 reactions · 1 share Fabrizio Nucera Giampaolo 2w · Public Nella notte tra il 5 ed il 6 settembre 1706: una giovane ragazza pianezzese, Maria Chiaberge Brico, residente accanto alle porte del castello di ...",
+      "status": "PENDING_APPROVAL",
+      "batch_id": "20260925-101258",
+      "discovered_at": "2026-09-25T10:23:16+00:00",
+      "approved_at": null,
+      "join_requested_at": null,
+      "member_at": null,
+      "last_post_at": null,
+      "notes": ""
     }
   ],
-  "updated_at": "2026-09-24T10:16:50+00:00",
-  "last_batch_id": "20260924-100259"
+  "updated_at": "2026-09-25T10:23:57+00:00",
+  "last_batch_id": "20260925-101258"
 }
