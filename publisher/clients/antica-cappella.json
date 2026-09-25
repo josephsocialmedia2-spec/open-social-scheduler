@@ -24,7 +24,7 @@
     ]
   },
   "publishing": {
-    "backend": "direct_api",
+    "backend": "buffer",
     "secret_prefix": "ANTICACAPPELLA",
     "require_media": true,
     "slots": [
@@ -32,18 +32,20 @@
       "18:30"
     ],
     "platforms": [
-      "facebook",
       "instagram"
     ],
-    "buffer_secret_env": "ANTICACAPPELLA_BUFFER_API_KEY"
+    "buffer_secret_env": "ANTICACAPPELLA_BUFFER_API_KEY",
+    "buffer_channels": {
+      "instagram": "6ab5cfc6ea19ca0bdedecef3"
+    }
   },
   "integrations": {
     "facebook": {
-      "id": "direct-api",
-      "required": true
+      "id": "not-connected",
+      "required": false
     },
     "instagram": {
-      "id": "direct-api",
+      "id": "buffer:6ab5cfc6ea19ca0bdedecef3",
       "required": true
     }
   }
