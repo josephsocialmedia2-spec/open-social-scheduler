@@ -18,6 +18,10 @@ jobs:
     env:
       BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
       LASACRA_BUFFER_API_KEY: ${{ secrets.LASACRA_BUFFER_API_KEY }}
+      RMP_BUFFER_API_KEY: ${{ secrets.RMP_BUFFER_API_KEY }}
+      ANTICACAPPELLA_BUFFER_API_KEY: ${{ secrets.ANTICACAPPELLA_BUFFER_API_KEY }}
+      MARTA_BUFFER_API_KEY: ${{ secrets.MARTA_BUFFER_API_KEY }}
+      CARTOLIBRERIA10ELODE_BUFFER_API_KEY: ${{ secrets.CARTOLIBRERIA10ELODE_BUFFER_API_KEY }}
       CLOUDINARY_URL: ${{ secrets.CLOUDINARY_URL }}
 
     steps:
@@ -145,3 +149,23 @@ jobs:
       - name: Validate Immobiliare La Sacra Buffer channels without publishing
         shell: bash
         run: python publisher/buffer_queue_publish.py --verify-client immobiliare-la-sacra
+
+      - name: Discover Real Media Pro Buffer channels when key is present
+        if: env.RMP_BUFFER_API_KEY != ''
+        shell: bash
+        run: python publisher/buffer_queue_publish.py --discover-client real-media-pro
+
+      - name: Discover Antica Cappella Buffer channels when key is present
+        if: env.ANTICACAPPELLA_BUFFER_API_KEY != ''
+        shell: bash
+        run: python publisher/buffer_queue_publish.py --discover-client antica-cappella
+
+      - name: Discover Marta Ruffino Buffer channels when key is present
+        if: env.MARTA_BUFFER_API_KEY != ''
+        shell: bash
+        run: python publisher/buffer_queue_publish.py --discover-client marta-ruffino
+
+      - name: Discover Cartolibreria 10 e Lode Buffer channels when key is present
+        if: env.CARTOLIBRERIA10ELODE_BUFFER_API_KEY != ''
+        shell: bash
+        run: python publisher/buffer_queue_publish.py --discover-client cartolibreria-10-e-lode
