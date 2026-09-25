@@ -160,6 +160,11 @@ jobs:
         shell: bash
         run: python publisher/buffer_queue_publish.py --discover-client antica-cappella
 
+      - name: Validate Antica Cappella Buffer mapping without publishing
+        if: env.ANTICACAPPELLA_BUFFER_API_KEY != ''
+        shell: bash
+        run: python publisher/buffer_queue_publish.py --verify-client antica-cappella
+
       - name: Discover Marta Ruffino Buffer channels when key is present
         if: env.MARTA_BUFFER_API_KEY != ''
         shell: bash
