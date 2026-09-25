@@ -431421,6 +431421,21 @@
       "retry_count": 0,
       "created_by": "supabase-queue-bridge",
       "autonomous_publish": true,
+      "buffer_posts": [
+        {
+          "service": "instagram",
+          "channel_id": "6ab2b6e7ea19ca0bdeb80e19",
+          "post_id": "6ab67057d7638fd2853d9a26",
+          "buffer_status": "error",
+          "due_at": "2026-09-25T17:00:00.000Z",
+          "created_at": "2026-09-25T13:00:07+00:00",
+          "sent_at": null,
+          "external_link": null
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "instagram"
+      ],
       "cloudinary_assets": [
         {
           "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272481/f1-buffer/supabase-calendar-1ce2790b-defe-44ae-88b2-1aaddb71d1a8/slide-01.png",
@@ -431482,19 +431497,6 @@
           "resource_type": "image",
           "bytes": "3296784"
         }
-      ],
-      "buffer_posts": [
-        {
-          "service": "instagram",
-          "channel_id": "6ab2b6e7ea19ca0bdeb80e19",
-          "post_id": "6ab67057d7638fd2853d9a26",
-          "buffer_status": "scheduled",
-          "due_at": "2026-09-25T17:00:00.000Z",
-          "created_at": "2026-09-25T13:00:07+00:00"
-        }
-      ],
-      "buffer_scheduled_platforms": [
-        "instagram"
       ]
     },
     {
@@ -431637,6 +431639,21 @@
       "retry_count": 0,
       "created_by": "supabase-queue-bridge",
       "autonomous_publish": true,
+      "buffer_posts": [
+        {
+          "service": "instagram",
+          "channel_id": "6ab2b6e7ea19ca0bdeb80e19",
+          "post_id": "6ab6705e8c95968bb039f1d5",
+          "buffer_status": "scheduled",
+          "due_at": "2026-09-26T11:00:00.000Z",
+          "created_at": "2026-09-25T13:00:14+00:00",
+          "sent_at": null,
+          "external_link": null
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "instagram"
+      ],
       "cloudinary_assets": [
         {
           "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272498/f1-buffer/supabase-calendar-a695de94-d98e-4ec2-8983-e0a089e625a5/slide-01.png",
@@ -431698,19 +431715,6 @@
           "resource_type": "image",
           "bytes": "3296784"
         }
-      ],
-      "buffer_posts": [
-        {
-          "service": "instagram",
-          "channel_id": "6ab2b6e7ea19ca0bdeb80e19",
-          "post_id": "6ab6705e8c95968bb039f1d5",
-          "buffer_status": "scheduled",
-          "due_at": "2026-09-26T11:00:00.000Z",
-          "created_at": "2026-09-25T13:00:14+00:00"
-        }
-      ],
-      "buffer_scheduled_platforms": [
-        "instagram"
       ]
     },
     {
@@ -431818,7 +431822,7 @@
     {
       "id": "supabase-calendar-50559439-482c-45be-ae10-36b2cf22c1ba",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "buffer_scheduled",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "IG POST 9 · Posizione · APPARTAMENTO DUE LOCALI A VALGIOIE",
@@ -431915,7 +431919,19 @@
           "bytes": "3296784"
         }
       ],
-      "blocked_reason": "Buffer instagram: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
+      "buffer_posts": [
+        {
+          "service": "instagram",
+          "channel_id": "6ab2b6e7ea19ca0bdeb80e19",
+          "post_id": "6ab6b5979c15eda27740540c",
+          "buffer_status": "scheduled",
+          "due_at": "2026-09-26T17:00:00.000Z",
+          "created_at": "2026-09-25T17:55:36+00:00"
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "instagram"
+      ]
     },
     {
       "id": "supabase-calendar-72a338fe-ddae-43cf-8d73-8ddd7e85e2f4",
@@ -432124,7 +432140,7 @@
     {
       "id": "supabase-calendar-dcf5e371-fcc0-46db-95ec-db54ea28b14c",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "buffer_scheduled",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "IG POST 10 · Per chi è adatta · APPARTAMENTO DUE LOCALI A VALGIOIE",
@@ -432221,12 +432237,24 @@
           "bytes": "3296784"
         }
       ],
-      "blocked_reason": "Buffer instagram: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
+      "buffer_posts": [
+        {
+          "service": "instagram",
+          "channel_id": "6ab2b6e7ea19ca0bdeb80e19",
+          "post_id": "6ab6b5a09c15eda277405b85",
+          "buffer_status": "scheduled",
+          "due_at": "2026-09-27T11:00:00.000Z",
+          "created_at": "2026-09-25T17:55:44+00:00"
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "instagram"
+      ]
     },
     {
       "id": "supabase-calendar-19772500-252d-4777-a223-2f920cb5f770",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "buffer_scheduled",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "IG POST 11 · 3 motivi per visitarla · APPARTAMENTO DUE LOCALI A VALGIOIE",
@@ -432323,7 +432351,19 @@
           "bytes": "3296784"
         }
       ],
-      "blocked_reason": "Buffer instagram: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
+      "buffer_posts": [
+        {
+          "service": "instagram",
+          "channel_id": "6ab2b6e7ea19ca0bdeb80e19",
+          "post_id": "6ab6b5a288146db945e049af",
+          "buffer_status": "scheduled",
+          "due_at": "2026-09-27T17:00:00.000Z",
+          "created_at": "2026-09-25T17:55:46+00:00"
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "instagram"
+      ]
     },
     {
       "id": "supabase-calendar-ab6f1c1b-2508-4376-89f4-ce7e6be4358f",
@@ -432836,7 +432876,7 @@
       "blocked_reason": "Buffer facebook: Invalid post: Whoops, it looks like you've already got this one scheduled or posted around the same time. We're not able to post the same thing twice so close together."
     }
   ],
-  "updated_at": "2026-09-25T13:01:01+00:00",
+  "updated_at": "2026-09-25T17:56:06+00:00",
   "updated_by": "Approved 5+5 publication renderer",
   "current_cycle": "2026-09-25T08:00",
   "history_days": 14,
