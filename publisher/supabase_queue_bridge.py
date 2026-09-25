@@ -248,7 +248,7 @@ def build_or_update_jobs(queue: dict[str, Any]) -> dict[str, int]:
         "PROGRAMMATO", "APPROVATO", "CANALE_DA_COLLEGARE", "ERRORE_QUEUE",
         "IN PUBBLICAZIONE", "ERRORE_PUBBLICAZIONE", "ERRORE_MEDIA",
         "AUTO_PUBLISH_DISATTIVATO", "APPROVAZIONE_RICHIESTA",
-        "CREDENZIALI_MANCANTI"
+        "CREDENZIALI_MANCANTI", "AUTH_REQUIRED", "DA_RIAUTORIZZARE"
     }
 
     for row in calendars:
