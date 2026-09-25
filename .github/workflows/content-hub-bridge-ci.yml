@@ -5,9 +5,15 @@ on:
     paths:
       - 'publisher/supabase_queue_bridge.py'
       - 'publisher/supabase_website_sync.py'
+      - 'publisher/direct_api_entry.py'
+      - 'publisher/direct_api_publish.py'
+      - 'publisher/oauth_broker.py'
+      - 'publisher/test_oauth_broker.py'
       - 'publisher/clients/**'
       - 'publisher/queue.json'
       - 'f1-content-hub/**'
+      - 'supabase/functions/f1-social-oauth/**'
+      - 'supabase/migrations/20260925_f1_social_oauth_broker.sql'
       - '.github/workflows/social-publisher.yml'
       - '.github/workflows/content-hub-bridge-ci.yml'
   workflow_dispatch:
@@ -26,7 +32,9 @@ jobs:
       - name: Install minimal dependency
         run: pip install requests==2.32.5
       - name: Compile bridge scripts
-        run: python -m py_compile publisher/supabase_queue_bridge.py publisher/supabase_website_sync.py publisher/direct_api_entry.py publisher/direct_api_publish.py
+        run: python -m py_compile publisher/supabase_queue_bridge.py publisher/supabase_website_sync.py publisher/direct_api_entry.py publisher/direct_api_publish.py publisher/oauth_broker.py
+      - name: Test OAuth broker client
+        run: PYTHONPATH=publisher python -m unittest publisher/test_oauth_broker.py
       - name: Validate queue and client configs
         run: |
           python - <<'PY'
@@ -61,7 +69,7 @@ jobs:
         run: |
           python - <<'PY'
           from pathlib import Path
-          roots=[Path('publisher'),Path('f1-content-hub')]
+          roots=[Path('publisher'),Path('f1-content-hub'),Path('supabase/functions/f1-social-oauth')]
           forbidden=('sb_secret_',)
           offenders=[]
           for root in roots:

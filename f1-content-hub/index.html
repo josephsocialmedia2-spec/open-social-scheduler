@@ -77,7 +77,7 @@
             <option>IN ARRIVO</option><option>DA CLASSIFICARE</option><option>DA LAVORARE</option>
             <option>IN LAVORAZIONE</option><option>PRONTO</option><option>DA APPROVARE</option>
             <option>APPROVATO</option><option>PROGRAMMATO</option><option>IN PUBBLICAZIONE</option><option>PUBBLICATO</option><option>ARCHIVIATO</option>
-            <option>ERRORE_MEDIA</option><option>ERRORE_QUEUE</option><option>ERRORE_PUBBLICAZIONE</option><option>CANALE_DA_COLLEGARE</option><option>CREDENZIALI_MANCANTI</option>
+            <option>ERRORE_MEDIA</option><option>ERRORE_QUEUE</option><option>ERRORE_PUBBLICAZIONE</option><option>CANALE_DA_COLLEGARE</option><option>CREDENZIALI_MANCANTI</option><option>AUTH_REQUIRED</option><option>DA_RIAUTORIZZARE</option>
           </select>
         </div>
         <div class="content-grid" id="archiveGrid"></div>
@@ -116,6 +116,11 @@
       <div class="panel">
         <div class="section-title"><h2>Stato automazione</h2><span class="muted">Hub → calendario → queue → publisher → social</span></div>
         <div id="automationHealth" class="calendar-list"></div>
+      </div>
+      <div class="panel">
+        <div class="section-title"><h2>Social collegati</h2><span class="muted">OAuth finale solo quando decidi di configurarlo</span></div>
+        <div class="notice warn">La configurazione tecnica può essere completata senza autorizzare gli account. I pulsanti COLLEGA aprono il consenso ufficiale del proprietario solo quando verranno usati.</div>
+        <div id="socialConnections" class="calendar-list"></div>
       </div>
       <div class="panel">
         <div class="section-title"><h2>Revisione ambienti / negozi · 75 giorni</h2><span class="muted">Promemoria amministrativo, non duplicazione automatica</span></div>
@@ -195,6 +200,7 @@ import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js
 
 const SUPABASE_URL = "https://nqnmlsmeiynxbdojeyjt.supabase.co";
 const SUPABASE_KEY = "sb_publishable_Clz5qPTkTtvwV0rqWTcfMQ_sCDSRgnu";
+const OAUTH_BROKER_URL = SUPABASE_URL+"/functions/v1/f1-social-oauth";
 const sb = createClient(SUPABASE_URL, SUPABASE_KEY, { auth: { persistSession: true, autoRefreshToken: true } });
 
 const SEED_CLIENTS = [
@@ -376,6 +382,61 @@ function daysUntil(value){
   if(!value)return null;
   return Math.ceil((new Date(value).getTime()-Date.now())/86400000);
 }
+function platformLabel(value){
+  const p=String(value||"").toLowerCase();
+  return {"facebook":"Facebook","instagram":"Instagram","linkedin-page":"LinkedIn","linkedin":"LinkedIn","tiktok":"TikTok","youtube":"YouTube"}[p]||value;
+}
+function oauthPlatform(value){return value==="linkedin-page"?"linkedin":value}
+function socialStateClass(row){
+  if(row&&row.enabled&&row.verified)return "green";
+  if(row&&["AUTORIZZAZIONE_RICHIESTA","CONFIGURAZIONE_PRONTA","ACCOUNT_DA_SELEZIONARE"].includes(row.connection_status))return "amber";
+  return "";
+}
+function renderSocialConnections(){
+  const order=["facebook","instagram","linkedin-page","tiktok","youtube"];
+  const html=clients.map(function(c){
+    const rows=order.map(function(p){
+      const row=socialChannels.find(function(x){return x.client_id===c.id&&x.platform===p});
+      const state=row?(row.connection_status||(row.verified?"COLLEGATO":"CANALE_DA_COLLEGARE")):"NON CONFIGURATO";
+      const broker=["linkedin-page","tiktok","youtube"].includes(p);
+      const actions=broker
+        ? '<button class="btn small primary" onclick="window.f1ConnectSocial(\''+c.id+'\',\''+p+'\')">COLLEGA</button> <button class="btn small ghost" onclick="window.f1VerifySocial()">VERIFICA</button> '+(row&&row.verified?'<button class="btn small danger" onclick="window.f1DisconnectSocial(\''+c.id+'\',\''+p+'\')">DISCONNETTI</button>':'')
+        : '<span class="meta">Provider attuale: '+esc(row&&row.provider?row.provider:"direct")+'</span>';
+      return '<div class="lineitem"><b>'+esc(platformLabel(p))+'</b><div><span class="badge '+socialStateClass(row)+'">'+esc(state)+'</span><div class="meta">'+esc(row&&row.account_name?row.account_name:(row&&row.external_channel_id?row.external_channel_id:"Nessun account autorizzato"))+'</div></div><div>'+actions+'</div></div>';
+    }).join("");
+    return '<div style="margin-bottom:16px"><h3 style="margin:4px 0 8px">'+esc(c.name)+'</h3>'+rows+'</div>';
+  }).join("");
+  el("socialConnections").innerHTML=html||'<div class="empty">Nessun cliente.</div>';
+}
+async function oauthSession(){
+  const r=await sb.auth.getSession();
+  const session=r.data&&r.data.session;
+  if(!session)throw new Error("Sessione scaduta: accedi di nuovo.");
+  return session;
+}
+window.f1ConnectSocial=async function(clientId,platform){
+  try{
+    const session=await oauthSession();
+    const url=OAUTH_BROKER_URL+"/authorize?client_id="+encodeURIComponent(clientId)+"&platform="+encodeURIComponent(oauthPlatform(platform));
+    const r=await fetch(url,{headers:{Authorization:"Bearer "+session.access_token,apikey:SUPABASE_KEY}});
+    const data=await r.json();
+    if(!r.ok){
+      if(data.error==="configuration_missing")return alert("Configurazione tecnica OAuth non ancora completata per "+platformLabel(platform)+". Questa parte è stata lasciata volutamente per ultima.");
+      throw new Error(data.error||"Errore OAuth");
+    }
+    location.href=data.authorization_url;
+  }catch(e){alert(e.message||String(e))}
+};
+window.f1VerifySocial=async function(){await loadAll();renderAutomation()};
+window.f1DisconnectSocial=async function(clientId,platform){
+  if(!confirm("Disconnettere "+platformLabel(platform)+" per questo cliente?"))return;
+  try{
+    const session=await oauthSession();
+    const r=await fetch(OAUTH_BROKER_URL+"/disconnect",{method:"POST",headers:{Authorization:"Bearer "+session.access_token,apikey:SUPABASE_KEY,"content-type":"application/json"},body:JSON.stringify({client_id:clientId,platform:oauthPlatform(platform)})});
+    const data=await r.json();if(!r.ok)throw new Error(data.error||"Errore disconnessione");
+    await loadAll();renderAutomation();
+  }catch(e){alert(e.message||String(e))}
+};
 function renderAutomation(){
   const health=clients.map(function(c){
     const ch=socialChannels.filter(function(x){return x.client_id===c.id});
@@ -383,7 +444,7 @@ function renderAutomation(){
     const sources=webSources.filter(function(x){return x.client_id===c.id});
     const cal=calendar.filter(function(x){return x.client_id===c.id});
     const queued=cal.filter(function(x){return !!x.queue_job_id});
-    const blocked=cal.filter(function(x){return ["CANALE_DA_COLLEGARE","ERRORE_MEDIA","ERRORE_QUEUE","ERRORE_PUBBLICAZIONE","CREDENZIALI_MANCANTI"].includes(x.status)});
+    const blocked=cal.filter(function(x){return ["CANALE_DA_COLLEGARE","ERRORE_MEDIA","ERRORE_QUEUE","ERRORE_PUBBLICAZIONE","CREDENZIALI_MANCANTI","AUTH_REQUIRED","DA_RIAUTORIZZARE"].includes(x.status)});
     const website=c.website?(sources.length?"SITO OK":"SITO DA SINCRONIZZARE"):"WEBSITE MANCANTE";
     const wa=whatsappSenders.length?"WHATSAPP ATTIVO":"WHATSAPP DA CONFIGURARE";
     let state="CONFIGURAZIONE INCOMPLETA", cls="amber";
@@ -392,6 +453,7 @@ function renderAutomation(){
     return '<div class="lineitem"><b>'+esc(c.name)+'</b><div><div class="badges"><span class="badge '+cls+'">'+esc(state)+'</span><span class="badge">'+esc(website)+'</span><span class="badge">'+esc(wa)+'</span></div><div class="meta">Canali verificati: '+verified.length+'/'+ch.length+' · Calendario: '+cal.length+' · In queue: '+queued.length+' · Fonti web: '+sources.length+'</div></div><span class="badge '+(blocked.length?"":"green")+'">'+(blocked.length?blocked.length+" BLOCCATI":"OK")+'</span></div>';
   }).join("");
   el("automationHealth").innerHTML=health||'<div class="empty">Nessun cliente.</div>';
+  renderSocialConnections();
 
   const cycles=storeCycles.map(function(x){
     const c=clients.find(function(k){return k.id===x.client_id});
@@ -506,6 +568,16 @@ el("searchInput").oninput=function(){renderGrid("archiveGrid",filteredItems())};
 el("refreshBtn").onclick=async function(){await loadAll();renderAll();if(!el("tab-whatsapp").classList.contains("hidden"))await loadWhatsApp()};
 
 if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("./sw.js").catch(function(){})})}
+const oauthParams=new URLSearchParams(location.search);
+if(oauthParams.get("oauth")){
+  const state=oauthParams.get("oauth"), platform=oauthParams.get("platform")||"social";
+  setTimeout(function(){
+    if(state==="connected")alert(platformLabel(platform)+" collegato correttamente.");
+    else if(state==="denied")alert("Autorizzazione "+platformLabel(platform)+" non concessa.");
+    else if(state==="error")alert("Errore durante il collegamento "+platformLabel(platform)+".");
+  },300);
+  history.replaceState({},document.title,location.pathname+location.hash);
+}
 authState();
 </script>
 </body>

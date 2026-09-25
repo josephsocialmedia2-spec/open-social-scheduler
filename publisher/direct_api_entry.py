@@ -19,7 +19,10 @@ def tiktok_publish_fixed(job: dict[str, Any], client: dict[str, Any], paths, _ca
     if str(job.get("format") or "reel") != "reel":
         raise core.PublishError("TikTok direct publisher currently accepts reel/video jobs only")
 
-    token = core.secret(client, "TIKTOK_ACCESS_TOKEN")
+    if core.oauth_broker.enabled():
+        token = str(core.oauth_broker.token(client, "tiktok")["access_token"])
+    else:
+        token = core.secret(client, "TIKTOK_ACCESS_TOKEN")
     headers = {"Authorization": f"Bearer {token}", "Content-Type": "application/json; charset=UTF-8"}
     creator = core.request(
         "POST",
