@@ -440,10 +440,16 @@ async function cardHtml(item){
     else if(media.mime_type&&media.mime_type.startsWith("video/"))thumb='<div class="thumb"><video src="'+esc(url)+'" muted controls></video></div>';
     else thumb='<div class="thumb">'+esc((media.mime_type||"FILE").toUpperCase())+'</div>';
   }
-  const options=["IN ARRIVO","DA CLASSIFICARE","DA LAVORARE","IN LAVORAZIONE","PRONTO","DA APPROVARE","APPROVATO","PROGRAMMATO","IN PUBBLICAZIONE","TIKTOK_REVIEW_REQUIRED","BOZZA_TIKTOK_INVIATA","PUBBLICATO","ARCHIVIATO"].map(function(s){return '<option '+(s===item.status?"selected":"")+'>'+s+'</option>'}).join("");
+  const manualStates=["BOZZA","IN ARRIVO","DA CLASSIFICARE","DA LAVORARE","IN LAVORAZIONE","PRONTO","DA APPROVARE","APPROVATO","PROGRAMMATO","IN PUBBLICAZIONE","PARZIALMENTE PUBBLICATO","ERRORE","TIKTOK_REVIEW_REQUIRED","BOZZA_TIKTOK_INVIATA","ARCHIVIATO"];
+  let options=manualStates.map(function(s){return '<option '+(s===item.status?"selected":"")+'>'+s+'</option>'}).join("");
+  if(item.status==="PUBBLICATO")options='<option selected disabled>PUBBLICATO</option>'+options;
   const isVideo=!!(media&&media.mime_type&&media.mime_type.startsWith("video/"));
   const tiktokBtn=isVideo?'<button class="btn small green" onclick="window.f1TikTokConfigure(\''+item.id+'\',\''+item.client_id+'\')">TIKTOK</button>':'';
-  return '<article class="content-card">'+thumb+'<div class="card-body"><div class="meta">'+esc(c?c.name:"Cliente")+' · '+esc(fmt(item.created_at))+'</div><h3 title="'+esc(item.title)+'">'+esc(item.title||"Senza titolo")+'</h3><div class="badges"><span class="badge">'+esc(item.content_type)+'</span><span class="badge '+(item.status==="PUBBLICATO"?"green":item.status==="PROGRAMMATO"?"amber":"")+'">'+esc(item.status)+'</span></div><div class="card-actions"><select class="input" style="padding:6px 7px" onchange="window.f1SetStatus(\''+item.id+'\',this.value)">'+options+'</select><button class="btn small" onclick="window.f1Reuse(\''+item.id+'\')">RIUTILIZZA</button>'+tiktokBtn+'<button class="btn small primary" onclick="window.f1Schedule(\''+item.id+'\',\''+item.client_id+'\')">PROGRAMMA</button></div></div></article>';
+  const isF1Social=!!(c&&c.slug==="f1-social");
+  const isF1Test=isF1Social&&item.campaign==="F1_SOCIAL_OFFICIAL_TEST_20260926";
+  const attachBtn=isF1Test&&!media?'<button class="btn small ghost" onclick="window.f1AttachTestMedia(\''+item.id+'\',\''+item.client_id+'\')">ALLEGA MEDIA TEST</button>':'';
+  const publishNowBtn=isF1Social?'<button class="btn small green" onclick="window.f1PublishNow(\''+item.id+'\',\''+item.client_id+'\')">🚀 PUBBLICA ORA</button>':'';
+  return '<article class="content-card">'+thumb+'<div class="card-body"><div class="meta">'+esc(c?c.name:"Cliente")+' · '+esc(fmt(item.created_at))+'</div><h3 title="'+esc(item.title)+'">'+esc(item.title||"Senza titolo")+'</h3><div class="badges"><span class="badge">'+esc(item.content_type)+'</span><span class="badge '+(item.status==="PUBBLICATO"?"green":item.status==="PROGRAMMATO"||item.status==="IN PUBBLICAZIONE"?"amber":"")+'">'+esc(item.status)+'</span></div><div class="card-actions"><select class="input" style="padding:6px 7px" onchange="window.f1SetStatus(\''+item.id+'\',this.value)">'+options+'</select><button class="btn small" onclick="window.f1Reuse(\''+item.id+'\')">RIUTILIZZA</button>'+attachBtn+tiktokBtn+publishNowBtn+'<button class="btn small primary" onclick="window.f1Schedule(\''+item.id+'\',\''+item.client_id+'\')">PROGRAMMA</button></div></div></article>';
 }
 async function renderGrid(target,list){
   if(!list.length){el(target).innerHTML='<div class="empty">Nessun contenuto.</div>';return}
@@ -477,12 +483,131 @@ window.f1SelectClient=function(id){
   renderAll();
   setTab("dashboard");
 };
-window.f1SetStatus=async function(id,status){const r=await sb.from("f1_content_items").update({status:status}).eq("id",id);if(r.error)return alert(r.error.message);const it=items.find(function(i){return i.id===id});if(it)it.status=status;renderMetrics()};
+window.f1SetStatus=async function(id,status){
+  if(status==="PUBBLICATO")return alert("PUBBLICATO può essere assegnato solo dalla conferma reale della piattaforma.");
+  const r=await sb.from("f1_content_items").update({status:status}).eq("id",id);
+  if(r.error)return alert(r.error.message);
+  const it=items.find(function(i){return i.id===id});if(it)it.status=status;renderMetrics();
+};
 window.f1Reuse=async function(id){
   const src=items.find(function(i){return i.id===id});if(!src)return;
   const r=await sb.from("f1_content_items").insert({owner_id:user.id,client_id:src.client_id,title:"RIUTILIZZO · "+src.title,description:src.description,content_type:src.content_type,source:"RIUTILIZZO",status:"DA LAVORARE",priority:src.priority,campaign:src.campaign,tags:src.tags,notes:src.notes,location:src.location,reused_from:src.id}).select().single();
   if(r.error)return alert(r.error.message);await loadAll();renderAll();alert("Nuova lavorazione creata senza duplicare il file originale.");
 };
+const F1_SOCIAL_TEST_SHA256="4a9f0300c91b6b6f2140d926c58e725f3a56ebb4226aae17c6ab4eff120d92d0";
+async function sha256Hex(buffer){
+  const hash=await crypto.subtle.digest("SHA-256",buffer);
+  return Array.from(new Uint8Array(hash)).map(function(b){return b.toString(16).padStart(2,"0")}).join("");
+}
+async function f1MediaHash(media){
+  const url=await signedUrl(media);
+  if(!url)throw new Error("MEDIA_MISSING");
+  const r=await fetch(url,{cache:"no-store"});if(!r.ok)throw new Error("MEDIA_NON_LEGGIBILE");
+  return sha256Hex(await r.arrayBuffer());
+}
+window.f1AttachTestMedia=function(itemId,clientId){
+  const item=items.find(function(x){return x.id===itemId}),client=clients.find(function(x){return x.id===clientId});
+  if(!item||!client||client.slug!=="f1-social"||item.campaign!=="F1_SOCIAL_OFFICIAL_TEST_20260926")return alert("Contenuto test F1 Social non valido.");
+  const input=document.createElement("input");input.type="file";input.accept="image/png";
+  input.onchange=async function(){
+    const file=input.files&&input.files[0];if(!file)return;
+    try{
+      if(file.type!=="image/png")throw new Error("Il media test deve essere un PNG.");
+      const buf=await file.arrayBuffer(),hash=await sha256Hex(buf);
+      if(hash!==F1_SOCIAL_TEST_SHA256)throw new Error("MEDIA_DIVERSO_DALL_ORIGINALE — hash SHA-256 non corrispondente.");
+      const existing=(item.f1_content_media||[])[0];if(existing)throw new Error("Il contenuto test possiede già un media.");
+      const safe="F1-Social-Gestione-Social-Intelligente.png";
+      const path=user.id+"/"+clientId+"/"+itemId+"/official-test-"+safe;
+      const up=await sb.storage.from("f1-content-media").upload(path,file,{contentType:"image/png",upsert:false});
+      if(up.error)throw up.error;
+      const mr=await sb.from("f1_content_media").insert({owner_id:user.id,content_id:itemId,client_id:clientId,file_name:safe,mime_type:"image/png",storage_path:path,file_size:file.size,source:"CHATGPT_LIBRARY"});
+      if(mr.error)throw mr.error;
+      const ur=await sb.from("f1_content_items").update({content_type:"IMMAGINE",source:"CHATGPT_LIBRARY",status:"BOZZA"}).eq("id",itemId);
+      if(ur.error)throw ur.error;
+      await loadAll();renderAll();alert("Media test verificato e allegato. SHA-256 corretto.");
+    }catch(e){alert(e.message||String(e))}
+  };
+  input.click();
+};
+function f1ScopeRequired(platform){
+  return {facebook:"pages_manage_posts",instagram:"instagram_content_publish",tiktok:"video.publish","linkedin-page":"w_member_social",youtube:"https://www.googleapis.com/auth/youtube.upload"}[platform]||"";
+}
+function f1ConnectionPreflight(clientId,platform){
+  const row=socialChannels.find(function(x){return x.client_id===clientId&&x.platform===platform});
+  if(!row)return {ok:false,status:"CANALE_DA_COLLEGARE",row:null};
+  if(!(row.enabled&&row.verified))return {ok:false,status:row.connection_status||"AUTH_REQUIRED",row:row};
+  const collision=socialChannels.some(function(x){return x.client_id!==clientId&&x.platform===platform&&x.enabled&&x.verified&&x.external_channel_id&&row.external_channel_id&&x.external_channel_id===row.external_channel_id});
+  if(collision)return {ok:false,status:"ACCOUNT_CONDIVISO",row:row};
+  const required=f1ScopeRequired(platform),scopes=new Set(row.scopes||[]);
+  if(required&&!scopes.has(required))return {ok:false,status:"AUTH_REQUIRED",row:row};
+  return {ok:true,status:"PRONTO",row:row};
+}
+window.f1PublishNow=async function(itemId,clientId){
+  const item=items.find(function(x){return x.id===itemId}),client=clients.find(function(x){return x.id===clientId});
+  if(!item||!client||client.slug!=="f1-social")return alert("PUBBLICA ORA è isolato al tenant F1 Social.");
+  const media=(item.f1_content_media||[])[0];
+  if(!media)return alert("MEDIA_MISSING — allega prima il file multimediale.");
+  let mediaHash="";
+  try{
+    mediaHash=await f1MediaHash(media);
+    if(item.campaign==="F1_SOCIAL_OFFICIAL_TEST_20260926"&&mediaHash!==F1_SOCIAL_TEST_SHA256)return alert("MEDIA_DIVERSO_DALL_ORIGINALE — pubblicazione bloccata.");
+  }catch(e){return alert(e.message||String(e))}
+  const image=String(media.mime_type||"").startsWith("image/");
+  const defs=[
+    {platform:"facebook",label:"Facebook"},
+    {platform:"instagram",label:"Instagram"},
+    {platform:"tiktok",label:"TikTok"},
+    {platform:"linkedin-page",label:"LinkedIn"},
+    {platform:"youtube",label:"YouTube"}
+  ];
+  const ready=[],blocked=[];
+  defs.forEach(function(d){
+    const r=f1ConnectionPreflight(clientId,d.platform);
+    if(!r.ok){blocked.push({label:d.label,status:r.status,row:r.row});return}
+    if(image&&d.platform==="youtube"){blocked.push({label:d.label,status:"FORMATO_NON_SUPPORTATO",row:r.row});return}
+    if(image&&d.platform==="tiktok"){blocked.push({label:d.label,status:"TIKTOK_PHOTO_URL_REQUIRED",row:r.row});return}
+    ready.push({label:d.label,platform:d.platform,row:r.row});
+  });
+  blocked.push({label:"X",status:"NON_SUPPORTATO",row:null});
+  blocked.push({label:"Pinterest",status:"AUTH_REQUIRED",row:null});
+  const now=new Date().toISOString();
+  for(const b of blocked){
+    await sb.from("f1_publication_events").insert({
+      owner_id:user.id,client_id:clientId,content_id:itemId,provider:b.row&&b.row.provider||null,
+      platform:b.row&&b.row.platform||b.label.toLowerCase(),action:"PUBLISH_NOW_PREFLIGHT",status:b.status,
+      error:b.status,api_sent:false,account_expected:b.row&&b.row.profile_url||null,account_detected:b.row&&b.row.external_channel_id||null,
+      details:{media_sha256:mediaHash,publish_now:true}
+    });
+  }
+  for(const r of ready){
+    const existing=await sb.from("f1_content_calendar").select("id,status").eq("content_id",itemId).eq("platform",r.platform).order("created_at",{ascending:false}).limit(1);
+    const payload={
+      owner_id:user.id,content_id:itemId,client_id:clientId,platform:r.platform,publication_at:now,status:"IN PUBBLICAZIONE",
+      provider:r.row.provider||"oauth_broker",retry_count:0,error:null,
+      platform_metadata:{publish_now:true,expected_media_sha256:mediaHash,expected_account:r.row.profile_url||null,api_sent:false}
+    };
+    let calendarId="";
+    if(existing.data&&existing.data.length){
+      calendarId=existing.data[0].id;
+      const ur=await sb.from("f1_content_calendar").update(payload).eq("id",calendarId);if(ur.error)return alert(ur.error.message);
+    }else{
+      const ir=await sb.from("f1_content_calendar").insert(payload).select("id").single();if(ir.error)return alert(ir.error.message);calendarId=ir.data.id;
+    }
+    await sb.from("f1_publication_events").insert({
+      owner_id:user.id,client_id:clientId,content_id:itemId,calendar_id:calendarId,provider:r.row.provider||"oauth_broker",
+      platform:r.platform,action:"PUBBLICA_ORA",status:"IN PUBBLICAZIONE",api_sent:false,
+      account_expected:r.row.profile_url||null,account_detected:r.row.external_channel_id||null,
+      details:{media_sha256:mediaHash,publish_now:true,queued_at:now}
+    });
+  }
+  if(ready.length){
+    await sb.from("f1_content_items").update({status:"IN PUBBLICAZIONE"}).eq("id",itemId);
+  }
+  await loadAll();renderAll();
+  const lines=ready.map(function(x){return "✅ "+x.label+" — IN PUBBLICAZIONE"}).concat(blocked.map(function(x){return "⚠️ "+x.label+" — "+x.status}));
+  alert("F1 SOCIAL — preflight PUBBLICA ORA\n\n"+lines.join("\n"));
+};
+
 window.f1Schedule=async function(id,clientId){
   const item=items.find(function(x){return x.id===id}), client=clients.find(function(x){return x.id===clientId});
   if(client&&client.approval_required&&item&&!["APPROVATO","PROGRAMMATO"].includes(item.status))return alert("Questo cliente richiede approvazione. Imposta prima il contenuto su APPROVATO.");
