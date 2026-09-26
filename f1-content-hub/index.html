@@ -606,7 +606,8 @@ function effectiveSocialState(row,collisions){
   if(row.external_channel_id && collisions[key] && collisions[key].length>1)return "ACCOUNT_CONDIVISO";
   if(row.reauthorization_required)return "DA_RIAUTORIZZARE";
   if(row.token_expires_at && new Date(row.token_expires_at).getTime()<=Date.now())return "TOKEN_SCADUTO";
-  return row.connection_status||(row.verified?"COLLEGATO":"CANALE_DA_COLLEGARE");
+  if(row.enabled&&row.verified)return "COLLEGATO";
+  return row.connection_status||"CANALE_DA_COLLEGARE";
 }
 function socialStateClass(row,state){
   if(state==="COLLEGATO")return "green";
