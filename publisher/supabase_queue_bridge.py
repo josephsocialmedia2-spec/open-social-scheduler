@@ -192,7 +192,7 @@ def load_source_rows() -> tuple[list[dict[str, Any]], dict[str, dict[str, Any]],
         {
             "select": (
                 "id,owner_id,content_id,client_id,platform,publication_at,status,queue_job_id,"
-                "provider,external_post_id,external_url,retry_count,error,"
+                "provider,external_post_id,external_url,retry_count,error,platform_metadata,"
                 "f1_content_items(id,title,description,source_text,status,campaign,property_id,source,tiktok_settings,"
                 "f1_content_media(id,file_name,mime_type,storage_path,file_size)),"
                 "f1_content_clients(id,name,slug,timezone,auto_publish,approval_required)"
@@ -230,6 +230,11 @@ def event(row: dict[str, Any], action: str, status: str, **extra: Any) -> None:
         "status": status,
         "retry_count": int(extra.pop("retry_count", 0) or 0),
         "error": extra.pop("error", None),
+        "api_sent": bool(extra.pop("api_sent", False)),
+        "external_url": extra.pop("external_url", None),
+        "account_expected": extra.pop("account_expected", None),
+        "account_detected": extra.pop("account_detected", None),
+        "api_response": extra.pop("api_response", {}),
         "details": extra,
     }
     try:
@@ -275,7 +280,9 @@ def build_or_update_jobs(queue: dict[str, Any]) -> dict[str, int]:
         job_id = f"supabase-calendar-{row['id']}"
         channel = channels.get(channel_key(str(row.get("client_id")), platform))
         channel_ok = bool(channel and channel.get("enabled") and channel.get("verified"))
-        auto_publish = bool(client.get("auto_publish"))
+        platform_metadata = row.get("platform_metadata") if isinstance(row.get("platform_metadata"), dict) else {}
+        manual_publish_now = bool(platform_metadata.get("publish_now"))
+        auto_publish = bool(client.get("auto_publish")) or manual_publish_now
         approval_required = bool(client.get("approval_required", True))
         item_status = str(item.get("status") or "")
         approval_ok = (not approval_required) or item_status in {"APPROVATO", "PROGRAMMATO", "IN PUBBLICAZIONE", "PUBBLICATO"}
@@ -351,7 +358,11 @@ def build_or_update_jobs(queue: dict[str, Any]) -> dict[str, int]:
             "tiktok_settings": tiktok_settings if platform == "tiktok" else {},
             "retry_count": int((job or {}).get("retry_count") or 0),
             "created_by": "supabase-queue-bridge",
-            "autonomous_publish": True,
+            "autonomous_publish": not manual_publish_now,
+            "manual_publish_now": manual_publish_now,
+            "expected_media_sha256": platform_metadata.get("expected_media_sha256"),
+            "public_media_urls": platform_metadata.get("public_media_urls") or [],
+            "tiktok_photo_urls": platform_metadata.get("tiktok_photo_urls") or [],
         }
         if reason:
             new_job["blocked_reason"] = reason
