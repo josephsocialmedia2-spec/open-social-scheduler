@@ -47,6 +47,20 @@
     "instagram": {
       "id": "buffer:6ab5cfc6ea19ca0bdedecef3",
       "required": true
+    },
+    "youtube": {
+      "id": "not-connected",
+      "required": false
+    },
+    "tiktok": {
+      "id": "not-connected",
+      "required": false
     }
+  },
+  "profile_urls": {
+    "facebook": "https://www.facebook.com/profile.php?id=61550077453442",
+    "instagram": "https://www.instagram.com/anticacappella/",
+    "youtube": "https://www.youtube.com/@ristoranteanticacappella",
+    "tiktok": "https://www.tiktok.com/@ristoranteanticacappella?lang=en"
   }
 }
