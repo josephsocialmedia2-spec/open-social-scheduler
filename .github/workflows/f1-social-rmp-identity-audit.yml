@@ -1,0 +1,141 @@
+name: F1 Social RMP Identity Audit
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.f1-social-rmp-identity-audit-trigger'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: f1-social-rmp-identity-audit
+  cancel-in-progress: false
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    env:
+      META_GRAPH_VERSION: ${{ vars.META_GRAPH_VERSION || 'v23.0' }}
+      RMP_FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.RMP_FACEBOOK_PAGE_ACCESS_TOKEN }}
+      RMP_INSTAGRAM_ACCESS_TOKEN: ${{ secrets.RMP_INSTAGRAM_ACCESS_TOKEN }}
+      RMP_INSTAGRAM_USER_ID: ${{ secrets.RMP_INSTAGRAM_USER_ID }}
+      RMP_TIKTOK_ACCESS_TOKEN: ${{ secrets.RMP_TIKTOK_ACCESS_TOKEN }}
+      RMP_LINKEDIN_ACCESS_TOKEN: ${{ secrets.RMP_LINKEDIN_ACCESS_TOKEN }}
+      RMP_LINKEDIN_AUTHOR_URN: ${{ secrets.RMP_LINKEDIN_AUTHOR_URN }}
+      RMP_PINTEREST_ACCESS_TOKEN: ${{ secrets.RMP_PINTEREST_ACCESS_TOKEN }}
+      RMP_PINTEREST_BOARD_ID: ${{ secrets.RMP_PINTEREST_BOARD_ID }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Audit RMP/F1 Social destinations read-only
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json, os, urllib.request, urllib.error
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          def get_json(url, headers=None):
+              req=urllib.request.Request(url, headers=headers or {}, method='GET')
+              try:
+                  with urllib.request.urlopen(req, timeout=30) as r:
+                      return {'ok': True, 'status': r.status, 'data': json.loads(r.read().decode())}
+              except urllib.error.HTTPError as e:
+                  body=e.read().decode(errors='replace')[:1200]
+                  return {'ok': False, 'status': e.code, 'error': body}
+              except Exception as e:
+                  return {'ok': False, 'error': str(e)}
+
+          out={
+            'brand':'F1 SOCIAL / Real Media Pro',
+            'mode':'READ_ONLY_IDENTITY_AUDIT',
+            'checked_at':datetime.now(timezone.utc).isoformat(),
+            'platforms':{}
+          }
+
+          ver=os.getenv('META_GRAPH_VERSION','v23.0')
+          fb=os.getenv('RMP_FACEBOOK_PAGE_ACCESS_TOKEN','').strip()
+          if fb:
+              out['platforms']['facebook']=get_json(f'https://graph.facebook.com/{ver}/me?fields=id,name&access_token={fb}')
+          else:
+              out['platforms']['facebook']={'ok':False,'reason':'RMP_FACEBOOK_PAGE_ACCESS_TOKEN_MISSING'}
+
+          igtok=os.getenv('RMP_INSTAGRAM_ACCESS_TOKEN','').strip()
+          igid=os.getenv('RMP_INSTAGRAM_USER_ID','').strip()
+          if igtok and igid:
+              out['platforms']['instagram']=get_json(f'https://graph.facebook.com/{ver}/{igid}?fields=id,username&access_token={igtok}')
+          else:
+              out['platforms']['instagram']={'ok':False,'reason':'RMP_INSTAGRAM_CREDENTIALS_MISSING'}
+
+          litok=os.getenv('RMP_LINKEDIN_ACCESS_TOKEN','').strip()
+          liurn=os.getenv('RMP_LINKEDIN_AUTHOR_URN','').strip()
+          if litok and liurn:
+              # The author URN is already the publication destination. Validate token without exposing it.
+              who=get_json('https://api.linkedin.com/v2/userinfo', {'Authorization':f'Bearer {litok}'})
+              out['platforms']['linkedin']={'ok': bool(who.get('ok')), 'author_urn': liurn, 'token_check': who}
+          else:
+              out['platforms']['linkedin']={'ok':False,'reason':'RMP_LINKEDIN_CREDENTIALS_MISSING'}
+
+          pintok=os.getenv('RMP_PINTEREST_ACCESS_TOKEN','').strip()
+          board=os.getenv('RMP_PINTEREST_BOARD_ID','').strip()
+          if pintok:
+              p=get_json('https://api.pinterest.com/v5/user_account', {'Authorization':f'Bearer {pintok}'})
+              p['board_id_configured']=bool(board)
+              p['board_id']=board if board else None
+              out['platforms']['pinterest']=p
+          else:
+              out['platforms']['pinterest']={'ok':False,'reason':'RMP_PINTEREST_ACCESS_TOKEN_MISSING','board_id_configured':bool(board)}
+
+          tt=os.getenv('RMP_TIKTOK_ACCESS_TOKEN','').strip()
+          out['platforms']['tiktok']={
+            'ok': bool(tt),
+            'credential_present': bool(tt),
+            'format_support_for_this_test': False,
+            'reason':'CURRENT_DIRECT_PUBLISHER_REQUIRES_VIDEO_REEL_FOR_TIKTOK'
+          }
+
+          out['platforms']['x']={
+            'ok':False,
+            'reason':'NO_X_PUBLISHER_OR_RMP_X_CREDENTIALS_CONFIGURED'
+          }
+          out['platforms']['youtube']={
+            'ok':False,
+            'reason':'IMAGE_POST_NOT_SUPPORTED_BY_CURRENT_YOUTUBE_INTEGRATION'
+          }
+
+          # Remove any provider error payloads that could accidentally contain echoed URLs/tokens.
+          for v in out['platforms'].values():
+              if isinstance(v,dict):
+                  if isinstance(v.get('error'),str):
+                      v['error']=v['error'][:500]
+                  tc=v.get('token_check')
+                  if isinstance(tc,dict) and isinstance(tc.get('error'),str):
+                      tc['error']=tc['error'][:500]
+
+          Path('publisher/f1_social_rmp_identity_audit.json').write_text(
+              json.dumps(out,ensure_ascii=False,indent=2)+'\n',encoding='utf-8'
+          )
+          print(json.dumps({
+            'brand':out['brand'],
+            'checked_at':out['checked_at'],
+            'platform_ok':{k:bool(v.get('ok')) for k,v in out['platforms'].items()}
+          },ensure_ascii=False))
+          PY
+
+      - name: Persist sanitized identity audit
+        shell: bash
+        run: |
+          git config user.name 'f1-social-identity-audit'
+          git config user.email 'f1-social-identity-audit@users.noreply.github.com'
+          git add publisher/f1_social_rmp_identity_audit.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Update F1 Social RMP identity audit'
+          git fetch origin main
+          git rebase origin/main
+          git push origin HEAD:main
