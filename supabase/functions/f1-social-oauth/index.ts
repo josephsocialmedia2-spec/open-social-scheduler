@@ -314,7 +314,7 @@ async function tiktokConfigCheck() {
   const errorCode = String(payload?.error?.code || payload?.error || "");
   const errorMessage = String(payload?.error?.message || payload?.error_description || "");
   const valid = res.ok && (!errorCode || errorCode === "ok");
-  console.log("TIKTOK_CONFIG_CHECK", JSON.stringify({
+  const diagnostic = {
     valid,
     http_status: res.status,
     key_length: key.length,
@@ -323,8 +323,18 @@ async function tiktokConfigCheck() {
     secret_length: secret.length,
     secret_outer_whitespace: rawSecret !== secret,
     error_code: errorCode || null,
-    error_message: errorMessage || null
-  }));
+    error_message: errorMessage || null,
+    checked_at: nowIso()
+  };
+  console.log("TIKTOK_CONFIG_CHECK", JSON.stringify(diagnostic));
+  try {
+    const diagClient = await clientForWorker("real-media-pro");
+    if (diagClient) {
+      await patchChannel(diagClient.owner_id, diagClient.id, "tiktok", {
+        oauth_metadata: { config_check: diagnostic }
+      });
+    }
+  } catch (_) {}
   return respond({
     ok: valid,
     configured: true,
