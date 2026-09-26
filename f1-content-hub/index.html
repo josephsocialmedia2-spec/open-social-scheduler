@@ -80,6 +80,7 @@
           <select id="clientFilter"></select>
           <select id="statusFilter">
             <option value="">Tutti gli stati</option>
+            <option>BOZZA</option><option>PRONTO</option><option>IN PUBBLICAZIONE</option><option>PUBBLICATO</option><option>PARZIALMENTE PUBBLICATO</option><option>ERRORE</option>
             <option>IN ARRIVO</option><option>DA CLASSIFICARE</option><option>DA LAVORARE</option>
             <option>IN LAVORAZIONE</option><option>PRONTO</option><option>DA APPROVARE</option>
             <option>APPROVATO</option><option>PROGRAMMATO</option><option>IN PUBBLICAZIONE</option><option>PUBBLICATO</option><option>ARCHIVIATO</option>
@@ -291,6 +292,7 @@ const OAUTH_BROKER_URL = SUPABASE_URL+"/functions/v1/f1-social-oauth";
 const sb = createClient(SUPABASE_URL, SUPABASE_KEY, { auth: { persistSession: true, autoRefreshToken: true } });
 
 const SEED_CLIENTS = [
+  {name:"F1 Social",slug:"f1-social",category:"Social media management",aliases:["F1 SOCIAL","REAL MEDIA PRO"]},
   {name:"F1 Immobiliare",slug:"f1-immobiliare",category:"Immobiliare",aliases:["F1","F1 IMMOBILIARE"]},
   {name:"Real Media Pro",slug:"real-media-pro",category:"Web agency",aliases:["RMP","REAL MEDIA PRO"]},
   {name:"Marta Ruffino",slug:"marta-ruffino",category:"Salute · Riabilitazione pavimento pelvico",aliases:["MARTA","MARTA RUFFINO"]},
