@@ -45,6 +45,20 @@
     "instagram": {
       "id": "direct-api",
       "required": true
+    },
+    "tiktok": {
+      "id": "direct-api",
+      "required": false
+    },
+    "youtube": {
+      "id": "direct-api",
+      "required": false
     }
+  },
+  "profile_urls": {
+    "facebook": "https://www.facebook.com/profile.php?id=61576475002477",
+    "instagram": "https://www.instagram.com/10_e_lode_cartolibreria/",
+    "tiktok": "https://www.tiktok.com/@10elode1",
+    "youtube": "https://www.youtube.com/@10eLodeCartolibreriaTorino"
   }
 }
