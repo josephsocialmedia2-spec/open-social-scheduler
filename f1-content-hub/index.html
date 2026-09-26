@@ -37,6 +37,16 @@
 .scope-badge i{width:8px;height:8px;border-radius:50%;background:#39f28a;display:inline-block}
 @media(max-width:900px){.global-client-select{min-width:150px;max-width:190px}.top-actions{flex-wrap:wrap}.workspace-nav{width:100%}}
 @media(max-width:620px){.global-client-select{width:100%;max-width:none}.top-actions{width:100%}.top-actions .btn{flex:1}.client-card{min-width:0}}
+.content-toolbar{grid-template-columns:minmax(220px,2fr) repeat(4,minmax(135px,1fr))}
+.week-calendar.month-mode .week-day{min-height:145px}
+.week-calendar.day-mode{grid-template-columns:minmax(300px,1fr);min-width:0}
+.week-calendar.day-mode .week-day{min-height:520px}
+.calendar-modes .btn.active-mode{background:var(--green);color:#05110a;border-color:var(--green)}
+.week-event[draggable="true"]{cursor:grab}
+.week-event[draggable="true"]:active{cursor:grabbing}
+.week-day.drop-ready{outline:2px dashed var(--green);outline-offset:-4px}
+@media(max-width:1050px){.content-toolbar{grid-template-columns:1fr 1fr}}
+@media(max-width:760px){.content-toolbar{grid-template-columns:1fr}.calendar-modes{width:100%;justify-content:space-between}}
 </style>
 </head>
 <body>
@@ -81,6 +91,7 @@
         <select id="globalClientSelect" class="input global-client-select" aria-label="Cliente attivo">
           <option value="">Tutti i clienti</option>
         </select>
+        <button class="btn ghost" id="problemQuickBtn">PROBLEMI <span id="problemQuickCount" class="badge">0</span></button>
         <button class="btn ghost" id="refreshBtn">AGGIORNA</button>
         <button class="btn green" id="openUploadBtn">+ CARICA CONTENUTI</button>
       </div>
@@ -101,7 +112,7 @@
 
     <section id="tab-archive" class="hidden">
       <div class="panel">
-        <div class="toolbar">
+        <div class="toolbar content-toolbar">
           <input id="searchInput" class="input" placeholder="Cerca cliente, titolo, campagna, località, tag...">
           <select id="clientFilter"></select>
           <select id="statusFilter">
@@ -111,6 +122,20 @@
             <option>IN LAVORAZIONE</option><option>PRONTO</option><option>DA APPROVARE</option>
             <option>APPROVATO</option><option>PROGRAMMATO</option><option>IN PUBBLICAZIONE</option><option>PUBBLICATO</option><option>ARCHIVIATO</option>
             <option>ERRORE_MEDIA</option><option>ERRORE_QUEUE</option><option>ERRORE_PUBBLICAZIONE</option><option>CANALE_DA_COLLEGARE</option><option>CREDENZIALI_MANCANTI</option><option>AUTH_REQUIRED</option><option>DA_RIAUTORIZZARE</option><option>TIKTOK_REVIEW_REQUIRED</option><option>BOZZA_TIKTOK_INVIATA</option>
+          </select>
+          <select id="typeFilter">
+            <option value="">Tutti i formati</option>
+            <option value="image">Immagini</option>
+            <option value="video">Video</option>
+            <option value="audio">Audio</option>
+            <option value="document">Documenti</option>
+            <option value="text">Solo testo</option>
+          </select>
+          <select id="usageFilter">
+            <option value="">Tutti gli utilizzi</option>
+            <option value="unused">Non utilizzati</option>
+            <option value="scheduled">Programmati</option>
+            <option value="published">Pubblicati</option>
           </select>
         </div>
         <div class="content-grid" id="archiveGrid"></div>
@@ -129,11 +154,16 @@
           <div class="week-shell">
             <div class="week-toolbar">
               <div class="row">
-                <button class="btn small ghost" onclick="window.f1CalendarWeek(-1)">← SETTIMANA</button>
+                <button class="btn small ghost" onclick="window.f1CalendarMove(-1)">←</button>
                 <button class="btn small ghost" onclick="window.f1CalendarToday()">OGGI</button>
-                <button class="btn small ghost" onclick="window.f1CalendarWeek(1)">SETTIMANA →</button>
+                <button class="btn small ghost" onclick="window.f1CalendarMove(1)">→</button>
               </div>
               <div id="weekLabel" class="week-title"></div>
+              <div class="row calendar-modes">
+                <button id="calendarModeMonth" class="btn small ghost" onclick="window.f1CalendarMode('month')">MESE</button>
+                <button id="calendarModeWeek" class="btn small primary" onclick="window.f1CalendarMode('week')">SETTIMANA</button>
+                <button id="calendarModeDay" class="btn small ghost" onclick="window.f1CalendarMode('day')">GIORNO</button>
+              </div>
             </div>
             <div style="overflow:auto"><div id="weekCalendar" class="week-calendar"></div></div>
           </div>
@@ -145,7 +175,7 @@
 
     <section id="tab-analytics" class="hidden">
       <div class="panel">
-        <div class="section-title"><h2>Analisi operative</h2><span class="muted">Pubblicazioni, errori, canali e distribuzione</span></div>
+        <div class="section-title"><div><h2>Analisi operative</h2><span class="muted">Pubblicazioni, errori, canali e distribuzione</span></div><button class="btn small ghost" onclick="setTab('reports')">REPORT</button></div>
         <div class="notice warn">Le metriche qui sotto sono operative e derivano dal motore F1 Social. Reach, impression, follower ed engagement verranno mostrati solo quando restituiti dalle API ufficiali dei social: nessun dato viene stimato o inventato.</div>
         <div id="analyticsMetrics" class="analytics-grid"></div>
         <div class="analytics-layout">
@@ -182,6 +212,21 @@
         <div class="section-title"><div><h2>Problemi da risolvere</h2><div class="muted">Errori trasformati in azioni operative, senza dati simulati.</div></div></div>
         <div id="problemMetrics" class="analytics-grid"></div>
         <div id="problemList" class="calendar-list"></div>
+      </div>
+    </section>
+
+    <section id="tab-reports" class="hidden">
+      <div class="panel">
+        <div class="section-title">
+          <div><h2>Report operativo</h2><div class="muted">Dati verificabili del cliente e confronto del periodo. Nessuna metrica viene stimata.</div></div>
+          <div class="row">
+            <select id="reportRange" class="input" style="width:auto"><option value="7">7 giorni</option><option value="30" selected>30 giorni</option><option value="90">90 giorni</option></select>
+            <button class="btn small ghost" id="exportReportBtn">ESPORTA CSV</button>
+          </div>
+        </div>
+        <div class="notice warn">Reach, impression, follower e engagement vengono mostrati solo quando sono realmente persistiti da una API/provider. Questo report usa gli eventi operativi disponibili nel Content Hub.</div>
+        <div id="reportMetrics" class="analytics-grid"></div>
+        <div id="reportClients" class="calendar-list"></div>
       </div>
     </section>
 
@@ -261,8 +306,10 @@
       <div class="field span2"><label>Titolo</label><input id="uploadTitle" class="input" placeholder="Es. Matrimonio settembre / Appartamento Valgioie"></div>
       <div class="field"><label>Campagna</label><input id="uploadCampaign" class="input" placeholder="Facoltativa"></div>
       <div class="field"><label>Località</label><input id="uploadLocation" class="input" placeholder="Facoltativa"></div>
-      <div class="field"><label>Tag</label><input id="uploadTags" class="input" placeholder="matrimonio, menu, reel"></div>
-      <div class="field span3"><label>Note / testo</label><textarea id="uploadNotes" placeholder="Descrizione, didascalia, idea..."></textarea></div>
+      <div class="field"><label>Tag / hashtag</label><input id="uploadTags" class="input" placeholder="matrimonio, menu, reel"></div>
+      <div class="field"><label>Stato iniziale</label><select id="uploadStatus"><option>DA LAVORARE</option><option>BOZZA</option><option>PRONTO</option><option>DA APPROVARE</option></select></div>
+      <div class="field span3"><label>Didascalia / testo da pubblicare</label><textarea id="uploadCaption" placeholder="Testo principale del contenuto..."></textarea></div>
+      <div class="field span3"><label>Note interne</label><textarea id="uploadNotes" placeholder="Indicazioni operative non destinate alla pubblicazione..."></textarea></div>
     </div>
     <label id="dropZone" class="uploadbox" style="display:block;margin-top:12px">
       <input id="fileInput" type="file" multiple accept="image/*,video/*,audio/*,.pdf,.doc,.docx">
@@ -365,6 +412,7 @@ let selectedClientId = "";
 let droppedFiles = [];
 let tiktokContext = null;
 let calendarWeekOffset = 0;
+let calendarViewMode = "week";
 
 const el = (id) => document.getElementById(id);
 const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, function(m){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]});
@@ -482,11 +530,11 @@ function fillClientSelects(){
   if(selectedClientId)el("uploadClient").value=selectedClientId;
 }
 function setTab(tab,options){
-  const valid=["dashboard","clients","calendar","archive","publications","analytics","connections","automation","problems","whatsapp"];
+  const valid=["dashboard","clients","calendar","archive","publications","analytics","connections","automation","problems","reports","whatsapp"];
   if(!valid.includes(tab))tab="dashboard";
   valid.forEach(function(t){el("tab-"+t).classList.toggle("hidden",t!==tab)});
   document.querySelectorAll("[data-tab]").forEach(function(b){b.classList.toggle("active",b.dataset.tab===tab)});
-  const titles={dashboard:"Dashboard",clients:"Clienti",calendar:"Calendario editoriale",archive:"Contenuti",publications:"Pubblicazioni",analytics:"Analisi",connections:"Connessioni",automation:"Automazioni",problems:"Problemi",whatsapp:"WhatsApp"};
+  const titles={dashboard:"Dashboard",clients:"Clienti",calendar:"Calendario editoriale",archive:"Contenuti",publications:"Pubblicazioni",analytics:"Analisi",connections:"Connessioni",automation:"Automazioni",problems:"Problemi",reports:"Report",whatsapp:"WhatsApp"};
   el("pageTitle").textContent=titles[tab]||"F1 Content Hub";
   if(!(options&&options.skipUrl)){
     const url=new URL(location.href);
@@ -500,6 +548,7 @@ function setTab(tab,options){
   if(tab==="connections")renderSocialConnections();
   if(tab==="publications")renderPublicationCenter();
   if(tab==="problems")renderProblems();
+  if(tab==="reports")renderReports();
 }
 document.querySelectorAll("[data-tab]").forEach(function(b){b.onclick=function(){setTab(b.dataset.tab)}});
 
@@ -509,11 +558,31 @@ function filteredItems(limit){
   const q=(el("searchInput").value||"").toLowerCase().trim();
   const st=el("statusFilter").value;
   const cf=el("clientFilter").value;
+  const type=el("typeFilter")?el("typeFilter").value:"";
+  const usage=el("usageFilter")?el("usageFilter").value:"";
   if(cf)list=list.filter(function(i){return i.client_id===cf});
   if(st)list=list.filter(function(i){return i.status===st});
+  if(type)list=list.filter(function(i){
+    const media=(i.f1_content_media||[])[0];
+    const mime=String(media&&media.mime_type||"").toLowerCase();
+    const ct=String(i.content_type||"").toLowerCase();
+    if(type==="image")return mime.startsWith("image/")||/foto|image|immagine/.test(ct);
+    if(type==="video")return mime.startsWith("video/")||/video|reel|short/.test(ct);
+    if(type==="audio")return mime.startsWith("audio/")||/audio/.test(ct);
+    if(type==="document")return (!!media&&!/^(image|video|audio)\//.test(mime))||/document|pdf|doc/.test(ct);
+    if(type==="text")return !media||ct==="testo";
+    return true;
+  });
+  if(usage)list=list.filter(function(i){
+    const cal=i.f1_content_calendar||[];
+    if(usage==="published")return i.status==="PUBBLICATO"||cal.some(function(x){return /PUBBLICAT|PUBLISHED|COMPLETED/i.test(String(x.status||""))});
+    if(usage==="scheduled")return i.status==="PROGRAMMATO"||cal.some(function(x){return /PROGRAMM|SCHEDULE|QUEUE|PUBLISHING|IN PUBBLICAZIONE/i.test(String(x.status||""))});
+    if(usage==="unused")return i.status!=="PUBBLICATO"&&!cal.length;
+    return true;
+  });
   if(q)list=list.filter(function(i){
-    const c=clients.find(function(x){return x.id===i.client_id});
-    const hay=[c&&c.name,i.title,i.description,i.campaign,i.location,(i.tags||[]).join(" "),i.notes].join(" ").toLowerCase();
+    const cc=clients.find(function(x){return x.id===i.client_id});
+    const hay=[cc&&cc.name,i.title,i.description,i.campaign,i.location,(i.tags||[]).join(" "),i.notes].join(" ").toLowerCase();
     return hay.includes(q);
   });
   return limit?list.slice(0,limit):list;
@@ -622,7 +691,7 @@ function renderClients(){
 async function renderAll(){
   renderMetrics();renderClients();renderClientContext();
   await renderGrid("latestGrid",filteredItems(12));await renderGrid("archiveGrid",filteredItems());
-  renderCalendar();renderAnalytics();renderAutomation();renderPublicationCenter();renderProblems();
+  renderCalendar();renderAnalytics();renderAutomation();renderPublicationCenter();renderProblems();renderReports();
 }
 window.f1SetClientScope=function(id){
   const chosen=clients.find(function(x){return x.id===id});
@@ -974,40 +1043,91 @@ function renderClientContext(){
     '<button class="btn small ghost" onclick="setTab(\'analytics\')">ANALISI</button>'+
     '<button class="btn small ghost" onclick="setTab(\'connections\')">SOCIAL</button>'+
     '<button class="btn small ghost" onclick="setTab(\'automation\')">AUTOMAZIONI</button>'+
+    '<button class="btn small ghost" onclick="setTab(\'reports\')">REPORT</button>'+
     '<button class="btn small ghost" onclick="setTab(\'problems\')">PROBLEMI</button>'+
     '<button class="btn small danger" onclick="window.f1SetClientScope(\'\')">TUTTI I CLIENTI</button>'+
   '</div>';
 }
-function mondayForOffset(offset){
-  const d=new Date();d.setHours(0,0,0,0);
-  const day=(d.getDay()+6)%7;d.setDate(d.getDate()-day+(offset||0)*7);return d;
+function mondayForDate(value){
+  const d=new Date(value);d.setHours(0,0,0,0);
+  const day=(d.getDay()+6)%7;d.setDate(d.getDate()-day);return d;
 }
-function isoDay(d){return d.toISOString().slice(0,10)}
-window.f1CalendarWeek=function(delta){calendarWeekOffset+=delta;renderCalendar()};
+function isoDay(d){
+  const y=d.getFullYear(),m=String(d.getMonth()+1).padStart(2,"0"),day=String(d.getDate()).padStart(2,"0");
+  return y+"-"+m+"-"+day;
+}
+function addDays(date,n){const d=new Date(date);d.setDate(d.getDate()+n);return d}
+window.f1CalendarMode=function(mode){
+  if(!["month","week","day"].includes(mode))return;
+  calendarViewMode=mode;calendarWeekOffset=0;renderCalendar();
+};
+window.f1CalendarMove=function(delta){calendarWeekOffset+=delta;renderCalendar()};
+window.f1CalendarWeek=window.f1CalendarMove;
 window.f1CalendarToday=function(){calendarWeekOffset=0;renderCalendar()};
+window.f1CalendarDragOver=function(ev){ev.preventDefault();if(ev.currentTarget)ev.currentTarget.classList.add("drop-ready")};
+window.f1CalendarDragLeave=function(ev){if(ev.currentTarget)ev.currentTarget.classList.remove("drop-ready")};
+window.f1MoveCalendarEvent=async function(ev,dateKey){
+  ev.preventDefault();if(ev.currentTarget)ev.currentTarget.classList.remove("drop-ready");
+  const id=ev.dataTransfer?ev.dataTransfer.getData("text/f1-calendar-id"):"";
+  const row=calendar.find(function(x){return x.id===id});if(!row)return;
+  if(row.queue_job_id)return alert("Questa pubblicazione è già entrata nella coda. Modificala dalla gestione della pubblicazione per evitare disallineamenti.");
+  if(/PUBBLICAT|PUBLISHED|COMPLETED/i.test(String(row.status||"")))return alert("Una pubblicazione già confermata non può essere spostata.");
+  const old=new Date(row.publication_at),target=new Date(dateKey+"T00:00:00");
+  target.setHours(old.getHours(),old.getMinutes(),old.getSeconds(),0);
+  const u=await sb.from("f1_content_calendar").update({publication_at:target.toISOString()}).eq("id",row.id).eq("client_id",row.client_id);
+  if(u.error)return alert(u.error.message);
+  await loadAll();renderCalendar();renderMetrics();renderClients();
+};
 function renderPlanner(){
-  const start=mondayForOffset(calendarWeekOffset), end=new Date(start);end.setDate(start.getDate()+6);
-  const label=el("weekLabel");if(label)label.textContent=start.toLocaleDateString("it-IT",{day:"2-digit",month:"short"})+" – "+end.toLocaleDateString("it-IT",{day:"2-digit",month:"short",year:"numeric"});
+  const base=new Date();base.setHours(0,0,0,0);
+  let start,count,labelText,modeClass="";
+  if(calendarViewMode==="month"){
+    const anchor=new Date(base.getFullYear(),base.getMonth()+calendarWeekOffset,1);
+    const first=mondayForDate(anchor);
+    const lastDay=new Date(anchor.getFullYear(),anchor.getMonth()+1,0);
+    const lastWeekStart=mondayForDate(lastDay);
+    start=first;count=Math.round((addDays(lastWeekStart,6)-first)/86400000)+1;
+    labelText=anchor.toLocaleDateString("it-IT",{month:"long",year:"numeric"});
+    modeClass=" month-mode";
+  }else if(calendarViewMode==="day"){
+    start=addDays(base,calendarWeekOffset);count=1;
+    labelText=start.toLocaleDateString("it-IT",{weekday:"long",day:"2-digit",month:"long",year:"numeric"});
+    modeClass=" day-mode";
+  }else{
+    start=addDays(mondayForDate(base),calendarWeekOffset*7);count=7;
+    const end=addDays(start,6);
+    labelText=start.toLocaleDateString("it-IT",{day:"2-digit",month:"short"})+" – "+end.toLocaleDateString("it-IT",{day:"2-digit",month:"short",year:"numeric"});
+  }
+  if(el("weekLabel"))el("weekLabel").textContent=labelText;
+  ["month","week","day"].forEach(function(m){
+    const b=el("calendarMode"+m.charAt(0).toUpperCase()+m.slice(1));if(!b)return;
+    b.classList.toggle("primary",m===calendarViewMode);b.classList.toggle("ghost",m!==calendarViewMode);
+  });
   let scoped=calendar.slice();
   if(selectedClientId)scoped=scoped.filter(function(x){return x.client_id===selectedClientId});
+  const tz=(selectedClientId&&(clients.find(function(x){return x.id===selectedClientId})||{}).timezone)||"Europe/Rome";
   const cols=[];
-  for(let i=0;i<7;i++){
-    const d=new Date(start);d.setDate(start.getDate()+i);const key=isoDay(d);
-    const events=scoped.filter(function(x){return String(x.publication_at||"").slice(0,10)===key}).sort(function(a,b){return new Date(a.publication_at)-new Date(b.publication_at)});
+  for(let i=0;i<count;i++){
+    const d=addDays(start,i),key=isoDay(d);
+    const events=scoped.filter(function(x){return f1DateKey(x.publication_at,tz)===key}).sort(function(a,b){return new Date(a.publication_at)-new Date(b.publication_at)});
     const rows=events.map(function(x){
-      const c=x.f1_content_clients?x.f1_content_clients.name:"";
+      const cc=x.f1_content_clients?x.f1_content_clients.name:"";
       const title=x.f1_content_items?x.f1_content_items.title:"Contenuto";
-      return '<div class="week-event"><div class="time">'+esc(new Date(x.publication_at).toLocaleTimeString("it-IT",{hour:"2-digit",minute:"2-digit"}))+'</div><div class="platform">'+esc(x.platform||"")+'</div><b>'+esc(title)+'</b><div class="meta">'+esc(c)+' · '+esc(x.status||"")+'</div></div>';
+      const movable=!x.queue_job_id&&!/PUBBLICAT|PUBLISHED|COMPLETED/i.test(String(x.status||""));
+      return '<div class="week-event" draggable="'+(movable?"true":"false")+'" '+(movable?'ondragstart="event.dataTransfer.setData(\'text/f1-calendar-id\',\''+x.id+'\')"':"")+'><div class="time">'+esc(new Date(x.publication_at).toLocaleTimeString("it-IT",{hour:"2-digit",minute:"2-digit"}))+'</div><div class="platform">'+esc(x.platform||"")+'</div><b>'+esc(title)+'</b><div class="meta">'+esc(cc)+' · '+esc(x.status||"")+(x.queue_job_id?" · IN CODA":"")+'</div></div>';
     }).join("");
-    cols.push('<div class="week-day"><div class="week-day-head"><b>'+esc(d.toLocaleDateString("it-IT",{weekday:"short"}))+'</b><span>'+esc(d.toLocaleDateString("it-IT",{day:"2-digit",month:"2-digit"}))+'</span></div>'+rows+(rows?"":'<div class="empty" style="padding:18px 6px">Nessun post</div>')+'</div>');
+    cols.push('<div class="week-day" ondragover="window.f1CalendarDragOver(event)" ondragleave="window.f1CalendarDragLeave(event)" ondrop="window.f1MoveCalendarEvent(event,\''+key+'\')"><div class="week-day-head"><b>'+esc(d.toLocaleDateString("it-IT",{weekday:"short"}))+'</b><span>'+esc(d.toLocaleDateString("it-IT",{day:"2-digit",month:"2-digit"}))+'</span></div>'+rows+(rows?"":'<div class="empty" style="padding:18px 6px">Nessun post</div>')+'</div>');
   }
-  if(el("weekCalendar"))el("weekCalendar").innerHTML=cols.join("");
+  if(el("weekCalendar")){
+    el("weekCalendar").className="week-calendar"+modeClass;
+    el("weekCalendar").innerHTML=cols.join("");
+  }
   let media=items.filter(function(x){return ["PRONTO","APPROVATO","DA APPROVARE","DA LAVORARE","IN LAVORAZIONE"].includes(x.status)});
   if(selectedClientId)media=media.filter(function(x){return x.client_id===selectedClientId});
   media=media.slice(0,24);
   if(el("plannerMediaRail"))el("plannerMediaRail").innerHTML=media.length?media.map(function(x){
-    const c=clients.find(function(k){return k.id===x.client_id});
-    return '<div class="media-rail-item"><b>'+esc(x.title||"Senza titolo")+'</b><div class="meta">'+esc(c?c.name:"")+' · '+esc(x.status)+'</div><div class="row" style="margin-top:6px"><button class="btn tiny primary" onclick="window.f1Schedule(\''+x.id+'\',\''+x.client_id+'\')">PROGRAMMA</button></div></div>';
+    const cc=clients.find(function(k){return k.id===x.client_id});
+    return '<div class="media-rail-item"><b>'+esc(x.title||"Senza titolo")+'</b><div class="meta">'+esc(cc?cc.name:"")+' · '+esc(x.status)+'</div><div class="row" style="margin-top:6px"><button class="btn tiny primary" onclick="window.f1Schedule(\''+x.id+'\',\''+x.client_id+'\')">PROGRAMMA</button></div></div>';
   }).join(""):'<div class="empty">Nessun contenuto pronto.</div>';
 }
 function eventIsError(x){const s=(String(x.status||"")+" "+String(x.action||"")+" "+String(x.error||"")).toUpperCase();return /ERROR|ERRORE|FAIL|AUTH_REQUIRED|DA_RIAUTORIZZARE/.test(s)}
@@ -1269,6 +1389,39 @@ window.f1DisconnectSocial=async function(clientId,platform){
     await loadAll();renderAutomation();
   }catch(e){alert(e.message||String(e))}
 };
+function reportScopedEvents(days){
+  const cutoff=Date.now()-Number(days||30)*86400000;
+  return publicationEvents.filter(function(x){return (!selectedClientId||x.client_id===selectedClientId)&&new Date(x.created_at).getTime()>=cutoff});
+}
+function renderReports(){
+  if(!el("reportMetrics")||!el("reportClients"))return;
+  const days=Number(el("reportRange")&&el("reportRange").value||30),ev=reportScopedEvents(days);
+  const success=ev.filter(eventIsSuccess).length,errors=ev.filter(eventIsError).length;
+  const rate=(success+errors)?Math.round(success/(success+errors)*100):0;
+  const links=ev.filter(function(x){return safeSocialHref(x.external_url)}).length;
+  el("reportMetrics").innerHTML=[
+    ["EVENTI",ev.length],["CONFERMATI",success],["ERRORI",errors],["AFFIDABILITÀ",rate+"%"],["POST CON LINK",links]
+  ].map(function(x){return '<div class="analytics-card"><b>'+x[1]+'</b><span>'+x[0]+'</span></div>'}).join("");
+  const scopedClients=selectedClientId?clients.filter(function(c){return c.id===selectedClientId}):clients;
+  el("reportClients").innerHTML=scopedClients.map(function(cc){
+    const cev=ev.filter(function(x){return x.client_id===cc.id});
+    const ok=cev.filter(eventIsSuccess).length,err=cev.filter(eventIsError).length;
+    const platforms={};cev.forEach(function(x){const p=platformLabel(x.platform||"Altro");platforms[p]=(platforms[p]||0)+1});
+    const dist=Object.entries(platforms).sort(function(a,b){return b[1]-a[1]}).map(function(x){return x[0]+" "+x[1]}).join(" · ")||"Nessun evento";
+    return '<div class="lineitem"><b>'+esc(cc.name)+'</b><div style="flex:1"><b>'+ok+' confermati · '+err+' errori</b><div class="meta">'+esc(dist)+'</div></div><span class="badge '+(err?"amber":"green")+'">'+(cev.length?cev.length+" EVENTI":"NESSUN DATO")+'</span></div>';
+  }).join("")||'<div class="empty">Nessun cliente nel perimetro selezionato.</div>';
+}
+window.f1ExportReport=function(){
+  const days=Number(el("reportRange")&&el("reportRange").value||30),ev=reportScopedEvents(days);
+  const rows=[["data","cliente","piattaforma","azione","stato","provider","url","errore"]];
+  ev.forEach(function(x){
+    const cc=(x.f1_content_clients&&x.f1_content_clients.name)||(clients.find(function(c){return c.id===x.client_id})||{}).name||"";
+    rows.push([x.created_at,cc,platformLabel(x.platform||""),x.action||"",x.status||"",x.provider||"",x.external_url||"",x.error||""]);
+  });
+  const csv=rows.map(function(row){return row.map(function(v){return '"'+String(v==null?"":v).replaceAll('"','""')+'"'}).join(",")}).join("\n");
+  const blob=new Blob([csv],{type:"text/csv;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a");
+  a.href=url;a.download="f1-social-report-"+days+"g-"+new Date().toISOString().slice(0,10)+".csv";document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
+}
 function renderPublicationCenter(){
   if(!el("publicationMetrics")||!el("publicationList"))return;
   let ev=publicationEvents.filter(function(x){return !selectedClientId||x.client_id===selectedClientId});
@@ -1314,6 +1467,7 @@ function renderProblems(){
   el("problemMetrics").innerHTML=[
     ["PROBLEMI",problems.length],["CRITICI",critical],["ATTENZIONE",warning]
   ].map(function(x){return '<div class="analytics-card"><b>'+x[1]+'</b><span>'+x[0]+'</span></div>'}).join("");
+  if(el("problemQuickCount")){el("problemQuickCount").textContent=problems.length;el("problemQuickCount").className="badge "+(critical?"":(warning?"amber":"green"))}
   el("problemList").innerHTML=problems.length?problems.map(function(p){
     const tab=p.action==="CONNESSIONI"?"connections":p.action==="CALENDARIO"?"calendar":"publications";
     return '<div class="lineitem '+(p.severity==="critical"?"problem-critical":"problem-warning")+'"><b>'+esc(p.type)+'</b><div style="flex:1"><b>'+esc(p.client)+' · '+esc(p.platform)+'</b><div class="meta">'+esc(String(p.title).replaceAll("_"," "))+'</div><div class="meta">'+esc(p.detail)+'</div></div><button class="btn small primary" onclick="window.f1OpenProblem(\''+String(p.clientId||"")+'\',\''+tab+'\')">APRI</button></div>';
@@ -1375,11 +1529,12 @@ dz.addEventListener("drop",function(e){droppedFiles=Array.from(e.dataTransfer.fi
 async function doUpload(){
   const clientId=el("uploadClient").value,title=el("uploadTitle").value.trim()||"Contenuto senza titolo";
   const fs=filesFromInput();if(!clientId)return msg("uploadMessage","Seleziona il cliente.","error");
-  if(!fs.length&&!el("uploadNotes").value.trim())return msg("uploadMessage","Aggiungi almeno un file o una nota.","error");
+  if(!fs.length&&!el("uploadCaption").value.trim()&&!el("uploadNotes").value.trim())return msg("uploadMessage","Aggiungi almeno un file o un testo.","error");
   el("doUploadBtn").disabled=true;msg("uploadMessage","Caricamento in corso...");
   try{
     const tags=el("uploadTags").value.split(",").map(function(x){return x.trim()}).filter(Boolean);
-    const ins=await sb.from("f1_content_items").insert({owner_id:user.id,client_id:clientId,title:title,description:el("uploadNotes").value.trim(),source_text:el("uploadNotes").value.trim(),content_type:fs.length?(fs[0].type.startsWith("image/")?"FOTO":fs[0].type.startsWith("video/")?"VIDEO":fs[0].type.startsWith("audio/")?"AUDIO":"DOCUMENTO"):"TESTO",source:"WEB",status:"DA LAVORARE",campaign:el("uploadCampaign").value.trim(),location:el("uploadLocation").value.trim(),tags:tags,notes:el("uploadNotes").value.trim()}).select().single();
+    const caption=el("uploadCaption").value.trim(),notes=el("uploadNotes").value.trim(),initialStatus=el("uploadStatus").value||"DA LAVORARE";
+    const ins=await sb.from("f1_content_items").insert({owner_id:user.id,client_id:clientId,title:title,description:caption,source_text:caption,content_type:fs.length?(fs[0].type.startsWith("image/")?"FOTO":fs[0].type.startsWith("video/")?"VIDEO":fs[0].type.startsWith("audio/")?"AUDIO":"DOCUMENTO"):"TESTO",source:"WEB",status:initialStatus,campaign:el("uploadCampaign").value.trim(),location:el("uploadLocation").value.trim(),tags:tags,notes:notes}).select().single();
     if(ins.error)throw ins.error;
     for(const f of fs){
       const safe=f.name.replace(/[^a-zA-Z0-9._-]+/g,"_");
@@ -1389,7 +1544,7 @@ async function doUpload(){
       const mr=await sb.from("f1_content_media").insert({owner_id:user.id,content_id:ins.data.id,client_id:clientId,file_name:safe,mime_type:f.type||"application/octet-stream",storage_path:path,file_size:f.size,source:"WEB"});
       if(mr.error)throw mr.error;
     }
-    el("uploadTitle").value="";el("uploadCampaign").value="";el("uploadLocation").value="";el("uploadTags").value="";el("uploadNotes").value="";el("fileInput").value="";droppedFiles=[];updateFileSummary();
+    el("uploadTitle").value="";el("uploadCampaign").value="";el("uploadLocation").value="";el("uploadTags").value="";el("uploadCaption").value="";el("uploadNotes").value="";el("uploadStatus").value="DA LAVORARE";el("fileInput").value="";droppedFiles=[];updateFileSummary();
     await loadAll();renderAll();msg("uploadMessage","Contenuto salvato correttamente.","");setTimeout(function(){closeModal("uploadModal")},700);
   }catch(e){msg("uploadMessage",e.message||String(e),"error")}finally{el("doUploadBtn").disabled=false}
 }
@@ -1453,6 +1608,11 @@ async function importLegacy(){
 }
 el("legacyImportBtn").onclick=importLegacy;
 el("searchInput").oninput=function(){renderGrid("archiveGrid",filteredItems())};el("statusFilter").onchange=function(){renderGrid("archiveGrid",filteredItems())};el("clientFilter").onchange=function(){window.f1SetClientScope(this.value)};
+if(el("typeFilter"))el("typeFilter").onchange=function(){renderGrid("archiveGrid",filteredItems())};
+if(el("usageFilter"))el("usageFilter").onchange=function(){renderGrid("archiveGrid",filteredItems())};
+if(el("problemQuickBtn"))el("problemQuickBtn").onclick=function(){setTab("problems")};
+if(el("reportRange"))el("reportRange").onchange=renderReports;
+if(el("exportReportBtn"))el("exportReportBtn").onclick=window.f1ExportReport;
 el("refreshBtn").onclick=async function(){await loadAll();renderAll();if(!el("tab-whatsapp").classList.contains("hidden"))await loadWhatsApp()};
 
 if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("./sw.js").catch(function(){})})}
