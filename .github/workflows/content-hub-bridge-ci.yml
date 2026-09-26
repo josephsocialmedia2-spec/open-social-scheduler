@@ -10,6 +10,8 @@ on:
       - 'publisher/oauth_broker.py'
       - 'publisher/test_oauth_broker.py'
       - 'publisher/test_social_oauth_ui.py'
+      - 'publisher/f1_social_safety.py'
+      - 'publisher/test_f1_social_safety.py'
       - 'publisher/clients/**'
       - 'publisher/queue.json'
       - 'f1-content-hub/**'
@@ -39,7 +41,7 @@ jobs:
       - name: Compile bridge scripts
         run: python -m py_compile publisher/supabase_queue_bridge.py publisher/supabase_website_sync.py publisher/direct_api_entry.py publisher/direct_api_publish.py publisher/oauth_broker.py
       - name: Test OAuth broker client and TikTok policy
-        run: PYTHONPATH=publisher python -m unittest publisher/test_oauth_broker.py publisher/test_tiktok_policy.py publisher/test_social_oauth_ui.py
+        run: PYTHONPATH=. python -m unittest publisher/test_oauth_broker.py publisher/test_tiktok_policy.py publisher/test_social_oauth_ui.py publisher/test_f1_social_safety.py
       - name: Validate queue and client configs
         run: |
           python - <<'PY'
