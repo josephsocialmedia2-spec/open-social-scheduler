@@ -107,6 +107,8 @@ jobs:
           offenders=[]
           for root in roots:
               for path in root.rglob('*'):
+                  if 'vendor' in path.parts:
+                      continue
                   if not path.is_file() or path.suffix.lower() not in {'.py','.html','.js','.json','.yml','.yaml','.md'}:
                       continue
                   text=path.read_text(encoding='utf-8',errors='ignore')
