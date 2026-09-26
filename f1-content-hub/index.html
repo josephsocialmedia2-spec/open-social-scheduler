@@ -17,6 +17,26 @@
 @media(max-width:1100px){.metrics{grid-template-columns:repeat(3,1fr)}.forms{grid-template-columns:1fr 1fr}.span3{grid-column:1/-1}}
 @media(max-width:760px){.shell{display:block}.sidebar{display:none}.main{padding:12px 12px 92px}.topbar h1{font-size:23px}.metrics{grid-template-columns:1fr 1fr}.toolbar{grid-template-columns:1fr}.forms{grid-template-columns:1fr}.span2,.span3{grid-column:auto}.lineitem{grid-template-columns:1fr}.mobilebar{display:grid;grid-template-columns:repeat(7,1fr);position:fixed;left:0;right:0;bottom:0;background:#081522;border-top:1px solid var(--line);z-index:40}.mobilebar button{background:transparent;border:0;color:#9fb1c7;padding:12px 4px;font-size:10px;font-weight:900}.mobilebar button.active{color:#fff;background:#102238}.fab{display:block;position:fixed;right:16px;bottom:70px;border:0;border-radius:999px;width:54px;height:54px;background:var(--green);color:#03140b;font-size:25px;font-weight:bold;z-index:39}.content-grid{grid-template-columns:1fr 1fr}.thumb{height:135px}}
 @media(max-width:480px){.content-grid{grid-template-columns:1fr}.metrics{grid-template-columns:1fr 1fr}}
+.global-client-select{min-width:210px;max-width:290px;background:#0d1710;border-color:#2d4735}
+.client-card{position:relative;overflow:hidden}
+.client-card .client-top{display:flex;gap:10px;justify-content:space-between;align-items:flex-start}
+.client-territory{color:#9cac9f;font-size:11px;margin-top:4px}
+.social-strip{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0}
+.social-pill{display:inline-flex;align-items:center;gap:5px;border:1px solid #293a2d;border-radius:999px;padding:5px 7px;font-size:10px;color:#c5d0c7;background:#0a100b}
+.social-pill i{width:7px;height:7px;border-radius:50%;background:#6d786f;display:inline-block}
+.social-pill.ok i{background:#39f28a}.social-pill.warn i{background:#ffc857}.social-pill.bad i{background:#ff6b6b}
+.client-next{margin-top:10px;padding:9px;border-radius:10px;background:#0a100b;border:1px solid #243028;font-size:11px;color:#b8c4bb}
+.client-open{margin-top:12px;width:100%}
+.workspace-nav{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+.workspace-nav .btn{padding:7px 9px}
+.problem-critical{border-left:3px solid #ff6b6b}.problem-warning{border-left:3px solid #ffc857}
+.problem-ok{border-left:3px solid #39f28a}
+.pub-link{white-space:nowrap;text-decoration:none}
+.kpi-caption{display:block;color:#9cac9f;font-size:10px;margin-top:4px}
+.scope-badge{display:inline-flex;align-items:center;gap:6px}
+.scope-badge i{width:8px;height:8px;border-radius:50%;background:#39f28a;display:inline-block}
+@media(max-width:900px){.global-client-select{min-width:150px;max-width:190px}.top-actions{flex-wrap:wrap}.workspace-nav{width:100%}}
+@media(max-width:620px){.global-client-select{width:100%;max-width:none}.top-actions{width:100%}.top-actions .btn{flex:1}.client-card{min-width:0}}
 </style>
 </head>
 <body>
@@ -41,12 +61,15 @@
     <div class="brand"><small>REAL MEDIA PRO</small>F1 CONTENT HUB</div>
     <div class="nav">
       <button data-tab="dashboard" class="active">Dashboard</button>
-      <button data-tab="archive">Archivio</button>
-      <button data-tab="calendar">Calendario</button>
-      <button data-tab="analytics">Analisi</button>
-      <button data-tab="whatsapp">WhatsApp</button>
-      <button data-tab="automation">Automazione</button>
       <button data-tab="clients">Clienti</button>
+      <button data-tab="calendar">Calendario</button>
+      <button data-tab="archive">Contenuti</button>
+      <button data-tab="publications">Pubblicazioni</button>
+      <button data-tab="analytics">Analisi</button>
+      <button data-tab="connections">Connessioni</button>
+      <button data-tab="automation">Automazioni</button>
+      <button data-tab="problems">Problemi</button>
+      <button data-tab="whatsapp">WhatsApp</button>
     </div>
     <div class="userbox"><div id="userEmail"></div><button class="btn ghost small" style="margin-top:8px;width:100%" id="logoutBtn">ESCI</button></div>
   </aside>
@@ -55,6 +78,9 @@
     <div class="topbar">
       <div><h1 id="pageTitle">Dashboard</h1><div class="muted" id="pageSubtitle">Controllo operativo multi-cliente</div></div>
       <div class="top-actions">
+        <select id="globalClientSelect" class="input global-client-select" aria-label="Cliente attivo">
+          <option value="">Tutti i clienti</option>
+        </select>
         <button class="btn ghost" id="refreshBtn">AGGIORNA</button>
         <button class="btn green" id="openUploadBtn">+ CARICA CONTENUTI</button>
       </div>
@@ -132,6 +158,30 @@
             <div id="analyticsEvents" class="log-list"></div>
           </div>
         </div>
+      </div>
+    </section>
+
+    <section id="tab-publications" class="hidden">
+      <div class="panel">
+        <div class="section-title"><div><h2>Centro pubblicazioni</h2><div class="muted">Stato reale dei job, conferme piattaforma e collegamenti ai post.</div></div></div>
+        <div id="publicationMetrics" class="analytics-grid"></div>
+        <div id="publicationList" class="calendar-list"></div>
+      </div>
+    </section>
+
+    <section id="tab-connections" class="hidden">
+      <div class="panel">
+        <div class="section-title"><div><h2>Connessioni social</h2><div class="muted">Account, autorizzazioni, scadenze e verifica per cliente.</div></div></div>
+        <div class="notice warn">Un canale è considerato collegato solo se il relativo account risulta abilitato e verificato. Token e segreti non vengono mostrati nell'interfaccia.</div>
+        <div id="socialConnectionsDedicated" class="calendar-list"></div>
+      </div>
+    </section>
+
+    <section id="tab-problems" class="hidden">
+      <div class="panel">
+        <div class="section-title"><div><h2>Problemi da risolvere</h2><div class="muted">Errori trasformati in azioni operative, senza dati simulati.</div></div></div>
+        <div id="problemMetrics" class="analytics-grid"></div>
+        <div id="problemList" class="calendar-list"></div>
       </div>
     </section>
 
@@ -355,11 +405,15 @@ async function enterApp(){
     if(match)selectedClientId=match.id;
   }
   renderAll();
+  const requestedView=params.get("view");
+  if(requestedView)setTab(requestedView,{skipUrl:true});
   const oauthState=params.get("oauth");
   if(oauthState){
     if(window.f1ResumePendingPublishNow)await window.f1ResumePendingPublishNow();
     if(window.f1ContinueConnectAllSocials)await window.f1ContinueConnectAllSocials(false);
-    setTab("automation");history.replaceState({},document.title,location.pathname);
+    setTab("automation");
+    const cleanUrl=new URL(location.href);cleanUrl.searchParams.delete("oauth");
+    history.replaceState({},document.title,cleanUrl.pathname+(cleanUrl.searchParams.toString()?"?"+cleanUrl.searchParams.toString():""));
   }
 }
 el("loginBtn").onclick=async function(){
@@ -423,15 +477,29 @@ function fillClientSelects(){
   const options='<option value="">Tutti i clienti</option>'+clients.map(function(c){return '<option value="'+c.id+'">'+esc(c.name)+'</option>'}).join("");
   el("clientFilter").innerHTML=options;
   el("clientFilter").value=selectedClientId||"";
+  if(el("globalClientSelect")){el("globalClientSelect").innerHTML=options;el("globalClientSelect").value=selectedClientId||""}
   el("uploadClient").innerHTML=clients.map(function(c){return '<option value="'+c.id+'">'+esc(c.name)+'</option>'}).join("");
   if(selectedClientId)el("uploadClient").value=selectedClientId;
 }
-function setTab(tab){
-  ["dashboard","archive","calendar","analytics","whatsapp","automation","clients"].forEach(function(t){el("tab-"+t).classList.toggle("hidden",t!==tab)});
+function setTab(tab,options){
+  const valid=["dashboard","clients","calendar","archive","publications","analytics","connections","automation","problems","whatsapp"];
+  if(!valid.includes(tab))tab="dashboard";
+  valid.forEach(function(t){el("tab-"+t).classList.toggle("hidden",t!==tab)});
   document.querySelectorAll("[data-tab]").forEach(function(b){b.classList.toggle("active",b.dataset.tab===tab)});
-  const titles={dashboard:"Dashboard",archive:"Archivio contenuti",calendar:"Calendario editoriale",analytics:"Analisi",whatsapp:"WhatsApp",automation:"Automazione",clients:"Clienti"};
+  const titles={dashboard:"Dashboard",clients:"Clienti",calendar:"Calendario editoriale",archive:"Contenuti",publications:"Pubblicazioni",analytics:"Analisi",connections:"Connessioni",automation:"Automazioni",problems:"Problemi",whatsapp:"WhatsApp"};
   el("pageTitle").textContent=titles[tab]||"F1 Content Hub";
-  if(tab==="whatsapp")loadWhatsApp(); if(tab==="calendar")renderCalendar(); if(tab==="analytics")renderAnalytics(); if(tab==="automation")renderAutomation();
+  if(!(options&&options.skipUrl)){
+    const url=new URL(location.href);
+    if(tab==="dashboard")url.searchParams.delete("view");else url.searchParams.set("view",tab);
+    history.replaceState({},document.title,url.pathname+(url.searchParams.toString()?"?"+url.searchParams.toString():""));
+  }
+  if(tab==="whatsapp")loadWhatsApp();
+  if(tab==="calendar")renderCalendar();
+  if(tab==="analytics")renderAnalytics();
+  if(tab==="automation")renderAutomation();
+  if(tab==="connections")renderSocialConnections();
+  if(tab==="publications")renderPublicationCenter();
+  if(tab==="problems")renderProblems();
 }
 document.querySelectorAll("[data-tab]").forEach(function(b){b.onclick=function(){setTab(b.dataset.tab)}});
 
@@ -480,26 +548,85 @@ async function renderGrid(target,list){
   if(!list.length){el(target).innerHTML='<div class="empty">Nessun contenuto.</div>';return}
   const html=await Promise.all(list.map(cardHtml));el(target).innerHTML=html.join("");
 }
+function f1DateKey(value,timeZone){
+  if(!value)return "";
+  try{
+    const parts=new Intl.DateTimeFormat("en-CA",{timeZone:timeZone||"Europe/Rome",year:"numeric",month:"2-digit",day:"2-digit"}).formatToParts(new Date(value));
+    const out={};parts.forEach(function(p){out[p.type]=p.value});
+    return out.year+"-"+out.month+"-"+out.day;
+  }catch(e){return String(value).slice(0,10)}
+}
+function scopedClientIds(){
+  return selectedClientId?[selectedClientId]:clients.map(function(c){return c.id});
+}
 function renderMetrics(){
-  const total=items.length, work=items.filter(function(i){return i.status==="DA LAVORARE"||i.status==="IN LAVORAZIONE"}).length;
-  const ready=items.filter(function(i){return i.status==="PRONTO"||i.status==="APPROVATO"}).length;
-  const planned=items.filter(function(i){return i.status==="PROGRAMMATO"}).length;
-  const pub=items.filter(function(i){return i.status==="PUBBLICATO"}).length;
-  const today=new Date().toISOString().slice(0,10);
-  const todayN=items.filter(function(i){return String(i.created_at).slice(0,10)===today}).length;
-  const data=[["CLIENTI",clients.length],["CONTENUTI",total],["DA LAVORARE",work],["PRONTI",ready],["PROGRAMMATI",planned],["RICEVUTI OGGI",todayN]];
-  el("metrics").innerHTML=data.map(function(x){return '<div class="metric"><b>'+x[1]+'</b><span>'+x[0]+'</span></div>'}).join("");
+  const ids=new Set(scopedClientIds());
+  const scopedItems=items.filter(function(x){return ids.has(x.client_id)});
+  const scopedCal=calendar.filter(function(x){return ids.has(x.client_id)});
+  const scopedEv=publicationEvents.filter(function(x){return !x.client_id||ids.has(x.client_id)});
+  const scopedCh=socialChannels.filter(function(x){return ids.has(x.client_id)});
+  const tz=(selectedClientId&&(clients.find(function(x){return x.id===selectedClientId})||{}).timezone)||"Europe/Rome";
+  const today=f1DateKey(new Date(),tz);
+  const activeClients=clients.filter(function(x){return (!selectedClientId||x.id===selectedClientId)&&x.status==="ATTIVO"}).length;
+  const collisions=socialCollisionMap();
+  const connected=scopedCh.filter(function(x){return effectiveSocialState(x,collisions)==="COLLEGATO"}).length;
+  const plannedToday=scopedCal.filter(function(x){return f1DateKey(x.publication_at,tz)===today&&!["ANNULLATO","CANCELED"].includes(String(x.status||"").toUpperCase())}).length;
+  const publishedToday=scopedEv.filter(function(x){return f1DateKey(x.created_at,tz)===today&&eventIsSuccess(x)&&/PUBBLICAT|PUBLISHED|SUCCESS|COMPLETED/i.test(String(x.status||"")+" "+String(x.action||""))}).length;
+  const waiting=scopedItems.filter(function(x){return ["DA LAVORARE","IN LAVORAZIONE","PRONTO","DA APPROVARE","APPROVATO","BOZZA"].includes(x.status)}).length;
+  const errors=scopedEv.filter(function(x){return eventIsError(x)}).slice(0,100).length+scopedCal.filter(function(x){return x.error||/ERRORE|FAIL|ERROR/i.test(String(x.status||""))}).length;
+  const now=Date.now(),soon=now+7*86400000;
+  const renew=scopedCh.filter(function(x){const exp=x.token_expires_at?new Date(x.token_expires_at).getTime():null;return !!x.reauthorization_required||(exp!==null&&exp<=soon)}).length;
+  const data=[
+    ["CLIENTI ATTIVI",activeClients,"ambiente selezionato"],
+    ["SOCIAL COLLEGATI",connected,"account verificati"],
+    ["PROGRAMMATI OGGI",plannedToday,"calendario reale"],
+    ["PUBBLICATI OGGI",publishedToday,"eventi confermati"],
+    ["IN ATTESA",waiting,"contenuti da lavorare"],
+    ["ERRORI",errors,"eventi / calendario"],
+    ["DA RINNOVARE",renew,"entro 7 giorni"]
+  ];
+  el("metrics").innerHTML=data.map(function(x){return '<div class="metric"><b>'+x[1]+'</b><span>'+x[0]+'</span><small class="kpi-caption">'+x[2]+'</small></div>'}).join("");
 }
 function renderClients(){
-  const counts={};items.forEach(function(i){if(!counts[i.client_id])counts[i.client_id]={all:0,work:0,plan:0};counts[i.client_id].all++;if(i.status==="DA LAVORARE")counts[i.client_id].work++;if(i.status==="PROGRAMMATO")counts[i.client_id].plan++});
-  const html=clients.map(function(c){const n=counts[c.id]||{all:0,work:0,plan:0};return '<article class="client-card '+(selectedClientId===c.id?"active":"")+'" onclick="window.f1SelectClient(\''+c.id+'\')"><small>'+esc(c.category)+'</small><h3>'+esc(c.name)+'</h3><div class="client-stats"><span>'+n.all+' contenuti</span><span>'+n.work+' da lavorare</span><span>'+n.plan+' programmati</span></div></article>'}).join("");
-  el("clientCards").innerHTML=html;el("clientsAdmin").innerHTML=html;
+  const collisions=socialCollisionMap();
+  const order=["facebook","instagram","tiktok","youtube"];
+  const now=Date.now();
+  const html=clients.map(function(c){
+    const ownItems=items.filter(function(i){return i.client_id===c.id});
+    const ownCal=calendar.filter(function(i){return i.client_id===c.id});
+    const ownEv=publicationEvents.filter(function(i){return i.client_id===c.id});
+    const next=ownCal.filter(function(x){return new Date(x.publication_at).getTime()>=now&&!["ANNULLATO","CANCELED"].includes(String(x.status||"").toUpperCase())}).sort(function(a,b){return new Date(a.publication_at)-new Date(b.publication_at)})[0];
+    const pub=ownItems.filter(function(x){return x.status==="PUBBLICATO"}).length;
+    const plan=ownCal.filter(function(x){return /PROGRAMM|SCHEDULE|QUEUE/i.test(String(x.status||""))}).length;
+    const errors=ownEv.filter(eventIsError).length+ownCal.filter(function(x){return x.error||/ERRORE|FAIL|ERROR/i.test(String(x.status||""))}).length;
+    const territory=[c.city,c.province].filter(Boolean).join(" · ")||"Territorio non impostato";
+    const social=order.map(function(p){
+      const row=socialChannels.find(function(x){return x.client_id===c.id&&x.platform===p});
+      const state=effectiveSocialState(row,collisions);
+      const cls=state==="COLLEGATO"?"ok":(["TOKEN_SCADUTO","DA_RIAUTORIZZARE","ACCOUNT_CONDIVISO","AUTORIZZAZIONE_RICHIESTA","CONFIGURAZIONE_PRONTA"].includes(state)?"warn":(row?"bad":""));
+      const label={facebook:"FB",instagram:"IG",tiktok:"TK",youtube:"YT"}[p];
+      return '<span class="social-pill '+cls+'" title="'+esc(state)+'"><i></i>'+label+'</span>';
+    }).join("");
+    const nextText=next?('<b>Prossimo:</b> '+esc(fmt(next.publication_at))+' · '+esc(platformLabel(next.platform))):'<b>Prossimo:</b> nessuna pubblicazione';
+    return '<article class="client-card '+(selectedClientId===c.id?"active":"")+'">'+
+      '<div class="client-top"><div><small>'+esc(c.category||"Cliente")+'</small><h3>'+esc(c.name)+'</h3><div class="client-territory">'+esc(territory)+'</div></div><span class="badge '+(errors?"":"green")+'">'+(errors?errors+" PROBLEMI":"OK")+'</span></div>'+
+      '<div class="social-strip">'+social+'</div>'+
+      '<div class="client-stats"><span>'+ownItems.length+' contenuti</span><span>'+plan+' programmati</span><span>'+pub+' pubblicati</span></div>'+
+      '<div class="client-next">'+nextText+'</div>'+
+      '<button class="btn small primary client-open" onclick="window.f1SetClientScope(\''+c.id+'\')">APRI CLIENTE</button>'+
+      '</article>';
+  }).join("");
+  el("clientCards").innerHTML=html||'<div class="empty">Nessun cliente.</div>';
+  el("clientsAdmin").innerHTML=html||'<div class="empty">Nessun cliente.</div>';
 }
-async function renderAll(){renderMetrics();renderClients();renderClientContext();await renderGrid("latestGrid",filteredItems(12));await renderGrid("archiveGrid",filteredItems());renderCalendar();renderAnalytics();renderAutomation()}
-window.f1SelectClient=function(id){
+async function renderAll(){
+  renderMetrics();renderClients();renderClientContext();
+  await renderGrid("latestGrid",filteredItems(12));await renderGrid("archiveGrid",filteredItems());
+  renderCalendar();renderAnalytics();renderAutomation();renderPublicationCenter();renderProblems();
+}
+window.f1SetClientScope=function(id){
   const chosen=clients.find(function(x){return x.id===id});
-  selectedClientId=selectedClientId===id?"":id;
-  el("clientFilter").value=selectedClientId;
+  selectedClientId=chosen?id:"";
   fillClientSelects();
   const url=new URL(location.href);
   if(selectedClientId&&chosen)url.searchParams.set("client",chosen.slug||chosen.id);else url.searchParams.delete("client");
@@ -508,6 +635,9 @@ window.f1SelectClient=function(id){
   renderAll();
   setTab("dashboard");
 };
+window.f1SelectClient=function(id){window.f1SetClientScope(selectedClientId===id?"":id)};
+if(el("globalClientSelect"))el("globalClientSelect").onchange=function(){window.f1SetClientScope(this.value)};
+
 window.f1SetStatus=async function(id,status){
   if(status==="PUBBLICATO")return alert("PUBBLICATO può essere assegnato solo dalla conferma reale della piattaforma.");
   const r=await sb.from("f1_content_items").update({status:status}).eq("id",id);
@@ -826,14 +956,27 @@ function renderClientContext(){
   if(!box)return;
   const c=clients.find(function(x){return x.id===selectedClientId});
   if(!c){
-    box.innerHTML='<div class="ctx-main"><span class="badge green">MULTI-CLIENTE</span><div><div class="ctx-name">Tutti i clienti</div><div class="ctx-meta">Archivio, calendario e automazioni separati per client_id.</div></div></div><div class="row"><button class="btn small ghost" onclick="setTab(\'clients\')">GESTISCI CLIENTI</button><button class="btn small primary" onclick="setTab(\'calendar\')">PIANIFICA</button></div>';
+    box.innerHTML='<div class="ctx-main"><span class="badge green scope-badge"><i></i>MULTI-CLIENTE</span><div><div class="ctx-name">Tutti i clienti</div><div class="ctx-meta">Vista generale di contenuti, calendario, pubblicazioni, connessioni e problemi.</div></div></div><div class="workspace-nav"><button class="btn small ghost" onclick="setTab(\'clients\')">CLIENTI</button><button class="btn small primary" onclick="setTab(\'calendar\')">CALENDARIO</button><button class="btn small ghost" onclick="setTab(\'problems\')">PROBLEMI</button></div>';
     return;
   }
   const ch=socialChannels.filter(function(x){return x.client_id===c.id});
-  const verified=ch.filter(function(x){return x.enabled&&x.verified}).length;
+  const collisions=socialCollisionMap();
+  const verified=ch.filter(function(x){return effectiveSocialState(x,collisions)==="COLLEGATO"}).length;
   const ownItems=items.filter(function(x){return x.client_id===c.id});
   const ownCal=calendar.filter(function(x){return x.client_id===c.id});
-  box.innerHTML='<div class="ctx-main"><span class="badge green">SCHEDA CLIENTE</span><div><div class="ctx-name">'+esc(c.name)+'</div><div class="ctx-meta">'+ownItems.length+' contenuti · '+ownCal.length+' programmazioni · '+verified+'/'+ch.length+' canali verificati</div></div></div><div class="row"><button class="btn small ghost" onclick="setTab(\'archive\')">MEDIA</button><button class="btn small ghost" onclick="setTab(\'calendar\')">CALENDARIO</button><button class="btn small ghost" onclick="setTab(\'analytics\')">ANALISI</button><button class="btn small primary" onclick="setTab(\'automation\')">SOCIAL</button><button class="btn small danger" onclick="window.f1SelectClient(\''+c.id+'\')">CHIUDI SCHEDA</button></div>';
+  const territory=[c.city,c.province,c.region].filter(Boolean).join(" · ")||"Territorio non impostato";
+  box.innerHTML='<div class="ctx-main"><span class="badge green scope-badge"><i></i>SCHEDA CLIENTE</span><div><div class="ctx-name">'+esc(c.name)+'</div><div class="ctx-meta">'+esc(c.category||"Cliente")+' · '+esc(territory)+' · '+ownItems.length+' contenuti · '+ownCal.length+' programmazioni · '+verified+'/'+ch.length+' canali collegati</div></div></div>'+
+  '<div class="workspace-nav">'+
+    '<button class="btn small primary" onclick="setTab(\'dashboard\')">PANORAMICA</button>'+
+    '<button class="btn small ghost" onclick="setTab(\'calendar\')">CALENDARIO</button>'+
+    '<button class="btn small ghost" onclick="setTab(\'archive\')">CONTENUTI</button>'+
+    '<button class="btn small ghost" onclick="setTab(\'publications\')">PUBBLICAZIONI</button>'+
+    '<button class="btn small ghost" onclick="setTab(\'analytics\')">ANALISI</button>'+
+    '<button class="btn small ghost" onclick="setTab(\'connections\')">SOCIAL</button>'+
+    '<button class="btn small ghost" onclick="setTab(\'automation\')">AUTOMAZIONI</button>'+
+    '<button class="btn small ghost" onclick="setTab(\'problems\')">PROBLEMI</button>'+
+    '<button class="btn small danger" onclick="window.f1SetClientScope(\'\')">TUTTI I CLIENTI</button>'+
+  '</div>';
 }
 function mondayForOffset(offset){
   const d=new Date();d.setHours(0,0,0,0);
@@ -940,7 +1083,8 @@ function socialStateClass(row,state){
 function renderSocialConnections(){
   const order=["facebook","instagram","linkedin-page","tiktok","youtube"];
   const collisions=socialCollisionMap();
-  const html=clients.map(function(c){
+  const scopedClients=selectedClientId?clients.filter(function(c){return c.id===selectedClientId}):clients;
+  const html=scopedClients.map(function(c){
     const rows=order.map(function(p){
       const row=socialChannels.find(function(x){return x.client_id===c.id&&x.platform===p});
       const rawState=effectiveSocialState(row,collisions);
@@ -983,6 +1127,7 @@ function renderSocialConnections(){
     return '<div style="margin-bottom:22px;padding:14px;border:1px solid #263a56;border-radius:14px"><div class="section-title"><h3 style="margin:0">'+esc(c.name)+'</h3>'+allActions+'</div>'+wizardStatus+rows+'</div>';
   }).join("");
   el("socialConnections").innerHTML=html||'<div class="empty">Nessun cliente.</div>';
+  if(el("socialConnectionsDedicated"))el("socialConnectionsDedicated").innerHTML=html||'<div class="empty">Nessun cliente.</div>';
 }
 async function oauthSession(){
   const r=await sb.auth.getSession();
@@ -1124,8 +1269,63 @@ window.f1DisconnectSocial=async function(clientId,platform){
     await loadAll();renderAutomation();
   }catch(e){alert(e.message||String(e))}
 };
+function renderPublicationCenter(){
+  if(!el("publicationMetrics")||!el("publicationList"))return;
+  let ev=publicationEvents.filter(function(x){return !selectedClientId||x.client_id===selectedClientId});
+  const total=ev.length, ok=ev.filter(eventIsSuccess).length, failed=ev.filter(eventIsError).length;
+  const processing=ev.filter(function(x){return /PROCESS|PUBBLICAZIONE IN CORSO|PUBLISHING|QUEUED|SCHEDULED|PROGRAMM/i.test(String(x.status||""))&&!eventIsError(x)}).length;
+  el("publicationMetrics").innerHTML=[
+    ["EVENTI",total],["CONFERMATI",ok],["IN CORSO / CODA",processing],["ERRORI",failed]
+  ].map(function(x){return '<div class="analytics-card"><b>'+x[1]+'</b><span>'+x[0]+'</span></div>'}).join("");
+  el("publicationList").innerHTML=ev.slice(0,100).map(function(x){
+    const client=x.f1_content_clients&&x.f1_content_clients.name?x.f1_content_clients.name:(clients.find(function(c){return c.id===x.client_id})||{}).name||"";
+    const link=safeSocialHref(x.external_url)?'<a class="btn tiny ghost pub-link" href="'+esc(x.external_url)+'" target="_blank" rel="noopener noreferrer">APRI POST</a>':"";
+    const cls=eventIsError(x)?"":(eventIsSuccess(x)?"green":"amber");
+    return '<div class="lineitem"><b>'+esc(fmt(x.created_at))+'</b><div style="flex:1"><b>'+esc(x.action||"EVENTO")+'</b><div class="meta">'+esc(client)+' · '+esc(platformLabel(x.platform||""))+' · '+esc(x.provider||"")+'</div>'+(x.error?'<div class="meta" style="color:#ff9ca3">'+esc(x.error)+'</div>':"")+'</div><span class="badge '+cls+'">'+esc(x.status||"")+'</span>'+link+'</div>';
+  }).join("")||'<div class="empty">Nessun evento di pubblicazione disponibile.</div>';
+}
+function renderProblems(){
+  if(!el("problemMetrics")||!el("problemList"))return;
+  const collisions=socialCollisionMap();
+  const problems=[];
+  const channels=socialChannels.filter(function(x){return !selectedClientId||x.client_id===selectedClientId});
+  channels.forEach(function(row){
+    const state=effectiveSocialState(row,collisions);
+    const actionable=["TOKEN_SCADUTO","DA_RIAUTORIZZARE","ACCOUNT_CONDIVISO","ACCOUNT_ERRATO","AUTH_REQUIRED","CREDENZIALI_MANCANTI"];
+    if(!actionable.includes(state))return;
+    const client=clients.find(function(c){return c.id===row.client_id});
+    problems.push({
+      type:"CONNESSIONE",severity:["TOKEN_SCADUTO","DA_RIAUTORIZZARE","ACCOUNT_ERRATO"].includes(state)?"critical":"warning",
+      clientId:row.client_id,client:client?client.name:"Cliente",platform:platformLabel(row.platform),
+      title:state.replaceAll("_"," "),detail:state==="ACCOUNT_CONDIVISO"?"Lo stesso identificativo account è associato a più clienti.":"Verifica o rinnova l'autorizzazione del canale.",
+      action:"CONNESSIONI"
+    });
+  });
+  publicationEvents.filter(function(x){return (!selectedClientId||x.client_id===selectedClientId)&&eventIsError(x)}).slice(0,30).forEach(function(x){
+    const client=x.f1_content_clients&&x.f1_content_clients.name?x.f1_content_clients.name:(clients.find(function(c){return c.id===x.client_id})||{}).name||"Cliente";
+    problems.push({type:"PUBBLICAZIONE",severity:"critical",clientId:x.client_id,client:client,platform:platformLabel(x.platform||""),title:x.status||x.action||"ERRORE PUBBLICAZIONE",detail:x.error||"La piattaforma non ha confermato la pubblicazione.",action:"PUBBLICAZIONI"});
+  });
+  calendar.filter(function(x){return (!selectedClientId||x.client_id===selectedClientId)&&(x.error||/ERRORE|FAIL|ERROR|AUTH_REQUIRED|DA_RIAUTORIZZARE/i.test(String(x.status||"")))}).slice(0,30).forEach(function(x){
+    const client=(x.f1_content_clients&&x.f1_content_clients.name)||(clients.find(function(c){return c.id===x.client_id})||{}).name||"Cliente";
+    problems.push({type:"CALENDARIO",severity:"critical",clientId:x.client_id,client:client,platform:platformLabel(x.platform||""),title:x.status||"ERRORE CALENDARIO",detail:x.error||"Programmazione bloccata.",action:"CALENDARIO"});
+  });
+  const critical=problems.filter(function(x){return x.severity==="critical"}).length;
+  const warning=problems.length-critical;
+  el("problemMetrics").innerHTML=[
+    ["PROBLEMI",problems.length],["CRITICI",critical],["ATTENZIONE",warning]
+  ].map(function(x){return '<div class="analytics-card"><b>'+x[1]+'</b><span>'+x[0]+'</span></div>'}).join("");
+  el("problemList").innerHTML=problems.length?problems.map(function(p){
+    const tab=p.action==="CONNESSIONI"?"connections":p.action==="CALENDARIO"?"calendar":"publications";
+    return '<div class="lineitem '+(p.severity==="critical"?"problem-critical":"problem-warning")+'"><b>'+esc(p.type)+'</b><div style="flex:1"><b>'+esc(p.client)+' · '+esc(p.platform)+'</b><div class="meta">'+esc(String(p.title).replaceAll("_"," "))+'</div><div class="meta">'+esc(p.detail)+'</div></div><button class="btn small primary" onclick="window.f1OpenProblem(\''+String(p.clientId||"")+'\',\''+tab+'\')">APRI</button></div>';
+  }).join(""):'<div class="lineitem problem-ok"><b>OK</b><div><b>Nessun problema operativo rilevato</b><div class="meta">Le viste correnti non riportano errori o autorizzazioni critiche.</div></div><span class="badge green">OPERATIVO</span></div>';
+}
+window.f1OpenProblem=function(clientId,tab){
+  if(clientId&&clients.some(function(c){return c.id===clientId}))selectedClientId=clientId;
+  fillClientSelects();renderAll();setTab(tab||"problems");
+}
 function renderAutomation(){
-  const health=clients.map(function(c){
+  const scopedClients=selectedClientId?clients.filter(function(c){return c.id===selectedClientId}):clients;
+  const health=scopedClients.map(function(c){
     const ch=socialChannels.filter(function(x){return x.client_id===c.id});
     const verified=ch.filter(function(x){return x.enabled&&x.verified});
     const sources=webSources.filter(function(x){return x.client_id===c.id});
@@ -1142,7 +1342,7 @@ function renderAutomation(){
   el("automationHealth").innerHTML=health||'<div class="empty">Nessun cliente.</div>';
   renderSocialConnections();
 
-  const cycles=storeCycles.map(function(x){
+  const cycles=storeCycles.filter(function(x){return !selectedClientId||x.client_id===selectedClientId}).map(function(x){
     const c=clients.find(function(k){return k.id===x.client_id});
     const d=daysUntil(x.clone_review_due_at);
     let label="Revisione tra "+d+" giorni", cls="";
@@ -1155,7 +1355,8 @@ function renderAutomation(){
   }).join("");
   el("storeCycleList").innerHTML=cycles||'<div class="empty">Nessun ciclo configurato.</div>';
 
-  el("publicationEvents").innerHTML=publicationEvents.slice(0,30).map(function(x){
+  const scopedPublicationEvents=publicationEvents.filter(function(x){return !selectedClientId||x.client_id===selectedClientId});
+  el("publicationEvents").innerHTML=scopedPublicationEvents.slice(0,30).map(function(x){
     return '<div class="lineitem"><b>'+esc(fmt(x.created_at))+'</b><div><b>'+esc(x.action)+' · '+esc(x.status)+'</b><div class="meta">'+esc(x.f1_content_clients?x.f1_content_clients.name:"")+' · '+esc(x.platform||"")+' · '+esc(x.queue_job_id||"")+'</div>'+(x.error?'<div class="meta" style="color:#ff9ca3">'+esc(x.error)+'</div>':"")+'</div><span class="badge">'+esc(x.provider||"")+'</span></div>';
   }).join("")||'<div class="empty">Nessun evento di pubblicazione.</div>';
 }
@@ -1251,7 +1452,7 @@ async function importLegacy(){
   }catch(e){msg("legacyResult",e.message||String(e),"error")}
 }
 el("legacyImportBtn").onclick=importLegacy;
-el("searchInput").oninput=function(){renderGrid("archiveGrid",filteredItems())};el("statusFilter").onchange=function(){renderGrid("archiveGrid",filteredItems())};el("clientFilter").onchange=function(){selectedClientId=el("clientFilter").value;renderClients();renderGrid("archiveGrid",filteredItems())};
+el("searchInput").oninput=function(){renderGrid("archiveGrid",filteredItems())};el("statusFilter").onchange=function(){renderGrid("archiveGrid",filteredItems())};el("clientFilter").onchange=function(){window.f1SetClientScope(this.value)};
 el("refreshBtn").onclick=async function(){await loadAll();renderAll();if(!el("tab-whatsapp").classList.contains("hidden"))await loadWhatsApp()};
 
 if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("./sw.js").catch(function(){})})}
