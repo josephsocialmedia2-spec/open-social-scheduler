@@ -128,7 +128,8 @@ def remaining_platforms(job: dict[str, Any], only: set[str] | None = None) -> li
 def required_secrets(platform: str, client: dict[str, Any], job: dict[str, Any] | None = None) -> list[str]:
     provider = str((job or {}).get("provider") or "").strip().lower()
     broker_requested = provider == "oauth_broker" and platform in {"facebook", "instagram", "tiktok", "linkedin", "linkedin-page", "youtube"}
-    if (oauth_broker.enabled() or broker_requested) and platform in {"facebook", "instagram", "tiktok", "linkedin", "linkedin-page", "youtube"}:
+    broker_active = broker_requested or (oauth_broker.enabled() and platform in {"tiktok", "linkedin", "linkedin-page", "youtube"})
+    if broker_active:
         return []
     by_platform = {
         "facebook": ["FACEBOOK_PAGE_ACCESS_TOKEN"],
@@ -249,8 +250,8 @@ def meta_graph_base() -> str:
 
 def facebook_publish(job: dict[str, Any], client: dict[str, Any], paths: list[Path], _cache: PublicMediaCache) -> dict[str, Any]:
     broker_requested = str(job.get("provider") or "").strip().lower() == "oauth_broker"
-    if oauth_broker.enabled() or broker_requested:
-        broker = oauth_broker.token(client, "facebook", force=broker_requested)
+    if broker_requested:
+        broker = oauth_broker.token(client, "facebook", force=True)
         token = str(broker["access_token"])
     else:
         token = secret(client, "FACEBOOK_PAGE_ACCESS_TOKEN")
@@ -283,8 +284,8 @@ def ig_wait_container(container_id: str, token: str, timeout_seconds: int = 300)
 
 def instagram_publish(job: dict[str, Any], client: dict[str, Any], paths: list[Path], cache: PublicMediaCache) -> dict[str, Any]:
     broker_requested = str(job.get("provider") or "").strip().lower() == "oauth_broker"
-    if oauth_broker.enabled() or broker_requested:
-        broker = oauth_broker.token(client, "instagram", force=broker_requested)
+    if broker_requested:
+        broker = oauth_broker.token(client, "instagram", force=True)
         token = str(broker["access_token"])
         ig_user_id = str(broker.get("instagram_user_id") or broker.get("account_id") or "").strip()
         if not ig_user_id:
