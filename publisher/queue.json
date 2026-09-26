@@ -442808,9 +442808,1433 @@
       "visual_count": 1,
       "fresh_visual_count": 1,
       "reused_visual_count": 0
+    },
+    {
+      "id": "supabase-calendar-1728622a-2f89-4e92-8e51-22bc9461d9aa",
+      "enabled": true,
+      "status": "buffer_review_required",
+      "client_id": "immobiliare-la-sacra",
+      "client_name": "Immobiliare La Sacra",
+      "title": "IG POST 5 · Camera / zona notte · APPARTAMENTO DUE LOCALI A VALGIOIE",
+      "caption": "Focus zona notte: immagini e informazioni dell'annuncio per capire meglio gli spazi.\n\nAnnuncio: https://lasacraimmobiliare.it/products/appartamento-due-locali-a-valgioie",
+      "format": "post",
+      "media": [
+        "publisher/media/supabase/1728622a-2f89-4e92-8e51-22bc9461d9aa/property-01.png",
+        "publisher/media/supabase/1728622a-2f89-4e92-8e51-22bc9461d9aa/property-02.png",
+        "publisher/media/supabase/1728622a-2f89-4e92-8e51-22bc9461d9aa/property-03.png",
+        "publisher/media/supabase/1728622a-2f89-4e92-8e51-22bc9461d9aa/property-04.png",
+        "publisher/media/supabase/1728622a-2f89-4e92-8e51-22bc9461d9aa/property-05.png",
+        "publisher/media/supabase/1728622a-2f89-4e92-8e51-22bc9461d9aa/property-06.png",
+        "publisher/media/supabase/1728622a-2f89-4e92-8e51-22bc9461d9aa/property-07.png",
+        "publisher/media/supabase/1728622a-2f89-4e92-8e51-22bc9461d9aa/property-08.png",
+        "publisher/media/supabase/1728622a-2f89-4e92-8e51-22bc9461d9aa/property-09.png",
+        "publisher/media/supabase/1728622a-2f89-4e92-8e51-22bc9461d9aa/property-10.png"
+      ],
+      "scheduled_at": "2026-09-24T17:00:00+00:00",
+      "platforms": [
+        "instagram"
+      ],
+      "published_platforms": [],
+      "source": "SUPABASE_CONTENT_HUB",
+      "supabase_calendar_id": "1728622a-2f89-4e92-8e51-22bc9461d9aa",
+      "supabase_content_id": "63e271f0-2d42-4f80-815a-1ff8e0649865",
+      "supabase_client_id": "404cd3f1-8036-4918-85b7-e5fc568f7f1f",
+      "campaign": "CALENDARIO PDF 23-28/09/2026",
+      "property_id": "735c663b-be38-4de6-88a4-65067a2ec69a",
+      "provider": "buffer",
+      "provider_channel_id": "6ab2b6e7ea19ca0bdeb80e19",
+      "provider_secret_prefix": "LASACRA",
+      "retry_count": 0,
+      "created_by": "supabase-queue-bridge",
+      "autonomous_publish": true,
+      "blocked_reason": "Scheduled time is more than 60 minutes in the past; manual review required"
+    },
+    {
+      "id": "supabase-calendar-42ef3b6a-4286-4828-a473-47f81acfa112",
+      "enabled": true,
+      "status": "buffer_review_required",
+      "client_id": "immobiliare-la-sacra",
+      "client_name": "Immobiliare La Sacra",
+      "title": "FB POST 5 · Camera / zona notte · APPARTAMENTO DUE LOCALI A VALGIOIE",
+      "caption": "Approfondimento sulla zona notte e sugli spazi destinati al riposo.\n\nAnnuncio: https://lasacraimmobiliare.it/products/appartamento-due-locali-a-valgioie",
+      "format": "post",
+      "media": [
+        "publisher/media/supabase/42ef3b6a-4286-4828-a473-47f81acfa112/property-01.png",
+        "publisher/media/supabase/42ef3b6a-4286-4828-a473-47f81acfa112/property-02.png",
+        "publisher/media/supabase/42ef3b6a-4286-4828-a473-47f81acfa112/property-03.png",
+        "publisher/media/supabase/42ef3b6a-4286-4828-a473-47f81acfa112/property-04.png",
+        "publisher/media/supabase/42ef3b6a-4286-4828-a473-47f81acfa112/property-05.png",
+        "publisher/media/supabase/42ef3b6a-4286-4828-a473-47f81acfa112/property-06.png",
+        "publisher/media/supabase/42ef3b6a-4286-4828-a473-47f81acfa112/property-07.png",
+        "publisher/media/supabase/42ef3b6a-4286-4828-a473-47f81acfa112/property-08.png",
+        "publisher/media/supabase/42ef3b6a-4286-4828-a473-47f81acfa112/property-09.png",
+        "publisher/media/supabase/42ef3b6a-4286-4828-a473-47f81acfa112/property-10.png"
+      ],
+      "scheduled_at": "2026-09-25T11:00:00+00:00",
+      "platforms": [
+        "facebook"
+      ],
+      "published_platforms": [],
+      "source": "SUPABASE_CONTENT_HUB",
+      "supabase_calendar_id": "42ef3b6a-4286-4828-a473-47f81acfa112",
+      "supabase_content_id": "5204360e-f2ec-43db-bd3b-69b61284d801",
+      "supabase_client_id": "404cd3f1-8036-4918-85b7-e5fc568f7f1f",
+      "campaign": "CALENDARIO PDF 23-28/09/2026",
+      "property_id": "735c663b-be38-4de6-88a4-65067a2ec69a",
+      "provider": "buffer",
+      "provider_channel_id": "6ab2b713ea19ca0bdeb8103d",
+      "provider_secret_prefix": "LASACRA",
+      "retry_count": 0,
+      "created_by": "supabase-queue-bridge",
+      "autonomous_publish": true,
+      "blocked_reason": "Scheduled time is more than 60 minutes in the past; manual review required"
+    },
+    {
+      "id": "supabase-calendar-67648e42-64db-44ba-bcec-46331d640e57",
+      "enabled": true,
+      "status": "buffer_review_required",
+      "client_id": "immobiliare-la-sacra",
+      "client_name": "Immobiliare La Sacra",
+      "title": "IG POST 6 · Bagno / finiture · APPARTAMENTO DUE LOCALI A VALGIOIE",
+      "caption": "Dettagli di bagno e finiture: una lettura visuale basata esclusivamente sulla scheda disponibile.\n\nAnnuncio: https://lasacraimmobiliare.it/products/appartamento-due-locali-a-valgioie",
+      "format": "post",
+      "media": [
+        "publisher/media/supabase/67648e42-64db-44ba-bcec-46331d640e57/property-01.png",
+        "publisher/media/supabase/67648e42-64db-44ba-bcec-46331d640e57/property-02.png",
+        "publisher/media/supabase/67648e42-64db-44ba-bcec-46331d640e57/property-03.png",
+        "publisher/media/supabase/67648e42-64db-44ba-bcec-46331d640e57/property-04.png",
+        "publisher/media/supabase/67648e42-64db-44ba-bcec-46331d640e57/property-05.png",
+        "publisher/media/supabase/67648e42-64db-44ba-bcec-46331d640e57/property-06.png",
+        "publisher/media/supabase/67648e42-64db-44ba-bcec-46331d640e57/property-07.png",
+        "publisher/media/supabase/67648e42-64db-44ba-bcec-46331d640e57/property-08.png",
+        "publisher/media/supabase/67648e42-64db-44ba-bcec-46331d640e57/property-09.png",
+        "publisher/media/supabase/67648e42-64db-44ba-bcec-46331d640e57/property-10.png"
+      ],
+      "scheduled_at": "2026-09-25T11:00:00+00:00",
+      "platforms": [
+        "instagram"
+      ],
+      "published_platforms": [],
+      "source": "SUPABASE_CONTENT_HUB",
+      "supabase_calendar_id": "67648e42-64db-44ba-bcec-46331d640e57",
+      "supabase_content_id": "bd647f05-ac6f-4011-9256-86d18b560f35",
+      "supabase_client_id": "404cd3f1-8036-4918-85b7-e5fc568f7f1f",
+      "campaign": "CALENDARIO PDF 23-28/09/2026",
+      "property_id": "735c663b-be38-4de6-88a4-65067a2ec69a",
+      "provider": "buffer",
+      "provider_channel_id": "6ab2b6e7ea19ca0bdeb80e19",
+      "provider_secret_prefix": "LASACRA",
+      "retry_count": 0,
+      "created_by": "supabase-queue-bridge",
+      "autonomous_publish": true,
+      "blocked_reason": "Scheduled time is more than 60 minutes in the past; manual review required"
+    },
+    {
+      "id": "supabase-calendar-cf27ed42-096f-4b77-a159-5187080c57fb",
+      "enabled": true,
+      "status": "buffer_review_required",
+      "client_id": "immobiliare-la-sacra",
+      "client_name": "Immobiliare La Sacra",
+      "title": "FB POST 6 · Bagno / finiture · APPARTAMENTO DUE LOCALI A VALGIOIE",
+      "caption": "Focus su bagno e finiture, senza introdurre dettagli non verificati.\n\nAnnuncio: https://lasacraimmobiliare.it/products/appartamento-due-locali-a-valgioie",
+      "format": "post",
+      "media": [
+        "publisher/media/supabase/cf27ed42-096f-4b77-a159-5187080c57fb/property-01.png",
+        "publisher/media/supabase/cf27ed42-096f-4b77-a159-5187080c57fb/property-02.png",
+        "publisher/media/supabase/cf27ed42-096f-4b77-a159-5187080c57fb/property-03.png",
+        "publisher/media/supabase/cf27ed42-096f-4b77-a159-5187080c57fb/property-04.png",
+        "publisher/media/supabase/cf27ed42-096f-4b77-a159-5187080c57fb/property-05.png",
+        "publisher/media/supabase/cf27ed42-096f-4b77-a159-5187080c57fb/property-06.png",
+        "publisher/media/supabase/cf27ed42-096f-4b77-a159-5187080c57fb/property-07.png",
+        "publisher/media/supabase/cf27ed42-096f-4b77-a159-5187080c57fb/property-08.png",
+        "publisher/media/supabase/cf27ed42-096f-4b77-a159-5187080c57fb/property-09.png",
+        "publisher/media/supabase/cf27ed42-096f-4b77-a159-5187080c57fb/property-10.png"
+      ],
+      "scheduled_at": "2026-09-25T17:00:00+00:00",
+      "platforms": [
+        "facebook"
+      ],
+      "published_platforms": [],
+      "source": "SUPABASE_CONTENT_HUB",
+      "supabase_calendar_id": "cf27ed42-096f-4b77-a159-5187080c57fb",
+      "supabase_content_id": "e5d08521-d571-4f4a-be63-1ec856c4b650",
+      "supabase_client_id": "404cd3f1-8036-4918-85b7-e5fc568f7f1f",
+      "campaign": "CALENDARIO PDF 23-28/09/2026",
+      "property_id": "735c663b-be38-4de6-88a4-65067a2ec69a",
+      "provider": "buffer",
+      "provider_channel_id": "6ab2b713ea19ca0bdeb8103d",
+      "provider_secret_prefix": "LASACRA",
+      "retry_count": 0,
+      "created_by": "supabase-queue-bridge",
+      "autonomous_publish": true,
+      "blocked_reason": "Scheduled time is more than 60 minutes in the past; manual review required"
+    },
+    {
+      "id": "supabase-calendar-1ce2790b-defe-44ae-88b2-1aaddb71d1a8",
+      "enabled": true,
+      "status": "buffer_review_required",
+      "client_id": "immobiliare-la-sacra",
+      "client_name": "Immobiliare La Sacra",
+      "title": "IG POST 7 · Spazi esterni · APPARTAMENTO DUE LOCALI A VALGIOIE",
+      "caption": "Gli eventuali spazi esterni diventano il focus del contenuto di oggi.\n\nAnnuncio: https://lasacraimmobiliare.it/products/appartamento-due-locali-a-valgioie",
+      "format": "post",
+      "media": [
+        "publisher/media/supabase/1ce2790b-defe-44ae-88b2-1aaddb71d1a8/property-01.png",
+        "publisher/media/supabase/1ce2790b-defe-44ae-88b2-1aaddb71d1a8/property-02.png",
+        "publisher/media/supabase/1ce2790b-defe-44ae-88b2-1aaddb71d1a8/property-03.png",
+        "publisher/media/supabase/1ce2790b-defe-44ae-88b2-1aaddb71d1a8/property-04.png",
+        "publisher/media/supabase/1ce2790b-defe-44ae-88b2-1aaddb71d1a8/property-05.png",
+        "publisher/media/supabase/1ce2790b-defe-44ae-88b2-1aaddb71d1a8/property-06.png",
+        "publisher/media/supabase/1ce2790b-defe-44ae-88b2-1aaddb71d1a8/property-07.png",
+        "publisher/media/supabase/1ce2790b-defe-44ae-88b2-1aaddb71d1a8/property-08.png",
+        "publisher/media/supabase/1ce2790b-defe-44ae-88b2-1aaddb71d1a8/property-09.png",
+        "publisher/media/supabase/1ce2790b-defe-44ae-88b2-1aaddb71d1a8/property-10.png"
+      ],
+      "scheduled_at": "2026-09-25T17:00:00+00:00",
+      "platforms": [
+        "instagram"
+      ],
+      "published_platforms": [],
+      "source": "SUPABASE_CONTENT_HUB",
+      "supabase_calendar_id": "1ce2790b-defe-44ae-88b2-1aaddb71d1a8",
+      "supabase_content_id": "7f45dff3-9c48-42d0-9ddc-c5adad486110",
+      "supabase_client_id": "404cd3f1-8036-4918-85b7-e5fc568f7f1f",
+      "campaign": "CALENDARIO PDF 23-28/09/2026",
+      "property_id": "735c663b-be38-4de6-88a4-65067a2ec69a",
+      "provider": "buffer",
+      "provider_channel_id": "6ab2b6e7ea19ca0bdeb80e19",
+      "provider_secret_prefix": "LASACRA",
+      "retry_count": 0,
+      "created_by": "supabase-queue-bridge",
+      "autonomous_publish": true,
+      "blocked_reason": "Scheduled time is more than 60 minutes in the past; manual review required"
+    },
+    {
+      "id": "supabase-calendar-6c86e47a-2d80-46d3-a3a1-eae546481cd6",
+      "enabled": true,
+      "status": "buffer_retry_required",
+      "client_id": "immobiliare-la-sacra",
+      "client_name": "Immobiliare La Sacra",
+      "title": "FB POST 7 · Spazi esterni · APPARTAMENTO DUE LOCALI A VALGIOIE",
+      "caption": "Contenuto dedicato agli eventuali spazi esterni presenti nella scheda dell'immobile.\n\nAnnuncio: https://lasacraimmobiliare.it/products/appartamento-due-locali-a-valgioie",
+      "format": "post",
+      "media": [
+        "publisher/media/supabase/6c86e47a-2d80-46d3-a3a1-eae546481cd6/property-01.png",
+        "publisher/media/supabase/6c86e47a-2d80-46d3-a3a1-eae546481cd6/property-02.png",
+        "publisher/media/supabase/6c86e47a-2d80-46d3-a3a1-eae546481cd6/property-03.png",
+        "publisher/media/supabase/6c86e47a-2d80-46d3-a3a1-eae546481cd6/property-04.png",
+        "publisher/media/supabase/6c86e47a-2d80-46d3-a3a1-eae546481cd6/property-05.png",
+        "publisher/media/supabase/6c86e47a-2d80-46d3-a3a1-eae546481cd6/property-06.png",
+        "publisher/media/supabase/6c86e47a-2d80-46d3-a3a1-eae546481cd6/property-07.png",
+        "publisher/media/supabase/6c86e47a-2d80-46d3-a3a1-eae546481cd6/property-08.png",
+        "publisher/media/supabase/6c86e47a-2d80-46d3-a3a1-eae546481cd6/property-09.png",
+        "publisher/media/supabase/6c86e47a-2d80-46d3-a3a1-eae546481cd6/property-10.png"
+      ],
+      "scheduled_at": "2026-09-26T11:00:00+00:00",
+      "platforms": [
+        "facebook"
+      ],
+      "published_platforms": [],
+      "source": "SUPABASE_CONTENT_HUB",
+      "supabase_calendar_id": "6c86e47a-2d80-46d3-a3a1-eae546481cd6",
+      "supabase_content_id": "af56182a-bbd1-4196-9469-526ae2bc69c2",
+      "supabase_client_id": "404cd3f1-8036-4918-85b7-e5fc568f7f1f",
+      "campaign": "CALENDARIO PDF 23-28/09/2026",
+      "property_id": "735c663b-be38-4de6-88a4-65067a2ec69a",
+      "provider": "buffer",
+      "provider_channel_id": "6ab2b713ea19ca0bdeb8103d",
+      "provider_secret_prefix": "LASACRA",
+      "retry_count": 0,
+      "created_by": "supabase-queue-bridge",
+      "autonomous_publish": true,
+      "cloudinary_assets": [
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272508/f1-buffer/supabase-calendar-6c86e47a-2d80-46d3-a3a1-eae546481cd6/slide-01.png",
+          "public_id": "f1-buffer/supabase-calendar-6c86e47a-2d80-46d3-a3a1-eae546481cd6/slide-01",
+          "resource_type": "image",
+          "bytes": "2973836"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272508/f1-buffer/supabase-calendar-6c86e47a-2d80-46d3-a3a1-eae546481cd6/slide-02.png",
+          "public_id": "f1-buffer/supabase-calendar-6c86e47a-2d80-46d3-a3a1-eae546481cd6/slide-02",
+          "resource_type": "image",
+          "bytes": "4858"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272509/f1-buffer/supabase-calendar-6c86e47a-2d80-46d3-a3a1-eae546481cd6/slide-03.png",
+          "public_id": "f1-buffer/supabase-calendar-6c86e47a-2d80-46d3-a3a1-eae546481cd6/slide-03",
+          "resource_type": "image",
+          "bytes": "2973836"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272509/f1-buffer/supabase-calendar-6c86e47a-2d80-46d3-a3a1-eae546481cd6/slide-04.png",
+          "public_id": "f1-buffer/supabase-calendar-6c86e47a-2d80-46d3-a3a1-eae546481cd6/slide-04",
+          "resource_type": "image",
+          "bytes": "3262050"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272511/f1-buffer/supabase-calendar-6c86e47a-2d80-46d3-a3a1-eae546481cd6/slide-05.png",
+          "public_id": "f1-buffer/supabase-calendar-6c86e47a-2d80-46d3-a3a1-eae546481cd6/slide-05",
+          "resource_type": "image",
+          "bytes": "1923067"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272512/f1-buffer/supabase-calendar-6c86e47a-2d80-46d3-a3a1-eae546481cd6/slide-06.png",
+          "public_id": "f1-buffer/supabase-calendar-6c86e47a-2d80-46d3-a3a1-eae546481cd6/slide-06",
+          "resource_type": "image",
+          "bytes": "2065971"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272513/f1-buffer/supabase-calendar-6c86e47a-2d80-46d3-a3a1-eae546481cd6/slide-07.png",
+          "public_id": "f1-buffer/supabase-calendar-6c86e47a-2d80-46d3-a3a1-eae546481cd6/slide-07",
+          "resource_type": "image",
+          "bytes": "2845827"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272513/f1-buffer/supabase-calendar-6c86e47a-2d80-46d3-a3a1-eae546481cd6/slide-08.png",
+          "public_id": "f1-buffer/supabase-calendar-6c86e47a-2d80-46d3-a3a1-eae546481cd6/slide-08",
+          "resource_type": "image",
+          "bytes": "2566001"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272514/f1-buffer/supabase-calendar-6c86e47a-2d80-46d3-a3a1-eae546481cd6/slide-09.png",
+          "public_id": "f1-buffer/supabase-calendar-6c86e47a-2d80-46d3-a3a1-eae546481cd6/slide-09",
+          "resource_type": "image",
+          "bytes": "2486059"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272516/f1-buffer/supabase-calendar-6c86e47a-2d80-46d3-a3a1-eae546481cd6/slide-10.png",
+          "public_id": "f1-buffer/supabase-calendar-6c86e47a-2d80-46d3-a3a1-eae546481cd6/slide-10",
+          "resource_type": "image",
+          "bytes": "3296784"
+        }
+      ],
+      "blocked_reason": "Buffer facebook: Invalid post: Whoops, it looks like you've already got this one scheduled or posted around the same time. We're not able to post the same thing twice so close together."
+    },
+    {
+      "id": "supabase-calendar-a695de94-d98e-4ec2-8983-e0a089e625a5",
+      "enabled": true,
+      "status": "buffer_retry_required",
+      "client_id": "immobiliare-la-sacra",
+      "client_name": "Immobiliare La Sacra",
+      "title": "IG POST 8 · Comfort · APPARTAMENTO DUE LOCALI A VALGIOIE",
+      "caption": "Comfort e dotazioni: scopri solo ciò che è realmente indicato nella scheda dell'immobile.\n\nAnnuncio: https://lasacraimmobiliare.it/products/appartamento-due-locali-a-valgioie",
+      "format": "post",
+      "media": [
+        "publisher/media/supabase/a695de94-d98e-4ec2-8983-e0a089e625a5/property-01.png",
+        "publisher/media/supabase/a695de94-d98e-4ec2-8983-e0a089e625a5/property-02.png",
+        "publisher/media/supabase/a695de94-d98e-4ec2-8983-e0a089e625a5/property-03.png",
+        "publisher/media/supabase/a695de94-d98e-4ec2-8983-e0a089e625a5/property-04.png",
+        "publisher/media/supabase/a695de94-d98e-4ec2-8983-e0a089e625a5/property-05.png",
+        "publisher/media/supabase/a695de94-d98e-4ec2-8983-e0a089e625a5/property-06.png",
+        "publisher/media/supabase/a695de94-d98e-4ec2-8983-e0a089e625a5/property-07.png",
+        "publisher/media/supabase/a695de94-d98e-4ec2-8983-e0a089e625a5/property-08.png",
+        "publisher/media/supabase/a695de94-d98e-4ec2-8983-e0a089e625a5/property-09.png",
+        "publisher/media/supabase/a695de94-d98e-4ec2-8983-e0a089e625a5/property-10.png"
+      ],
+      "scheduled_at": "2026-09-26T11:00:00+00:00",
+      "platforms": [
+        "instagram"
+      ],
+      "published_platforms": [],
+      "source": "SUPABASE_CONTENT_HUB",
+      "supabase_calendar_id": "a695de94-d98e-4ec2-8983-e0a089e625a5",
+      "supabase_content_id": "0396e379-82b7-4a38-ac80-903d80c7cfd7",
+      "supabase_client_id": "404cd3f1-8036-4918-85b7-e5fc568f7f1f",
+      "campaign": "CALENDARIO PDF 23-28/09/2026",
+      "property_id": "735c663b-be38-4de6-88a4-65067a2ec69a",
+      "provider": "buffer",
+      "provider_channel_id": "6ab2b6e7ea19ca0bdeb80e19",
+      "provider_secret_prefix": "LASACRA",
+      "retry_count": 0,
+      "created_by": "supabase-queue-bridge",
+      "autonomous_publish": true,
+      "cloudinary_assets": [
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272498/f1-buffer/supabase-calendar-a695de94-d98e-4ec2-8983-e0a089e625a5/slide-01.png",
+          "public_id": "f1-buffer/supabase-calendar-a695de94-d98e-4ec2-8983-e0a089e625a5/slide-01",
+          "resource_type": "image",
+          "bytes": "2973836"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272499/f1-buffer/supabase-calendar-a695de94-d98e-4ec2-8983-e0a089e625a5/slide-02.png",
+          "public_id": "f1-buffer/supabase-calendar-a695de94-d98e-4ec2-8983-e0a089e625a5/slide-02",
+          "resource_type": "image",
+          "bytes": "4858"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272500/f1-buffer/supabase-calendar-a695de94-d98e-4ec2-8983-e0a089e625a5/slide-03.png",
+          "public_id": "f1-buffer/supabase-calendar-a695de94-d98e-4ec2-8983-e0a089e625a5/slide-03",
+          "resource_type": "image",
+          "bytes": "2973836"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272501/f1-buffer/supabase-calendar-a695de94-d98e-4ec2-8983-e0a089e625a5/slide-04.png",
+          "public_id": "f1-buffer/supabase-calendar-a695de94-d98e-4ec2-8983-e0a089e625a5/slide-04",
+          "resource_type": "image",
+          "bytes": "3262050"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272502/f1-buffer/supabase-calendar-a695de94-d98e-4ec2-8983-e0a089e625a5/slide-05.png",
+          "public_id": "f1-buffer/supabase-calendar-a695de94-d98e-4ec2-8983-e0a089e625a5/slide-05",
+          "resource_type": "image",
+          "bytes": "1923067"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272503/f1-buffer/supabase-calendar-a695de94-d98e-4ec2-8983-e0a089e625a5/slide-06.png",
+          "public_id": "f1-buffer/supabase-calendar-a695de94-d98e-4ec2-8983-e0a089e625a5/slide-06",
+          "resource_type": "image",
+          "bytes": "2065971"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272503/f1-buffer/supabase-calendar-a695de94-d98e-4ec2-8983-e0a089e625a5/slide-07.png",
+          "public_id": "f1-buffer/supabase-calendar-a695de94-d98e-4ec2-8983-e0a089e625a5/slide-07",
+          "resource_type": "image",
+          "bytes": "2845827"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272504/f1-buffer/supabase-calendar-a695de94-d98e-4ec2-8983-e0a089e625a5/slide-08.png",
+          "public_id": "f1-buffer/supabase-calendar-a695de94-d98e-4ec2-8983-e0a089e625a5/slide-08",
+          "resource_type": "image",
+          "bytes": "2566001"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272505/f1-buffer/supabase-calendar-a695de94-d98e-4ec2-8983-e0a089e625a5/slide-09.png",
+          "public_id": "f1-buffer/supabase-calendar-a695de94-d98e-4ec2-8983-e0a089e625a5/slide-09",
+          "resource_type": "image",
+          "bytes": "2486059"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272505/f1-buffer/supabase-calendar-a695de94-d98e-4ec2-8983-e0a089e625a5/slide-10.png",
+          "public_id": "f1-buffer/supabase-calendar-a695de94-d98e-4ec2-8983-e0a089e625a5/slide-10",
+          "resource_type": "image",
+          "bytes": "3296784"
+        }
+      ],
+      "blocked_reason": "Buffer instagram: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
+    },
+    {
+      "id": "supabase-calendar-72a338fe-ddae-43cf-8d73-8ddd7e85e2f4",
+      "enabled": true,
+      "status": "buffer_retry_required",
+      "client_id": "immobiliare-la-sacra",
+      "client_name": "Immobiliare La Sacra",
+      "title": "FB POST 8 · Comfort · APPARTAMENTO DUE LOCALI A VALGIOIE",
+      "caption": "Contenuto dedicato ai comfort e alle dotazioni effettivamente indicate nell'annuncio.\n\nAnnuncio: https://lasacraimmobiliare.it/products/appartamento-due-locali-a-valgioie",
+      "format": "post",
+      "media": [
+        "publisher/media/supabase/72a338fe-ddae-43cf-8d73-8ddd7e85e2f4/property-01.png",
+        "publisher/media/supabase/72a338fe-ddae-43cf-8d73-8ddd7e85e2f4/property-02.png",
+        "publisher/media/supabase/72a338fe-ddae-43cf-8d73-8ddd7e85e2f4/property-03.png",
+        "publisher/media/supabase/72a338fe-ddae-43cf-8d73-8ddd7e85e2f4/property-04.png",
+        "publisher/media/supabase/72a338fe-ddae-43cf-8d73-8ddd7e85e2f4/property-05.png",
+        "publisher/media/supabase/72a338fe-ddae-43cf-8d73-8ddd7e85e2f4/property-06.png",
+        "publisher/media/supabase/72a338fe-ddae-43cf-8d73-8ddd7e85e2f4/property-07.png",
+        "publisher/media/supabase/72a338fe-ddae-43cf-8d73-8ddd7e85e2f4/property-08.png",
+        "publisher/media/supabase/72a338fe-ddae-43cf-8d73-8ddd7e85e2f4/property-09.png",
+        "publisher/media/supabase/72a338fe-ddae-43cf-8d73-8ddd7e85e2f4/property-10.png"
+      ],
+      "scheduled_at": "2026-09-26T17:00:00+00:00",
+      "platforms": [
+        "facebook"
+      ],
+      "published_platforms": [],
+      "source": "SUPABASE_CONTENT_HUB",
+      "supabase_calendar_id": "72a338fe-ddae-43cf-8d73-8ddd7e85e2f4",
+      "supabase_content_id": "96c939a7-3440-41bd-8a9a-c2d289accb23",
+      "supabase_client_id": "404cd3f1-8036-4918-85b7-e5fc568f7f1f",
+      "campaign": "CALENDARIO PDF 23-28/09/2026",
+      "property_id": "735c663b-be38-4de6-88a4-65067a2ec69a",
+      "provider": "buffer",
+      "provider_channel_id": "6ab2b713ea19ca0bdeb8103d",
+      "provider_secret_prefix": "LASACRA",
+      "retry_count": 0,
+      "created_by": "supabase-queue-bridge",
+      "autonomous_publish": true,
+      "cloudinary_assets": [
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272518/f1-buffer/supabase-calendar-72a338fe-ddae-43cf-8d73-8ddd7e85e2f4/slide-01.png",
+          "public_id": "f1-buffer/supabase-calendar-72a338fe-ddae-43cf-8d73-8ddd7e85e2f4/slide-01",
+          "resource_type": "image",
+          "bytes": "2973836"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272519/f1-buffer/supabase-calendar-72a338fe-ddae-43cf-8d73-8ddd7e85e2f4/slide-02.png",
+          "public_id": "f1-buffer/supabase-calendar-72a338fe-ddae-43cf-8d73-8ddd7e85e2f4/slide-02",
+          "resource_type": "image",
+          "bytes": "4858"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272520/f1-buffer/supabase-calendar-72a338fe-ddae-43cf-8d73-8ddd7e85e2f4/slide-03.png",
+          "public_id": "f1-buffer/supabase-calendar-72a338fe-ddae-43cf-8d73-8ddd7e85e2f4/slide-03",
+          "resource_type": "image",
+          "bytes": "2973836"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272521/f1-buffer/supabase-calendar-72a338fe-ddae-43cf-8d73-8ddd7e85e2f4/slide-04.png",
+          "public_id": "f1-buffer/supabase-calendar-72a338fe-ddae-43cf-8d73-8ddd7e85e2f4/slide-04",
+          "resource_type": "image",
+          "bytes": "3262050"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272522/f1-buffer/supabase-calendar-72a338fe-ddae-43cf-8d73-8ddd7e85e2f4/slide-05.png",
+          "public_id": "f1-buffer/supabase-calendar-72a338fe-ddae-43cf-8d73-8ddd7e85e2f4/slide-05",
+          "resource_type": "image",
+          "bytes": "1923067"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272522/f1-buffer/supabase-calendar-72a338fe-ddae-43cf-8d73-8ddd7e85e2f4/slide-06.png",
+          "public_id": "f1-buffer/supabase-calendar-72a338fe-ddae-43cf-8d73-8ddd7e85e2f4/slide-06",
+          "resource_type": "image",
+          "bytes": "2065971"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272523/f1-buffer/supabase-calendar-72a338fe-ddae-43cf-8d73-8ddd7e85e2f4/slide-07.png",
+          "public_id": "f1-buffer/supabase-calendar-72a338fe-ddae-43cf-8d73-8ddd7e85e2f4/slide-07",
+          "resource_type": "image",
+          "bytes": "2845827"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272524/f1-buffer/supabase-calendar-72a338fe-ddae-43cf-8d73-8ddd7e85e2f4/slide-08.png",
+          "public_id": "f1-buffer/supabase-calendar-72a338fe-ddae-43cf-8d73-8ddd7e85e2f4/slide-08",
+          "resource_type": "image",
+          "bytes": "2566001"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272525/f1-buffer/supabase-calendar-72a338fe-ddae-43cf-8d73-8ddd7e85e2f4/slide-09.png",
+          "public_id": "f1-buffer/supabase-calendar-72a338fe-ddae-43cf-8d73-8ddd7e85e2f4/slide-09",
+          "resource_type": "image",
+          "bytes": "2486059"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272526/f1-buffer/supabase-calendar-72a338fe-ddae-43cf-8d73-8ddd7e85e2f4/slide-10.png",
+          "public_id": "f1-buffer/supabase-calendar-72a338fe-ddae-43cf-8d73-8ddd7e85e2f4/slide-10",
+          "resource_type": "image",
+          "bytes": "3296784"
+        }
+      ],
+      "blocked_reason": "Buffer facebook: Invalid post: Whoops, it looks like you've already got this one scheduled or posted around the same time. We're not able to post the same thing twice so close together."
+    },
+    {
+      "id": "supabase-calendar-50559439-482c-45be-ae10-36b2cf22c1ba",
+      "enabled": true,
+      "status": "buffer_retry_required",
+      "client_id": "immobiliare-la-sacra",
+      "client_name": "Immobiliare La Sacra",
+      "title": "IG POST 9 · Posizione · APPARTAMENTO DUE LOCALI A VALGIOIE",
+      "caption": "Dove si trova? Oggi il contenuto mette al centro la posizione dell'immobile.\n\nAnnuncio: https://lasacraimmobiliare.it/products/appartamento-due-locali-a-valgioie",
+      "format": "post",
+      "media": [
+        "publisher/media/supabase/50559439-482c-45be-ae10-36b2cf22c1ba/property-01.png",
+        "publisher/media/supabase/50559439-482c-45be-ae10-36b2cf22c1ba/property-02.png",
+        "publisher/media/supabase/50559439-482c-45be-ae10-36b2cf22c1ba/property-03.png",
+        "publisher/media/supabase/50559439-482c-45be-ae10-36b2cf22c1ba/property-04.png",
+        "publisher/media/supabase/50559439-482c-45be-ae10-36b2cf22c1ba/property-05.png",
+        "publisher/media/supabase/50559439-482c-45be-ae10-36b2cf22c1ba/property-06.png",
+        "publisher/media/supabase/50559439-482c-45be-ae10-36b2cf22c1ba/property-07.png",
+        "publisher/media/supabase/50559439-482c-45be-ae10-36b2cf22c1ba/property-08.png",
+        "publisher/media/supabase/50559439-482c-45be-ae10-36b2cf22c1ba/property-09.png",
+        "publisher/media/supabase/50559439-482c-45be-ae10-36b2cf22c1ba/property-10.png"
+      ],
+      "scheduled_at": "2026-09-26T17:00:00+00:00",
+      "platforms": [
+        "instagram"
+      ],
+      "published_platforms": [],
+      "source": "SUPABASE_CONTENT_HUB",
+      "supabase_calendar_id": "50559439-482c-45be-ae10-36b2cf22c1ba",
+      "supabase_content_id": "e1729129-de1f-4104-b490-d2534117eedd",
+      "supabase_client_id": "404cd3f1-8036-4918-85b7-e5fc568f7f1f",
+      "campaign": "CALENDARIO PDF 23-28/09/2026",
+      "property_id": "735c663b-be38-4de6-88a4-65067a2ec69a",
+      "provider": "buffer",
+      "provider_channel_id": "6ab2b6e7ea19ca0bdeb80e19",
+      "provider_secret_prefix": "LASACRA",
+      "retry_count": 0,
+      "created_by": "supabase-queue-bridge",
+      "autonomous_publish": true,
+      "cloudinary_assets": [
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272528/f1-buffer/supabase-calendar-50559439-482c-45be-ae10-36b2cf22c1ba/slide-01.png",
+          "public_id": "f1-buffer/supabase-calendar-50559439-482c-45be-ae10-36b2cf22c1ba/slide-01",
+          "resource_type": "image",
+          "bytes": "2973836"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272528/f1-buffer/supabase-calendar-50559439-482c-45be-ae10-36b2cf22c1ba/slide-02.png",
+          "public_id": "f1-buffer/supabase-calendar-50559439-482c-45be-ae10-36b2cf22c1ba/slide-02",
+          "resource_type": "image",
+          "bytes": "4858"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272529/f1-buffer/supabase-calendar-50559439-482c-45be-ae10-36b2cf22c1ba/slide-03.png",
+          "public_id": "f1-buffer/supabase-calendar-50559439-482c-45be-ae10-36b2cf22c1ba/slide-03",
+          "resource_type": "image",
+          "bytes": "2973836"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272529/f1-buffer/supabase-calendar-50559439-482c-45be-ae10-36b2cf22c1ba/slide-04.png",
+          "public_id": "f1-buffer/supabase-calendar-50559439-482c-45be-ae10-36b2cf22c1ba/slide-04",
+          "resource_type": "image",
+          "bytes": "3262050"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272530/f1-buffer/supabase-calendar-50559439-482c-45be-ae10-36b2cf22c1ba/slide-05.png",
+          "public_id": "f1-buffer/supabase-calendar-50559439-482c-45be-ae10-36b2cf22c1ba/slide-05",
+          "resource_type": "image",
+          "bytes": "1923067"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272531/f1-buffer/supabase-calendar-50559439-482c-45be-ae10-36b2cf22c1ba/slide-06.png",
+          "public_id": "f1-buffer/supabase-calendar-50559439-482c-45be-ae10-36b2cf22c1ba/slide-06",
+          "resource_type": "image",
+          "bytes": "2065971"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272532/f1-buffer/supabase-calendar-50559439-482c-45be-ae10-36b2cf22c1ba/slide-07.png",
+          "public_id": "f1-buffer/supabase-calendar-50559439-482c-45be-ae10-36b2cf22c1ba/slide-07",
+          "resource_type": "image",
+          "bytes": "2845827"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272532/f1-buffer/supabase-calendar-50559439-482c-45be-ae10-36b2cf22c1ba/slide-08.png",
+          "public_id": "f1-buffer/supabase-calendar-50559439-482c-45be-ae10-36b2cf22c1ba/slide-08",
+          "resource_type": "image",
+          "bytes": "2566001"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272533/f1-buffer/supabase-calendar-50559439-482c-45be-ae10-36b2cf22c1ba/slide-09.png",
+          "public_id": "f1-buffer/supabase-calendar-50559439-482c-45be-ae10-36b2cf22c1ba/slide-09",
+          "resource_type": "image",
+          "bytes": "2486059"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272534/f1-buffer/supabase-calendar-50559439-482c-45be-ae10-36b2cf22c1ba/slide-10.png",
+          "public_id": "f1-buffer/supabase-calendar-50559439-482c-45be-ae10-36b2cf22c1ba/slide-10",
+          "resource_type": "image",
+          "bytes": "3296784"
+        }
+      ],
+      "blocked_reason": "Buffer instagram: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
+    },
+    {
+      "id": "supabase-calendar-dcf5e371-fcc0-46db-95ec-db54ea28b14c",
+      "enabled": true,
+      "status": "buffer_retry_required",
+      "client_id": "immobiliare-la-sacra",
+      "client_name": "Immobiliare La Sacra",
+      "title": "IG POST 10 · Per chi è adatta · APPARTAMENTO DUE LOCALI A VALGIOIE",
+      "caption": "A chi potrebbe interessare questa soluzione? Una lettura sintetica della tipologia di immobile.\n\nAnnuncio: https://lasacraimmobiliare.it/products/appartamento-due-locali-a-valgioie",
+      "format": "post",
+      "media": [
+        "publisher/media/supabase/dcf5e371-fcc0-46db-95ec-db54ea28b14c/property-01.png",
+        "publisher/media/supabase/dcf5e371-fcc0-46db-95ec-db54ea28b14c/property-02.png",
+        "publisher/media/supabase/dcf5e371-fcc0-46db-95ec-db54ea28b14c/property-03.png",
+        "publisher/media/supabase/dcf5e371-fcc0-46db-95ec-db54ea28b14c/property-04.png",
+        "publisher/media/supabase/dcf5e371-fcc0-46db-95ec-db54ea28b14c/property-05.png",
+        "publisher/media/supabase/dcf5e371-fcc0-46db-95ec-db54ea28b14c/property-06.png",
+        "publisher/media/supabase/dcf5e371-fcc0-46db-95ec-db54ea28b14c/property-07.png",
+        "publisher/media/supabase/dcf5e371-fcc0-46db-95ec-db54ea28b14c/property-08.png",
+        "publisher/media/supabase/dcf5e371-fcc0-46db-95ec-db54ea28b14c/property-09.png",
+        "publisher/media/supabase/dcf5e371-fcc0-46db-95ec-db54ea28b14c/property-10.png"
+      ],
+      "scheduled_at": "2026-09-27T11:00:00+00:00",
+      "platforms": [
+        "instagram"
+      ],
+      "published_platforms": [],
+      "source": "SUPABASE_CONTENT_HUB",
+      "supabase_calendar_id": "dcf5e371-fcc0-46db-95ec-db54ea28b14c",
+      "supabase_content_id": "22e0f051-d844-4285-9f52-3872faf0967a",
+      "supabase_client_id": "404cd3f1-8036-4918-85b7-e5fc568f7f1f",
+      "campaign": "CALENDARIO PDF 23-28/09/2026",
+      "property_id": "735c663b-be38-4de6-88a4-65067a2ec69a",
+      "provider": "buffer",
+      "provider_channel_id": "6ab2b6e7ea19ca0bdeb80e19",
+      "provider_secret_prefix": "LASACRA",
+      "retry_count": 0,
+      "created_by": "supabase-queue-bridge",
+      "autonomous_publish": true,
+      "cloudinary_assets": [
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272536/f1-buffer/supabase-calendar-dcf5e371-fcc0-46db-95ec-db54ea28b14c/slide-01.png",
+          "public_id": "f1-buffer/supabase-calendar-dcf5e371-fcc0-46db-95ec-db54ea28b14c/slide-01",
+          "resource_type": "image",
+          "bytes": "2973836"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272537/f1-buffer/supabase-calendar-dcf5e371-fcc0-46db-95ec-db54ea28b14c/slide-02.png",
+          "public_id": "f1-buffer/supabase-calendar-dcf5e371-fcc0-46db-95ec-db54ea28b14c/slide-02",
+          "resource_type": "image",
+          "bytes": "4858"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272537/f1-buffer/supabase-calendar-dcf5e371-fcc0-46db-95ec-db54ea28b14c/slide-03.png",
+          "public_id": "f1-buffer/supabase-calendar-dcf5e371-fcc0-46db-95ec-db54ea28b14c/slide-03",
+          "resource_type": "image",
+          "bytes": "2973836"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272538/f1-buffer/supabase-calendar-dcf5e371-fcc0-46db-95ec-db54ea28b14c/slide-04.png",
+          "public_id": "f1-buffer/supabase-calendar-dcf5e371-fcc0-46db-95ec-db54ea28b14c/slide-04",
+          "resource_type": "image",
+          "bytes": "3262050"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272539/f1-buffer/supabase-calendar-dcf5e371-fcc0-46db-95ec-db54ea28b14c/slide-05.png",
+          "public_id": "f1-buffer/supabase-calendar-dcf5e371-fcc0-46db-95ec-db54ea28b14c/slide-05",
+          "resource_type": "image",
+          "bytes": "1923067"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272539/f1-buffer/supabase-calendar-dcf5e371-fcc0-46db-95ec-db54ea28b14c/slide-06.png",
+          "public_id": "f1-buffer/supabase-calendar-dcf5e371-fcc0-46db-95ec-db54ea28b14c/slide-06",
+          "resource_type": "image",
+          "bytes": "2065971"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272540/f1-buffer/supabase-calendar-dcf5e371-fcc0-46db-95ec-db54ea28b14c/slide-07.png",
+          "public_id": "f1-buffer/supabase-calendar-dcf5e371-fcc0-46db-95ec-db54ea28b14c/slide-07",
+          "resource_type": "image",
+          "bytes": "2845827"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272540/f1-buffer/supabase-calendar-dcf5e371-fcc0-46db-95ec-db54ea28b14c/slide-08.png",
+          "public_id": "f1-buffer/supabase-calendar-dcf5e371-fcc0-46db-95ec-db54ea28b14c/slide-08",
+          "resource_type": "image",
+          "bytes": "2566001"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272541/f1-buffer/supabase-calendar-dcf5e371-fcc0-46db-95ec-db54ea28b14c/slide-09.png",
+          "public_id": "f1-buffer/supabase-calendar-dcf5e371-fcc0-46db-95ec-db54ea28b14c/slide-09",
+          "resource_type": "image",
+          "bytes": "2486059"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272542/f1-buffer/supabase-calendar-dcf5e371-fcc0-46db-95ec-db54ea28b14c/slide-10.png",
+          "public_id": "f1-buffer/supabase-calendar-dcf5e371-fcc0-46db-95ec-db54ea28b14c/slide-10",
+          "resource_type": "image",
+          "bytes": "3296784"
+        }
+      ],
+      "blocked_reason": "Buffer instagram: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
+    },
+    {
+      "id": "supabase-calendar-564b3f1c-69d5-4c06-ad1d-e176376f248d",
+      "enabled": true,
+      "status": "buffer_retry_required",
+      "client_id": "immobiliare-la-sacra",
+      "client_name": "Immobiliare La Sacra",
+      "title": "FB POST 9 · Posizione · APPARTAMENTO DUE LOCALI A VALGIOIE",
+      "caption": "Focus sulla posizione dell'immobile e sul contesto territoriale indicato nella scheda.\n\nAnnuncio: https://lasacraimmobiliare.it/products/appartamento-due-locali-a-valgioie",
+      "format": "post",
+      "media": [
+        "publisher/media/supabase/564b3f1c-69d5-4c06-ad1d-e176376f248d/property-01.png",
+        "publisher/media/supabase/564b3f1c-69d5-4c06-ad1d-e176376f248d/property-02.png",
+        "publisher/media/supabase/564b3f1c-69d5-4c06-ad1d-e176376f248d/property-03.png",
+        "publisher/media/supabase/564b3f1c-69d5-4c06-ad1d-e176376f248d/property-04.png",
+        "publisher/media/supabase/564b3f1c-69d5-4c06-ad1d-e176376f248d/property-05.png",
+        "publisher/media/supabase/564b3f1c-69d5-4c06-ad1d-e176376f248d/property-06.png",
+        "publisher/media/supabase/564b3f1c-69d5-4c06-ad1d-e176376f248d/property-07.png",
+        "publisher/media/supabase/564b3f1c-69d5-4c06-ad1d-e176376f248d/property-08.png",
+        "publisher/media/supabase/564b3f1c-69d5-4c06-ad1d-e176376f248d/property-09.png",
+        "publisher/media/supabase/564b3f1c-69d5-4c06-ad1d-e176376f248d/property-10.png"
+      ],
+      "scheduled_at": "2026-09-27T11:00:00+00:00",
+      "platforms": [
+        "facebook"
+      ],
+      "published_platforms": [],
+      "source": "SUPABASE_CONTENT_HUB",
+      "supabase_calendar_id": "564b3f1c-69d5-4c06-ad1d-e176376f248d",
+      "supabase_content_id": "f3774dd2-d10f-4459-8380-650110c20896",
+      "supabase_client_id": "404cd3f1-8036-4918-85b7-e5fc568f7f1f",
+      "campaign": "CALENDARIO PDF 23-28/09/2026",
+      "property_id": "735c663b-be38-4de6-88a4-65067a2ec69a",
+      "provider": "buffer",
+      "provider_channel_id": "6ab2b713ea19ca0bdeb8103d",
+      "provider_secret_prefix": "LASACRA",
+      "retry_count": 0,
+      "created_by": "supabase-queue-bridge",
+      "autonomous_publish": true,
+      "cloudinary_assets": [
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272543/f1-buffer/supabase-calendar-564b3f1c-69d5-4c06-ad1d-e176376f248d/slide-01.png",
+          "public_id": "f1-buffer/supabase-calendar-564b3f1c-69d5-4c06-ad1d-e176376f248d/slide-01",
+          "resource_type": "image",
+          "bytes": "2973836"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272544/f1-buffer/supabase-calendar-564b3f1c-69d5-4c06-ad1d-e176376f248d/slide-02.png",
+          "public_id": "f1-buffer/supabase-calendar-564b3f1c-69d5-4c06-ad1d-e176376f248d/slide-02",
+          "resource_type": "image",
+          "bytes": "4858"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272544/f1-buffer/supabase-calendar-564b3f1c-69d5-4c06-ad1d-e176376f248d/slide-03.png",
+          "public_id": "f1-buffer/supabase-calendar-564b3f1c-69d5-4c06-ad1d-e176376f248d/slide-03",
+          "resource_type": "image",
+          "bytes": "2973836"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272545/f1-buffer/supabase-calendar-564b3f1c-69d5-4c06-ad1d-e176376f248d/slide-04.png",
+          "public_id": "f1-buffer/supabase-calendar-564b3f1c-69d5-4c06-ad1d-e176376f248d/slide-04",
+          "resource_type": "image",
+          "bytes": "3262050"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272547/f1-buffer/supabase-calendar-564b3f1c-69d5-4c06-ad1d-e176376f248d/slide-05.png",
+          "public_id": "f1-buffer/supabase-calendar-564b3f1c-69d5-4c06-ad1d-e176376f248d/slide-05",
+          "resource_type": "image",
+          "bytes": "1923067"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272548/f1-buffer/supabase-calendar-564b3f1c-69d5-4c06-ad1d-e176376f248d/slide-06.png",
+          "public_id": "f1-buffer/supabase-calendar-564b3f1c-69d5-4c06-ad1d-e176376f248d/slide-06",
+          "resource_type": "image",
+          "bytes": "2065971"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272548/f1-buffer/supabase-calendar-564b3f1c-69d5-4c06-ad1d-e176376f248d/slide-07.png",
+          "public_id": "f1-buffer/supabase-calendar-564b3f1c-69d5-4c06-ad1d-e176376f248d/slide-07",
+          "resource_type": "image",
+          "bytes": "2845827"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272549/f1-buffer/supabase-calendar-564b3f1c-69d5-4c06-ad1d-e176376f248d/slide-08.png",
+          "public_id": "f1-buffer/supabase-calendar-564b3f1c-69d5-4c06-ad1d-e176376f248d/slide-08",
+          "resource_type": "image",
+          "bytes": "2566001"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272550/f1-buffer/supabase-calendar-564b3f1c-69d5-4c06-ad1d-e176376f248d/slide-09.png",
+          "public_id": "f1-buffer/supabase-calendar-564b3f1c-69d5-4c06-ad1d-e176376f248d/slide-09",
+          "resource_type": "image",
+          "bytes": "2486059"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272551/f1-buffer/supabase-calendar-564b3f1c-69d5-4c06-ad1d-e176376f248d/slide-10.png",
+          "public_id": "f1-buffer/supabase-calendar-564b3f1c-69d5-4c06-ad1d-e176376f248d/slide-10",
+          "resource_type": "image",
+          "bytes": "3296784"
+        }
+      ],
+      "blocked_reason": "Buffer facebook: Invalid post: Whoops, it looks like you've already got this one scheduled or posted around the same time. We're not able to post the same thing twice so close together."
+    },
+    {
+      "id": "supabase-calendar-19772500-252d-4777-a223-2f920cb5f770",
+      "enabled": true,
+      "status": "buffer_retry_required",
+      "client_id": "immobiliare-la-sacra",
+      "client_name": "Immobiliare La Sacra",
+      "title": "IG POST 11 · 3 motivi per visitarla · APPARTAMENTO DUE LOCALI A VALGIOIE",
+      "caption": "Tre spunti da verificare dal vivo durante una visita.\n\nAnnuncio: https://lasacraimmobiliare.it/products/appartamento-due-locali-a-valgioie",
+      "format": "post",
+      "media": [
+        "publisher/media/supabase/19772500-252d-4777-a223-2f920cb5f770/property-01.png",
+        "publisher/media/supabase/19772500-252d-4777-a223-2f920cb5f770/property-02.png",
+        "publisher/media/supabase/19772500-252d-4777-a223-2f920cb5f770/property-03.png",
+        "publisher/media/supabase/19772500-252d-4777-a223-2f920cb5f770/property-04.png",
+        "publisher/media/supabase/19772500-252d-4777-a223-2f920cb5f770/property-05.png",
+        "publisher/media/supabase/19772500-252d-4777-a223-2f920cb5f770/property-06.png",
+        "publisher/media/supabase/19772500-252d-4777-a223-2f920cb5f770/property-07.png",
+        "publisher/media/supabase/19772500-252d-4777-a223-2f920cb5f770/property-08.png",
+        "publisher/media/supabase/19772500-252d-4777-a223-2f920cb5f770/property-09.png",
+        "publisher/media/supabase/19772500-252d-4777-a223-2f920cb5f770/property-10.png"
+      ],
+      "scheduled_at": "2026-09-27T17:00:00+00:00",
+      "platforms": [
+        "instagram"
+      ],
+      "published_platforms": [],
+      "source": "SUPABASE_CONTENT_HUB",
+      "supabase_calendar_id": "19772500-252d-4777-a223-2f920cb5f770",
+      "supabase_content_id": "2a6a88f3-e29b-44a7-80f3-a2a165d32684",
+      "supabase_client_id": "404cd3f1-8036-4918-85b7-e5fc568f7f1f",
+      "campaign": "CALENDARIO PDF 23-28/09/2026",
+      "property_id": "735c663b-be38-4de6-88a4-65067a2ec69a",
+      "provider": "buffer",
+      "provider_channel_id": "6ab2b6e7ea19ca0bdeb80e19",
+      "provider_secret_prefix": "LASACRA",
+      "retry_count": 0,
+      "created_by": "supabase-queue-bridge",
+      "autonomous_publish": true,
+      "cloudinary_assets": [
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272564/f1-buffer/supabase-calendar-19772500-252d-4777-a223-2f920cb5f770/slide-01.png",
+          "public_id": "f1-buffer/supabase-calendar-19772500-252d-4777-a223-2f920cb5f770/slide-01",
+          "resource_type": "image",
+          "bytes": "2973836"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272566/f1-buffer/supabase-calendar-19772500-252d-4777-a223-2f920cb5f770/slide-02.png",
+          "public_id": "f1-buffer/supabase-calendar-19772500-252d-4777-a223-2f920cb5f770/slide-02",
+          "resource_type": "image",
+          "bytes": "4858"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272567/f1-buffer/supabase-calendar-19772500-252d-4777-a223-2f920cb5f770/slide-03.png",
+          "public_id": "f1-buffer/supabase-calendar-19772500-252d-4777-a223-2f920cb5f770/slide-03",
+          "resource_type": "image",
+          "bytes": "2973836"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272567/f1-buffer/supabase-calendar-19772500-252d-4777-a223-2f920cb5f770/slide-04.png",
+          "public_id": "f1-buffer/supabase-calendar-19772500-252d-4777-a223-2f920cb5f770/slide-04",
+          "resource_type": "image",
+          "bytes": "3262050"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272568/f1-buffer/supabase-calendar-19772500-252d-4777-a223-2f920cb5f770/slide-05.png",
+          "public_id": "f1-buffer/supabase-calendar-19772500-252d-4777-a223-2f920cb5f770/slide-05",
+          "resource_type": "image",
+          "bytes": "1923067"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272569/f1-buffer/supabase-calendar-19772500-252d-4777-a223-2f920cb5f770/slide-06.png",
+          "public_id": "f1-buffer/supabase-calendar-19772500-252d-4777-a223-2f920cb5f770/slide-06",
+          "resource_type": "image",
+          "bytes": "2065971"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272571/f1-buffer/supabase-calendar-19772500-252d-4777-a223-2f920cb5f770/slide-07.png",
+          "public_id": "f1-buffer/supabase-calendar-19772500-252d-4777-a223-2f920cb5f770/slide-07",
+          "resource_type": "image",
+          "bytes": "2845827"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272571/f1-buffer/supabase-calendar-19772500-252d-4777-a223-2f920cb5f770/slide-08.png",
+          "public_id": "f1-buffer/supabase-calendar-19772500-252d-4777-a223-2f920cb5f770/slide-08",
+          "resource_type": "image",
+          "bytes": "2566001"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272572/f1-buffer/supabase-calendar-19772500-252d-4777-a223-2f920cb5f770/slide-09.png",
+          "public_id": "f1-buffer/supabase-calendar-19772500-252d-4777-a223-2f920cb5f770/slide-09",
+          "resource_type": "image",
+          "bytes": "2486059"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272573/f1-buffer/supabase-calendar-19772500-252d-4777-a223-2f920cb5f770/slide-10.png",
+          "public_id": "f1-buffer/supabase-calendar-19772500-252d-4777-a223-2f920cb5f770/slide-10",
+          "resource_type": "image",
+          "bytes": "3296784"
+        }
+      ],
+      "blocked_reason": "Buffer instagram: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
+    },
+    {
+      "id": "supabase-calendar-ab6f1c1b-2508-4376-89f4-ce7e6be4358f",
+      "enabled": true,
+      "status": "buffer_retry_required",
+      "client_id": "immobiliare-la-sacra",
+      "client_name": "Immobiliare La Sacra",
+      "title": "FB POST 10 · Per chi è adatta · APPARTAMENTO DUE LOCALI A VALGIOIE",
+      "caption": "Lettura editoriale del profilo di acquirente potenzialmente interessato, senza affermazioni non verificabili.\n\nAnnuncio: https://lasacraimmobiliare.it/products/appartamento-due-locali-a-valgioie",
+      "format": "post",
+      "media": [
+        "publisher/media/supabase/ab6f1c1b-2508-4376-89f4-ce7e6be4358f/property-01.png",
+        "publisher/media/supabase/ab6f1c1b-2508-4376-89f4-ce7e6be4358f/property-02.png",
+        "publisher/media/supabase/ab6f1c1b-2508-4376-89f4-ce7e6be4358f/property-03.png",
+        "publisher/media/supabase/ab6f1c1b-2508-4376-89f4-ce7e6be4358f/property-04.png",
+        "publisher/media/supabase/ab6f1c1b-2508-4376-89f4-ce7e6be4358f/property-05.png",
+        "publisher/media/supabase/ab6f1c1b-2508-4376-89f4-ce7e6be4358f/property-06.png",
+        "publisher/media/supabase/ab6f1c1b-2508-4376-89f4-ce7e6be4358f/property-07.png",
+        "publisher/media/supabase/ab6f1c1b-2508-4376-89f4-ce7e6be4358f/property-08.png",
+        "publisher/media/supabase/ab6f1c1b-2508-4376-89f4-ce7e6be4358f/property-09.png",
+        "publisher/media/supabase/ab6f1c1b-2508-4376-89f4-ce7e6be4358f/property-10.png"
+      ],
+      "scheduled_at": "2026-09-27T17:00:00+00:00",
+      "platforms": [
+        "facebook"
+      ],
+      "published_platforms": [],
+      "source": "SUPABASE_CONTENT_HUB",
+      "supabase_calendar_id": "ab6f1c1b-2508-4376-89f4-ce7e6be4358f",
+      "supabase_content_id": "4067453a-00f0-49ed-8b71-ebd36868ae84",
+      "supabase_client_id": "404cd3f1-8036-4918-85b7-e5fc568f7f1f",
+      "campaign": "CALENDARIO PDF 23-28/09/2026",
+      "property_id": "735c663b-be38-4de6-88a4-65067a2ec69a",
+      "provider": "buffer",
+      "provider_channel_id": "6ab2b713ea19ca0bdeb8103d",
+      "provider_secret_prefix": "LASACRA",
+      "retry_count": 0,
+      "created_by": "supabase-queue-bridge",
+      "autonomous_publish": true,
+      "cloudinary_assets": [
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272553/f1-buffer/supabase-calendar-ab6f1c1b-2508-4376-89f4-ce7e6be4358f/slide-01.png",
+          "public_id": "f1-buffer/supabase-calendar-ab6f1c1b-2508-4376-89f4-ce7e6be4358f/slide-01",
+          "resource_type": "image",
+          "bytes": "2973836"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272553/f1-buffer/supabase-calendar-ab6f1c1b-2508-4376-89f4-ce7e6be4358f/slide-02.png",
+          "public_id": "f1-buffer/supabase-calendar-ab6f1c1b-2508-4376-89f4-ce7e6be4358f/slide-02",
+          "resource_type": "image",
+          "bytes": "4858"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272555/f1-buffer/supabase-calendar-ab6f1c1b-2508-4376-89f4-ce7e6be4358f/slide-03.png",
+          "public_id": "f1-buffer/supabase-calendar-ab6f1c1b-2508-4376-89f4-ce7e6be4358f/slide-03",
+          "resource_type": "image",
+          "bytes": "2973836"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272556/f1-buffer/supabase-calendar-ab6f1c1b-2508-4376-89f4-ce7e6be4358f/slide-04.png",
+          "public_id": "f1-buffer/supabase-calendar-ab6f1c1b-2508-4376-89f4-ce7e6be4358f/slide-04",
+          "resource_type": "image",
+          "bytes": "3262050"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272558/f1-buffer/supabase-calendar-ab6f1c1b-2508-4376-89f4-ce7e6be4358f/slide-05.png",
+          "public_id": "f1-buffer/supabase-calendar-ab6f1c1b-2508-4376-89f4-ce7e6be4358f/slide-05",
+          "resource_type": "image",
+          "bytes": "1923067"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272559/f1-buffer/supabase-calendar-ab6f1c1b-2508-4376-89f4-ce7e6be4358f/slide-06.png",
+          "public_id": "f1-buffer/supabase-calendar-ab6f1c1b-2508-4376-89f4-ce7e6be4358f/slide-06",
+          "resource_type": "image",
+          "bytes": "2065971"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272560/f1-buffer/supabase-calendar-ab6f1c1b-2508-4376-89f4-ce7e6be4358f/slide-07.png",
+          "public_id": "f1-buffer/supabase-calendar-ab6f1c1b-2508-4376-89f4-ce7e6be4358f/slide-07",
+          "resource_type": "image",
+          "bytes": "2845827"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272561/f1-buffer/supabase-calendar-ab6f1c1b-2508-4376-89f4-ce7e6be4358f/slide-08.png",
+          "public_id": "f1-buffer/supabase-calendar-ab6f1c1b-2508-4376-89f4-ce7e6be4358f/slide-08",
+          "resource_type": "image",
+          "bytes": "2566001"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272562/f1-buffer/supabase-calendar-ab6f1c1b-2508-4376-89f4-ce7e6be4358f/slide-09.png",
+          "public_id": "f1-buffer/supabase-calendar-ab6f1c1b-2508-4376-89f4-ce7e6be4358f/slide-09",
+          "resource_type": "image",
+          "bytes": "2486059"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272562/f1-buffer/supabase-calendar-ab6f1c1b-2508-4376-89f4-ce7e6be4358f/slide-10.png",
+          "public_id": "f1-buffer/supabase-calendar-ab6f1c1b-2508-4376-89f4-ce7e6be4358f/slide-10",
+          "resource_type": "image",
+          "bytes": "3296784"
+        }
+      ],
+      "blocked_reason": "Buffer facebook: Invalid post: Whoops, it looks like you've already got this one scheduled or posted around the same time. We're not able to post the same thing twice so close together."
+    },
+    {
+      "id": "supabase-calendar-9799f24b-82db-4f53-92c3-01e732b00319",
+      "enabled": true,
+      "status": "buffer_retry_required",
+      "client_id": "immobiliare-la-sacra",
+      "client_name": "Immobiliare La Sacra",
+      "title": "FB POST 11 · 3 motivi per visitarla · APPARTAMENTO DUE LOCALI A VALGIOIE",
+      "caption": "Tre elementi da valutare durante una visita, ricavati esclusivamente dalle informazioni disponibili.\n\nAnnuncio: https://lasacraimmobiliare.it/products/appartamento-due-locali-a-valgioie",
+      "format": "post",
+      "media": [
+        "publisher/media/supabase/9799f24b-82db-4f53-92c3-01e732b00319/property-01.png",
+        "publisher/media/supabase/9799f24b-82db-4f53-92c3-01e732b00319/property-02.png",
+        "publisher/media/supabase/9799f24b-82db-4f53-92c3-01e732b00319/property-03.png",
+        "publisher/media/supabase/9799f24b-82db-4f53-92c3-01e732b00319/property-04.png",
+        "publisher/media/supabase/9799f24b-82db-4f53-92c3-01e732b00319/property-05.png",
+        "publisher/media/supabase/9799f24b-82db-4f53-92c3-01e732b00319/property-06.png",
+        "publisher/media/supabase/9799f24b-82db-4f53-92c3-01e732b00319/property-07.png",
+        "publisher/media/supabase/9799f24b-82db-4f53-92c3-01e732b00319/property-08.png",
+        "publisher/media/supabase/9799f24b-82db-4f53-92c3-01e732b00319/property-09.png",
+        "publisher/media/supabase/9799f24b-82db-4f53-92c3-01e732b00319/property-10.png"
+      ],
+      "scheduled_at": "2026-09-28T11:00:00+00:00",
+      "platforms": [
+        "facebook"
+      ],
+      "published_platforms": [],
+      "source": "SUPABASE_CONTENT_HUB",
+      "supabase_calendar_id": "9799f24b-82db-4f53-92c3-01e732b00319",
+      "supabase_content_id": "d2e0fd97-cba8-4233-9c37-5eac550b3225",
+      "supabase_client_id": "404cd3f1-8036-4918-85b7-e5fc568f7f1f",
+      "campaign": "CALENDARIO PDF 23-28/09/2026",
+      "property_id": "735c663b-be38-4de6-88a4-65067a2ec69a",
+      "provider": "buffer",
+      "provider_channel_id": "6ab2b713ea19ca0bdeb8103d",
+      "provider_secret_prefix": "LASACRA",
+      "retry_count": 0,
+      "created_by": "supabase-queue-bridge",
+      "autonomous_publish": true,
+      "cloudinary_assets": [
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272575/f1-buffer/supabase-calendar-9799f24b-82db-4f53-92c3-01e732b00319/slide-01.png",
+          "public_id": "f1-buffer/supabase-calendar-9799f24b-82db-4f53-92c3-01e732b00319/slide-01",
+          "resource_type": "image",
+          "bytes": "2973836"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272576/f1-buffer/supabase-calendar-9799f24b-82db-4f53-92c3-01e732b00319/slide-02.png",
+          "public_id": "f1-buffer/supabase-calendar-9799f24b-82db-4f53-92c3-01e732b00319/slide-02",
+          "resource_type": "image",
+          "bytes": "4858"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272577/f1-buffer/supabase-calendar-9799f24b-82db-4f53-92c3-01e732b00319/slide-03.png",
+          "public_id": "f1-buffer/supabase-calendar-9799f24b-82db-4f53-92c3-01e732b00319/slide-03",
+          "resource_type": "image",
+          "bytes": "2973836"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272578/f1-buffer/supabase-calendar-9799f24b-82db-4f53-92c3-01e732b00319/slide-04.png",
+          "public_id": "f1-buffer/supabase-calendar-9799f24b-82db-4f53-92c3-01e732b00319/slide-04",
+          "resource_type": "image",
+          "bytes": "3262050"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272578/f1-buffer/supabase-calendar-9799f24b-82db-4f53-92c3-01e732b00319/slide-05.png",
+          "public_id": "f1-buffer/supabase-calendar-9799f24b-82db-4f53-92c3-01e732b00319/slide-05",
+          "resource_type": "image",
+          "bytes": "1923067"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272579/f1-buffer/supabase-calendar-9799f24b-82db-4f53-92c3-01e732b00319/slide-06.png",
+          "public_id": "f1-buffer/supabase-calendar-9799f24b-82db-4f53-92c3-01e732b00319/slide-06",
+          "resource_type": "image",
+          "bytes": "2065971"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272580/f1-buffer/supabase-calendar-9799f24b-82db-4f53-92c3-01e732b00319/slide-07.png",
+          "public_id": "f1-buffer/supabase-calendar-9799f24b-82db-4f53-92c3-01e732b00319/slide-07",
+          "resource_type": "image",
+          "bytes": "2845827"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272581/f1-buffer/supabase-calendar-9799f24b-82db-4f53-92c3-01e732b00319/slide-08.png",
+          "public_id": "f1-buffer/supabase-calendar-9799f24b-82db-4f53-92c3-01e732b00319/slide-08",
+          "resource_type": "image",
+          "bytes": "2566001"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272583/f1-buffer/supabase-calendar-9799f24b-82db-4f53-92c3-01e732b00319/slide-09.png",
+          "public_id": "f1-buffer/supabase-calendar-9799f24b-82db-4f53-92c3-01e732b00319/slide-09",
+          "resource_type": "image",
+          "bytes": "2486059"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272584/f1-buffer/supabase-calendar-9799f24b-82db-4f53-92c3-01e732b00319/slide-10.png",
+          "public_id": "f1-buffer/supabase-calendar-9799f24b-82db-4f53-92c3-01e732b00319/slide-10",
+          "resource_type": "image",
+          "bytes": "3296784"
+        }
+      ],
+      "blocked_reason": "Buffer facebook: Invalid post: Whoops, it looks like you've already got this one scheduled or posted around the same time. We're not able to post the same thing twice so close together."
+    },
+    {
+      "id": "supabase-calendar-f99ec603-678b-401f-8575-96543112dd6e",
+      "enabled": true,
+      "status": "buffer_retry_required",
+      "client_id": "immobiliare-la-sacra",
+      "client_name": "Immobiliare La Sacra",
+      "title": "IG POST 12 · Call to action / visita · APPARTAMENTO DUE LOCALI A VALGIOIE",
+      "caption": "Vuoi approfondire? Consulta l'annuncio e richiedi informazioni per una visita.\n\nAnnuncio: https://lasacraimmobiliare.it/products/appartamento-due-locali-a-valgioie",
+      "format": "post",
+      "media": [
+        "publisher/media/supabase/f99ec603-678b-401f-8575-96543112dd6e/property-01.png",
+        "publisher/media/supabase/f99ec603-678b-401f-8575-96543112dd6e/property-02.png",
+        "publisher/media/supabase/f99ec603-678b-401f-8575-96543112dd6e/property-03.png",
+        "publisher/media/supabase/f99ec603-678b-401f-8575-96543112dd6e/property-04.png",
+        "publisher/media/supabase/f99ec603-678b-401f-8575-96543112dd6e/property-05.png",
+        "publisher/media/supabase/f99ec603-678b-401f-8575-96543112dd6e/property-06.png",
+        "publisher/media/supabase/f99ec603-678b-401f-8575-96543112dd6e/property-07.png",
+        "publisher/media/supabase/f99ec603-678b-401f-8575-96543112dd6e/property-08.png",
+        "publisher/media/supabase/f99ec603-678b-401f-8575-96543112dd6e/property-09.png",
+        "publisher/media/supabase/f99ec603-678b-401f-8575-96543112dd6e/property-10.png"
+      ],
+      "scheduled_at": "2026-09-28T11:00:00+00:00",
+      "platforms": [
+        "instagram"
+      ],
+      "published_platforms": [],
+      "source": "SUPABASE_CONTENT_HUB",
+      "supabase_calendar_id": "f99ec603-678b-401f-8575-96543112dd6e",
+      "supabase_content_id": "e8a7d343-27a8-4d3a-aa32-125f299356ee",
+      "supabase_client_id": "404cd3f1-8036-4918-85b7-e5fc568f7f1f",
+      "campaign": "CALENDARIO PDF 23-28/09/2026",
+      "property_id": "735c663b-be38-4de6-88a4-65067a2ec69a",
+      "provider": "buffer",
+      "provider_channel_id": "6ab2b6e7ea19ca0bdeb80e19",
+      "provider_secret_prefix": "LASACRA",
+      "retry_count": 0,
+      "created_by": "supabase-queue-bridge",
+      "autonomous_publish": true,
+      "cloudinary_assets": [
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272586/f1-buffer/supabase-calendar-f99ec603-678b-401f-8575-96543112dd6e/slide-01.png",
+          "public_id": "f1-buffer/supabase-calendar-f99ec603-678b-401f-8575-96543112dd6e/slide-01",
+          "resource_type": "image",
+          "bytes": "2973836"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272586/f1-buffer/supabase-calendar-f99ec603-678b-401f-8575-96543112dd6e/slide-02.png",
+          "public_id": "f1-buffer/supabase-calendar-f99ec603-678b-401f-8575-96543112dd6e/slide-02",
+          "resource_type": "image",
+          "bytes": "4858"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272587/f1-buffer/supabase-calendar-f99ec603-678b-401f-8575-96543112dd6e/slide-03.png",
+          "public_id": "f1-buffer/supabase-calendar-f99ec603-678b-401f-8575-96543112dd6e/slide-03",
+          "resource_type": "image",
+          "bytes": "2973836"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272588/f1-buffer/supabase-calendar-f99ec603-678b-401f-8575-96543112dd6e/slide-04.png",
+          "public_id": "f1-buffer/supabase-calendar-f99ec603-678b-401f-8575-96543112dd6e/slide-04",
+          "resource_type": "image",
+          "bytes": "3262050"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272589/f1-buffer/supabase-calendar-f99ec603-678b-401f-8575-96543112dd6e/slide-05.png",
+          "public_id": "f1-buffer/supabase-calendar-f99ec603-678b-401f-8575-96543112dd6e/slide-05",
+          "resource_type": "image",
+          "bytes": "1923067"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272589/f1-buffer/supabase-calendar-f99ec603-678b-401f-8575-96543112dd6e/slide-06.png",
+          "public_id": "f1-buffer/supabase-calendar-f99ec603-678b-401f-8575-96543112dd6e/slide-06",
+          "resource_type": "image",
+          "bytes": "2065971"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272591/f1-buffer/supabase-calendar-f99ec603-678b-401f-8575-96543112dd6e/slide-07.png",
+          "public_id": "f1-buffer/supabase-calendar-f99ec603-678b-401f-8575-96543112dd6e/slide-07",
+          "resource_type": "image",
+          "bytes": "2845827"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272592/f1-buffer/supabase-calendar-f99ec603-678b-401f-8575-96543112dd6e/slide-08.png",
+          "public_id": "f1-buffer/supabase-calendar-f99ec603-678b-401f-8575-96543112dd6e/slide-08",
+          "resource_type": "image",
+          "bytes": "2566001"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272593/f1-buffer/supabase-calendar-f99ec603-678b-401f-8575-96543112dd6e/slide-09.png",
+          "public_id": "f1-buffer/supabase-calendar-f99ec603-678b-401f-8575-96543112dd6e/slide-09",
+          "resource_type": "image",
+          "bytes": "2486059"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272594/f1-buffer/supabase-calendar-f99ec603-678b-401f-8575-96543112dd6e/slide-10.png",
+          "public_id": "f1-buffer/supabase-calendar-f99ec603-678b-401f-8575-96543112dd6e/slide-10",
+          "resource_type": "image",
+          "bytes": "3296784"
+        }
+      ],
+      "blocked_reason": "Buffer instagram: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
+    },
+    {
+      "id": "supabase-calendar-22b4ebc1-ab54-4eab-aa9c-3ba31ce82e2f",
+      "enabled": true,
+      "status": "buffer_retry_required",
+      "client_id": "immobiliare-la-sacra",
+      "client_name": "Immobiliare La Sacra",
+      "title": "IG POST 1 · Presentazione immobile · APPARTAMENTO DUE LOCALI A VALGIOIE",
+      "caption": "Presentazione visuale dell'immobile: scopri la scheda completa e le immagini disponibili.\n\nAnnuncio: https://lasacraimmobiliare.it/products/appartamento-due-locali-a-valgioie",
+      "format": "post",
+      "media": [
+        "publisher/media/supabase/22b4ebc1-ab54-4eab-aa9c-3ba31ce82e2f/property-01.png",
+        "publisher/media/supabase/22b4ebc1-ab54-4eab-aa9c-3ba31ce82e2f/property-02.png",
+        "publisher/media/supabase/22b4ebc1-ab54-4eab-aa9c-3ba31ce82e2f/property-03.png",
+        "publisher/media/supabase/22b4ebc1-ab54-4eab-aa9c-3ba31ce82e2f/property-04.png",
+        "publisher/media/supabase/22b4ebc1-ab54-4eab-aa9c-3ba31ce82e2f/property-05.png",
+        "publisher/media/supabase/22b4ebc1-ab54-4eab-aa9c-3ba31ce82e2f/property-06.png",
+        "publisher/media/supabase/22b4ebc1-ab54-4eab-aa9c-3ba31ce82e2f/property-07.png",
+        "publisher/media/supabase/22b4ebc1-ab54-4eab-aa9c-3ba31ce82e2f/property-08.png",
+        "publisher/media/supabase/22b4ebc1-ab54-4eab-aa9c-3ba31ce82e2f/property-09.png",
+        "publisher/media/supabase/22b4ebc1-ab54-4eab-aa9c-3ba31ce82e2f/property-10.png"
+      ],
+      "scheduled_at": "2026-09-28T17:00:00+00:00",
+      "platforms": [
+        "instagram"
+      ],
+      "published_platforms": [],
+      "source": "SUPABASE_CONTENT_HUB",
+      "supabase_calendar_id": "22b4ebc1-ab54-4eab-aa9c-3ba31ce82e2f",
+      "supabase_content_id": "1150fa01-93de-449c-8d30-177e971426df",
+      "supabase_client_id": "404cd3f1-8036-4918-85b7-e5fc568f7f1f",
+      "campaign": "CALENDARIO PDF 23-28/09/2026",
+      "property_id": "735c663b-be38-4de6-88a4-65067a2ec69a",
+      "provider": "buffer",
+      "provider_channel_id": "6ab2b6e7ea19ca0bdeb80e19",
+      "provider_secret_prefix": "LASACRA",
+      "retry_count": 0,
+      "created_by": "supabase-queue-bridge",
+      "autonomous_publish": true,
+      "cloudinary_assets": [
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272595/f1-buffer/supabase-calendar-22b4ebc1-ab54-4eab-aa9c-3ba31ce82e2f/slide-01.png",
+          "public_id": "f1-buffer/supabase-calendar-22b4ebc1-ab54-4eab-aa9c-3ba31ce82e2f/slide-01",
+          "resource_type": "image",
+          "bytes": "2973836"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272596/f1-buffer/supabase-calendar-22b4ebc1-ab54-4eab-aa9c-3ba31ce82e2f/slide-02.png",
+          "public_id": "f1-buffer/supabase-calendar-22b4ebc1-ab54-4eab-aa9c-3ba31ce82e2f/slide-02",
+          "resource_type": "image",
+          "bytes": "4858"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272596/f1-buffer/supabase-calendar-22b4ebc1-ab54-4eab-aa9c-3ba31ce82e2f/slide-03.png",
+          "public_id": "f1-buffer/supabase-calendar-22b4ebc1-ab54-4eab-aa9c-3ba31ce82e2f/slide-03",
+          "resource_type": "image",
+          "bytes": "2973836"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272597/f1-buffer/supabase-calendar-22b4ebc1-ab54-4eab-aa9c-3ba31ce82e2f/slide-04.png",
+          "public_id": "f1-buffer/supabase-calendar-22b4ebc1-ab54-4eab-aa9c-3ba31ce82e2f/slide-04",
+          "resource_type": "image",
+          "bytes": "3262050"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272598/f1-buffer/supabase-calendar-22b4ebc1-ab54-4eab-aa9c-3ba31ce82e2f/slide-05.png",
+          "public_id": "f1-buffer/supabase-calendar-22b4ebc1-ab54-4eab-aa9c-3ba31ce82e2f/slide-05",
+          "resource_type": "image",
+          "bytes": "1923067"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272598/f1-buffer/supabase-calendar-22b4ebc1-ab54-4eab-aa9c-3ba31ce82e2f/slide-06.png",
+          "public_id": "f1-buffer/supabase-calendar-22b4ebc1-ab54-4eab-aa9c-3ba31ce82e2f/slide-06",
+          "resource_type": "image",
+          "bytes": "2065971"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272600/f1-buffer/supabase-calendar-22b4ebc1-ab54-4eab-aa9c-3ba31ce82e2f/slide-07.png",
+          "public_id": "f1-buffer/supabase-calendar-22b4ebc1-ab54-4eab-aa9c-3ba31ce82e2f/slide-07",
+          "resource_type": "image",
+          "bytes": "2845827"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272601/f1-buffer/supabase-calendar-22b4ebc1-ab54-4eab-aa9c-3ba31ce82e2f/slide-08.png",
+          "public_id": "f1-buffer/supabase-calendar-22b4ebc1-ab54-4eab-aa9c-3ba31ce82e2f/slide-08",
+          "resource_type": "image",
+          "bytes": "2566001"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272602/f1-buffer/supabase-calendar-22b4ebc1-ab54-4eab-aa9c-3ba31ce82e2f/slide-09.png",
+          "public_id": "f1-buffer/supabase-calendar-22b4ebc1-ab54-4eab-aa9c-3ba31ce82e2f/slide-09",
+          "resource_type": "image",
+          "bytes": "2486059"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272602/f1-buffer/supabase-calendar-22b4ebc1-ab54-4eab-aa9c-3ba31ce82e2f/slide-10.png",
+          "public_id": "f1-buffer/supabase-calendar-22b4ebc1-ab54-4eab-aa9c-3ba31ce82e2f/slide-10",
+          "resource_type": "image",
+          "bytes": "3296784"
+        }
+      ],
+      "blocked_reason": "Buffer instagram: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
+    },
+    {
+      "id": "supabase-calendar-58985be8-4282-4b4f-8296-bebd4d5fe9db",
+      "enabled": true,
+      "status": "buffer_retry_required",
+      "client_id": "immobiliare-la-sacra",
+      "client_name": "Immobiliare La Sacra",
+      "title": "FB POST 12 · Call to action / visita · APPARTAMENTO DUE LOCALI A VALGIOIE",
+      "caption": "Invito a richiedere informazioni e fissare una visita all'immobile.\n\nAnnuncio: https://lasacraimmobiliare.it/products/appartamento-due-locali-a-valgioie",
+      "format": "post",
+      "media": [
+        "publisher/media/supabase/58985be8-4282-4b4f-8296-bebd4d5fe9db/property-01.png",
+        "publisher/media/supabase/58985be8-4282-4b4f-8296-bebd4d5fe9db/property-02.png",
+        "publisher/media/supabase/58985be8-4282-4b4f-8296-bebd4d5fe9db/property-03.png",
+        "publisher/media/supabase/58985be8-4282-4b4f-8296-bebd4d5fe9db/property-04.png",
+        "publisher/media/supabase/58985be8-4282-4b4f-8296-bebd4d5fe9db/property-05.png",
+        "publisher/media/supabase/58985be8-4282-4b4f-8296-bebd4d5fe9db/property-06.png",
+        "publisher/media/supabase/58985be8-4282-4b4f-8296-bebd4d5fe9db/property-07.png",
+        "publisher/media/supabase/58985be8-4282-4b4f-8296-bebd4d5fe9db/property-08.png",
+        "publisher/media/supabase/58985be8-4282-4b4f-8296-bebd4d5fe9db/property-09.png",
+        "publisher/media/supabase/58985be8-4282-4b4f-8296-bebd4d5fe9db/property-10.png"
+      ],
+      "scheduled_at": "2026-09-28T17:00:00+00:00",
+      "platforms": [
+        "facebook"
+      ],
+      "published_platforms": [],
+      "source": "SUPABASE_CONTENT_HUB",
+      "supabase_calendar_id": "58985be8-4282-4b4f-8296-bebd4d5fe9db",
+      "supabase_content_id": "f98b010a-319d-4869-a3d4-99fc1ef91c91",
+      "supabase_client_id": "404cd3f1-8036-4918-85b7-e5fc568f7f1f",
+      "campaign": "CALENDARIO PDF 23-28/09/2026",
+      "property_id": "735c663b-be38-4de6-88a4-65067a2ec69a",
+      "provider": "buffer",
+      "provider_channel_id": "6ab2b713ea19ca0bdeb8103d",
+      "provider_secret_prefix": "LASACRA",
+      "retry_count": 0,
+      "created_by": "supabase-queue-bridge",
+      "autonomous_publish": true,
+      "cloudinary_assets": [
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272605/f1-buffer/supabase-calendar-58985be8-4282-4b4f-8296-bebd4d5fe9db/slide-01.png",
+          "public_id": "f1-buffer/supabase-calendar-58985be8-4282-4b4f-8296-bebd4d5fe9db/slide-01",
+          "resource_type": "image",
+          "bytes": "2973836"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272607/f1-buffer/supabase-calendar-58985be8-4282-4b4f-8296-bebd4d5fe9db/slide-02.png",
+          "public_id": "f1-buffer/supabase-calendar-58985be8-4282-4b4f-8296-bebd4d5fe9db/slide-02",
+          "resource_type": "image",
+          "bytes": "4858"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272608/f1-buffer/supabase-calendar-58985be8-4282-4b4f-8296-bebd4d5fe9db/slide-03.png",
+          "public_id": "f1-buffer/supabase-calendar-58985be8-4282-4b4f-8296-bebd4d5fe9db/slide-03",
+          "resource_type": "image",
+          "bytes": "2973836"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272608/f1-buffer/supabase-calendar-58985be8-4282-4b4f-8296-bebd4d5fe9db/slide-04.png",
+          "public_id": "f1-buffer/supabase-calendar-58985be8-4282-4b4f-8296-bebd4d5fe9db/slide-04",
+          "resource_type": "image",
+          "bytes": "3262050"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272609/f1-buffer/supabase-calendar-58985be8-4282-4b4f-8296-bebd4d5fe9db/slide-05.png",
+          "public_id": "f1-buffer/supabase-calendar-58985be8-4282-4b4f-8296-bebd4d5fe9db/slide-05",
+          "resource_type": "image",
+          "bytes": "1923067"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272610/f1-buffer/supabase-calendar-58985be8-4282-4b4f-8296-bebd4d5fe9db/slide-06.png",
+          "public_id": "f1-buffer/supabase-calendar-58985be8-4282-4b4f-8296-bebd4d5fe9db/slide-06",
+          "resource_type": "image",
+          "bytes": "2065971"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272611/f1-buffer/supabase-calendar-58985be8-4282-4b4f-8296-bebd4d5fe9db/slide-07.png",
+          "public_id": "f1-buffer/supabase-calendar-58985be8-4282-4b4f-8296-bebd4d5fe9db/slide-07",
+          "resource_type": "image",
+          "bytes": "2845827"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272612/f1-buffer/supabase-calendar-58985be8-4282-4b4f-8296-bebd4d5fe9db/slide-08.png",
+          "public_id": "f1-buffer/supabase-calendar-58985be8-4282-4b4f-8296-bebd4d5fe9db/slide-08",
+          "resource_type": "image",
+          "bytes": "2566001"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272614/f1-buffer/supabase-calendar-58985be8-4282-4b4f-8296-bebd4d5fe9db/slide-09.png",
+          "public_id": "f1-buffer/supabase-calendar-58985be8-4282-4b4f-8296-bebd4d5fe9db/slide-09",
+          "resource_type": "image",
+          "bytes": "2486059"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272614/f1-buffer/supabase-calendar-58985be8-4282-4b4f-8296-bebd4d5fe9db/slide-10.png",
+          "public_id": "f1-buffer/supabase-calendar-58985be8-4282-4b4f-8296-bebd4d5fe9db/slide-10",
+          "resource_type": "image",
+          "bytes": "3296784"
+        }
+      ],
+      "blocked_reason": "Buffer facebook: Invalid post: Whoops, it looks like you've already got this one scheduled or posted around the same time. We're not able to post the same thing twice so close together."
     }
   ],
-  "updated_at": "2026-09-26T02:51:10+00:00",
+  "updated_at": "2026-09-26T05:05:14+00:00",
   "updated_by": "Approved 5+5 publication renderer",
   "current_cycle": "2026-09-26T04:00",
   "history_days": 14,
