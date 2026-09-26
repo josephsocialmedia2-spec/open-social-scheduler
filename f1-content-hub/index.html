@@ -9,7 +9,7 @@
 <title>F1 Content Hub</title>
 <style>
 :root{--bg:#07111f;--panel:#0e1b2c;--panel2:#12243a;--line:#27405d;--text:#f5f8fc;--muted:#9eb0c7;--blue:#2d7ff9;--green:#27d17f;--amber:#f2b84b;--red:#ef5f68}
-*{box-sizing:border-box}html,body{margin:0;background:linear-gradient(145deg,#06101c,#0b1727 60%,#07111f);color:var(--text);font:14px/1.45 Arial,Helvetica,sans-serif;min-height:100%}button,input,select,textarea{font:inherit}button{cursor:pointer}.hidden{display:none!important}.app{min-height:100vh}.auth{min-height:100vh;display:grid;place-items:center;padding:20px}.auth-card{width:min(470px,100%);background:rgba(14,27,44,.98);border:1px solid var(--line);border-radius:20px;padding:24px}.brand{font-weight:1000;letter-spacing:.08em}.brand small{display:block;color:var(--green);font-size:11px;margin-bottom:5px}.auth-card h1{margin:4px 0 6px;font-size:34px}.muted{color:var(--muted)}.field{display:grid;gap:6px;margin-top:12px}.field label{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#b8c6d8;font-weight:800}.input,select,textarea{width:100%;background:#071522;border:1px solid #2b4665;color:#fff;border-radius:10px;padding:11px 12px;outline:none}.input:focus,select:focus,textarea:focus{border-color:var(--blue)}textarea{min-height:90px;resize:vertical}.row{display:flex;gap:8px;flex-wrap:wrap}.btn{border:0;border-radius:10px;padding:10px 13px;font-weight:900;color:white;background:#172a41}.btn.primary{background:var(--blue)}.btn.green{background:var(--green);color:#04150c}.btn.danger{background:#6f252c}.btn.ghost{border:1px solid var(--line);background:transparent}.btn.small{padding:7px 9px;font-size:12px}.shell{display:grid;grid-template-columns:250px 1fr;min-height:100vh}.sidebar{border-right:1px solid var(--line);background:#081522;padding:18px 14px;position:sticky;top:0;height:100vh}.sidebar .brand{font-size:19px;padding:6px 8px 16px}.nav{display:grid;gap:5px}.nav button{width:100%;text-align:left;border:0;background:transparent;color:#b8c6d8;padding:11px 12px;border-radius:10px;font-weight:800}.nav button.active,.nav button:hover{background:#13283f;color:#fff}.userbox{position:absolute;left:14px;right:14px;bottom:16px;padding:11px;border:1px solid var(--line);border-radius:12px;background:#0d1c2e;font-size:12px}.main{padding:18px 18px 50px;min-width:0}.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}.topbar h1{margin:0;font-size:28px}.top-actions{display:flex;gap:8px;flex-wrap:wrap}.panel{background:rgba(14,27,44,.97);border:1px solid var(--line);border-radius:16px;padding:15px;margin-bottom:12px}.metrics{display:grid;grid-template-columns:repeat(6,minmax(120px,1fr));gap:9px;margin-bottom:12px}.metric{background:#0f2034;border:1px solid var(--line);border-radius:14px;padding:13px}.metric b{font-size:27px;display:block}.metric span{color:var(--muted);font-size:11px;text-transform:uppercase;font-weight:900}.clients{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px}.client-card{background:#102238;border:1px solid var(--line);border-radius:14px;padding:14px;cursor:pointer;transition:.15s}.client-card:hover,.client-card.active{border-color:var(--blue);transform:translateY(-1px)}.client-card small{color:var(--muted);text-transform:uppercase}.client-card h3{margin:4px 0}.client-stats{display:flex;gap:10px;color:#b9c8da;font-size:12px}.toolbar{display:grid;grid-template-columns:minmax(220px,1fr) 180px 180px;gap:8px;margin-bottom:12px}.content-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:11px}.content-card{background:#0b1a2a;border:1px solid var(--line);border-radius:14px;overflow:hidden;min-width:0}.thumb{height:170px;background:#13283e;display:grid;place-items:center;color:#8195ae;overflow:hidden}.thumb img,.thumb video{width:100%;height:100%;object-fit:cover}.card-body{padding:12px}.card-body h3{margin:0 0 4px;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.meta{font-size:11px;color:var(--muted)}.badges{display:flex;gap:5px;flex-wrap:wrap;margin:8px 0}.badge{padding:4px 7px;border-radius:999px;border:1px solid #35516f;font-size:10px;font-weight:900}.badge.green{color:#7ef0b0;border-color:#24734b}.badge.amber{color:#f7d48a;border-color:#866521}.card-actions{display:flex;gap:6px;flex-wrap:wrap}.uploadbox{border:1px dashed #456482;border-radius:14px;padding:18px;text-align:center;background:#0a1827}.uploadbox.drag{border-color:var(--green);background:#0c241c}.uploadbox input{display:none}.forms{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.span2{grid-column:span 2}.span3{grid-column:1/-1}.calendar-list,.log-list{display:grid;gap:7px}.lineitem{display:grid;grid-template-columns:150px 1fr auto;gap:10px;align-items:center;background:#0c1b2b;border:1px solid var(--line);border-radius:11px;padding:10px}.section-title{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}.section-title h2{margin:0}.notice{padding:10px 12px;border-radius:10px;background:#102a20;border:1px solid #285f43;color:#b9efce;margin:10px 0}.warn{background:#2d2411;border-color:#725b24;color:#f5dc9e}.error{background:#35191c;border-color:#743039;color:#ffb3b8}.modal{position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;align-items:center;justify-content:center;padding:16px;z-index:50}.modal.open{display:flex}.modal-card{width:min(680px,100%);max-height:90vh;overflow:auto;background:#0e1b2c;border:1px solid #3c5a7b;border-radius:17px;padding:18px}.empty{padding:24px;text-align:center;color:var(--muted)}code{color:#b9d8ff;word-break:break-all}.mobilebar{display:none}.fab{display:none}
+*{box-sizing:border-box}html,body{margin:0;background:linear-gradient(145deg,#06101c,#0b1727 60%,#07111f);color:var(--text);font:14px/1.45 Arial,Helvetica,sans-serif;min-height:100%}button,input,select,textarea{font:inherit}button{cursor:pointer}.hidden{display:none!important}.app{min-height:100vh}.auth{min-height:100vh;display:grid;place-items:center;padding:20px}.auth-card{width:min(470px,100%);background:rgba(14,27,44,.98);border:1px solid var(--line);border-radius:20px;padding:24px}.brand{font-weight:1000;letter-spacing:.08em}.brand small{display:block;color:var(--green);font-size:11px;margin-bottom:5px}.auth-card h1{margin:4px 0 6px;font-size:34px}.muted{color:var(--muted)}.field{display:grid;gap:6px;margin-top:12px}.field label{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#b8c6d8;font-weight:800}.input,select,textarea{width:100%;background:#071522;border:1px solid #2b4665;color:#fff;border-radius:10px;padding:11px 12px;outline:none}.input:focus,select:focus,textarea:focus{border-color:var(--blue)}textarea{min-height:90px;resize:vertical}.row{display:flex;gap:8px;flex-wrap:wrap}.btn{border:0;border-radius:10px;padding:10px 13px;font-weight:900;color:white;background:#172a41}.btn.primary{background:var(--blue)}.btn.green{background:var(--green);color:#04150c}.btn.danger{background:#6f252c}.btn.ghost{border:1px solid var(--line);background:transparent}.btn.small{padding:7px 9px;font-size:12px}.shell{display:grid;grid-template-columns:250px 1fr;min-height:100vh}.sidebar{border-right:1px solid var(--line);background:#081522;padding:18px 14px;position:sticky;top:0;height:100vh}.sidebar .brand{font-size:19px;padding:6px 8px 16px}.nav{display:grid;gap:5px}.nav button{width:100%;text-align:left;border:0;background:transparent;color:#b8c6d8;padding:11px 12px;border-radius:10px;font-weight:800}.nav button.active,.nav button:hover{background:#13283f;color:#fff}.userbox{position:absolute;left:14px;right:14px;bottom:16px;padding:11px;border:1px solid var(--line);border-radius:12px;background:#0d1c2e;font-size:12px}.main{padding:18px 18px 50px;min-width:0}.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}.topbar h1{margin:0;font-size:28px}.top-actions{display:flex;gap:8px;flex-wrap:wrap}.panel{background:rgba(14,27,44,.97);border:1px solid var(--line);border-radius:16px;padding:15px;margin-bottom:12px}.metrics{display:grid;grid-template-columns:repeat(6,minmax(120px,1fr));gap:9px;margin-bottom:12px}.metric{background:#0f2034;border:1px solid var(--line);border-radius:14px;padding:13px}.metric b{font-size:27px;display:block}.metric span{color:var(--muted);font-size:11px;text-transform:uppercase;font-weight:900}.clients{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px}.client-card{background:#102238;border:1px solid var(--line);border-radius:14px;padding:14px;cursor:pointer;transition:.15s}.client-card:hover,.client-card.active{border-color:var(--blue);transform:translateY(-1px)}.client-card small{color:var(--muted);text-transform:uppercase}.client-card h3{margin:4px 0}.client-stats{display:flex;gap:10px;color:#b9c8da;font-size:12px}.toolbar{display:grid;grid-template-columns:minmax(220px,1fr) 180px 180px;gap:8px;margin-bottom:12px}.content-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:11px}.content-card{background:#0b1a2a;border:1px solid var(--line);border-radius:14px;overflow:hidden;min-width:0}.thumb{height:170px;background:#13283e;display:grid;place-items:center;color:#8195ae;overflow:hidden}.thumb img,.thumb video{width:100%;height:100%;object-fit:cover}.card-body{padding:12px}.card-body h3{margin:0 0 4px;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.meta{font-size:11px;color:var(--muted)}.badges{display:flex;gap:5px;flex-wrap:wrap;margin:8px 0}.badge{padding:4px 7px;border-radius:999px;border:1px solid #35516f;font-size:10px;font-weight:900}.badge.green{color:#7ef0b0;border-color:#24734b}.badge.amber{color:#f7d48a;border-color:#866521}.card-actions{display:flex;gap:6px;flex-wrap:wrap}.uploadbox{border:1px dashed #456482;border-radius:14px;padding:18px;text-align:center;background:#0a1827}.uploadbox.drag{border-color:var(--green);background:#0c241c}.uploadbox input{display:none}.forms{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.span2{grid-column:span 2}.span3{grid-column:1/-1}.calendar-list,.log-list{display:grid;gap:7px}.lineitem{display:grid;grid-template-columns:150px 1fr auto;gap:10px;align-items:center;background:#0c1b2b;border:1px solid var(--line);border-radius:11px;padding:10px}.section-title{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}.section-title h2{margin:0}.notice{padding:10px 12px;border-radius:10px;background:#102a20;border:1px solid #285f43;color:#b9efce;margin:10px 0}.warn{background:#2d2411;border-color:#725b24;color:#f5dc9e}.error{background:#35191c;border-color:#743039;color:#ffb3b8}.modal{position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;align-items:center;justify-content:center;padding:16px;z-index:50}.modal.open{display:flex}.modal-card{width:min(680px,100%);max-height:90vh;overflow:auto;background:#0e1b2c;border:1px solid #3c5a7b;border-radius:17px;padding:18px}.tiktok-account{display:flex;align-items:center;gap:12px;padding:12px;border:1px solid var(--line);border-radius:12px;background:#091827}.tiktok-account img{width:54px;height:54px;border-radius:50%;object-fit:cover;background:#13283e}.tiktok-preview{width:100%;max-height:360px;border-radius:12px;background:#050b12;margin-top:8px}.checkline{display:flex;align-items:flex-start;gap:9px;padding:8px 0}.checkline input{margin-top:3px}.subpanel{border:1px solid var(--line);border-radius:12px;padding:12px;background:#0a1827;margin-top:10px}.empty{padding:24px;text-align:center;color:var(--muted)}code{color:#b9d8ff;word-break:break-all}.mobilebar{display:none}.fab{display:none}
 @media(max-width:1100px){.metrics{grid-template-columns:repeat(3,1fr)}.forms{grid-template-columns:1fr 1fr}.span3{grid-column:1/-1}}
 @media(max-width:760px){.shell{display:block}.sidebar{display:none}.main{padding:12px 12px 92px}.topbar h1{font-size:23px}.metrics{grid-template-columns:1fr 1fr}.toolbar{grid-template-columns:1fr}.forms{grid-template-columns:1fr}.span2,.span3{grid-column:auto}.lineitem{grid-template-columns:1fr}.mobilebar{display:grid;grid-template-columns:repeat(6,1fr);position:fixed;left:0;right:0;bottom:0;background:#081522;border-top:1px solid var(--line);z-index:40}.mobilebar button{background:transparent;border:0;color:#9fb1c7;padding:12px 4px;font-size:10px;font-weight:900}.mobilebar button.active{color:#fff;background:#102238}.fab{display:block;position:fixed;right:16px;bottom:70px;border:0;border-radius:999px;width:54px;height:54px;background:var(--green);color:#03140b;font-size:25px;font-weight:bold;z-index:39}.content-grid{grid-template-columns:1fr 1fr}.thumb{height:135px}}
 @media(max-width:480px){.content-grid{grid-template-columns:1fr}.metrics{grid-template-columns:1fr 1fr}}
@@ -77,7 +77,7 @@
             <option>IN ARRIVO</option><option>DA CLASSIFICARE</option><option>DA LAVORARE</option>
             <option>IN LAVORAZIONE</option><option>PRONTO</option><option>DA APPROVARE</option>
             <option>APPROVATO</option><option>PROGRAMMATO</option><option>IN PUBBLICAZIONE</option><option>PUBBLICATO</option><option>ARCHIVIATO</option>
-            <option>ERRORE_MEDIA</option><option>ERRORE_QUEUE</option><option>ERRORE_PUBBLICAZIONE</option><option>CANALE_DA_COLLEGARE</option><option>CREDENZIALI_MANCANTI</option><option>AUTH_REQUIRED</option><option>DA_RIAUTORIZZARE</option>
+            <option>ERRORE_MEDIA</option><option>ERRORE_QUEUE</option><option>ERRORE_PUBBLICAZIONE</option><option>CANALE_DA_COLLEGARE</option><option>CREDENZIALI_MANCANTI</option><option>AUTH_REQUIRED</option><option>DA_RIAUTORIZZARE</option><option>TIKTOK_REVIEW_REQUIRED</option><option>BOZZA_TIKTOK_INVIATA</option>
           </select>
         </div>
         <div class="content-grid" id="archiveGrid"></div>
@@ -195,6 +195,48 @@
   </div>
 </div>
 
+<div class="modal" id="tiktokModal">
+  <div class="modal-card">
+    <div class="section-title"><h2>PUBBLICA SU TIKTOK</h2><button class="btn ghost small" data-close="tiktokModal">CHIUDI</button></div>
+    <div class="row" style="margin-bottom:10px"><span class="badge amber">TIKTOK REVIEW / SANDBOX</span><span class="muted">Usa l'ambiente Sandbox configurato nel portale per la demo di revisione.</span></div>
+    <div id="tiktokMessage"></div>
+    <div class="tiktok-account">
+      <img id="tiktokAvatar" alt="">
+      <div><b id="tiktokNickname">Caricamento account...</b><div class="meta" id="tiktokUsername"></div></div>
+    </div>
+    <div class="field"><label>Modalità</label>
+      <select id="tiktokMode">
+        <option value="DIRECT_POST">Pubblica direttamente</option>
+        <option value="DRAFT_UPLOAD">Invia come bozza a TikTok</option>
+      </select>
+    </div>
+    <div class="field"><label>Anteprima video</label><video id="tiktokPreview" class="tiktok-preview" controls muted playsinline></video><div class="meta" id="tiktokDuration"></div></div>
+    <div class="field"><label>Caption TikTok</label><textarea id="tiktokCaption" placeholder="Scrivi o modifica la caption prima della pubblicazione"></textarea><div class="meta" id="tiktokCaptionCount">0 / 2200</div></div>
+    <div id="tiktokDirectFields">
+      <div class="field"><label>Privacy</label><select id="tiktokPrivacy"><option value="">Seleziona manualmente...</option></select></div>
+      <div class="subpanel">
+        <b>Interazioni</b>
+        <label class="checkline"><input id="tiktokAllowComment" type="checkbox"> <span>Consenti commenti</span></label>
+        <label class="checkline"><input id="tiktokAllowDuet" type="checkbox"> <span>Consenti Duet</span></label>
+        <label class="checkline"><input id="tiktokAllowStitch" type="checkbox"> <span>Consenti Stitch</span></label>
+      </div>
+      <div class="subpanel">
+        <label class="checkline"><input id="tiktokCommercial" type="checkbox"> <span><b>Questo contenuto promuove un brand, prodotto o servizio</b></span></label>
+        <div id="tiktokCommercialOptions" class="hidden">
+          <label class="checkline"><input id="tiktokYourBrand" type="checkbox"> <span>Il tuo brand <span class="meta">· Promotional content</span></span></label>
+          <label class="checkline"><input id="tiktokBranded" type="checkbox"> <span>Contenuto brandizzato / partnership <span class="meta">· Paid partnership</span></span></label>
+        </div>
+      </div>
+    </div>
+    <div class="field"><label>Data e ora pubblicazione</label><input id="tiktokScheduleAt" class="input" type="datetime-local"></div>
+    <div class="subpanel">
+      <label class="checkline"><input id="tiktokConsent" type="checkbox"> <span id="tiktokConsentText">By posting, you agree to TikTok's Music Usage Confirmation</span></label>
+      <div class="meta">Il contenuto verrà inviato solo dopo questa conferma esplicita. L'elaborazione TikTok può richiedere alcuni minuti.</div>
+    </div>
+    <div class="row" style="margin-top:12px"><button class="btn green" id="tiktokConfirmBtn" disabled>CONFERMA E PROGRAMMA SU TIKTOK</button></div>
+  </div>
+</div>
+
 <script type="module">
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.0/+esm";
 
@@ -223,6 +265,7 @@ let publicationEvents = [];
 let whatsappSenders = [];
 let selectedClientId = "";
 let droppedFiles = [];
+let tiktokContext = null;
 
 const el = (id) => document.getElementById(id);
 const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, function(m){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]});
@@ -269,7 +312,7 @@ async function seedClients(){
 async function loadAll(){
   if(!user)return;
   const rc=await sb.from("f1_content_clients").select("*").order("name");
-  const ri=await sb.from("f1_content_items").select("*, f1_content_media(id,file_name,mime_type,storage_path,file_size,created_at), f1_content_calendar(id,platform,publication_at,status)").order("created_at",{ascending:false}).limit(300);
+  const ri=await sb.from("f1_content_items").select("*, f1_content_media(id,file_name,mime_type,storage_path,file_size,created_at), f1_content_calendar(id,platform,publication_at,status,platform_metadata)").order("created_at",{ascending:false}).limit(300);
   const rcal=await sb.from("f1_content_calendar").select("*, f1_content_items(title), f1_content_clients(name)").order("publication_at",{ascending:true}).limit(300);
   const rch=await sb.from("f1_client_social_channels").select("*").order("platform");
   const rws=await sb.from("f1_client_web_sources").select("id,client_id,url,canonical_url,page_type,title,last_checked_at,active").eq("active",true).order("last_checked_at",{ascending:false}).limit(1000);
@@ -329,8 +372,10 @@ async function cardHtml(item){
     else if(media.mime_type&&media.mime_type.startsWith("video/"))thumb='<div class="thumb"><video src="'+esc(url)+'" muted controls></video></div>';
     else thumb='<div class="thumb">'+esc((media.mime_type||"FILE").toUpperCase())+'</div>';
   }
-  const options=["IN ARRIVO","DA CLASSIFICARE","DA LAVORARE","IN LAVORAZIONE","PRONTO","DA APPROVARE","APPROVATO","PROGRAMMATO","PUBBLICATO","ARCHIVIATO"].map(function(s){return '<option '+(s===item.status?"selected":"")+'>'+s+'</option>'}).join("");
-  return '<article class="content-card">'+thumb+'<div class="card-body"><div class="meta">'+esc(c?c.name:"Cliente")+' · '+esc(fmt(item.created_at))+'</div><h3 title="'+esc(item.title)+'">'+esc(item.title||"Senza titolo")+'</h3><div class="badges"><span class="badge">'+esc(item.content_type)+'</span><span class="badge '+(item.status==="PUBBLICATO"?"green":item.status==="PROGRAMMATO"?"amber":"")+'">'+esc(item.status)+'</span></div><div class="card-actions"><select class="input" style="padding:6px 7px" onchange="window.f1SetStatus(\''+item.id+'\',this.value)">'+options+'</select><button class="btn small" onclick="window.f1Reuse(\''+item.id+'\')">RIUTILIZZA</button><button class="btn small primary" onclick="window.f1Schedule(\''+item.id+'\',\''+item.client_id+'\')">PROGRAMMA</button></div></div></article>';
+  const options=["IN ARRIVO","DA CLASSIFICARE","DA LAVORARE","IN LAVORAZIONE","PRONTO","DA APPROVARE","APPROVATO","PROGRAMMATO","IN PUBBLICAZIONE","TIKTOK_REVIEW_REQUIRED","BOZZA_TIKTOK_INVIATA","PUBBLICATO","ARCHIVIATO"].map(function(s){return '<option '+(s===item.status?"selected":"")+'>'+s+'</option>'}).join("");
+  const isVideo=!!(media&&media.mime_type&&media.mime_type.startsWith("video/"));
+  const tiktokBtn=isVideo?'<button class="btn small green" onclick="window.f1TikTokConfigure(\''+item.id+'\',\''+item.client_id+'\')">TIKTOK</button>':'';
+  return '<article class="content-card">'+thumb+'<div class="card-body"><div class="meta">'+esc(c?c.name:"Cliente")+' · '+esc(fmt(item.created_at))+'</div><h3 title="'+esc(item.title)+'">'+esc(item.title||"Senza titolo")+'</h3><div class="badges"><span class="badge">'+esc(item.content_type)+'</span><span class="badge '+(item.status==="PUBBLICATO"?"green":item.status==="PROGRAMMATO"?"amber":"")+'">'+esc(item.status)+'</span></div><div class="card-actions"><select class="input" style="padding:6px 7px" onchange="window.f1SetStatus(\''+item.id+'\',this.value)">'+options+'</select><button class="btn small" onclick="window.f1Reuse(\''+item.id+'\')">RIUTILIZZA</button>'+tiktokBtn+'<button class="btn small primary" onclick="window.f1Schedule(\''+item.id+'\',\''+item.client_id+'\')">PROGRAMMA</button></div></div></article>';
 }
 async function renderGrid(target,list){
   if(!list.length){el(target).innerHTML='<div class="empty">Nessun contenuto.</div>';return}
@@ -362,13 +407,161 @@ window.f1Reuse=async function(id){
 window.f1Schedule=async function(id,clientId){
   const item=items.find(function(x){return x.id===id}), client=clients.find(function(x){return x.id===clientId});
   if(client&&client.approval_required&&item&&!["APPROVATO","PROGRAMMATO"].includes(item.status))return alert("Questo cliente richiede approvazione. Imposta prima il contenuto su APPROVATO.");
-  const platform=(prompt("Piattaforma: Facebook, Instagram, TikTok, LinkedIn, YouTube, Google Business Profile","Instagram")||"").trim();if(!platform)return;
+  const platform=(prompt("Piattaforma: Facebook, Instagram, LinkedIn, YouTube, Google Business Profile","Instagram")||"").trim();if(!platform)return;
+  if(platform.toLowerCase()==="tiktok")return window.f1TikTokConfigure(id,clientId);
   const dt=(prompt("Data e ora in formato YYYY-MM-DD HH:MM","2026-09-24 18:30")||"").trim();if(!dt)return;
   const parsed=new Date(dt.replace(" ","T"));if(isNaN(parsed.getTime()))return alert("Data non valida.");
   const r=await sb.from("f1_content_calendar").insert({owner_id:user.id,content_id:id,client_id:clientId,platform:platform,publication_at:parsed.toISOString(),status:"PROGRAMMATO"});
   if(r.error)return alert(r.error.message);
   await sb.from("f1_content_items").update({status:"PROGRAMMATO"}).eq("id",id);
   await loadAll();renderAll();setTab("calendar");
+};
+
+function tiktokUtf16Units(value){return new Blob([String(value||"")]).size===0?0:Array.from(String(value||"")).reduce(function(n,ch){return n+(ch.codePointAt(0)>0xFFFF?2:1)},0)}
+function tiktokPrivacyLabel(value){return {"PUBLIC_TO_EVERYONE":"Tutti","MUTUAL_FOLLOW_FRIENDS":"Amici reciproci","FOLLOWER_OF_CREATOR":"Follower","SELF_ONLY":"Solo io"}[value]||value}
+function tiktokMsg(text,type){el("tiktokMessage").innerHTML=text?'<div class="notice '+(type||"")+'">'+esc(text)+'</div>':""}
+function tiktokDirect(){return el("tiktokMode").value==="DIRECT_POST"}
+function tiktokUpdateUi(){
+  if(!tiktokContext)return;
+  const creator=tiktokContext.creator||{};
+  const direct=tiktokDirect();
+  el("tiktokDirectFields").classList.toggle("hidden",!direct);
+  const commercial=direct&&el("tiktokCommercial").checked;
+  el("tiktokCommercialOptions").classList.toggle("hidden",!commercial);
+  if(!commercial){el("tiktokYourBrand").checked=false;el("tiktokBranded").checked=false}
+  const privacy=el("tiktokPrivacy").value;
+  if(privacy==="SELF_ONLY"&&el("tiktokBranded").checked)el("tiktokBranded").checked=false;
+  el("tiktokBranded").disabled=privacy==="SELF_ONLY";
+  const branded=commercial&&el("tiktokBranded").checked;
+  el("tiktokConsentText").textContent=branded
+    ?"By posting, you agree to TikTok's Branded Content Policy and Music Usage Confirmation."
+    :"By posting, you agree to TikTok's Music Usage Confirmation";
+  const units=tiktokUtf16Units(el("tiktokCaption").value);
+  el("tiktokCaptionCount").textContent=units+" / 2200";
+  const max=Number(creator.max_video_post_duration_sec||0);
+  const duration=Number(tiktokContext.videoDuration||0);
+  const durationOk=duration>0&&(!max||duration<=max+0.05);
+  const schedule=el("tiktokScheduleAt").value;
+  const scheduleDate=schedule?new Date(schedule):null;
+  const scheduleOk=!!(scheduleDate&&!isNaN(scheduleDate.getTime())&&scheduleDate.getTime()>Date.now()-60000);
+  const commercialOk=!commercial||(el("tiktokYourBrand").checked||el("tiktokBranded").checked);
+  const privacyOk=!direct||!!privacy;
+  const creatorOk=!!creator.creator_nickname&&Array.isArray(creator.privacy_level_options);
+  const captionOk=units<=2200;
+  const consentOk=el("tiktokConsent").checked;
+  el("tiktokConfirmBtn").disabled=!(creatorOk&&durationOk&&scheduleOk&&commercialOk&&privacyOk&&captionOk&&consentOk);
+  if(max&&duration>max)tiktokMsg("Questo video supera la durata massima consentita dall'account TikTok collegato.","error");
+  else if(units>2200)tiktokMsg("La caption supera il limite TikTok di 2200 unità UTF-16.","error");
+  else if(commercial&&!commercialOk)tiktokMsg("Indica se il contenuto promuove il tuo brand, una terza parte o entrambi.","warn");
+  else tiktokMsg("");
+}
+async function tiktokCreatorInfo(clientId){
+  const session=await oauthSession();
+  const r=await fetch(OAUTH_BROKER_URL+"/tiktok/creator-info?client_id="+encodeURIComponent(clientId),{
+    headers:{Authorization:"Bearer "+session.access_token,apikey:SUPABASE_KEY,"cache-control":"no-store"}
+  });
+  let data={};try{data=await r.json()}catch(_){}
+  if(!r.ok){
+    if(data.error==="AUTH_REQUIRED")throw new Error("TikTok deve essere collegato o riautorizzato con video.publish.");
+    throw new Error(data.detail||data.error||"Impossibile leggere creator_info TikTok.");
+  }
+  return data;
+}
+window.f1TikTokConfigure=async function(id,clientId){
+  const item=items.find(function(x){return x.id===id});
+  const client=clients.find(function(x){return x.id===clientId});
+  if(!item)return;
+  if(client&&client.approval_required&&!["APPROVATO","PROGRAMMATO","TIKTOK_REVIEW_REQUIRED"].includes(item.status))return alert("Questo cliente richiede approvazione. Imposta prima il contenuto su APPROVATO.");
+  const media=(item.f1_content_media||[]).find(function(m){return m.mime_type&&m.mime_type.startsWith("video/")});
+  if(!media)return alert("TikTok Direct Post richiede un video.");
+  tiktokContext={item:item,clientId:clientId,media:media,creator:null,videoDuration:0};
+  openModal("tiktokModal");
+  tiktokMsg("Lettura account e impostazioni TikTok...");
+  el("tiktokAvatar").src="";
+  el("tiktokNickname").textContent="Caricamento account...";
+  el("tiktokUsername").textContent="";
+  el("tiktokMode").value=(item.tiktok_settings&&item.tiktok_settings.mode)||"DIRECT_POST";
+  el("tiktokCaption").value=(item.tiktok_settings&&item.tiktok_settings.caption)||item.description||item.source_text||"";
+  el("tiktokPrivacy").innerHTML='<option value="">Seleziona manualmente...</option>';
+  ["tiktokAllowComment","tiktokAllowDuet","tiktokAllowStitch","tiktokCommercial","tiktokYourBrand","tiktokBranded","tiktokConsent"].forEach(function(x){el(x).checked=false;el(x).disabled=false});
+  el("tiktokScheduleAt").value="";
+  el("tiktokConfirmBtn").disabled=true;
+  try{
+    const creator=await tiktokCreatorInfo(clientId);
+    tiktokContext.creator=creator;
+    el("tiktokAvatar").src=creator.creator_avatar_url||"";
+    el("tiktokNickname").textContent=creator.creator_nickname||"TikTok";
+    el("tiktokUsername").textContent=creator.creator_username?"@"+creator.creator_username:"";
+    el("tiktokPrivacy").innerHTML='<option value="">Seleziona manualmente...</option>'+(creator.privacy_level_options||[]).map(function(v){return '<option value="'+esc(v)+'">'+esc(tiktokPrivacyLabel(v))+' · '+esc(v)+'</option>'}).join("");
+    el("tiktokAllowComment").disabled=!!creator.comment_disabled;
+    el("tiktokAllowDuet").disabled=!!creator.duet_disabled;
+    el("tiktokAllowStitch").disabled=!!creator.stitch_disabled;
+    const saved=item.tiktok_settings||{};
+    if(saved.privacy_level&&(creator.privacy_level_options||[]).includes(saved.privacy_level))el("tiktokPrivacy").value=saved.privacy_level;
+    el("tiktokAllowComment").checked=!!saved.allow_comment&&!creator.comment_disabled;
+    el("tiktokAllowDuet").checked=!!saved.allow_duet&&!creator.duet_disabled;
+    el("tiktokAllowStitch").checked=!!saved.allow_stitch&&!creator.stitch_disabled;
+    el("tiktokCommercial").checked=!!saved.commercial_content;
+    el("tiktokYourBrand").checked=!!saved.your_brand;
+    el("tiktokBranded").checked=!!saved.branded_content;
+    const url=await signedUrl(media);
+    el("tiktokPreview").src=url;
+    el("tiktokPreview").onloadedmetadata=function(){
+      tiktokContext.videoDuration=Number(el("tiktokPreview").duration||0);
+      const max=Number(creator.max_video_post_duration_sec||0);
+      el("tiktokDuration").textContent="Durata: "+tiktokContext.videoDuration.toFixed(1)+" s"+(max?" · massimo account: "+max+" s":"");
+      tiktokUpdateUi();
+    };
+    tiktokMsg("");
+    tiktokUpdateUi();
+  }catch(e){
+    tiktokMsg(e.message||String(e),"error");
+  }
+};
+["tiktokMode","tiktokPrivacy","tiktokAllowComment","tiktokAllowDuet","tiktokAllowStitch","tiktokCommercial","tiktokYourBrand","tiktokBranded","tiktokConsent","tiktokScheduleAt"].forEach(function(id){el(id).addEventListener("change",tiktokUpdateUi)});
+el("tiktokCaption").addEventListener("input",tiktokUpdateUi);
+el("tiktokConfirmBtn").onclick=async function(){
+  if(!tiktokContext||el("tiktokConfirmBtn").disabled)return;
+  const item=tiktokContext.item,creator=tiktokContext.creator;
+  const mode=el("tiktokMode").value;
+  const settings={
+    mode:mode,
+    creator_username:creator.creator_username||"",
+    creator_nickname:creator.creator_nickname||"",
+    creator_avatar_url:creator.creator_avatar_url||"",
+    privacy_level:mode==="DIRECT_POST"?el("tiktokPrivacy").value:"",
+    allow_comment:mode==="DIRECT_POST"&&el("tiktokAllowComment").checked,
+    allow_duet:mode==="DIRECT_POST"&&el("tiktokAllowDuet").checked,
+    allow_stitch:mode==="DIRECT_POST"&&el("tiktokAllowStitch").checked,
+    commercial_content:mode==="DIRECT_POST"&&el("tiktokCommercial").checked,
+    your_brand:mode==="DIRECT_POST"&&el("tiktokCommercial").checked&&el("tiktokYourBrand").checked,
+    branded_content:mode==="DIRECT_POST"&&el("tiktokCommercial").checked&&el("tiktokBranded").checked,
+    caption:el("tiktokCaption").value,
+    consent_confirmed:true,
+    consent_at:new Date().toISOString(),
+    creator_info_checked_at:new Date().toISOString(),
+    max_video_post_duration_sec:Number(creator.max_video_post_duration_sec||0),
+    review_flow:"TIKTOK_REVIEW_SANDBOX_READY"
+  };
+  const publicationAt=new Date(el("tiktokScheduleAt").value);
+  el("tiktokConfirmBtn").disabled=true;tiktokMsg("Salvataggio configurazione TikTok...");
+  try{
+    const up=await sb.from("f1_content_items").update({tiktok_settings:settings,status:"PROGRAMMATO"}).eq("id",item.id);
+    if(up.error)throw up.error;
+    const existing=await sb.from("f1_content_calendar").select("id,status").eq("content_id",item.id).eq("platform","tiktok").neq("status","PUBBLICATO").order("publication_at",{ascending:false}).limit(1);
+    if(existing.error)throw existing.error;
+    let cal;
+    if(existing.data&&existing.data[0]){
+      cal=await sb.from("f1_content_calendar").update({publication_at:publicationAt.toISOString(),status:"PROGRAMMATO",error:null,platform_metadata:{review_flow:"TIKTOK_REVIEW_SANDBOX_READY"}}).eq("id",existing.data[0].id);
+    }else{
+      cal=await sb.from("f1_content_calendar").insert({owner_id:user.id,content_id:item.id,client_id:tiktokContext.clientId,platform:"tiktok",publication_at:publicationAt.toISOString(),status:"PROGRAMMATO",platform_metadata:{review_flow:"TIKTOK_REVIEW_SANDBOX_READY"}});
+    }
+    if(cal.error)throw cal.error;
+    await loadAll();renderAll();closeModal("tiktokModal");setTab("calendar");
+  }catch(e){
+    tiktokMsg(e.message||String(e),"error");
+    tiktokUpdateUi();
+  }
 };
 function renderCalendar(){
   const now=Date.now();let list=calendar.filter(function(x){return new Date(x.publication_at).getTime()>=now-86400000});
