@@ -1,3 +1,4 @@
+# CI regression suite: F1 Social fail-closed isolation.
 import hashlib
 import tempfile
 import unittest
