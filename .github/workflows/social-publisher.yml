@@ -113,13 +113,20 @@ jobs:
       - name: Install publisher dependencies
         run: pip install -r publisher/requirements.txt
 
-      - name: Ensure ffprobe is available for TikTok duration validation
+      - name: Ensure ffmpeg and Italian speech synthesis are available
         shell: bash
         run: |
-          if ! command -v ffprobe >/dev/null 2>&1; then
+          NEED_UPDATE=false
+          if ! command -v ffprobe >/dev/null 2>&1; then NEED_UPDATE=true; fi
+          if ! command -v espeak >/dev/null 2>&1; then NEED_UPDATE=true; fi
+          if [ "$NEED_UPDATE" = "true" ]; then
             sudo apt-get update
-            sudo apt-get install -y ffmpeg
+            sudo apt-get install -y ffmpeg espeak
           fi
+
+      - name: Generate licensed multi-client spoken publication test
+        if: github.event_name == 'push'
+        run: python publisher/generate_multiclient_test_jobs.py
 
       - name: Reconcile F1 Content Hub into publisher queue
         run: python publisher/supabase_queue_bridge.py
@@ -164,6 +171,10 @@ jobs:
 
           if find publisher/media/supabase -type f -print -quit 2>/dev/null | grep -q .; then
             echo "Supabase Content Hub media is available."
+            AVAILABLE=true
+          fi
+          if find publisher/media/generated/multiclient-test-20260926 -type f -name '*.mp4' -print -quit 2>/dev/null | grep -q .; then
+            echo "Licensed multi-client test media is available."
             AVAILABLE=true
           fi
 
