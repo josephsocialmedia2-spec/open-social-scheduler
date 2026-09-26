@@ -355,7 +355,10 @@ async function enterApp(){
   }
   renderAll();
   const oauthState=params.get("oauth");
-  if(oauthState){setTab("automation");history.replaceState({},document.title,location.pathname);}
+  if(oauthState){
+    if(window.f1ResumePendingPublishNow)await window.f1ResumePendingPublishNow();
+    setTab("automation");history.replaceState({},document.title,location.pathname);
+  }
 }
 el("loginBtn").onclick=async function(){
   const email=el("authEmail").value.trim(), password=el("authPassword").value;
@@ -524,7 +527,9 @@ window.f1AttachTestMedia=function(itemId,clientId){
       if(mr.error)throw mr.error;
       const ur=await sb.from("f1_content_items").update({content_type:"IMMAGINE",source:"CHATGPT_LIBRARY",status:"BOZZA"}).eq("id",itemId);
       if(ur.error)throw ur.error;
-      await loadAll();renderAll();alert("Media test verificato e allegato. SHA-256 corretto.");
+      await loadAll();renderAll();
+      if(window.f1ResumePendingPublishNow)await window.f1ResumePendingPublishNow();
+      alert("Media test verificato e allegato. SHA-256 corretto.");
     }catch(e){alert(e.message||String(e))}
   };
   input.click();
@@ -542,7 +547,8 @@ function f1ConnectionPreflight(clientId,platform){
   if(required&&!scopes.has(required))return {ok:false,status:"AUTH_REQUIRED",row:row};
   return {ok:true,status:"PRONTO",row:row};
 }
-window.f1PublishNow=async function(itemId,clientId){
+window.f1PublishNow=async function(itemId,clientId,options){
+  const opts=options||{};
   const item=items.find(function(x){return x.id===itemId}),client=clients.find(function(x){return x.id===clientId});
   if(!item||!client||client.slug!=="f1-social")return alert("PUBBLICA ORA è isolato al tenant F1 Social.");
   const media=(item.f1_content_media||[])[0];
@@ -563,20 +569,36 @@ window.f1PublishNow=async function(itemId,clientId){
   const ready=[],blocked=[];
   defs.forEach(function(d){
     const r=f1ConnectionPreflight(clientId,d.platform);
-    if(!r.ok){blocked.push({label:d.label,status:r.status,row:r.row});return}
-    if(image&&d.platform==="youtube"){blocked.push({label:d.label,status:"FORMATO_NON_SUPPORTATO",row:r.row});return}
-    if(image&&d.platform==="tiktok"){blocked.push({label:d.label,status:"TIKTOK_PHOTO_URL_REQUIRED",row:r.row});return}
+    if(!r.ok){blocked.push({label:d.label,platform:d.platform,status:r.status,row:r.row});return}
+    if(image&&d.platform==="youtube"){blocked.push({label:d.label,platform:d.platform,status:"FORMATO_NON_SUPPORTATO",row:r.row});return}
+    if(image&&d.platform==="tiktok"){blocked.push({label:d.label,platform:d.platform,status:"TIKTOK_PHOTO_URL_REQUIRED",row:r.row});return}
     ready.push({label:d.label,platform:d.platform,row:r.row});
   });
-  blocked.push({label:"X",status:"NON_SUPPORTATO",row:null});
-  blocked.push({label:"Pinterest",status:"AUTH_REQUIRED",row:null});
+  blocked.push({label:"X",platform:"x",status:"NON_SUPPORTATO",row:null});
+  blocked.push({label:"Pinterest",platform:"pinterest",status:"AUTH_REQUIRED",row:null});
   const now=new Date().toISOString();
   for(const b of blocked){
+    let pendingCalendarId=null;
+    if(b.row){
+      const existing=await sb.from("f1_content_calendar").select("id,status").eq("content_id",itemId).eq("platform",b.platform).order("created_at",{ascending:false}).limit(1);
+      const pendingPayload={
+        owner_id:user.id,content_id:itemId,client_id:clientId,platform:b.platform,publication_at:now,status:b.status,
+        provider:b.row.provider||"oauth_broker",retry_count:0,error:b.status,
+        platform_metadata:{publish_now:true,expected_media_sha256:mediaHash,expected_account:b.row.profile_url||null,api_sent:false,pending_preflight:true}
+      };
+      if(existing.data&&existing.data.length){
+        pendingCalendarId=existing.data[0].id;
+        await sb.from("f1_content_calendar").update(pendingPayload).eq("id",pendingCalendarId);
+      }else{
+        const ir=await sb.from("f1_content_calendar").insert(pendingPayload).select("id").single();
+        if(!ir.error)pendingCalendarId=ir.data.id;
+      }
+    }
     await sb.from("f1_publication_events").insert({
-      owner_id:user.id,client_id:clientId,content_id:itemId,provider:b.row&&b.row.provider||null,
-      platform:b.row&&b.row.platform||b.label.toLowerCase(),action:"PUBLISH_NOW_PREFLIGHT",status:b.status,
+      owner_id:user.id,client_id:clientId,content_id:itemId,calendar_id:pendingCalendarId,provider:b.row&&b.row.provider||null,
+      platform:b.platform||b.label.toLowerCase(),action:"PUBLISH_NOW_PREFLIGHT",status:b.status,
       error:b.status,api_sent:false,account_expected:b.row&&b.row.profile_url||null,account_detected:b.row&&b.row.external_channel_id||null,
-      details:{media_sha256:mediaHash,publish_now:true}
+      details:{media_sha256:mediaHash,publish_now:true,pending_resume:!!b.row}
     });
   }
   for(const r of ready){
@@ -605,7 +627,16 @@ window.f1PublishNow=async function(itemId,clientId){
   }
   await loadAll();renderAll();
   const lines=ready.map(function(x){return "✅ "+x.label+" — IN PUBBLICAZIONE"}).concat(blocked.map(function(x){return "⚠️ "+x.label+" — "+x.status}));
-  alert("F1 SOCIAL — preflight PUBBLICA ORA\n\n"+lines.join("\n"));
+  if(!opts.silent)alert("F1 SOCIAL — preflight PUBBLICA ORA\n\n"+lines.join("\n"));
+};
+window.f1ResumePendingPublishNow=async function(){
+  const f1=clients.find(function(x){return x.slug==="f1-social"});if(!f1)return;
+  const pending=calendar.filter(function(x){return x.client_id===f1.id&&x.status!=="PUBBLICATO"&&x.platform_metadata&&x.platform_metadata.publish_now});
+  const ids=Array.from(new Set(pending.map(function(x){return x.content_id})));
+  for(const itemId of ids){
+    const item=items.find(function(x){return x.id===itemId});
+    if(item&&(item.f1_content_media||[]).length)await window.f1PublishNow(itemId,f1.id,{silent:true,resume:true});
+  }
 };
 
 window.f1Schedule=async function(id,clientId){
