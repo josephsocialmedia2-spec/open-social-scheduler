@@ -22,6 +22,7 @@ from typing import Any
 import requests
 
 import oauth_broker
+from f1_social_safety import SecurityError, assert_broker_account, assert_job_safety
 
 ROOT = Path(__file__).resolve().parents[1]
 QUEUE_PATH = ROOT / "publisher" / "queue.json"
@@ -252,6 +253,7 @@ def facebook_publish(job: dict[str, Any], client: dict[str, Any], paths: list[Pa
     broker_requested = str(job.get("provider") or "").strip().lower() == "oauth_broker"
     if broker_requested:
         broker = oauth_broker.token(client, "facebook", force=True)
+        assert_broker_account(client, "facebook", broker)
         token = str(broker["access_token"])
     else:
         token = secret(client, "FACEBOOK_PAGE_ACCESS_TOKEN")
@@ -286,6 +288,7 @@ def instagram_publish(job: dict[str, Any], client: dict[str, Any], paths: list[P
     broker_requested = str(job.get("provider") or "").strip().lower() == "oauth_broker"
     if broker_requested:
         broker = oauth_broker.token(client, "instagram", force=True)
+        assert_broker_account(client, "instagram", broker)
         token = str(broker["access_token"])
         ig_user_id = str(broker.get("instagram_user_id") or broker.get("account_id") or "").strip()
         if not ig_user_id:
@@ -486,13 +489,42 @@ def tiktok_fetch_status(token: str, publish_id: str) -> dict[str, Any]:
     return payload.get("data") or {}
 
 
-def tiktok_publish(job: dict[str, Any], client: dict[str, Any], paths: list[Path], _cache: PublicMediaCache) -> dict[str, Any]:
-    if str(job.get("format") or "reel") != "reel":
-        raise PlatformReviewRequired("TikTok Direct Post currently requires a video/reel job")
+def tiktok_validate_photo_settings(settings: dict[str, Any], creator: dict[str, Any], job: dict[str, Any]) -> list[str]:
+    if not settings.get("consent_confirmed"):
+        raise PlatformReviewRequired("TikTok explicit publishing consent is missing")
+    mode = str(settings.get("mode") or "DIRECT_POST").upper()
+    if mode not in {"DIRECT_POST", "DRAFT_UPLOAD"}:
+        raise PlatformReviewRequired("TikTok publishing mode must be selected again")
+    if mode == "DIRECT_POST":
+        privacy = str(settings.get("privacy_level") or "")
+        options = [str(x) for x in creator.get("privacy_level_options") or []]
+        if not privacy or privacy not in options:
+            raise PlatformReviewRequired("TikTok privacy choice is missing or no longer available")
+    title = str(settings.get("photo_title") or job.get("title") or "")
+    description = str(settings.get("caption") or job.get("caption") or "")
+    if tiktok_utf16_units(title) > 90:
+        raise PlatformReviewRequired("TikTok photo title exceeds the 90 UTF-16 unit limit")
+    if tiktok_utf16_units(description) > 4000:
+        raise PlatformReviewRequired("TikTok photo description exceeds the 4000 UTF-16 unit limit")
+    urls = job.get("tiktok_photo_urls") or job.get("public_media_urls") or []
+    if isinstance(urls, str):
+        urls = [urls]
+    urls = [str(x).strip() for x in urls if str(x).strip()]
+    if not urls:
+        raise PlatformReviewRequired(
+            "TikTok photo posting requires public image URLs from a domain or URL prefix verified in the TikTok app",
+            reason="TIKTOK_PHOTO_URL_REQUIRED",
+        )
+    if len(urls) > 35 or any(not x.startswith(("https://", "http://")) for x in urls):
+        raise PlatformReviewRequired("TikTok photo URL list is invalid", reason="TIKTOK_PHOTO_URL_INVALID")
+    return urls
 
+
+def tiktok_publish(job: dict[str, Any], client: dict[str, Any], paths: list[Path], _cache: PublicMediaCache) -> dict[str, Any]:
     broker_requested = str(job.get("provider") or "").strip().lower() == "oauth_broker"
     if oauth_broker.enabled() or broker_requested:
         token_payload = oauth_broker.token(client, "tiktok", force=broker_requested)
+        assert_broker_account(client, "tiktok", token_payload)
         token = str(token_payload["access_token"])
     else:
         token = secret(client, "TIKTOK_ACCESS_TOKEN")
@@ -508,25 +540,78 @@ def tiktok_publish(job: dict[str, Any], client: dict[str, Any], paths: list[Path
             raise PublishError(f"TikTok publish failed: {status.get('fail_reason') or 'unknown'}")
         if state == "PUBLISH_COMPLETE" or (mode == "DRAFT_UPLOAD" and state == "SEND_TO_USER_INBOX"):
             public_ids = status.get("publicaly_available_post_id") or []
-            return {
-                "publish_id": existing_publish_id,
-                "status": state,
-                "post_ids": public_ids,
-                "mode": mode,
-            }
+            return {"publish_id": existing_publish_id, "status": state, "post_ids": public_ids, "mode": mode}
         raise PublishPending(
             f"TikTok publish is still processing: {state or 'UNKNOWN'}",
             {"publish_id": existing_publish_id, "status": state or "PROCESSING"},
         )
 
+    creator = tiktok_creator_info(token)
+    headers = {"Authorization": f"Bearer {token}", "Content-Type": "application/json; charset=UTF-8"}
+    fmt = str(job.get("format") or "reel").lower()
+
+    if fmt != "reel":
+        urls = tiktok_validate_photo_settings(settings, creator, job)
+        post_mode = "DIRECT_POST" if mode == "DIRECT_POST" else "MEDIA_UPLOAD"
+        post_info: dict[str, Any] = {
+            "title": str(settings.get("photo_title") or job.get("title") or "")[:90],
+            "description": str(settings.get("caption") or job.get("caption") or "")[:4000],
+            "brand_organic_toggle": bool(settings.get("commercial_content") and settings.get("your_brand")),
+            "brand_content_toggle": bool(settings.get("commercial_content") and settings.get("branded_content")),
+        }
+        if mode == "DIRECT_POST":
+            post_info.update({
+                "privacy_level": str(settings["privacy_level"]),
+                "disable_comment": not bool(settings.get("allow_comment")),
+                "auto_add_music": bool(settings.get("auto_add_music", False)),
+            })
+        init_body = {
+            "media_type": "PHOTO",
+            "post_mode": post_mode,
+            "post_info": post_info,
+            "source_info": {
+                "source": "PULL_FROM_URL",
+                "photo_images": urls,
+                "photo_cover_index": int(settings.get("photo_cover_index") or 0),
+            },
+            "is_aigc": bool(job.get("image_made_with_ai", False)),
+        }
+        init = request(
+            "POST",
+            "https://open.tiktokapis.com/v2/post/publish/content/init/",
+            headers=headers,
+            json=init_body,
+        ).json()
+        tiktok_raise_api_error("photo_init", init)
+        publish_id = str((init.get("data") or {}).get("publish_id") or "")
+        if not publish_id:
+            raise PublishError("TikTok photo init response did not return publish_id")
+        job["tiktok_publish_id"] = publish_id
+        job["tiktok_publish_mode"] = mode
+        status = tiktok_fetch_status(token, publish_id)
+        state = str(status.get("status") or "")
+        job["tiktok_last_status"] = status
+        if state == "FAILED":
+            raise PublishError(f"TikTok photo publish failed: {status.get('fail_reason') or 'unknown'}")
+        if state == "PUBLISH_COMPLETE" or (mode == "DRAFT_UPLOAD" and state == "SEND_TO_USER_INBOX"):
+            return {
+                "publish_id": publish_id,
+                "status": state,
+                "post_ids": status.get("publicaly_available_post_id") or [],
+                "mode": mode,
+                "media_type": "PHOTO",
+            }
+        raise PublishPending(
+            f"TikTok photo publish is processing: {state or 'UNKNOWN'}",
+            {"publish_id": publish_id, "status": state or "PROCESSING", "media_type": "PHOTO"},
+        )
+
     path = paths[0]
     duration = tiktok_video_duration(path)
-    creator = tiktok_creator_info(token)
     tiktok_validate_settings(settings, creator, duration)
 
     size = path.stat().st_size
     chunk_size, total_chunks = tiktok_chunk_plan(size)
-    headers = {"Authorization": f"Bearer {token}", "Content-Type": "application/json; charset=UTF-8"}
 
     if mode == "DRAFT_UPLOAD":
         init_url = "https://open.tiktokapis.com/v2/post/publish/inbox/video/init/"
@@ -572,7 +657,6 @@ def tiktok_publish(job: dict[str, Any], client: dict[str, Any], paths: list[Path
     job["tiktok_publish_id"] = publish_id
     job["tiktok_publish_mode"] = mode
     job["tiktok_last_status"] = {"status": "PROCESSING_UPLOAD"}
-
     tiktok_upload_file(upload_url, path, chunk_size, total_chunks)
     status = tiktok_fetch_status(token, publish_id)
     state = str(status.get("status") or "")
@@ -593,10 +677,11 @@ def tiktok_publish(job: dict[str, Any], client: dict[str, Any], paths: list[Path
         {"publish_id": publish_id, "status": state or "PROCESSING"},
     )
 
-def linkedin_publish(job: dict[str, Any], client: dict[str, Any], _paths: list[Path], _cache: PublicMediaCache) -> dict[str, Any]:
+def linkedin_publish(job: dict[str, Any], client: dict[str, Any], paths: list[Path], _cache: PublicMediaCache) -> dict[str, Any]:
     broker_requested = str(job.get("provider") or "").strip().lower() == "oauth_broker"
     if oauth_broker.enabled() or broker_requested:
         broker = oauth_broker.token(client, "linkedin", force=broker_requested)
+        assert_broker_account(client, "linkedin", broker)
         token = str(broker["access_token"])
         author = str(broker.get("author_urn") or "").strip()
         if not author:
@@ -604,9 +689,57 @@ def linkedin_publish(job: dict[str, Any], client: dict[str, Any], _paths: list[P
     else:
         token = secret(client, "LINKEDIN_ACCESS_TOKEN")
         author = secret(client, "LINKEDIN_AUTHOR_URN")
-    version = os.getenv("LINKEDIN_VERSION", "202601").strip()
-    response = request("POST", "https://api.linkedin.com/rest/posts", headers={"Authorization": f"Bearer {token}", "X-Restli-Protocol-Version": "2.0.0", "Linkedin-Version": version, "Content-Type": "application/json"}, json={"author": author, "commentary": str(job.get("caption") or "")[:3000], "visibility": "PUBLIC", "distribution": {"feedDistribution": "MAIN_FEED", "targetEntities": [], "thirdPartyDistributionChannels": []}, "lifecycleState": "PUBLISHED", "isReshareDisabledByAuthor": False})
-    return {"post_id": response.headers.get("x-restli-id", ""), "mode": "text"}
+
+    version = os.getenv("LINKEDIN_VERSION", "202606").strip()
+    headers = {
+        "Authorization": f"Bearer {token}",
+        "X-Restli-Protocol-Version": "2.0.0",
+        "Linkedin-Version": version,
+        "Content-Type": "application/json",
+    }
+    post: dict[str, Any] = {
+        "author": author,
+        "commentary": str(job.get("caption") or "")[:3000],
+        "visibility": "PUBLIC",
+        "distribution": {"feedDistribution": "MAIN_FEED", "targetEntities": [], "thirdPartyDistributionChannels": []},
+        "lifecycleState": "PUBLISHED",
+        "isReshareDisabledByAuthor": False,
+    }
+
+    path = paths[0] if paths else None
+    if path and path.suffix.lower() in {".jpg", ".jpeg", ".png", ".gif"}:
+        init = request(
+            "POST",
+            "https://api.linkedin.com/rest/images?action=initializeUpload",
+            headers=headers,
+            json={"initializeUploadRequest": {"owner": author}},
+        ).json()
+        value = init.get("value") or {}
+        upload_url = str(value.get("uploadUrl") or "")
+        image_urn = str(value.get("image") or "")
+        if not upload_url or not image_urn:
+            raise PublishError("LinkedIn image initializeUpload did not return uploadUrl/image")
+        media_type = mimetypes.guess_type(path.name)[0] or "application/octet-stream"
+        request(
+            "PUT",
+            upload_url,
+            headers={"Authorization": f"Bearer {token}", "Content-Type": media_type},
+            data=path.read_bytes(),
+            timeout=300,
+        )
+        post["content"] = {
+            "media": {
+                "id": image_urn,
+                "altText": str(job.get("alt_text") or job.get("title") or "F1 Social")[:4086],
+            }
+        }
+
+    response = request("POST", "https://api.linkedin.com/rest/posts", headers=headers, json=post)
+    return {
+        "post_id": response.headers.get("x-restli-id", ""),
+        "mode": "image" if "content" in post else "text",
+        "image_urn": (post.get("content") or {}).get("media", {}).get("id"),
+    }
 
 
 def youtube_publish(job: dict[str, Any], client: dict[str, Any], paths: list[Path], _cache: PublicMediaCache) -> dict[str, Any]:
@@ -614,7 +747,9 @@ def youtube_publish(job: dict[str, Any], client: dict[str, Any], paths: list[Pat
         raise PublishError("YouTube publisher accepts video/reel jobs only")
     broker_requested = str(job.get("provider") or "").strip().lower() == "oauth_broker"
     if oauth_broker.enabled() or broker_requested:
-        access_token = str(oauth_broker.token(client, "youtube", force=broker_requested)["access_token"])
+        broker = oauth_broker.token(client, "youtube", force=broker_requested)
+        assert_broker_account(client, "youtube", broker)
+        access_token = str(broker["access_token"])
     else:
         client_id = secret(client, "YOUTUBE_CLIENT_ID")
         client_secret = secret(client, "YOUTUBE_CLIENT_SECRET")
@@ -676,6 +811,12 @@ def publish_job(job: dict[str, Any], only: set[str] | None, dry_run: bool) -> tu
     results: list[dict[str, Any]] = []
     if not platforms:
         return results, True
+    try:
+        assert_job_safety(client, job, paths, platforms)
+    except SecurityError as exc:
+        job["status"] = "blocked"
+        job["blocked_reason"] = str(exc)
+        return ([{"platform": p, "status": "security_blocked", "error": str(exc), "api_sent": False} for p in platforms], False)
     blocked = {platform: required_secrets(platform, client, job) for platform in platforms}
     blocked = {platform: names for platform, names in blocked.items() if names}
     if blocked:
