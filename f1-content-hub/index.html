@@ -188,6 +188,10 @@
             <div id="analyticsEvents" class="log-list"></div>
           </div>
         </div>
+        <div class="subpanel" style="margin-top:12px">
+          <div class="section-title"><div><h3 style="margin:0">Prestazioni provider</h3><div class="muted">Snapshot server-side per cliente/piattaforma. I nomi delle metriche restano quelli restituiti dal provider.</div></div><span id="analyticsProviderStatus" class="badge">NESSUN DATO</span></div>
+          <div id="analyticsProviderRows" class="calendar-list"></div>
+        </div>
       </div>
     </section>
 
@@ -406,6 +410,7 @@ let socialChannels = [];
 let webSources = [];
 let storeCycles = [];
 let publicationEvents = [];
+let analyticsSnapshots = [];
 let whatsappSenders = [];
 let loadWarnings = [];
 let selectedClientId = "";
@@ -510,9 +515,10 @@ async function loadAll(){
     f1QueryWithRetry(function(){return sb.from("f1_client_web_sources").select("id,client_id,url,canonical_url,page_type,title,last_checked_at,active").eq("active",true).order("last_checked_at",{ascending:false}).limit(300)},"Fonti web",2),
     f1QueryWithRetry(function(){return sb.from("f1_client_store_cycles").select("*").order("clone_review_due_at")},"Cicli negozi",2),
     f1QueryWithRetry(function(){return sb.from("f1_publication_events").select("*, f1_content_clients(name)").order("created_at",{ascending:false}).limit(100)},"Eventi pubblicazione",2),
-    f1QueryWithRetry(function(){return sb.from("f1_whatsapp_senders").select("*").eq("active",true)},"WhatsApp",2)
+    f1QueryWithRetry(function(){return sb.from("f1_whatsapp_senders").select("*").eq("active",true)},"WhatsApp",2),
+    f1QueryWithRetry(function(){return sb.from("f1_social_analytics_snapshots").select("*, f1_content_clients(name)").order("captured_at",{ascending:false}).limit(500)},"Analytics provider",2)
   ]);
-  const ri=results[0],rcal=results[1],rch=results[2],rws=results[3],rsc=results[4],rpe=results[5],rwas=results[6];
+  const ri=results[0],rcal=results[1],rch=results[2],rws=results[3],rsc=results[4],rpe=results[5],rwas=results[6],ras=results[7];
   if(ri&&!ri.error)items=ri.data||[];
   if(rcal&&!rcal.error)calendar=rcal.data||[];
   if(rch&&!rch.error)socialChannels=rch.data||[];
@@ -520,6 +526,7 @@ async function loadAll(){
   if(rsc&&!rsc.error)storeCycles=rsc.data||[];
   if(rpe&&!rpe.error)publicationEvents=rpe.data||[];
   if(rwas&&!rwas.error)whatsappSenders=rwas.data||[];
+  if(ras&&!ras.error)analyticsSnapshots=ras.data||[];
 }
 function fillClientSelects(){
   const options='<option value="">Tutti i clienti</option>'+clients.map(function(c){return '<option value="'+c.id+'">'+esc(c.name)+'</option>'}).join("");
@@ -1132,6 +1139,50 @@ function renderPlanner(){
 }
 function eventIsError(x){const s=(String(x.status||"")+" "+String(x.action||"")+" "+String(x.error||"")).toUpperCase();return /ERROR|ERRORE|FAIL|AUTH_REQUIRED|DA_RIAUTORIZZARE/.test(s)}
 function eventIsSuccess(x){const s=(String(x.status||"")+" "+String(x.action||"")).toUpperCase();return /PUBBLICAT|PUBLISHED|SUCCESS|SCHEDULED|SCHEDULAT|SENT|COMPLETED/.test(s)&&!eventIsError(x)}
+function f1MetricLeaves(value,prefix,depth,out){
+  out=out||[];depth=depth||0;
+  if(out.length>=12||depth>3||value==null)return out;
+  if(typeof value==="number"&&Number.isFinite(value)){
+    out.push([prefix||"value",value]);return out;
+  }
+  if(Array.isArray(value)){
+    if(value.length===1)return f1MetricLeaves(value[0],prefix,depth+1,out);
+    value.slice(0,8).forEach(function(v,i){f1MetricLeaves(v,prefix?prefix+"."+i:String(i),depth+1,out)});
+    return out;
+  }
+  if(typeof value==="object"){
+    Object.keys(value).slice(0,30).forEach(function(k){
+      if(out.length>=12)return;
+      if(/(^|_)(id|timestamp|created_at|updated_at|date)$/i.test(k))return;
+      f1MetricLeaves(value[k],prefix?prefix+"."+k:k,depth+1,out);
+    });
+  }
+  return out;
+}
+function latestAnalyticsSnapshots(){
+  const scoped=analyticsSnapshots.filter(function(x){return !selectedClientId||x.client_id===selectedClientId});
+  const seen=new Set(),latest=[];
+  scoped.forEach(function(x){
+    const key=x.client_id+"|"+x.platform+"|"+x.provider+"|"+x.lookback_days;
+    if(seen.has(key))return;seen.add(key);latest.push(x);
+  });
+  return latest;
+}
+function renderProviderAnalytics(){
+  if(!el("analyticsProviderRows"))return;
+  const rows=latestAnalyticsSnapshots();
+  if(el("analyticsProviderStatus")){
+    el("analyticsProviderStatus").textContent=rows.length?rows.length+" SNAPSHOT":"NESSUN DATO";
+    el("analyticsProviderStatus").className="badge "+(rows.length?"green":"amber");
+  }
+  el("analyticsProviderRows").innerHTML=rows.length?rows.map(function(x){
+    const client=(x.f1_content_clients&&x.f1_content_clients.name)||(clients.find(function(c){return c.id===x.client_id})||{}).name||"Cliente";
+    const error=x.error||(x.metrics&&x.metrics.error);
+    const metrics=error?[]:f1MetricLeaves(x.metrics,"",0,[]);
+    const metricHtml=metrics.length?'<div class="badges" style="margin-top:7px">'+metrics.map(function(m){return '<span class="badge">'+esc(String(m[0]).replaceAll("_"," "))+' <b>'+esc(m[1])+'</b></span>'}).join("")+'</div>':'<div class="meta">Nessuna metrica numerica leggibile nello snapshot.</div>';
+    return '<div class="lineitem"><b>'+esc(platformLabel(x.platform))+'</b><div style="flex:1"><b>'+esc(client)+'</b><div class="meta">Provider: '+esc(x.provider||"postiz")+' · periodo '+esc(x.lookback_days||30)+' giorni · '+esc(fmt(x.captured_at))+'</div>'+(error?'<div class="meta" style="color:#ff9ca3">'+esc(error)+'</div>':metricHtml)+'</div><span class="badge '+(error?"":"green")+'">'+(error?"ERRORE":"REALE")+'</span></div>';
+  }).join(""):'<div class="empty">Nessuno snapshot analytics persistito. La sincronizzazione server-side mostrerà qui solo dati restituiti dal provider.</div>';
+}
 function renderAnalytics(){
   if(!el("analyticsMetrics"))return;
   let ev=publicationEvents.slice(), scopedItems=items.slice(), scopedChannels=socialChannels.slice();
@@ -1149,6 +1200,7 @@ function renderAnalytics(){
   const max=Math.max(1,...Object.values(counts));
   el("analyticsPlatforms").innerHTML=Object.keys(counts).length?Object.entries(counts).sort(function(a,b){return b[1]-a[1]}).map(function(x){return '<div class="platform-row"><b>'+esc(platformLabel(x[0]))+'</b><div class="platform-bar"><i style="width:'+Math.round(x[1]/max*100)+'%"></i></div><span>'+x[1]+'</span></div>'}).join(""):'<div class="empty">Nessun evento negli ultimi 30 giorni.</div>';
   el("analyticsEvents").innerHTML=ev.slice(0,20).map(function(x){const cls=eventIsError(x)?"":(eventIsSuccess(x)?"green":"amber");return '<div class="lineitem"><b>'+esc(fmt(x.created_at))+'</b><div><b>'+esc(x.action||"EVENTO")+'</b><div class="meta">'+esc((x.f1_content_clients&&x.f1_content_clients.name)||"")+' · '+esc(x.platform||"")+(x.error?'<br>'+esc(x.error):"")+'</div></div><span class="badge '+cls+'">'+esc(x.status||"")+'</span></div>'}).join("")||'<div class="empty">Nessun evento disponibile.</div>';
+  renderProviderAnalytics();
 }
 function renderCalendar(){
   renderPlanner();
