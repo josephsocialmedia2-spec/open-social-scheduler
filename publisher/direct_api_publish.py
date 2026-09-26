@@ -127,8 +127,9 @@ def remaining_platforms(job: dict[str, Any], only: set[str] | None = None) -> li
 
 def required_secrets(platform: str, client: dict[str, Any], job: dict[str, Any] | None = None) -> list[str]:
     provider = str((job or {}).get("provider") or "").strip().lower()
-    broker_requested = provider == "oauth_broker" and platform in {"tiktok", "linkedin", "linkedin-page", "youtube"}
-    if (oauth_broker.enabled() or broker_requested) and platform in {"tiktok", "linkedin", "linkedin-page", "youtube"}:
+    broker_requested = provider == "oauth_broker" and platform in {"facebook", "instagram", "tiktok", "linkedin", "linkedin-page", "youtube"}
+    broker_active = broker_requested or (oauth_broker.enabled() and platform in {"tiktok", "linkedin", "linkedin-page", "youtube"})
+    if broker_active:
         return []
     by_platform = {
         "facebook": ["FACEBOOK_PAGE_ACCESS_TOKEN"],
@@ -248,7 +249,12 @@ def meta_graph_base() -> str:
 
 
 def facebook_publish(job: dict[str, Any], client: dict[str, Any], paths: list[Path], _cache: PublicMediaCache) -> dict[str, Any]:
-    token = secret(client, "FACEBOOK_PAGE_ACCESS_TOKEN")
+    broker_requested = str(job.get("provider") or "").strip().lower() == "oauth_broker"
+    if broker_requested:
+        broker = oauth_broker.token(client, "facebook", force=True)
+        token = str(broker["access_token"])
+    else:
+        token = secret(client, "FACEBOOK_PAGE_ACCESS_TOKEN")
     if str(job.get("format") or "reel") == "reel":
         start = request("POST", f"{meta_graph_base()}/me/video_reels", params={"access_token": token, "upload_phase": "start"}).json()
         video_id = str(start["video_id"])
@@ -277,8 +283,16 @@ def ig_wait_container(container_id: str, token: str, timeout_seconds: int = 300)
 
 
 def instagram_publish(job: dict[str, Any], client: dict[str, Any], paths: list[Path], cache: PublicMediaCache) -> dict[str, Any]:
-    token = secret(client, "INSTAGRAM_ACCESS_TOKEN")
-    ig_user_id = secret(client, "INSTAGRAM_USER_ID")
+    broker_requested = str(job.get("provider") or "").strip().lower() == "oauth_broker"
+    if broker_requested:
+        broker = oauth_broker.token(client, "instagram", force=True)
+        token = str(broker["access_token"])
+        ig_user_id = str(broker.get("instagram_user_id") or broker.get("account_id") or "").strip()
+        if not ig_user_id:
+            raise oauth_broker.BrokerError("Instagram account selection required", auth_required=True)
+    else:
+        token = secret(client, "INSTAGRAM_ACCESS_TOKEN")
+        ig_user_id = secret(client, "INSTAGRAM_USER_ID")
     urls = [cache.upload(path, str(job["id"]), idx) for idx, path in enumerate(paths, 1)]
     if str(job.get("format") or "reel") == "reel":
         created = request("POST", f"{meta_graph_base()}/{ig_user_id}/media", params={"media_type": "REELS", "video_url": urls[0], "caption": str(job.get("caption") or "")[:2200], "share_to_feed": "true", "access_token": token}).json()

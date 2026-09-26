@@ -288,6 +288,8 @@ async function enterApp(){
   await seedClients();
   await loadAll();
   renderAll();
+  const oauthState=new URLSearchParams(location.search).get("oauth");
+  if(oauthState){setTab("automation");history.replaceState({},document.title,location.pathname);}
 }
 el("loginBtn").onclick=async function(){
   const email=el("authEmail").value.trim(), password=el("authPassword").value;
@@ -585,19 +587,65 @@ function socialStateClass(row){
   if(row&&["AUTORIZZAZIONE_RICHIESTA","CONFIGURAZIONE_PRONTA","ACCOUNT_DA_SELEZIONARE"].includes(row.connection_status))return "amber";
   return "";
 }
+function safeSocialHref(value){
+  const raw=String(value||"").trim();
+  return /^https?:\/\//i.test(raw)?raw:"";
+}
+function socialCollisionMap(){
+  const map={};
+  socialChannels.forEach(function(row){
+    if(!row||!row.enabled||!row.verified||!row.external_channel_id)return;
+    const key=String(row.platform||"")+"|"+String(row.external_channel_id||"");
+    (map[key]||(map[key]=[])).push(row.client_id);
+  });
+  return map;
+}
+function effectiveSocialState(row,collisions){
+  if(!row)return "NON CONFIGURATO";
+  const key=String(row.platform||"")+"|"+String(row.external_channel_id||"");
+  if(row.external_channel_id && collisions[key] && collisions[key].length>1)return "ACCOUNT_CONDIVISO";
+  if(row.reauthorization_required)return "DA_RIAUTORIZZARE";
+  if(row.token_expires_at && new Date(row.token_expires_at).getTime()<=Date.now())return "TOKEN_SCADUTO";
+  if(row.enabled&&row.verified)return "COLLEGATO";
+  return row.connection_status||"CANALE_DA_COLLEGARE";
+}
+function socialStateClass(row,state){
+  if(state==="COLLEGATO")return "green";
+  if(["CONFIGURAZIONE_PRONTA","AUTORIZZAZIONE_RICHIESTA","ACCOUNT_DA_SELEZIONARE","ACCOUNT_CONDIVISO","DA_RIAUTORIZZARE","TOKEN_SCADUTO"].includes(state))return "amber";
+  return "";
+}
 function renderSocialConnections(){
   const order=["facebook","instagram","linkedin-page","tiktok","youtube"];
+  const collisions=socialCollisionMap();
   const html=clients.map(function(c){
     const rows=order.map(function(p){
       const row=socialChannels.find(function(x){return x.client_id===c.id&&x.platform===p});
-      const state=row?(row.connection_status||(row.verified?"COLLEGATO":"CANALE_DA_COLLEGARE")):"NON CONFIGURATO";
-      const broker=["linkedin-page","tiktok","youtube"].includes(p);
-      const actions=broker
-        ? '<button class="btn small primary" onclick="window.f1ConnectSocial(\''+c.id+'\',\''+p+'\')">COLLEGA</button> <button class="btn small ghost" onclick="window.f1VerifySocial()">VERIFICA</button> '+(row&&row.verified?'<button class="btn small danger" onclick="window.f1DisconnectSocial(\''+c.id+'\',\''+p+'\')">DISCONNETTI</button>':'')
-        : '<span class="meta">Provider attuale: '+esc(row&&row.provider?row.provider:"direct")+'</span>';
-      return '<div class="lineitem"><b>'+esc(platformLabel(p))+'</b><div><span class="badge '+socialStateClass(row)+'">'+esc(state)+'</span><div class="meta">'+esc(row&&row.account_name?row.account_name:(row&&row.external_channel_id?row.external_channel_id:"Nessun account autorizzato"))+'</div></div><div>'+actions+'</div></div>';
+      const state=effectiveSocialState(row,collisions);
+      const provider=row&&row.provider?row.provider:"oauth_broker";
+      const profileUrl=safeSocialHref(row&&row.profile_url);
+      const account=row&&(row.account_name||row.external_channel_id)?(row.account_name||row.external_channel_id):"Nessun account autorizzato";
+      const openBtn=profileUrl?'<a class="btn small ghost" href="'+esc(profileUrl)+'" target="_blank" rel="noopener noreferrer">APRI PAGINA</a>':"";
+      const urlEditor='<div class="row" style="margin-top:7px;gap:6px"><input id="social-url-'+c.id+'-'+p+'" class="input" style="min-width:220px;padding:7px" placeholder="URL profilo" value="'+esc(profileUrl)+'"><button class="btn small ghost" onclick="window.f1SaveSocialUrl(\''+c.id+'\',\''+p+'\')">SALVA LINK</button></div>';
+      let actions=openBtn;
+      const connected=!!(row&&row.enabled&&row.verified);
+      const isBuffer=provider==="buffer";
+      if(isBuffer){
+        if(connected) actions+=' <button class="btn small ghost" onclick="window.f1VerifySocial(\''+c.id+'\',\''+p+'\')">VERIFICA</button>';
+      }else{
+        if(state==="ACCOUNT_DA_SELEZIONARE" && (p==="facebook"||p==="instagram")){
+          actions+=' <button class="btn small primary" onclick="window.f1SelectMetaAccount(\''+c.id+'\',\''+p+'\')">SELEZIONA ACCOUNT</button>';
+        }else if(!connected || ["DA_RIAUTORIZZARE","TOKEN_SCADUTO","CANALE_DA_COLLEGARE","CONFIGURAZIONE_PRONTA","AUTORIZZAZIONE_RICHIESTA","ACCOUNT_ERRATO"].includes(state)){
+          actions+=' <button class="btn small primary" onclick="window.f1ConnectSocial(\''+c.id+'\',\''+p+'\')">'+(["DA_RIAUTORIZZARE","TOKEN_SCADUTO"].includes(state)?"RIAUTORIZZA":"COLLEGA")+'</button>';
+        }
+        if(connected) actions+=' <button class="btn small ghost" onclick="window.f1VerifySocial(\''+c.id+'\',\''+p+'\')">VERIFICA</button>';
+        if(connected) actions+=' <button class="btn small danger" onclick="window.f1DisconnectSocial(\''+c.id+'\',\''+p+'\')">DISCONNETTI</button>';
+      }
+      const collisionNote=state==="ACCOUNT_CONDIVISO"?'<div class="meta" style="color:#ffcf66">Lo stesso account è associato a più clienti. La pubblicazione automatica deve essere verificata.</div>':"";
+      const verifiedAt=row&&row.last_verified_at?'<div class="meta">Ultima verifica: '+esc(fmt(row.last_verified_at))+'</div>':"";
+      return '<div class="lineitem" style="align-items:flex-start"><b>'+esc(platformLabel(p))+'</b><div style="flex:1"><span class="badge '+socialStateClass(row,state)+'">'+esc(state)+'</span><div class="meta"><b>'+esc(account)+'</b></div><div class="meta">Provider: '+esc(provider)+(row&&row.external_channel_id?' · ID: '+esc(row.external_channel_id):"")+'</div>'+verifiedAt+collisionNote+urlEditor+'</div><div class="row" style="justify-content:flex-end">'+actions+'</div></div>';
     }).join("");
-    return '<div style="margin-bottom:16px"><h3 style="margin:4px 0 8px">'+esc(c.name)+'</h3>'+rows+'</div>';
+    const discover=c.website?'<button class="btn small ghost" onclick="window.f1DiscoverSocials(\''+c.id+'\')">SCOPRI SOCIAL</button>':'';
+    return '<div style="margin-bottom:22px;padding:14px;border:1px solid #263a56;border-radius:14px"><div class="section-title"><h3 style="margin:0">'+esc(c.name)+'</h3>'+discover+'</div>'+rows+'</div>';
   }).join("");
   el("socialConnections").innerHTML=html||'<div class="empty">Nessun cliente.</div>';
 }
@@ -607,6 +655,13 @@ async function oauthSession(){
   if(!session)throw new Error("Sessione scaduta: accedi di nuovo.");
   return session;
 }
+async function brokerPost(path,payload){
+  const session=await oauthSession();
+  const r=await fetch(OAUTH_BROKER_URL+path,{method:"POST",headers:{Authorization:"Bearer "+session.access_token,apikey:SUPABASE_KEY,"content-type":"application/json"},body:JSON.stringify(payload||{})});
+  let data={};try{data=await r.json()}catch(_){}
+  if(!r.ok){const e=new Error(data.detail||data.error||"Errore");e.payload=data;e.status=r.status;throw e}
+  return data;
+}
 window.f1ConnectSocial=async function(clientId,platform){
   try{
     const session=await oauthSession();
@@ -614,19 +669,58 @@ window.f1ConnectSocial=async function(clientId,platform){
     const r=await fetch(url,{headers:{Authorization:"Bearer "+session.access_token,apikey:SUPABASE_KEY}});
     const data=await r.json();
     if(!r.ok){
-      if(data.error==="configuration_missing")return alert("Configurazione tecnica OAuth non ancora completata per "+platformLabel(platform)+". Questa parte è stata lasciata volutamente per ultima.");
-      throw new Error(data.error||"Errore OAuth");
+      if(data.error==="configuration_missing")return alert("Configurazione OAuth non ancora completata per "+platformLabel(platform)+". Aggiungi le credenziali server-side del provider e riprova.");
+      if(data.error==="already_connected")return alert(platformLabel(platform)+" è già collegato e non verrà modificato.");
+      throw new Error(data.detail||data.error||"Errore OAuth");
     }
     location.href=data.authorization_url;
   }catch(e){alert(e.message||String(e))}
 };
-window.f1VerifySocial=async function(){await loadAll();renderAutomation()};
-window.f1DisconnectSocial=async function(clientId,platform){
-  if(!confirm("Disconnettere "+platformLabel(platform)+" per questo cliente?"))return;
+window.f1VerifySocial=async function(clientId,platform){
   try{
-    const session=await oauthSession();
-    const r=await fetch(OAUTH_BROKER_URL+"/disconnect",{method:"POST",headers:{Authorization:"Bearer "+session.access_token,apikey:SUPABASE_KEY,"content-type":"application/json"},body:JSON.stringify({client_id:clientId,platform:oauthPlatform(platform)})});
-    const data=await r.json();if(!r.ok)throw new Error(data.error||"Errore disconnessione");
+    await brokerPost("/verify",{client_id:clientId,platform:oauthPlatform(platform)});
+    await loadAll();renderAutomation();
+  }catch(e){
+    await loadAll();renderAutomation();
+    alert("Verifica "+platformLabel(platform)+": "+(e.message||String(e)));
+  }
+};
+window.f1SaveSocialUrl=async function(clientId,platform){
+  const input=el("social-url-"+clientId+"-"+platform);
+  const value=input?input.value.trim():"";
+  if(!value)return alert("Inserisci l'URL del profilo.");
+  try{
+    await brokerPost("/profile-url",{client_id:clientId,platform:oauthPlatform(platform),profile_url:value});
+    await loadAll();renderAutomation();
+  }catch(e){alert(e.message||String(e))}
+};
+window.f1DiscoverSocials=async function(clientId){
+  try{
+    const data=await brokerPost("/discover-socials",{client_id:clientId});
+    await loadAll();renderAutomation();
+    const n=Object.keys(data.saved||{}).length;
+    alert(n?("Trovati e salvati "+n+" collegamenti social."):"Nessun nuovo collegamento social trovato sul sito.");
+  }catch(e){alert(e.message||String(e))}
+};
+window.f1SelectMetaAccount=async function(clientId,platform){
+  const row=socialChannels.find(function(x){return x.client_id===clientId&&x.platform===platform});
+  const candidates=(row&&row.oauth_metadata&&row.oauth_metadata.meta_candidates)||[];
+  if(!candidates.length)return alert("Nessun account disponibile. Ripeti COLLEGA.");
+  const lines=candidates.map(function(x,i){return (i+1)+". "+(x.account_name||x.account_id)+(x.profile_url?" — "+x.profile_url:"")}).join("\n");
+  const choice=prompt("Seleziona l'account per "+platformLabel(platform)+":\n\n"+lines+"\n\nInserisci il numero:");
+  const idx=Number(choice)-1;
+  if(!Number.isInteger(idx)||idx<0||idx>=candidates.length)return;
+  try{
+    await brokerPost("/meta/select",{client_id:clientId,platform:oauthPlatform(platform),account_id:candidates[idx].account_id});
+    await loadAll();renderAutomation();
+  }catch(e){alert(e.message||String(e))}
+};
+window.f1DisconnectSocial=async function(clientId,platform){
+  const row=socialChannels.find(function(x){return x.client_id===clientId&&x.platform===platform});
+  if(row&&row.provider==="buffer")return alert("Questo canale è gestito da Buffer e non viene modificato da OAuth.");
+  if(!confirm("Disconnettere "+platformLabel(platform)+" per questo cliente? Il link del profilo resterà salvato."))return;
+  try{
+    await brokerPost("/disconnect",{client_id:clientId,platform:oauthPlatform(platform)});
     await loadAll();renderAutomation();
   }catch(e){alert(e.message||String(e))}
 };
