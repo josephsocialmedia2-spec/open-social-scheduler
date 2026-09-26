@@ -23,8 +23,8 @@ jobs:
           node-version: '22'
       - name: Build local Supabase browser bundle
         run: |
-          mkdir -p .vendor-build f1-content-hub/vendor
-          cd .vendor-build
+          mkdir -p vendor-build-temp f1-content-hub/vendor
+          cd vendor-build-temp
           npm init -y >/dev/null 2>&1
           npm install --no-audit --no-fund @supabase/supabase-js@2.117.0 esbuild@0.25.9
           cat > entry.js <<'EOF'
@@ -33,7 +33,7 @@ jobs:
           EOF
           npx esbuild entry.js --bundle --minify --format=iife --platform=browser --target=es2020 --outfile=../f1-content-hub/vendor/supabase.min.js
           cd ..
-          rm -rf .vendor-build
+          rm -rf vendor-build-temp
       - name: Point hub to local Supabase bundle
         run: |
           python - <<'PY'
