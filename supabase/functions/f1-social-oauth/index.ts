@@ -282,6 +282,53 @@ function configured(platform) {
   const c = providerConfig(platform);
   return !!(c && c.clientId && c.clientSecret);
 }
+async function shortFingerprint(value) {
+  const bytes = new TextEncoder().encode(String(value || ""));
+  const hash = new Uint8Array(await crypto.subtle.digest("SHA-256", bytes));
+  return Array.from(hash.slice(0, 8)).map((b) => b.toString(16).padStart(2, "0")).join("");
+}
+async function tiktokConfigCheck() {
+  const cfg = providerConfig("tiktok");
+  const rawKey = String(cfg?.clientId || "");
+  const key = rawKey.trim();
+  const rawSecret = String(cfg?.clientSecret || "");
+  const secret = rawSecret.trim();
+  if (!key || !secret) {
+    return respond({
+      ok: false,
+      configured: false,
+      client_key_present: !!key,
+      client_secret_present: !!secret
+    }, 503);
+  }
+  const body = new URLSearchParams();
+  body.set("client_key", key);
+  body.set("scope", "user.info.basic");
+  const res = await fetch("https://open.tiktokapis.com/v2/oauth/get_qrcode/", {
+    method: "POST",
+    headers: { "content-type": "application/x-www-form-urlencoded", "cache-control": "no-store" },
+    body
+  });
+  let payload = {};
+  try { payload = await res.json(); } catch (_) {}
+  const errorCode = String(payload?.error?.code || payload?.error || "");
+  const errorMessage = String(payload?.error?.message || payload?.error_description || "");
+  return respond({
+    ok: res.ok && (!errorCode || errorCode === "ok"),
+    configured: true,
+    provider_http_status: res.status,
+    client_key_valid: res.ok && (!errorCode || errorCode === "ok"),
+    client_key_length: key.length,
+    client_key_fingerprint: await shortFingerprint(key),
+    client_key_outer_whitespace: rawKey !== key,
+    client_secret_length: secret.length,
+    client_secret_outer_whitespace: rawSecret !== secret,
+    scope: cfg?.scope || "",
+    redirect_uri: callbackUrl("tiktok"),
+    tiktok_error_code: errorCode || null,
+    tiktok_error_message: errorMessage || null
+  }, res.ok ? 200 : 502);
+}
 async function exchangeCode(platform, code) {
   const p = canonicalPlatform(platform);
   const c = providerConfig(p);
@@ -616,6 +663,7 @@ Deno.serve(async (req) => {
         oauth_required_only_at_final_setup: true
       });
     }
+    if (route === "tiktok" && routeParts[1] === "config-check" && req.method === "GET") return await tiktokConfigCheck();
     if (route === "authorize" && req.method === "GET") return await authorize(req, url);
     if (route === "callback" && req.method === "GET") return await callback(url, canonicalPlatform(routeParts[1]));
     if (route === "status" && req.method === "GET") return await status(req, url);
