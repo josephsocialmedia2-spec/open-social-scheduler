@@ -22,18 +22,30 @@ class BrokerError(RuntimeError):
         self.auth_required = auth_required
 
 
+def available() -> bool:
+    return bool(os.getenv("SUPABASE_SERVICE_ROLE_KEY", "").strip())
+
+
 def enabled() -> bool:
     flag = os.getenv("F1_OAUTH_BROKER_ENABLED", "").strip().lower()
-    service_key = os.getenv("SUPABASE_SERVICE_ROLE_KEY", "").strip()
-    return flag in {"1", "true", "yes", "on"} and bool(service_key)
+    return flag in {"1", "true", "yes", "on"} and available()
 
 
 def broker_url() -> str:
     return os.getenv("F1_OAUTH_BROKER_URL", DEFAULT_BROKER_URL).rstrip("/")
 
 
-def token(client: dict[str, Any], platform: str, timeout: int = 30) -> dict[str, Any]:
-    if not enabled():
+def token(
+    client: dict[str, Any],
+    platform: str,
+    timeout: int = 30,
+    *,
+    force: bool = False,
+) -> dict[str, Any]:
+    if force:
+        if not available():
+            raise BrokerError("OAuth broker service key unavailable")
+    elif not enabled():
         raise BrokerError("OAuth broker disabled")
 
     client_ref = str(
