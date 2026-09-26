@@ -9,12 +9,14 @@ on:
       - 'publisher/direct_api_publish.py'
       - 'publisher/oauth_broker.py'
       - 'publisher/test_oauth_broker.py'
+      - 'publisher/test_social_oauth_ui.py'
       - 'publisher/clients/**'
       - 'publisher/queue.json'
       - 'f1-content-hub/**'
       - 'supabase/functions/f1-social-oauth/**'
       - 'supabase/migrations/20260925_f1_social_oauth_broker.sql'
       - 'supabase/migrations/20260926_f1_tiktok_review_flow.sql'
+      - 'supabase/migrations/20260926_social_links_meta_oauth.sql'
       - 'scripts/install_tiktok_verification.py'
       - 'docs/TIKTOK_APP_REVIEW_DEMO.md'
       - '.github/workflows/social-publisher.yml'
@@ -37,7 +39,7 @@ jobs:
       - name: Compile bridge scripts
         run: python -m py_compile publisher/supabase_queue_bridge.py publisher/supabase_website_sync.py publisher/direct_api_entry.py publisher/direct_api_publish.py publisher/oauth_broker.py
       - name: Test OAuth broker client and TikTok policy
-        run: PYTHONPATH=publisher python -m unittest publisher/test_oauth_broker.py publisher/test_tiktok_policy.py
+        run: PYTHONPATH=publisher python -m unittest publisher/test_oauth_broker.py publisher/test_tiktok_policy.py publisher/test_social_oauth_ui.py
       - name: Validate queue and client configs
         run: |
           python - <<'PY'
