@@ -164,14 +164,14 @@ async function clientForUser(clientId, userId) {
   const rows = await db(
     "f1_content_clients?id=eq." + encodeURIComponent(clientId) +
     "&owner_id=eq." + encodeURIComponent(userId) +
-    "&select=id,owner_id,name,slug,website&limit=1"
+    "&select=id,owner_id,name,slug,website,facebook,instagram,linkedin,tiktok,youtube,profile_metadata&limit=1"
   );
   return rows && rows[0] ? rows[0] : null;
 }
 async function clientForWorker(ref) {
   const isUuid = /^[0-9a-f]{8}-[0-9a-f-]{27,}$/i.test(ref);
   const filter = isUuid ? "id=eq." + encodeURIComponent(ref) : "slug=eq." + encodeURIComponent(ref);
-  const rows = await db("f1_content_clients?" + filter + "&status=eq.ATTIVO&select=id,owner_id,name,slug&limit=2");
+  const rows = await db("f1_content_clients?" + filter + "&status=eq.ATTIVO&select=id,owner_id,name,slug,facebook,instagram,linkedin,tiktok,youtube,profile_metadata&limit=2");
   if (!rows || !rows.length) return null;
   if (rows.length > 1) throw new Error("client reference ambiguous");
   return rows[0];
@@ -438,11 +438,25 @@ async function profileFor(platform, accessToken) {
     const data = await res.json();
     if (!res.ok || (data.error && data.error.code !== "ok")) throw new Error("TikTok profile failed: " + JSON.stringify(data).slice(0, 800));
     const u = data.data?.user || {};
+    let creator = {};
+    try {
+      const creatorRes = await fetch("https://open.tiktokapis.com/v2/post/publish/creator_info/query/", {
+        method:"POST",
+        headers:{ authorization:"Bearer " + accessToken, "content-type":"application/json; charset=UTF-8", "cache-control":"no-store" },
+        body:"{}"
+      });
+      const creatorPayload = await creatorRes.json();
+      if (creatorRes.ok && (!creatorPayload?.error?.code || creatorPayload.error.code === "ok")) creator = creatorPayload?.data || {};
+    } catch (_) {}
+    const username = String(creator?.creator_username || "").replace(/^@/, "");
     return {
       subject: u.open_id || null,
       account_id: u.open_id || null,
-      account_name: u.display_name || "TikTok",
-      avatar_url: u.avatar_url || null
+      account_name: creator?.creator_nickname || u.display_name || "TikTok",
+      username: username || null,
+      creator_username: username || null,
+      profile_url: username ? "https://www.tiktok.com/@" + username : null,
+      avatar_url: creator?.creator_avatar_url || u.avatar_url || null
     };
   }
   if (p === "linkedin") {
@@ -486,9 +500,128 @@ function cleanProfileUrl(value) {
   } catch (_) { return null; }
 }
 function sameProfileUrl(a, b) {
-  const aa = String(a || "").replace(/\/$/, "").toLowerCase();
-  const bb = String(b || "").replace(/\/$/, "").toLowerCase();
+  const normalize = (value) => {
+    try {
+      const u = new URL(String(value || "").trim());
+      u.hash = "";
+      u.search = "";
+      let path = u.pathname.replace(/\/+$/, "").toLowerCase();
+      const host = u.hostname.toLowerCase().replace(/^www\./, "");
+      return host + path;
+    } catch (_) {
+      return String(value || "").trim().replace(/\/+$/, "").toLowerCase();
+    }
+  };
+  const aa = normalize(a);
+  const bb = normalize(b);
   return !!aa && !!bb && aa === bb;
+}
+function exclusiveWhitelist(client) {
+  return client?.slug === "f1-social" || client?.profile_metadata?.exclusive_account_whitelist === true;
+}
+function expectedProfileUrl(client, platform) {
+  const p = canonicalPlatform(platform);
+  if (p === "facebook") return cleanProfileUrl(client?.facebook);
+  if (p === "instagram") return cleanProfileUrl(client?.instagram);
+  if (p === "tiktok") return cleanProfileUrl(client?.tiktok);
+  if (p === "youtube") return cleanProfileUrl(client?.youtube);
+  if (p === "linkedin") return cleanProfileUrl(client?.linkedin);
+  return null;
+}
+function handleFromProfileUrl(platform, value) {
+  const clean = cleanProfileUrl(value);
+  if (!clean) return "";
+  try {
+    const u = new URL(clean);
+    const parts = u.pathname.split("/").filter(Boolean);
+    if (!parts.length) return "";
+    if (canonicalPlatform(platform) === "youtube" && parts[0] === "channel") return parts[1] || "";
+    return String(parts[0] || "").replace(/^@/, "").toLowerCase();
+  } catch (_) { return ""; }
+}
+function expectedAccountMatches(client, platform, profile) {
+  if (!exclusiveWhitelist(client)) return true;
+  const p = canonicalPlatform(platform);
+  const expected = expectedProfileUrl(client, p);
+  if (!expected) return false;
+  const actualUrl = cleanProfileUrl(profile?.profile_url);
+  if (actualUrl && sameProfileUrl(expected, actualUrl)) return true;
+  const expectedHandle = handleFromProfileUrl(p, expected);
+  const actualHandle = String(profile?.username || profile?.creator_username || "").replace(/^@/, "").toLowerCase();
+  if (expectedHandle && actualHandle && expectedHandle === actualHandle) return true;
+  if (p === "youtube") {
+    const expectedId = handleFromProfileUrl("youtube", expected);
+    const actualId = String(profile?.account_id || profile?.subject || "");
+    if (expectedId && actualId && expectedId === actualId) return true;
+  }
+  return false;
+}
+function requiredPublishScope(platform) {
+  const p = canonicalPlatform(platform);
+  if (p === "facebook") return "pages_manage_posts";
+  if (p === "instagram") return "instagram_content_publish";
+  if (p === "tiktok") return "video.publish";
+  if (p === "youtube") return "https://www.googleapis.com/auth/youtube.upload";
+  if (p === "linkedin") return "w_member_social";
+  return "";
+}
+function tokenScopes(value) {
+  return new Set(String(value || "").split(/[,\s]+/).map(x => x.trim()).filter(Boolean));
+}
+function hasRequiredPublishScope(platform, value) {
+  const required = requiredPublishScope(platform);
+  return !required || tokenScopes(value).has(required);
+}
+async function accountCollision(ownerId, clientId, platform, accountId) {
+  if (!accountId) return [];
+  const cp = channelPlatform(platform);
+  const rows = await db(
+    "f1_client_social_channels?platform=eq." + encodeURIComponent(cp) +
+    "&external_channel_id=eq." + encodeURIComponent(String(accountId)) +
+    "&enabled=eq.true&verified=eq.true&select=client_id,account_name,profile_url&limit=20"
+  );
+  return (rows || []).filter(x => String(x.client_id) !== String(clientId));
+}
+async function assertExpectedAccount(ownerId, client, platform, profile, scopeValue = "") {
+  const accountId = String(profile?.account_id || profile?.subject || profile?.author_urn || "");
+  if (exclusiveWhitelist(client) && !expectedProfileUrl(client, platform)) {
+    await patchChannel(ownerId, client.id, platform, {
+      enabled:false, verified:false, connection_status:"ACCOUNT_NON_AUTORIZZATO",
+      oauth_metadata:{ reason:"platform_not_whitelisted", at:nowIso() }
+    });
+    throw new Error("ACCOUNT_NON_AUTORIZZATO");
+  }
+  if (!expectedAccountMatches(client, platform, profile)) {
+    await patchChannel(ownerId, client.id, platform, {
+      enabled:false, verified:false, connection_status:"ACCOUNT_ERRATO",
+      oauth_metadata:{
+        reason:"whitelist_mismatch",
+        expected_profile_url:expectedProfileUrl(client, platform),
+        actual_profile_url:profile?.profile_url || null,
+        actual_account_id:accountId || null,
+        actual_account_name:profile?.account_name || null,
+        at:nowIso()
+      }
+    });
+    throw new Error("ACCOUNT_ERRATO");
+  }
+  if (!hasRequiredPublishScope(platform, scopeValue)) {
+    await patchChannel(ownerId, client.id, platform, {
+      enabled:false, verified:false, connection_status:"AUTH_REQUIRED",
+      reauthorization_required:true,
+      oauth_metadata:{ reason:"publish_scope_missing", required_scope:requiredPublishScope(platform), at:nowIso() }
+    });
+    throw authRequiredError("AUTH_REQUIRED");
+  }
+  const collisions = await accountCollision(ownerId, client.id, platform, accountId);
+  if (collisions.length) {
+    await patchChannel(ownerId, client.id, platform, {
+      enabled:false, verified:false, connection_status:"ACCOUNT_CONDIVISO",
+      oauth_metadata:{ reason:"account_shared_across_clients", collisions, at:nowIso() }
+    });
+    throw new Error("ACCOUNT_CONDIVISO");
+  }
+  return true;
 }
 async function metaAccounts(userToken) {
   const fields = "id,name,link,access_token,tasks,instagram_business_account{id,username,name,profile_picture_url}";
@@ -544,6 +677,7 @@ function chooseCandidate(profileUrl, candidates) {
       if (fuzzy) return fuzzy;
     } catch (_) {}
   }
+  if (profileUrl) return null;
   return candidates.length === 1 ? candidates[0] : null;
 }
 async function metaProfileFromSelection(platform, userToken, selectionId, existingProfileUrl = null) {
@@ -610,6 +744,9 @@ async function authorize(req, url) {
   if (!isSupported(platform)) return respond({ error: "unsupported_platform" }, 400);
   const client = await clientForUser(clientId, user.id);
   if (!client) return respond({ error: "client_not_found" }, 404);
+  if (exclusiveWhitelist(client) && !expectedProfileUrl(client, platform)) {
+    return respond({ error:"ACCOUNT_NON_AUTORIZZATO", platform }, 409);
+  }
   const existingChannel = await channelRow(user.id, client.id, platform);
   if (existingChannel?.enabled && existingChannel?.verified) {
     return respond({ error: "already_connected", platform, provider: existingChannel.provider }, 409);
@@ -660,6 +797,8 @@ async function callback(url, platform) {
   if (!code) return respond({ error: "authorization_code_missing" }, 400);
   try {
     const tokenData = await exchangeCode(platform, code);
+    const client = await clientForUser(state.cid, state.uid);
+    if (!client) throw new Error("client_not_found");
     if (platform === "facebook" || platform === "instagram") {
       const current = await channelRow(state.uid, state.cid, platform);
       const meta = await metaProfileFromSelection(platform, String(tokenData.access_token || ""), null, current?.profile_url || null);
@@ -680,6 +819,7 @@ async function callback(url, platform) {
         return redirect(HUB_URL + "?oauth=select_account&platform=" + encodeURIComponent(platform) + "&client_id=" + encodeURIComponent(state.cid));
       }
       const selected = meta.selected;
+      await assertExpectedAccount(state.uid, client, platform, selected, tokenData.scope || "");
       await upsertToken(state.uid, state.cid, platform, tokenData, {
         subject: selected.account_id,
         account_id: selected.account_id,
@@ -692,6 +832,7 @@ async function callback(url, platform) {
       });
     } else {
       const profile = await profileFor(platform, String(tokenData.access_token || ""));
+      await assertExpectedAccount(state.uid, client, platform, profile, tokenData.scope || "");
       await upsertToken(state.uid, state.cid, platform, tokenData, profile);
     }
     return redirect(HUB_URL + "?oauth=connected&platform=" + encodeURIComponent(platform) + "&client_id=" + encodeURIComponent(state.cid));
@@ -726,9 +867,12 @@ async function workerToken(req, url) {
   const client = await clientForWorker(clientRef);
   if (!client) return respond({ error: "client_not_found" }, 404);
   try {
+    const channel = await channelRow(client.owner_id, client.id, platform);
+    if (!channel?.enabled || !channel?.verified) return respond({ error:"AUTH_REQUIRED", detail:"channel_not_verified" },409);
     const token = await usableToken(client.owner_id, client.id, platform);
     const row = await tokenRow(client.owner_id, client.id, platform);
     const metadata = row?.metadata || token.metadata || {};
+    if (!hasRequiredPublishScope(platform, row?.scope || "")) return respond({ error:"AUTH_REQUIRED", detail:"publish_scope_missing" },409);
     if (platform === "facebook" || platform === "instagram") {
       const selection = String(metadata.account_id || row?.provider_subject || "");
       if (!selection) return respond({ error: "ACCOUNT_DA_SELEZIONARE" }, 409);
@@ -736,6 +880,8 @@ async function workerToken(req, url) {
       const candidates = metaCandidates(platform, pages);
       const selected = candidates.find(x => x.account_id === selection);
       if (!selected) return respond({ error: "ACCOUNT_ERRATO" }, 409);
+      try { await assertExpectedAccount(client.owner_id, client, platform, selected, row?.scope || ""); }
+      catch (e) { return respond({ error:String(e).includes("ACCOUNT_CONDIVISO")?"ACCOUNT_CONDIVISO":"ACCOUNT_ERRATO" },409); }
       const pageToken = await metaPageToken(token.access_token, selected.page_id);
       return respond({
         access_token: pageToken,
@@ -744,16 +890,27 @@ async function workerToken(req, url) {
         account_name: selected.account_name,
         profile_url: selected.profile_url,
         page_id: selected.page_id,
-        instagram_user_id: platform === "instagram" ? selected.account_id : null
+        instagram_user_id: platform === "instagram" ? selected.account_id : null,
+        scopes: String(row?.scope || "").split(/[,\s]+/).filter(Boolean),
+        account_shared: false
       });
+    }
+    const liveProfile = await profileFor(platform, token.access_token);
+    try { await assertExpectedAccount(client.owner_id, client, platform, liveProfile, row?.scope || ""); }
+    catch (e) {
+      const msg=String(e);
+      return respond({ error:msg.includes("ACCOUNT_CONDIVISO")?"ACCOUNT_CONDIVISO":(msg.includes("AUTH_REQUIRED")?"AUTH_REQUIRED":"ACCOUNT_ERRATO") },409);
     }
     return respond({
       access_token: token.access_token,
       expires_at: token.expires_at,
-      account_id: metadata.account_id || row?.provider_subject || null,
-      account_name: metadata.account_name || null,
-      profile_url: metadata.profile_url || null,
-      author_urn: metadata.author_urn || null
+      account_id: liveProfile.account_id || metadata.account_id || row?.provider_subject || null,
+      account_name: liveProfile.account_name || metadata.account_name || null,
+      profile_url: liveProfile.profile_url || metadata.profile_url || null,
+      author_urn: liveProfile.author_urn || metadata.author_urn || null,
+      creator_username: liveProfile.creator_username || liveProfile.username || null,
+      scopes: String(row?.scope || "").split(/[,\s]+/).filter(Boolean),
+      account_shared: false
     });
   } catch (e) {
     const authRequired = isAuthRequiredError(e);
@@ -874,6 +1031,7 @@ async function metaSelect(req) {
   if (!meta.selected) return respond({ error: "account_not_available" }, 404);
   const seconds = token.expires_at ? Math.max(60, Math.floor((new Date(token.expires_at).getTime()-Date.now())/1000)) : 0;
   const selected = meta.selected;
+  await assertExpectedAccount(user.id, client, platform, selected, row?.scope || "");
   const safeCandidates = meta.candidates.map(({account_id,account_name,profile_url,page_id,page_name,username,tasks}) =>
     ({account_id,account_name,profile_url,page_id,page_name,username,tasks})
   );
@@ -926,6 +1084,7 @@ async function verifyChannel(req) {
       profile = await profileFor(platform, token.access_token);
     }
     const liveId = String(profile?.account_id || profile?.subject || "");
+    await assertExpectedAccount(user.id, client, platform, profile, (await tokenRow(user.id, client.id, platform))?.scope || "");
     if (row.external_channel_id && liveId && String(row.external_channel_id) !== liveId) {
       await patchChannel(user.id, client.id, platform, { verified:false, connection_status:"ACCOUNT_ERRATO", last_verified_at:nowIso() });
       return respond({ error:"ACCOUNT_ERRATO", expected:row.external_channel_id, actual:liveId },409);
