@@ -1,0 +1,308 @@
+{
+  "test_id": "20260926-audio-caption",
+  "created_at": "2026-09-26T12:32:21.423897+00:00",
+  "duplicated_tiktok_accounts": {
+    "-000rTUYv_0DDSwZS4zPKGG0y2aorHuZmnj0": [
+      "antica-cappella",
+      "immobiliare-la-sacra",
+      "cartolibreria-10-e-lode",
+      "real-media-pro",
+      "f1-immobiliare",
+      "marta-ruffino"
+    ]
+  },
+  "clients": {
+    "antica-cappella": {
+      "territory": "Avigliana · Valle di Susa · Provincia di Torino",
+      "source_page": "https://commons.wikimedia.org/wiki/File:AFN_News_Now_-_Chef_Irvine_Visit_(1006156).webm",
+      "license": "Public domain (U.S. Air Force work)",
+      "author": "U.S. Air Force / DVIDS",
+      "duration_seconds": 55.02,
+      "narration": "Quando si sceglie un ristorante per una cena, una ricorrenza o un evento, non conta soltanto quello che arriva nel piatto. Contano l'accoglienza, l'attenzione, il ritmo del servizio e la capacità di far sentire ogni ospite nel posto giusto. Antica Cappella, ad Avigliana, lavora su questa idea di esperienza: cucina di tradizione, momenti da condividere e spazi pensati per pranzi, cene, cerimonie ed eventi. Il valore di un locale storico sta anche nella continuità: conoscere il territorio, rispettare le stagioni e curare i dettagli. Se stai organizzando un pranzo speciale, una cena o una festa in Valle di Susa, informati per tempo sulla disponibilità e sul tipo di menù più adatto al tuo evento.",
+      "caption_master": "Quando si sceglie un ristorante per una cena, una ricorrenza o un evento, non conta soltanto quello che arriva nel piatto. Contano l'accoglienza, l'attenzione, il ritmo del servizio e la capacità di far sentire ogni ospite nel posto giusto. Antica Cappella, ad Avigliana, lavora su questa idea di esperienza: cucina di tradizione, momenti da condividere e spazi pensati per pranzi, cene, cerimonie ed eventi. Il valore di un locale storico sta anche nella continuità: conoscere il territorio, rispettare le stagioni e curare i dettagli. Se stai organizzando un pranzo speciale, una cena o una festa in Valle di Susa, informati per tempo sulla disponibilità e sul tipo di menù più adatto al tuo evento.\n\nPer informazioni e prenotazioni contatta Antica Cappella ad Avigliana.\n\n#AnticaCappella #Avigliana #ValleDiSusa #Torino #Ristorante #CucinaPiemontese #Eventi",
+      "audio_caption_match": 1.0,
+      "srt": "publisher/media/generated/multiclient-test-20260926/antica-cappella.srt",
+      "vtt": "publisher/media/generated/multiclient-test-20260926/antica-cappella.vtt",
+      "jobs": [
+        {
+          "job_id": "multiclient-test-20260926-audio-caption-antica-cappella-instagram",
+          "platform": "instagram",
+          "provider": "buffer",
+          "account_name": null,
+          "external_channel_id": "6ab5cfc6ea19ca0bdedecef3"
+        }
+      ],
+      "skipped": [
+        {
+          "platform": "linkedin",
+          "reason": "NON_COLLEGATO"
+        },
+        {
+          "platform": "facebook",
+          "reason": "NON_COLLEGATO"
+        },
+        {
+          "platform": "youtube",
+          "reason": "NON_COLLEGATO"
+        },
+        {
+          "platform": "tiktok",
+          "reason": "BLOCCATO_ACCOUNT_DUPLICATO",
+          "account_name": "joseph malafronte",
+          "external_channel_id": "-000rTUYv_0DDSwZS4zPKGG0y2aorHuZmnj0",
+          "mapped_clients": [
+            "antica-cappella",
+            "immobiliare-la-sacra",
+            "cartolibreria-10-e-lode",
+            "real-media-pro",
+            "f1-immobiliare",
+            "marta-ruffino"
+          ]
+        }
+      ]
+    },
+    "cartolibreria-10-e-lode": {
+      "territory": "Susa · Valle di Susa · Provincia di Torino",
+      "source_page": "https://commons.wikimedia.org/wiki/File:Office_pencils_in_market.jpg",
+      "license": "CC0 1.0 Universal",
+      "author": "Umarxon III",
+      "duration_seconds": 58.56,
+      "narration": "Una cartoleria di quartiere non serve soltanto quando manca una penna all'ultimo momento. È un punto pratico per organizzare scuola, studio e lavoro con quaderni, materiali di scrittura, colori, accessori e piccoli strumenti che usiamo ogni giorno. Scegliere il prodotto giusto significa anche evitare acquisti inutili: una penna adatta, un quaderno con la grammatura corretta o un sistema semplice per archiviare possono fare la differenza nella routine. Cartolibreria 10 e Lode vuole essere un riferimento locale per chi cerca materiale scolastico e di cancelleria nella zona di Susa e in Valle di Susa. Prima di acquistare, controlla disponibilità, formati e varianti: così trovi più velocemente quello che serve davvero per scuola, ufficio o creatività.",
+      "caption_master": "Una cartoleria di quartiere non serve soltanto quando manca una penna all'ultimo momento. È un punto pratico per organizzare scuola, studio e lavoro con quaderni, materiali di scrittura, colori, accessori e piccoli strumenti che usiamo ogni giorno. Scegliere il prodotto giusto significa anche evitare acquisti inutili: una penna adatta, un quaderno con la grammatura corretta o un sistema semplice per archiviare possono fare la differenza nella routine. Cartolibreria 10 e Lode vuole essere un riferimento locale per chi cerca materiale scolastico e di cancelleria nella zona di Susa e in Valle di Susa. Prima di acquistare, controlla disponibilità, formati e varianti: così trovi più velocemente quello che serve davvero per scuola, ufficio o creatività.\n\nContatta Cartolibreria 10 e Lode per disponibilità e novità in negozio.\n\n#Cartolibreria10eLode #Susa #ValleDiSusa #Torino #Cartoleria #Scuola #Cancelleria",
+      "audio_caption_match": 1.0,
+      "srt": "publisher/media/generated/multiclient-test-20260926/cartolibreria-10-e-lode.srt",
+      "vtt": "publisher/media/generated/multiclient-test-20260926/cartolibreria-10-e-lode.vtt",
+      "jobs": [],
+      "skipped": [
+        {
+          "platform": "facebook",
+          "reason": "NON_COLLEGATO"
+        },
+        {
+          "platform": "instagram",
+          "reason": "NON_COLLEGATO"
+        },
+        {
+          "platform": "linkedin",
+          "reason": "NON_COLLEGATO"
+        },
+        {
+          "platform": "youtube",
+          "reason": "NON_COLLEGATO"
+        },
+        {
+          "platform": "tiktok",
+          "reason": "BLOCCATO_ACCOUNT_DUPLICATO",
+          "account_name": "joseph malafronte",
+          "external_channel_id": "-000rTUYv_0DDSwZS4zPKGG0y2aorHuZmnj0",
+          "mapped_clients": [
+            "antica-cappella",
+            "immobiliare-la-sacra",
+            "cartolibreria-10-e-lode",
+            "real-media-pro",
+            "f1-immobiliare",
+            "marta-ruffino"
+          ]
+        }
+      ]
+    },
+    "f1-immobiliare": {
+      "territory": "Valle di Susa · Avigliana · Susa · Provincia di Torino",
+      "source_page": "https://commons.wikimedia.org/wiki/File:Men_at_work_in_building_site.webm",
+      "license": "CC0 1.0 Universal",
+      "author": "Akum20",
+      "duration_seconds": 60.18,
+      "narration": "Vendere casa non dovrebbe partire da una sensazione sul prezzo. Dovrebbe partire dai dati. Prima di pubblicare un immobile è utile osservare la microzona, gli immobili concorrenti, le caratteristiche reali della casa e il tipo di domanda presente sul territorio. Un prezzo troppo alto può ridurre l'interesse e allungare i tempi; un prezzo non ragionato può invece lasciare valore sul tavolo. F1 Immobiliare lavora con un principio semplice: prima i dati, poi la strategia, poi la vendita. Per un proprietario in Valle di Susa significa capire come presentare l'immobile, quale pubblico raggiungere e quale percorso usare prima ancora di pubblicare l'annuncio. Se stai pensando di vendere, parti da un'analisi comprensibile e verificabile del tuo immobile e del mercato locale.",
+      "caption_master": "Vendere casa non dovrebbe partire da una sensazione sul prezzo. Dovrebbe partire dai dati. Prima di pubblicare un immobile è utile osservare la microzona, gli immobili concorrenti, le caratteristiche reali della casa e il tipo di domanda presente sul territorio. Un prezzo troppo alto può ridurre l'interesse e allungare i tempi; un prezzo non ragionato può invece lasciare valore sul tavolo. F1 Immobiliare lavora con un principio semplice: prima i dati, poi la strategia, poi la vendita. Per un proprietario in Valle di Susa significa capire come presentare l'immobile, quale pubblico raggiungere e quale percorso usare prima ancora di pubblicare l'annuncio. Se stai pensando di vendere, parti da un'analisi comprensibile e verificabile del tuo immobile e del mercato locale.\n\nF1 Immobiliare: non a sensazione, con i dati. Richiedi un'analisi del valore.\n\n#F1Immobiliare #ValleDiSusa #Avigliana #Susa #Torino #VendereCasa #ValutazioneImmobiliare",
+      "audio_caption_match": 1.0,
+      "srt": "publisher/media/generated/multiclient-test-20260926/f1-immobiliare.srt",
+      "vtt": "publisher/media/generated/multiclient-test-20260926/f1-immobiliare.vtt",
+      "jobs": [
+        {
+          "job_id": "multiclient-test-20260926-audio-caption-f1-immobiliare-youtube",
+          "platform": "youtube",
+          "provider": "oauth_broker",
+          "account_name": "joseph_real_estate",
+          "external_channel_id": "UCjhfd8E-XMRGGzOLdwd0sxA"
+        }
+      ],
+      "skipped": [
+        {
+          "platform": "facebook",
+          "reason": "NON_COLLEGATO"
+        },
+        {
+          "platform": "instagram",
+          "reason": "NON_COLLEGATO"
+        },
+        {
+          "platform": "linkedin",
+          "reason": "NON_COLLEGATO"
+        },
+        {
+          "platform": "tiktok",
+          "reason": "BLOCCATO_ACCOUNT_DUPLICATO",
+          "account_name": "joseph malafronte",
+          "external_channel_id": "-000rTUYv_0DDSwZS4zPKGG0y2aorHuZmnj0",
+          "mapped_clients": [
+            "antica-cappella",
+            "immobiliare-la-sacra",
+            "cartolibreria-10-e-lode",
+            "real-media-pro",
+            "f1-immobiliare",
+            "marta-ruffino"
+          ]
+        }
+      ]
+    },
+    "immobiliare-la-sacra": {
+      "territory": "Valle di Susa · Provincia di Torino",
+      "source_page": "https://commons.wikimedia.org/wiki/File:Solar_triplex_home_animation.webm",
+      "license": "CC0 1.0 Universal",
+      "author": "Wikideas1",
+      "duration_seconds": 63.77,
+      "narration": "Quando si compra o si vende una casa, le immagini attirano l'attenzione, ma la decisione nasce da informazioni chiare. Superficie, stato dell'immobile, posizione, documentazione, spese, pertinenze e caratteristiche del contesto devono essere letti insieme. Per questo una buona presentazione immobiliare non è soltanto una sequenza di fotografie: deve aiutare chi guarda a capire rapidamente se quella casa è coerente con le proprie esigenze. Immobiliare La Sacra opera sul territorio della Valle di Susa e lavora sulla valorizzazione dell'immobile, sulla gestione delle visite e su percorsi organizzati come gli Open House quando sono adatti al caso. Se stai pensando di vendere o acquistare, il primo passo utile è raccogliere i dati corretti e costruire un percorso chiaro, evitando decisioni prese soltanto sulla fretta.",
+      "caption_master": "Quando si compra o si vende una casa, le immagini attirano l'attenzione, ma la decisione nasce da informazioni chiare. Superficie, stato dell'immobile, posizione, documentazione, spese, pertinenze e caratteristiche del contesto devono essere letti insieme. Per questo una buona presentazione immobiliare non è soltanto una sequenza di fotografie: deve aiutare chi guarda a capire rapidamente se quella casa è coerente con le proprie esigenze. Immobiliare La Sacra opera sul territorio della Valle di Susa e lavora sulla valorizzazione dell'immobile, sulla gestione delle visite e su percorsi organizzati come gli Open House quando sono adatti al caso. Se stai pensando di vendere o acquistare, il primo passo utile è raccogliere i dati corretti e costruire un percorso chiaro, evitando decisioni prese soltanto sulla fretta.\n\nImmobiliare La Sacra: richiedi informazioni o prenota un confronto sul tuo immobile.\n\n#ImmobiliareLaSacra #ValleDiSusa #ProvinciaDiTorino #Casa #VendereCasa #ComprareCasa #OpenHouse",
+      "audio_caption_match": 1.0,
+      "srt": "publisher/media/generated/multiclient-test-20260926/immobiliare-la-sacra.srt",
+      "vtt": "publisher/media/generated/multiclient-test-20260926/immobiliare-la-sacra.vtt",
+      "jobs": [
+        {
+          "job_id": "multiclient-test-20260926-audio-caption-immobiliare-la-sacra-facebook",
+          "platform": "facebook",
+          "provider": "buffer",
+          "account_name": null,
+          "external_channel_id": "6ab2b713ea19ca0bdeb8103d"
+        },
+        {
+          "job_id": "multiclient-test-20260926-audio-caption-immobiliare-la-sacra-instagram",
+          "platform": "instagram",
+          "provider": "buffer",
+          "account_name": null,
+          "external_channel_id": "6ab2b6e7ea19ca0bdeb80e19"
+        }
+      ],
+      "skipped": [
+        {
+          "platform": "linkedin",
+          "reason": "NON_COLLEGATO"
+        },
+        {
+          "platform": "youtube",
+          "reason": "NON_COLLEGATO"
+        },
+        {
+          "platform": "tiktok",
+          "reason": "BLOCCATO_ACCOUNT_DUPLICATO",
+          "account_name": "joseph malafronte",
+          "external_channel_id": "-000rTUYv_0DDSwZS4zPKGG0y2aorHuZmnj0",
+          "mapped_clients": [
+            "antica-cappella",
+            "immobiliare-la-sacra",
+            "cartolibreria-10-e-lode",
+            "real-media-pro",
+            "f1-immobiliare",
+            "marta-ruffino"
+          ]
+        }
+      ]
+    },
+    "marta-ruffino": {
+      "territory": "Provincia di Torino",
+      "source_page": "https://commons.wikimedia.org/wiki/File:Exercises_that_keep_the_body_healthy.webm",
+      "license": "CC0 1.0 Universal",
+      "author": "Samson Ssemakadde",
+      "duration_seconds": 68.34,
+      "narration": "Prendersi cura del pavimento pelvico significa prima di tutto conoscere meglio una parte del corpo che spesso viene considerata soltanto quando compare un disturbo. La consapevolezza del respiro, della postura e del modo in cui si gestiscono gli sforzi quotidiani può essere utile all'interno di un percorso professionale personalizzato. Non esiste però un esercizio valido per tutti: sintomi, storia personale e obiettivi possono essere molto diversi. Per questo, prima di iniziare esercizi specifici, è importante affidarsi a una valutazione professionale e ricevere indicazioni adatte alla propria situazione. Il contenuto di questo video è informativo e non sostituisce una valutazione sanitaria. Se vuoi approfondire il tema della riabilitazione del pavimento pelvico in Provincia di Torino, puoi richiedere informazioni e capire quale percorso professionale può essere più adatto.",
+      "caption_master": "Prendersi cura del pavimento pelvico significa prima di tutto conoscere meglio una parte del corpo che spesso viene considerata soltanto quando compare un disturbo. La consapevolezza del respiro, della postura e del modo in cui si gestiscono gli sforzi quotidiani può essere utile all'interno di un percorso professionale personalizzato. Non esiste però un esercizio valido per tutti: sintomi, storia personale e obiettivi possono essere molto diversi. Per questo, prima di iniziare esercizi specifici, è importante affidarsi a una valutazione professionale e ricevere indicazioni adatte alla propria situazione. Il contenuto di questo video è informativo e non sostituisce una valutazione sanitaria. Se vuoi approfondire il tema della riabilitazione del pavimento pelvico in Provincia di Torino, puoi richiedere informazioni e capire quale percorso professionale può essere più adatto.\n\nPer informazioni sui percorsi professionali di Marta Ruffino, richiedi un contatto dedicato.\n\n#MartaRuffino #Torino #ProvinciaDiTorino #PavimentoPelvico #RiabilitazionePelvica #Benessere",
+      "audio_caption_match": 1.0,
+      "srt": "publisher/media/generated/multiclient-test-20260926/marta-ruffino.srt",
+      "vtt": "publisher/media/generated/multiclient-test-20260926/marta-ruffino.vtt",
+      "jobs": [
+        {
+          "job_id": "multiclient-test-20260926-audio-caption-marta-ruffino-instagram",
+          "platform": "instagram",
+          "provider": "buffer",
+          "account_name": null,
+          "external_channel_id": "6ab5d64dea19ca0bdedefe49"
+        },
+        {
+          "job_id": "multiclient-test-20260926-audio-caption-marta-ruffino-facebook",
+          "platform": "facebook",
+          "provider": "buffer",
+          "account_name": null,
+          "external_channel_id": "6ab5d62bea19ca0bdedefc11"
+        }
+      ],
+      "skipped": [
+        {
+          "platform": "linkedin",
+          "reason": "NON_COLLEGATO"
+        },
+        {
+          "platform": "youtube",
+          "reason": "NON_COLLEGATO"
+        },
+        {
+          "platform": "tiktok",
+          "reason": "BLOCCATO_ACCOUNT_DUPLICATO",
+          "account_name": "joseph malafronte",
+          "external_channel_id": "-000rTUYv_0DDSwZS4zPKGG0y2aorHuZmnj0",
+          "mapped_clients": [
+            "antica-cappella",
+            "immobiliare-la-sacra",
+            "cartolibreria-10-e-lode",
+            "real-media-pro",
+            "f1-immobiliare",
+            "marta-ruffino"
+          ]
+        }
+      ]
+    },
+    "real-media-pro": {
+      "territory": "Torino · Rivoli · Avigliana · Valle di Susa",
+      "source_page": "https://commons.wikimedia.org/wiki/File:WIKI-Social-Wikipedialokal_190909_1080-Instagram_mit_Button.png",
+      "license": "CC0 1.0 Universal",
+      "author": "Sinnwerkstatt",
+      "duration_seconds": 69.77,
+      "narration": "Pubblicare sui social non significa avere una strategia digitale. Una presenza online efficace collega contenuti, sito, campagne e contatti verso un obiettivo concreto. Prima si chiarisce che cosa deve fare l'utente: chiedere informazioni, prenotare, acquistare o fissare un appuntamento. Poi si costruiscono messaggio, creatività e distribuzione. Real Media Pro lavora proprio su questo collegamento tra comunicazione e processo commerciale per attività locali, professionisti e progetti immobiliari. Il punto non è riempire il calendario di post, ma creare contenuti che abbiano una funzione e misurare cosa succede dopo la pubblicazione. Se la tua attività opera tra Torino, Rivoli, Avigliana e Valle di Susa, controlla se sito, social e contatto commerciale stanno davvero lavorando insieme. Da lì può partire un'analisi più utile della semplice quantità di visualizzazioni.",
+      "caption_master": "Pubblicare sui social non significa avere una strategia digitale. Una presenza online efficace collega contenuti, sito, campagne e contatti verso un obiettivo concreto. Prima si chiarisce che cosa deve fare l'utente: chiedere informazioni, prenotare, acquistare o fissare un appuntamento. Poi si costruiscono messaggio, creatività e distribuzione. Real Media Pro lavora proprio su questo collegamento tra comunicazione e processo commerciale per attività locali, professionisti e progetti immobiliari. Il punto non è riempire il calendario di post, ma creare contenuti che abbiano una funzione e misurare cosa succede dopo la pubblicazione. Se la tua attività opera tra Torino, Rivoli, Avigliana e Valle di Susa, controlla se sito, social e contatto commerciale stanno davvero lavorando insieme. Da lì può partire un'analisi più utile della semplice quantità di visualizzazioni.\n\nReal Media Pro: richiedi un'analisi strategica della tua presenza digitale.\n\n#RealMediaPro #Torino #Rivoli #Avigliana #ValleDiSusa #MarketingDigitale #SocialMedia",
+      "audio_caption_match": 1.0,
+      "srt": "publisher/media/generated/multiclient-test-20260926/real-media-pro.srt",
+      "vtt": "publisher/media/generated/multiclient-test-20260926/real-media-pro.vtt",
+      "jobs": [],
+      "skipped": [
+        {
+          "platform": "youtube",
+          "reason": "NON_COLLEGATO"
+        },
+        {
+          "platform": "facebook",
+          "reason": "NON_COLLEGATO"
+        },
+        {
+          "platform": "instagram",
+          "reason": "NON_COLLEGATO"
+        },
+        {
+          "platform": "linkedin",
+          "reason": "NON_COLLEGATO"
+        },
+        {
+          "platform": "tiktok",
+          "reason": "BLOCCATO_ACCOUNT_DUPLICATO",
+          "account_name": "joseph malafronte",
+          "external_channel_id": "-000rTUYv_0DDSwZS4zPKGG0y2aorHuZmnj0",
+          "mapped_clients": [
+            "antica-cappella",
+            "immobiliare-la-sacra",
+            "cartolibreria-10-e-lode",
+            "real-media-pro",
+            "f1-immobiliare",
+            "marta-ruffino"
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -443017,7 +443017,7 @@
     {
       "id": "supabase-calendar-6c86e47a-2d80-46d3-a3a1-eae546481cd6",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "buffer_review_required",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "FB POST 7 · Spazi esterni · APPARTAMENTO DUE LOCALI A VALGIOIE",
@@ -443115,12 +443115,12 @@
           "bytes": "3296784"
         }
       ],
-      "blocked_reason": "Buffer facebook: Invalid post: Whoops, it looks like you've already got this one scheduled or posted around the same time. We're not able to post the same thing twice so close together."
+      "blocked_reason": "Scheduled time is more than 60 minutes in the past; manual review required"
     },
     {
       "id": "supabase-calendar-a695de94-d98e-4ec2-8983-e0a089e625a5",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "buffer_review_required",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "IG POST 8 · Comfort · APPARTAMENTO DUE LOCALI A VALGIOIE",
@@ -443218,7 +443218,7 @@
           "bytes": "3296784"
         }
       ],
-      "blocked_reason": "Buffer instagram: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
+      "blocked_reason": "Scheduled time is more than 60 minutes in the past; manual review required"
     },
     {
       "id": "supabase-calendar-72a338fe-ddae-43cf-8d73-8ddd7e85e2f4",
@@ -443326,7 +443326,7 @@
     {
       "id": "supabase-calendar-50559439-482c-45be-ae10-36b2cf22c1ba",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "buffer_scheduled",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "IG POST 9 · Posizione · APPARTAMENTO DUE LOCALI A VALGIOIE",
@@ -443424,12 +443424,24 @@
           "bytes": "3296784"
         }
       ],
-      "blocked_reason": "Buffer instagram: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
+      "buffer_posts": [
+        {
+          "service": "instagram",
+          "channel_id": "6ab2b6e7ea19ca0bdeb80e19",
+          "post_id": "6ab7bcbb05811e57372b8f7b",
+          "buffer_status": "scheduled",
+          "due_at": "2026-09-26T17:00:00.000Z",
+          "created_at": "2026-09-26T12:38:19+00:00"
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "instagram"
+      ]
     },
     {
       "id": "supabase-calendar-dcf5e371-fcc0-46db-95ec-db54ea28b14c",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "buffer_scheduled",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "IG POST 10 · Per chi è adatta · APPARTAMENTO DUE LOCALI A VALGIOIE",
@@ -443527,7 +443539,19 @@
           "bytes": "3296784"
         }
       ],
-      "blocked_reason": "Buffer instagram: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
+      "buffer_posts": [
+        {
+          "service": "instagram",
+          "channel_id": "6ab2b6e7ea19ca0bdeb80e19",
+          "post_id": "6ab7bcbd0f79a37c5d2e0258",
+          "buffer_status": "scheduled",
+          "due_at": "2026-09-27T11:00:00.000Z",
+          "created_at": "2026-09-26T12:38:21+00:00"
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "instagram"
+      ]
     },
     {
       "id": "supabase-calendar-564b3f1c-69d5-4c06-ad1d-e176376f248d",
@@ -444249,9 +444273,302 @@
         }
       ],
       "blocked_reason": "Buffer facebook: Invalid post: Whoops, it looks like you've already got this one scheduled or posted around the same time. We're not able to post the same thing twice so close together."
+    },
+    {
+      "id": "multiclient-test-20260926-audio-caption-antica-cappella-instagram",
+      "enabled": true,
+      "status": "buffer_scheduled",
+      "client_id": "antica-cappella",
+      "client_name": "Antica Cappella",
+      "title": "Antica Cappella · test parlato 60 secondi",
+      "caption": "Quando si sceglie un ristorante per una cena, una ricorrenza o un evento, non conta soltanto quello che arriva nel piatto. Contano l'accoglienza, l'attenzione, il ritmo del servizio e la capacità di far sentire ogni ospite nel posto giusto. Antica Cappella, ad Avigliana, lavora su questa idea di esperienza: cucina di tradizione, momenti da condividere e spazi pensati per pranzi, cene, cerimonie ed eventi. Il valore di un locale storico sta anche nella continuità: conoscere il territorio, rispettare le stagioni e curare i dettagli. Se stai organizzando un pranzo speciale, una cena o una festa in Valle di Susa, informati per tempo sulla disponibilità e sul tipo di menù più adatto al tuo evento.\n\nPer informazioni e prenotazioni contatta Antica Cappella ad Avigliana.\n\n#AnticaCappella #Avigliana #ValleDiSusa #Torino #Ristorante #CucinaPiemontese #Eventi",
+      "format": "reel",
+      "media": [
+        "publisher/media/generated/multiclient-test-20260926/antica-cappella-spoken-test.mp4"
+      ],
+      "scheduled_at": "2026-09-26T12:32:48+00:00",
+      "platforms": [
+        "instagram"
+      ],
+      "published_platforms": [],
+      "source": "MULTICLIENT_LICENSED_TEST",
+      "provider": "buffer",
+      "provider_channel_id": "6ab5cfc6ea19ca0bdedecef3",
+      "created_by": "multiclient-test-generator",
+      "autonomous_publish": true,
+      "license": {
+        "source": "https://commons.wikimedia.org/wiki/File:AFN_News_Now_-_Chef_Irvine_Visit_(1006156).webm",
+        "license": "Public domain (U.S. Air Force work)",
+        "author": "U.S. Air Force / DVIDS"
+      },
+      "audio_caption_match": 1.0,
+      "cloudinary_assets": [
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/video/upload/v1790426310/f1-buffer/multiclient-test-20260926-audio-caption-antica-cappella-instagram/video.mp4",
+          "public_id": "f1-buffer/multiclient-test-20260926-audio-caption-antica-cappella-instagram/video",
+          "resource_type": "video",
+          "bytes": "6284881"
+        }
+      ],
+      "buffer_posts": [
+        {
+          "service": "instagram",
+          "channel_id": "6ab5cfc6ea19ca0bdedecef3",
+          "post_id": "6ab7bcc70f79a37c5d2e0303",
+          "buffer_status": "sending",
+          "due_at": "2026-09-26T12:38:31.883Z",
+          "created_at": "2026-09-26T12:38:42+00:00"
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "id": "multiclient-test-20260926-audio-caption-f1-immobiliare-youtube",
+      "enabled": true,
+      "status": "ready",
+      "client_id": "f1-immobiliare",
+      "client_name": "F1 Immobiliare",
+      "title": "F1 Immobiliare · test parlato 60 secondi",
+      "caption": "Vendere casa non dovrebbe partire da una sensazione sul prezzo. Dovrebbe partire dai dati. Prima di pubblicare un immobile è utile osservare la microzona, gli immobili concorrenti, le caratteristiche reali della casa e il tipo di domanda presente sul territorio. Un prezzo troppo alto può ridurre l'interesse e allungare i tempi; un prezzo non ragionato può invece lasciare valore sul tavolo. F1 Immobiliare lavora con un principio semplice: prima i dati, poi la strategia, poi la vendita. Per un proprietario in Valle di Susa significa capire come presentare l'immobile, quale pubblico raggiungere e quale percorso usare prima ancora di pubblicare l'annuncio. Se stai pensando di vendere, parti da un'analisi comprensibile e verificabile del tuo immobile e del mercato locale.\n\nF1 Immobiliare: non a sensazione, con i dati. Richiedi un'analisi del valore.\n\n#F1Immobiliare #ValleDiSusa #Avigliana #Susa #Torino #VendereCasa #ValutazioneImmobiliare",
+      "format": "reel",
+      "media": [
+        "publisher/media/generated/multiclient-test-20260926/f1-immobiliare-spoken-test.mp4"
+      ],
+      "scheduled_at": "2026-09-26T12:36:06+00:00",
+      "platforms": [
+        "youtube"
+      ],
+      "published_platforms": [],
+      "source": "MULTICLIENT_LICENSED_TEST",
+      "provider": "oauth_broker",
+      "provider_channel_id": "UCjhfd8E-XMRGGzOLdwd0sxA",
+      "created_by": "multiclient-test-generator",
+      "autonomous_publish": true,
+      "license": {
+        "source": "https://commons.wikimedia.org/wiki/File:Men_at_work_in_building_site.webm",
+        "license": "CC0 1.0 Universal",
+        "author": "Akum20"
+      },
+      "audio_caption_match": 1.0,
+      "youtube_privacy_status": "private",
+      "direct_api_results": [
+        {
+          "at": "2026-09-26T12:39:33+00:00",
+          "dry_run": false,
+          "results": [
+            {
+              "platform": "youtube",
+              "status": "error",
+              "error": "missing GitHub Secret: F1_YOUTUBE_CLIENT_ID"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "multiclient-test-20260926-audio-caption-immobiliare-la-sacra-facebook",
+      "enabled": true,
+      "status": "buffer_scheduled",
+      "client_id": "immobiliare-la-sacra",
+      "client_name": "Immobiliare La Sacra",
+      "title": "Immobiliare La Sacra · test parlato 60 secondi",
+      "caption": "Quando si compra o si vende una casa, le immagini attirano l'attenzione, ma la decisione nasce da informazioni chiare. Superficie, stato dell'immobile, posizione, documentazione, spese, pertinenze e caratteristiche del contesto devono essere letti insieme. Per questo una buona presentazione immobiliare non è soltanto una sequenza di fotografie: deve aiutare chi guarda a capire rapidamente se quella casa è coerente con le proprie esigenze. Immobiliare La Sacra opera sul territorio della Valle di Susa e lavora sulla valorizzazione dell'immobile, sulla gestione delle visite e su percorsi organizzati come gli Open House quando sono adatti al caso. Se stai pensando di vendere o acquistare, il primo passo utile è raccogliere i dati corretti e costruire un percorso chiaro, evitando decisioni prese soltanto sulla fretta.\n\nImmobiliare La Sacra: richiedi informazioni o prenota un confronto sul tuo immobile.\n\n#ImmobiliareLaSacra #ValleDiSusa #ProvinciaDiTorino #Casa #VendereCasa #ComprareCasa #OpenHouse",
+      "format": "reel",
+      "media": [
+        "publisher/media/generated/multiclient-test-20260926/immobiliare-la-sacra-spoken-test.mp4"
+      ],
+      "scheduled_at": "2026-09-26T12:36:35+00:00",
+      "platforms": [
+        "facebook"
+      ],
+      "published_platforms": [],
+      "source": "MULTICLIENT_LICENSED_TEST",
+      "provider": "buffer",
+      "provider_channel_id": "6ab2b713ea19ca0bdeb8103d",
+      "created_by": "multiclient-test-generator",
+      "autonomous_publish": true,
+      "license": {
+        "source": "https://commons.wikimedia.org/wiki/File:Solar_triplex_home_animation.webm",
+        "license": "CC0 1.0 Universal",
+        "author": "Wikideas1"
+      },
+      "audio_caption_match": 1.0,
+      "cloudinary_assets": [
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/video/upload/v1790426323/f1-buffer/multiclient-test-20260926-audio-caption-immobiliare-la-sacra-facebook/video.mp4",
+          "public_id": "f1-buffer/multiclient-test-20260926-audio-caption-immobiliare-la-sacra-facebook/video",
+          "resource_type": "video",
+          "bytes": "19228958"
+        }
+      ],
+      "buffer_posts": [
+        {
+          "service": "facebook",
+          "channel_id": "6ab2b713ea19ca0bdeb8103d",
+          "post_id": "6ab7bcd43d66d464e5afbd94",
+          "buffer_status": "sent",
+          "due_at": "2026-09-26T12:38:44.732Z",
+          "created_at": "2026-09-26T12:38:54+00:00"
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "facebook"
+      ]
+    },
+    {
+      "id": "multiclient-test-20260926-audio-caption-immobiliare-la-sacra-instagram",
+      "enabled": true,
+      "status": "buffer_scheduled",
+      "client_id": "immobiliare-la-sacra",
+      "client_name": "Immobiliare La Sacra",
+      "title": "Immobiliare La Sacra · test parlato 60 secondi",
+      "caption": "Quando si compra o si vende una casa, le immagini attirano l'attenzione, ma la decisione nasce da informazioni chiare. Superficie, stato dell'immobile, posizione, documentazione, spese, pertinenze e caratteristiche del contesto devono essere letti insieme. Per questo una buona presentazione immobiliare non è soltanto una sequenza di fotografie: deve aiutare chi guarda a capire rapidamente se quella casa è coerente con le proprie esigenze. Immobiliare La Sacra opera sul territorio della Valle di Susa e lavora sulla valorizzazione dell'immobile, sulla gestione delle visite e su percorsi organizzati come gli Open House quando sono adatti al caso. Se stai pensando di vendere o acquistare, il primo passo utile è raccogliere i dati corretti e costruire un percorso chiaro, evitando decisioni prese soltanto sulla fretta.\n\nImmobiliare La Sacra: richiedi informazioni o prenota un confronto sul tuo immobile.\n\n#ImmobiliareLaSacra #ValleDiSusa #ProvinciaDiTorino #Casa #VendereCasa #ComprareCasa #OpenHouse",
+      "format": "reel",
+      "media": [
+        "publisher/media/generated/multiclient-test-20260926/immobiliare-la-sacra-spoken-test.mp4"
+      ],
+      "scheduled_at": "2026-09-26T12:36:35+00:00",
+      "platforms": [
+        "instagram"
+      ],
+      "published_platforms": [],
+      "source": "MULTICLIENT_LICENSED_TEST",
+      "provider": "buffer",
+      "provider_channel_id": "6ab2b6e7ea19ca0bdeb80e19",
+      "created_by": "multiclient-test-generator",
+      "autonomous_publish": true,
+      "license": {
+        "source": "https://commons.wikimedia.org/wiki/File:Solar_triplex_home_animation.webm",
+        "license": "CC0 1.0 Universal",
+        "author": "Wikideas1"
+      },
+      "audio_caption_match": 1.0,
+      "cloudinary_assets": [
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/video/upload/v1790426335/f1-buffer/multiclient-test-20260926-audio-caption-immobiliare-la-sacra-instagram/video.mp4",
+          "public_id": "f1-buffer/multiclient-test-20260926-audio-caption-immobiliare-la-sacra-instagram/video",
+          "resource_type": "video",
+          "bytes": "19228958"
+        }
+      ],
+      "buffer_posts": [
+        {
+          "service": "instagram",
+          "channel_id": "6ab2b6e7ea19ca0bdeb80e19",
+          "post_id": "6ab7bce14b4b9f2c1c4ab9f0",
+          "buffer_status": "sending",
+          "due_at": "2026-09-26T12:38:57.090Z",
+          "created_at": "2026-09-26T12:39:07+00:00"
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "id": "multiclient-test-20260926-audio-caption-marta-ruffino-instagram",
+      "enabled": true,
+      "status": "buffer_scheduled",
+      "client_id": "marta-ruffino",
+      "client_name": "Marta Ruffino",
+      "title": "Marta Ruffino · test parlato 60 secondi",
+      "caption": "Prendersi cura del pavimento pelvico significa prima di tutto conoscere meglio una parte del corpo che spesso viene considerata soltanto quando compare un disturbo. La consapevolezza del respiro, della postura e del modo in cui si gestiscono gli sforzi quotidiani può essere utile all'interno di un percorso professionale personalizzato. Non esiste però un esercizio valido per tutti: sintomi, storia personale e obiettivi possono essere molto diversi. Per questo, prima di iniziare esercizi specifici, è importante affidarsi a una valutazione professionale e ricevere indicazioni adatte alla propria situazione. Il contenuto di questo video è informativo e non sostituisce una valutazione sanitaria. Se vuoi approfondire il tema della riabilitazione del pavimento pelvico in Provincia di Torino, puoi richiedere informazioni e capire quale percorso professionale può essere più adatto.\n\nPer informazioni sui percorsi professionali di Marta Ruffino, richiedi un contatto dedicato.\n\n#MartaRuffino #Torino #ProvinciaDiTorino #PavimentoPelvico #RiabilitazionePelvica #Benessere",
+      "format": "reel",
+      "media": [
+        "publisher/media/generated/multiclient-test-20260926/marta-ruffino-spoken-test.mp4"
+      ],
+      "scheduled_at": "2026-09-26T12:37:07+00:00",
+      "platforms": [
+        "instagram"
+      ],
+      "published_platforms": [],
+      "source": "MULTICLIENT_LICENSED_TEST",
+      "provider": "buffer",
+      "provider_channel_id": "6ab5d64dea19ca0bdedefe49",
+      "created_by": "multiclient-test-generator",
+      "autonomous_publish": true,
+      "license": {
+        "source": "https://commons.wikimedia.org/wiki/File:Exercises_that_keep_the_body_healthy.webm",
+        "license": "CC0 1.0 Universal",
+        "author": "Samson Ssemakadde"
+      },
+      "audio_caption_match": 1.0,
+      "cloudinary_assets": [
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/video/upload/v1790426348/f1-buffer/multiclient-test-20260926-audio-caption-marta-ruffino-instagram/video.mp4",
+          "public_id": "f1-buffer/multiclient-test-20260926-audio-caption-marta-ruffino-instagram/video",
+          "resource_type": "video",
+          "bytes": "22923087"
+        }
+      ],
+      "buffer_posts": [
+        {
+          "service": "instagram",
+          "channel_id": "6ab5d64dea19ca0bdedefe49",
+          "post_id": "6ab7bced3d66d464e5afc258",
+          "buffer_status": "sending",
+          "due_at": "2026-09-26T12:39:09.545Z",
+          "created_at": "2026-09-26T12:39:19+00:00"
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "id": "multiclient-test-20260926-audio-caption-marta-ruffino-facebook",
+      "enabled": true,
+      "status": "buffer_scheduled",
+      "client_id": "marta-ruffino",
+      "client_name": "Marta Ruffino",
+      "title": "Marta Ruffino · test parlato 60 secondi",
+      "caption": "Prendersi cura del pavimento pelvico significa prima di tutto conoscere meglio una parte del corpo che spesso viene considerata soltanto quando compare un disturbo. La consapevolezza del respiro, della postura e del modo in cui si gestiscono gli sforzi quotidiani può essere utile all'interno di un percorso professionale personalizzato. Non esiste però un esercizio valido per tutti: sintomi, storia personale e obiettivi possono essere molto diversi. Per questo, prima di iniziare esercizi specifici, è importante affidarsi a una valutazione professionale e ricevere indicazioni adatte alla propria situazione. Il contenuto di questo video è informativo e non sostituisce una valutazione sanitaria. Se vuoi approfondire il tema della riabilitazione del pavimento pelvico in Provincia di Torino, puoi richiedere informazioni e capire quale percorso professionale può essere più adatto.\n\nPer informazioni sui percorsi professionali di Marta Ruffino, richiedi un contatto dedicato.\n\n#MartaRuffino #Torino #ProvinciaDiTorino #PavimentoPelvico #RiabilitazionePelvica #Benessere",
+      "format": "reel",
+      "media": [
+        "publisher/media/generated/multiclient-test-20260926/marta-ruffino-spoken-test.mp4"
+      ],
+      "scheduled_at": "2026-09-26T12:37:07+00:00",
+      "platforms": [
+        "facebook"
+      ],
+      "published_platforms": [],
+      "source": "MULTICLIENT_LICENSED_TEST",
+      "provider": "buffer",
+      "provider_channel_id": "6ab5d62bea19ca0bdedefc11",
+      "created_by": "multiclient-test-generator",
+      "autonomous_publish": true,
+      "license": {
+        "source": "https://commons.wikimedia.org/wiki/File:Exercises_that_keep_the_body_healthy.webm",
+        "license": "CC0 1.0 Universal",
+        "author": "Samson Ssemakadde"
+      },
+      "audio_caption_match": 1.0,
+      "cloudinary_assets": [
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/video/upload/v1790426360/f1-buffer/multiclient-test-20260926-audio-caption-marta-ruffino-facebook/video.mp4",
+          "public_id": "f1-buffer/multiclient-test-20260926-audio-caption-marta-ruffino-facebook/video",
+          "resource_type": "video",
+          "bytes": "22923087"
+        }
+      ],
+      "buffer_posts": [
+        {
+          "service": "facebook",
+          "channel_id": "6ab5d62bea19ca0bdedefc11",
+          "post_id": "6ab7bcfa4b4b9f2c1c4abbaf",
+          "buffer_status": "sending",
+          "due_at": "2026-09-26T12:39:22.092Z",
+          "created_at": "2026-09-26T12:39:32+00:00"
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "facebook"
+      ]
     }
   ],
-  "updated_at": "2026-09-26T12:28:36+00:00",
+  "updated_at": "2026-09-26T12:39:36+00:00",
   "updated_by": "Approved 5+5 publication renderer",
   "current_cycle": "2026-09-26T04:00",
   "history_days": 14,
