@@ -754,7 +754,7 @@ function effectiveSocialState(row,collisions){
 }
 function socialStateClass(row,state){
   if(state==="COLLEGATO")return "green";
-  if(["CONFIGURAZIONE_PRONTA","AUTORIZZAZIONE_RICHIESTA","ACCOUNT_DA_SELEZIONARE","ACCOUNT_CONDIVISO","DA_RIAUTORIZZARE","TOKEN_SCADUTO"].includes(state))return "amber";
+  if(["CONFIGURAZIONE_PRONTA","AUTORIZZAZIONE_RICHIESTA","ACCOUNT_DA_SELEZIONARE","ACCOUNT_CONDIVISO","DA_RIAUTORIZZARE","TOKEN_SCADUTO","ACCOUNT GOOGLE DA AUTORIZZARE"].includes(state))return "amber";
   return "";
 }
 function renderSocialConnections(){
@@ -763,7 +763,8 @@ function renderSocialConnections(){
   const html=clients.map(function(c){
     const rows=order.map(function(p){
       const row=socialChannels.find(function(x){return x.client_id===c.id&&x.platform===p});
-      const state=effectiveSocialState(row,collisions);
+      const rawState=effectiveSocialState(row,collisions);
+      const state=(c.slug==="antica-cappella"&&p==="youtube"&&!(row&&row.enabled&&row.verified))?"ACCOUNT GOOGLE DA AUTORIZZARE":rawState;
       const provider=row&&row.provider?row.provider:"oauth_broker";
       const profileUrl=safeSocialHref(row&&row.profile_url);
       const account=row&&(row.account_name||row.external_channel_id)?(row.account_name||row.external_channel_id):"Nessun account autorizzato";
@@ -778,7 +779,7 @@ function renderSocialConnections(){
         actions+=' <a class="btn small primary" href="https://account.buffer.com/channels" target="_blank" rel="noopener noreferrer">COLLEGA FACEBOOK IN BUFFER</a>';
       }
       if(isAnticaYoutube&&!connected){
-        actions+=' <button class="btn small primary" onclick="window.f1AnticaYoutubeHelp()">ABILITA ACCOUNT GOOGLE</button>';
+        actions+=' <a class="btn small primary" href="https://console.cloud.google.com/auth/audience" target="_blank" rel="noopener noreferrer">APRI GOOGLE AUTH PLATFORM</a> <button class="btn small ghost" onclick="window.f1AnticaYoutubeHelp()">ISTRUZIONI</button>';
       }
       if(isBuffer){
         if(connected) actions+=' <button class="btn small ghost" onclick="window.f1VerifySocial(\''+c.id+'\',\''+p+'\')">VERIFICA</button>';
