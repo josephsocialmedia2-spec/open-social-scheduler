@@ -773,22 +773,28 @@ function renderSocialConnections(){
       const connected=!!(row&&row.enabled&&row.verified);
       const isBuffer=provider==="buffer";
       const isAnticaFacebook=(c.slug==="antica-cappella"&&p==="facebook");
+      const isAnticaYoutube=(c.slug==="antica-cappella"&&p==="youtube");
       if(isAnticaFacebook&&!connected){
         actions+=' <a class="btn small primary" href="https://account.buffer.com/channels" target="_blank" rel="noopener noreferrer">COLLEGA FACEBOOK IN BUFFER</a>';
+      }
+      if(isAnticaYoutube&&!connected){
+        actions+=' <button class="btn small primary" onclick="window.f1AnticaYoutubeHelp()">ABILITA ACCOUNT GOOGLE</button>';
       }
       if(isBuffer){
         if(connected) actions+=' <button class="btn small ghost" onclick="window.f1VerifySocial(\''+c.id+'\',\''+p+'\')">VERIFICA</button>';
       }else{
         if(state==="ACCOUNT_DA_SELEZIONARE" && (p==="facebook"||p==="instagram")){
           actions+=' <button class="btn small primary" onclick="window.f1SelectMetaAccount(\''+c.id+'\',\''+p+'\')">SELEZIONA ACCOUNT</button>';
-        }else if((!connected || ["DA_RIAUTORIZZARE","TOKEN_SCADUTO","CANALE_DA_COLLEGARE","CONFIGURAZIONE_PRONTA","AUTORIZZAZIONE_RICHIESTA","ACCOUNT_ERRATO"].includes(state))&&!isAnticaFacebook){
+        }else if((!connected || ["DA_RIAUTORIZZARE","TOKEN_SCADUTO","CANALE_DA_COLLEGARE","CONFIGURAZIONE_PRONTA","AUTORIZZAZIONE_RICHIESTA","ACCOUNT_ERRATO"].includes(state))&&!isAnticaFacebook&&!isAnticaYoutube){
           actions+=' <button class="btn small primary" onclick="window.f1ConnectSocial(\''+c.id+'\',\''+p+'\')">'+(["DA_RIAUTORIZZARE","TOKEN_SCADUTO"].includes(state)?"RIAUTORIZZA":"COLLEGA")+'</button>';
         }
         if(connected) actions+=' <button class="btn small ghost" onclick="window.f1VerifySocial(\''+c.id+'\',\''+p+'\')">VERIFICA</button>';
         if(connected) actions+=' <button class="btn small danger" onclick="window.f1DisconnectSocial(\''+c.id+'\',\''+p+'\')">DISCONNETTI</button>';
       }
       const collisionNote=state==="ACCOUNT_CONDIVISO"?'<div class="meta" style="color:#ffcf66">Lo stesso account è associato a più clienti. La pubblicazione automatica deve essere verificata.</div>':"";
-      const onboardingNote=isAnticaFacebook&&!connected?'<div class="meta" style="color:#f7d48a">Pagina trovata. Buffer Antica Cappella contiene già Instagram; aggiungi qui la Pagina Facebook per autorizzare la pubblicazione.</div>':"";
+      const onboardingNote=isAnticaFacebook&&!connected
+        ?'<div class="meta" style="color:#f7d48a">Pagina trovata. Buffer Antica Cappella contiene già Instagram; aggiungi qui la Pagina Facebook per autorizzare la pubblicazione.</div>'
+        :(isAnticaYoutube&&!connected?'<div class="meta" style="color:#f7d48a">Google OAuth è in modalità TEST. Prima di collegare YouTube aggiungi anticacappella.avigliana@gmail.com tra gli utenti di test dell\'app Google.</div>':"");
       const verifiedAt=row&&row.last_verified_at?'<div class="meta">Ultima verifica: '+esc(fmt(row.last_verified_at))+'</div>':"";
       return '<div class="lineitem" style="align-items:flex-start"><b>'+esc(platformLabel(p))+'</b><div style="flex:1"><span class="badge '+socialStateClass(row,state)+'">'+esc(state)+'</span><div class="meta"><b>'+esc(account)+'</b></div><div class="meta">Provider: '+esc(provider)+(row&&row.external_channel_id?' · ID: '+esc(row.external_channel_id):"")+'</div>'+verifiedAt+collisionNote+onboardingNote+urlEditor+'</div><div class="row" style="justify-content:flex-end">'+actions+'</div></div>';
     }).join("");
@@ -810,6 +816,10 @@ async function brokerPost(path,payload){
   if(!r.ok){const e=new Error(data.detail||data.error||"Errore");e.payload=data;e.status=r.status;throw e}
   return data;
 }
+window.f1AnticaYoutubeHelp=function(){
+  const text="Per collegare YouTube di Antica Cappella:\n\n1. Apri Google Cloud Console del progetto che contiene il client OAuth F1 Social.\n2. Vai in Google Auth Platform → Pubblico / Audience.\n3. In Utenti di test premi Aggiungi utenti.\n4. Aggiungi: anticacappella.avigliana@gmail.com\n5. Salva.\n6. Torna qui e premi COLLEGA YouTube.\n\nFinché l'account non è tra i tester, Google risponde 403 access_denied.";
+  alert(text);
+};
 window.f1ConnectSocial=async function(clientId,platform){
   try{
     const session=await oauthSession();
