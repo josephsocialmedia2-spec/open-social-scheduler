@@ -10,8 +10,12 @@
 <style>
 :root{--bg:#07111f;--panel:#0e1b2c;--panel2:#12243a;--line:#27405d;--text:#f5f8fc;--muted:#9eb0c7;--blue:#2d7ff9;--green:#27d17f;--amber:#f2b84b;--red:#ef5f68}
 *{box-sizing:border-box}html,body{margin:0;background:linear-gradient(145deg,#06101c,#0b1727 60%,#07111f);color:var(--text);font:14px/1.45 Arial,Helvetica,sans-serif;min-height:100%}button,input,select,textarea{font:inherit}button{cursor:pointer}.hidden{display:none!important}.app{min-height:100vh}.auth{min-height:100vh;display:grid;place-items:center;padding:20px}.auth-card{width:min(470px,100%);background:rgba(14,27,44,.98);border:1px solid var(--line);border-radius:20px;padding:24px}.brand{font-weight:1000;letter-spacing:.08em}.brand small{display:block;color:var(--green);font-size:11px;margin-bottom:5px}.auth-card h1{margin:4px 0 6px;font-size:34px}.muted{color:var(--muted)}.field{display:grid;gap:6px;margin-top:12px}.field label{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#b8c6d8;font-weight:800}.input,select,textarea{width:100%;background:#071522;border:1px solid #2b4665;color:#fff;border-radius:10px;padding:11px 12px;outline:none}.input:focus,select:focus,textarea:focus{border-color:var(--blue)}textarea{min-height:90px;resize:vertical}.row{display:flex;gap:8px;flex-wrap:wrap}.btn{border:0;border-radius:10px;padding:10px 13px;font-weight:900;color:white;background:#172a41}.btn.primary{background:var(--blue)}.btn.green{background:var(--green);color:#04150c}.btn.danger{background:#6f252c}.btn.ghost{border:1px solid var(--line);background:transparent}.btn.small{padding:7px 9px;font-size:12px}.shell{display:grid;grid-template-columns:250px 1fr;min-height:100vh}.sidebar{border-right:1px solid var(--line);background:#081522;padding:18px 14px;position:sticky;top:0;height:100vh}.sidebar .brand{font-size:19px;padding:6px 8px 16px}.nav{display:grid;gap:5px}.nav button{width:100%;text-align:left;border:0;background:transparent;color:#b8c6d8;padding:11px 12px;border-radius:10px;font-weight:800}.nav button.active,.nav button:hover{background:#13283f;color:#fff}.userbox{position:absolute;left:14px;right:14px;bottom:16px;padding:11px;border:1px solid var(--line);border-radius:12px;background:#0d1c2e;font-size:12px}.main{padding:18px 18px 50px;min-width:0}.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}.topbar h1{margin:0;font-size:28px}.top-actions{display:flex;gap:8px;flex-wrap:wrap}.panel{background:rgba(14,27,44,.97);border:1px solid var(--line);border-radius:16px;padding:15px;margin-bottom:12px}.metrics{display:grid;grid-template-columns:repeat(6,minmax(120px,1fr));gap:9px;margin-bottom:12px}.metric{background:#0f2034;border:1px solid var(--line);border-radius:14px;padding:13px}.metric b{font-size:27px;display:block}.metric span{color:var(--muted);font-size:11px;text-transform:uppercase;font-weight:900}.clients{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px}.client-card{background:#102238;border:1px solid var(--line);border-radius:14px;padding:14px;cursor:pointer;transition:.15s}.client-card:hover,.client-card.active{border-color:var(--blue);transform:translateY(-1px)}.client-card small{color:var(--muted);text-transform:uppercase}.client-card h3{margin:4px 0}.client-stats{display:flex;gap:10px;color:#b9c8da;font-size:12px}.toolbar{display:grid;grid-template-columns:minmax(220px,1fr) 180px 180px;gap:8px;margin-bottom:12px}.content-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:11px}.content-card{background:#0b1a2a;border:1px solid var(--line);border-radius:14px;overflow:hidden;min-width:0}.thumb{height:170px;background:#13283e;display:grid;place-items:center;color:#8195ae;overflow:hidden}.thumb img,.thumb video{width:100%;height:100%;object-fit:cover}.card-body{padding:12px}.card-body h3{margin:0 0 4px;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.meta{font-size:11px;color:var(--muted)}.badges{display:flex;gap:5px;flex-wrap:wrap;margin:8px 0}.badge{padding:4px 7px;border-radius:999px;border:1px solid #35516f;font-size:10px;font-weight:900}.badge.green{color:#7ef0b0;border-color:#24734b}.badge.amber{color:#f7d48a;border-color:#866521}.card-actions{display:flex;gap:6px;flex-wrap:wrap}.uploadbox{border:1px dashed #456482;border-radius:14px;padding:18px;text-align:center;background:#0a1827}.uploadbox.drag{border-color:var(--green);background:#0c241c}.uploadbox input{display:none}.forms{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.span2{grid-column:span 2}.span3{grid-column:1/-1}.calendar-list,.log-list{display:grid;gap:7px}.lineitem{display:grid;grid-template-columns:150px 1fr auto;gap:10px;align-items:center;background:#0c1b2b;border:1px solid var(--line);border-radius:11px;padding:10px}.section-title{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}.section-title h2{margin:0}.notice{padding:10px 12px;border-radius:10px;background:#102a20;border:1px solid #285f43;color:#b9efce;margin:10px 0}.warn{background:#2d2411;border-color:#725b24;color:#f5dc9e}.error{background:#35191c;border-color:#743039;color:#ffb3b8}.modal{position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;align-items:center;justify-content:center;padding:16px;z-index:50}.modal.open{display:flex}.modal-card{width:min(680px,100%);max-height:90vh;overflow:auto;background:#0e1b2c;border:1px solid #3c5a7b;border-radius:17px;padding:18px}.tiktok-account{display:flex;align-items:center;gap:12px;padding:12px;border:1px solid var(--line);border-radius:12px;background:#091827}.tiktok-account img{width:54px;height:54px;border-radius:50%;object-fit:cover;background:#13283e}.tiktok-preview{width:100%;max-height:360px;border-radius:12px;background:#050b12;margin-top:8px}.checkline{display:flex;align-items:flex-start;gap:9px;padding:8px 0}.checkline input{margin-top:3px}.subpanel{border:1px solid var(--line);border-radius:12px;padding:12px;background:#0a1827;margin-top:10px}.empty{padding:24px;text-align:center;color:var(--muted)}code{color:#b9d8ff;word-break:break-all}.mobilebar{display:none}.fab{display:none}
+.client-context{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;background:#0b1b2c;border:1px solid var(--line);border-radius:14px;padding:11px 13px;margin:-2px 0 12px}
+.client-context .ctx-main{display:flex;align-items:center;gap:9px;flex-wrap:wrap}.client-context .ctx-name{font-weight:900;font-size:15px}.client-context .ctx-meta{color:var(--muted);font-size:12px}
+.planner-layout{display:grid;grid-template-columns:260px minmax(0,1fr);gap:12px}.media-rail{background:#0a1827;border:1px solid var(--line);border-radius:14px;padding:11px;min-height:420px}.media-rail h3{margin:0 0 8px}.media-rail-list{display:grid;gap:7px;max-height:620px;overflow:auto}.media-rail-item{background:#102238;border:1px solid #29415e;border-radius:10px;padding:9px}.media-rail-item b{display:block;font-size:12px}.week-shell{min-width:0}.week-toolbar{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:9px}.week-title{font-weight:900;font-size:17px}.week-calendar{display:grid;grid-template-columns:repeat(7,minmax(150px,1fr));gap:1px;background:#29415e;border:1px solid #29415e;border-radius:14px;overflow:auto;min-width:1080px}.week-day{background:#0a1728;min-height:420px;padding:8px}.week-day-head{position:sticky;top:0;background:#0f2034;margin:-8px -8px 8px;padding:9px 8px;border-bottom:1px solid #29415e;z-index:2}.week-day-head b{display:block}.week-day-head span{font-size:11px;color:var(--muted)}.week-event{border:1px solid #35516f;background:#102238;border-radius:9px;padding:8px;margin-bottom:7px}.week-event .time{font-weight:900;font-size:11px;color:#9bc2ff}.week-event .platform{font-size:10px;text-transform:uppercase;color:#7ef0b0}.analytics-grid{display:grid;grid-template-columns:repeat(5,minmax(120px,1fr));gap:9px;margin-bottom:12px}.analytics-card{background:#0f2034;border:1px solid var(--line);border-radius:14px;padding:13px}.analytics-card b{display:block;font-size:25px}.analytics-card span{font-size:10px;color:var(--muted);text-transform:uppercase;font-weight:900}.analytics-layout{display:grid;grid-template-columns:1fr 1fr;gap:12px}.platform-row{display:grid;grid-template-columns:130px 1fr 70px;gap:8px;align-items:center;margin:8px 0}.platform-bar{height:10px;border-radius:999px;background:#14263b;overflow:hidden}.platform-bar i{display:block;height:100%;background:var(--green)}
+@media(max-width:1050px){.planner-layout{grid-template-columns:1fr}.media-rail{min-height:0}.analytics-grid{grid-template-columns:repeat(3,1fr)}.analytics-layout{grid-template-columns:1fr}}
 @media(max-width:1100px){.metrics{grid-template-columns:repeat(3,1fr)}.forms{grid-template-columns:1fr 1fr}.span3{grid-column:1/-1}}
-@media(max-width:760px){.shell{display:block}.sidebar{display:none}.main{padding:12px 12px 92px}.topbar h1{font-size:23px}.metrics{grid-template-columns:1fr 1fr}.toolbar{grid-template-columns:1fr}.forms{grid-template-columns:1fr}.span2,.span3{grid-column:auto}.lineitem{grid-template-columns:1fr}.mobilebar{display:grid;grid-template-columns:repeat(6,1fr);position:fixed;left:0;right:0;bottom:0;background:#081522;border-top:1px solid var(--line);z-index:40}.mobilebar button{background:transparent;border:0;color:#9fb1c7;padding:12px 4px;font-size:10px;font-weight:900}.mobilebar button.active{color:#fff;background:#102238}.fab{display:block;position:fixed;right:16px;bottom:70px;border:0;border-radius:999px;width:54px;height:54px;background:var(--green);color:#03140b;font-size:25px;font-weight:bold;z-index:39}.content-grid{grid-template-columns:1fr 1fr}.thumb{height:135px}}
+@media(max-width:760px){.shell{display:block}.sidebar{display:none}.main{padding:12px 12px 92px}.topbar h1{font-size:23px}.metrics{grid-template-columns:1fr 1fr}.toolbar{grid-template-columns:1fr}.forms{grid-template-columns:1fr}.span2,.span3{grid-column:auto}.lineitem{grid-template-columns:1fr}.mobilebar{display:grid;grid-template-columns:repeat(7,1fr);position:fixed;left:0;right:0;bottom:0;background:#081522;border-top:1px solid var(--line);z-index:40}.mobilebar button{background:transparent;border:0;color:#9fb1c7;padding:12px 4px;font-size:10px;font-weight:900}.mobilebar button.active{color:#fff;background:#102238}.fab{display:block;position:fixed;right:16px;bottom:70px;border:0;border-radius:999px;width:54px;height:54px;background:var(--green);color:#03140b;font-size:25px;font-weight:bold;z-index:39}.content-grid{grid-template-columns:1fr 1fr}.thumb{height:135px}}
 @media(max-width:480px){.content-grid{grid-template-columns:1fr}.metrics{grid-template-columns:1fr 1fr}}
 </style>
 </head>
@@ -39,6 +43,7 @@
       <button data-tab="dashboard" class="active">Dashboard</button>
       <button data-tab="archive">Archivio</button>
       <button data-tab="calendar">Calendario</button>
+      <button data-tab="analytics">Analisi</button>
       <button data-tab="whatsapp">WhatsApp</button>
       <button data-tab="automation">Automazione</button>
       <button data-tab="clients">Clienti</button>
@@ -54,6 +59,7 @@
         <button class="btn green" id="openUploadBtn">+ CARICA CONTENUTI</button>
       </div>
     </div>
+    <div id="clientContext" class="client-context"></div>
 
     <section id="tab-dashboard">
       <div class="metrics" id="metrics"></div>
@@ -87,7 +93,44 @@
     <section id="tab-calendar" class="hidden">
       <div class="panel">
         <div class="section-title"><h2>Calendario editoriale</h2><span class="muted">Programmazioni future</span></div>
+        <div class="planner-layout">
+          <aside class="media-rail">
+            <h3>Media pronta</h3>
+            <div class="muted" style="font-size:11px;margin-bottom:8px">Contenuti del cliente pronti da programmare.</div>
+            <div id="plannerMediaRail" class="media-rail-list"></div>
+          </aside>
+          <div class="week-shell">
+            <div class="week-toolbar">
+              <div class="row">
+                <button class="btn small ghost" onclick="window.f1CalendarWeek(-1)">← SETTIMANA</button>
+                <button class="btn small ghost" onclick="window.f1CalendarToday()">OGGI</button>
+                <button class="btn small ghost" onclick="window.f1CalendarWeek(1)">SETTIMANA →</button>
+              </div>
+              <div id="weekLabel" class="week-title"></div>
+            </div>
+            <div style="overflow:auto"><div id="weekCalendar" class="week-calendar"></div></div>
+          </div>
+        </div>
+        <div class="section-title" style="margin-top:14px"><h3 style="margin:0">Elenco programmazioni</h3></div>
         <div class="calendar-list" id="calendarList"></div>
+      </div>
+    </section>
+
+    <section id="tab-analytics" class="hidden">
+      <div class="panel">
+        <div class="section-title"><h2>Analisi operative</h2><span class="muted">Pubblicazioni, errori, canali e distribuzione</span></div>
+        <div class="notice warn">Le metriche qui sotto sono operative e derivano dal motore F1 Social. Reach, impression, follower ed engagement verranno mostrati solo quando restituiti dalle API ufficiali dei social: nessun dato viene stimato o inventato.</div>
+        <div id="analyticsMetrics" class="analytics-grid"></div>
+        <div class="analytics-layout">
+          <div class="subpanel">
+            <div class="section-title"><h3 style="margin:0">Distribuzione per piattaforma</h3></div>
+            <div id="analyticsPlatforms"></div>
+          </div>
+          <div class="subpanel">
+            <div class="section-title"><h3 style="margin:0">Ultimi eventi</h3></div>
+            <div id="analyticsEvents" class="log-list"></div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -151,6 +194,7 @@
   <button data-tab="dashboard" class="active">HOME</button>
   <button data-tab="archive">ARCHIVIO</button>
   <button data-tab="calendar">CALENDARIO</button>
+  <button data-tab="analytics">ANALISI</button>
   <button data-tab="whatsapp">WHATSAPP</button>
   <button data-tab="automation">AUTO</button>
   <button data-tab="clients">CLIENTI</button>
@@ -266,6 +310,7 @@ let whatsappSenders = [];
 let selectedClientId = "";
 let droppedFiles = [];
 let tiktokContext = null;
+let calendarWeekOffset = 0;
 
 const el = (id) => document.getElementById(id);
 const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, function(m){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]});
@@ -287,8 +332,14 @@ async function enterApp(){
   el("userEmail").textContent=user.email||"";
   await seedClients();
   await loadAll();
+  const params=new URLSearchParams(location.search);
+  const requestedClient=params.get("client");
+  if(requestedClient){
+    const match=clients.find(function(c){return c.slug===requestedClient||c.id===requestedClient});
+    if(match)selectedClientId=match.id;
+  }
   renderAll();
-  const oauthState=new URLSearchParams(location.search).get("oauth");
+  const oauthState=params.get("oauth");
   if(oauthState){setTab("automation");history.replaceState({},document.title,location.pathname);}
 }
 el("loginBtn").onclick=async function(){
@@ -336,11 +387,11 @@ function fillClientSelects(){
   if(selectedClientId)el("uploadClient").value=selectedClientId;
 }
 function setTab(tab){
-  ["dashboard","archive","calendar","whatsapp","automation","clients"].forEach(function(t){el("tab-"+t).classList.toggle("hidden",t!==tab)});
+  ["dashboard","archive","calendar","analytics","whatsapp","automation","clients"].forEach(function(t){el("tab-"+t).classList.toggle("hidden",t!==tab)});
   document.querySelectorAll("[data-tab]").forEach(function(b){b.classList.toggle("active",b.dataset.tab===tab)});
-  const titles={dashboard:"Dashboard",archive:"Archivio contenuti",calendar:"Calendario editoriale",whatsapp:"WhatsApp",automation:"Automazione",clients:"Clienti"};
+  const titles={dashboard:"Dashboard",archive:"Archivio contenuti",calendar:"Calendario editoriale",analytics:"Analisi",whatsapp:"WhatsApp",automation:"Automazione",clients:"Clienti"};
   el("pageTitle").textContent=titles[tab]||"F1 Content Hub";
-  if(tab==="whatsapp")loadWhatsApp(); if(tab==="calendar")renderCalendar(); if(tab==="automation")renderAutomation();
+  if(tab==="whatsapp")loadWhatsApp(); if(tab==="calendar")renderCalendar(); if(tab==="analytics")renderAnalytics(); if(tab==="automation")renderAutomation();
 }
 document.querySelectorAll("[data-tab]").forEach(function(b){b.onclick=function(){setTab(b.dataset.tab)}});
 
@@ -398,8 +449,19 @@ function renderClients(){
   const html=clients.map(function(c){const n=counts[c.id]||{all:0,work:0,plan:0};return '<article class="client-card '+(selectedClientId===c.id?"active":"")+'" onclick="window.f1SelectClient(\''+c.id+'\')"><small>'+esc(c.category)+'</small><h3>'+esc(c.name)+'</h3><div class="client-stats"><span>'+n.all+' contenuti</span><span>'+n.work+' da lavorare</span><span>'+n.plan+' programmati</span></div></article>'}).join("");
   el("clientCards").innerHTML=html;el("clientsAdmin").innerHTML=html;
 }
-async function renderAll(){renderMetrics();renderClients();await renderGrid("latestGrid",filteredItems(12));await renderGrid("archiveGrid",filteredItems());renderCalendar();renderAutomation()}
-window.f1SelectClient=function(id){const chosen=clients.find(function(x){return x.id===id});if(chosen&&chosen.slug==="immobiliare-la-sacra"){location.href="./immobiliare-la-sacra.html";return}selectedClientId=selectedClientId===id?"":id;el("clientFilter").value=selectedClientId;fillClientSelects();renderAll();setTab("archive")};
+async function renderAll(){renderMetrics();renderClients();renderClientContext();await renderGrid("latestGrid",filteredItems(12));await renderGrid("archiveGrid",filteredItems());renderCalendar();renderAnalytics();renderAutomation()}
+window.f1SelectClient=function(id){
+  const chosen=clients.find(function(x){return x.id===id});
+  selectedClientId=selectedClientId===id?"":id;
+  el("clientFilter").value=selectedClientId;
+  fillClientSelects();
+  const url=new URL(location.href);
+  if(selectedClientId&&chosen)url.searchParams.set("client",chosen.slug||chosen.id);else url.searchParams.delete("client");
+  url.searchParams.delete("oauth");
+  history.replaceState({},document.title,url.pathname+(url.searchParams.toString()?"?"+url.searchParams.toString():""));
+  renderAll();
+  setTab("dashboard");
+};
 window.f1SetStatus=async function(id,status){const r=await sb.from("f1_content_items").update({status:status}).eq("id",id);if(r.error)return alert(r.error.message);const it=items.find(function(i){return i.id===id});if(it)it.status=status;renderMetrics()};
 window.f1Reuse=async function(id){
   const src=items.find(function(i){return i.id===id});if(!src)return;
@@ -565,7 +627,75 @@ el("tiktokConfirmBtn").onclick=async function(){
     tiktokUpdateUi();
   }
 };
+
+function renderClientContext(){
+  const box=el("clientContext");
+  if(!box)return;
+  const c=clients.find(function(x){return x.id===selectedClientId});
+  if(!c){
+    box.innerHTML='<div class="ctx-main"><span class="badge green">MULTI-CLIENTE</span><div><div class="ctx-name">Tutti i clienti</div><div class="ctx-meta">Archivio, calendario e automazioni separati per client_id.</div></div></div><div class="row"><button class="btn small ghost" onclick="setTab(\'clients\')">GESTISCI CLIENTI</button><button class="btn small primary" onclick="setTab(\'calendar\')">PIANIFICA</button></div>';
+    return;
+  }
+  const ch=socialChannels.filter(function(x){return x.client_id===c.id});
+  const verified=ch.filter(function(x){return x.enabled&&x.verified}).length;
+  const ownItems=items.filter(function(x){return x.client_id===c.id});
+  const ownCal=calendar.filter(function(x){return x.client_id===c.id});
+  box.innerHTML='<div class="ctx-main"><span class="badge green">SCHEDA CLIENTE</span><div><div class="ctx-name">'+esc(c.name)+'</div><div class="ctx-meta">'+ownItems.length+' contenuti · '+ownCal.length+' programmazioni · '+verified+'/'+ch.length+' canali verificati</div></div></div><div class="row"><button class="btn small ghost" onclick="setTab(\'archive\')">MEDIA</button><button class="btn small ghost" onclick="setTab(\'calendar\')">CALENDARIO</button><button class="btn small ghost" onclick="setTab(\'analytics\')">ANALISI</button><button class="btn small primary" onclick="setTab(\'automation\')">SOCIAL</button><button class="btn small danger" onclick="window.f1SelectClient(\''+c.id+'\')">CHIUDI SCHEDA</button></div>';
+}
+function mondayForOffset(offset){
+  const d=new Date();d.setHours(0,0,0,0);
+  const day=(d.getDay()+6)%7;d.setDate(d.getDate()-day+(offset||0)*7);return d;
+}
+function isoDay(d){return d.toISOString().slice(0,10)}
+window.f1CalendarWeek=function(delta){calendarWeekOffset+=delta;renderCalendar()};
+window.f1CalendarToday=function(){calendarWeekOffset=0;renderCalendar()};
+function renderPlanner(){
+  const start=mondayForOffset(calendarWeekOffset), end=new Date(start);end.setDate(start.getDate()+6);
+  const label=el("weekLabel");if(label)label.textContent=start.toLocaleDateString("it-IT",{day:"2-digit",month:"short"})+" – "+end.toLocaleDateString("it-IT",{day:"2-digit",month:"short",year:"numeric"});
+  let scoped=calendar.slice();
+  if(selectedClientId)scoped=scoped.filter(function(x){return x.client_id===selectedClientId});
+  const cols=[];
+  for(let i=0;i<7;i++){
+    const d=new Date(start);d.setDate(start.getDate()+i);const key=isoDay(d);
+    const events=scoped.filter(function(x){return String(x.publication_at||"").slice(0,10)===key}).sort(function(a,b){return new Date(a.publication_at)-new Date(b.publication_at)});
+    const rows=events.map(function(x){
+      const c=x.f1_content_clients?x.f1_content_clients.name:"";
+      const title=x.f1_content_items?x.f1_content_items.title:"Contenuto";
+      return '<div class="week-event"><div class="time">'+esc(new Date(x.publication_at).toLocaleTimeString("it-IT",{hour:"2-digit",minute:"2-digit"}))+'</div><div class="platform">'+esc(x.platform||"")+'</div><b>'+esc(title)+'</b><div class="meta">'+esc(c)+' · '+esc(x.status||"")+'</div></div>';
+    }).join("");
+    cols.push('<div class="week-day"><div class="week-day-head"><b>'+esc(d.toLocaleDateString("it-IT",{weekday:"short"}))+'</b><span>'+esc(d.toLocaleDateString("it-IT",{day:"2-digit",month:"2-digit"}))+'</span></div>'+rows+(rows?"":'<div class="empty" style="padding:18px 6px">Nessun post</div>')+'</div>');
+  }
+  if(el("weekCalendar"))el("weekCalendar").innerHTML=cols.join("");
+  let media=items.filter(function(x){return ["PRONTO","APPROVATO","DA APPROVARE","DA LAVORARE","IN LAVORAZIONE"].includes(x.status)});
+  if(selectedClientId)media=media.filter(function(x){return x.client_id===selectedClientId});
+  media=media.slice(0,24);
+  if(el("plannerMediaRail"))el("plannerMediaRail").innerHTML=media.length?media.map(function(x){
+    const c=clients.find(function(k){return k.id===x.client_id});
+    return '<div class="media-rail-item"><b>'+esc(x.title||"Senza titolo")+'</b><div class="meta">'+esc(c?c.name:"")+' · '+esc(x.status)+'</div><div class="row" style="margin-top:6px"><button class="btn tiny primary" onclick="window.f1Schedule(\''+x.id+'\',\''+x.client_id+'\')">PROGRAMMA</button></div></div>';
+  }).join(""):'<div class="empty">Nessun contenuto pronto.</div>';
+}
+function eventIsError(x){const s=(String(x.status||"")+" "+String(x.action||"")+" "+String(x.error||"")).toUpperCase();return /ERROR|ERRORE|FAIL|AUTH_REQUIRED|DA_RIAUTORIZZARE/.test(s)}
+function eventIsSuccess(x){const s=(String(x.status||"")+" "+String(x.action||"")).toUpperCase();return /PUBBLICAT|PUBLISHED|SUCCESS|SCHEDULED|SCHEDULAT|SENT|COMPLETED/.test(s)&&!eventIsError(x)}
+function renderAnalytics(){
+  if(!el("analyticsMetrics"))return;
+  let ev=publicationEvents.slice(), scopedItems=items.slice(), scopedChannels=socialChannels.slice();
+  if(selectedClientId){ev=ev.filter(function(x){return x.client_id===selectedClientId});scopedItems=scopedItems.filter(function(x){return x.client_id===selectedClientId});scopedChannels=scopedChannels.filter(function(x){return x.client_id===selectedClientId})}
+  const now=Date.now(), d30=now-30*86400000, d7=now-7*86400000;
+  const ev30=ev.filter(function(x){return new Date(x.created_at).getTime()>=d30});
+  const ev7=ev.filter(function(x){return new Date(x.created_at).getTime()>=d7});
+  const success30=ev30.filter(eventIsSuccess).length, errors30=ev30.filter(eventIsError).length;
+  const published=scopedItems.filter(function(x){return x.status==="PUBBLICATO"}).length;
+  const verified=scopedChannels.filter(function(x){return x.enabled&&x.verified}).length;
+  const rate=(success30+errors30)?Math.round(success30/(success30+errors30)*100):0;
+  const metrics=[["PUBBLICATI",published],["EVENTI 7 GIORNI",ev7.length],["SUCCESSI 30 GIORNI",success30],["ERRORI 30 GIORNI",errors30],["AFFIDABILITÀ",rate+"%"],["CANALI VERIFICATI",verified]];
+  el("analyticsMetrics").innerHTML=metrics.map(function(x){return '<div class="analytics-card"><b>'+x[1]+'</b><span>'+x[0]+'</span></div>'}).join("");
+  const counts={};ev30.forEach(function(x){const p=String(x.platform||"altro").toLowerCase();counts[p]=(counts[p]||0)+1});
+  const max=Math.max(1,...Object.values(counts));
+  el("analyticsPlatforms").innerHTML=Object.keys(counts).length?Object.entries(counts).sort(function(a,b){return b[1]-a[1]}).map(function(x){return '<div class="platform-row"><b>'+esc(platformLabel(x[0]))+'</b><div class="platform-bar"><i style="width:'+Math.round(x[1]/max*100)+'%"></i></div><span>'+x[1]+'</span></div>'}).join(""):'<div class="empty">Nessun evento negli ultimi 30 giorni.</div>';
+  el("analyticsEvents").innerHTML=ev.slice(0,20).map(function(x){const cls=eventIsError(x)?"":(eventIsSuccess(x)?"green":"amber");return '<div class="lineitem"><b>'+esc(fmt(x.created_at))+'</b><div><b>'+esc(x.action||"EVENTO")+'</b><div class="meta">'+esc((x.f1_content_clients&&x.f1_content_clients.name)||"")+' · '+esc(x.platform||"")+(x.error?'<br>'+esc(x.error):"")+'</div></div><span class="badge '+cls+'">'+esc(x.status||"")+'</span></div>'}).join("")||'<div class="empty">Nessun evento disponibile.</div>';
+}
 function renderCalendar(){
+  renderPlanner();
   const now=Date.now();let list=calendar.filter(function(x){return new Date(x.publication_at).getTime()>=now-86400000});
   if(selectedClientId)list=list.filter(function(x){return x.client_id===selectedClientId});
   if(!list.length){el("calendarList").innerHTML='<div class="empty">Nessuna programmazione.</div>';return}
