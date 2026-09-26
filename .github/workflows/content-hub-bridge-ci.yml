@@ -41,7 +41,33 @@ jobs:
       - name: Compile bridge scripts
         run: python -m py_compile publisher/supabase_queue_bridge.py publisher/supabase_website_sync.py publisher/direct_api_entry.py publisher/direct_api_publish.py publisher/oauth_broker.py
       - name: Test OAuth broker client and TikTok policy
-        run: PYTHONPATH=. python -m unittest publisher/test_oauth_broker.py publisher/test_tiktok_policy.py publisher/test_social_oauth_ui.py publisher/test_f1_social_safety.py
+        run: PYTHONPATH=.:publisher python -m unittest publisher/test_oauth_broker.py publisher/test_tiktok_policy.py publisher/test_social_oauth_ui.py publisher/test_f1_social_safety.py
+      - name: Validate F1 Content Hub HTML and inline JavaScript
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import re
+          from pathlib import Path
+
+          html = Path('f1-content-hub/index.html').read_text(encoding='utf-8')
+          required_ids = {
+              'tab-dashboard', 'tab-clients', 'tab-calendar', 'tab-archive',
+              'tab-publications', 'tab-analytics', 'tab-connections',
+              'tab-automation', 'tab-problems', 'globalClientSelect'
+          }
+          ids = re.findall(r'\bid="([^"]+)"', html)
+          duplicates = sorted({item for item in ids if ids.count(item) > 1})
+          missing = sorted(required_ids - set(ids))
+          assert not duplicates, f'Duplicate DOM ids: {duplicates}'
+          assert not missing, f'Missing required DOM ids: {missing}'
+
+          scripts = re.findall(r'<script(?![^>]*\bsrc=)[^>]*>([\s\S]*?)</script>', html, re.I)
+          assert scripts, 'No inline application script found'
+          Path('/tmp/f1-content-hub-inline.js').write_text(max(scripts, key=len), encoding='utf-8')
+          print('CONTENT_HUB_HTML_OK')
+          PY
+          node --check /tmp/f1-content-hub-inline.js
       - name: Validate queue and client configs
         run: |
           python - <<'PY'
@@ -81,6 +107,8 @@ jobs:
           offenders=[]
           for root in roots:
               for path in root.rglob('*'):
+                  if 'vendor' in path.parts:
+                      continue
                   if not path.is_file() or path.suffix.lower() not in {'.py','.html','.js','.json','.yml','.yaml','.md'}:
                       continue
                   text=path.read_text(encoding='utf-8',errors='ignore')
