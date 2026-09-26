@@ -257,8 +257,8 @@ function providerConfig(platform) {
   }
   if (p === "tiktok") {
     return {
-      clientId: Deno.env.get("TIKTOK_CLIENT_KEY") || "",
-      clientSecret: Deno.env.get("TIKTOK_CLIENT_SECRET") || "",
+      clientId: (Deno.env.get("TIKTOK_CLIENT_KEY") || "").trim(),
+      clientSecret: (Deno.env.get("TIKTOK_CLIENT_SECRET") || "").trim(),
       scope: Deno.env.get("TIKTOK_OAUTH_SCOPES") || "user.info.basic,video.publish,video.upload",
       authUrl: "https://www.tiktok.com/v2/auth/authorize/",
       tokenUrl: "https://open.tiktokapis.com/v2/oauth/token/"
@@ -313,11 +313,23 @@ async function tiktokConfigCheck() {
   try { payload = await res.json(); } catch (_) {}
   const errorCode = String(payload?.error?.code || payload?.error || "");
   const errorMessage = String(payload?.error?.message || payload?.error_description || "");
+  const valid = res.ok && (!errorCode || errorCode === "ok");
+  console.log("TIKTOK_CONFIG_CHECK", JSON.stringify({
+    valid,
+    http_status: res.status,
+    key_length: key.length,
+    key_fingerprint: await shortFingerprint(key),
+    key_outer_whitespace: rawKey !== key,
+    secret_length: secret.length,
+    secret_outer_whitespace: rawSecret !== secret,
+    error_code: errorCode || null,
+    error_message: errorMessage || null
+  }));
   return respond({
-    ok: res.ok && (!errorCode || errorCode === "ok"),
+    ok: valid,
     configured: true,
     provider_http_status: res.status,
-    client_key_valid: res.ok && (!errorCode || errorCode === "ok"),
+    client_key_valid: valid,
     client_key_length: key.length,
     client_key_fingerprint: await shortFingerprint(key),
     client_key_outer_whitespace: rawKey !== key,
