@@ -772,20 +772,25 @@ function renderSocialConnections(){
       let actions=openBtn;
       const connected=!!(row&&row.enabled&&row.verified);
       const isBuffer=provider==="buffer";
+      const isAnticaFacebook=(c.slug==="antica-cappella"&&p==="facebook");
+      if(isAnticaFacebook&&!connected){
+        actions+=' <a class="btn small primary" href="https://account.buffer.com/channels" target="_blank" rel="noopener noreferrer">COLLEGA FACEBOOK IN BUFFER</a>';
+      }
       if(isBuffer){
         if(connected) actions+=' <button class="btn small ghost" onclick="window.f1VerifySocial(\''+c.id+'\',\''+p+'\')">VERIFICA</button>';
       }else{
         if(state==="ACCOUNT_DA_SELEZIONARE" && (p==="facebook"||p==="instagram")){
           actions+=' <button class="btn small primary" onclick="window.f1SelectMetaAccount(\''+c.id+'\',\''+p+'\')">SELEZIONA ACCOUNT</button>';
-        }else if(!connected || ["DA_RIAUTORIZZARE","TOKEN_SCADUTO","CANALE_DA_COLLEGARE","CONFIGURAZIONE_PRONTA","AUTORIZZAZIONE_RICHIESTA","ACCOUNT_ERRATO"].includes(state)){
+        }else if((!connected || ["DA_RIAUTORIZZARE","TOKEN_SCADUTO","CANALE_DA_COLLEGARE","CONFIGURAZIONE_PRONTA","AUTORIZZAZIONE_RICHIESTA","ACCOUNT_ERRATO"].includes(state))&&!isAnticaFacebook){
           actions+=' <button class="btn small primary" onclick="window.f1ConnectSocial(\''+c.id+'\',\''+p+'\')">'+(["DA_RIAUTORIZZARE","TOKEN_SCADUTO"].includes(state)?"RIAUTORIZZA":"COLLEGA")+'</button>';
         }
         if(connected) actions+=' <button class="btn small ghost" onclick="window.f1VerifySocial(\''+c.id+'\',\''+p+'\')">VERIFICA</button>';
         if(connected) actions+=' <button class="btn small danger" onclick="window.f1DisconnectSocial(\''+c.id+'\',\''+p+'\')">DISCONNETTI</button>';
       }
       const collisionNote=state==="ACCOUNT_CONDIVISO"?'<div class="meta" style="color:#ffcf66">Lo stesso account è associato a più clienti. La pubblicazione automatica deve essere verificata.</div>':"";
+      const onboardingNote=isAnticaFacebook&&!connected?'<div class="meta" style="color:#f7d48a">Pagina trovata. Buffer Antica Cappella contiene già Instagram; aggiungi qui la Pagina Facebook per autorizzare la pubblicazione.</div>':"";
       const verifiedAt=row&&row.last_verified_at?'<div class="meta">Ultima verifica: '+esc(fmt(row.last_verified_at))+'</div>':"";
-      return '<div class="lineitem" style="align-items:flex-start"><b>'+esc(platformLabel(p))+'</b><div style="flex:1"><span class="badge '+socialStateClass(row,state)+'">'+esc(state)+'</span><div class="meta"><b>'+esc(account)+'</b></div><div class="meta">Provider: '+esc(provider)+(row&&row.external_channel_id?' · ID: '+esc(row.external_channel_id):"")+'</div>'+verifiedAt+collisionNote+urlEditor+'</div><div class="row" style="justify-content:flex-end">'+actions+'</div></div>';
+      return '<div class="lineitem" style="align-items:flex-start"><b>'+esc(platformLabel(p))+'</b><div style="flex:1"><span class="badge '+socialStateClass(row,state)+'">'+esc(state)+'</span><div class="meta"><b>'+esc(account)+'</b></div><div class="meta">Provider: '+esc(provider)+(row&&row.external_channel_id?' · ID: '+esc(row.external_channel_id):"")+'</div>'+verifiedAt+collisionNote+onboardingNote+urlEditor+'</div><div class="row" style="justify-content:flex-end">'+actions+'</div></div>';
     }).join("");
     const discover=c.website?'<button class="btn small ghost" onclick="window.f1DiscoverSocials(\''+c.id+'\')">SCOPRI SOCIAL</button>':'';
     return '<div style="margin-bottom:22px;padding:14px;border:1px solid #263a56;border-radius:14px"><div class="section-title"><h3 style="margin:0">'+esc(c.name)+'</h3>'+discover+'</div>'+rows+'</div>';
@@ -812,7 +817,17 @@ window.f1ConnectSocial=async function(clientId,platform){
     const r=await fetch(url,{headers:{Authorization:"Bearer "+session.access_token,apikey:SUPABASE_KEY}});
     const data=await r.json();
     if(!r.ok){
-      if(data.error==="configuration_missing")return alert("Configurazione OAuth non ancora completata per "+platformLabel(platform)+". Aggiungi le credenziali server-side del provider e riprova.");
+      if(data.error==="configuration_missing"){
+        const client=clients.find(function(x){return x.id===clientId});
+        const row=socialChannels.find(function(x){return x.client_id===clientId&&x.platform===platform});
+        if(client&&client.slug==="antica-cappella"&&platform==="facebook"){
+          const ok=confirm("Facebook di Antica Cappella è stato trovato, ma non è ancora autorizzato alla pubblicazione. Buffer di Antica Cappella contiene già Instagram. Premi OK per aprire Buffer > Canali e aggiungere la Pagina Facebook senza modificare Instagram.");
+          if(ok)window.open("https://account.buffer.com/channels","_blank","noopener");
+          return;
+        }
+        if(row&&row.profile_url)return alert("Il link "+platformLabel(platform)+" è già salvato, ma manca ancora l'autorizzazione alla pubblicazione. Il collegamento esistente non viene modificato.");
+        return alert("Configurazione OAuth non ancora completata per "+platformLabel(platform)+".");
+      }
       if(data.error==="already_connected")return alert(platformLabel(platform)+" è già collegato e non verrà modificato.");
       throw new Error(data.detail||data.error||"Errore OAuth");
     }
