@@ -10,6 +10,27 @@ class OAuthBrokerTests(unittest.TestCase):
         with patch.dict(os.environ, {"SUPABASE_SERVICE_ROLE_KEY": "secret"}, clear=True):
             self.assertFalse(oauth_broker.enabled())
 
+    def test_force_uses_broker_when_global_flag_is_off(self):
+        response = Mock()
+        response.ok = True
+        response.status_code = 200
+        response.json.return_value = {"access_token": "forced-token"}
+        env = {
+            "SUPABASE_SERVICE_ROLE_KEY": "service-key",
+            "F1_OAUTH_BROKER_URL": "https://example.test/functions/v1/f1-social-oauth",
+        }
+        with patch.dict(os.environ, env, clear=True), patch(
+            "oauth_broker.requests.get", return_value=response
+        ) as get:
+            result = oauth_broker.token({"id": "client-slug"}, "tiktok", force=True)
+        self.assertEqual(result["access_token"], "forced-token")
+        get.assert_called_once()
+
+    def test_force_still_requires_service_key(self):
+        with patch.dict(os.environ, {}, clear=True):
+            with self.assertRaises(oauth_broker.BrokerError):
+                oauth_broker.token({"id": "client-slug"}, "tiktok", force=True)
+
     def test_successful_token_response(self):
         response = Mock()
         response.ok = True
