@@ -125,8 +125,10 @@ def remaining_platforms(job: dict[str, Any], only: set[str] | None = None) -> li
     return out
 
 
-def required_secrets(platform: str, client: dict[str, Any]) -> list[str]:
-    if oauth_broker.enabled() and platform in {"tiktok", "linkedin", "linkedin-page", "youtube"}:
+def required_secrets(platform: str, client: dict[str, Any], job: dict[str, Any] | None = None) -> list[str]:
+    provider = str((job or {}).get("provider") or "").strip().lower()
+    broker_requested = provider == "oauth_broker" and platform in {"tiktok", "linkedin", "linkedin-page", "youtube"}
+    if (oauth_broker.enabled() or broker_requested) and platform in {"tiktok", "linkedin", "linkedin-page", "youtube"}:
         return []
     by_platform = {
         "facebook": ["FACEBOOK_PAGE_ACCESS_TOKEN"],
@@ -474,8 +476,9 @@ def tiktok_publish(job: dict[str, Any], client: dict[str, Any], paths: list[Path
     if str(job.get("format") or "reel") != "reel":
         raise PlatformReviewRequired("TikTok Direct Post currently requires a video/reel job")
 
-    if oauth_broker.enabled():
-        token_payload = oauth_broker.token(client, "tiktok")
+    broker_requested = str(job.get("provider") or "").strip().lower() == "oauth_broker"
+    if oauth_broker.enabled() or broker_requested:
+        token_payload = oauth_broker.token(client, "tiktok", force=broker_requested)
         token = str(token_payload["access_token"])
     else:
         token = secret(client, "TIKTOK_ACCESS_TOKEN")
@@ -657,7 +660,7 @@ def publish_job(job: dict[str, Any], only: set[str] | None, dry_run: bool) -> tu
     results: list[dict[str, Any]] = []
     if not platforms:
         return results, True
-    blocked = {platform: required_secrets(platform, client) for platform in platforms}
+    blocked = {platform: required_secrets(platform, client, job) for platform in platforms}
     blocked = {platform: names for platform, names in blocked.items() if names}
     if blocked:
         for platform, names in blocked.items():
