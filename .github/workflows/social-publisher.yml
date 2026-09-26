@@ -22,9 +22,9 @@ on:
         default: false
         type: boolean
   schedule:
-    # Automatic publication check every 15 minutes. Queue scheduled_at remains
+    # Automatic publication check every 5 minutes. Queue scheduled_at remains
     # the source of truth, so nothing is published before its planned time.
-    - cron: '*/15 * * * *'
+    - cron: '*/5 * * * *'
   workflow_run:
     # Also run immediately after a successful 4-hour content-production cycle.
     workflows: ['Open Social Engine - 10 STATIC PUBLICATIONS - 5 F1 + 5 RMP']
