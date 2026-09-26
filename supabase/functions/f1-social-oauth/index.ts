@@ -259,7 +259,7 @@ function providerConfig(platform) {
     return {
       clientId: Deno.env.get("TIKTOK_CLIENT_KEY") || "",
       clientSecret: Deno.env.get("TIKTOK_CLIENT_SECRET") || "",
-      scope: Deno.env.get("TIKTOK_OAUTH_SCOPES") || "user.info.basic,video.publish",
+      scope: Deno.env.get("TIKTOK_OAUTH_SCOPES") || "user.info.basic,video.publish,video.upload",
       authUrl: "https://www.tiktok.com/v2/auth/authorize/",
       tokenUrl: "https://open.tiktokapis.com/v2/oauth/token/"
     };
@@ -320,7 +320,12 @@ async function profileFor(platform, accessToken) {
     const data = await res.json();
     if (!res.ok || (data.error && data.error.code !== "ok")) throw new Error("TikTok profile failed: " + JSON.stringify(data).slice(0, 800));
     const u = data.data?.user || {};
-    return { subject: u.open_id || null, account_id: u.open_id || null, account_name: u.display_name || "TikTok" };
+    return {
+      subject: u.open_id || null,
+      account_id: u.open_id || null,
+      account_name: u.display_name || "TikTok",
+      avatar_url: u.avatar_url || null
+    };
   }
   if (p === "linkedin") {
     let memberId = "";
@@ -492,6 +497,72 @@ async function workerToken(req, url) {
     return respond({ error: authRequired ? "AUTH_REQUIRED" : "TOKEN_ERROR", detail: String(e) }, authRequired ? 409 : 500);
   }
 }
+function scopeSet(value) {
+  return new Set(String(value || "").split(/[,\s]+/).map(x => x.trim()).filter(Boolean));
+}
+
+async function tiktokCreatorInfo(req, url) {
+  const user = await authUser(req);
+  if (!user) return respond({ error: "unauthorized" }, 401);
+  const clientId = String(url.searchParams.get("client_id") || "");
+  const client = await clientForUser(clientId, user.id);
+  if (!client) return respond({ error: "client_not_found" }, 404);
+
+  const row = await tokenRow(user.id, client.id, "tiktok");
+  if (!row) return respond({ error: "AUTH_REQUIRED", detail: "TikTok is not connected" }, 409);
+  const scopes = scopeSet(row.scope);
+  if (!scopes.has("video.publish")) {
+    await markReauth(user.id, client.id, "tiktok", "video.publish_scope_missing");
+    return respond({ error: "AUTH_REQUIRED", detail: "video.publish scope is missing" }, 409);
+  }
+
+  let token;
+  try {
+    token = await usableToken(user.id, client.id, "tiktok");
+  } catch (e) {
+    const authRequired = isAuthRequiredError(e);
+    return respond({ error: authRequired ? "AUTH_REQUIRED" : "TOKEN_ERROR", detail: String(e) }, authRequired ? 409 : 500);
+  }
+
+  const res = await fetch("https://open.tiktokapis.com/v2/post/publish/creator_info/query/", {
+    method: "POST",
+    headers: {
+      authorization: "Bearer " + token.access_token,
+      "content-type": "application/json; charset=UTF-8",
+      "cache-control": "no-store"
+    },
+    body: JSON.stringify({})
+  });
+
+  let payload = {};
+  try { payload = await res.json(); } catch (_) {}
+  const code = String(payload?.error?.code || "");
+  if (!res.ok || (code && code !== "ok")) {
+    if (res.status === 401 || code === "access_token_invalid" || code === "scope_not_authorized") {
+      await markReauth(user.id, client.id, "tiktok", code || "creator_info_auth_failed");
+      return respond({ error: "AUTH_REQUIRED", detail: code || "TikTok authorization failed" }, 409);
+    }
+    return respond({
+      error: code || "TIKTOK_CREATOR_INFO_ERROR",
+      detail: String(payload?.error?.message || "TikTok creator_info failed")
+    }, 400);
+  }
+
+  const data = payload?.data || {};
+  return respond({
+    creator_avatar_url: data.creator_avatar_url || null,
+    creator_username: data.creator_username || null,
+    creator_nickname: data.creator_nickname || row.metadata?.account_name || "TikTok",
+    privacy_level_options: Array.isArray(data.privacy_level_options) ? data.privacy_level_options : [],
+    comment_disabled: !!data.comment_disabled,
+    duet_disabled: !!data.duet_disabled,
+    stitch_disabled: !!data.stitch_disabled,
+    max_video_post_duration_sec: Number(data.max_video_post_duration_sec || 0),
+    account_id: row.provider_subject || row.metadata?.account_id || null,
+    scopes: Array.from(scopes)
+  });
+}
+
 async function disconnect(req) {
   const user = await authUser(req);
   if (!user) return respond({ error: "unauthorized" }, 401);
@@ -548,6 +619,7 @@ Deno.serve(async (req) => {
     if (route === "authorize" && req.method === "GET") return await authorize(req, url);
     if (route === "callback" && req.method === "GET") return await callback(url, canonicalPlatform(routeParts[1]));
     if (route === "status" && req.method === "GET") return await status(req, url);
+    if (route === "tiktok" && routeParts[1] === "creator-info" && req.method === "GET") return await tiktokCreatorInfo(req, url);
     if (route === "token" && req.method === "GET") return await workerToken(req, url);
     if (route === "disconnect" && req.method === "POST") return await disconnect(req);
     return respond({ error: "not_found" }, 404);
