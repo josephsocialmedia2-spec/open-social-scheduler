@@ -268,7 +268,15 @@ def facebook_publish(job: dict[str, Any], client: dict[str, Any], paths: list[Pa
     with paths[0].open("rb") as fh:
         media_type = mimetypes.guess_type(paths[0].name)[0] or "image/jpeg"
         response = request("POST", f"{meta_graph_base()}/me/photos", params={"access_token": token, "message": str(job.get("caption") or "")[:5000]}, files={"source": (paths[0].name, fh, media_type)}, timeout=180).json()
-    return {"photo_id": response.get("id"), "post_id": response.get("post_id"), "mode": "first_slide"}
+    post_id = response.get("post_id") or response.get("id")
+    permalink = ""
+    if post_id:
+        try:
+            meta = request("GET", f"{meta_graph_base()}/{post_id}", params={"fields": "permalink_url", "access_token": token}).json()
+            permalink = str(meta.get("permalink_url") or "")
+        except Exception:
+            permalink = ""
+    return {"photo_id": response.get("id"), "post_id": response.get("post_id"), "mode": "first_slide", "url": permalink or None}
 
 
 def ig_wait_container(container_id: str, token: str, timeout_seconds: int = 300) -> None:
@@ -320,7 +328,15 @@ def instagram_publish(job: dict[str, Any], client: dict[str, Any], paths: list[P
             f"{meta_graph_base()}/{ig_user_id}/media_publish",
             params={"creation_id": container_id, "access_token": token},
         ).json()
-        return {"container_id": container_id, "media_id": published.get("id"), "mode": "single_image"}
+        media_id = published.get("id")
+        permalink = ""
+        if media_id:
+            try:
+                meta = request("GET", f"{meta_graph_base()}/{media_id}", params={"fields": "permalink", "access_token": token}).json()
+                permalink = str(meta.get("permalink") or "")
+            except Exception:
+                permalink = ""
+        return {"container_id": container_id, "media_id": media_id, "mode": "single_image", "url": permalink or None}
     children: list[str] = []
     for url in urls[:10]:
         child = request("POST", f"{meta_graph_base()}/{ig_user_id}/media", params={"image_url": url, "is_carousel_item": "true", "access_token": token}).json()
@@ -594,12 +610,16 @@ def tiktok_publish(job: dict[str, Any], client: dict[str, Any], paths: list[Path
         if state == "FAILED":
             raise PublishError(f"TikTok photo publish failed: {status.get('fail_reason') or 'unknown'}")
         if state == "PUBLISH_COMPLETE" or (mode == "DRAFT_UPLOAD" and state == "SEND_TO_USER_INBOX"):
+            post_ids = status.get("publicaly_available_post_id") or []
+            creator_username = str(token_payload.get("creator_username") or "").lstrip("@")
+            public_url = ("https://www.tiktok.com/@" + creator_username + "/photo/" + str(post_ids[0])) if creator_username and post_ids else None
             return {
                 "publish_id": publish_id,
                 "status": state,
-                "post_ids": status.get("publicaly_available_post_id") or [],
+                "post_ids": post_ids,
                 "mode": mode,
                 "media_type": "PHOTO",
+                "url": public_url,
             }
         raise PublishPending(
             f"TikTok photo publish is processing: {state or 'UNKNOWN'}",
@@ -763,7 +783,8 @@ def youtube_publish(job: dict[str, Any], client: dict[str, Any], paths: list[Pat
     if not upload_url:
         raise PublishError("YouTube did not return a resumable upload URL")
     result = request("PUT", upload_url, headers={"Content-Type": "video/mp4", "Content-Length": str(path.stat().st_size)}, data=path.read_bytes(), timeout=600).json()
-    return {"video_id": result.get("id"), "privacy": metadata["status"]["privacyStatus"]}
+    video_id = result.get("id")
+    return {"video_id": video_id, "privacy": metadata["status"]["privacyStatus"], "url": ("https://www.youtube.com/watch?v=" + str(video_id)) if video_id else None}
 
 
 def pinterest_publish(job: dict[str, Any], client: dict[str, Any], paths: list[Path], _cache: PublicMediaCache) -> dict[str, Any]:
@@ -779,7 +800,8 @@ def pinterest_publish(job: dict[str, Any], client: dict[str, Any], paths: list[P
     if link:
         payload["link"] = link
     result = request("POST", "https://api.pinterest.com/v5/pins", headers={"Authorization": f"Bearer {token}", "Content-Type": "application/json"}, json=payload).json()
-    return {"pin_id": result.get("id")}
+    pin_id = result.get("id")
+    return {"pin_id": pin_id, "url": ("https://www.pinterest.com/pin/" + str(pin_id) + "/") if pin_id else None}
 
 
 PUBLISHERS = {"facebook": facebook_publish, "instagram": instagram_publish, "tiktok": tiktok_publish, "linkedin": linkedin_publish, "linkedin-page": linkedin_publish, "youtube": youtube_publish, "pinterest": pinterest_publish}
@@ -841,23 +863,23 @@ def publish_job(job: dict[str, Any], only: set[str] | None, dry_run: bool) -> tu
                 continue
             try:
                 payload = publisher(job, client, paths, cache)
-                results.append({"platform": platform, "status": "published", "result": payload})
+                results.append({"platform": platform, "status": "published", "result": payload, "api_sent": True})
                 published = set(str(x) for x in job.get("published_platforms", []))
                 published.add(platform)
                 job["published_platforms"] = sorted(published)
             except PublishPending as exc:
                 processing_platforms.add(platform)
-                results.append({"platform": platform, "status": "processing", "result": exc.payload, "error": str(exc)})
+                results.append({"platform": platform, "status": "processing", "result": exc.payload, "error": str(exc), "api_sent": True})
             except PlatformReviewRequired as exc:
                 review_required_platforms.add(platform)
-                results.append({"platform": platform, "status": "review_required", "reason": exc.reason, "error": str(exc)})
+                results.append({"platform": platform, "status": "review_required", "reason": exc.reason, "error": str(exc), "api_sent": False})
                 success = False
             except oauth_broker.BrokerError as exc:
                 if exc.auth_required:
                     auth_required_platforms.add(platform)
-                    results.append({"platform": platform, "status": "auth_required", "error": str(exc)})
+                    results.append({"platform": platform, "status": "auth_required", "error": str(exc), "api_sent": False})
                 else:
-                    results.append({"platform": platform, "status": "error", "error": str(exc)})
+                    results.append({"platform": platform, "status": "error", "error": str(exc), "api_sent": False})
                 success = False
             except Exception as exc:
                 results.append({"platform": platform, "status": "error", "error": str(exc)})
