@@ -326,6 +326,50 @@
       "status": "QUEUED_FOR_PC",
       "created_at": "2026-09-26T09:30:20+02:00",
       "updated_at": "2026-09-26T09:30:20+02:00"
+    },
+    {
+      "id": "COMM-NEWS-20260926-EVENING-BF4F1069",
+      "communication_id": "COMM-NEWS-20260926-EVENING-BF4F1069",
+      "query": "Avviso di asta pubblica per l'alienazione di immobili comunali - Lotti",
+      "communication": "AVVISO DI ASTA PUBBLICA PER L'ALIENAZIONE DI IMMOBILI COMUNALI - LOTTI 1 E 2\n\nAvviso di asta pubblica per l'alienazione di immobili comunali - Lotti 1 e 2\n\nPer chi vive, vende, compra o cambia casa in Valle di Susa, la notizia conta solo se viene tradotta in effetti concreti sul territorio. F1 la segnala e la contestualizza senza trasformare una comunicazione generale in una conclusione sul singolo immobile.\n\nFonte: Comune di Susa.\nhttps://www.comune.susa.to.it/it-it/novita/avvisi/2026/avviso-di-asta-pubblica-per-l-alienazione-di-immobili-comunali-lotti-1-e-2-402398-1-9e5ff8fd51b959c57f90b4b33cf22c17\n\nNon a sensazione. Con i dati.\n\nValutazione immobile: https://www.agentpricing.com/j.malafronte\nContatto F1 Immobiliare: https://wa.me/393713708294",
+      "caption": "AVVISO DI ASTA PUBBLICA PER L'ALIENAZIONE DI IMMOBILI COMUNALI - LOTTI 1 E 2\n\nAvviso di asta pubblica per l'alienazione di immobili comunali - Lotti 1 e 2\n\nPer chi vive, vende, compra o cambia casa in Valle di Susa, la notizia conta solo se viene tradotta in effetti concreti sul territorio. F1 la segnala e la contestualizza senza trasformare una comunicazione generale in una conclusione sul singolo immobile.\n\nFonte: Comune di Susa.\nhttps://www.comune.susa.to.it/it-it/novita/avvisi/2026/avviso-di-asta-pubblica-per-l-alienazione-di-immobili-comunali-lotti-1-e-2-402398-1-9e5ff8fd51b959c57f90b4b33cf22c17\n\nNon a sensazione. Con i dati.\n\nValutazione immobile: https://www.agentpricing.com/j.malafronte\nContatto F1 Immobiliare: https://wa.me/393713708294",
+      "prompt": "Crea un visual fotografico editoriale real-estate per una notizia F1 Immobiliare. Argomento: Avviso di asta pubblica per l'alienazione di immobili comunali - Lotti 1 e 2. Categoria: notizia immobiliare. Area: Valle di Susa / Piemonte. Contesto: Avviso di asta pubblica per l'alienazione di immobili comunali - Lotti 1 e 2. Trasforma la notizia in una scena fotografica plausibile e concreta, non in un volantino: architettura e territorio piemontese/Valle di Susa coerenti quando pertinenti, luce naturale, stile premium ma autentico, composizione verticale social-first 4:5, soggetto o immobile principale sulla destra e spazio negativo pulito sulla sinistra per il copy successivo. Non inserire testo, titoli, loghi, CTA, numeri, URL, documenti con testo leggibile o watermark. Evita look stock, icone, infografiche, card nere, template piatti, mani deformi, prospettive impossibili e artefatti AI. La fotografia deve essere adatta a una testata locale immobiliare autorevole.",
+      "client": "F1 Immobiliare",
+      "territory": "Valle di Susa",
+      "scope": "network",
+      "platforms": [
+        "facebook",
+        "instagram"
+      ],
+      "source": "f1-news-browser-control",
+      "news_id": "AUTO-292DEF051016",
+      "headline": "Avviso di asta pubblica per l'alienazione di immobili comunali - Lotti",
+      "cta": "SCOPRI COSA CAMBIA",
+      "category": "notizia immobiliare",
+      "source_name": "Comune di Susa",
+      "source_url": "https://www.comune.susa.to.it/it-it/novita/avvisi/2026/avviso-di-asta-pubblica-per-l-alienazione-di-immobili-comunali-lotti-1-e-2-402398-1-9e5ff8fd51b959c57f90b4b33cf22c17",
+      "source_hash": "bf4f10699ff12aa00155b2986e0648fb07bd3a31290668d768dfd794429f5830",
+      "source_published_at": "2026-09-26",
+      "source_verification": {
+        "http_status": 200,
+        "final_url": "https://www.comune.susa.to.it/it-it/novita/avvisi/2026/avviso-di-asta-pubblica-per-l-alienazione-di-immobili-comunali-lotti-1-e-2-402398-1-9e5ff8fd51b959c57f90b4b33cf22c17",
+        "domain": "www.comune.susa.to.it",
+        "content_sha256": "53215b648d7debe373b5839ba49a6b8b6688da873aff60e5fc113baad1f1d2fd",
+        "matched_title_terms": [
+          "alienazione",
+          "avviso",
+          "comunali",
+          "immobili",
+          "lotti",
+          "pubblica"
+        ],
+        "verified_at": "2026-09-26T16:39:20+00:00"
+      },
+      "editorial_slot": "evening",
+      "slot_key": "2026-09-26|EVENING",
+      "status": "QUEUED_FOR_PC",
+      "created_at": "2026-09-26T18:38:05+02:00",
+      "updated_at": "2026-09-26T18:38:05+02:00"
     }
   ],
   "rejected": [
@@ -336,5 +380,5 @@
       "error": "ConnectTimeout: HTTPSConnectionPool(host='www.regione.piemonte.it', port=443): Max retries exceeded with url: /web/amministrazione/autonomie-locali/notiziario-per-amministrazioni-locali/notiziario-per-amministrazioni-locali-n-31-3-settembre-2026 (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.regione.piemonte.it', port=443) at 0x7f0ef94c3bc0>, 'Connection to www.regione.piemonte.it timed out. (connect timeout=8)'))"
     }
   ],
-  "updated_at": "2026-09-26T09:30:20+02:00"
+  "updated_at": "2026-09-26T18:38:05+02:00"
 }
