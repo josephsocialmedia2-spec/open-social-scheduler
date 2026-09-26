@@ -1,0 +1,38 @@
+{
+  "brand": "F1 SOCIAL / Real Media Pro",
+  "mode": "READ_ONLY_IDENTITY_AUDIT",
+  "checked_at": "2026-09-26T16:55:21.775071+00:00",
+  "platforms": {
+    "facebook": {
+      "ok": false,
+      "reason": "RMP_FACEBOOK_PAGE_ACCESS_TOKEN_MISSING"
+    },
+    "instagram": {
+      "ok": false,
+      "reason": "RMP_INSTAGRAM_CREDENTIALS_MISSING"
+    },
+    "linkedin": {
+      "ok": false,
+      "reason": "RMP_LINKEDIN_CREDENTIALS_MISSING"
+    },
+    "pinterest": {
+      "ok": false,
+      "reason": "RMP_PINTEREST_ACCESS_TOKEN_MISSING",
+      "board_id_configured": false
+    },
+    "tiktok": {
+      "ok": false,
+      "credential_present": false,
+      "format_support_for_this_test": false,
+      "reason": "CURRENT_DIRECT_PUBLISHER_REQUIRES_VIDEO_REEL_FOR_TIKTOK"
+    },
+    "x": {
+      "ok": false,
+      "reason": "NO_X_PUBLISHER_OR_RMP_X_CREDENTIALS_CONFIGURED"
+    },
+    "youtube": {
+      "ok": false,
+      "reason": "IMAGE_POST_NOT_SUPPORTED_BY_CURRENT_YOUTUBE_INTEGRATION"
+    }
+  }
+}
