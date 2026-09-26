@@ -40,6 +40,35 @@ CLIENT = {
     },
 }
 
+ANTICA = {
+    "id": "antica-cappella",
+    "safety": {
+        "exclusive_account_whitelist": True,
+        "allow_client_accounts": False,
+    },
+    "authorized_accounts": {
+        "facebook": {
+            "url": "https://www.facebook.com/profile.php?id=61550077453442",
+            "authorized": True,
+        },
+        "instagram": {
+            "url": "https://www.instagram.com/anticacappella/",
+            "handle": "anticacappella",
+            "authorized": True,
+        },
+        "tiktok": {
+            "url": "https://www.tiktok.com/@ristoranteanticacappella",
+            "handle": "@ristoranteanticacappella",
+            "authorized": True,
+        },
+        "youtube": {
+            "url": "https://www.youtube.com/@ristoranteanticacappella",
+            "handle": "@ristoranteanticacappella",
+            "authorized": True,
+        },
+    },
+}
+
 
 class F1SocialSafetyTests(unittest.TestCase):
     def test_exact_facebook_account_passes(self):
@@ -49,6 +78,23 @@ class F1SocialSafetyTests(unittest.TestCase):
             "scopes": ["pages_manage_posts"],
             "account_shared": False,
         })
+
+    def test_antica_cappella_facebook_page_id_passes(self):
+        assert_broker_account(ANTICA, "facebook", {
+            "profile_url": "https://www.facebook.com/AnticaCappella",
+            "account_id": "61550077453442",
+            "scopes": ["pages_manage_posts"],
+            "account_shared": False,
+        })
+
+    def test_antica_cappella_wrong_facebook_page_is_blocked(self):
+        with self.assertRaisesRegex(SecurityError, "BLOCKED_ACCOUNT_OWNERSHIP_MISMATCH"):
+            assert_broker_account(ANTICA, "facebook", {
+                "profile_url": "https://www.facebook.com/other-page",
+                "account_id": "111111111111111",
+                "scopes": ["pages_manage_posts"],
+                "account_shared": False,
+            })
 
     def test_wrong_account_is_blocked(self):
         with self.assertRaisesRegex(SecurityError, "BLOCKED_ACCOUNT_OWNERSHIP_MISMATCH"):
