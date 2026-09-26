@@ -1,0 +1,74 @@
+{
+  "id": "f1-social",
+  "name": "F1 Social",
+  "operator": "Real Media Pro",
+  "active": true,
+  "timezone": "Europe/Rome",
+  "purpose": "Official F1 Social / Real Media Pro publishing tenant",
+  "safety": {
+    "exclusive_account_whitelist": true,
+    "allow_client_accounts": false,
+    "require_exact_account_match": true,
+    "require_valid_token": true,
+    "require_publish_permission": true,
+    "require_media": true,
+    "published_only_after_platform_confirmation": true,
+    "allowed_statuses": [
+      "BOZZA",
+      "PRONTO",
+      "IN PUBBLICAZIONE",
+      "PUBBLICATO",
+      "PARZIALMENTE PUBBLICATO",
+      "ERRORE"
+    ]
+  },
+  "publishing": {
+    "backend": "direct_api",
+    "secret_prefix": "F1SOCIAL",
+    "manual_publish_only": true,
+    "require_media": true,
+    "platforms": [
+      "facebook",
+      "instagram",
+      "tiktok",
+      "youtube"
+    ]
+  },
+  "authorized_accounts": {
+    "facebook": {
+      "url": "https://www.facebook.com/josephrealmedia",
+      "handle": "josephrealmedia",
+      "brand_owner": "F1 Social / Real Media Pro",
+      "authorized": true
+    },
+    "instagram": {
+      "url": "https://www.instagram.com/realmediaproageency/",
+      "handle": "realmediaproageency",
+      "brand_owner": "F1 Social / Real Media Pro",
+      "authorized": true
+    },
+    "tiktok": {
+      "url": "https://www.tiktok.com/@realmediapro_agency",
+      "handle": "@realmediapro_agency",
+      "brand_owner": "F1 Social / Real Media Pro",
+      "authorized": true
+    },
+    "youtube": {
+      "url": "https://www.youtube.com/channel/UC4G1Oq0z-_b0UTwRmYBxbCA",
+      "channel_id": "UC4G1Oq0z-_b0UTwRmYBxbCA",
+      "brand_owner": "F1 Social / Real Media Pro",
+      "authorized": true
+    }
+  },
+  "blocked_until_verified": {
+    "linkedin": "No authorized F1 Social / Real Media Pro account supplied",
+    "x": "No authorized F1 Social / Real Media Pro account supplied",
+    "pinterest": "No authorized F1 Social / Real Media Pro account supplied"
+  },
+  "test_post": {
+    "title": "F1 SOCIAL — Gestione Social Intelligente",
+    "status": "BOZZA",
+    "require_original_media_asset": true,
+    "publish_now_requires_preflight": true
+  }
+}
