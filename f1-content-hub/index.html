@@ -357,6 +357,7 @@ async function enterApp(){
   const oauthState=params.get("oauth");
   if(oauthState){
     if(window.f1ResumePendingPublishNow)await window.f1ResumePendingPublishNow();
+    if(window.f1ContinueConnectAllSocials)await window.f1ContinueConnectAllSocials(false);
     setTab("automation");history.replaceState({},document.title,location.pathname);
   }
 }
@@ -922,7 +923,7 @@ function renderSocialConnections(){
     const rows=order.map(function(p){
       const row=socialChannels.find(function(x){return x.client_id===c.id&&x.platform===p});
       const rawState=effectiveSocialState(row,collisions);
-      const state=(c.slug==="antica-cappella"&&p==="youtube"&&!(row&&row.enabled&&row.verified))?"ACCOUNT GOOGLE DA AUTORIZZARE":rawState;
+      const state=(c.slug==="antica-cappella"&&p==="linkedin-page"&&!profileUrl)?"NON_CONFIGURATO":rawState;
       const provider=row&&row.provider?row.provider:"oauth_broker";
       const profileUrl=safeSocialHref(row&&row.profile_url);
       const account=row&&(row.account_name||row.external_channel_id)?(row.account_name||row.external_channel_id):"Nessun account autorizzato";
@@ -931,34 +932,34 @@ function renderSocialConnections(){
       let actions=openBtn;
       const connected=!!(row&&row.enabled&&row.verified);
       const isBuffer=provider==="buffer";
-      const isAnticaFacebook=(c.slug==="antica-cappella"&&p==="facebook");
-      const isAnticaYoutube=(c.slug==="antica-cappella"&&p==="youtube");
-      if(isAnticaFacebook&&!connected){
-        actions+=' <a class="btn small primary" href="https://account.buffer.com/channels" target="_blank" rel="noopener noreferrer">COLLEGA FACEBOOK IN BUFFER</a>';
-      }
-      if(isAnticaYoutube&&!connected){
-        actions+=' <a class="btn small primary" href="https://console.cloud.google.com/auth/audience" target="_blank" rel="noopener noreferrer">APRI GOOGLE AUTH PLATFORM</a> <button class="btn small ghost" onclick="window.f1AnticaYoutubeHelp()">ISTRUZIONI</button>';
-      }
+      const anticaMissingLinkedin=(c.slug==="antica-cappella"&&p==="linkedin-page"&&!profileUrl);
       if(isBuffer){
         if(connected) actions+=' <button class="btn small ghost" onclick="window.f1VerifySocial(\''+c.id+'\',\''+p+'\')">VERIFICA</button>';
       }else{
         if(state==="ACCOUNT_DA_SELEZIONARE" && (p==="facebook"||p==="instagram")){
           actions+=' <button class="btn small primary" onclick="window.f1SelectMetaAccount(\''+c.id+'\',\''+p+'\')">SELEZIONA ACCOUNT</button>';
-        }else if((!connected || ["DA_RIAUTORIZZARE","TOKEN_SCADUTO","CANALE_DA_COLLEGARE","CONFIGURAZIONE_PRONTA","AUTORIZZAZIONE_RICHIESTA","ACCOUNT_ERRATO"].includes(state))&&!isAnticaFacebook&&!isAnticaYoutube){
+        }else if((!connected || ["DA_RIAUTORIZZARE","TOKEN_SCADUTO","CANALE_DA_COLLEGARE","CONFIGURAZIONE_PRONTA","AUTORIZZAZIONE_RICHIESTA","ACCOUNT_ERRATO"].includes(state))&&!anticaMissingLinkedin){
           actions+=' <button class="btn small primary" onclick="window.f1ConnectSocial(\''+c.id+'\',\''+p+'\')">'+(["DA_RIAUTORIZZARE","TOKEN_SCADUTO"].includes(state)?"RIAUTORIZZA":"COLLEGA")+'</button>';
         }
         if(connected) actions+=' <button class="btn small ghost" onclick="window.f1VerifySocial(\''+c.id+'\',\''+p+'\')">VERIFICA</button>';
         if(connected) actions+=' <button class="btn small danger" onclick="window.f1DisconnectSocial(\''+c.id+'\',\''+p+'\')">DISCONNETTI</button>';
       }
       const collisionNote=state==="ACCOUNT_CONDIVISO"?'<div class="meta" style="color:#ffcf66">Lo stesso account è associato a più clienti. La pubblicazione automatica deve essere verificata.</div>':"";
-      const onboardingNote=isAnticaFacebook&&!connected
-        ?'<div class="meta" style="color:#f7d48a">Pagina trovata. Buffer Antica Cappella contiene già Instagram; aggiungi qui la Pagina Facebook per autorizzare la pubblicazione.</div>'
-        :(isAnticaYoutube&&!connected?'<div class="meta" style="color:#f7d48a">Google OAuth è in modalità TEST. Prima di collegare YouTube aggiungi anticacappella.avigliana@gmail.com tra gli utenti di test dell\'app Google.</div>':"");
+      const onboardingNote=(c.slug==="antica-cappella"&&p==="facebook"&&!connected)
+        ?'<div class="meta" style="color:#f7d48a">Usa COLLEGA per autorizzare esclusivamente la Pagina Facebook Antica Cappella tramite Meta OAuth. Instagram Buffer non viene modificato.</div>'
+        :(c.slug==="antica-cappella"&&p==="tiktok"&&!connected)
+          ?'<div class="meta" style="color:#f7d48a">Usa COLLEGA e accedi a TikTok con @ristoranteanticacappella. L\'account viene verificato prima del salvataggio.</div>'
+          :(c.slug==="antica-cappella"&&p==="youtube"&&!connected)
+            ?'<div class="meta" style="color:#f7d48a">Usa COLLEGA e accedi con l\'account Google proprietario di @ristoranteanticacappella.</div>'
+            :(anticaMissingLinkedin?'<div class="meta">Nessun profilo LinkedIn ufficiale verificato: canale non configurato.</div>':"");
       const verifiedAt=row&&row.last_verified_at?'<div class="meta">Ultima verifica: '+esc(fmt(row.last_verified_at))+'</div>':"";
       return '<div class="lineitem" style="align-items:flex-start"><b>'+esc(platformLabel(p))+'</b><div style="flex:1"><span class="badge '+socialStateClass(row,state)+'">'+esc(state)+'</span><div class="meta"><b>'+esc(account)+'</b></div><div class="meta">Provider: '+esc(provider)+(row&&row.external_channel_id?' · ID: '+esc(row.external_channel_id):"")+'</div>'+verifiedAt+collisionNote+onboardingNote+urlEditor+'</div><div class="row" style="justify-content:flex-end">'+actions+'</div></div>';
     }).join("");
     const discover=c.website?'<button class="btn small ghost" onclick="window.f1DiscoverSocials(\''+c.id+'\')">SCOPRI SOCIAL</button>':'';
-    return '<div style="margin-bottom:22px;padding:14px;border:1px solid #263a56;border-radius:14px"><div class="section-title"><h3 style="margin:0">'+esc(c.name)+'</h3>'+discover+'</div>'+rows+'</div>';
+    const connectAll=c.slug==="antica-cappella"?'<button class="btn small green" onclick="window.f1ConnectAllSocials(\''+c.id+'\')">COLLEGA TUTTI</button>':'';
+    const allActions='<div class="row" style="justify-content:flex-end;gap:6px">'+connectAll+discover+'</div>';
+    const wizardStatus=c.slug==="antica-cappella"?'<div id="connect-all-status-'+c.id+'" class="meta" style="margin:6px 0 10px"></div>':'';
+    return '<div style="margin-bottom:22px;padding:14px;border:1px solid #263a56;border-radius:14px"><div class="section-title"><h3 style="margin:0">'+esc(c.name)+'</h3>'+allActions+'</div>'+wizardStatus+rows+'</div>';
   }).join("");
   el("socialConnections").innerHTML=html||'<div class="empty">Nessun cliente.</div>';
 }
@@ -979,7 +980,8 @@ window.f1AnticaYoutubeHelp=function(){
   const text="Per collegare YouTube di Antica Cappella:\n\n1. Apri Google Cloud Console del progetto che contiene il client OAuth F1 Social.\n2. Vai in Google Auth Platform → Pubblico / Audience.\n3. In Utenti di test premi Aggiungi utenti.\n4. Aggiungi: anticacappella.avigliana@gmail.com\n5. Salva.\n6. Torna qui e premi COLLEGA YouTube.\n\nFinché l'account non è tra i tester, Google risponde 403 access_denied.";
   alert(text);
 };
-window.f1ConnectSocial=async function(clientId,platform){
+window.f1ConnectSocial=async function(clientId,platform,options){
+  const opts=options||{};
   try{
     const session=await oauthSession();
     const url=OAUTH_BROKER_URL+"/authorize?client_id="+encodeURIComponent(clientId)+"&platform="+encodeURIComponent(oauthPlatform(platform));
@@ -987,22 +989,72 @@ window.f1ConnectSocial=async function(clientId,platform){
     const data=await r.json();
     if(!r.ok){
       if(data.error==="configuration_missing"){
-        const client=clients.find(function(x){return x.id===clientId});
+        if(opts.wizard)localStorage.removeItem("f1-antica-connect-all");
         const row=socialChannels.find(function(x){return x.client_id===clientId&&x.platform===platform});
-        if(client&&client.slug==="antica-cappella"&&platform==="facebook"){
-          const ok=confirm("Facebook di Antica Cappella è stato trovato, ma non è ancora autorizzato alla pubblicazione. Buffer di Antica Cappella contiene già Instagram. Premi OK per aprire Buffer > Canali e aggiungere la Pagina Facebook senza modificare Instagram.");
-          if(ok)window.open("https://account.buffer.com/channels","_blank","noopener");
-          return;
-        }
-        if(row&&row.profile_url)return alert("Il link "+platformLabel(platform)+" è già salvato, ma manca ancora l'autorizzazione alla pubblicazione. Il collegamento esistente non viene modificato.");
-        return alert("Configurazione OAuth non ancora completata per "+platformLabel(platform)+".");
+        const message=row&&row.profile_url
+          ?("Il profilo "+platformLabel(platform)+" è già registrato, ma la configurazione OAuth del provider non è ancora disponibile. Nessun altro account viene usato.")
+          :("Configurazione OAuth non ancora completata per "+platformLabel(platform)+".");
+        alert(message);
+        return false;
       }
-      if(data.error==="already_connected")return alert(platformLabel(platform)+" è già collegato e non verrà modificato.");
+      if(data.error==="already_connected"){
+        if(!opts.silent)alert(platformLabel(platform)+" è già collegato e non verrà modificato.");
+        return true;
+      }
       throw new Error(data.detail||data.error||"Errore OAuth");
     }
+    if(!data.authorization_url)throw new Error("URL OAuth non restituito per "+platformLabel(platform)+".");
     location.href=data.authorization_url;
-  }catch(e){alert(e.message||String(e))}
+    return true;
+  }catch(e){
+    if(opts.wizard)localStorage.removeItem("f1-antica-connect-all");
+    alert(e.message||String(e));
+    return false;
+  }
 };
+window.f1ConnectAllSocials=async function(clientId){
+  const client=clients.find(function(x){return x.id===clientId});
+  if(!client||client.slug!=="antica-cappella")return alert("COLLEGA TUTTI è riservato ad Antica Cappella.");
+  const plan={clientId:clientId,current:null,startedAt:new Date().toISOString()};
+  localStorage.setItem("f1-antica-connect-all",JSON.stringify(plan));
+  await window.f1ContinueConnectAllSocials(true);
+};
+window.f1ContinueConnectAllSocials=async function(manualStart){
+  let plan=null;
+  try{plan=JSON.parse(localStorage.getItem("f1-antica-connect-all")||"null")}catch(_){}
+  if(!plan||!plan.clientId)return;
+  await loadAll();
+  const client=clients.find(function(x){return x.id===plan.clientId});
+  if(!client||client.slug!=="antica-cappella"){localStorage.removeItem("f1-antica-connect-all");return}
+  const statusEl=el("connect-all-status-"+plan.clientId);
+  const targets=["facebook","tiktok","youtube"];
+  const connected=function(p){
+    const row=socialChannels.find(function(x){return x.client_id===plan.clientId&&x.platform===p});
+    return !!(row&&row.enabled&&row.verified);
+  };
+  if(plan.current){
+    if(!connected(plan.current)){
+      localStorage.removeItem("f1-antica-connect-all");
+      if(statusEl)statusEl.textContent="Autorizzazione non completata per "+platformLabel(plan.current)+".";
+      if(!manualStart)alert("Il collegamento di "+platformLabel(plan.current)+" non è stato completato. Gli altri canali non vengono toccati.");
+      return;
+    }
+    plan.current=null;
+    localStorage.setItem("f1-antica-connect-all",JSON.stringify(plan));
+  }
+  const next=targets.find(function(p){return !connected(p)});
+  if(!next){
+    localStorage.removeItem("f1-antica-connect-all");
+    if(statusEl)statusEl.textContent="Facebook, Instagram, TikTok e YouTube risultano collegati e verificati.";
+    alert("Antica Cappella: tutti i canali configurati risultano collegati e verificati.");
+    return;
+  }
+  plan.current=next;
+  localStorage.setItem("f1-antica-connect-all",JSON.stringify(plan));
+  if(statusEl)statusEl.textContent="Prossimo collegamento: "+platformLabel(next)+". Instagram già collegato viene mantenuto.";
+  await window.f1ConnectSocial(plan.clientId,next,{wizard:true,silent:true});
+};
+
 window.f1VerifySocial=async function(clientId,platform){
   try{
     await brokerPost("/verify",{client_id:clientId,platform:oauthPlatform(platform)});
