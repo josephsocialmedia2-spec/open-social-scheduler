@@ -219,10 +219,13 @@ jobs:
         if: always()
         shell: bash
         run: |
-          if git diff --quiet -- publisher/queue.json; then exit 0; fi
+          TRACKED=(publisher/queue.json)
+          if [ -f publisher/multiclient_test_report.json ]; then TRACKED+=(publisher/multiclient_test_report.json); fi
+          if git diff --quiet -- "${TRACKED[@]}" && [ ! -f publisher/multiclient_test_report.json ]; then exit 0; fi
           git config user.name 'open-social-engine'
           git config user.email 'open-social-engine@users.noreply.github.com'
-          git add publisher/queue.json
+          git add "${TRACKED[@]}"
+          if git diff --cached --quiet; then exit 0; fi
           git commit -m 'Update automatic direct social publication state'
           git fetch origin main
           git rebase origin/main
