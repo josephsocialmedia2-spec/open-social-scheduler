@@ -1,0 +1,40 @@
+name: F1 Social Analytics Sync
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 */6 * * *'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: f1-social-analytics-sync
+  cancel-in-progress: true
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      POSTIZ_API_URL: ${{ vars.POSTIZ_API_URL || 'https://api.postiz.com/public/v1' }}
+      POSTIZ_API_KEY: ${{ secrets.POSTIZ_API_KEY }}
+      SUPABASE_URL: ${{ vars.SUPABASE_URL || 'https://nqnmlsmeiynxbdojeyjt.supabase.co' }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+      ANALYTICS_DAYS: '30'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependency
+        run: pip install requests==2.32.5
+
+      - name: Compile analytics sync
+        run: python -m py_compile publisher/sync_analytics.py
+
+      - name: Sync provider analytics into tenant-scoped snapshots
+        run: python publisher/sync_analytics.py
