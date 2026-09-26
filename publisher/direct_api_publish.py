@@ -12,6 +12,8 @@ import base64
 import json
 import mimetypes
 import os
+import math
+import subprocess
 import time
 from datetime import datetime, timezone
 from pathlib import Path
@@ -30,6 +32,18 @@ CACHE_RELEASE_TAG = "social-media-cache"
 
 class PublishError(RuntimeError):
     pass
+
+
+class PublishPending(PublishError):
+    def __init__(self, message: str, payload: dict[str, Any] | None = None) -> None:
+        super().__init__(message)
+        self.payload = payload or {}
+
+
+class PlatformReviewRequired(PublishError):
+    def __init__(self, message: str, reason: str = "TIKTOK_REVIEW_REQUIRED") -> None:
+        super().__init__(message)
+        self.reason = reason
 
 
 def load_json(path: Path) -> dict[str, Any]:
@@ -299,41 +313,268 @@ def instagram_publish(job: dict[str, Any], client: dict[str, Any], paths: list[P
     return {"container_id": container_id, "media_id": published.get("id"), "children": children}
 
 
-def tiktok_publish(job: dict[str, Any], client: dict[str, Any], paths: list[Path], _cache: PublicMediaCache) -> dict[str, Any]:
-    if str(job.get("format") or "reel") != "reel":
-        raise PublishError("TikTok direct publisher currently accepts reel/video jobs only")
-    if oauth_broker.enabled():
-        token = str(oauth_broker.token(client, "tiktok")["access_token"])
-    else:
-        token = secret(client, "TIKTOK_ACCESS_TOKEN")
+def tiktok_error_code(payload: dict[str, Any]) -> str:
+    return str((payload.get("error") or {}).get("code") or "").strip()
+
+
+def tiktok_raise_api_error(context: str, payload: dict[str, Any]) -> None:
+    code = tiktok_error_code(payload)
+    if not code or code == "ok":
+        return
+    detail = str((payload.get("error") or {}).get("message") or code)
+    if code in {"access_token_invalid", "scope_not_authorized"}:
+        raise oauth_broker.BrokerError(f"TikTok {context}: {code} - {detail}", auth_required=True)
+    if code in {"privacy_level_option_mismatch"}:
+        raise PlatformReviewRequired(f"TikTok {context}: {code} - {detail}")
+    raise PublishError(f"TikTok {context}: {code} - {detail}")
+
+
+def tiktok_creator_info(token: str) -> dict[str, Any]:
     headers = {"Authorization": f"Bearer {token}", "Content-Type": "application/json; charset=UTF-8"}
-    creator = request("POST", "https://open.tiktokapis.com/v2/post/publish/creator_info/query/", headers=headers, json={}).json()
-    if creator.get("error", {}).get("code") != "ok":
-        raise PublishError(f"TikTok creator info error: {creator}")
-    options = creator.get("data", {}).get("privacy_level_options") or ["SELF_ONLY"]
-    preferred = os.getenv("TIKTOK_PRIVACY_LEVEL", "PUBLIC_TO_EVERYONE").strip()
-    privacy = preferred if preferred in options else options[0]
-    path = paths[0]
+    payload = request(
+        "POST",
+        "https://open.tiktokapis.com/v2/post/publish/creator_info/query/",
+        headers=headers,
+        json={},
+    ).json()
+    tiktok_raise_api_error("creator_info", payload)
+    data = payload.get("data") or {}
+    if not data.get("privacy_level_options"):
+        raise PlatformReviewRequired("TikTok creator_info did not return privacy options")
+    return data
+
+
+def tiktok_utf16_units(value: str) -> int:
+    return len(value.encode("utf-16-le")) // 2
+
+
+def tiktok_video_duration(path: Path) -> float:
+    try:
+        result = subprocess.run(
+            [
+                "ffprobe", "-v", "error", "-show_entries", "format=duration",
+                "-of", "default=noprint_wrappers=1:nokey=1", str(path),
+            ],
+            check=True,
+            capture_output=True,
+            text=True,
+            timeout=30,
+        )
+        return float(result.stdout.strip())
+    except (FileNotFoundError, subprocess.SubprocessError, ValueError) as exc:
+        raise PublishError("TikTok video duration validation requires ffprobe") from exc
+
+
+def tiktok_settings_for_job(job: dict[str, Any]) -> dict[str, Any]:
+    raw = job.get("tiktok_settings")
+    return raw if isinstance(raw, dict) else {}
+
+
+def tiktok_validate_settings(
+    settings: dict[str, Any],
+    creator: dict[str, Any],
+    duration_seconds: float,
+) -> None:
+    if not settings.get("consent_confirmed"):
+        raise PlatformReviewRequired("TikTok explicit publishing consent is missing")
+
+    mode = str(settings.get("mode") or "DIRECT_POST").upper()
+    if mode not in {"DIRECT_POST", "DRAFT_UPLOAD"}:
+        raise PlatformReviewRequired("TikTok publishing mode must be selected again")
+
+    max_duration = float(creator.get("max_video_post_duration_sec") or 0)
+    if max_duration > 0 and duration_seconds > max_duration + 0.05:
+        raise PlatformReviewRequired(
+            "This video exceeds the maximum duration allowed by the connected TikTok account"
+        )
+
+    caption = str(settings.get("caption") or "")
+    if tiktok_utf16_units(caption) > 2200:
+        raise PlatformReviewRequired("TikTok caption exceeds the 2200 UTF-16 unit limit")
+
+    if mode == "DRAFT_UPLOAD":
+        return
+
+    privacy = str(settings.get("privacy_level") or "")
+    options = [str(x) for x in creator.get("privacy_level_options") or []]
+    if not privacy or privacy not in options:
+        raise PlatformReviewRequired("TikTok privacy choice is missing or no longer available")
+
+    if bool(settings.get("allow_comment")) and bool(creator.get("comment_disabled")):
+        raise PlatformReviewRequired("TikTok comments are no longer available for this creator")
+    if bool(settings.get("allow_duet")) and bool(creator.get("duet_disabled")):
+        raise PlatformReviewRequired("TikTok Duet is no longer available for this creator")
+    if bool(settings.get("allow_stitch")) and bool(creator.get("stitch_disabled")):
+        raise PlatformReviewRequired("TikTok Stitch is no longer available for this creator")
+
+    commercial = bool(settings.get("commercial_content"))
+    your_brand = bool(settings.get("your_brand"))
+    branded = bool(settings.get("branded_content"))
+    if commercial and not (your_brand or branded):
+        raise PlatformReviewRequired("TikTok commercial content disclosure is incomplete")
+    if not commercial and (your_brand or branded):
+        raise PlatformReviewRequired("TikTok commercial content settings are inconsistent")
+    if branded and privacy == "SELF_ONLY":
+        raise PlatformReviewRequired("TikTok branded content cannot use private visibility")
+
+
+def tiktok_chunk_plan(size: int) -> tuple[int, int]:
+    if size <= 0:
+        raise PublishError("TikTok video is empty")
+    max_chunk = 64 * 1024 * 1024
+    if size <= max_chunk:
+        return size, 1
+    total_chunks = math.ceil(size / max_chunk)
+    chunk_size = math.ceil(size / total_chunks)
+    if chunk_size > max_chunk:
+        raise PublishError("TikTok chunk plan exceeds 64 MiB")
+    return chunk_size, total_chunks
+
+
+def tiktok_upload_file(upload_url: str, path: Path, chunk_size: int, total_chunks: int) -> None:
     size = path.stat().st_size
-    chunk_size = size if size < 5 * 1024 * 1024 else min(size, 64 * 1024 * 1024)
-    total_chunks = max(1, size // chunk_size)
-    init = request("POST", "https://open.tiktokapis.com/v2/post/publish/video/init/", headers=headers, json={"post_info": {"title": str(job.get("caption") or "")[:2200], "privacy_level": privacy, "disable_duet": False, "disable_comment": False, "disable_stitch": False, "video_cover_timestamp_ms": 1000, "brand_organic_toggle": True, "is_aigc": bool(job.get("video_made_with_ai", False))}, "source_info": {"source": "FILE_UPLOAD", "video_size": size, "chunk_size": chunk_size, "total_chunk_count": total_chunks}}).json()
-    if init.get("error", {}).get("code") != "ok":
-        raise PublishError(f"TikTok init error: {init}")
-    upload_url = str(init["data"]["upload_url"])
-    publish_id = str(init["data"]["publish_id"])
     with path.open("rb") as fh:
         start = 0
-        while start < size:
-            remaining = size - start
-            body = fh.read(remaining if remaining <= 128 * 1024 * 1024 and start > 0 else chunk_size)
+        for chunk_index in range(total_chunks):
+            read_size = size - start if chunk_index == total_chunks - 1 else min(chunk_size, size - start)
+            body = fh.read(read_size)
+            if not body:
+                raise PublishError(f"TikTok upload ended early at chunk {chunk_index + 1}/{total_chunks}")
             end = start + len(body) - 1
-            response = requests.put(upload_url, headers={"Content-Type": mimetypes.guess_type(path.name)[0] or "video/mp4", "Content-Length": str(len(body)), "Content-Range": f"bytes {start}-{end}/{size}"}, data=body, timeout=300)
+            response = requests.put(
+                upload_url,
+                headers={
+                    "Content-Type": mimetypes.guess_type(path.name)[0] or "video/mp4",
+                    "Content-Length": str(len(body)),
+                    "Content-Range": f"bytes {start}-{end}/{size}",
+                },
+                data=body,
+                timeout=300,
+            )
             if response.status_code not in {200, 201, 206}:
                 raise PublishError(f"TikTok binary upload -> {response.status_code}: {response.text[:1000]}")
             start = end + 1
-    return {"publish_id": publish_id, "privacy_level": privacy}
+    if start != size:
+        raise PublishError(f"TikTok upload byte mismatch: sent {start} of {size}")
 
+
+def tiktok_fetch_status(token: str, publish_id: str) -> dict[str, Any]:
+    headers = {"Authorization": f"Bearer {token}", "Content-Type": "application/json; charset=UTF-8"}
+    payload = request(
+        "POST",
+        "https://open.tiktokapis.com/v2/post/publish/status/fetch/",
+        headers=headers,
+        json={"publish_id": publish_id},
+    ).json()
+    tiktok_raise_api_error("publish_status", payload)
+    return payload.get("data") or {}
+
+
+def tiktok_publish(job: dict[str, Any], client: dict[str, Any], paths: list[Path], _cache: PublicMediaCache) -> dict[str, Any]:
+    if str(job.get("format") or "reel") != "reel":
+        raise PlatformReviewRequired("TikTok Direct Post currently requires a video/reel job")
+
+    if oauth_broker.enabled():
+        token_payload = oauth_broker.token(client, "tiktok")
+        token = str(token_payload["access_token"])
+    else:
+        token = secret(client, "TIKTOK_ACCESS_TOKEN")
+
+    settings = tiktok_settings_for_job(job)
+    mode = str(settings.get("mode") or "DIRECT_POST").upper()
+    existing_publish_id = str(job.get("tiktok_publish_id") or "").strip()
+    if existing_publish_id:
+        status = tiktok_fetch_status(token, existing_publish_id)
+        state = str(status.get("status") or "")
+        job["tiktok_last_status"] = status
+        if state == "FAILED":
+            raise PublishError(f"TikTok publish failed: {status.get('fail_reason') or 'unknown'}")
+        if state == "PUBLISH_COMPLETE" or (mode == "DRAFT_UPLOAD" and state == "SEND_TO_USER_INBOX"):
+            public_ids = status.get("publicaly_available_post_id") or []
+            return {
+                "publish_id": existing_publish_id,
+                "status": state,
+                "post_ids": public_ids,
+                "mode": mode,
+            }
+        raise PublishPending(
+            f"TikTok publish is still processing: {state or 'UNKNOWN'}",
+            {"publish_id": existing_publish_id, "status": state or "PROCESSING"},
+        )
+
+    path = paths[0]
+    duration = tiktok_video_duration(path)
+    creator = tiktok_creator_info(token)
+    tiktok_validate_settings(settings, creator, duration)
+
+    size = path.stat().st_size
+    chunk_size, total_chunks = tiktok_chunk_plan(size)
+    headers = {"Authorization": f"Bearer {token}", "Content-Type": "application/json; charset=UTF-8"}
+
+    if mode == "DRAFT_UPLOAD":
+        init_url = "https://open.tiktokapis.com/v2/post/publish/inbox/video/init/"
+        init_body = {
+            "source_info": {
+                "source": "FILE_UPLOAD",
+                "video_size": size,
+                "chunk_size": chunk_size,
+                "total_chunk_count": total_chunks,
+            }
+        }
+    else:
+        privacy = str(settings["privacy_level"])
+        init_url = "https://open.tiktokapis.com/v2/post/publish/video/init/"
+        init_body = {
+            "post_info": {
+                "title": str(settings.get("caption") or job.get("caption") or ""),
+                "privacy_level": privacy,
+                "disable_duet": not bool(settings.get("allow_duet")),
+                "disable_comment": not bool(settings.get("allow_comment")),
+                "disable_stitch": not bool(settings.get("allow_stitch")),
+                "video_cover_timestamp_ms": 1000,
+                "brand_organic_toggle": bool(settings.get("commercial_content") and settings.get("your_brand")),
+                "brand_content_toggle": bool(settings.get("commercial_content") and settings.get("branded_content")),
+                "is_aigc": bool(job.get("video_made_with_ai", False)),
+            },
+            "source_info": {
+                "source": "FILE_UPLOAD",
+                "video_size": size,
+                "chunk_size": chunk_size,
+                "total_chunk_count": total_chunks,
+            },
+        }
+
+    init = request("POST", init_url, headers=headers, json=init_body).json()
+    tiktok_raise_api_error("init", init)
+    data = init.get("data") or {}
+    publish_id = str(data.get("publish_id") or "")
+    upload_url = str(data.get("upload_url") or "")
+    if not publish_id or not upload_url:
+        raise PublishError("TikTok init response did not return publish_id/upload_url")
+
+    job["tiktok_publish_id"] = publish_id
+    job["tiktok_publish_mode"] = mode
+    job["tiktok_last_status"] = {"status": "PROCESSING_UPLOAD"}
+
+    tiktok_upload_file(upload_url, path, chunk_size, total_chunks)
+    status = tiktok_fetch_status(token, publish_id)
+    state = str(status.get("status") or "")
+    job["tiktok_last_status"] = status
+
+    if state == "FAILED":
+        raise PublishError(f"TikTok publish failed: {status.get('fail_reason') or 'unknown'}")
+    if state == "PUBLISH_COMPLETE" or (mode == "DRAFT_UPLOAD" and state == "SEND_TO_USER_INBOX"):
+        return {
+            "publish_id": publish_id,
+            "status": state,
+            "post_ids": status.get("publicaly_available_post_id") or [],
+            "privacy_level": settings.get("privacy_level"),
+            "mode": mode,
+        }
+    raise PublishPending(
+        f"TikTok publish is processing: {state or 'UNKNOWN'}",
+        {"publish_id": publish_id, "status": state or "PROCESSING"},
+    )
 
 def linkedin_publish(job: dict[str, Any], client: dict[str, Any], _paths: list[Path], _cache: PublicMediaCache) -> dict[str, Any]:
     if oauth_broker.enabled():
@@ -429,6 +670,8 @@ def publish_job(job: dict[str, Any], only: set[str] | None, dry_run: bool) -> tu
     cache = PublicMediaCache()
     success = True
     auth_required_platforms: set[str] = set()
+    review_required_platforms: set[str] = set()
+    processing_platforms: set[str] = set()
     try:
         for platform in platforms:
             publisher = PUBLISHERS.get(platform)
@@ -442,6 +685,13 @@ def publish_job(job: dict[str, Any], only: set[str] | None, dry_run: bool) -> tu
                 published = set(str(x) for x in job.get("published_platforms", []))
                 published.add(platform)
                 job["published_platforms"] = sorted(published)
+            except PublishPending as exc:
+                processing_platforms.add(platform)
+                results.append({"platform": platform, "status": "processing", "result": exc.payload, "error": str(exc)})
+            except PlatformReviewRequired as exc:
+                review_required_platforms.add(platform)
+                results.append({"platform": platform, "status": "review_required", "reason": exc.reason, "error": str(exc)})
+                success = False
             except oauth_broker.BrokerError as exc:
                 if exc.auth_required:
                     auth_required_platforms.add(platform)
@@ -460,13 +710,20 @@ def publish_job(job: dict[str, Any], only: set[str] | None, dry_run: bool) -> tu
         job["status"] = "published"
         job.pop("blocked_reason", None)
         job.pop("auth_required_platforms", None)
+        job.pop("review_required_platforms", None)
+        job.pop("processing_platforms", None)
+    elif review_required_platforms:
+        job["review_required_platforms"] = sorted(review_required_platforms)
+        job["status"] = "partially_published" if done else "blocked"
+        job["blocked_reason"] = "TIKTOK_REVIEW_REQUIRED"
     elif auth_required_platforms:
         job["auth_required_platforms"] = sorted(auth_required_platforms)
-        if done:
-            job["status"] = "partially_published"
-        else:
-            job["status"] = "blocked"
+        job["status"] = "partially_published" if done else "blocked"
         job["blocked_reason"] = "AUTH_REQUIRED"
+    elif processing_platforms:
+        job["processing_platforms"] = sorted(processing_platforms)
+        job["status"] = "partially_published"
+        job["blocked_reason"] = "IN_PUBBLICAZIONE"
     elif done:
         job["status"] = "partially_published"
     return results, success
