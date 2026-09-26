@@ -1,0 +1,59 @@
+name: F1 Social RMP Buffer Audit
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.f1-social-rmp-buffer-audit-trigger'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    env:
+      RMP_BUFFER_API_KEY: ${{ secrets.RMP_BUFFER_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install requests
+      - name: Discover RMP Buffer channels read-only
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json, os, sys
+          from datetime import datetime, timezone
+          from pathlib import Path
+          sys.path.insert(0,'publisher')
+          import buffer_twice_daily as b
+          key=os.getenv('RMP_BUFFER_API_KEY','').strip()
+          out={'brand':'F1 SOCIAL / Real Media Pro','mode':'BUFFER_READ_ONLY_AUDIT','checked_at':datetime.now(timezone.utc).isoformat()}
+          if not key:
+              out.update({'ok':False,'reason':'RMP_BUFFER_API_KEY_MISSING','channels':{}})
+          else:
+              try:
+                  org, channels=b.discover_buffer_channels(key)
+                  out.update({'ok':True,'organization_id':org,'channels':channels})
+              except Exception as e:
+                  out.update({'ok':False,'reason':str(e)[:1200],'channels':{}})
+          Path('publisher/f1_social_rmp_buffer_audit.json').write_text(json.dumps(out,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          print(json.dumps({'ok':out['ok'],'channels':out.get('channels',{})},ensure_ascii=False))
+          PY
+      - name: Persist sanitized audit
+        shell: bash
+        run: |
+          git config user.name 'f1-social-buffer-audit'
+          git config user.email 'f1-social-buffer-audit@users.noreply.github.com'
+          git add publisher/f1_social_rmp_buffer_audit.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Update F1 Social RMP Buffer audit'
+          git fetch origin main
+          git rebase origin/main
+          git push origin HEAD:main
