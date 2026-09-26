@@ -193,7 +193,7 @@ def load_source_rows() -> tuple[list[dict[str, Any]], dict[str, dict[str, Any]],
             "select": (
                 "id,owner_id,content_id,client_id,platform,publication_at,status,queue_job_id,"
                 "provider,external_post_id,external_url,retry_count,error,"
-                "f1_content_items(id,title,description,source_text,status,campaign,property_id,source,"
+                "f1_content_items(id,title,description,source_text,status,campaign,property_id,source,tiktok_settings,"
                 "f1_content_media(id,file_name,mime_type,storage_path,file_size)),"
                 "f1_content_clients(id,name,slug,timezone,auto_publish,approval_required)"
             ),
@@ -248,7 +248,8 @@ def build_or_update_jobs(queue: dict[str, Any]) -> dict[str, int]:
         "PROGRAMMATO", "APPROVATO", "CANALE_DA_COLLEGARE", "ERRORE_QUEUE",
         "IN PUBBLICAZIONE", "ERRORE_PUBBLICAZIONE", "ERRORE_MEDIA",
         "AUTO_PUBLISH_DISATTIVATO", "APPROVAZIONE_RICHIESTA",
-        "CREDENZIALI_MANCANTI", "AUTH_REQUIRED", "DA_RIAUTORIZZARE"
+        "CREDENZIALI_MANCANTI", "AUTH_REQUIRED", "DA_RIAUTORIZZARE",
+        "TIKTOK_REVIEW_REQUIRED"
     }
 
     for row in calendars:
@@ -279,6 +280,21 @@ def build_or_update_jobs(queue: dict[str, Any]) -> dict[str, int]:
             reason = "AUTO_PUBLISH_DISATTIVATO"
         elif not approval_ok:
             reason = "APPROVAZIONE_RICHIESTA"
+
+        tiktok_settings = item.get("tiktok_settings") if isinstance(item.get("tiktok_settings"), dict) else {}
+        if not reason and platform == "tiktok":
+            mode = str(tiktok_settings.get("mode") or "").upper()
+            scopes = {str(x) for x in (channel or {}).get("scopes") or []}
+            if not tiktok_settings.get("consent_confirmed"):
+                reason = "TIKTOK_REVIEW_REQUIRED"
+            elif mode not in {"DIRECT_POST", "DRAFT_UPLOAD"}:
+                reason = "TIKTOK_REVIEW_REQUIRED"
+            elif mode == "DIRECT_POST" and not str(tiktok_settings.get("privacy_level") or ""):
+                reason = "TIKTOK_REVIEW_REQUIRED"
+            elif mode == "DIRECT_POST" and scopes and "video.publish" not in scopes:
+                reason = "AUTH_REQUIRED"
+            elif mode == "DRAFT_UPLOAD" and scopes and "video.upload" not in scopes:
+                reason = "AUTH_REQUIRED"
 
         media_paths: list[str] = []
         mime = ""
@@ -317,6 +333,7 @@ def build_or_update_jobs(queue: dict[str, Any]) -> dict[str, int]:
             "provider": (channel or {}).get("provider") or "direct",
             "provider_channel_id": (channel or {}).get("external_channel_id"),
             "provider_secret_prefix": (channel or {}).get("secret_prefix"),
+            "tiktok_settings": tiktok_settings if platform == "tiktok" else {},
             "retry_count": int((job or {}).get("retry_count") or 0),
             "created_by": "supabase-queue-bridge",
             "autonomous_publish": True,
@@ -338,6 +355,11 @@ def build_or_update_jobs(queue: dict[str, Any]) -> dict[str, int]:
             cloudinary_assets = list(job.get("cloudinary_assets") or [])
             external_post_id = job.get("external_post_id")
             external_url = job.get("external_url")
+            tiktok_publish_id = job.get("tiktok_publish_id")
+            tiktok_publish_mode = job.get("tiktok_publish_mode")
+            tiktok_last_status = job.get("tiktok_last_status")
+            processing_platforms = list(job.get("processing_platforms") or [])
+            review_required_platforms = list(job.get("review_required_platforms") or [])
             prior_status = str(job.get("status") or "")
             job.clear()
             job.update(new_job)
@@ -354,6 +376,16 @@ def build_or_update_jobs(queue: dict[str, Any]) -> dict[str, int]:
                 job["external_post_id"] = external_post_id
             if external_url:
                 job["external_url"] = external_url
+            if tiktok_publish_id:
+                job["tiktok_publish_id"] = tiktok_publish_id
+            if tiktok_publish_mode:
+                job["tiktok_publish_mode"] = tiktok_publish_mode
+            if tiktok_last_status:
+                job["tiktok_last_status"] = tiktok_last_status
+            if processing_platforms:
+                job["processing_platforms"] = processing_platforms
+            if review_required_platforms:
+                job["review_required_platforms"] = review_required_platforms
             if buffer_posts and prior_status != "published":
                 job["status"] = "buffer_scheduled"
                 job["enabled"] = True
@@ -386,6 +418,8 @@ def build_or_update_jobs(queue: dict[str, Any]) -> dict[str, int]:
 
 
 def extract_external(job: dict[str, Any]) -> tuple[str | None, str | None]:
+    if job.get("tiktok_publish_id"):
+        return str(job.get("tiktok_publish_id")), None
     if job.get("external_post_id") or job.get("external_url"):
         return (
             str(job.get("external_post_id")) if job.get("external_post_id") else None,
@@ -450,6 +484,14 @@ def sync_back(queue: dict[str, Any]) -> dict[str, int]:
             "external_url": external_url,
             "queue_job_id": job.get("id"),
         }
+        if normalize_platform(str(row.get("platform") or "")) == "tiktok":
+            patch["platform_metadata"] = {
+                "tiktok_publish_id": job.get("tiktok_publish_id"),
+                "tiktok_publish_mode": job.get("tiktok_publish_mode"),
+                "tiktok_last_status": job.get("tiktok_last_status"),
+                "processing_platforms": job.get("processing_platforms") or [],
+                "review_required_platforms": job.get("review_required_platforms") or [],
+            }
 
         if target == "PUBBLICATO":
             stats["published"] += 1
