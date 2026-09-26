@@ -443362,6 +443362,21 @@
       "retry_count": 0,
       "created_by": "supabase-queue-bridge",
       "autonomous_publish": true,
+      "buffer_posts": [
+        {
+          "service": "instagram",
+          "channel_id": "6ab2b6e7ea19ca0bdeb80e19",
+          "post_id": "6ab7bcbb05811e57372b8f7b",
+          "buffer_status": "scheduled",
+          "due_at": "2026-09-26T17:00:00.000Z",
+          "created_at": "2026-09-26T12:38:19+00:00",
+          "sent_at": null,
+          "external_link": null
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "instagram"
+      ],
       "cloudinary_assets": [
         {
           "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272528/f1-buffer/supabase-calendar-50559439-482c-45be-ae10-36b2cf22c1ba/slide-01.png",
@@ -443423,19 +443438,6 @@
           "resource_type": "image",
           "bytes": "3296784"
         }
-      ],
-      "buffer_posts": [
-        {
-          "service": "instagram",
-          "channel_id": "6ab2b6e7ea19ca0bdeb80e19",
-          "post_id": "6ab7bcbb05811e57372b8f7b",
-          "buffer_status": "scheduled",
-          "due_at": "2026-09-26T17:00:00.000Z",
-          "created_at": "2026-09-26T12:38:19+00:00"
-        }
-      ],
-      "buffer_scheduled_platforms": [
-        "instagram"
       ]
     },
     {
@@ -443477,6 +443479,21 @@
       "retry_count": 0,
       "created_by": "supabase-queue-bridge",
       "autonomous_publish": true,
+      "buffer_posts": [
+        {
+          "service": "instagram",
+          "channel_id": "6ab2b6e7ea19ca0bdeb80e19",
+          "post_id": "6ab7bcbd0f79a37c5d2e0258",
+          "buffer_status": "scheduled",
+          "due_at": "2026-09-27T11:00:00.000Z",
+          "created_at": "2026-09-26T12:38:21+00:00",
+          "sent_at": null,
+          "external_link": null
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "instagram"
+      ],
       "cloudinary_assets": [
         {
           "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790272536/f1-buffer/supabase-calendar-dcf5e371-fcc0-46db-95ec-db54ea28b14c/slide-01.png",
@@ -443538,19 +443555,6 @@
           "resource_type": "image",
           "bytes": "3296784"
         }
-      ],
-      "buffer_posts": [
-        {
-          "service": "instagram",
-          "channel_id": "6ab2b6e7ea19ca0bdeb80e19",
-          "post_id": "6ab7bcbd0f79a37c5d2e0258",
-          "buffer_status": "scheduled",
-          "due_at": "2026-09-27T11:00:00.000Z",
-          "created_at": "2026-09-26T12:38:21+00:00"
-        }
-      ],
-      "buffer_scheduled_platforms": [
-        "instagram"
       ]
     },
     {
@@ -444276,8 +444280,8 @@
     },
     {
       "id": "multiclient-test-20260926-audio-caption-antica-cappella-instagram",
-      "enabled": true,
-      "status": "buffer_scheduled",
+      "enabled": false,
+      "status": "published",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "Antica Cappella · test parlato 60 secondi",
@@ -444315,19 +444319,23 @@
           "service": "instagram",
           "channel_id": "6ab5cfc6ea19ca0bdedecef3",
           "post_id": "6ab7bcc70f79a37c5d2e0303",
-          "buffer_status": "sending",
+          "buffer_status": "sent",
           "due_at": "2026-09-26T12:38:31.883Z",
-          "created_at": "2026-09-26T12:38:42+00:00"
+          "created_at": "2026-09-26T12:38:42+00:00",
+          "sent_at": "2026-09-26T12:39:31.135Z",
+          "external_link": "https://www.instagram.com/reel/DdwDbLxiIou/"
         }
       ],
       "buffer_scheduled_platforms": [
         "instagram"
-      ]
+      ],
+      "external_post_id": "6ab7bcc70f79a37c5d2e0303",
+      "external_url": "https://www.instagram.com/reel/DdwDbLxiIou/"
     },
     {
       "id": "multiclient-test-20260926-audio-caption-f1-immobiliare-youtube",
       "enabled": true,
-      "status": "ready",
+      "status": "published",
       "client_id": "f1-immobiliare",
       "client_name": "F1 Immobiliare",
       "title": "F1 Immobiliare · test parlato 60 secondi",
@@ -444340,7 +444348,9 @@
       "platforms": [
         "youtube"
       ],
-      "published_platforms": [],
+      "published_platforms": [
+        "youtube"
+      ],
       "source": "MULTICLIENT_LICENSED_TEST",
       "provider": "oauth_broker",
       "provider_channel_id": "UCjhfd8E-XMRGGzOLdwd0sxA",
@@ -444364,13 +444374,27 @@
               "error": "missing GitHub Secret: F1_YOUTUBE_CLIENT_ID"
             }
           ]
+        },
+        {
+          "at": "2026-09-26T12:50:15+00:00",
+          "dry_run": false,
+          "results": [
+            {
+              "platform": "youtube",
+              "status": "published",
+              "result": {
+                "video_id": "YzUZerhH2LA",
+                "privacy": "private"
+              }
+            }
+          ]
         }
       ]
     },
     {
       "id": "multiclient-test-20260926-audio-caption-immobiliare-la-sacra-facebook",
-      "enabled": true,
-      "status": "buffer_scheduled",
+      "enabled": false,
+      "status": "published",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "Immobiliare La Sacra · test parlato 60 secondi",
@@ -444410,17 +444434,21 @@
           "post_id": "6ab7bcd43d66d464e5afbd94",
           "buffer_status": "sent",
           "due_at": "2026-09-26T12:38:44.732Z",
-          "created_at": "2026-09-26T12:38:54+00:00"
+          "created_at": "2026-09-26T12:38:54+00:00",
+          "sent_at": "2026-09-26T12:38:53.961Z",
+          "external_link": "https://www.facebook.com/reel/2589541551512481/"
         }
       ],
       "buffer_scheduled_platforms": [
         "facebook"
-      ]
+      ],
+      "external_post_id": "6ab7bcd43d66d464e5afbd94",
+      "external_url": "https://www.facebook.com/reel/2589541551512481/"
     },
     {
       "id": "multiclient-test-20260926-audio-caption-immobiliare-la-sacra-instagram",
-      "enabled": true,
-      "status": "buffer_scheduled",
+      "enabled": false,
+      "status": "published",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "Immobiliare La Sacra · test parlato 60 secondi",
@@ -444458,19 +444486,23 @@
           "service": "instagram",
           "channel_id": "6ab2b6e7ea19ca0bdeb80e19",
           "post_id": "6ab7bce14b4b9f2c1c4ab9f0",
-          "buffer_status": "sending",
+          "buffer_status": "sent",
           "due_at": "2026-09-26T12:38:57.090Z",
-          "created_at": "2026-09-26T12:39:07+00:00"
+          "created_at": "2026-09-26T12:39:07+00:00",
+          "sent_at": "2026-09-26T12:39:55.498Z",
+          "external_link": "https://www.instagram.com/reel/DdwDf50leHp/"
         }
       ],
       "buffer_scheduled_platforms": [
         "instagram"
-      ]
+      ],
+      "external_post_id": "6ab7bce14b4b9f2c1c4ab9f0",
+      "external_url": "https://www.instagram.com/reel/DdwDf50leHp/"
     },
     {
       "id": "multiclient-test-20260926-audio-caption-marta-ruffino-instagram",
-      "enabled": true,
-      "status": "buffer_scheduled",
+      "enabled": false,
+      "status": "published",
       "client_id": "marta-ruffino",
       "client_name": "Marta Ruffino",
       "title": "Marta Ruffino · test parlato 60 secondi",
@@ -444508,19 +444540,23 @@
           "service": "instagram",
           "channel_id": "6ab5d64dea19ca0bdedefe49",
           "post_id": "6ab7bced3d66d464e5afc258",
-          "buffer_status": "sending",
+          "buffer_status": "sent",
           "due_at": "2026-09-26T12:39:09.545Z",
-          "created_at": "2026-09-26T12:39:19+00:00"
+          "created_at": "2026-09-26T12:39:19+00:00",
+          "sent_at": "2026-09-26T12:40:08.231Z",
+          "external_link": "https://www.instagram.com/reel/DdwDfwwkj2v/"
         }
       ],
       "buffer_scheduled_platforms": [
         "instagram"
-      ]
+      ],
+      "external_post_id": "6ab7bced3d66d464e5afc258",
+      "external_url": "https://www.instagram.com/reel/DdwDfwwkj2v/"
     },
     {
       "id": "multiclient-test-20260926-audio-caption-marta-ruffino-facebook",
-      "enabled": true,
-      "status": "buffer_scheduled",
+      "enabled": false,
+      "status": "published",
       "client_id": "marta-ruffino",
       "client_name": "Marta Ruffino",
       "title": "Marta Ruffino · test parlato 60 secondi",
@@ -444558,17 +444594,21 @@
           "service": "facebook",
           "channel_id": "6ab5d62bea19ca0bdedefc11",
           "post_id": "6ab7bcfa4b4b9f2c1c4abbaf",
-          "buffer_status": "sending",
+          "buffer_status": "sent",
           "due_at": "2026-09-26T12:39:22.092Z",
-          "created_at": "2026-09-26T12:39:32+00:00"
+          "created_at": "2026-09-26T12:39:32+00:00",
+          "sent_at": "2026-09-26T12:39:32.304Z",
+          "external_link": "https://www.facebook.com/reel/4426167364271784/"
         }
       ],
       "buffer_scheduled_platforms": [
         "facebook"
-      ]
+      ],
+      "external_post_id": "6ab7bcfa4b4b9f2c1c4abbaf",
+      "external_url": "https://www.facebook.com/reel/4426167364271784/"
     }
   ],
-  "updated_at": "2026-09-26T12:39:36+00:00",
+  "updated_at": "2026-09-26T12:50:18+00:00",
   "updated_by": "Approved 5+5 publication renderer",
   "current_cycle": "2026-09-26T04:00",
   "history_days": 14,
