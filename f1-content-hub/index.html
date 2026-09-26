@@ -474,7 +474,7 @@ function renderClients(){
   const html=clients.map(function(c){const n=counts[c.id]||{all:0,work:0,plan:0};return '<article class="client-card '+(selectedClientId===c.id?"active":"")+'" onclick="window.f1SelectClient(\''+c.id+'\')"><small>'+esc(c.category)+'</small><h3>'+esc(c.name)+'</h3><div class="client-stats"><span>'+n.all+' contenuti</span><span>'+n.work+' da lavorare</span><span>'+n.plan+' programmati</span></div></article>'}).join("");
   el("clientCards").innerHTML=html;el("clientsAdmin").innerHTML=html;
 }
-async function renderAll(){renderMetrics();renderClients();renderClientContext();await renderGrid("latestGrid",filteredItems(12));await renderGrid("archiveGrid",filteredItems());renderCalendar();renderAnalytics();renderAutomation()}
+async async function renderAll(){renderMetrics();renderClients();renderClientContext();await renderGrid("latestGrid",filteredItems(12));await renderGrid("archiveGrid",filteredItems());renderCalendar();renderAnalytics();renderAutomation()}
 window.f1SelectClient=function(id){
   const chosen=clients.find(function(x){return x.id===id});
   selectedClientId=selectedClientId===id?"":id;
@@ -923,9 +923,9 @@ function renderSocialConnections(){
     const rows=order.map(function(p){
       const row=socialChannels.find(function(x){return x.client_id===c.id&&x.platform===p});
       const rawState=effectiveSocialState(row,collisions);
-      const state=(c.slug==="antica-cappella"&&p==="linkedin-page"&&!profileUrl)?"NON_CONFIGURATO":rawState;
       const provider=row&&row.provider?row.provider:"oauth_broker";
       const profileUrl=safeSocialHref(row&&row.profile_url);
+      const state=(c.slug==="antica-cappella"&&p==="linkedin-page"&&!profileUrl)?"NON_CONFIGURATO":rawState;
       const account=row&&(row.account_name||row.external_channel_id)?(row.account_name||row.external_channel_id):"Nessun account autorizzato";
       const openBtn=profileUrl?'<a class="btn small ghost" href="'+esc(profileUrl)+'" target="_blank" rel="noopener noreferrer">APRI PAGINA</a>':"";
       const urlEditor='<div class="row" style="margin-top:7px;gap:6px"><input id="social-url-'+c.id+'-'+p+'" class="input" style="min-width:220px;padding:7px" placeholder="URL profilo" value="'+esc(profileUrl)+'"><button class="btn small ghost" onclick="window.f1SaveSocialUrl(\''+c.id+'\',\''+p+'\')">SALVA LINK</button></div>';
