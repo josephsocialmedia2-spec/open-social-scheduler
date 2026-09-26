@@ -1,6 +1,6 @@
 {
   "version": 3,
-  "generated_at": "2026-09-26T02:50:30Z",
+  "generated_at": "2026-09-26T16:26:03Z",
   "policy": "ANALISI PRIMA DELLA CREAZIONE DEL POST + INSTAGRAM FEED/REELS + INSTAGRAM CREATORS BEST PRACTICES",
   "instagram_policy_file": "publisher/instagram_distribution_policy.json",
   "instagram_creators_policy_file": "publisher/instagram_creators_best_practices.json",
@@ -20,7 +20,30 @@
         },
         "top_posts": []
       },
-      "comparable_previous_posts": [],
+      "comparable_previous_posts": [
+        {
+          "title": "Antica Cappella · test parlato 60 secondi",
+          "format": "reel",
+          "category": null,
+          "visual_source": null,
+          "caption": "Quando si sceglie un ristorante per una cena, una ricorrenza o un evento, non conta soltanto quello che arriva nel piatto. Contano l'accoglienza, l'attenzione, il ritmo del servizio e la capacità di far sentire ogni ospite nel posto giusto. Antica Cappella, ad Avigliana, lavora su questa idea di esperienza: cucina di tradizione, momenti da condividere e spazi pensati per pranzi, cene, cerimonie ed eventi. Il valore di un locale storico sta anche nella continuità: conoscere il territorio, rispettare le stagioni e curare i dettagli. Se stai organizzando un pranzo speciale, una cena o una festa in Valle di Susa, informati per tempo sulla disponibilità e sul tipo di menù più adatto al tuo evento",
+          "likes": null,
+          "comments": null,
+          "shares": null,
+          "saves": null,
+          "cta_clicks": null,
+          "profile_visits": null,
+          "direct_shares": null,
+          "dwell_time_seconds": null,
+          "skip_rate": null,
+          "carousel_completion_rate": null,
+          "average_watch_time_seconds": null,
+          "three_second_view_rate": null,
+          "ten_second_view_rate": null,
+          "audio_on_rate": null,
+          "metrics_status": "NOT_AVAILABLE_IN_QUEUE"
+        }
+      ],
       "public": "Potenziali clienti coerenti con il posizionamento del brand",
       "objective": "conoscenza del brand",
       "main_message": "Antica Cappella",
@@ -1138,9 +1161,31 @@
       },
       "comparable_previous_posts": [
         {
+          "title": "F1 Immobiliare · test parlato 60 secondi",
+          "format": "reel",
+          "category": null,
+          "visual_source": null,
+          "caption": "Vendere casa non dovrebbe partire da una sensazione sul prezzo. Dovrebbe partire dai dati. Prima di pubblicare un immobile è utile osservare la microzona, gli immobili concorrenti, le caratteristiche reali della casa e il tipo di domanda presente sul territorio. Un prezzo troppo alto può ridurre l'interesse e allungare i tempi; un prezzo non ragionato può invece lasciare valore sul tavolo. F1 Immobiliare lavora con un principio semplice: prima i dati, poi la strategia, poi la vendita. Per un proprietario in Valle di Susa significa capire come presentare l'immobile, quale pubblico raggiungere e quale percorso usare prima ancora di pubblicare l'annuncio. Se stai pensando di vendere, parti da u",
+          "likes": null,
+          "comments": null,
+          "shares": null,
+          "saves": null,
+          "cta_clicks": null,
+          "profile_visits": null,
+          "direct_shares": null,
+          "dwell_time_seconds": null,
+          "skip_rate": null,
+          "carousel_completion_rate": null,
+          "average_watch_time_seconds": null,
+          "three_second_view_rate": null,
+          "ten_second_view_rate": null,
+          "audio_on_rate": null,
+          "metrics_status": "NOT_AVAILABLE_IN_QUEUE"
+        },
+        {
           "title": "BONUS CASA: PRIMA LE FONTI UFFICIALI",
           "format": "photo",
-          "category": "error",
+          "category": "data",
           "visual_source": "f1-approved-local-valle-susa",
           "caption": "BONUS, AGEVOLAZIONI E PRIMA CASA: LE REGOLE CAMBIANO.\n\nPer questo F1 Immobiliare non pubblica aliquote, soglie ISEE, requisiti o scadenze copiandoli da vecchi articoli o da fonti non istituzionali.\n\nI contenuti informativi del Servizio 3 devono essere verificati sulle pagine ufficiali dell'Agenzia delle Entrate prima della pubblicazione. Finché il controllo giornaliero non conferma un dato, quel dato non viene pubblicato.\n\nFonte istituzionale di riferimento:\nhttps://www.agenziaentrate.gov.it/portale/aree-tematiche/casa\n\nInformarsi bene prima di comprare casa è parte di una scelta consapevole.\n\n371 370 8294 · 371 424 6300\n\n#ValleDiSusa #Avigliana #Susa #Condove #Almese #Bussoleno",
           "likes": null,
@@ -1162,7 +1207,7 @@
         {
           "title": "CERCHIAMO UNA COORDINATRICE D'UFFICIO",
           "format": "photo",
-          "category": "data",
+          "category": "proof",
           "visual_source": "f1-approved-local-valle-susa",
           "caption": "F1 IMMOBILIARE AMPLIA IL TEAM.\n\nCerchiamo una Coordinatrice d'Ufficio: una figura centrale nell'organizzazione dell'agenzia, non una semplice receptionist.\n\nIl ruolo comprende front office, gestione della banca dati, agenda, richiami, telemarketing operativo, fissazione degli appuntamenti e supporto quotidiano alla squadra.\n\nCerchiamo precisione, organizzazione, capacità comunicative e dimestichezza con gli strumenti digitali. L'esperienza immobiliare può essere utile, ma non è necessariamente indispensabile se il profilo è adatto al ruolo.\n\nCANDIDATI:\n371 370 8294 · 371 424 6300\n\n#ValleDiSusa #Avigliana #Susa #Condove #Almese #Bussoleno",
           "likes": null,
@@ -1184,7 +1229,7 @@
         {
           "title": "CERCHIAMO TALENTO, NON ESPERIENZA.",
           "format": "photo",
-          "category": "proof",
+          "category": "error",
           "visual_source": "f1-approved-local-valle-susa",
           "caption": "F1 IMMOBILIARE CERCA COLLABORATORI / AGENTI IMMOBILIARI JUNIOR.\n\nVivi in Valle di Susa e vuoi costruire un percorso professionale nel settore immobiliare? Selezioniamo giovani neodiplomati, neolaureati e candidati anche alla prima esperienza.\n\nNon cerchiamo qualcuno che sappia già fare tutto. Cerchiamo persone da formare con un metodo operativo, una zona assegnata e obiettivi chiari.\n\nIl percorso di crescita può svilupparsi da Collaboratore Junior ad Agente, Team Leader e Responsabile. Per i profili che maturano competenze, risultati e responsabilità adeguate può aprirsi anche la possibilità di partecipare allo sviluppo di una nuova sede F1 Immobiliare.\n\nNessuna promessa automatica: la cresc",
           "likes": null,
@@ -1206,7 +1251,7 @@
         {
           "title": "NON UN ANNUNCIO. UN PIANO DI VENDITA.",
           "format": "photo",
-          "category": "error",
+          "category": "data",
           "visual_source": "f1-approved-local-valle-susa",
           "caption": "LA TUA CASA NON HA BISOGNO DI UN SEMPLICE ANNUNCIO.\n\nQuando prendiamo in carico un immobile costruiamo un piano di marketing dedicato alla proprietà.\n\nPrepariamo servizio fotografico, video, Reel, planimetrie, descrizione commerciale, cartello, scheda immobile e materiali per le visite. Poi sviluppiamo la presenza online sui principali portali, sul sito F1 e sui nostri canali social, attiviamo banca dati, email, WhatsApp e rete di collaboratori.\n\nSul territorio possiamo pianificare fino a 2.500 volantini dedicati, con distribuzione progressiva registrata e monitorata. Quando previsto, il piano comprende anche un Open House.\n\nFotografie, video, portali, social, sito, territorio, banca dati, W",
           "likes": null,
@@ -1228,7 +1273,7 @@
         {
           "title": "QUANTO VALE DAVVERO CASA TUA?",
           "format": "photo",
-          "category": "data",
+          "category": "proof",
           "visual_source": "f1-approved-local-valle-susa",
           "caption": "QUANTO VALE DAVVERO CASA TUA?\n\nUna valutazione professionale non nasce da una sensazione. Con Agent Pricing analizziamo dati, immobili comparabili, microzona, concorrenza, domanda e caratteristiche reali della proprietà per costruire una strategia di prezzo comprensibile.\n\nIl nostro obiettivo non è darti il numero che vuoi sentirti dire: è aiutarti a capire su quali elementi si basa la valutazione.\n\nRichiedi una valutazione professionale:\nhttps://www.agentpricing.com/j.malafronte\n\n371 370 8294 · 371 424 6300\n\n#ValleDiSusa #Avigliana #Susa #Condove #Almese #Bussoleno",
           "likes": null,
@@ -1250,7 +1295,7 @@
         {
           "title": "BONUS CASA: PRIMA LE FONTI UFFICIALI",
           "format": "photo",
-          "category": "data",
+          "category": "error",
           "visual_source": "f1-approved-local-valle-susa",
           "caption": "BONUS, AGEVOLAZIONI E PRIMA CASA: LE REGOLE CAMBIANO.\n\nPer questo F1 Immobiliare non pubblica aliquote, soglie ISEE, requisiti o scadenze copiandoli da vecchi articoli o da fonti non istituzionali.\n\nI contenuti informativi del Servizio 3 devono essere verificati sulle pagine ufficiali dell'Agenzia delle Entrate prima della pubblicazione. Finché il controllo giornaliero non conferma un dato, quel dato non viene pubblicato.\n\nFonte istituzionale di riferimento:\nhttps://www.agenziaentrate.gov.it/portale/aree-tematiche/casa\n\nInformarsi bene prima di comprare casa è parte di una scelta consapevole.\n\n371 370 8294 · 371 424 6300\n\n#ValleDiSusa #Avigliana #Susa #Condove #Almese #Bussoleno",
           "likes": null,
@@ -1272,7 +1317,7 @@
         {
           "title": "CERCHIAMO UNA COORDINATRICE D'UFFICIO",
           "format": "photo",
-          "category": "proof",
+          "category": "data",
           "visual_source": "f1-approved-local-valle-susa",
           "caption": "F1 IMMOBILIARE AMPLIA IL TEAM.\n\nCerchiamo una Coordinatrice d'Ufficio: una figura centrale nell'organizzazione dell'agenzia, non una semplice receptionist.\n\nIl ruolo comprende front office, gestione della banca dati, agenda, richiami, telemarketing operativo, fissazione degli appuntamenti e supporto quotidiano alla squadra.\n\nCerchiamo precisione, organizzazione, capacità comunicative e dimestichezza con gli strumenti digitali. L'esperienza immobiliare può essere utile, ma non è necessariamente indispensabile se il profilo è adatto al ruolo.\n\nCANDIDATI:\n371 370 8294 · 371 424 6300\n\n#ValleDiSusa #Avigliana #Susa #Condove #Almese #Bussoleno",
           "likes": null,
@@ -1294,7 +1339,7 @@
         {
           "title": "CERCHIAMO TALENTO, NON ESPERIENZA.",
           "format": "photo",
-          "category": "error",
+          "category": "proof",
           "visual_source": "f1-approved-local-valle-susa",
           "caption": "F1 IMMOBILIARE CERCA COLLABORATORI / AGENTI IMMOBILIARI JUNIOR.\n\nVivi in Valle di Susa e vuoi costruire un percorso professionale nel settore immobiliare? Selezioniamo giovani neodiplomati, neolaureati e candidati anche alla prima esperienza.\n\nNon cerchiamo qualcuno che sappia già fare tutto. Cerchiamo persone da formare con un metodo operativo, una zona assegnata e obiettivi chiari.\n\nIl percorso di crescita può svilupparsi da Collaboratore Junior ad Agente, Team Leader e Responsabile. Per i profili che maturano competenze, risultati e responsabilità adeguate può aprirsi anche la possibilità di partecipare allo sviluppo di una nuova sede F1 Immobiliare.\n\nNessuna promessa automatica: la cresc",
           "likes": null,
@@ -1316,7 +1361,7 @@
         {
           "title": "NON UN ANNUNCIO. UN PIANO DI VENDITA.",
           "format": "photo",
-          "category": "data",
+          "category": "error",
           "visual_source": "f1-approved-local-valle-susa",
           "caption": "LA TUA CASA NON HA BISOGNO DI UN SEMPLICE ANNUNCIO.\n\nQuando prendiamo in carico un immobile costruiamo un piano di marketing dedicato alla proprietà.\n\nPrepariamo servizio fotografico, video, Reel, planimetrie, descrizione commerciale, cartello, scheda immobile e materiali per le visite. Poi sviluppiamo la presenza online sui principali portali, sul sito F1 e sui nostri canali social, attiviamo banca dati, email, WhatsApp e rete di collaboratori.\n\nSul territorio possiamo pianificare fino a 2.500 volantini dedicati, con distribuzione progressiva registrata e monitorata. Quando previsto, il piano comprende anche un Open House.\n\nFotografie, video, portali, social, sito, territorio, banca dati, W",
           "likes": null,
@@ -1338,7 +1383,7 @@
         {
           "title": "QUANTO VALE DAVVERO CASA TUA?",
           "format": "photo",
-          "category": "proof",
+          "category": "data",
           "visual_source": "f1-approved-local-valle-susa",
           "caption": "QUANTO VALE DAVVERO CASA TUA?\n\nUna valutazione professionale non nasce da una sensazione. Con Agent Pricing analizziamo dati, immobili comparabili, microzona, concorrenza, domanda e caratteristiche reali della proprietà per costruire una strategia di prezzo comprensibile.\n\nIl nostro obiettivo non è darti il numero che vuoi sentirti dire: è aiutarti a capire su quali elementi si basa la valutazione.\n\nRichiedi una valutazione professionale:\nhttps://www.agentpricing.com/j.malafronte\n\n371 370 8294 · 371 424 6300\n\n#ValleDiSusa #Avigliana #Susa #Condove #Almese #Bussoleno",
           "likes": null,
@@ -1361,6 +1406,564 @@
       "public": "Proprietari di immobili residenziali in Valle di Susa che stanno valutando la vendita o vogliono conoscere il valore reale dell'immobile",
       "objective": "richiesta informazioni",
       "main_message": "Prima di vendere casa, il valore va verificato con dati, comparabili, microzona e domanda reale.",
+      "cta_policy": "ONE_OR_NONE_AND_ONLY_IF_OBJECTIVE_REQUIRES_IT",
+      "quality_gate": {
+        "sharp_media_required": true,
+        "brand_coherence_required": true,
+        "recognizable_subject_required": true,
+        "short_visual_text_required": true,
+        "single_main_idea_required": true,
+        "relevant_question_only": true,
+        "skip_risk_review_required": true,
+        "dwell_time_value_review_required": true,
+        "direct_share_value_review_required": true,
+        "profile_visit_value_review_required": true,
+        "format_specific_rules_required": true,
+        "share_worthiness_review_required": true,
+        "format_diversification_review_required": true,
+        "first_three_seconds_or_first_unit_review_required": true,
+        "highest_resolution_required": true,
+        "muted_view_comprehension_required_for_video": true,
+        "audio_rights_review_required_if_audio": true,
+        "early_comment_response_plan_required_for_reels": true
+      },
+      "instagram": {
+        "policy_version": 2,
+        "creators_policy_version": 2,
+        "ranking_model": {
+          "inventory": {
+            "rule": "The system first gathers potential posts from accounts the viewer follows and applies integrity filtering.",
+            "production_implication": "Every asset must be policy-safe, truthful, coherent and designed for an identifiable audience."
+          },
+          "signals": {
+            "rule": "The ranking system considers multiple input signals about the creator, media type, viewer relationship and current post.",
+            "production_implication": "Do not optimize for a single vanity metric. Evaluate audience relevance, media fit, prior comparable performance and meaningful actions together."
+          },
+          "predictions": {
+            "rule": "Models predict which content a person may find most useful and relevant.",
+            "production_implication": "Before creation define one precise audience, one objective and one main message with a clear reason to stop, consume and act."
+          },
+          "ranking_score": {
+            "rule": "The system scores eligible posts for relevance and orders them; it also seeks a useful mix of content types.",
+            "production_implication": "Score drafts against the full prediction set and maintain creative/format variety instead of repeating one pattern."
+          }
+        },
+        "predictions_to_optimize": {
+          "carousel_completion": {
+            "applicable_to": [
+              "carousel"
+            ],
+            "signals": [
+              "how often the viewer advances to the next card",
+              "number of carousel units viewed",
+              "whether the carousel was reordered in Feed",
+              "whether the post is recommended",
+              "number of units in the carousel"
+            ],
+            "creative_rules": [
+              "Card 1 must create a precise reason to continue.",
+              "Every card must add new information and create a logical reason to swipe.",
+              "Do not pad the carousel with redundant slides.",
+              "The final card must close the information loop or present one coherent next action."
+            ]
+          },
+          "positive_action_probability": {
+            "applicable_to": [
+              "photo",
+              "carousel",
+              "reel",
+              "video"
+            ],
+            "signals": [
+              "positive actions such as like, comment or reshare",
+              "time spent on the post",
+              "media type used to estimate expected viewing time"
+            ],
+            "creative_rules": [
+              "Create something meaningful for the selected audience, not generic engagement bait.",
+              "Make the subject immediately recognizable.",
+              "Use the media format that best serves the message rather than forcing every idea into one format."
+            ]
+          },
+          "skip_probability": {
+            "applicable_to": [
+              "photo",
+              "carousel",
+              "reel",
+              "video"
+            ],
+            "signals": [
+              "whether the post is photo, video or carousel",
+              "relative probability of skipping this post versus adjacent posts"
+            ],
+            "creative_rules": [
+              "Remove weak introductions.",
+              "Put the relevant subject, problem, desire, result or information in the first visible unit.",
+              "Avoid generic stock-like, confusing, blurred or visually unrelated assets.",
+              "Keep visual text short and immediately readable."
+            ]
+          },
+          "profile_time_after_post": {
+            "applicable_to": [
+              "photo",
+              "carousel",
+              "reel",
+              "video"
+            ],
+            "signals": [
+              "time spent on the creator profile",
+              "whether the post is recommended",
+              "profile visit after viewing the post"
+            ],
+            "creative_rules": [
+              "Make brand identity visible without overwhelming the content.",
+              "Create enough credibility or curiosity that the target has a reason to inspect the profile.",
+              "Keep the post coherent with profile positioning so the transition to the profile makes sense."
+            ]
+          },
+          "direct_share_probability": {
+            "applicable_to": [
+              "photo",
+              "carousel",
+              "reel",
+              "video"
+            ],
+            "signals": [
+              "whether content is informational such as news, reviews, tutorials or instructions",
+              "recency of the post within 90 days",
+              "whether it is a repost or organic repost",
+              "opening the share sheet and selecting a recipient",
+              "whether the post is recommended"
+            ],
+            "creative_rules": [
+              "Prefer useful information people may naturally send to another person when appropriate.",
+              "Do not ask for meaningless shares; make the information itself share-worthy.",
+              "Use current, relevant and specific information when the subject is time-sensitive."
+            ]
+          },
+          "predicted_time_on_post": {
+            "applicable_to": [
+              "photo",
+              "carousel",
+              "reel",
+              "video"
+            ],
+            "signals": [
+              "for photos, amount of overlaid text",
+              "viewer Reels watch-time group",
+              "whether the post is recommended",
+              "time spent on the post",
+              "recent reshare-button use in the previous 28 days"
+            ],
+            "creative_rules": [
+              "For photos, do not overload the image with text.",
+              "Use one primary visual message and move explanation to the caption when necessary.",
+              "Design content so useful attention is rewarded rather than created through confusion."
+            ]
+          },
+          "first_post_skip_probability": {
+            "applicable_to": [
+              "photo",
+              "carousel",
+              "reel",
+              "video"
+            ],
+            "signals": [
+              "whether the first post was actually viewed",
+              "time spent on the first post",
+              "whether an action occurred",
+              "whether the post is first in Feed"
+            ],
+            "creative_rules": [
+              "Assume every post may be the first item a follower sees.",
+              "The first visible unit must work without prior context.",
+              "Do not rely on a slow setup to explain why the content matters."
+            ]
+          },
+          "first_post_over_10_seconds": {
+            "applicable_to": [
+              "reel",
+              "video",
+              "carousel"
+            ],
+            "signals": [
+              "whether the post is recommended",
+              "whether viewing time reaches 10 seconds",
+              "total viewing time including Reels shown in Feed"
+            ],
+            "creative_rules": [
+              "Create a strong first 1-3 seconds and a reason to continue beyond the hook.",
+              "Do not reveal only the hook and then repeat it; add progressive value.",
+              "For video, structure the middle so the viewer has a reason to stay beyond 10 seconds."
+            ]
+          },
+          "audio_activation_probability": {
+            "applicable_to": [
+              "reel",
+              "video"
+            ],
+            "signals": [
+              "whether the post is recommended",
+              "whether the viewer enables audio",
+              "whether the post is video/Reel"
+            ],
+            "creative_rules": [
+              "Design audio intentionally with music, voiceover or sound effects when rights permit.",
+              "The content must remain understandable with captions/context even if audio is not activated.",
+              "Audio should support the message rather than exist as decoration."
+            ]
+          },
+          "session_continuation_after_first_post": {
+            "applicable_to": [
+              "photo",
+              "carousel",
+              "reel",
+              "video"
+            ],
+            "signals": [
+              "whether the post is first in Feed",
+              "whether it was viewed for at least 3 seconds",
+              "time spent in the rest of the session after the first post"
+            ],
+            "creative_rules": [
+              "Optimize the first impression for immediate relevance and low confusion.",
+              "Avoid clickbait that disappoints after the first seconds.",
+              "Deliver value quickly enough that the post contributes positively to the viewing session."
+            ]
+          }
+        },
+        "gallery_suggestion_metadata": {
+          "permission_required": true,
+          "signals": [
+            "recency of photo/video capture",
+            "capture location",
+            "whether media was favorited",
+            "presence of people or animals"
+          ],
+          "production_implication": "When the user has granted Instagram access to owned gallery metadata, these fields may help organize candidate media for Stories, posts or Reels. They are selection metadata, not proof that an asset will rank well.",
+          "privacy_rule": "Do not infer private or sensitive traits from people present in media."
+        },
+        "reels_creative_essentials": {
+          "format": "9:16 vertical full-screen",
+          "audio": "Use intentional audio when rights permit; keep the message understandable without audio.",
+          "safe_area": "Keep the bottom 35% free of essential creative elements, text and logos so interface overlays do not obscure the message.",
+          "message": "Keep primary messages inside the safe area.",
+          "first_frame": "The first frame/first 1-3 seconds must make the subject and value understandable immediately.",
+          "captions": "Use captions/subtitles when they improve context, clarity and accessibility.",
+          "brand": "Show the brand clearly and coherently, especially for conversion-oriented Reels.",
+          "harmony": "Use visually coherent clips/assets; avoid mixing unrelated styles and shooting conditions without a reason.",
+          "production_quality": "Professional-only footage is not required; phone footage is acceptable when clear, coherent and useful."
+        },
+        "reels_for_sales": {
+          "do": [
+            "highlight the product/service clearly",
+            "keep the brand visible",
+            "show special offers only when genuine and relevant",
+            "create harmonious content",
+            "use a clear purchase/action CTA when the objective is conversion"
+          ],
+          "dont": [
+            "mix footage created at very different times/styles without coherence",
+            "assume only professionally shot footage can work"
+          ],
+          "storyboard_patterns": {
+            "uniform_background": [
+              "introduction",
+              "product/subject movement",
+              "closer",
+              "clear CTA"
+            ],
+            "customer_interaction": [
+              "wide shot",
+              "close-up",
+              "detail",
+              "clear CTA"
+            ],
+            "photo_service_reuse": [
+              "intro close-up/text",
+              "action shot",
+              "group shot",
+              "single shot"
+            ]
+          }
+        },
+        "reels_for_results": {
+          "do": [
+            "show one clear CTA",
+            "show the value of taking the action immediately",
+            "keep brand visible",
+            "build the Reel toward the final action"
+          ],
+          "dont": [
+            "focus only on lifestyle or atmosphere when the objective is a measurable action"
+          ],
+          "storyboard_patterns": {
+            "unboxing_or_reveal": [
+              "whole package/result",
+              "details one by one",
+              "group/result together"
+            ],
+            "demo": [
+              "start from finished result",
+              "keep product/service visible during demonstration",
+              "return to initial result"
+            ],
+            "team_expertise": [
+              "introduce expert and role",
+              "share three relevant expertise/details",
+              "close with a clear next step"
+            ]
+          }
+        },
+        "reels_editing": {
+          "animate_static_images": "Use movement/transitions when turning static images into Reels, but movement must improve viewing rather than distract.",
+          "subtitles": "Add subtitles/captions to contextualize, clarify and improve accessibility.",
+          "audio": "Use rights-cleared/royalty-free audio.",
+          "cutout": "Background removal/cutout may be used to emphasize subjects, text or alternate backgrounds when coherent.",
+          "metrics_to_review_when_available": [
+            "skip rate",
+            "average watch time",
+            "3-second view signal",
+            "10-second view signal",
+            "like rate",
+            "share rate",
+            "direct share/send rate",
+            "comment rate",
+            "save rate",
+            "profile visits",
+            "audio activation signal"
+          ]
+        },
+        "ai_assisted_reels": {
+          "allowed_uses": [
+            "image expansion",
+            "video expansion",
+            "text generation/variants",
+            "background generation for catalog assets",
+            "image animation",
+            "full image generation"
+          ],
+          "rules": [
+            "Use AI to scale what already works, renew creative faster and reuse existing assets.",
+            "Generated text variants must be based on brand tone and prior high-performing comparable content when such data exists.",
+            "Convert existing video to 9:16 without damaging the subject or brand coherence.",
+            "AI output remains subject to the same quality, truthfulness, brand, integrity and rights checks as manually produced media."
+          ]
+        },
+        "mandatory_prepublication_checks": [
+          "integrity_and_truthfulness_passed",
+          "audience_is_precise",
+          "single_objective",
+          "single_main_message",
+          "creative_is_sharp",
+          "creative_is_brand_coherent",
+          "subject_is_immediately_recognizable",
+          "visual_text_is_short",
+          "opening_is_immediately_relevant",
+          "caption_has_no_unnecessary_elements",
+          "content_is_meaningful_for_target",
+          "cta_matches_objective_or_is_omitted",
+          "question_is_relevant_if_used",
+          "content_is_distinct_enough_from_recent_posts",
+          "creative_fatigue_reviewed",
+          "skip_risk_reviewed",
+          "dwell_time_value_reviewed",
+          "direct_share_value_reviewed",
+          "save_value_reviewed",
+          "profile_visit_value_reviewed",
+          "negative_feedback_risk_reviewed",
+          "format_specific_rules_passed",
+          "carousel_completion_logic_passed_if_carousel",
+          "first_3_seconds_passed_if_video",
+          "reason_to_continue_beyond_10_seconds_passed_if_video_or_carousel",
+          "audio_intent_and_silent_comprehension_passed_if_video",
+          "gallery_metadata_used_only_with_permission_if_used"
+        ],
+        "creators_best_practices": {
+          "version": 2,
+          "name": "Instagram Creators Engaging Content Best Practices",
+          "source_basis": "User-supplied Instagram Creators guidance",
+          "engagement_definition": {
+            "interactions": [
+              "likes",
+              "comments",
+              "saves",
+              "shares"
+            ],
+            "rule": "Create content that earns meaningful interactions rather than generic engagement bait."
+          },
+          "experimentation": {
+            "trial_reels": {
+              "enabled_when_available": true,
+              "audience": "non-followers first",
+              "profile_visibility": "not shown on profile or to followers during trial",
+              "review_after_hours": 24,
+              "metrics": [
+                "views",
+                "likes",
+                "comments",
+                "shares"
+              ],
+              "auto_share_window_hours": 72,
+              "rule": "Use trial Reels to test new concepts, characters and styles before wider distribution when the account is eligible."
+            }
+          },
+          "format_diversification": {
+            "allowed_mix": [
+              "photo",
+              "carousel",
+              "reel",
+              "story",
+              "live"
+            ],
+            "rule": "Use a mix of formats instead of repeating one format automatically; choose format based on the message, target and objective."
+          },
+          "creative_effects": {
+            "allowed": [
+              "interactive stickers",
+              "custom cutouts",
+              "text overlays",
+              "media overlays",
+              "creative effects"
+            ],
+            "rule": "Use creative effects only when they improve storytelling, clarity or interaction."
+          },
+          "audio": {
+            "multiple_tracks_max": 20,
+            "allowed_types": [
+              "popular audio",
+              "original audio",
+              "voiceover",
+              "licensed audio",
+              "Meta Audio Collection"
+            ],
+            "rights_rule": "Use only audio you are licensed or otherwise permitted to use.",
+            "purpose": "Use music and sound to create atmosphere, meaning or pacing; never as decoration only."
+          },
+          "community_connections": {
+            "reach_audience_directly": {
+              "channels": [
+                "comments",
+                "DM",
+                "stories",
+                "channels",
+                "live",
+                "post_polls"
+              ],
+              "rule": "When useful, ask the audience directly what matters to them using authentic feedback mechanisms such as comments, DMs, Stories, channels, live sessions or polls."
+            },
+            "engagement_bait": {
+              "prohibited": true,
+              "rule": "Do not ask for artificial or meaningless interactions intended only to inflate engagement or reach.",
+              "authentic_cta_allowed": true,
+              "examples_to_avoid": [
+                "Commenta SI senza valore rispetto al contenuto",
+                "Tagga persone senza una ragione utile",
+                "Condividi seguendo formule manipolative o superstiziose",
+                "Inviti a cliccare o condividere che non aggiungono valore al contenuto"
+              ]
+            },
+            "comment_interaction": {
+              "early_days_priority": true,
+              "actions": [
+                "like comments",
+                "reply to comments",
+                "reply to a Reel comment with a Reel when useful"
+              ],
+              "rule": "Keep the conversation alive by liking or replying to comments in the first days after publication; a relevant Reel reply may be used when it adds value."
+            }
+          },
+          "reels_best_practices": {
+            "share_worthy": true,
+            "hook_first_seconds": 3,
+            "highest_resolution_possible": true,
+            "popular_or_original_audio": true,
+            "muted_view_optimization": true,
+            "muted_view_methods": [
+              "on-screen text",
+              "captions",
+              "subtitles"
+            ],
+            "comment_response_early_days": true,
+            "recommended_non_follower_max_duration_seconds": 180,
+            "rule": "Reels must capture attention immediately, remain understandable without sound, and be built to create natural sharing and conversation."
+          },
+          "post_publish": {
+            "early_comment_interaction_required": true,
+            "trial_reel_review_required": true,
+            "metrics_to_review": [
+              "views",
+              "likes",
+              "comments",
+              "shares",
+              "saves",
+              "skip_rate",
+              "average_watch_time",
+              "three_second_view_rate"
+            ]
+          },
+          "mandatory_checks": [
+            "format_selected_for_message_not_habit",
+            "new_idea_test_considered",
+            "share_worthiness_reviewed",
+            "first_3_seconds_or_first_visible_unit_clear",
+            "highest_available_resolution_used",
+            "muted_view_understandable_if_video",
+            "audio_rights_verified_if_audio_used",
+            "comment_followup_plan_present_if_reel",
+            "reel_duration_within_recommendation_if_non_follower_distribution_is_objective",
+            "audience_feedback_method_considered",
+            "engagement_bait_absent",
+            "authentic_cta_only",
+            "early_comment_interaction_plan_present"
+          ]
+        },
+        "performance_data_status": "NOT_AVAILABLE",
+        "performance_metrics_expected": [
+          "likes",
+          "comments",
+          "shares",
+          "saves",
+          "cta_clicks",
+          "profile_visits",
+          "direct_shares",
+          "dwell_time_seconds",
+          "skip_rate",
+          "carousel_completion_rate",
+          "average_watch_time_seconds",
+          "three_second_view_rate",
+          "ten_second_view_rate",
+          "audio_on_rate"
+        ],
+        "rule": "Use actual account/page data when present. Never fabricate ranking performance, watch-time, skip, share, save, profile-visit or audio metrics."
+      },
+      "publication_timing": {
+        "status": "UNVERIFIED_NO_INSIGHTS",
+        "day": null,
+        "time_window": null,
+        "rule": "Use actual Page/Instagram Insights audience-online data. Never invent a best time."
+      },
+      "manual_approval_required": true
+    },
+    "f1-social": {
+      "client_id": "f1-social",
+      "analysis_status": "PARTIAL_INSIGHTS_MISSING",
+      "insights": {
+        "status": "NOT_AVAILABLE",
+        "source_file": null,
+        "audience": {
+          "provenance": null,
+          "age": null,
+          "interests": null,
+          "page_actions": null,
+          "cta_clicks": null
+        },
+        "top_posts": []
+      },
+      "comparable_previous_posts": [],
+      "public": "Potenziali clienti coerenti con il posizionamento del brand",
+      "objective": "conoscenza del brand",
+      "main_message": "Messaggio principale del brand",
       "cta_policy": "ONE_OR_NONE_AND_ONLY_IF_OBJECTIVE_REQUIRES_IT",
       "quality_gate": {
         "sharp_media_required": true,
@@ -2049,28 +2652,6 @@
           "metrics_status": "NOT_AVAILABLE_IN_QUEUE"
         },
         {
-          "title": "FB POST 9 · Posizione · APPARTAMENTO DUE LOCALI A VALGIOIE",
-          "format": "post",
-          "category": null,
-          "visual_source": null,
-          "caption": "Focus sulla posizione dell'immobile e sul contesto territoriale indicato nella scheda.\n\nAnnuncio: https://lasacraimmobiliare.it/products/appartamento-due-locali-a-valgioie",
-          "likes": null,
-          "comments": null,
-          "shares": null,
-          "saves": null,
-          "cta_clicks": null,
-          "profile_visits": null,
-          "direct_shares": null,
-          "dwell_time_seconds": null,
-          "skip_rate": null,
-          "carousel_completion_rate": null,
-          "average_watch_time_seconds": null,
-          "three_second_view_rate": null,
-          "ten_second_view_rate": null,
-          "audio_on_rate": null,
-          "metrics_status": "NOT_AVAILABLE_IN_QUEUE"
-        },
-        {
           "title": "IG POST 10 · Per chi è adatta · APPARTAMENTO DUE LOCALI A VALGIOIE",
           "format": "post",
           "category": null,
@@ -2093,11 +2674,11 @@
           "metrics_status": "NOT_AVAILABLE_IN_QUEUE"
         },
         {
-          "title": "IG POST 9 · Posizione · APPARTAMENTO DUE LOCALI A VALGIOIE",
+          "title": "FB POST 9 · Posizione · APPARTAMENTO DUE LOCALI A VALGIOIE",
           "format": "post",
           "category": null,
           "visual_source": null,
-          "caption": "Dove si trova? Oggi il contenuto mette al centro la posizione dell'immobile.\n\nAnnuncio: https://lasacraimmobiliare.it/products/appartamento-due-locali-a-valgioie",
+          "caption": "Focus sulla posizione dell'immobile e sul contesto territoriale indicato nella scheda.\n\nAnnuncio: https://lasacraimmobiliare.it/products/appartamento-due-locali-a-valgioie",
           "likes": null,
           "comments": null,
           "shares": null,
@@ -2137,11 +2718,33 @@
           "metrics_status": "NOT_AVAILABLE_IN_QUEUE"
         },
         {
-          "title": "IG POST 8 · Comfort · APPARTAMENTO DUE LOCALI A VALGIOIE",
+          "title": "IG POST 9 · Posizione · APPARTAMENTO DUE LOCALI A VALGIOIE",
           "format": "post",
           "category": null,
           "visual_source": null,
-          "caption": "Comfort e dotazioni: scopri solo ciò che è realmente indicato nella scheda dell'immobile.\n\nAnnuncio: https://lasacraimmobiliare.it/products/appartamento-due-locali-a-valgioie",
+          "caption": "Dove si trova? Oggi il contenuto mette al centro la posizione dell'immobile.\n\nAnnuncio: https://lasacraimmobiliare.it/products/appartamento-due-locali-a-valgioie",
+          "likes": null,
+          "comments": null,
+          "shares": null,
+          "saves": null,
+          "cta_clicks": null,
+          "profile_visits": null,
+          "direct_shares": null,
+          "dwell_time_seconds": null,
+          "skip_rate": null,
+          "carousel_completion_rate": null,
+          "average_watch_time_seconds": null,
+          "three_second_view_rate": null,
+          "ten_second_view_rate": null,
+          "audio_on_rate": null,
+          "metrics_status": "NOT_AVAILABLE_IN_QUEUE"
+        },
+        {
+          "title": "Immobiliare La Sacra · test parlato 60 secondi",
+          "format": "reel",
+          "category": null,
+          "visual_source": null,
+          "caption": "Quando si compra o si vende una casa, le immagini attirano l'attenzione, ma la decisione nasce da informazioni chiare. Superficie, stato dell'immobile, posizione, documentazione, spese, pertinenze e caratteristiche del contesto devono essere letti insieme. Per questo una buona presentazione immobiliare non è soltanto una sequenza di fotografie: deve aiutare chi guarda a capire rapidamente se quella casa è coerente con le proprie esigenze. Immobiliare La Sacra opera sul territorio della Valle di Susa e lavora sulla valorizzazione dell'immobile, sulla gestione delle visite e su percorsi organizzati come gli Open House quando sono adatti al caso. Se stai pensando di vendere o acquistare, il pri",
           "likes": null,
           "comments": null,
           "shares": null,
@@ -2738,7 +3341,30 @@
         },
         "top_posts": []
       },
-      "comparable_previous_posts": [],
+      "comparable_previous_posts": [
+        {
+          "title": "Marta Ruffino · test parlato 60 secondi",
+          "format": "reel",
+          "category": null,
+          "visual_source": null,
+          "caption": "Prendersi cura del pavimento pelvico significa prima di tutto conoscere meglio una parte del corpo che spesso viene considerata soltanto quando compare un disturbo. La consapevolezza del respiro, della postura e del modo in cui si gestiscono gli sforzi quotidiani può essere utile all'interno di un percorso professionale personalizzato. Non esiste però un esercizio valido per tutti: sintomi, storia personale e obiettivi possono essere molto diversi. Per questo, prima di iniziare esercizi specifici, è importante affidarsi a una valutazione professionale e ricevere indicazioni adatte alla propria situazione. Il contenuto di questo video è informativo e non sostituisce una valutazione sanitaria.",
+          "likes": null,
+          "comments": null,
+          "shares": null,
+          "saves": null,
+          "cta_clicks": null,
+          "profile_visits": null,
+          "direct_shares": null,
+          "dwell_time_seconds": null,
+          "skip_rate": null,
+          "carousel_completion_rate": null,
+          "average_watch_time_seconds": null,
+          "three_second_view_rate": null,
+          "ten_second_view_rate": null,
+          "audio_on_rate": null,
+          "metrics_status": "NOT_AVAILABLE_IN_QUEUE"
+        }
+      ],
       "public": "Potenziali clienti coerenti con il posizionamento del brand",
       "objective": "conoscenza del brand",
       "main_message": "Marta Ruffino",
@@ -3300,7 +3926,7 @@
         {
           "title": "SEZIONI MODULARI PER VENDERE MEGLIO",
           "format": "photo",
-          "category": "nurture",
+          "category": "attract",
           "visual_source": "shopify-theme-store-description-only",
           "caption": "SEZIONI MODULARI PER VENDERE MEGLIO.\n\nVivid mette insieme struttura pulita, personalizzazione, ricerca, filtri e sezioni dedicate alla scoperta dei prodotti.\n\nPer Real Media Pro il punto non è replicare il tema: è utilizzare queste logiche per progettare un'esperienza originale che aiuti l'utente a trovare, capire e scegliere più facilmente.\n\nNessuna immagine del Theme Store viene riutilizzata.\n\nAnalisi strategica gratuita: 371 370 8294",
           "likes": null,
@@ -3322,7 +3948,7 @@
         {
           "title": "SITI WEB CHE VALORIZZANO IL BRAND",
           "format": "photo",
-          "category": "attract",
+          "category": "convert",
           "visual_source": "shopify-theme-store-description-only",
           "caption": "SITI WEB CHE VALORIZZANO IL BRAND.\n\nAllure unisce semplicità, impatto visivo, scoperta dei prodotti e una struttura pensata per sostenere la vendita. È un riferimento utile per capire quanto design e percorso commerciale debbano lavorare insieme.\n\nNoi partiamo da questi principi per creare un sito originale, coerente con il brand e costruito attorno ai suoi prodotti e clienti.\n\nNessuna immagine Shopify viene copiata.\n\nAnalisi strategica gratuita: 371 370 8294",
           "likes": null,
@@ -3344,7 +3970,7 @@
         {
           "title": "DESIGN PREMIUM, PRESTAZIONI VELOCI",
           "format": "photo",
-          "category": "convert",
+          "category": "nurture",
           "visual_source": "shopify-theme-store-description-only",
           "caption": "DESIGN PREMIUM, PRESTAZIONI VELOCI.\n\nPrestige mostra come un e-commerce premium possa combinare immagine di marca, prodotto, sezioni configurabili, velocità e accessibilità.\n\nReal Media Pro traduce questi principi in un progetto originale costruito sull'identità del cliente: nessuna copia del tema, ma una struttura pensata per far percepire valore e facilitare l'acquisto.\n\nAnalisi strategica gratuita: 371 370 8294",
           "likes": null,
@@ -3366,7 +3992,7 @@
         {
           "title": "MOBILE FIRST, PERCORSO CHIARO",
           "format": "photo",
-          "category": "nurture",
+          "category": "attract",
           "visual_source": "shopify-theme-store-description-only",
           "caption": "MOBILE FIRST, PERCORSO CHIARO.\n\nIl tema Shopify Broadcast mette al centro sezioni personalizzabili, velocità, mobile, acquisto rapido e strumenti che accompagnano il cliente verso la vendita.\n\nDa questa logica costruiamo un concept Real Media Pro completamente originale: gerarchia chiara, CTA visibili, navigazione veloce e meno attrito da smartphone.\n\nNessuna immagine del tema viene copiata o ripubblicata.\n\nAnalisi strategica gratuita: 371 370 8294",
           "likes": null,
@@ -3388,7 +4014,7 @@
         {
           "title": "SHOPIFY: DAL PRODOTTO ALLA CONVERSIONE",
           "format": "photo",
-          "category": "attract",
+          "category": "convert",
           "visual_source": "shopify-theme-store-description-only",
           "caption": "SHOPIFY: DAL PRODOTTO ALLA CONVERSIONE.\n\nUn e-commerce deve rendere semplice capire il prodotto, confrontare le alternative e arrivare all'azione. Prendiamo ispirazione dalle logiche del tema Shopify Shapes: struttura creativa, sezioni modulari, quick buy e percorso di scoperta chiaro.\n\nLa grafica che mostriamo è originale: non copiamo immagini o creatività del tema.\n\nReal Media Pro progetta siti Shopify orientati a navigazione, prodotto e conversione.\n\nAnalisi strategica gratuita: 371 370 8294",
           "likes": null,
@@ -3410,7 +4036,7 @@
         {
           "title": "SEZIONI MODULARI PER VENDERE MEGLIO",
           "format": "photo",
-          "category": "attract",
+          "category": "nurture",
           "visual_source": "shopify-theme-store-description-only",
           "caption": "SEZIONI MODULARI PER VENDERE MEGLIO.\n\nVivid mette insieme struttura pulita, personalizzazione, ricerca, filtri e sezioni dedicate alla scoperta dei prodotti.\n\nPer Real Media Pro il punto non è replicare il tema: è utilizzare queste logiche per progettare un'esperienza originale che aiuti l'utente a trovare, capire e scegliere più facilmente.\n\nNessuna immagine del Theme Store viene riutilizzata.\n\nAnalisi strategica gratuita: 371 370 8294",
           "likes": null,
@@ -3432,7 +4058,7 @@
         {
           "title": "SITI WEB CHE VALORIZZANO IL BRAND",
           "format": "photo",
-          "category": "convert",
+          "category": "attract",
           "visual_source": "shopify-theme-store-description-only",
           "caption": "SITI WEB CHE VALORIZZANO IL BRAND.\n\nAllure unisce semplicità, impatto visivo, scoperta dei prodotti e una struttura pensata per sostenere la vendita. È un riferimento utile per capire quanto design e percorso commerciale debbano lavorare insieme.\n\nNoi partiamo da questi principi per creare un sito originale, coerente con il brand e costruito attorno ai suoi prodotti e clienti.\n\nNessuna immagine Shopify viene copiata.\n\nAnalisi strategica gratuita: 371 370 8294",
           "likes": null,
@@ -3454,7 +4080,7 @@
         {
           "title": "DESIGN PREMIUM, PRESTAZIONI VELOCI",
           "format": "photo",
-          "category": "nurture",
+          "category": "convert",
           "visual_source": "shopify-theme-store-description-only",
           "caption": "DESIGN PREMIUM, PRESTAZIONI VELOCI.\n\nPrestige mostra come un e-commerce premium possa combinare immagine di marca, prodotto, sezioni configurabili, velocità e accessibilità.\n\nReal Media Pro traduce questi principi in un progetto originale costruito sull'identità del cliente: nessuna copia del tema, ma una struttura pensata per far percepire valore e facilitare l'acquisto.\n\nAnalisi strategica gratuita: 371 370 8294",
           "likes": null,
@@ -3476,7 +4102,7 @@
         {
           "title": "MOBILE FIRST, PERCORSO CHIARO",
           "format": "photo",
-          "category": "attract",
+          "category": "nurture",
           "visual_source": "shopify-theme-store-description-only",
           "caption": "MOBILE FIRST, PERCORSO CHIARO.\n\nIl tema Shopify Broadcast mette al centro sezioni personalizzabili, velocità, mobile, acquisto rapido e strumenti che accompagnano il cliente verso la vendita.\n\nDa questa logica costruiamo un concept Real Media Pro completamente originale: gerarchia chiara, CTA visibili, navigazione veloce e meno attrito da smartphone.\n\nNessuna immagine del tema viene copiata o ripubblicata.\n\nAnalisi strategica gratuita: 371 370 8294",
           "likes": null,
@@ -3498,7 +4124,7 @@
         {
           "title": "SHOPIFY: DAL PRODOTTO ALLA CONVERSIONE",
           "format": "photo",
-          "category": "convert",
+          "category": "attract",
           "visual_source": "shopify-theme-store-description-only",
           "caption": "SHOPIFY: DAL PRODOTTO ALLA CONVERSIONE.\n\nUn e-commerce deve rendere semplice capire il prodotto, confrontare le alternative e arrivare all'azione. Prendiamo ispirazione dalle logiche del tema Shopify Shapes: struttura creativa, sezioni modulari, quick buy e percorso di scoperta chiaro.\n\nLa grafica che mostriamo è originale: non copiamo immagini o creatività del tema.\n\nReal Media Pro progetta siti Shopify orientati a navigazione, prodotto e conversione.\n\nAnalisi strategica gratuita: 371 370 8294",
           "likes": null,
