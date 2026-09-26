@@ -38,6 +38,10 @@
     "buffer_channels": {
       "instagram": "6ab5d64dea19ca0bdedefe49",
       "facebook": "6ab5d62bea19ca0bdedefc11"
+    },
+    "account_whitelist": {
+      "facebook": "6ab5d62bea19ca0bdedefc11",
+      "instagram": "6ab5d64dea19ca0bdedefe49"
     }
   },
   "integrations": {
@@ -49,5 +53,10 @@
       "id": "buffer:6ab5d64dea19ca0bdedefe49",
       "required": true
     }
+  },
+  "profile_urls": {
+    "facebook": "https://www.facebook.com/martaruffinoriflessologa/reels/",
+    "instagram": "https://www.instagram.com/pelvicamente.marta/",
+    "youtube": "https://www.youtube.com/@martaruffino2697"
   }
 }
