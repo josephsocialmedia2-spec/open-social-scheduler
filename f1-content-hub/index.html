@@ -77,7 +77,7 @@
             <option>IN ARRIVO</option><option>DA CLASSIFICARE</option><option>DA LAVORARE</option>
             <option>IN LAVORAZIONE</option><option>PRONTO</option><option>DA APPROVARE</option>
             <option>APPROVATO</option><option>PROGRAMMATO</option><option>IN PUBBLICAZIONE</option><option>PUBBLICATO</option><option>ARCHIVIATO</option>
-            <option>ERRORE_MEDIA</option><option>ERRORE_QUEUE</option><option>ERRORE_PUBBLICAZIONE</option><option>CANALE_DA_COLLEGARE</option><option>CREDENZIALI_MANCANTI</option><option>AUTH_REQUIRED</option><option>DA_RIAUTORIZZARE</option><option>TIKTOK_REVIEW_REQUIRED</option>
+            <option>ERRORE_MEDIA</option><option>ERRORE_QUEUE</option><option>ERRORE_PUBBLICAZIONE</option><option>CANALE_DA_COLLEGARE</option><option>CREDENZIALI_MANCANTI</option><option>AUTH_REQUIRED</option><option>DA_RIAUTORIZZARE</option><option>TIKTOK_REVIEW_REQUIRED</option><option>BOZZA_TIKTOK_INVIATA</option>
           </select>
         </div>
         <div class="content-grid" id="archiveGrid"></div>
@@ -372,7 +372,7 @@ async function cardHtml(item){
     else if(media.mime_type&&media.mime_type.startsWith("video/"))thumb='<div class="thumb"><video src="'+esc(url)+'" muted controls></video></div>';
     else thumb='<div class="thumb">'+esc((media.mime_type||"FILE").toUpperCase())+'</div>';
   }
-  const options=["IN ARRIVO","DA CLASSIFICARE","DA LAVORARE","IN LAVORAZIONE","PRONTO","DA APPROVARE","APPROVATO","PROGRAMMATO","IN PUBBLICAZIONE","TIKTOK_REVIEW_REQUIRED","PUBBLICATO","ARCHIVIATO"].map(function(s){return '<option '+(s===item.status?"selected":"")+'>'+s+'</option>'}).join("");
+  const options=["IN ARRIVO","DA CLASSIFICARE","DA LAVORARE","IN LAVORAZIONE","PRONTO","DA APPROVARE","APPROVATO","PROGRAMMATO","IN PUBBLICAZIONE","TIKTOK_REVIEW_REQUIRED","BOZZA_TIKTOK_INVIATA","PUBBLICATO","ARCHIVIATO"].map(function(s){return '<option '+(s===item.status?"selected":"")+'>'+s+'</option>'}).join("");
   const isVideo=!!(media&&media.mime_type&&media.mime_type.startsWith("video/"));
   const tiktokBtn=isVideo?'<button class="btn small green" onclick="window.f1TikTokConfigure(\''+item.id+'\',\''+item.client_id+'\')">TIKTOK</button>':'';
   return '<article class="content-card">'+thumb+'<div class="card-body"><div class="meta">'+esc(c?c.name:"Cliente")+' · '+esc(fmt(item.created_at))+'</div><h3 title="'+esc(item.title)+'">'+esc(item.title||"Senza titolo")+'</h3><div class="badges"><span class="badge">'+esc(item.content_type)+'</span><span class="badge '+(item.status==="PUBBLICATO"?"green":item.status==="PROGRAMMATO"?"amber":"")+'">'+esc(item.status)+'</span></div><div class="card-actions"><select class="input" style="padding:6px 7px" onchange="window.f1SetStatus(\''+item.id+'\',this.value)">'+options+'</select><button class="btn small" onclick="window.f1Reuse(\''+item.id+'\')">RIUTILIZZA</button>'+tiktokBtn+'<button class="btn small primary" onclick="window.f1Schedule(\''+item.id+'\',\''+item.client_id+'\')">PROGRAMMA</button></div></div></article>';
