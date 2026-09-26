@@ -12,6 +12,13 @@ alter table public.f1_publication_events
 create index if not exists f1_publication_events_client_platform_created_idx
   on public.f1_publication_events(client_id, platform, created_at desc);
 
+create index if not exists f1_social_channels_client_owner_idx on public.f1_client_social_channels(client_id,owner_id);
+create index if not exists f1_social_oauth_tokens_client_owner_idx on public.f1_social_oauth_tokens(client_id,owner_id);
+create index if not exists f1_content_items_client_owner_idx on public.f1_content_items(client_id,owner_id);
+create index if not exists f1_content_media_client_owner_idx on public.f1_content_media(client_id,owner_id);
+create index if not exists f1_content_calendar_client_owner_idx on public.f1_content_calendar(client_id,owner_id);
+create index if not exists f1_publication_events_client_owner_idx on public.f1_publication_events(client_id,owner_id);
+
 -- Live database also enforces composite ownership:
 -- f1_content_clients unique(id, owner_id)
 -- f1_client_social_channels (client_id, owner_id) -> f1_content_clients(id, owner_id)
