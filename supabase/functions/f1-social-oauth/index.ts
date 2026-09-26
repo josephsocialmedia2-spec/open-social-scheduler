@@ -1012,7 +1012,23 @@ async function saveProfileUrl(req) {
   if (!client) return respond({ error: "client_not_found" }, 404);
   const profileUrl = validateProfileUrl(platform, body.profile_url);
   await patchChannel(user.id, client.id, platform, { profile_url: profileUrl, updated_at: nowIso() });
-  return respond({ ok: true, profile_url: profileUrl });
+  if (exclusiveWhitelist(client)) {
+    const column = {
+      facebook: "facebook",
+      instagram: "instagram",
+      linkedin: "linkedin",
+      tiktok: "tiktok",
+      youtube: "youtube"
+    }[platform];
+    if (column) {
+      await db(
+        "f1_content_clients?id=eq." + encodeURIComponent(client.id) +
+        "&owner_id=eq." + encodeURIComponent(user.id),
+        { method:"PATCH", headers:{Prefer:"return=minimal"}, body:JSON.stringify({ [column]: profileUrl, updated_at:nowIso() }) }
+      );
+    }
+  }
+  return respond({ ok: true, profile_url: profileUrl, whitelist_updated: exclusiveWhitelist(client) });
 }
 async function metaSelect(req) {
   const user = await authUser(req);
