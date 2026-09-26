@@ -281,19 +281,9 @@
   </div>
 </div>
 
-<script type="module">
-let createClient;
-try {
-  ({ createClient } = await import("https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.0/+esm"));
-} catch (primaryError) {
-  try {
-    ({ createClient } = await import("https://esm.sh/@supabase/supabase-js@2.117.0"));
-  } catch (secondaryError) {
-    const box=document.getElementById("authMessage");
-    if(box) box.innerHTML='<div class="notice error">Impossibile caricare il motore di accesso. Aggiorna la pagina con CTRL+F5. Se il problema continua, il collegamento CDN è momentaneamente irraggiungibile.</div>';
-    throw secondaryError;
-  }
-}
+<script src="./vendor/supabase.min.js"></script>
+<script>
+const { createClient } = window.F1Supabase;
 
 const SUPABASE_URL = "https://nqnmlsmeiynxbdojeyjt.supabase.co";
 const SUPABASE_KEY = "sb_publishable_Clz5qPTkTtvwV0rqWTcfMQ_sCDSRgnu";
