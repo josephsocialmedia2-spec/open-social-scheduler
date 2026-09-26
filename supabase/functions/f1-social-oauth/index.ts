@@ -539,6 +539,15 @@ function handleFromProfileUrl(platform, value) {
     return String(parts[0] || "").replace(/^@/, "").toLowerCase();
   } catch (_) { return ""; }
 }
+function facebookIdFromUrl(value) {
+  try {
+    const u = new URL(String(value || "").trim());
+    if (u.pathname.toLowerCase().endsWith("/profile.php") || u.pathname.toLowerCase() === "/profile.php") {
+      return String(u.searchParams.get("id") || "").trim();
+    }
+  } catch (_) {}
+  return "";
+}
 function expectedAccountMatches(client, platform, profile) {
   if (!exclusiveWhitelist(client)) return true;
   const p = canonicalPlatform(platform);
@@ -549,6 +558,11 @@ function expectedAccountMatches(client, platform, profile) {
   const expectedHandle = handleFromProfileUrl(p, expected);
   const actualHandle = String(profile?.username || profile?.creator_username || "").replace(/^@/, "").toLowerCase();
   if (expectedHandle && actualHandle && expectedHandle === actualHandle) return true;
+  if (p === "facebook") {
+    const expectedId = facebookIdFromUrl(expected);
+    const actualId = String(profile?.account_id || profile?.page_id || profile?.subject || "");
+    if (expectedId && actualId && expectedId === actualId) return true;
+  }
   if (p === "youtube") {
     const expectedId = handleFromProfileUrl("youtube", expected);
     const actualId = String(profile?.account_id || profile?.subject || "");
