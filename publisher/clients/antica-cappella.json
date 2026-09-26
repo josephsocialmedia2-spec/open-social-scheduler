@@ -62,5 +62,33 @@
     "instagram": "https://www.instagram.com/anticacappella/",
     "youtube": "https://www.youtube.com/@ristoranteanticacappella",
     "tiktok": "https://www.tiktok.com/@ristoranteanticacappella?lang=en"
+  },
+  "safety": {
+    "exclusive_account_whitelist": true,
+    "allow_client_accounts": false,
+    "require_exact_account_match": true
+  },
+  "authorized_accounts": {
+    "facebook": {
+      "url": "https://www.facebook.com/profile.php?id=61550077453442",
+      "authorized": true
+    },
+    "instagram": {
+      "url": "https://www.instagram.com/anticacappella/",
+      "handle": "anticacappella",
+      "authorized": true,
+      "provider": "buffer",
+      "channel_id": "6ab5cfc6ea19ca0bdedecef3"
+    },
+    "tiktok": {
+      "url": "https://www.tiktok.com/@ristoranteanticacappella",
+      "handle": "@ristoranteanticacappella",
+      "authorized": true
+    },
+    "youtube": {
+      "url": "https://www.youtube.com/@ristoranteanticacappella",
+      "handle": "@ristoranteanticacappella",
+      "authorized": true
+    }
   }
 }
