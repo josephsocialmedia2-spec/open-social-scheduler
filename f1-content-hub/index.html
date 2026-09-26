@@ -282,7 +282,18 @@
 </div>
 
 <script type="module">
-import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.0/+esm";
+let createClient;
+try {
+  ({ createClient } = await import("https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.0/+esm"));
+} catch (primaryError) {
+  try {
+    ({ createClient } = await import("https://esm.sh/@supabase/supabase-js@2.117.0"));
+  } catch (secondaryError) {
+    const box=document.getElementById("authMessage");
+    if(box) box.innerHTML='<div class="notice error">Impossibile caricare il motore di accesso. Aggiorna la pagina con CTRL+F5. Se il problema continua, il collegamento CDN è momentaneamente irraggiungibile.</div>';
+    throw secondaryError;
+  }
+}
 
 const SUPABASE_URL = "https://nqnmlsmeiynxbdojeyjt.supabase.co";
 const SUPABASE_KEY = "sb_publishable_Clz5qPTkTtvwV0rqWTcfMQ_sCDSRgnu";
@@ -322,16 +333,28 @@ function closeModal(id){el(id).classList.remove("open")}
 document.querySelectorAll("[data-close]").forEach(function(b){b.addEventListener("click",function(){closeModal(b.dataset.close)})});
 
 async function authState(){
-  const r = await sb.auth.getSession();
-  user = r.data.session ? r.data.session.user : null;
-  if(user){ await enterApp(); } else { showAuth(); }
+  try{
+    const r = await sb.auth.getSession();
+    if(r.error)throw r.error;
+    user = r.data && r.data.session ? r.data.session.user : null;
+    if(user){ await enterApp(); return; }
+    showAuth();
+  }catch(e){
+    showAuth();
+    msg("authMessage","Sessione non caricata: "+(e.message||String(e))+". Premi ACCEDI oppure aggiorna la pagina.","error");
+  }
 }
 function showAuth(){el("authView").classList.remove("hidden");el("appView").classList.add("hidden")}
 async function enterApp(){
   el("authView").classList.add("hidden");el("appView").classList.remove("hidden");
   el("userEmail").textContent=user.email||"";
-  await seedClients();
-  await loadAll();
+  try{
+    await seedClients();
+    await loadAll();
+  }catch(e){
+    console.error("F1 Content Hub bootstrap error",e);
+    el("clientContext").innerHTML='<div class="notice error" style="margin:0;width:100%"><b>Accesso riconosciuto, ma alcuni dati non sono stati caricati.</b><br>'+esc(e.message||String(e))+'<br><button class="btn small primary" style="margin-top:8px" onclick="location.reload()">RIPROVA</button></div>';
+  }
   const params=new URLSearchParams(location.search);
   const requestedClient=params.get("client");
   if(requestedClient){
@@ -995,6 +1018,13 @@ if(oauthParams.get("oauth")){
   },300);
   history.replaceState({},document.title,location.pathname+location.hash);
 }
+sb.auth.onAuthStateChange(function(event,session){
+  if(event==="SIGNED_IN" && session && session.user && !user){
+    user=session.user;
+    enterApp().catch(function(e){console.error(e)});
+  }
+  if(event==="SIGNED_OUT"){user=null;showAuth()}
+});
 authState();
 </script>
 </body>
