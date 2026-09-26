@@ -580,8 +580,9 @@ def tiktok_publish(job: dict[str, Any], client: dict[str, Any], paths: list[Path
     )
 
 def linkedin_publish(job: dict[str, Any], client: dict[str, Any], _paths: list[Path], _cache: PublicMediaCache) -> dict[str, Any]:
-    if oauth_broker.enabled():
-        broker = oauth_broker.token(client, "linkedin")
+    broker_requested = str(job.get("provider") or "").strip().lower() == "oauth_broker"
+    if oauth_broker.enabled() or broker_requested:
+        broker = oauth_broker.token(client, "linkedin", force=broker_requested)
         token = str(broker["access_token"])
         author = str(broker.get("author_urn") or "").strip()
         if not author:
@@ -597,8 +598,9 @@ def linkedin_publish(job: dict[str, Any], client: dict[str, Any], _paths: list[P
 def youtube_publish(job: dict[str, Any], client: dict[str, Any], paths: list[Path], _cache: PublicMediaCache) -> dict[str, Any]:
     if str(job.get("format") or "reel") != "reel":
         raise PublishError("YouTube publisher accepts video/reel jobs only")
-    if oauth_broker.enabled():
-        access_token = str(oauth_broker.token(client, "youtube")["access_token"])
+    broker_requested = str(job.get("provider") or "").strip().lower() == "oauth_broker"
+    if oauth_broker.enabled() or broker_requested:
+        access_token = str(oauth_broker.token(client, "youtube", force=broker_requested)["access_token"])
     else:
         client_id = secret(client, "YOUTUBE_CLIENT_ID")
         client_secret = secret(client, "YOUTUBE_CLIENT_SECRET")
