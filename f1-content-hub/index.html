@@ -731,7 +731,7 @@ function renderAutomation(){
     const sources=webSources.filter(function(x){return x.client_id===c.id});
     const cal=calendar.filter(function(x){return x.client_id===c.id});
     const queued=cal.filter(function(x){return !!x.queue_job_id});
-    const blocked=cal.filter(function(x){return ["CANALE_DA_COLLEGARE","ERRORE_MEDIA","ERRORE_QUEUE","ERRORE_PUBBLICAZIONE","CREDENZIALI_MANCANTI","AUTH_REQUIRED","DA_RIAUTORIZZARE"].includes(x.status)});
+    const blocked=cal.filter(function(x){return ["CANALE_DA_COLLEGARE","ERRORE_MEDIA","ERRORE_QUEUE","ERRORE_PUBBLICAZIONE","CREDENZIALI_MANCANTI","AUTH_REQUIRED","DA_RIAUTORIZZARE","ACCOUNT_CONDIVISO"].includes(x.status)});
     const website=c.website?(sources.length?"SITO OK":"SITO DA SINCRONIZZARE"):"WEBSITE MANCANTE";
     const wa=whatsappSenders.length?"WHATSAPP ATTIVO":"WHATSAPP DA CONFIGURARE";
     let state="CONFIGURAZIONE INCOMPLETA", cls="amber";

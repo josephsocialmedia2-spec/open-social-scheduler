@@ -244,12 +244,19 @@ def build_or_update_jobs(queue: dict[str, Any]) -> dict[str, int]:
     by_id = {str(job.get("id")): job for job in jobs if job.get("id")}
     stats = {"created": 0, "updated": 0, "blocked": 0, "ready": 0, "skipped": 0}
 
+    identity_counts: dict[tuple[str, str], int] = {}
+    for ch in channels.values():
+        if not (ch.get("enabled") and ch.get("verified") and ch.get("external_channel_id")):
+            continue
+        key = (normalize_platform(str(ch.get("platform") or "")), str(ch.get("external_channel_id") or ""))
+        identity_counts[key] = identity_counts.get(key, 0) + 1
+
     accepted_calendar_states = {
         "PROGRAMMATO", "APPROVATO", "CANALE_DA_COLLEGARE", "ERRORE_QUEUE",
         "IN PUBBLICAZIONE", "ERRORE_PUBBLICAZIONE", "ERRORE_MEDIA",
         "AUTO_PUBLISH_DISATTIVATO", "APPROVAZIONE_RICHIESTA",
         "CREDENZIALI_MANCANTI", "AUTH_REQUIRED", "DA_RIAUTORIZZARE",
-        "TIKTOK_REVIEW_REQUIRED"
+        "TIKTOK_REVIEW_REQUIRED", "ACCOUNT_CONDIVISO"
     }
 
     for row in calendars:
@@ -274,7 +281,15 @@ def build_or_update_jobs(queue: dict[str, Any]) -> dict[str, int]:
         approval_ok = (not approval_required) or item_status in {"APPROVATO", "PROGRAMMATO", "IN PUBBLICAZIONE", "PUBBLICATO"}
 
         reason = ""
-        if not channel_ok:
+        shared_identity = bool(
+            channel
+            and platform == "tiktok"
+            and channel.get("external_channel_id")
+            and identity_counts.get((platform, str(channel.get("external_channel_id"))), 0) > 1
+        )
+        if shared_identity:
+            reason = "ACCOUNT_CONDIVISO"
+        elif not channel_ok:
             reason = "CANALE_DA_COLLEGARE"
         elif not auto_publish:
             reason = "AUTO_PUBLISH_DISATTIVATO"
