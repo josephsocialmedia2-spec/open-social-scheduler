@@ -55,6 +55,20 @@ def _handle_from_url(value: Any) -> str:
         return ""
 
 
+def _facebook_id_from_url(value: Any) -> str:
+    raw = str(value or "").strip()
+    if not raw:
+        return ""
+    try:
+        from urllib.parse import parse_qs
+        u = urlparse(raw)
+        if u.path.lower().endswith("/profile.php") or u.path.lower() == "/profile.php":
+            return str((parse_qs(u.query).get("id") or [""])[0]).strip()
+    except Exception:
+        return ""
+    return ""
+
+
 def required_scope(platform: str) -> str:
     return {
         "facebook": "pages_manage_posts",
@@ -102,6 +116,8 @@ def assert_broker_account(client: dict[str, Any], platform: str, payload: dict[s
     if expected_handle and actual_handle and expected_handle == actual_handle:
         matched = True
     if expected_channel and actual_id and expected_channel == actual_id:
+        matched = True
+    if expected_url and p == "facebook" and actual_id and _facebook_id_from_url(expected_url) == actual_id:
         matched = True
     if expected_url and p == "youtube" and actual_id and _handle_from_url(expected_url) == actual_id:
         matched = True
