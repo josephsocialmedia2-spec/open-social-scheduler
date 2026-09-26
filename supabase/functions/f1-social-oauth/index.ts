@@ -5,6 +5,7 @@ const ENV_ENCRYPTION_SECRET = Deno.env.get("F1_OAUTH_ENCRYPTION_KEY") || "";
 let ENCRYPTION_SECRET_CACHE = ENV_ENCRYPTION_SECRET;
 const HUB_URL = (Deno.env.get("F1_CONTENT_HUB_URL") || "https://josephsocialmedia2-spec.github.io/open-social-scheduler/f1-content-hub/").replace(/\/+$/, "/");
 const LINKEDIN_VERSION = Deno.env.get("LINKEDIN_VERSION") || "202608";
+const META_GRAPH_VERSION = Deno.env.get("META_GRAPH_VERSION") || "v23.0";
 
 function jsonEnv(name) {
   try { return JSON.parse(Deno.env.get(name) || "{}"); } catch { return {}; }
@@ -46,7 +47,7 @@ function channelPlatform(platform) {
   return canonicalPlatform(platform) === "linkedin" ? "linkedin-page" : canonicalPlatform(platform);
 }
 function isSupported(platform) {
-  return ["youtube", "tiktok", "linkedin"].includes(canonicalPlatform(platform));
+  return ["facebook", "instagram", "youtube", "tiktok", "linkedin"].includes(canonicalPlatform(platform));
 }
 function bearer(req) {
   const h = req.headers.get("authorization") || "";
@@ -163,7 +164,7 @@ async function clientForUser(clientId, userId) {
   const rows = await db(
     "f1_content_clients?id=eq." + encodeURIComponent(clientId) +
     "&owner_id=eq." + encodeURIComponent(userId) +
-    "&select=id,owner_id,name,slug&limit=1"
+    "&select=id,owner_id,name,slug,website&limit=1"
   );
   return rows && rows[0] ? rows[0] : null;
 }
@@ -180,6 +181,16 @@ async function tokenRow(ownerId, clientId, platform) {
     "f1_social_oauth_tokens?owner_id=eq." + encodeURIComponent(ownerId) +
     "&client_id=eq." + encodeURIComponent(clientId) +
     "&platform=eq." + encodeURIComponent(canonicalPlatform(platform)) +
+    "&select=*&limit=1"
+  );
+  return rows && rows[0] ? rows[0] : null;
+}
+
+async function channelRow(ownerId, clientId, platform) {
+  const rows = await db(
+    "f1_client_social_channels?owner_id=eq." + encodeURIComponent(ownerId) +
+    "&client_id=eq." + encodeURIComponent(clientId) +
+    "&platform=eq." + encodeURIComponent(channelPlatform(platform)) +
     "&select=*&limit=1"
   );
   return rows && rows[0] ? rows[0] : null;
@@ -233,6 +244,8 @@ async function upsertToken(ownerId, clientId, platform, tokenData, profile = {})
     last_refresh_at: nowIso(),
     reauthorization_required: false,
     oauth_subject: profile.subject || null,
+    profile_url: profile.profile_url || old?.metadata?.profile_url || null,
+    last_verified_at: accountId ? nowIso() : null,
     oauth_metadata: profile
   });
 }
@@ -246,6 +259,15 @@ async function markReauth(ownerId, clientId, platform, reason) {
 }
 function providerConfig(platform) {
   const p = canonicalPlatform(platform);
+  if (p === "facebook" || p === "instagram") {
+    return {
+      clientId: (Deno.env.get("META_APP_ID") || "").trim(),
+      clientSecret: (Deno.env.get("META_APP_SECRET") || "").trim(),
+      scope: Deno.env.get("META_OAUTH_SCOPES") || "pages_show_list,pages_read_engagement,pages_manage_posts,instagram_basic,instagram_content_publish",
+      authUrl: "https://www.facebook.com/" + META_GRAPH_VERSION + "/dialog/oauth",
+      tokenUrl: "https://graph.facebook.com/" + META_GRAPH_VERSION + "/oauth/access_token"
+    };
+  }
   if (p === "youtube") {
     return {
       clientId: Deno.env.get("GOOGLE_OAUTH_CLIENT_ID") || "",
@@ -355,6 +377,29 @@ async function exchangeCode(platform, code) {
   const p = canonicalPlatform(platform);
   const c = providerConfig(p);
   if (!c) throw new Error("provider unsupported");
+  if (p === "facebook" || p === "instagram") {
+    const tokenUrl = new URL(c.tokenUrl);
+    tokenUrl.searchParams.set("client_id", c.clientId);
+    tokenUrl.searchParams.set("client_secret", c.clientSecret);
+    tokenUrl.searchParams.set("redirect_uri", callbackUrl(p));
+    tokenUrl.searchParams.set("code", code);
+    const first = await fetch(tokenUrl.toString(), { headers: { "cache-control": "no-store" } });
+    const shortData = await first.json();
+    if (!first.ok || shortData.error || !shortData.access_token) {
+      throw new Error("Meta OAuth token exchange failed: " + JSON.stringify(shortData).slice(0, 900));
+    }
+    const longUrl = new URL(c.tokenUrl);
+    longUrl.searchParams.set("grant_type", "fb_exchange_token");
+    longUrl.searchParams.set("client_id", c.clientId);
+    longUrl.searchParams.set("client_secret", c.clientSecret);
+    longUrl.searchParams.set("fb_exchange_token", String(shortData.access_token));
+    const longRes = await fetch(longUrl.toString(), { headers: { "cache-control": "no-store" } });
+    const longData = await longRes.json();
+    if (!longRes.ok || longData.error || !longData.access_token) {
+      throw new Error("Meta long-lived token exchange failed: " + JSON.stringify(longData).slice(0, 900));
+    }
+    return { ...longData, scope: c.scope };
+  }
   const body = new URLSearchParams();
   if (p === "tiktok") body.set("client_key", c.clientId);
   else body.set("client_id", c.clientId);
@@ -380,7 +425,11 @@ async function profileFor(platform, accessToken) {
     const data = await res.json();
     if (!res.ok) throw new Error("YouTube profile failed: " + JSON.stringify(data).slice(0, 800));
     const ch = data.items && data.items[0];
-    return { subject: ch?.id || null, account_id: ch?.id || null, account_name: ch?.snippet?.title || "YouTube" };
+    const custom = String(ch?.snippet?.customUrl || "").trim();
+    const profileUrl = custom
+      ? "https://www.youtube.com/" + (custom.startsWith("@") ? custom : "@" + custom)
+      : (ch?.id ? "https://www.youtube.com/channel/" + ch.id : null);
+    return { subject: ch?.id || null, account_id: ch?.id || null, account_name: ch?.snippet?.title || "YouTube", profile_url: profileUrl };
   }
   if (p === "tiktok") {
     const res = await fetch("https://open.tiktokapis.com/v2/user/info/?fields=open_id,union_id,display_name,avatar_url", {
@@ -425,10 +474,100 @@ async function profileFor(platform, accessToken) {
   }
   return {};
 }
+
+function cleanProfileUrl(value) {
+  const raw = String(value || "").trim();
+  if (!raw) return null;
+  try {
+    const u = new URL(raw);
+    if (!["http:", "https:"].includes(u.protocol)) return null;
+    u.hash = "";
+    return u.toString();
+  } catch (_) { return null; }
+}
+function sameProfileUrl(a, b) {
+  const aa = String(a || "").replace(/\/$/, "").toLowerCase();
+  const bb = String(b || "").replace(/\/$/, "").toLowerCase();
+  return !!aa && !!bb && aa === bb;
+}
+async function metaAccounts(userToken) {
+  const fields = "id,name,link,access_token,tasks,instagram_business_account{id,username,name,profile_picture_url}";
+  const res = await fetch(
+    "https://graph.facebook.com/" + META_GRAPH_VERSION + "/me/accounts?limit=100&fields=" +
+    encodeURIComponent(fields) + "&access_token=" + encodeURIComponent(userToken),
+    { headers: { "cache-control": "no-store" } }
+  );
+  const data = await res.json();
+  if (!res.ok || data.error) throw new Error("Meta pages failed: " + JSON.stringify(data).slice(0, 900));
+  return Array.isArray(data.data) ? data.data : [];
+}
+function metaCandidates(platform, pages) {
+  const p = canonicalPlatform(platform);
+  const out = [];
+  for (const page of pages || []) {
+    if (p === "facebook") {
+      out.push({
+        account_id: String(page.id || ""),
+        account_name: String(page.name || "Facebook Page"),
+        profile_url: cleanProfileUrl(page.link) || (page.id ? "https://www.facebook.com/" + page.id : null),
+        page_id: String(page.id || ""),
+        page_name: String(page.name || ""),
+        tasks: Array.isArray(page.tasks) ? page.tasks : []
+      });
+    } else if (p === "instagram" && page.instagram_business_account?.id) {
+      const ig = page.instagram_business_account;
+      const username = String(ig.username || "").trim();
+      out.push({
+        account_id: String(ig.id || ""),
+        account_name: username || String(ig.name || "Instagram"),
+        profile_url: username ? "https://www.instagram.com/" + username + "/" : null,
+        username,
+        page_id: String(page.id || ""),
+        page_name: String(page.name || ""),
+        tasks: Array.isArray(page.tasks) ? page.tasks : []
+      });
+    }
+  }
+  return out.filter(x => x.account_id);
+}
+function chooseCandidate(profileUrl, candidates) {
+  if (profileUrl) {
+    const exact = candidates.find(x => sameProfileUrl(profileUrl, x.profile_url));
+    if (exact) return exact;
+    try {
+      const path = new URL(profileUrl).pathname.toLowerCase();
+      const fuzzy = candidates.find(x => {
+        if (x.username && path.includes("/" + String(x.username).toLowerCase())) return true;
+        if (x.page_id && path.includes("/" + String(x.page_id).toLowerCase())) return true;
+        return false;
+      });
+      if (fuzzy) return fuzzy;
+    } catch (_) {}
+  }
+  return candidates.length === 1 ? candidates[0] : null;
+}
+async function metaProfileFromSelection(platform, userToken, selectionId, existingProfileUrl = null) {
+  const pages = await metaAccounts(userToken);
+  const candidates = metaCandidates(platform, pages);
+  let selected = selectionId ? candidates.find(x => x.account_id === selectionId) : null;
+  if (!selected) selected = chooseCandidate(existingProfileUrl, candidates);
+  return { selected, candidates };
+}
+async function metaPageToken(userToken, pageId) {
+  const pages = await metaAccounts(userToken);
+  const page = pages.find(x => String(x.id || "") === String(pageId || ""));
+  if (!page?.access_token) throw new Error("Meta page access token unavailable");
+  return String(page.access_token);
+}
+
 async function refreshAccess(row) {
   const p = canonicalPlatform(row.platform);
   const c = providerConfig(p);
   if (!c || !c.clientId || !c.clientSecret) throw new Error("OAuth provider configuration missing");
+  if (p === "facebook" || p === "instagram") {
+    await markReauth(row.owner_id, row.client_id, p, "meta_token_expired");
+    throw authRequiredError("AUTH_REQUIRED");
+  }
   const refreshToken = await decrypt(row.refresh_token_ciphertext);
   if (!refreshToken) {
     await markReauth(row.owner_id, row.client_id, p, "refresh_token_missing");
@@ -471,6 +610,10 @@ async function authorize(req, url) {
   if (!isSupported(platform)) return respond({ error: "unsupported_platform" }, 400);
   const client = await clientForUser(clientId, user.id);
   if (!client) return respond({ error: "client_not_found" }, 404);
+  const existingChannel = await channelRow(user.id, client.id, platform);
+  if (existingChannel?.enabled && existingChannel?.verified) {
+    return respond({ error: "already_connected", platform, provider: existingChannel.provider }, 409);
+  }
   const c = providerConfig(platform);
   if (!configured(platform)) return respond({ error: "configuration_missing", platform }, 503);
   const state = await signState({
@@ -517,8 +660,40 @@ async function callback(url, platform) {
   if (!code) return respond({ error: "authorization_code_missing" }, 400);
   try {
     const tokenData = await exchangeCode(platform, code);
-    const profile = await profileFor(platform, String(tokenData.access_token || ""));
-    await upsertToken(state.uid, state.cid, platform, tokenData, profile);
+    if (platform === "facebook" || platform === "instagram") {
+      const current = await channelRow(state.uid, state.cid, platform);
+      const meta = await metaProfileFromSelection(platform, String(tokenData.access_token || ""), null, current?.profile_url || null);
+      const safeCandidates = meta.candidates.map(({account_id,account_name,profile_url,page_id,page_name,username,tasks}) =>
+        ({account_id,account_name,profile_url,page_id,page_name,username,tasks})
+      );
+      if (!meta.selected) {
+        await upsertToken(state.uid, state.cid, platform, tokenData, {
+          subject: null, account_id: null, account_name: null,
+          profile_url: current?.profile_url || null,
+          meta_candidates: safeCandidates
+        });
+        await patchChannel(state.uid, state.cid, platform, {
+          connection_status: "ACCOUNT_DA_SELEZIONARE",
+          verified: false,
+          enabled: false
+        });
+        return redirect(HUB_URL + "?oauth=select_account&platform=" + encodeURIComponent(platform) + "&client_id=" + encodeURIComponent(state.cid));
+      }
+      const selected = meta.selected;
+      await upsertToken(state.uid, state.cid, platform, tokenData, {
+        subject: selected.account_id,
+        account_id: selected.account_id,
+        account_name: selected.account_name,
+        profile_url: selected.profile_url,
+        page_id: selected.page_id,
+        page_name: selected.page_name,
+        username: selected.username || null,
+        meta_candidates: safeCandidates
+      });
+    } else {
+      const profile = await profileFor(platform, String(tokenData.access_token || ""));
+      await upsertToken(state.uid, state.cid, platform, tokenData, profile);
+    }
     return redirect(HUB_URL + "?oauth=connected&platform=" + encodeURIComponent(platform) + "&client_id=" + encodeURIComponent(state.cid));
   } catch (e) {
     await patchChannel(state.uid, state.cid, platform, {
@@ -539,7 +714,7 @@ async function status(req, url) {
   const rows = await db(
     "f1_client_social_channels?owner_id=eq." + encodeURIComponent(user.id) +
     "&client_id=eq." + encodeURIComponent(client.id) +
-    "&select=platform,provider,external_channel_id,account_name,enabled,verified,connection_status,scopes,token_expires_at,refresh_token_expires_at,last_refresh_at,reauthorization_required,oauth_metadata&order=platform"
+    "&select=platform,provider,external_channel_id,account_name,profile_url,enabled,verified,connection_status,scopes,token_expires_at,refresh_token_expires_at,last_refresh_at,last_verified_at,reauthorization_required,oauth_metadata&order=platform"
   );
   return respond({ client: { id: client.id, name: client.name, slug: client.slug }, channels: rows || [] });
 }
@@ -554,11 +729,30 @@ async function workerToken(req, url) {
     const token = await usableToken(client.owner_id, client.id, platform);
     const row = await tokenRow(client.owner_id, client.id, platform);
     const metadata = row?.metadata || token.metadata || {};
+    if (platform === "facebook" || platform === "instagram") {
+      const selection = String(metadata.account_id || row?.provider_subject || "");
+      if (!selection) return respond({ error: "ACCOUNT_DA_SELEZIONARE" }, 409);
+      const pages = await metaAccounts(token.access_token);
+      const candidates = metaCandidates(platform, pages);
+      const selected = candidates.find(x => x.account_id === selection);
+      if (!selected) return respond({ error: "ACCOUNT_ERRATO" }, 409);
+      const pageToken = await metaPageToken(token.access_token, selected.page_id);
+      return respond({
+        access_token: pageToken,
+        expires_at: token.expires_at,
+        account_id: selected.account_id,
+        account_name: selected.account_name,
+        profile_url: selected.profile_url,
+        page_id: selected.page_id,
+        instagram_user_id: platform === "instagram" ? selected.account_id : null
+      });
+    }
     return respond({
       access_token: token.access_token,
       expires_at: token.expires_at,
       account_id: metadata.account_id || row?.provider_subject || null,
       account_name: metadata.account_name || null,
+      profile_url: metadata.profile_url || null,
       author_urn: metadata.author_urn || null
     });
   } catch (e) {
@@ -632,6 +826,180 @@ async function tiktokCreatorInfo(req, url) {
   });
 }
 
+
+function allowedProfileHost(platform, hostname) {
+  const h = String(hostname || "").toLowerCase().replace(/^www\./, "");
+  const p = canonicalPlatform(platform);
+  if (p === "facebook") return h === "facebook.com" || h.endsWith(".facebook.com");
+  if (p === "instagram") return h === "instagram.com" || h.endsWith(".instagram.com");
+  if (p === "linkedin") return h === "linkedin.com" || h.endsWith(".linkedin.com");
+  if (p === "tiktok") return h === "tiktok.com" || h.endsWith(".tiktok.com");
+  if (p === "youtube") return h === "youtube.com" || h === "youtu.be" || h.endsWith(".youtube.com");
+  return false;
+}
+function validateProfileUrl(platform, value) {
+  const clean = cleanProfileUrl(value);
+  if (!clean) throw new Error("URL profilo non valido");
+  const u = new URL(clean);
+  if (!allowedProfileHost(platform, u.hostname)) throw new Error("Dominio social non coerente con la piattaforma");
+  return clean;
+}
+async function saveProfileUrl(req) {
+  const user = await authUser(req);
+  if (!user) return respond({ error: "unauthorized" }, 401);
+  const body = await req.json();
+  const clientId = String(body.client_id || "");
+  const platform = canonicalPlatform(body.platform);
+  if (!clientId || !isSupported(platform)) return respond({ error: "invalid_request" }, 400);
+  const client = await clientForUser(clientId, user.id);
+  if (!client) return respond({ error: "client_not_found" }, 404);
+  const profileUrl = validateProfileUrl(platform, body.profile_url);
+  await patchChannel(user.id, client.id, platform, { profile_url: profileUrl, updated_at: nowIso() });
+  return respond({ ok: true, profile_url: profileUrl });
+}
+async function metaSelect(req) {
+  const user = await authUser(req);
+  if (!user) return respond({ error: "unauthorized" }, 401);
+  const body = await req.json();
+  const clientId = String(body.client_id || "");
+  const platform = canonicalPlatform(body.platform);
+  const accountId = String(body.account_id || "");
+  if (!clientId || !["facebook","instagram"].includes(platform) || !accountId) return respond({ error: "invalid_request" }, 400);
+  const client = await clientForUser(clientId, user.id);
+  if (!client) return respond({ error: "client_not_found" }, 404);
+  const token = await usableToken(user.id, client.id, platform);
+  const row = await tokenRow(user.id, client.id, platform);
+  const current = await channelRow(user.id, client.id, platform);
+  const meta = await metaProfileFromSelection(platform, token.access_token, accountId, current?.profile_url || null);
+  if (!meta.selected) return respond({ error: "account_not_available" }, 404);
+  const seconds = token.expires_at ? Math.max(60, Math.floor((new Date(token.expires_at).getTime()-Date.now())/1000)) : 0;
+  const selected = meta.selected;
+  const safeCandidates = meta.candidates.map(({account_id,account_name,profile_url,page_id,page_name,username,tasks}) =>
+    ({account_id,account_name,profile_url,page_id,page_name,username,tasks})
+  );
+  await upsertToken(user.id, client.id, platform, {
+    access_token: token.access_token,
+    expires_in: seconds || undefined,
+    scope: row?.scope || providerConfig(platform)?.scope || ""
+  }, {
+    subject: selected.account_id,
+    account_id: selected.account_id,
+    account_name: selected.account_name,
+    profile_url: selected.profile_url,
+    page_id: selected.page_id,
+    page_name: selected.page_name,
+    username: selected.username || null,
+    meta_candidates: safeCandidates
+  });
+  return respond({ ok: true, account: selected });
+}
+async function verifyChannel(req) {
+  const user = await authUser(req);
+  if (!user) return respond({ error: "unauthorized" }, 401);
+  const body = await req.json();
+  const clientId = String(body.client_id || "");
+  const platform = canonicalPlatform(body.platform);
+  if (!clientId || !isSupported(platform)) return respond({ error: "invalid_request" }, 400);
+  const client = await clientForUser(clientId, user.id);
+  if (!client) return respond({ error: "client_not_found" }, 404);
+  const row = await channelRow(user.id, client.id, platform);
+  if (!row) return respond({ error: "channel_not_found" }, 404);
+  if (row.provider === "buffer") {
+    if (!row.enabled || !row.verified) return respond({ error: "buffer_channel_not_verified" }, 409);
+    await patchChannel(user.id, client.id, platform, { last_verified_at: nowIso() });
+    return respond({ ok: true, provider: "buffer", preserved: true, profile_url: row.profile_url || null });
+  }
+  if (row.provider !== "oauth_broker") return respond({ error: "authorization_required" }, 409);
+  try {
+    const token = await usableToken(user.id, client.id, platform);
+    let profile;
+    if (platform === "facebook" || platform === "instagram") {
+      const metadata = (await tokenRow(user.id, client.id, platform))?.metadata || {};
+      const accountId = String(metadata.account_id || row.external_channel_id || "");
+      const meta = await metaProfileFromSelection(platform, token.access_token, accountId, row.profile_url || null);
+      profile = meta.selected;
+      if (!profile) {
+        await patchChannel(user.id, client.id, platform, { verified:false, connection_status:"ACCOUNT_ERRATO", last_verified_at:nowIso() });
+        return respond({ error:"ACCOUNT_ERRATO" },409);
+      }
+    } else {
+      profile = await profileFor(platform, token.access_token);
+    }
+    const liveId = String(profile?.account_id || profile?.subject || "");
+    if (row.external_channel_id && liveId && String(row.external_channel_id) !== liveId) {
+      await patchChannel(user.id, client.id, platform, { verified:false, connection_status:"ACCOUNT_ERRATO", last_verified_at:nowIso() });
+      return respond({ error:"ACCOUNT_ERRATO", expected:row.external_channel_id, actual:liveId },409);
+    }
+    await patchChannel(user.id, client.id, platform, {
+      enabled:true,
+      verified:!!liveId,
+      connection_status:liveId ? "COLLEGATO" : "ACCOUNT_DA_SELEZIONARE",
+      external_channel_id:liveId || row.external_channel_id,
+      account_name:profile?.account_name || row.account_name,
+      profile_url:profile?.profile_url || row.profile_url,
+      last_verified_at:nowIso(),
+      reauthorization_required:false
+    });
+    return respond({ ok:true, account_id:liveId || null, account_name:profile?.account_name || row.account_name, profile_url:profile?.profile_url || row.profile_url || null });
+  } catch (e) {
+    if (isAuthRequiredError(e)) {
+      await markReauth(user.id, client.id, platform, "verify_auth_required");
+      return respond({ error:"AUTH_REQUIRED" },409);
+    }
+    return respond({ error:"verify_failed", detail:String(e) },500);
+  }
+}
+function extractSocialLinks(html) {
+  const out = {};
+  const regex = /https?:\/\/[^"'<>\s)]+/gi;
+  for (const raw of String(html || "").match(regex) || []) {
+    let url = raw.replace(/&amp;/g, "&");
+    try {
+      const u = new URL(url);
+      const h = u.hostname.toLowerCase();
+      const platform =
+        allowedProfileHost("facebook",h) ? "facebook" :
+        allowedProfileHost("instagram",h) ? "instagram" :
+        allowedProfileHost("linkedin",h) ? "linkedin" :
+        allowedProfileHost("tiktok",h) ? "tiktok" :
+        allowedProfileHost("youtube",h) ? "youtube" : null;
+      if (platform && !out[platform]) out[platform] = u.toString();
+    } catch (_) {}
+  }
+  return out;
+}
+function publicWebsiteUrl(value) {
+  const u = new URL(String(value || ""));
+  if (!["http:","https:"].includes(u.protocol)) throw new Error("website_protocol");
+  const h = u.hostname.toLowerCase();
+  if (h === "localhost" || h.endsWith(".local") || h === "127.0.0.1" || h === "::1") throw new Error("website_private_host");
+  return u;
+}
+async function discoverSocials(req) {
+  const user = await authUser(req);
+  if (!user) return respond({ error:"unauthorized" },401);
+  const body = await req.json();
+  const clientId = String(body.client_id || "");
+  const client = await clientForUser(clientId,user.id);
+  if (!client) return respond({ error:"client_not_found" },404);
+  if (!client.website) return respond({ error:"website_missing" },409);
+  let website;
+  try { website = publicWebsiteUrl(client.website); } catch (e) { return respond({ error:"website_invalid", detail:String(e) },400); }
+  const res = await fetch(website.toString(), { headers:{ "user-agent":"F1SocialPublisher/1.0" }, redirect:"follow" });
+  if (!res.ok) return respond({ error:"website_fetch_failed", status:res.status },502);
+  const html = await res.text();
+  const found = extractSocialLinks(html);
+  const saved = {};
+  for (const [platform,url] of Object.entries(found)) {
+    const row = await channelRow(user.id,client.id,platform);
+    if (row && !row.profile_url) {
+      await patchChannel(user.id,client.id,platform,{ profile_url:url, updated_at:nowIso() });
+      saved[platform]=url;
+    }
+  }
+  return respond({ ok:true, found, saved });
+}
+
 async function disconnect(req) {
   const user = await authUser(req);
   if (!user) return respond({ error: "unauthorized" }, 401);
@@ -678,6 +1046,8 @@ Deno.serve(async (req) => {
         ok: true,
         encryption_ready: encryptionReady,
         providers: {
+          facebook: configured("facebook"),
+          instagram: configured("instagram"),
           youtube: configured("youtube"),
           tiktok: configured("tiktok"),
           linkedin: configured("linkedin")
@@ -689,6 +1059,10 @@ Deno.serve(async (req) => {
     if (route === "authorize" && req.method === "GET") return await authorize(req, url);
     if (route === "callback" && req.method === "GET") return await callback(url, canonicalPlatform(routeParts[1]));
     if (route === "status" && req.method === "GET") return await status(req, url);
+    if (route === "verify" && req.method === "POST") return await verifyChannel(req);
+    if (route === "profile-url" && req.method === "POST") return await saveProfileUrl(req);
+    if (route === "discover-socials" && req.method === "POST") return await discoverSocials(req);
+    if (route === "meta" && routeParts[1] === "select" && req.method === "POST") return await metaSelect(req);
     if (route === "tiktok" && routeParts[1] === "creator-info" && req.method === "GET") return await tiktokCreatorInfo(req, url);
     if (route === "token" && req.method === "GET") return await workerToken(req, url);
     if (route === "disconnect" && req.method === "POST") return await disconnect(req);
