@@ -1,0 +1,73 @@
+name: Vendor Supabase for F1 Content Hub
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/vendor-f1-hub-supabase.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  vendor:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Build local Supabase browser bundle
+        run: |
+          mkdir -p .vendor-build f1-content-hub/vendor
+          cd .vendor-build
+          npm init -y >/dev/null 2>&1
+          npm install --no-audit --no-fund @supabase/supabase-js@2.117.0 esbuild@0.25.9
+          cat > entry.js <<'EOF'
+          import { createClient } from '@supabase/supabase-js';
+          window.F1Supabase = { createClient };
+          EOF
+          npx esbuild entry.js --bundle --minify --format=iife --platform=browser --target=es2020 --outfile=../f1-content-hub/vendor/supabase.min.js
+          cd ..
+          rm -rf .vendor-build
+      - name: Point hub to local Supabase bundle
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          p=Path("f1-content-hub/index.html")
+          s=p.read_text(encoding="utf-8")
+          pattern=r'<script type="module">\s*(?:(?:let createClient;[\s\S]*?throw secondaryError;\s*\}\s*\})|(?:import \{ createClient \} from "[^"]+";))\s*\n\s*const SUPABASE_URL'
+          repl='<script src="./vendor/supabase.min.js"></script>\n<script>\nconst { createClient } = window.F1Supabase;\n\nconst SUPABASE_URL'
+          out,n=re.subn(pattern,repl,s,count=1)
+          if n != 1:
+              raise SystemExit(f"Expected 1 bootstrap replacement, got {n}")
+          p.write_text(out,encoding="utf-8")
+          PY
+      - name: Refresh service worker cache
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path("f1-content-hub/sw.js")
+          s=p.read_text(encoding="utf-8")
+          import re
+          s=re.sub(r'const CACHE="f1-content-hub-v\d+";', 'const CACHE="f1-content-hub-v6";', s)
+          if '"./vendor/supabase.min.js"' not in s:
+              s=s.replace('const CORE=[', 'const CORE=["./vendor/supabase.min.js",')
+          p.write_text(s,encoding="utf-8")
+          PY
+      - name: Commit vendored runtime
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add f1-content-hub/index.html f1-content-hub/sw.js f1-content-hub/vendor/supabase.min.js
+          if git diff --cached --quiet; then
+            echo "No changes"
+            exit 0
+          fi
+          git commit -m "Self-host Supabase runtime for F1 Content Hub"
+          git push
