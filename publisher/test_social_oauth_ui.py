@@ -43,6 +43,13 @@ class SocialOAuthUiTests(unittest.TestCase):
         for p in ["facebook", "instagram", "linkedin-page", "tiktok", "youtube"]:
             self.assertIn(f"'{p}'", sql)
 
+    def test_shared_tiktok_accounts_are_blocked_in_queue(self):
+        src = (ROOT / "publisher" / "supabase_queue_bridge.py").read_text(encoding="utf-8")
+        self.assertIn('reason = "ACCOUNT_CONDIVISO"', src)
+        self.assertIn('platform == "tiktok"', src)
+        html = (ROOT / "f1-content-hub" / "index.html").read_text(encoding="utf-8")
+        self.assertIn('"ACCOUNT_CONDIVISO"', html)
+
 
 if __name__ == "__main__":
     unittest.main()
