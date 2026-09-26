@@ -354,6 +354,9 @@ def build_or_update_jobs(queue: dict[str, Any]) -> dict[str, int]:
             "property_id": item.get("property_id"),
             "provider": (channel or {}).get("provider") or "direct",
             "provider_channel_id": (channel or {}).get("external_channel_id"),
+            "expected_account": (channel or {}).get("profile_url"),
+            "detected_account_id": (channel or {}).get("external_channel_id"),
+            "detected_account_name": (channel or {}).get("account_name"),
             "provider_secret_prefix": (channel or {}).get("secret_prefix"),
             "tiktok_settings": tiktok_settings if platform == "tiktok" else {},
             "retry_count": int((job or {}).get("retry_count") or 0),
@@ -448,8 +451,6 @@ def build_or_update_jobs(queue: dict[str, Any]) -> dict[str, int]:
 
 
 def extract_external(job: dict[str, Any]) -> tuple[str | None, str | None]:
-    if job.get("tiktok_publish_id"):
-        return str(job.get("tiktok_publish_id")), None
     if job.get("external_post_id") or job.get("external_url"):
         return (
             str(job.get("external_post_id")) if job.get("external_post_id") else None,
@@ -475,6 +476,8 @@ def extract_external(job: dict[str, Any]) -> tuple[str | None, str | None]:
             )
             external_url = payload.get("url") or payload.get("permalink")
             return (str(external_id) if external_id else None, str(external_url) if external_url else None)
+    if job.get("tiktok_publish_id"):
+        return str(job.get("tiktok_publish_id")), None
     return None, None
 
 
@@ -541,7 +544,22 @@ def sync_back(queue: dict[str, Any]) -> dict[str, int]:
             stats["errors"] += 1
 
         if str(row.get("status")) != target:
-            event(row, "QUEUE_SYNC_BACK", target, provider=patch["provider"], external_id=external_id, external_url=external_url)
+            latest_result = {}
+            for batch in reversed(job.get("direct_api_results") or []):
+                rows_result = batch.get("results") or []
+                if rows_result:
+                    latest_result = rows_result[-1]
+                    break
+            event(
+                row, "QUEUE_SYNC_BACK", target,
+                provider=patch["provider"],
+                external_id=external_id,
+                external_url=external_url,
+                api_sent=bool(latest_result.get("api_sent", target in {"PUBBLICATO","IN PUBBLICAZIONE"})),
+                account_expected=job.get("expected_account"),
+                account_detected=job.get("detected_account_id") or job.get("detected_account_name"),
+                api_response=latest_result.get("result") or {},
+            )
         rest_patch("f1_content_calendar", {"id": calendar_id}, patch)
 
     return stats
