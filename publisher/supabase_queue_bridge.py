@@ -394,6 +394,10 @@ def build_or_update_jobs(queue: dict[str, Any]) -> dict[str, int]:
                 job["status"] = "published"
                 job["enabled"] = False
                 job.pop("blocked_reason", None)
+            elif prior_status == "partially_published" and tiktok_publish_id and not reason:
+                job["status"] = "partially_published"
+                job["enabled"] = True
+                job["blocked_reason"] = "IN_PUBBLICAZIONE"
             stats["updated"] += 1
 
         target_status = "PROGRAMMATO" if not reason else reason
@@ -460,7 +464,11 @@ def sync_back(queue: dict[str, Any]) -> dict[str, int]:
 
         q_status = str(job.get("status") or "")
         if q_status == "published":
-            target = "PUBBLICATO"
+            is_tiktok_draft = (
+                str(job.get("tiktok_publish_mode") or "").upper() == "DRAFT_UPLOAD"
+                and str((job.get("tiktok_last_status") or {}).get("status") or "") == "SEND_TO_USER_INBOX"
+            )
+            target = "BOZZA_TIKTOK_INVIATA" if is_tiktok_draft else "PUBBLICATO"
         elif q_status == "partially_published":
             target = "IN PUBBLICAZIONE"
         elif q_status in {"ready", "buffer_scheduled"}:
@@ -497,6 +505,10 @@ def sync_back(queue: dict[str, Any]) -> dict[str, int]:
             stats["published"] += 1
             if content_id:
                 rest_patch("f1_content_items", {"id": content_id}, {"status": "PUBBLICATO"})
+        elif target == "BOZZA_TIKTOK_INVIATA":
+            stats["published"] += 1
+            if content_id:
+                rest_patch("f1_content_items", {"id": content_id}, {"status": "BOZZA_TIKTOK_INVIATA"})
         elif target == "IN PUBBLICAZIONE":
             stats["in_progress"] += 1
         elif target.startswith("ERRORE") or target == "CREDENZIALI_MANCANTI":
