@@ -41,6 +41,9 @@ PLATFORM_MAP = {
     "pinterest": "pinterest",
 }
 
+HEIC_EXTENSIONS = {".heic", ".heif"}
+HEIC_MIMES = {"image/heic", "image/heif", "image/heic-sequence", "image/heif-sequence"}
+
 
 class BridgeError(RuntimeError):
     pass
@@ -126,6 +129,17 @@ def safe_name(value: str, fallback: str = "media.bin") -> str:
     return clean or fallback
 
 
+def media_row_is_heic(media: dict[str, Any]) -> bool:
+    file_name = str(media.get("file_name") or "")
+    storage_path = str(media.get("storage_path") or "")
+    mime = str(media.get("mime_type") or "").strip().lower()
+    return (
+        Path(file_name).suffix.lower() in HEIC_EXTENSIONS
+        or Path(storage_path).suffix.lower() in HEIC_EXTENSIONS
+        or mime in HEIC_MIMES
+    )
+
+
 def download_url(url: str, dest: Path, auth: bool = False) -> str:
     dest.parent.mkdir(parents=True, exist_ok=True)
     req_headers = {"Authorization": f"Bearer {SERVICE_KEY}", "apikey": SERVICE_KEY} if auth else {}
@@ -144,6 +158,8 @@ def materialize_media(calendar_id: str, item: dict[str, Any], properties: dict[s
     detected_type = ""
 
     for index, media in enumerate(media_rows, 1):
+        if media_row_is_heic(media):
+            raise BridgeError("CONVERSIONE_HEIC: HEIC/HEIF non può essere materializzato per la pubblicazione; convertire prima in PNG.")
         storage_path = str(media.get("storage_path") or "").lstrip("/")
         if not storage_path:
             continue
@@ -261,7 +277,7 @@ def build_or_update_jobs(queue: dict[str, Any]) -> dict[str, int]:
         "IN PUBBLICAZIONE", "ERRORE_PUBBLICAZIONE", "ERRORE_MEDIA",
         "AUTO_PUBLISH_DISATTIVATO", "APPROVAZIONE_RICHIESTA",
         "CREDENZIALI_MANCANTI", "AUTH_REQUIRED", "DA_RIAUTORIZZARE",
-        "TIKTOK_REVIEW_REQUIRED", "ACCOUNT_CONDIVISO"
+        "TIKTOK_REVIEW_REQUIRED", "ACCOUNT_CONDIVISO", "CONVERSIONE_HEIC"
     }
 
     for row in calendars:
@@ -302,6 +318,11 @@ def build_or_update_jobs(queue: dict[str, Any]) -> dict[str, int]:
             reason = "AUTO_PUBLISH_DISATTIVATO"
         elif not approval_ok:
             reason = "APPROVAZIONE_RICHIESTA"
+
+        source_media = item.get("f1_content_media") or []
+        if not reason and any(media_row_is_heic(media) for media in source_media):
+            reason = "CONVERSIONE_HEIC"
+            row["error"] = "HEIC/HEIF bloccato: il Content Hub deve convertirlo e verificarlo come PNG prima della pubblicazione."
 
         tiktok_settings = item.get("tiktok_settings") if isinstance(item.get("tiktok_settings"), dict) else {}
         if not reason and platform == "tiktok":
