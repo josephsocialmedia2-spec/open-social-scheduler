@@ -140,6 +140,7 @@ def main() -> int:
         )
 
     from playwright.sync_api import sync_playwright
+    from publisher.cloud_publisher.browser.base import verify_expected_account
 
     profile_path = Path(profile["profile_path"])
     profile_path.mkdir(
@@ -175,7 +176,15 @@ def main() -> int:
         )
         input(
             "Quando l'account corretto è aperto, premi INVIO "
-            "qui per registrare la sessione come CONNECTED..."
+            "qui per verificarlo e registrare la sessione..."
+        )
+
+        verify_expected_account(
+            page,
+            platform=args.platform,
+            expected_url=expected,
+            expected_id=session.get("expected_account_id"),
+            expected_name=session.get("expected_account_name") or client.get("name"),
         )
 
         now = datetime.now(
