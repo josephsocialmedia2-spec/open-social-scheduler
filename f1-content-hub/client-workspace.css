@@ -75,3 +75,29 @@
   .content-rail.open{transform:translateX(0)}
   .rail-thumb{height:185px}
 }
+
+
+/* Upload monitor + destructive actions */
+.upload-progress{margin:10px 0 14px;border:1px solid #315775;background:#091724;border-radius:14px;padding:13px}
+.upload-progress.hidden{display:none!important}
+.upload-progress-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:9px}
+.upload-progress-title{font-size:12px;font-weight:1000;letter-spacing:.03em}
+.upload-progress-status{font-size:10px;font-weight:900;color:#7ef0b0}
+.upload-track{height:18px;border-radius:999px;background:#13283e;border:1px solid #29435e;overflow:hidden;position:relative}
+.upload-fill{height:100%;width:0;background:linear-gradient(90deg,#22b86d,#39f28a);transition:width .2s linear}
+.upload-percent{font-size:12px;font-weight:1000;min-width:48px;text-align:right}
+.upload-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:10px}
+.upload-stat{background:#0d1f32;border:1px solid #29435e;border-radius:10px;padding:8px}
+.upload-stat b{display:block;font-size:12px}.upload-stat span{display:block;font-size:9px;color:#9fb1c7;text-transform:uppercase;font-weight:900;margin-top:2px}
+.upload-current{margin-top:8px;font-size:11px;color:#b9c8da;word-break:break-all}
+.upload-progress.completed{border-color:#2c8c58;background:#0b241a}.upload-progress.completed .upload-fill{background:#39f28a}
+.upload-progress.partial,.upload-progress.error{border-color:#843740;background:#2a1518}.upload-progress.partial .upload-fill,.upload-progress.error .upload-fill{background:#ef5f68}
+.upload-cloud{margin-top:10px;padding:12px;border-radius:11px;border:1px solid #2c8c58;background:#0e2b1d;color:#ccffe1;text-align:center}
+.upload-cloud b{display:block;font-size:17px}.upload-cloud span{display:block;font-size:11px;margin-top:3px}
+.upload-retry{margin-top:8px}
+.rail-count b{display:block;color:#fff;font-size:12px}.rail-count span{display:block;color:#9fb1c7;font-size:9px;margin-top:1px}
+.rail-actions{grid-template-columns:1fr 1fr}.rail-actions .rail-delete{grid-column:1/-1}
+.btn.danger-bright{background:#d9363e;color:#fff;border:1px solid #f05f66}.btn.danger-bright:hover{background:#ef4d56}
+.delete-modal-meta{display:grid;gap:8px;margin:12px 0}.delete-modal-meta .subpanel{margin:0}.delete-modal-actions{display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap;margin-top:14px}
+.deleting{opacity:.55;pointer-events:none}
+@media(max-width:760px){.upload-summary{grid-template-columns:1fr 1fr}}
