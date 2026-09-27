@@ -1,0 +1,28 @@
+name: F1 Social Cloud Browser CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'publisher/cloud_publisher/**'
+      - 'scripts/f1_browser_session.py'
+      - 'scripts/install_f1_social_browser_runner.sh'
+      - '.github/workflows/f1-social-cloud-publisher.yml'
+      - 'supabase/migrations/*cloud_browser*'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install requests==2.32.5
+      - run: python -m unittest discover -s publisher/cloud_publisher/tests -v
+      - run: python -m py_compile publisher/cloud_publisher/*.py publisher/cloud_publisher/browser/*.py scripts/f1_browser_session.py
+      - run: bash -n scripts/install_f1_social_browser_runner.sh
