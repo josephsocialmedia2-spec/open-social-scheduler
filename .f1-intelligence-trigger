@@ -1,7 +1,7 @@
 bootstrap=2026-09-27
 mode=all-clients
+focus_client=antica-cappella
 real-estate=approval-required
-parallel-safe-cycle=4
 requested_by=central-operator
-reason=verify-normalized-publisher-bridge-and-rmp-seed
-run_at=2026-09-27T08:48Z
+reason=test-and-start-antica-cappella-work
+run_at=2026-09-27T09:36Z
