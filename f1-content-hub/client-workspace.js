@@ -271,6 +271,11 @@ window.f1SelectRailContent=async function(contentId){
   if(!item)return;
   if(selectedClientId&&item.client_id!==selectedClientId)return alert("Il contenuto non appartiene al cliente selezionato.");
   selectedRailContentId=item.id;
+  if(!selectedClientId&&window.f1SetClientScope){
+    window.f1SetClientScope(item.client_id);
+    if(window.matchMedia&&window.matchMedia("(max-width:1050px)").matches)window.f1ToggleContentRail(false);
+    return;
+  }
   await window.f1RenderContentRail();
   if(window.f1RenderClientPublisherWorkspace)await window.f1RenderClientPublisherWorkspace();
   const target=document.querySelector('[data-distribution-item="'+item.id+'"]');
