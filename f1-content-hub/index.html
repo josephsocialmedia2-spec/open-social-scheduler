@@ -548,7 +548,7 @@ async function loadAll(){
   fillClientSelects();
 
   const results=await Promise.all([
-    f1QueryWithRetry(function(){return sb.from("f1_content_items").select("*, f1_content_media(id,file_name,mime_type,storage_path,file_size,created_at), f1_content_calendar(id,platform,publication_at,status,platform_metadata)").order("created_at",{ascending:false}).limit(300)},"Contenuti",2),
+    f1QueryWithRetry(function(){return sb.from("f1_content_items").select("*, f1_content_media(id,owner_id,client_id,file_name,mime_type,storage_path,file_size,source,whatsapp_message_id,created_at), f1_content_calendar(id,platform,publication_at,status,platform_metadata)").order("created_at",{ascending:false}).limit(300)},"Contenuti",2),
     f1QueryWithRetry(function(){return sb.from("f1_content_calendar").select("*, f1_content_items(title), f1_content_clients(name)").order("publication_at",{ascending:true}).limit(300)},"Calendario",2),
     f1QueryWithRetry(function(){return sb.from("f1_client_social_channels").select("*").order("platform")},"Canali social",2),
     f1QueryWithRetry(function(){return sb.from("f1_client_web_sources").select("id,client_id,url,canonical_url,page_type,title,last_checked_at,active").eq("active",true).order("last_checked_at",{ascending:false}).limit(300)},"Fonti web",2),
