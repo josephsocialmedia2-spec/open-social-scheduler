@@ -79,13 +79,67 @@ jobs:
             'contentRailCount',
             'f1DeleteContent',
             'f1ConfirmDeleteContent',
-            'MEDIA_MISSING'
+            'MEDIA_MISSING',
+            'isHeicFile',
+            'convertHeicToPng',
+            'processMediaBeforeUpload',
+            'verifyPngBlob',
+            'cleanupOriginalHeic',
+            'convertExistingHeicMedia',
+            'CONVERTING_HEIC',
+            'image/png'
           ]){
             if(!js.includes(required)) throw new Error('Missing Content Rail logic: '+required);
           }
           console.log('CONTENT_RAIL_LOGIC_OK');
           NODE
-      - name: Check cache version v11
-        run: grep -q 'f1-content-hub-v11' f1-content-hub/sw.js
+      - name: Check cache version v12
+        run: |
+          grep -q 'f1-content-hub-v12' f1-content-hub/sw.js
+          grep -q 'heic2any-0.0.4.min.js' f1-content-hub/sw.js
+          grep -q 'heic2any-0.0.4.min.js' f1-content-hub/index.html
+          test -s f1-content-hub/vendor/heic2any-0.0.4.min.js
+          test -s f1-content-hub/vendor/heic2any-LICENSE.md
+      - name: Real HEIC to PNG browser conversion test
+        run: |
+          set -euo pipefail
+          curl -fsSL https://raw.githubusercontent.com/alexcorvi/heic2any/master/demo/1.heic -o f1-content-hub/__ci_fixture.heic
+          cat > f1-content-hub/__ci_heic_test.html <<'HTML'
+          <!doctype html><meta charset="utf-8">
+          <div id="result" data-result="WAIT">WAIT</div>
+          <script src="./vendor/heic2any-0.0.4.min.js"></script>
+          <script>
+          (async()=>{
+            try{
+              const src=await fetch("./__ci_fixture.heic").then(r=>r.blob());
+              const out=await heic2any({blob:src,toType:"image/png"});
+              const blob=Array.isArray(out)?out[0]:out;
+              if(!blob||blob.type!=="image/png"||blob.size<=0)throw new Error("invalid png");
+              const bitmap=await createImageBitmap(blob);
+              if(!(bitmap.width>0&&bitmap.height>0))throw new Error("invalid dimensions");
+              bitmap.close();
+              const el=document.getElementById("result");
+              el.dataset.result="OK";
+              el.textContent="OK "+blob.type+" "+blob.size;
+            }catch(e){
+              const el=document.getElementById("result");
+              el.dataset.result="ERROR";
+              el.textContent="ERROR "+(e&&e.message||e);
+            }
+          })();
+          </script>
+          HTML
+          (cd f1-content-hub && python3 -m http.server 8765 >/tmp/f1-heic-http.log 2>&1 & echo $! >/tmp/f1-heic-http.pid)
+          sleep 1
+          CHROME="$(command -v google-chrome || command -v chromium || command -v chromium-browser)"
+          "$CHROME" --headless --no-sandbox --disable-gpu --virtual-time-budget=20000 --dump-dom http://127.0.0.1:8765/__ci_heic_test.html >/tmp/f1-heic-dom.html
+          kill "$(cat /tmp/f1-heic-http.pid)" || true
+          cat /tmp/f1-heic-dom.html
+          grep -q 'data-result="OK"' /tmp/f1-heic-dom.html
+          rm -f f1-content-hub/__ci_fixture.heic f1-content-hub/__ci_heic_test.html
+      - name: Check HEIC is blocked from publisher
+        run: |
+          grep -q 'CONVERSIONE_HEIC' publisher/supabase_queue_bridge.py
+          grep -q 'CONVERSIONE_HEIC_REQUIRED' publisher/direct_api_publish.py
       - name: Check publisher bridge syntax
         run: python -m py_compile publisher/supabase_queue_bridge.py
