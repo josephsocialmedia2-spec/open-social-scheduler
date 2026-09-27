@@ -43,6 +43,12 @@ jobs:
               throw 'Google Chrome not found.'
             }
           }
+      - name: Ensure local Python dependencies
+        shell: powershell
+        run: |
+          & 'C:\F1Social\venv\Scripts\python.exe' -m pip install --disable-pip-version-check -r publisher\cloud_publisher\requirements.txt
+          if ($LASTEXITCODE -ne 0) { throw 'Unable to install F1 Social Python dependencies.' }
+
       - name: Open and verify missing client social sessions
         shell: powershell
         run: |
