@@ -1,0 +1,57 @@
+name: F1 Social Cloud Browser Publisher
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Prepare browser publication but do not click Publish'
+        required: true
+        default: true
+        type: boolean
+  schedule:
+    - cron: '*/5 * * * *'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: f1-social-cloud-browser-publisher
+  cancel-in-progress: false
+
+jobs:
+  sync-cloud-queue:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      SUPABASE_URL: ${{ vars.SUPABASE_URL || 'https://nqnmlsmeiynxbdojeyjt.supabase.co' }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r publisher/cloud_publisher/requirements.txt
+      - name: Reconcile Content Hub calendar into durable cloud queue
+        run: python -m publisher.cloud_publisher.main --sync-only
+
+  browser-fallback:
+    needs: sync-cloud-queue
+    if: ${{ vars.F1_BROWSER_FALLBACK_ENABLED == 'true' }}
+    runs-on: [self-hosted, linux, f1-social-browser]
+    timeout-minutes: 45
+    env:
+      SUPABASE_URL: ${{ vars.SUPABASE_URL || 'https://nqnmlsmeiynxbdojeyjt.supabase.co' }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+      F1_BROWSER_ROOT: /srv/f1social/browser-profiles
+      DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run || 'false' }}
+      GITHUB_RUN_ID: ${{ github.run_id }}
+      GITHUB_SHA: ${{ github.sha }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify persistent F1 browser environment
+        shell: bash
+        run: |
+          test -x /opt/f1-browser-venv/bin/python
+          /opt/f1-browser-venv/bin/python -m playwright --version
+      - name: Sync after API publisher and run browser fallback
+        run: /opt/f1-browser-venv/bin/python -m publisher.cloud_publisher.main --browser-only
