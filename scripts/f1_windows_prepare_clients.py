@@ -187,6 +187,20 @@ def main() -> int:
                     session.get("expected_profile_url") or ""
                 ).strip()
                 if not expected:
+                    patch(
+                        "f1_client_browser_social_sessions",
+                        str(session["id"]),
+                        {
+                            "status": "NOT_CONFIGURED",
+                            "error_code": "MISSING_EXPECTED_PROFILE_URL",
+                            "error_message": "Expected social profile URL is missing",
+                            "updated_at": datetime.now(timezone.utc).isoformat(),
+                        },
+                    )
+                    print(
+                        f"SKIP {client['name']} / {platform}: "
+                        "MISSING_EXPECTED_PROFILE_URL"
+                    )
                     continue
                 needed.append(session)
 
