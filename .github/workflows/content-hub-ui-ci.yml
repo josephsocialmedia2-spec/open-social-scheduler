@@ -103,6 +103,7 @@ jobs:
       - name: Real HEIC to PNG browser conversion test
         run: |
           set -euo pipefail
+          npm install --no-save puppeteer-core@24.24.1
           curl -fsSL https://raw.githubusercontent.com/alexcorvi/heic2any/master/demo/1.heic -o f1-content-hub/__ci_fixture.heic
           cat > f1-content-hub/__ci_heic_test.html <<'HTML'
           <!doctype html><meta charset="utf-8">
@@ -117,26 +118,50 @@ jobs:
               if(!blob||blob.type!=="image/png"||blob.size<=0)throw new Error("invalid png");
               const bitmap=await createImageBitmap(blob);
               if(!(bitmap.width>0&&bitmap.height>0))throw new Error("invalid dimensions");
+              const dims=bitmap.width+"x"+bitmap.height;
               bitmap.close();
               const el=document.getElementById("result");
               el.dataset.result="OK";
-              el.textContent="OK "+blob.type+" "+blob.size;
+              el.textContent="OK "+blob.type+" "+blob.size+" "+dims;
             }catch(e){
               const el=document.getElementById("result");
               el.dataset.result="ERROR";
-              el.textContent="ERROR "+(e&&e.message||e);
+              el.textContent="ERROR "+(e&&e.stack||e&&e.message||e);
             }
           })();
           </script>
           HTML
           (cd f1-content-hub && python3 -m http.server 8765 >/tmp/f1-heic-http.log 2>&1 & echo $! >/tmp/f1-heic-http.pid)
           sleep 1
-          CHROME="$(command -v google-chrome || command -v chromium || command -v chromium-browser)"
-          "$CHROME" --headless --no-sandbox --disable-gpu --virtual-time-budget=20000 --dump-dom http://127.0.0.1:8765/__ci_heic_test.html >/tmp/f1-heic-dom.html
+          export CHROME="$(command -v google-chrome || command -v chromium || command -v chromium-browser)"
+          node <<'NODE'
+          const puppeteer=require('puppeteer-core');
+          (async()=>{
+            const browser=await puppeteer.launch({
+              executablePath:process.env.CHROME,
+              headless:true,
+              args:['--no-sandbox','--disable-setuid-sandbox','--disable-gpu']
+            });
+            try{
+              const page=await browser.newPage();
+              page.on('console',m=>console.log('BROWSER',m.text()));
+              page.on('pageerror',e=>console.error('PAGEERROR',e.message));
+              await page.goto('http://127.0.0.1:8765/__ci_heic_test.html',{waitUntil:'networkidle0',timeout:30000});
+              await page.waitForFunction(
+                () => document.getElementById('result')?.dataset.result !== 'WAIT',
+                {timeout:45000}
+              );
+              const result=await page.$eval('#result',el=>({state:el.dataset.result,text:el.textContent}));
+              console.log('HEIC_TEST_RESULT',JSON.stringify(result));
+              if(result.state!=='OK')throw new Error(result.text||'HEIC conversion failed');
+            }finally{
+              await browser.close();
+            }
+          })().catch(e=>{console.error(e);process.exit(1)});
+          NODE
           kill "$(cat /tmp/f1-heic-http.pid)" || true
-          cat /tmp/f1-heic-dom.html
-          grep -q 'data-result="OK"' /tmp/f1-heic-dom.html
           rm -f f1-content-hub/__ci_fixture.heic f1-content-hub/__ci_heic_test.html
+
       - name: Check HEIC is blocked from publisher
         run: |
           grep -q 'CONVERSIONE_HEIC' publisher/supabase_queue_bridge.py
