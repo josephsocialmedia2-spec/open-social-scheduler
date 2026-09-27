@@ -1,3 +1,5 @@
+> Modalità precedente. Il progetto è stato spostato sul PC Windows sempre acceso. Usa `docs/F1_SOCIAL_LOCAL_PC.md` come procedura operativa corrente.
+
 # F1 Social Cloud Browser Publisher
 
 ## Architettura
