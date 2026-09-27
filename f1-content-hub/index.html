@@ -447,6 +447,9 @@ let clients = [];
 let items = [];
 let calendar = [];
 let socialChannels = [];
+let browserProfiles = [];
+let browserSessions = [];
+let cloudPublicationQueue = [];
 let webSources = [];
 let storeCycles = [];
 let publicationEvents = [];
@@ -561,9 +564,12 @@ async function loadAll(){
     f1QueryWithRetry(function(){return sb.from("f1_whatsapp_senders").select("*").eq("active",true)},"WhatsApp",2),
     f1QueryWithRetry(function(){return sb.from("f1_social_analytics_snapshots").select("*, f1_content_clients(name)").order("captured_at",{ascending:false}).limit(500)},"Analytics provider",2),
     f1QueryWithRetry(function(){return sb.from("f1_intelligence_events").select("*").order("created_at",{ascending:false}).limit(1000)},"F1 Intelligence",2),
-    f1QueryWithRetry(function(){return sb.from("f1_operator_preferences").select("*").limit(5)},"Preferenze operatore",2)
+    f1QueryWithRetry(function(){return sb.from("f1_operator_preferences").select("*").limit(5)},"Preferenze operatore",2),
+    f1QueryWithRetry(function(){return sb.from("f1_client_browser_profiles").select("*").order("updated_at",{ascending:false})},"Browser cloud",2),
+    f1QueryWithRetry(function(){return sb.from("f1_client_browser_social_sessions").select("*").order("updated_at",{ascending:false})},"Sessioni browser",2),
+    f1QueryWithRetry(function(){return sb.from("f1_publication_queue").select("*").order("scheduled_at",{ascending:true}).limit(500)},"Coda cloud",2)
   ]);
-  const ri=results[0],rcal=results[1],rch=results[2],rws=results[3],rsc=results[4],rpe=results[5],rwas=results[6],ras=results[7],rie=results[8],rop=results[9];
+  const ri=results[0],rcal=results[1],rch=results[2],rws=results[3],rsc=results[4],rpe=results[5],rwas=results[6],ras=results[7],rie=results[8],rop=results[9],rbp=results[10],rbs=results[11],rcq=results[12];
   if(ri&&!ri.error)items=ri.data||[];
   if(rcal&&!rcal.error)calendar=rcal.data||[];
   if(rch&&!rch.error)socialChannels=rch.data||[];
@@ -574,6 +580,9 @@ async function loadAll(){
   if(ras&&!ras.error)analyticsSnapshots=ras.data||[];
   if(rie&&!rie.error)intelligenceEvents=rie.data||[];
   if(rop&&!rop.error)operatorPreferences=rop.data||[];
+  if(rbp&&!rbp.error)browserProfiles=rbp.data||[];
+  if(rbs&&!rbs.error)browserSessions=rbs.data||[];
+  if(rcq&&!rcq.error)cloudPublicationQueue=rcq.data||[];
 }
 function fillClientSelects(){
   const options='<option value="">Tutti i clienti</option>'+clients.map(function(c){return '<option value="'+c.id+'">'+esc(c.name)+'</option>'}).join("");
@@ -1587,6 +1596,10 @@ function renderAutomation(){
   const health=scopedClients.map(function(c){
     const ch=socialChannels.filter(function(x){return x.client_id===c.id});
     const verified=ch.filter(function(x){return x.enabled&&x.verified});
+    const browserProfile=browserProfiles.find(function(x){return x.client_id===c.id});
+    const browserClientSessions=browserSessions.filter(function(x){return x.client_id===c.id});
+    const browserConnected=browserClientSessions.filter(function(x){return x.status==="CONNECTED"}).length;
+    const cloudJobs=cloudPublicationQueue.filter(function(x){return x.client_id===c.id});
     const sources=webSources.filter(function(x){return x.client_id===c.id});
     const cal=calendar.filter(function(x){return x.client_id===c.id});
     const queued=cal.filter(function(x){return !!x.queue_job_id});
@@ -1594,9 +1607,10 @@ function renderAutomation(){
     const website=c.website?(sources.length?"SITO OK":"SITO DA SINCRONIZZARE"):"WEBSITE MANCANTE";
     const wa=whatsappSenders.length?"WHATSAPP ATTIVO":"WHATSAPP DA CONFIGURARE";
     let state="CONFIGURAZIONE INCOMPLETA", cls="amber";
-    if(verified.length>0 && (c.website?sources.length>0:true) && (!cal.length || queued.length===cal.length) && !blocked.length){state="AUTOMAZIONE ATTIVA";cls="green"}
+    if((verified.length>0||browserConnected>0) && (c.website?sources.length>0:true) && (!cal.length || queued.length===cal.length) && !blocked.length){state="AUTOMAZIONE ATTIVA";cls="green"}
     if(blocked.length){state="PUBBLICAZIONE BLOCCATA";cls=""}
-    return '<div class="lineitem"><b>'+esc(c.name)+'</b><div><div class="badges"><span class="badge '+cls+'">'+esc(state)+'</span><span class="badge">'+esc(website)+'</span><span class="badge">'+esc(wa)+'</span></div><div class="meta">Canali verificati: '+verified.length+'/'+ch.length+' · Calendario: '+cal.length+' · In queue: '+queued.length+' · Fonti web: '+sources.length+'</div></div><span class="badge '+(blocked.length?"":"green")+'">'+(blocked.length?blocked.length+" BLOCCATI":"OK")+'</span></div>';
+    const browserLabel=browserProfile?(browserProfile.status==="READY"?"CHROME CLOUD READY":"CHROME "+browserProfile.status):"CHROME NON CONFIGURATO";
+    return '<div class="lineitem"><b>'+esc(c.name)+'</b><div><div class="badges"><span class="badge '+cls+'">'+esc(state)+'</span><span class="badge">'+esc(website)+'</span><span class="badge">'+esc(wa)+'</span><span class="badge '+(browserProfile&&browserProfile.status==="READY"?"green":"")+'">'+esc(browserLabel)+'</span></div><div class="meta">API verificati: '+verified.length+'/'+ch.length+' · Browser social: '+browserConnected+'/'+browserClientSessions.length+' · Coda cloud: '+cloudJobs.length+' · Calendario: '+cal.length+' · In queue: '+queued.length+' · Fonti web: '+sources.length+'</div></div><span class="badge '+(blocked.length?"":"green")+'">'+(blocked.length?blocked.length+" BLOCCATI":"OK")+'</span></div>';
   }).join("");
   el("automationHealth").innerHTML=health||'<div class="empty">Nessun cliente.</div>';
   renderSocialConnections();
