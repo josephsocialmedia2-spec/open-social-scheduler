@@ -82,7 +82,7 @@ def headers(extra: dict[str, str] | None = None) -> dict[str, str]:
     return out
 
 
-def rest_get(path: str, params: dict[str, str] | None = None) -> Any:
+def rest_get(path: str, params: dict[str, str] | None = None) -> list[dict[str, Any]]:
     r = requests.get(
         f"{SUPABASE_URL}/rest/v1/{path}",
         headers=headers(),
@@ -91,7 +91,28 @@ def rest_get(path: str, params: dict[str, str] | None = None) -> Any:
     )
     if not r.ok:
         raise BridgeError(f"Supabase GET {path}: {r.status_code} {r.text[:900]}")
-    return r.json()
+    data: Any = r.json()
+    # PostgREST normally returns a JSON array. Be defensive around gateways or
+    # wrappers that may return a JSON-encoded string or a {data|rows|result: []}
+    # envelope, so one malformed response cannot stop all clients.
+    if isinstance(data, str):
+        try:
+            data = json.loads(data)
+        except Exception as exc:
+            raise BridgeError(f"Supabase GET {path}: unexpected string payload") from exc
+    if isinstance(data, dict):
+        for key in ("data", "rows", "result"):
+            if isinstance(data.get(key), list):
+                data = data[key]
+                break
+        else:
+            data = [data]
+    if not isinstance(data, list):
+        raise BridgeError(f"Supabase GET {path}: unexpected payload type {type(data).__name__}")
+    rows = [row for row in data if isinstance(row, dict)]
+    if len(rows) != len(data):
+        print(f"WARN Supabase GET {path}: ignored {len(data)-len(rows)} non-object row(s)")
+    return rows
 
 
 def rest_patch(path: str, match: dict[str, str], payload: dict[str, Any]) -> None:
