@@ -17,6 +17,7 @@ def api_ready(channel: dict | None) -> bool:
         channel
         and channel.get("enabled")
         and channel.get("verified")
+        and str(channel.get("connection_status") or "").upper() == "COLLEGATO"
         and not channel.get("reauthorization_required")
         and str(channel.get("provider") or "") in {"direct", "oauth_broker", "buffer"}
     )
@@ -189,6 +190,12 @@ def process_one(db: Database, settings, row: dict) -> str:
         )
 
         now = datetime.now(timezone.utc).isoformat()
+        if not settings.dry_run and not result.verified:
+            raise BrowserPublishError(
+                "The social UI did not provide verifiable proof that the post was published",
+                "PUBLICATION_NOT_VERIFIED",
+            )
+
         if settings.dry_run:
             db.update_job(
                 job.id,
