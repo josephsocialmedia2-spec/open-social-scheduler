@@ -100,11 +100,14 @@ function captionFor(client,title,category,base,platform){
   return text;
 }
 function planState(clientId,platform,mime,item){
+  const type=String(mime||"").toLowerCase();
+  const isVideo=type.startsWith("video/"),isImage=type.startsWith("image/");
+  if(!type)return "MEDIA_MISSING";
+  if(!isVideo&&!isImage)return "FORMATO_NON_SUPPORTATO";
   const state=channelState(clientId,platform);
   if(state!=="COLLEGATO")return state;
-  const isVideo=String(mime||"").startsWith("video/");
-  const isImage=String(mime||"").startsWith("image/");
   if(platform==="youtube"&&!isVideo)return "FORMATO_NON_SUPPORTATO";
+  if(platform==="linkedin-page"&&isVideo)return "FORMATO_NON_SUPPORTATO";
   if(platform==="tiktok"&&isImage)return "TIKTOK_PHOTO_URL_REQUIRED";
   if(platform==="tiktok"&&isVideo){
     const s=item&&item.tiktok_settings&&typeof item.tiktok_settings==="object"?item.tiktok_settings:{};
@@ -298,7 +301,7 @@ async function scheduleOne(item,dayOffset){
   for(const p of WS_PLATFORMS){
     const data=plan.platforms[p.id]||{},ch=channelFor(client.id,p.id),state=planState(client.id,p.id,mime,item);
     const target=nextAt(data.time||prefFor(client,p.id).time,dayOffset||0);
-    if(state==="FORMATO_NON_SUPPORTATO"||state==="TIKTOK_PHOTO_URL_REQUIRED"||state==="TIKTOK_REVIEW_REQUIRED"){
+    if(state==="MEDIA_MISSING"||state==="FORMATO_NON_SUPPORTATO"||state==="TIKTOK_PHOTO_URL_REQUIRED"||state==="TIKTOK_REVIEW_REQUIRED"){
       data.status=state;data.scheduled_at=null;plan.platforms[p.id]=data;continue;
     }
     const calendarStatus=state==="PRONTO"?"PROGRAMMATO":"CANALE_DA_COLLEGARE";
