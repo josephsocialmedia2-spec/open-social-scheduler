@@ -1,0 +1,50 @@
+name: F1 Content Hub UI CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'f1-content-hub/**'
+      - 'publisher/supabase_queue_bridge.py'
+      - '.github/workflows/content-hub-ui-ci.yml'
+  pull_request:
+    paths:
+      - 'f1-content-hub/**'
+      - 'publisher/supabase_queue_bridge.py'
+      - '.github/workflows/content-hub-ui-ci.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate-ui:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check workspace JavaScript syntax
+        run: node --check f1-content-hub/client-workspace.js
+      - name: Check Content Hub wiring
+        run: |
+          node <<'NODE'
+          const fs=require('fs');
+          const html=fs.readFileSync('f1-content-hub/index.html','utf8');
+          const sw=fs.readFileSync('f1-content-hub/sw.js','utf8');
+          for(const required of [
+            'id="clientPublisherWorkspace"',
+            'client-workspace.css',
+            'client-workspace.js',
+            'f1RenderClientPublisherWorkspace'
+          ]){
+            if(!html.includes(required)) throw new Error('Missing Content Hub wiring: '+required);
+          }
+          if(!sw.includes('client-workspace.js')||!sw.includes('client-workspace.css')){
+            throw new Error('Service worker is not caching workspace assets');
+          }
+          console.log('CONTENT_HUB_WORKSPACE_WIRING_OK');
+          NODE
+      - name: Check publisher bridge syntax
+        run: python -m py_compile publisher/supabase_queue_bridge.py
