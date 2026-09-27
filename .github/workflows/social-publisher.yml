@@ -124,6 +124,171 @@ jobs:
             sudo apt-get install -y ffmpeg espeak
           fi
 
+      - name: Bootstrap Antica Cappella Facebook when the dedicated Page token is valid
+        shell: bash
+        run: |
+          python - <<'PY'
+          import os, json, sys
+          from datetime import datetime, timezone
+          import requests
+
+          SB=(os.environ.get('SUPABASE_URL') or '').rstrip('/')
+          KEY=(os.environ.get('SUPABASE_SERVICE_ROLE_KEY') or '').strip()
+          TOKEN=(os.environ.get('ANTICACAPPELLA_FACEBOOK_PAGE_ACCESS_TOKEN') or '').strip()
+          VERSION=(os.environ.get('META_GRAPH_VERSION') or 'v23.0').strip()
+          EXPECTED='61550077453442'
+          PROFILE='https://www.facebook.com/profile.php?id=61550077453442'
+
+          if not TOKEN:
+              print('ANTICA_FACEBOOK_BOOTSTRAP=AUTH_REQUIRED token_missing')
+              raise SystemExit(0)
+          if not SB or not KEY:
+              print('ANTICA_FACEBOOK_BOOTSTRAP=SKIPPED supabase_missing')
+              raise SystemExit(0)
+
+          graph=requests.get(
+              f'https://graph.facebook.com/{VERSION}/me',
+              params={'fields':'id,name,link','access_token':TOKEN},
+              timeout=30,
+          )
+          if not graph.ok:
+              print('ANTICA_FACEBOOK_BOOTSTRAP=AUTH_REQUIRED token_invalid http='+str(graph.status_code))
+              raise SystemExit(0)
+          page=graph.json()
+          detected=str(page.get('id') or '')
+          if detected != EXPECTED:
+              print('ANTICA_FACEBOOK_BOOTSTRAP=BLOCKED page_mismatch detected='+detected)
+              raise SystemExit(0)
+
+          # Read check: verifies that this Page token can actually access the expected Page.
+          read=requests.get(
+              f'https://graph.facebook.com/{VERSION}/{EXPECTED}/feed',
+              params={'fields':'id,created_time','limit':'1','access_token':TOKEN},
+              timeout=30,
+          )
+          if not read.ok:
+              print('ANTICA_FACEBOOK_BOOTSTRAP=AUTH_REQUIRED page_read_failed http='+str(read.status_code))
+              raise SystemExit(0)
+
+          H={'apikey':KEY,'Authorization':'Bearer '+KEY,'Content-Type':'application/json'}
+          def get(table,params):
+              r=requests.get(f'{SB}/rest/v1/{table}',headers=H,params=params,timeout=30)
+              r.raise_for_status()
+              return r.json()
+          def patch(table,params,payload):
+              h={**H,'Prefer':'return=minimal'}
+              r=requests.patch(f'{SB}/rest/v1/{table}',headers=h,params=params,json=payload,timeout=30)
+              r.raise_for_status()
+          def post(table,payload):
+              h={**H,'Prefer':'return=minimal'}
+              r=requests.post(f'{SB}/rest/v1/{table}',headers=h,json=payload,timeout=30)
+              r.raise_for_status()
+
+          clients=get('f1_content_clients',{'select':'id,owner_id,name,slug','slug':'eq.antica-cappella','limit':'1'})
+          if not clients:
+              raise RuntimeError('Antica Cappella client missing')
+          client=clients[0]
+          now=datetime.now(timezone.utc).isoformat(timespec='seconds')
+
+          patch('f1_client_social_channels',{
+              'owner_id':'eq.'+str(client['owner_id']),
+              'client_id':'eq.'+str(client['id']),
+              'platform':'eq.facebook',
+          },{
+              'provider':'direct',
+              'enabled':True,
+              'verified':True,
+              'connection_status':'COLLEGATO',
+              'external_channel_id':EXPECTED,
+              'account_name':str(page.get('name') or 'Antica Cappella'),
+              'profile_url':PROFILE,
+              'last_verified_at':now,
+              'reauthorization_required':False,
+              'updated_at':now,
+          })
+          print('ANTICA_FACEBOOK_PREFLIGHT=OK page_id='+EXPECTED+' page_name='+str(page.get('name') or ''))
+
+          events=get('f1_publication_events',{
+              'select':'content_id,status,external_id',
+              'client_id':'eq.'+str(client['id']),
+              'platform':'eq.facebook',
+              'limit':'1000',
+          })
+          published={
+              str(x.get('content_id')) for x in events
+              if x.get('content_id') and str(x.get('status') or '').upper() in {'PUBBLICATO','PUBLISHED','COMPLETED','SUCCESS'}
+          }
+          if published:
+              print('ANTICA_FACEBOOK_TEST=ALREADY_COMPLETED count='+str(len(published)))
+              raise SystemExit(0)
+
+          items=get('f1_content_items',{
+              'select':'id,title,description,source_text,status,content_type,created_at,f1_content_media(id,file_name,mime_type,storage_path,file_size)',
+              'client_id':'eq.'+str(client['id']),
+              'owner_id':'eq.'+str(client['owner_id']),
+              'order':'created_at.desc',
+              'limit':'100',
+          })
+          rank={'PRONTO':0,'APPROVATO':0,'PROGRAMMATO':1,'DA APPROVARE':2,'DA LAVORARE':3,'IN ARRIVO':4}
+          candidates=[]
+          for item in items:
+              if str(item.get('id')) in published: continue
+              if str(item.get('status') or '').upper() in {'ARCHIVIATO','PUBBLICATO'}: continue
+              media=[
+                  m for m in (item.get('f1_content_media') or [])
+                  if str(m.get('mime_type') or '').lower() in {'image/jpeg','image/png','image/webp'}
+                  and not str(m.get('file_name') or '').lower().endswith(('.heic','.heif'))
+                  and m.get('storage_path')
+              ]
+              if media:
+                  candidates.append((rank.get(str(item.get('status') or '').upper(),9),item,media[0]))
+          if not candidates:
+              print('ANTICA_FACEBOOK_TEST=WAITING_FOR_ELIGIBLE_MEDIA')
+              raise SystemExit(0)
+          candidates.sort(key=lambda x:(x[0],str(x[1].get('created_at') or '')))
+          item=candidates[0][1]
+          media=candidates[0][2]
+          caption=str(item.get('description') or item.get('source_text') or '').strip()
+          if not caption:
+              caption='Antica Cappella · Avigliana — tradizione, accoglienza ed eventi nel cuore della Valle di Susa.'
+
+          existing=get('f1_content_calendar',{
+              'select':'id,status,platform_metadata',
+              'owner_id':'eq.'+str(client['owner_id']),
+              'client_id':'eq.'+str(client['id']),
+              'content_id':'eq.'+str(item['id']),
+              'platform':'eq.facebook',
+              'limit':'1',
+          })
+          metadata={
+              'caption':caption,
+              'publish_now':True,
+              'connection_test':True,
+              'selected_time':'NOW',
+              'verified_page_id':EXPECTED,
+              'media_id':str(media.get('id') or ''),
+              'pipeline_version':'F1_INTELLIGENCE_V1',
+          }
+          if existing:
+              patch('f1_content_calendar',{'id':'eq.'+str(existing[0]['id'])},{
+                  'status':'PROGRAMMATO','provider':'direct','publication_at':now,
+                  'error':None,'updated_at':now,'platform_metadata':metadata,
+              })
+              calendar_id=str(existing[0]['id'])
+          else:
+              post('f1_content_calendar',{
+                  'owner_id':client['owner_id'],'client_id':client['id'],'content_id':item['id'],
+                  'platform':'facebook','provider':'direct','publication_at':now,'status':'PROGRAMMATO',
+                  'error':None,'platform_metadata':metadata,
+              })
+              rows=get('f1_content_calendar',{
+                  'select':'id','client_id':'eq.'+str(client['id']),
+                  'content_id':'eq.'+str(item['id']),'platform':'eq.facebook','limit':'1'
+              })
+              calendar_id=str(rows[0]['id']) if rows else ''
+          print('ANTICA_FACEBOOK_TEST=QUEUED content_id='+str(item['id'])+' title='+str(item.get('title') or '')+' calendar_id='+calendar_id)
+          PY
+
       - name: Generate licensed multi-client spoken publication test
         if: github.event_name == 'push'
         run: python publisher/generate_multiclient_test_jobs.py
