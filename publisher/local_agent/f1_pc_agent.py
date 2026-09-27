@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""F1 Social Intelligence local Windows folder agent.
+r"""F1 Social Intelligence local Windows folder agent.
 
 The operator controls one deterministic folder tree:
   C:\F1Social\Clients\<client-slug>\INBOX
