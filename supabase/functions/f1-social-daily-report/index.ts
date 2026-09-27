@@ -93,7 +93,11 @@ function statusLabel(row) {
   if (s === "PROGRAMMATO") return "PROGRAMMATO";
   if (s === "AUTH_REQUIRED") return "AUTH_REQUIRED";
   if (s === "ERROR" || s === "ERRORE") return "ERRORE";
-  return s || "NON PUBBLICATO";
+  if (["NEEDS_REVIEW", "ACCOUNT_CONDIVISO", "CONFIGURAZIONE_PRONTA", "CANALE_DA_COLLEGARE", "AUTORIZZAZIONE_RICHIESTA", "NOT_CONFIGURED", "ACCOUNT_WRONG", "EXPIRED"].includes(s)) {
+    return "NEEDS_REVIEW";
+  }
+  if (s === "DUPLICATE_BLOCKED") return "DUPLICATE_BLOCKED";
+  return "NON PUBBLICATO";
 }
 
 function timeLabel(row, timeZone) {
@@ -183,9 +187,11 @@ async function buildForOwner(ownerId, reportDate, timeZone) {
   const errorCount =
     rows.filter((x) => ["ERRORE", "AUTH_REQUIRED"].includes(x.status)).length +
     (inboxRows || []).filter((x) => x.status === "ERROR").length;
-  const blockedCount = (inboxRows || []).filter((x) =>
-    ["NEEDS_REVIEW", "DUPLICATE_BLOCKED"].includes(x.status)
-  ).length;
+  const blockedCount =
+    rows.filter((x) => ["NEEDS_REVIEW", "DUPLICATE_BLOCKED"].includes(x.status)).length +
+    (inboxRows || []).filter((x) =>
+      ["NEEDS_REVIEW", "DUPLICATE_BLOCKED"].includes(x.status)
+    ).length;
   const clientsHandled = new Set(
     rows.map((x) => x.client).filter(Boolean),
   ).size;
