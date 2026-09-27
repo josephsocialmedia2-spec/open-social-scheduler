@@ -108,23 +108,38 @@ jobs:
           cat > f1-content-hub/__ci_heic_test.html <<'HTML'
           <!doctype html><meta charset="utf-8">
           <div id="result" data-result="WAIT">WAIT</div>
+          <script>
+          window.clients=[];window.items=[];window.calendar=[];window.socialChannels=[];
+          window.selectedClientId="";window.user={id:"ci-owner"};
+          window.effectiveSocialState=()=>"CANALE_DA_COLLEGARE";
+          window.socialCollisionMap=()=>new Map();
+          window.loadAll=async()=>{};window.renderAll=async()=>{};
+          </script>
           <script src="./vendor/heic2any-0.0.4.min.js"></script>
+          <script src="./client-workspace.js"></script>
           <script>
           (async()=>{
+            const el=document.getElementById("result");
             try{
+              const diag=window.f1HeicDiagnostics;
+              if(!diag)throw new Error("diagnostics missing");
               const src=await fetch("./__ci_fixture.heic").then(r=>r.blob());
-              const out=await heic2any({blob:src,toType:"image/png"});
-              const blob=Array.isArray(out)?out[0]:out;
-              if(!blob||blob.type!=="image/png"||blob.size<=0)throw new Error("invalid png");
-              const bitmap=await createImageBitmap(blob);
-              if(!(bitmap.width>0&&bitmap.height>0))throw new Error("invalid dimensions");
-              const dims=bitmap.width+"x"+bitmap.height;
-              bitmap.close();
-              const el=document.getElementById("result");
+              const file=new File([src],"foto.HEIC",{type:"image/heic"});
+              if(!diag.isHeicFile(file))throw new Error("HEIC detection failed");
+              const prepared=await diag.processMediaBeforeUpload(file);
+              if(!prepared.converted)throw new Error("conversion flag false");
+              if(prepared.file.name!=="foto.png")throw new Error("wrong PNG name: "+prepared.file.name);
+              if(prepared.file.type!=="image/png"||prepared.file.size<=0)throw new Error("invalid PNG");
+              const verified=await diag.verifyPngBlob(prepared.file);
+              if(!(verified.width>0&&verified.height>0))throw new Error("invalid dimensions");
+              let corruptRejected=false;
+              try{
+                await diag.convertHeicToPng(new File([new Uint8Array([1,2,3,4,5])],"corrotto.heic",{type:"image/heic"}));
+              }catch(_){corruptRejected=true}
+              if(!corruptRejected)throw new Error("corrupt HEIC was not rejected");
               el.dataset.result="OK";
-              el.textContent="OK "+blob.type+" "+blob.size+" "+dims;
+              el.textContent="OK "+prepared.file.type+" "+prepared.file.size+" "+verified.width+"x"+verified.height+" name="+prepared.file.name+" corrupt=rejected";
             }catch(e){
-              const el=document.getElementById("result");
               el.dataset.result="ERROR";
               el.textContent="ERROR "+(e&&e.stack||e&&e.message||e);
             }
