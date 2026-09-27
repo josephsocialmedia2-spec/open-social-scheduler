@@ -1,11 +1,11 @@
 {
-  "name": "F1 Content Hub",
-  "short_name": "F1 HUB",
+  "name": "F1 Social Intelligence",
+  "short_name": "F1 SOCIAL",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#07111f",
-  "theme_color": "#07111f",
+  "background_color": "#01162c",
+  "theme_color": "#01162c",
   "icons": [
     {
       "src": "./icon.svg",
