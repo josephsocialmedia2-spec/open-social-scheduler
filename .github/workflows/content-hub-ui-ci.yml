@@ -69,11 +69,23 @@ jobs:
             'f1SelectRailContent',
             'f1QuickProgramFromRail',
             'f1WorkspaceScheduleItem',
-            'data-distribution-item'
+            'data-distribution-item',
+            'uploadBatchState',
+            'storageUploadWithProgress',
+            'calculateUploadProgress',
+            'calculateUploadSpeed',
+            'estimatedSecondsRemaining',
+            'CONTENUTI IN CLOUD',
+            'contentRailCount',
+            'f1DeleteContent',
+            'f1ConfirmDeleteContent',
+            'MEDIA_MISSING'
           ]){
             if(!js.includes(required)) throw new Error('Missing Content Rail logic: '+required);
           }
           console.log('CONTENT_RAIL_LOGIC_OK');
           NODE
+      - name: Check cache version v11
+        run: grep -q 'f1-content-hub-v11' f1-content-hub/sw.js
       - name: Check publisher bridge syntax
         run: python -m py_compile publisher/supabase_queue_bridge.py
