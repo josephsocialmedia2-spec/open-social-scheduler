@@ -31,8 +31,9 @@ jobs:
           if (-not (Test-Path 'C:\F1Social\venv\Scripts\python.exe')) {
             throw 'F1 Social Python environment missing.'
           }
-          & 'C:\F1Social\venv\Scripts\python.exe' -m pip install --disable-pip-version-check -r publisher\cloud_publisher\requirements.txt
+          & 'C:\F1Social\venv\Scripts\python.exe' -m pip install --disable-pip-version-check --retries 5 --timeout 30 -r publisher\cloud_publisher\requirements.txt
           if ($LASTEXITCODE -ne 0) { throw 'Dependency repair failed.' }
+          & 'C:\F1Social\venv\Scripts\python.exe' -c "import requests, playwright; print('Dependencies repaired')"
       - name: Open missing social profiles
         shell: powershell
         run: |
