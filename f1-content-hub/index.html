@@ -355,7 +355,7 @@
       <div class="field span3"><label>Note interne</label><textarea id="uploadNotes" placeholder="Indicazioni operative non destinate alla pubblicazione..."></textarea></div>
     </div>
     <label id="dropZone" class="uploadbox" style="display:block;margin-top:12px">
-      <input id="fileInput" type="file" multiple accept="image/*,video/*,audio/*,.pdf,.doc,.docx">
+      <input id="fileInput" type="file" multiple accept="image/*,video/*,audio/*,.heic,.heif,image/heic,image/heif,.pdf,.doc,.docx">
       <b>TOCCA QUI O TRASCINA I FILE</b>
       <div class="muted" id="fileSummary">Foto, video, audio, PDF e documenti</div>
     </label>
@@ -1728,6 +1728,7 @@ sb.auth.onAuthStateChange(function(event,session){
 });
 authState();
 </script>
-<script src="./client-workspace.js?v=20260927a"></script>
+<script src="./vendor/heic2any-0.0.4.min.js"></script>
+<script src="./client-workspace.js?v=20260927b"></script>
 </body>
 </html>
