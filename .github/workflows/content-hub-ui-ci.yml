@@ -112,11 +112,43 @@ jobs:
           }
           console.log('CONTENT_RAIL_LOGIC_OK');
           NODE
-      - name: Check cache version v13
+      - name: Check global F1 Social Intelligence design system
         run: |
-          grep -q 'f1-content-hub-v13' f1-content-hub/sw.js
+          node <<'NODE'
+          const fs=require('fs');
+          const css=fs.readFileSync('f1-content-hub/f1-design-system.css','utf8');
+          const main=fs.readFileSync('f1-content-hub/index.html','utf8');
+          const lasacra=fs.readFileSync('f1-content-hub/immobiliare-la-sacra.html','utf8');
+          const requiredTokens=[
+            '--f1-bg:#01162c',
+            '--f1-cyan:#20c7ff',
+            '--f1-green:#3ee0b5',
+            '--f1-danger:#e64b68',
+            '--f1-radius:18px',
+            '@keyframes intelligencePulse',
+            '@media(max-width:760px)',
+            '@media(prefers-reduced-motion:reduce)',
+            '.f1-shell',
+            '.f1-timeline'
+          ];
+          for(const token of requiredTokens){
+            if(!css.includes(token)) throw new Error('Missing global design token/component: '+token);
+          }
+          for(const [name,html] of [['index',main],['immobiliare-la-sacra',lasacra]]){
+            if(!html.includes('f1-design-system.css')) throw new Error(name+' does not load global design system');
+            const ids=[...html.matchAll(/\sid="([^"]+)"/g)].map(m=>m[1]);
+            const dup=ids.filter((id,i)=>ids.indexOf(id)!==i);
+            if(dup.length) throw new Error(name+' duplicate ids: '+[...new Set(dup)].join(','));
+          }
+          console.log('F1_GLOBAL_DESIGN_SYSTEM_OK');
+          NODE
+      - name: Check cache version v14
+        run: |
+          grep -q 'f1-content-hub-v14' f1-content-hub/sw.js
+          grep -q 'f1-design-system.css' f1-content-hub/sw.js
           grep -q 'heic2any-0.0.4.min.js' f1-content-hub/sw.js
           grep -q 'heic2any-0.0.4.min.js' f1-content-hub/index.html
+          test -s f1-content-hub/f1-design-system.css
           test -s f1-content-hub/vendor/heic2any-0.0.4.min.js
           test -s f1-content-hub/vendor/heic2any-LICENSE.md
       - name: Real HEIC to PNG browser conversion test
