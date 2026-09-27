@@ -42,7 +42,9 @@ jobs:
       - name: Install minimal dependency
         run: pip install requests==2.32.5
       - name: Compile bridge scripts
-        run: python -m py_compile publisher/supabase_queue_bridge.py publisher/supabase_website_sync.py publisher/direct_api_entry.py publisher/direct_api_publish.py publisher/oauth_broker.py publisher/sync_analytics.py
+        run: python -m py_compile publisher/supabase_queue_bridge.py publisher/supabase_website_sync.py publisher/direct_api_entry.py publisher/direct_api_publish.py publisher/oauth_broker.py
+      - name: Validate Content Hub workspace JavaScript
+        run: node --check f1-content-hub/client-workspace.js publisher/sync_analytics.py
       - name: Test OAuth broker client and TikTok policy
         run: PYTHONPATH=.:publisher python -m unittest publisher/test_oauth_broker.py publisher/test_tiktok_policy.py publisher/test_social_oauth_ui.py publisher/test_f1_social_safety.py
       - name: Validate F1 Content Hub HTML and inline JavaScript
