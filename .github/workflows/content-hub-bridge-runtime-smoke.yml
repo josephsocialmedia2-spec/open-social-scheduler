@@ -17,6 +17,7 @@ jobs:
       SUPABASE_URL: ${{ vars.SUPABASE_URL || 'https://nqnmlsmeiynxbdojeyjt.supabase.co' }}
       SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
       LASACRA_BUFFER_API_KEY: ${{ secrets.LASACRA_BUFFER_API_KEY }}
+      ANTICACAPPELLA_BUFFER_API_KEY: ${{ secrets.ANTICACAPPELLA_BUFFER_API_KEY }}
       CLOUDINARY_URL: ${{ secrets.CLOUDINARY_URL }}
     steps:
       - uses: actions/checkout@v4
@@ -81,6 +82,45 @@ jobs:
           qpath.write_text(json.dumps(q, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
           PY
           python publisher/buffer_queue_publish.py --job-id lasacra-buffer-smoke --dry-run --strict
+
+      - name: Verify Antica Cappella Buffer routing without publishing
+        shell: bash
+        run: |
+          set -euo pipefail
+          python publisher/buffer_queue_publish.py --verify-client antica-cappella
+          python - <<'PY'
+          import base64, json
+          from datetime import datetime, timedelta, timezone
+          from pathlib import Path
+
+          media = Path('publisher/media/smoke/antica-buffer-smoke.png')
+          media.parent.mkdir(parents=True, exist_ok=True)
+          media.write_bytes(base64.b64decode(
+              'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII='
+          ))
+          qpath = Path('publisher/queue.json')
+          q = json.loads(qpath.read_text(encoding='utf-8'))
+          q.setdefault('jobs', [])
+          q['jobs'] = [j for j in q['jobs'] if j.get('id') != 'antica-buffer-smoke']
+          q['jobs'].append({
+              'id': 'antica-buffer-smoke',
+              'enabled': True,
+              'status': 'ready',
+              'client_id': 'antica-cappella',
+              'client_name': 'Antica Cappella',
+              'caption': 'Antica Cappella Buffer routing smoke test - dry run only',
+              'format': 'post',
+              'media': ['publisher/media/smoke/antica-buffer-smoke.png'],
+              'scheduled_at': (datetime.now(timezone.utc) + timedelta(hours=1)).isoformat(),
+              'platforms': ['instagram'],
+              'published_platforms': [],
+              'source': 'SMOKE_TEST',
+              'provider': 'buffer',
+              'provider_channel_id': '6ab5cfc6ea19ca0bdedecef3',
+          })
+          qpath.write_text(json.dumps(q, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          PY
+          python publisher/buffer_queue_publish.py --job-id antica-buffer-smoke --dry-run --strict
 
       - name: Verify website source runtime
         shell: bash
