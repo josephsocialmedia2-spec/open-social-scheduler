@@ -566,7 +566,7 @@ async function quickUploadFiles(files,source){
       uploadBatchState.uploadedBytes=successfulBytes;
       renderUploadProgress();
     }catch(e){
-      if(storageCompleted&&path){try{await sb.storage.from("f1-content-media").remove([path])}catch(_){}}
+      if(path){try{await sb.storage.from("f1-content-media").remove([path])}catch(_){}}
       if(insertedId){try{await sb.from("f1_content_items").delete().eq("id",insertedId).eq("owner_id",user.id).eq("client_id",client.id)}catch(_){}}
       failed.push({file:file,error:e&&e.message?e.message:String(e)});
       uploadBatchState.failedFiles=failed.length;
@@ -675,6 +675,8 @@ window.f1DeleteContent=async function(contentId,publishedConfirmed){
     if(mediaRows.some(function(m){return String(m.client_id)!==String(item.client_id)}))throw new Error("ELIMINAZIONE BLOCCATA — media di un altro client_id rilevato.");
 
     const paths=Array.from(new Set(mediaRows.map(function(m){return m.storage_path}).filter(Boolean)));
+    const ownerPrefix=String(user.id)+"/";
+    if(paths.some(function(p){return !String(p).startsWith(ownerPrefix)}))throw new Error("ELIMINAZIONE BLOCCATA — storage_path fuori dal perimetro owner.");
     const removable=[];
     if(paths.length){
       const refs=await sb.from("f1_content_media").select("id,content_id,storage_path").in("storage_path",paths).neq("content_id",contentId).eq("owner_id",user.id);
