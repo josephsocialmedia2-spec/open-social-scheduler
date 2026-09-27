@@ -1,6 +1,7 @@
 bootstrap=2026-09-27
 mode=all-clients
 real-estate=approval-required
-parallel-safe-cycle=3
+parallel-safe-cycle=4
 requested_by=central-operator
-run_at=2026-09-27T08:36Z
+reason=verify-normalized-publisher-bridge-and-rmp-seed
+run_at=2026-09-27T08:48Z
