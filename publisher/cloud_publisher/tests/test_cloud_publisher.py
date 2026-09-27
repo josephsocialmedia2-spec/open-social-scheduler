@@ -2,9 +2,22 @@ from __future__ import annotations
 
 import unittest
 
-from publisher.cloud_publisher.browser.base import expected_handle
+from publisher.cloud_publisher.browser.base import BrowserPublishError, assert_authenticated_session, expected_handle
 from publisher.cloud_publisher.runtime import api_ready
 from publisher.cloud_publisher.queue import PublicationJob, normalize_platform
+
+
+class _FakeContext:
+    def __init__(self, names):
+        self._names = names
+
+    def cookies(self):
+        return [{"name": name} for name in self._names]
+
+
+class _FakePage:
+    def __init__(self, names):
+        self.context = _FakeContext(names)
 
 
 class CloudPublisherTests(unittest.TestCase):
@@ -57,6 +70,15 @@ class CloudPublisherTests(unittest.TestCase):
                 }
             )
         )
+
+    def test_authenticated_session_requires_platform_cookie(self):
+        assert_authenticated_session(_FakePage(["c_user"]), "facebook")
+        assert_authenticated_session(_FakePage(["sessionid"]), "instagram")
+        assert_authenticated_session(_FakePage(["li_at"]), "linkedin-page")
+        with self.assertRaises(BrowserPublishError):
+            assert_authenticated_session(_FakePage([]), "facebook")
+        with self.assertRaises(BrowserPublishError):
+            assert_authenticated_session(_FakePage(["unrelated"]), "instagram")
 
     def test_expected_handles(self):
         self.assertEqual(
