@@ -23,6 +23,7 @@ API_KEY = os.getenv("POSTIZ_API_KEY", "").strip()
 ALIASES = {
     "facebook": {"facebook"},
     "instagram": {"instagram", "instagram-standalone"},
+    "linkedin": {"linkedin"},
     "linkedin-page": {"linkedin-page"},
     "tiktok": {"tiktok"},
     "youtube": {"youtube"},
@@ -66,7 +67,8 @@ def main() -> int:
         expected_customer = str(cfg.get("postiz_customer_name") or cfg.get("name") or "").strip()
         print(f"\n[{cfg.get('id')}] expected Postiz customer: {expected_customer!r}")
         dirty = False
-        for platform, platform_cfg in cfg.get("integrations", {}).items():
+        bindings = cfg.get("postiz_integrations") if isinstance(cfg.get("postiz_integrations"), dict) else cfg.get("integrations", {})
+        for platform, platform_cfg in bindings.items():
             if str(platform_cfg.get("id") or "").strip():
                 print(f"  {platform}: already bound -> {platform_cfg['id']}")
                 continue

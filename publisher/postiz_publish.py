@@ -136,7 +136,8 @@ def resolve_integration(job: dict[str, Any], platform_spec: Any, integrations: l
     client_id = str(job.get("client_id") or "").strip()
     if client_id:
         cfg = load_client(client_id)
-        tenant_cfg = cfg.get("integrations", {}).get(platform, {})
+        binding_map = cfg.get("postiz_integrations") if isinstance(cfg.get("postiz_integrations"), dict) else cfg.get("integrations", {})
+        tenant_cfg = binding_map.get(platform, {})
         tenant_id = str(tenant_cfg.get("id") or "").strip()
         if integration_id and tenant_id and integration_id != tenant_id:
             raise RuntimeError(f"Tenant isolation mismatch for {client_id}/{platform}")
