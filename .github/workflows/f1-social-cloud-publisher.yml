@@ -36,7 +36,7 @@ jobs:
 
   browser-fallback:
     needs: sync-cloud-queue
-    if: ${{ vars.F1_BROWSER_FALLBACK_ENABLED == 'true' }}
+    if: ${{ false }} # stopped by user
     runs-on: [self-hosted, Windows, X64, f1-social-local-pc]
     timeout-minutes: 45
     env:
