@@ -12,9 +12,112 @@ let selectedRailContentId="";
 let railFilter="TUTTI";
 let railSort="recenti";
 const railThumbUrlCache=new Map();
+let uploadRetryFiles=[];
+let uploadBatchState={
+  totalFiles:0,completedFiles:0,failedFiles:0,totalBytes:0,uploadedBytes:0,
+  currentFileName:"",currentFileNumber:0,startedAt:0,bytesPerSecond:0,
+  estimatedSecondsRemaining:null,status:"IDLE",samples:[],failed:[]
+};
 
 function h(value){return String(value==null?"":value).replace(/[&<>"']/g,function(m){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]})}
 function clone(v){return JSON.parse(JSON.stringify(v||{}))}
+function formatBytes(bytes){
+  const n=Math.max(0,Number(bytes)||0);
+  if(n<1024)return n+" B";
+  if(n<1024*1024)return (n/1024).toFixed(1).replace(".",",")+" KB";
+  if(n<1024*1024*1024)return (n/(1024*1024)).toFixed(1).replace(".",",")+" MB";
+  return (n/(1024*1024*1024)).toFixed(2).replace(".",",")+" GB";
+}
+function formatDuration(seconds){
+  if(seconds==null||!Number.isFinite(seconds)||seconds<0)return "CALCOLO IN CORSO...";
+  const total=Math.max(0,Math.round(seconds)),m=Math.floor(total/60),s=total%60;
+  if(m>=60){const h=Math.floor(m/60),rm=m%60;return h+" h "+rm+" min"}
+  if(m>0)return m+" min "+String(s).padStart(2,"0")+" sec";
+  return s+" sec";
+}
+function calculateUploadProgress(){
+  const s=uploadBatchState;
+  if(!s.totalBytes)return s.totalFiles?Math.round(((s.completedFiles+s.failedFiles)/s.totalFiles)*100):0;
+  return Math.max(0,Math.min(100,(s.uploadedBytes/s.totalBytes)*100));
+}
+function calculateUploadSpeed(bytesNow){
+  const s=uploadBatchState,now=performance.now();
+  if(s.samples.length&&bytesNow<s.samples[s.samples.length-1].bytes)s.samples=[];
+  s.samples.push({time:now,bytes:bytesNow});
+  s.samples=s.samples.filter(function(x){return now-x.time<=5000});
+  if(s.samples.length<2){s.bytesPerSecond=0;return 0}
+  const first=s.samples[0],last=s.samples[s.samples.length-1],dt=(last.time-first.time)/1000;
+  const speed=dt>0?Math.max(0,(last.bytes-first.bytes)/dt):0;
+  s.bytesPerSecond=speed;
+  s.estimatedSecondsRemaining=speed>0?Math.max(0,(s.totalBytes-s.uploadedBytes)/speed):null;
+  return speed;
+}
+function uploadStatusLabel(status){
+  return {IDLE:"",PREPARING:"PREPARAZIONE",UPLOADING:"CARICAMENTO IN CORSO",SAVING:"SALVATAGGIO IN CLOUD",PROCESSING:"ELABORAZIONE",COMPLETED:"COMPLETATO",PARTIAL_ERROR:"CARICAMENTO PARZIALE",ERROR:"ERRORE"}[status]||status;
+}
+function renderUploadProgress(){
+  const box=document.getElementById("workspaceUploadProgress");if(!box)return;
+  const s=uploadBatchState;
+  if(s.status==="IDLE"){box.className="upload-progress hidden";box.innerHTML="";return}
+  const pct=calculateUploadProgress(),elapsed=s.startedAt?((performance.now()-s.startedAt)/1000):0;
+  const doneLabel=s.completedFiles+" / "+s.totalFiles+" contenuti";
+  const detail=s.currentFileName?("FILE "+Math.max(1,s.currentFileNumber)+" DI "+s.totalFiles+" · "+s.currentFileName):"";
+  const speed=s.bytesPerSecond>0?formatBytes(s.bytesPerSecond)+"/s":"CALCOLO IN CORSO...";
+  const eta=s.status==="COMPLETED"?"0 sec":formatDuration(s.estimatedSecondsRemaining);
+  const klass=s.status==="COMPLETED"?" completed":(s.status==="PARTIAL_ERROR"?" partial":(s.status==="ERROR"?" error":""));
+  let final="";
+  if(s.status==="COMPLETED"){
+    final='<div class="upload-cloud"><b>☁ CONTENUTI IN CLOUD</b><span>'+s.completedFiles+' contenuti caricati correttamente · completato in '+formatDuration(elapsed)+'</span></div>';
+  }else if(s.status==="PARTIAL_ERROR"||s.status==="ERROR"){
+    final='<div class="upload-cloud"><b>⚠ CARICAMENTO PARZIALE</b><span>'+s.completedFiles+' / '+s.totalFiles+' contenuti caricati · '+s.failedFiles+' errori</span>'+(s.failedFiles?'<button class="btn small danger-bright upload-retry" onclick="window.f1RetryFailedUploads()">RIPROVA '+s.failedFiles+' FILE</button>':'')+'</div>';
+  }
+  box.className="upload-progress"+klass;
+  box.innerHTML='<div class="upload-progress-head"><div><div class="upload-progress-title">CARICAMENTO CONTENUTI</div><div class="upload-progress-status">'+h(uploadStatusLabel(s.status))+'</div></div><div class="upload-percent">'+pct.toFixed(0)+'%</div></div>'+
+    '<div class="upload-track"><div class="upload-fill" style="width:'+pct.toFixed(2)+'%"></div></div>'+
+    '<div class="upload-summary"><div class="upload-stat"><b>'+h(doneLabel)+'</b><span>CONTENUTI</span></div><div class="upload-stat"><b>'+h(speed)+'</b><span>VELOCITÀ</span></div><div class="upload-stat"><b>'+h(eta)+'</b><span>TEMPO RIMANENTE</span></div><div class="upload-stat"><b>'+h(formatBytes(s.uploadedBytes))+' / '+h(formatBytes(s.totalBytes))+'</b><span>DATI</span></div></div>'+
+    (detail?'<div class="upload-current">'+h(detail)+'</div>':'')+final;
+}
+function resetUploadBatch(files){
+  const list=Array.from(files||[]);
+  uploadBatchState={
+    totalFiles:list.length,completedFiles:0,failedFiles:0,
+    totalBytes:list.reduce(function(sum,f){return sum+(Number(f.size)||0)},0),
+    uploadedBytes:0,currentFileName:"",currentFileNumber:0,
+    startedAt:performance.now(),bytesPerSecond:0,estimatedSecondsRemaining:null,
+    status:"PREPARING",samples:[],failed:[]
+  };
+  uploadRetryFiles=[];
+  renderUploadProgress();
+}
+async function storageUploadWithProgress(file,path,mime,onProgress){
+  const auth=await sb.auth.getSession();
+  if(auth.error)throw auth.error;
+  const session=auth.data&&auth.data.session;
+  if(!session||!session.access_token)throw new Error("Sessione non disponibile per il caricamento.");
+  const encodedPath=String(path).split("/").map(function(part){return encodeURIComponent(part)}).join("/");
+  const endpoint=SUPABASE_URL+"/storage/v1/object/f1-content-media/"+encodedPath;
+  return new Promise(function(resolve,reject){
+    const xhr=new XMLHttpRequest();
+    xhr.open("POST",endpoint,true);
+    xhr.setRequestHeader("Authorization","Bearer "+session.access_token);
+    xhr.setRequestHeader("apikey",SUPABASE_KEY);
+    xhr.setRequestHeader("x-upsert","false");
+    xhr.setRequestHeader("Content-Type",mime||"application/octet-stream");
+    xhr.upload.onprogress=function(ev){
+      if(ev.lengthComputable&&onProgress)onProgress(ev.loaded,ev.total);
+    };
+    xhr.onload=function(){
+      if(xhr.status>=200&&xhr.status<300){resolve({status:xhr.status,response:xhr.responseText});return}
+      let message="Storage upload failed ("+xhr.status+")";
+      try{const body=JSON.parse(xhr.responseText||"{}");message=body.message||body.error||message}catch(_){}
+      reject(new Error(message));
+    };
+    xhr.onerror=function(){reject(new Error("Errore di rete durante il caricamento in cloud."))};
+    xhr.onabort=function(){reject(new Error("Caricamento annullato."))};
+    xhr.send(file);
+  });
+}
+
 function currentClient(){return (clients||[]).find(function(x){return x.id===selectedClientId})||null}
 function prefFor(client,platform){
   const prefs=client&&client.publishing_preferences&&typeof client.publishing_preferences==="object"?client.publishing_preferences:{};
@@ -310,7 +413,9 @@ window.f1HydrateRailThumbs=async function(rows){
 window.f1RenderContentRail=async function(){
   const host=document.getElementById("contentRailList");if(!host)return;
   const rows=railScopedItems();
-  const count=document.getElementById("contentRailCount");if(count)count.textContent=rows.length+" contenut"+(rows.length===1?"o":"i");
+  const scopedTotal=(items||[]).filter(function(x){return !selectedClientId||x.client_id===selectedClientId}).length;
+  const count=document.getElementById("contentRailCount");
+  if(count)count.innerHTML='<b>'+scopedTotal+' contenut'+(scopedTotal===1?'o':'i')+'</b><span>'+rows.length+' visualizzat'+(rows.length===1?'o':'i')+(rows.length!==scopedTotal?' su '+scopedTotal:'')+'</span>';
   document.querySelectorAll("[data-rail-filter]").forEach(function(btn){btn.classList.toggle("active",btn.dataset.railFilter===railFilter)});
   if(!rows.length){host.innerHTML='<div class="content-rail-empty">Nessun contenuto disponibile con i filtri selezionati.</div>';return}
   host.innerHTML=rows.map(function(item){
@@ -326,7 +431,8 @@ window.f1RenderContentRail=async function(){
       '<div class="rail-meta">'+h(new Date(item.created_at).toLocaleString("it-IT",{dateStyle:"short",timeStyle:"short"}))+'</div>'+
       '<div class="rail-badges"><span class="rail-badge">'+h(railItemType(item))+'</span><span class="rail-badge '+railBadgeClass(item)+'">'+h(state)+'</span></div>'+
       '<div class="rail-actions"><button class="btn small ghost" onclick="event.stopPropagation();window.f1SelectRailContent(\''+item.id+'\')">USA</button>'+
-      '<button class="btn small primary" '+(immutable?"disabled":"")+' onclick="event.stopPropagation();window.f1QuickProgramFromRail(\''+item.id+'\')">PROGRAMMA</button></div>'+
+      '<button class="btn small primary" '+(immutable?"disabled":"")+' onclick="event.stopPropagation();window.f1QuickProgramFromRail(\''+item.id+'\')">PROGRAMMA</button>'+
+      '<button class="btn small danger-bright rail-delete" onclick="event.stopPropagation();window.f1ConfirmDeleteContent(\''+item.id+'\')">ELIMINA</button></div>'+
       '</article>';
   }).join("");
   await window.f1HydrateRailThumbs(rows);
@@ -367,7 +473,7 @@ window.f1RenderClientPublisherWorkspace=async function(){
       '</div>';
     }).join("");
     return '<article class="distribution-card '+(selectedRailContentId===item.id?'rail-focused':'')+'" data-distribution-item="'+item.id+'">'+
-      '<div class="distribution-main"><div class="distribution-preview" data-ws-preview="'+item.id+'">ANTEPRIMA</div><div class="distribution-title"><div class="publisher-source">'+h(sourceLabel(item.source))+'</div><h3>'+h(item.title||"Contenuto")+'</h3><div class="meta">'+h(plan.category||item.campaign||"CONTENUTO")+' · '+h(item.status||"")+(locked?' · SOLA LETTURA':'')+'</div><div class="row">'+(locked?'':'<button class="btn small green" onclick="window.f1WorkspaceScheduleItem(\''+item.id+'\')">PROGRAMMA SU TUTTI I SOCIAL</button>')+'</div></div></div>'+
+      '<div class="distribution-main"><div class="distribution-preview" data-ws-preview="'+item.id+'">ANTEPRIMA</div><div class="distribution-title"><div class="publisher-source">'+h(sourceLabel(item.source))+'</div><h3>'+h(item.title||"Contenuto")+'</h3><div class="meta">'+h(plan.category||item.campaign||"CONTENUTO")+' · '+h(item.status||"")+(locked?' · SOLA LETTURA':'')+'</div><div class="row">'+(locked?'':'<button class="btn small green" onclick="window.f1WorkspaceScheduleItem(\''+item.id+'\')">PROGRAMMA SU TUTTI I SOCIAL</button>')+'<button class="btn small danger-bright" onclick="window.f1ConfirmDeleteContent(\''+item.id+'\')">ELIMINA</button></div></div></div>'+
       '<div class="distribution-channels">'+pRows+'</div></article>';
   }).join("");
   root.innerHTML='<section class="publisher-console">'+
@@ -380,10 +486,12 @@ window.f1RenderClientPublisherWorkspace=async function(){
       '<input id="workspaceFileInput" type="file" multiple accept="image/*,video/*,audio/*,.pdf,.doc,.docx" hidden onchange="window.f1WorkspaceInputFiles(this.files,\'DRAG_DROP\')">'+
       '<input id="workspaceFolderInput" type="file" webkitdirectory directory multiple hidden onchange="window.f1WorkspaceInputFiles(this.files,\'CARTELLA\')">'+
     '</div>'+
+    '<div id="workspaceUploadProgress" class="upload-progress hidden"></div>'+
     '<div class="section-title" style="margin-top:12px"><h3 style="margin:0">Orari di distribuzione</h3><span class="muted">Modificabili per cliente e piattaforma</span></div><div class="publish-times">'+prefs+'</div>'+
     '<div class="section-title" style="margin-top:14px"><h3 style="margin:0">Come verranno distribuiti</h3><span class="muted">Le caption restano modificabili fino alla pubblicazione</span></div>'+
     '<div class="distribution-list">'+(cards||'<div class="publisher-empty">Nessun contenuto con piano di distribuzione. Carica un file da WhatsApp, cartella o trascinamento.</div>')+'</div>'+
   '</section>';
+  renderUploadProgress();
   await previewMedia();
 };
 
@@ -409,30 +517,89 @@ window.f1WorkspaceDrop=async function(ev){ev.preventDefault();window.f1Workspace
 
 async function quickUploadFiles(files,source){
   const client=currentClient();if(!client)return alert("Seleziona prima un cliente.");
-  if(!files.length)return;
-  const root=document.getElementById("clientPublisherWorkspace");if(root)root.style.opacity=".65";
-  let done=0;
-  try{
-    for(const file of files){
-      const title=cleanTitle(file.name),category=classify(file.name),base=baseCaption(client,title,category,""),mime=file.type||"application/octet-stream";
+  const list=Array.from(files||[]).filter(Boolean);if(!list.length)return;
+  resetUploadBatch(list);
+  let successfulBytes=0;
+  const failed=[];
+  for(let index=0;index<list.length;index++){
+    const file=list[index],mime=file.type||"application/octet-stream";
+    let insertedId="",path="",storageCompleted=false;
+    uploadBatchState.currentFileName=file.name||("file-"+(index+1));
+    uploadBatchState.currentFileNumber=index+1;
+    uploadBatchState.status="UPLOADING";
+    uploadBatchState.uploadedBytes=successfulBytes;
+    uploadBatchState.samples=[];
+    uploadBatchState.bytesPerSecond=0;
+    uploadBatchState.estimatedSecondsRemaining=null;
+    renderUploadProgress();
+    try{
+      const title=cleanTitle(file.name),category=classify(file.name),base=baseCaption(client,title,category,"");
       const plan=buildPlan(client,title,category,base,mime,source,null);
       const ins=await sb.from("f1_content_items").insert({
         owner_id:user.id,client_id:client.id,title:title,description:base,source_text:base,
         content_type:contentTypeFromMime(mime),source:source,status:"DA APPROVARE",priority:"NORMALE",
-        campaign:category,tags:hashtags(client,category).map(function(x){return x.replace(/^#/,"")}),notes:"Piano di distribuzione automatico generato al caricamento.",distribution_plan:plan
+        campaign:category,tags:hashtags(client,category).map(function(x){return x.replace(/^#/,"")}),
+        notes:"Piano di distribuzione automatico generato al caricamento.",distribution_plan:plan
       }).select().single();
       if(ins.error)throw ins.error;
-      const safe=file.name.replace(/[^a-zA-Z0-9._-]+/g,"_"),path=user.id+"/"+client.id+"/"+ins.data.id+"/"+crypto.randomUUID()+"-"+safe;
-      const up=await sb.storage.from("f1-content-media").upload(path,file,{contentType:mime,upsert:false});
-      if(up.error){await sb.from("f1_content_items").delete().eq("id",ins.data.id);throw up.error}
-      const mr=await sb.from("f1_content_media").insert({owner_id:user.id,content_id:ins.data.id,client_id:client.id,file_name:safe,mime_type:mime,storage_path:path,file_size:file.size,source:source});
-      if(mr.error){try{await sb.storage.from("f1-content-media").remove([path])}catch(_){};await sb.from("f1_content_items").delete().eq("id",ins.data.id);throw mr.error}
-      done++;
+      insertedId=ins.data.id;
+      const safe=file.name.replace(/[^a-zA-Z0-9._-]+/g,"_");
+      path=user.id+"/"+client.id+"/"+insertedId+"/"+crypto.randomUUID()+"-"+safe;
+      await storageUploadWithProgress(file,path,mime,function(loaded,total){
+        uploadBatchState.status="UPLOADING";
+        uploadBatchState.uploadedBytes=successfulBytes+Math.min(Number(loaded)||0,Number(total)||file.size||0);
+        calculateUploadSpeed(uploadBatchState.uploadedBytes);
+        renderUploadProgress();
+      });
+      storageCompleted=true;
+      uploadBatchState.status="SAVING";
+      uploadBatchState.uploadedBytes=successfulBytes+(Number(file.size)||0);
+      calculateUploadSpeed(uploadBatchState.uploadedBytes);
+      renderUploadProgress();
+      const mr=await sb.from("f1_content_media").insert({
+        owner_id:user.id,content_id:insertedId,client_id:client.id,file_name:safe,
+        mime_type:mime,storage_path:path,file_size:file.size,source:source
+      });
+      if(mr.error)throw mr.error;
+      successfulBytes+=Number(file.size)||0;
+      uploadBatchState.completedFiles++;
+      uploadBatchState.uploadedBytes=successfulBytes;
+      renderUploadProgress();
+    }catch(e){
+      if(storageCompleted&&path){try{await sb.storage.from("f1-content-media").remove([path])}catch(_){}}
+      if(insertedId){try{await sb.from("f1_content_items").delete().eq("id",insertedId).eq("owner_id",user.id).eq("client_id",client.id)}catch(_){}}
+      failed.push({file:file,error:e&&e.message?e.message:String(e)});
+      uploadBatchState.failedFiles=failed.length;
+      uploadBatchState.failed=failed.slice();
+      uploadBatchState.uploadedBytes=successfulBytes;
+      uploadBatchState.samples=[];
+      uploadBatchState.bytesPerSecond=0;
+      uploadBatchState.estimatedSecondsRemaining=null;
+      renderUploadProgress();
     }
-    await loadAll();await renderAll();
-    alert(done+" contenut"+(done===1?"o caricato":"i caricati")+" per "+client.name+". Piano social e caption pronti.");
-  }catch(e){alert("Caricamento interrotto: "+(e.message||String(e)))}finally{if(root)root.style.opacity="1"}
+  }
+  uploadBatchState.currentFileName="";
+  uploadBatchState.currentFileNumber=uploadBatchState.totalFiles;
+  uploadBatchState.status="PROCESSING";
+  uploadBatchState.uploadedBytes=successfulBytes;
+  renderUploadProgress();
+  await loadAll();
+  await renderAll();
+  uploadRetryFiles=failed.map(function(x){return x.file});
+  uploadBatchState.failedFiles=failed.length;
+  uploadBatchState.failed=failed.slice();
+  uploadBatchState.status=failed.length?(uploadBatchState.completedFiles?"PARTIAL_ERROR":"ERROR"):"COMPLETED";
+  if(!failed.length)uploadBatchState.uploadedBytes=uploadBatchState.totalBytes;
+  uploadBatchState.estimatedSecondsRemaining=failed.length?null:0;
+  renderUploadProgress();
+  if(window.f1RenderContentRail)await window.f1RenderContentRail();
 }
+window.f1RetryFailedUploads=async function(){
+  const retry=uploadRetryFiles.slice();
+  if(!retry.length)return;
+  await quickUploadFiles(retry,"RETRY");
+}
+
 window.f1WorkspaceSaveCaption=async function(itemId,platform,value){
   const item=(items||[]).find(function(x){return x.id===itemId}),client=item&&(clients||[]).find(function(x){return x.id===item.client_id});if(!item||!client)return;
   if(isImmutableItem(item))return alert("Il contenuto pubblicato o archiviato è in sola lettura.");
@@ -466,6 +633,85 @@ window.f1WorkspaceCopyCaption=async function(itemId,platform){
   const plan=itemPlan(item,client),value=(plan.platforms[platform]||{}).caption||"";
   try{await navigator.clipboard.writeText(value)}catch(_){prompt("Copia la caption:",value)}
 };
+
+function ensureDeleteModal(){
+  let modal=document.getElementById("workspaceDeleteModal");if(modal)return modal;
+  modal=document.createElement("div");modal.className="modal";modal.id="workspaceDeleteModal";
+  modal.innerHTML='<div class="modal-card"><div class="section-title"><h2 id="workspaceDeleteTitle">ELIMINARE QUESTO CONTENUTO?</h2><button class="btn ghost small" onclick="document.getElementById(\'workspaceDeleteModal\').classList.remove(\'open\')">CHIUDI</button></div><div id="workspaceDeleteBody"></div><div id="workspaceDeleteActions" class="delete-modal-actions"></div></div>';
+  document.body.appendChild(modal);return modal;
+}
+window.f1ConfirmDeleteContent=function(contentId){
+  const item=(items||[]).find(function(x){return x.id===contentId});if(!item)return alert("Contenuto non trovato.");
+  if(String(item.owner_id||"")!==String(user&&user.id||""))return alert("ELIMINAZIONE BLOCCATA — owner_id non corrispondente.");
+  if(selectedClientId&&String(item.client_id)!==String(selectedClientId))return alert("ELIMINAZIONE BLOCCATA — il contenuto non appartiene al cliente selezionato.");
+  const client=(clients||[]).find(function(x){return x.id===item.client_id}),published=railIsPublished(item)||String(item.status)==="PUBBLICATO";
+  const modal=ensureDeleteModal(),title=document.getElementById("workspaceDeleteTitle"),body=document.getElementById("workspaceDeleteBody"),actions=document.getElementById("workspaceDeleteActions");
+  title.textContent="ELIMINARE QUESTO CONTENUTO?";
+  body.innerHTML='<div class="delete-modal-meta"><div class="subpanel"><b>Titolo</b><div>'+h(item.title||"Contenuto senza titolo")+'</div></div><div class="subpanel"><b>Cliente</b><div>'+h(client&&client.name||"Cliente")+'</div></div></div>'+
+    (published?'<div class="notice warn"><b>CONTENUTO GIÀ PUBBLICATO</b><br>La cancellazione dal gestionale NON cancellerà il post già presente sulla piattaforma social. Non verrà inviata alcuna API di cancellazione remota.</div>':'<div class="notice error">Questa operazione eliminerà il contenuto dal cloud e dal gestionale.</div>');
+  actions.innerHTML='<button class="btn ghost" onclick="document.getElementById(\'workspaceDeleteModal\').classList.remove(\'open\')">ANNULLA</button><button class="btn danger-bright" onclick="window.f1DeleteContent(\''+item.id+'\',false)">ELIMINA DEFINITIVAMENTE</button>';
+  modal.classList.add("open");
+}
+window.f1DeleteContent=async function(contentId,publishedConfirmed){
+  const modal=ensureDeleteModal(),body=document.getElementById("workspaceDeleteBody"),actions=document.getElementById("workspaceDeleteActions");
+  try{
+    const ir=await sb.from("f1_content_items").select("*").eq("id",contentId).eq("owner_id",user.id).single();
+    if(ir.error||!ir.data)throw new Error("Contenuto non disponibile o non autorizzato.");
+    const item=ir.data;
+    if(selectedClientId&&String(item.client_id)!==String(selectedClientId))throw new Error("ELIMINAZIONE BLOCCATA — client_id non corrispondente.");
+    const published=railIsPublished(item)||String(item.status)==="PUBBLICATO";
+    if(published&&!publishedConfirmed){
+      body.innerHTML='<div class="notice error"><b>SECONDA CONFERMA — CONTENUTO GIÀ PUBBLICATO</b><br>Il post remoto resterà online. Verranno rimossi soltanto il contenuto locale, i media cloud del gestionale non condivisi e le programmazioni locali.</div>';
+      actions.innerHTML='<button class="btn ghost" onclick="document.getElementById(\'workspaceDeleteModal\').classList.remove(\'open\')">ANNULLA</button><button class="btn danger-bright" onclick="window.f1DeleteContent(\''+contentId+'\',true)">CONFERMA ELIMINAZIONE LOCALE</button>';
+      return;
+    }
+    modal.classList.add("deleting");
+    body.innerHTML='<div class="notice warn"><b>ELIMINAZIONE IN CORSO...</b><br>Verifica proprietà, Storage e record collegati.</div>';
+    actions.innerHTML='<button class="btn danger-bright" disabled>ELIMINAZIONE...</button>';
+
+    const mr=await sb.from("f1_content_media").select("id,content_id,client_id,owner_id,storage_path").eq("content_id",contentId).eq("owner_id",user.id);
+    if(mr.error)throw mr.error;
+    const mediaRows=mr.data||[];
+    if(mediaRows.some(function(m){return String(m.client_id)!==String(item.client_id)}))throw new Error("ELIMINAZIONE BLOCCATA — media di un altro client_id rilevato.");
+
+    const paths=Array.from(new Set(mediaRows.map(function(m){return m.storage_path}).filter(Boolean)));
+    const removable=[];
+    if(paths.length){
+      const refs=await sb.from("f1_content_media").select("id,content_id,storage_path").in("storage_path",paths).neq("content_id",contentId).eq("owner_id",user.id);
+      if(refs.error)throw refs.error;
+      const shared=new Set((refs.data||[]).map(function(x){return x.storage_path}));
+      paths.forEach(function(p){if(!shared.has(p))removable.push(p)});
+      if(removable.length){
+        const sr=await sb.storage.from("f1-content-media").remove(removable);
+        if(sr.error)throw sr.error;
+      }
+    }
+
+    const er=await sb.from("f1_publication_events").select("id,status,external_id").eq("content_id",contentId).eq("owner_id",user.id);
+    if(er.error)throw er.error;
+    const transientIds=(er.data||[]).filter(function(e){
+      return !e.external_id&&!/PUBBLICAT|PUBLISHED|COMPLETED/i.test(String(e.status||""));
+    }).map(function(e){return e.id});
+    if(transientIds.length){
+      const de=await sb.from("f1_publication_events").delete().in("id",transientIds).eq("owner_id",user.id);
+      if(de.error)throw de.error;
+    }
+
+    const del=await sb.from("f1_content_items").delete().eq("id",contentId).eq("owner_id",user.id).eq("client_id",item.client_id);
+    if(del.error)throw del.error;
+    items=(items||[]).filter(function(x){return x.id!==contentId});
+    calendar=(calendar||[]).filter(function(x){return x.content_id!==contentId});
+    if(selectedRailContentId===contentId)selectedRailContentId="";
+    modal.classList.remove("deleting","open");
+    await loadAll();await renderAll();
+    if(window.f1RenderContentRail)await window.f1RenderContentRail();
+    alert("CONTENUTO ELIMINATO");
+  }catch(e){
+    modal.classList.remove("deleting");
+    body.innerHTML='<div class="notice error"><b>ELIMINAZIONE NON COMPLETATA</b><br>'+h(e.message||String(e))+'</div>';
+    actions.innerHTML='<button class="btn ghost" onclick="document.getElementById(\'workspaceDeleteModal\').classList.remove(\'open\')">CHIUDI</button>';
+  }
+}
 
 async function scheduleOne(item,dayOffset){
   const client=(clients||[]).find(function(x){return x.id===item.client_id});if(!client)return 0;
