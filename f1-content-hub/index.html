@@ -85,6 +85,42 @@
     <div class="userbox"><div id="userEmail"></div><button class="btn ghost small" style="margin-top:8px;width:100%" id="logoutBtn">ESCI</button></div>
   </aside>
 
+  <aside id="contentRail" class="content-rail" aria-label="Contenuti">
+    <div class="content-rail-head">
+      <div>
+        <h2>Contenuti</h2>
+        <div class="muted">Scorri e scegli il contenuto</div>
+        <div id="contentRailCount" class="rail-count">0 contenuti</div>
+      </div>
+      <div class="row">
+        <button class="btn small ghost" onclick="window.f1ClearRailSelection()">TUTTI</button>
+        <button class="btn small ghost content-rail-close" onclick="window.f1ToggleContentRail(false)">CHIUDI</button>
+      </div>
+    </div>
+    <div class="content-rail-tools">
+      <input id="contentRailSearch" class="input" type="search" placeholder="Cerca contenuti..." oninput="window.f1RenderContentRail()">
+      <select id="contentRailSort" class="input content-rail-sort" onchange="window.f1SetRailSort(this.value)">
+        <option value="recenti">Più recenti</option>
+        <option value="vecchi">Più vecchi</option>
+        <option value="programmati">Programmazioni</option>
+        <option value="da_lavorare">Da lavorare</option>
+      </select>
+      <div class="content-rail-filters">
+        <button class="content-rail-filter active" data-rail-filter="TUTTI" onclick="window.f1SetRailFilter('TUTTI')">TUTTI</button>
+        <button class="content-rail-filter" data-rail-filter="FOTO" onclick="window.f1SetRailFilter('FOTO')">FOTO</button>
+        <button class="content-rail-filter" data-rail-filter="VIDEO" onclick="window.f1SetRailFilter('VIDEO')">VIDEO</button>
+        <button class="content-rail-filter" data-rail-filter="DA_LAVORARE" onclick="window.f1SetRailFilter('DA_LAVORARE')">DA LAVORARE</button>
+        <button class="content-rail-filter" data-rail-filter="PRONTI" onclick="window.f1SetRailFilter('PRONTI')">PRONTI</button>
+        <button class="content-rail-filter" data-rail-filter="PROGRAMMATI" onclick="window.f1SetRailFilter('PROGRAMMATI')">PROGRAMMATI</button>
+        <button class="content-rail-filter" data-rail-filter="PUBBLICATI" onclick="window.f1SetRailFilter('PUBBLICATI')">PUBBLICATI</button>
+        <button class="content-rail-filter" data-rail-filter="ARCHIVIATI" onclick="window.f1SetRailFilter('ARCHIVIATI')">ARCHIVIATI</button>
+      </div>
+    </div>
+    <div id="contentRailList" class="content-rail-list">
+      <div class="content-rail-empty">Caricamento contenuti...</div>
+    </div>
+  </aside>
+
   <main class="main">
     <div class="topbar">
       <div><h1 id="pageTitle">Dashboard</h1><div class="muted" id="pageSubtitle">Controllo operativo multi-cliente</div></div>
@@ -92,6 +128,7 @@
         <select id="globalClientSelect" class="input global-client-select" aria-label="Cliente attivo">
           <option value="">Tutti i clienti</option>
         </select>
+        <button class="btn ghost content-rail-toggle" id="contentRailToggleBtn" onclick="window.f1ToggleContentRail()">CONTENUTI</button>
         <button class="btn ghost" id="problemQuickBtn">PROBLEMI <span id="problemQuickCount" class="badge">0</span></button>
         <button class="btn ghost" id="refreshBtn">AGGIORNA</button>
         <button class="btn green" id="openUploadBtn">+ CARICA CONTENUTI</button>
@@ -699,6 +736,7 @@ function renderClients(){
 }
 async function renderAll(){
   renderMetrics();renderClients();renderClientContext();
+  if(window.f1RenderContentRail)await window.f1RenderContentRail();
   if(window.f1RenderClientPublisherWorkspace)await window.f1RenderClientPublisherWorkspace();
   await renderGrid("latestGrid",filteredItems(12));await renderGrid("archiveGrid",filteredItems());
   renderCalendar();renderAnalytics();renderAutomation();renderPublicationCenter();renderProblems();renderReports();
