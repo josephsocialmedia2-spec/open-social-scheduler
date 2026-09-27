@@ -142,9 +142,9 @@ jobs:
           }
           console.log('F1_GLOBAL_DESIGN_SYSTEM_OK');
           NODE
-      - name: Check cache version v14
+      - name: Check cache version v15
         run: |
-          grep -q 'f1-content-hub-v14' f1-content-hub/sw.js
+          grep -q 'f1-content-hub-v15' f1-content-hub/sw.js
           grep -q 'f1-design-system.css' f1-content-hub/sw.js
           grep -q 'heic2any-0.0.4.min.js' f1-content-hub/sw.js
           grep -q 'heic2any-0.0.4.min.js' f1-content-hub/index.html
