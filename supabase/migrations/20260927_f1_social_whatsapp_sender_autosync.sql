@@ -110,19 +110,54 @@ on public.f1_content_clients
 for each row
 execute function public.f1_sync_whatsapp_sender_from_client();
 
-do $$
-declare
-  r record;
-begin
-  for r in
-    select *
-    from public.f1_content_clients
-    where status = 'ATTIVO'
-  loop
-    perform public.f1_sync_whatsapp_sender_from_client();
-  end loop;
-exception
-  when feature_not_supported then
-    null;
-end
-$$;
+insert into public.f1_whatsapp_senders (
+  owner_id,
+  wa_id,
+  label,
+  active,
+  client_id,
+  auto_process,
+  report_recipient,
+  suppress_operational_notifications,
+  managed_from_client,
+  updated_at
+)
+select
+  c.owner_id,
+  public.f1_normalize_whatsapp_wa_id(
+    case
+      when nullif(trim(coalesce(c.whatsapp, '')), '') is not null
+        then c.whatsapp
+      when coalesce(c.profile_metadata->>'whatsapp_same_as_phone', 'false') = 'true'
+        then c.phone
+      else null
+    end
+  ) as wa_id,
+  c.name,
+  true,
+  c.id,
+  true,
+  false,
+  true,
+  true,
+  now()
+from public.f1_content_clients c
+where c.status = 'ATTIVO'
+  and public.f1_normalize_whatsapp_wa_id(
+    case
+      when nullif(trim(coalesce(c.whatsapp, '')), '') is not null
+        then c.whatsapp
+      when coalesce(c.profile_metadata->>'whatsapp_same_as_phone', 'false') = 'true'
+        then c.phone
+      else null
+    end
+  ) is not null
+on conflict (wa_id) do update
+  set label = excluded.label,
+      active = excluded.active,
+      client_id = excluded.client_id,
+      auto_process = excluded.auto_process,
+      suppress_operational_notifications = excluded.suppress_operational_notifications,
+      managed_from_client = true,
+      updated_at = now()
+  where public.f1_whatsapp_senders.owner_id = excluded.owner_id;
