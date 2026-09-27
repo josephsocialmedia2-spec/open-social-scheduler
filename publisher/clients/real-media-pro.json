@@ -28,7 +28,7 @@
       "slides": 8,
       "seconds_per_slide": 7.5,
       "target_seconds": 60,
-      "subtitles": false
+      "subtitles": true
     },
     "carousel": {
       "width": 1080,
@@ -144,23 +144,23 @@
       "show_metrics_only_when_verified": true,
       "avoid_fake_roas_or_revenue": true,
       "avoid_copying_shopify_creatives": true,
-      "subtitles": false,
+      "subtitles": true,
       "single_hook_title_only": true,
-      "manual_publish_only": true,
+      "manual_publish_only": false,
       "final_visual_provider": "shopify_storefront_transform",
       "pixabay_for_reusable_broll_and_photos": false,
       "reject_legacy_python_visuals_for_publication": true
     }
   },
   "approval": {
-    "required": true,
-    "mode": "iso_week",
-    "file": "publisher/approvals/real-media-pro.json"
+    "required": false,
+    "mode": "automatic"
   },
   "planning": {
     "horizon_days": 1,
     "week_view": "daily_candidates",
-    "manual_publish_only": true
+    "manual_publish_only": false,
+    "autonomous_publish": true
   },
   "publishing": {
     "backend": "direct_api",
@@ -204,7 +204,9 @@
         "pinterest"
       ]
     },
-    "buffer_secret_env": "RMP_BUFFER_API_KEY"
+    "buffer_secret_env": "RMP_BUFFER_API_KEY",
+    "manual_publish_only": false,
+    "autonomous_publish": true
   },
   "integrations": {
     "facebook": {
