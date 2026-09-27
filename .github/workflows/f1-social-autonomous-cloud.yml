@@ -1,6 +1,11 @@
 name: F1 Social Autonomous Cloud
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - '.f1/autopilot-smoke.txt'
+      - '.github/workflows/f1-social-autonomous-cloud.yml'
   schedule:
     - cron: '*/5 * * * *'
   workflow_dispatch:
