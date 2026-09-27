@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
+import argparse
 import os
+import time
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -72,6 +74,22 @@ def api_connected(channel: dict | None) -> bool:
 
 
 def main() -> int:
+    parser = argparse.ArgumentParser(
+        description="Prepare dedicated local Chrome profiles for F1 Social clients"
+    )
+    parser.add_argument(
+        "--auto-wait",
+        action="store_true",
+        help="Poll opened social tabs until the correct accounts are available",
+    )
+    parser.add_argument(
+        "--timeout",
+        type=int,
+        default=600,
+        help="Seconds to wait per client in --auto-wait mode",
+    )
+    args = parser.parse_args()
+
     if not SERVICE_KEY:
         raise SystemExit(
             "SUPABASE_SERVICE_ROLE_KEY is required locally. "
@@ -204,83 +222,118 @@ def main() -> int:
                     )
                     pages.append((session, page))
 
-                input(
-                    "\nCompleta eventuali login/2FA nelle schede "
-                    "aperte. Quando tutti gli account del cliente "
-                    "sono corretti, premi INVIO..."
-                )
+                if not args.auto_wait:
+                    input(
+                        "\nCompleta eventuali login/2FA nelle schede "
+                        "aperte. Quando tutti gli account del cliente "
+                        "sono corretti, premi INVIO..."
+                    )
 
                 connected = 0
-                for session, page in pages:
-                    platform = str(session["platform"])
-                    try:
-                        actual = verify_expected_account(
-                            page,
-                            platform=platform,
-                            expected_url=str(
-                                session["expected_profile_url"]
-                            ),
-                            expected_id=session.get(
-                                "expected_account_id"
-                            ),
-                            expected_name=(
-                                session.get(
-                                    "expected_account_name"
-                                )
-                                or client["name"]
-                            ),
-                        )
-                        now = datetime.now(
-                            timezone.utc
-                        ).isoformat()
-                        patch(
-                            "f1_client_browser_social_sessions",
-                            str(session["id"]),
-                            {
-                                "status": "CONNECTED",
-                                "last_verified_at": now,
-                                "last_used_at": now,
-                                "error_code": None,
-                                "error_message": None,
-                                "metadata": {
-                                    **(
-                                        session.get("metadata")
-                                        or {}
-                                    ),
-                                    "verified_account": actual,
-                                    "execution_mode":
-                                        "local_windows_pc",
+                pending = list(pages)
+                last_errors: dict[str, BrowserPublishError] = {}
+                deadline = time.time() + max(60, args.timeout)
+
+                while pending:
+                    next_pending: list[tuple[dict, object]] = []
+                    for session, page in pending:
+                        platform = str(session["platform"])
+                        try:
+                            actual = verify_expected_account(
+                                page,
+                                platform=platform,
+                                expected_url=str(
+                                    session["expected_profile_url"]
+                                ),
+                                expected_id=session.get(
+                                    "expected_account_id"
+                                ),
+                                expected_name=(
+                                    session.get(
+                                        "expected_account_name"
+                                    )
+                                    or client["name"]
+                                ),
+                            )
+                            now = datetime.now(
+                                timezone.utc
+                            ).isoformat()
+                            patch(
+                                "f1_client_browser_social_sessions",
+                                str(session["id"]),
+                                {
+                                    "status": "CONNECTED",
+                                    "last_verified_at": now,
+                                    "last_used_at": now,
+                                    "error_code": None,
+                                    "error_message": None,
+                                    "metadata": {
+                                        **(
+                                            session.get("metadata")
+                                            or {}
+                                        ),
+                                        "verified_account": actual,
+                                        "execution_mode":
+                                            "local_windows_pc",
+                                    },
+                                    "updated_at": now,
                                 },
-                                "updated_at": now,
-                            },
-                        )
-                        connected += 1
-                        print(
-                            f"OK   {client['name']} / "
-                            f"{platform}"
-                        )
-                    except BrowserPublishError as exc:
-                        status = (
-                            "ACCOUNT_WRONG"
-                            if exc.code == "ACCOUNT_WRONG"
-                            else "AUTH_REQUIRED"
-                        )
-                        patch(
-                            "f1_client_browser_social_sessions",
-                            str(session["id"]),
-                            {
-                                "status": status,
-                                "error_code": exc.code,
-                                "error_message": str(exc)[:1000],
-                                "updated_at": datetime.now(
-                                    timezone.utc
-                                ).isoformat(),
-                            },
-                        )
-                        print(
-                            f"STOP {client['name']} / "
-                            f"{platform}: {exc.code} - {exc}"
-                        )
+                            )
+                            connected += 1
+                            print(
+                                f"OK   {client['name']} / "
+                                f"{platform}"
+                            )
+                        except BrowserPublishError as exc:
+                            last_errors[platform] = exc
+                            next_pending.append((session, page))
+
+                    pending = next_pending
+                    if not pending:
+                        break
+                    if not args.auto_wait:
+                        break
+                    if time.time() >= deadline:
+                        break
+                    print(
+                        f"ATTESA {client['name']}: "
+                        f"{len(pending)} social richiedono login/verifica. "
+                        "Completa le finestre Chrome aperte."
+                    )
+                    time.sleep(5)
+
+                for session, _page in pending:
+                    platform = str(session["platform"])
+                    exc = last_errors.get(platform)
+                    status = (
+                        "ACCOUNT_WRONG"
+                        if exc and exc.code == "ACCOUNT_WRONG"
+                        else "AUTH_REQUIRED"
+                    )
+                    patch(
+                        "f1_client_browser_social_sessions",
+                        str(session["id"]),
+                        {
+                            "status": status,
+                            "error_code": (
+                                exc.code
+                                if exc
+                                else "AUTH_REQUIRED"
+                            ),
+                            "error_message": (
+                                str(exc)[:1000]
+                                if exc
+                                else "Login or verification required"
+                            ),
+                            "updated_at": datetime.now(
+                                timezone.utc
+                            ).isoformat(),
+                        },
+                    )
+                    print(
+                        f"STOP {client['name']} / "
+                        f"{platform}: {status}"
+                    )
 
                 now = datetime.now(
                     timezone.utc
