@@ -8,6 +8,7 @@ on:
       - 'supabase/functions/f1-content-autopilot/**'
       - 'supabase/functions/f1-social-daily-report/**'
       - 'supabase/migrations/*autonomous_whatsapp*'
+      - 'supabase/migrations/*whatsapp_sender*'
       - '.github/workflows/f1-social-autonomous-cloud.yml'
       - '.github/workflows/f1-social-autonomous-ci.yml'
   workflow_dispatch:
