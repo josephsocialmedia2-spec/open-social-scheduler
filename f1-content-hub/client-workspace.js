@@ -168,7 +168,9 @@ async function previewMedia(){
   }
 }
 function planItemsForClient(client){
-  return (items||[]).filter(function(x){return x.client_id===client.id&&x.distribution_plan&&x.distribution_plan.platforms&&x.status!=="ARCHIVIATO"}).slice(0,12);
+  return (items||[]).filter(function(x){
+    return x.client_id===client.id&&x.status!=="ARCHIVIATO"&&!/PUBBLICAT|PUBLISHED/i.test(String(x.status||""));
+  }).slice(0,12);
 }
 window.f1RenderClientPublisherWorkspace=async function(){
   const root=document.getElementById("clientPublisherWorkspace");if(!root)return;
