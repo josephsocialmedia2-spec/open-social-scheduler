@@ -171,7 +171,6 @@ async function processMediaBeforeUpload(file){
   renderUploadProgress();
   const png=await convertHeicToPng(file);
   uploadBatchState.totalBytes=Math.max(0,uploadBatchState.totalBytes-(Number(file.size)||0)+(Number(png.size)||0));
-  uploadBatchState.convertedHeic++;
   uploadBatchState.currentStage="✓ CONVERSIONE COMPLETATA · "+png.name;
   renderUploadProgress();
   return {file:png,converted:true,originalFile:file,engine:"heic2any-0.0.4"};
@@ -224,7 +223,8 @@ async function replaceHeicWithPngMedia(media,pngFile){
   uploadBatchState._lastExistingLoaded=0;
   const ins=await sb.from("f1_content_media").insert({
     owner_id:user.id,content_id:media.content_id,client_id:media.client_id,file_name:safe,
-    mime_type:"image/png",storage_path:path,file_size:pngFile.size,source:"HEIC2ANY"
+    mime_type:"image/png",storage_path:path,file_size:pngFile.size,source:"HEIC2ANY",
+    whatsapp_message_id:media.whatsapp_message_id||null
   }).select().single();
   if(ins.error){
     try{await sb.storage.from("f1-content-media").remove([path])}catch(_){}
@@ -252,7 +252,7 @@ async function convertExistingHeicMedia(media){
   if(dl.error)throw dl.error;
   const original=new File([dl.data],media.file_name||"immagine.heic",{type:isHeicMime(media.mime_type)?media.mime_type:"image/heic"});
   const png=await convertHeicToPng(original);
-  uploadBatchState.totalBytes=Math.max(uploadBatchState.totalBytes,uploadBatchState.uploadedBytes+png.size);
+  uploadBatchState.totalBytes=Math.max(0,uploadBatchState.totalBytes-(Number(media.file_size)||0)+(Number(png.size)||0));
   const replacement=await replaceHeicWithPngMedia(media,png);
   const item=(items||[]).find(function(x){return x.id===media.content_id});
   if(item){
@@ -307,6 +307,34 @@ window.f1HeicCountForClient=function(clientId){
   let count=0;
   (items||[]).filter(function(x){return x.client_id===clientId}).forEach(function(item){(item.f1_content_media||[]).forEach(function(m){if(isHeicMedia(m))count++})});
   return count;
+}
+window.f1ConvertHeicForItem=async function(itemId){
+  let item=(items||[]).find(function(x){return x.id===itemId});
+  if(!item)return null;
+  const client=(clients||[]).find(function(x){return x.id===item.client_id});
+  if(!client||String(item.owner_id)!==String(user.id))throw new Error("Conversione HEIC bloccata: ownership non valida.");
+  if(selectedClientId&&String(item.client_id)!==String(selectedClientId))throw new Error("Conversione HEIC bloccata: client_id non corrispondente.");
+  const heics=(item.f1_content_media||[]).filter(isHeicMedia);
+  if(!heics.length)return item;
+  resetUploadBatch(heics.map(function(m){return {name:m.file_name,size:Number(m.file_size)||0}}));
+  uploadBatchState.totalFiles=heics.length;
+  uploadBatchState.totalBytes=heics.reduce(function(sum,m){return sum+(Number(m.file_size)||0)},0);
+  let ok=0;const failed=[];
+  for(let i=0;i<heics.length;i++){
+    uploadBatchState.currentFileNumber=i+1;uploadBatchState.currentFileName=heics[i].file_name||"HEIC";
+    try{await convertExistingHeicMedia(heics[i]);ok++;uploadBatchState.completedFiles=ok;uploadBatchState.convertedHeic=ok}
+    catch(e){failed.push({file:{name:heics[i].file_name||"HEIC"},error:e&&e.message?e.message:String(e)});uploadBatchState.failedFiles=failed.length}
+    renderUploadProgress();
+  }
+  await loadAll();await renderAll();
+  uploadBatchState.currentFileName="";uploadBatchState.currentStage="";
+  uploadBatchState.failed=failed;uploadBatchState.completedFiles=ok;uploadBatchState.failedFiles=failed.length;uploadBatchState.convertedHeic=ok;
+  uploadBatchState.status=failed.length?(ok?"PARTIAL_ERROR":"ERROR"):"COMPLETED";
+  if(!failed.length)uploadBatchState.uploadedBytes=uploadBatchState.totalBytes;
+  renderUploadProgress();
+  if(failed.length)throw new Error("CONVERSIONE HEIC NON COMPLETATA — "+failed.length+" file originali conservati.");
+  item=(items||[]).find(function(x){return x.id===itemId});
+  return item||null;
 }
 
 function currentClient(){return (clients||[]).find(function(x){return x.id===selectedClientId})||null}
@@ -399,8 +427,8 @@ function captionFor(client,title,category,base,platform){
 }
 function planState(clientId,platform,mime,item){
   const type=String(mime||"").toLowerCase();
-  const media=(item&&item.f1_content_media||[])[0];
-  if(isHeicMedia(media)||isHeicMime(type))return "CONVERSIONE_HEIC";
+  const mediaRows=(item&&item.f1_content_media||[]);
+  if(mediaRows.some(isHeicMedia)||isHeicMime(type))return "CONVERSIONE_HEIC";
   const isVideo=type.startsWith("video/"),isImage=type.startsWith("image/");
   if(!type)return "MEDIA_MISSING";
   if(!isVideo&&!isImage)return "FORMATO_NON_SUPPORTATO";
@@ -479,9 +507,9 @@ function railItemMime(item){
   return String(media&&media.mime_type||"").toLowerCase();
 }
 function railItemType(item){
-  const media=(item&&item.f1_content_media||[])[0];
+  const mediaRows=(item&&item.f1_content_media||[]);
   const mime=railItemMime(item),ct=String(item&&item.content_type||"").toLowerCase();
-  if(isHeicMedia(media))return "HEIC";
+  if(mediaRows.some(isHeicMedia))return "HEIC";
   if(mime.startsWith("image/")||/foto|image|immagine/.test(ct))return "FOTO";
   if(mime.startsWith("video/")||/video|reel|short/.test(ct))return "VIDEO";
   if(mime.startsWith("audio/")||/audio/.test(ct))return "AUDIO";
@@ -587,7 +615,6 @@ window.f1QuickProgramFromRail=async function(contentId){
   if(selectedClientId&&item.client_id!==selectedClientId)return alert("Il contenuto non appartiene al cliente selezionato.");
   if(isImmutableItem(item))return alert("Il contenuto è già pubblicato o archiviato e non viene modificato.");
   if(!(item.f1_content_media||[]).length)return alert("MEDIA_MISSING — aggiungi prima un file multimediale.");
-  if((item.f1_content_media||[]).some(isHeicMedia))return alert("CONVERSIONE_HEIC — converti prima il file in PNG.");
   selectedRailContentId=item.id;
   if(window.f1WorkspaceScheduleItem)await window.f1WorkspaceScheduleItem(item.id);
 };
@@ -777,7 +804,10 @@ async function quickUploadFiles(files,source){
         mime_type:mime,storage_path:path,file_size:uploadFile.size,source:prepared.converted?"HEIC2ANY":source
       }).select().single();
       if(mr.error)throw mr.error;
-      if(prepared.converted)await verifyConvertedMedia(mr.data);
+      if(prepared.converted){
+        await verifyConvertedMedia(mr.data);
+        uploadBatchState.convertedHeic++;
+      }
       successfulBytes+=Number(uploadFile.size)||0;
       uploadBatchState.completedFiles++;
       uploadBatchState.uploadedBytes=successfulBytes;
@@ -942,7 +972,7 @@ async function scheduleOne(item,dayOffset){
   for(const p of WS_PLATFORMS){
     const data=plan.platforms[p.id]||{},ch=channelFor(client.id,p.id),state=planState(client.id,p.id,mime,item);
     const target=nextAt(data.time||prefFor(client,p.id).time,dayOffset||0);
-    if(state==="MEDIA_MISSING"||state==="FORMATO_NON_SUPPORTATO"||state==="TIKTOK_PHOTO_URL_REQUIRED"||state==="TIKTOK_REVIEW_REQUIRED"){
+    if(state==="MEDIA_MISSING"||state==="CONVERSIONE_HEIC"||state==="FORMATO_NON_SUPPORTATO"||state==="TIKTOK_PHOTO_URL_REQUIRED"||state==="TIKTOK_REVIEW_REQUIRED"){
       data.status=state;data.scheduled_at=null;plan.platforms[p.id]=data;continue;
     }
     const calendarStatus=state==="PRONTO"?"PROGRAMMATO":"CANALE_DA_COLLEGARE";
@@ -970,10 +1000,15 @@ async function scheduleOne(item,dayOffset){
   return scheduled;
 }
 window.f1WorkspaceScheduleItem=async function(itemId){
-  const item=(items||[]).find(function(x){return x.id===itemId});if(!item)return;
+  let item=(items||[]).find(function(x){return x.id===itemId});if(!item)return;
   if(isImmutableItem(item))return alert("Il contenuto è già pubblicato o archiviato e non viene riprogrammato.");
-  const client=(clients||[]).find(function(x){return x.id===item.client_id});
+  let client=(clients||[]).find(function(x){return x.id===item.client_id});
   try{
+    if((item.f1_content_media||[]).some(isHeicMedia)){
+      item=await window.f1ConvertHeicForItem(itemId);
+      if(!item)return;
+      client=(clients||[]).find(function(x){return x.id===item.client_id});
+    }
     if(client&&!client.auto_publish){
       const u=await sb.from("f1_content_clients").update({auto_publish:true,automation_status:"AUTOMAZIONE ATTIVA"}).eq("id",client.id);if(u.error)throw u.error;
       client.auto_publish=true;
@@ -984,9 +1019,13 @@ window.f1WorkspaceScheduleItem=async function(itemId){
 };
 window.f1WorkspaceProgramAll=async function(){
   const client=currentClient();if(!client)return;
-  const list=planItemsForClient(client).filter(function(x){return !/PUBBLICAT|PUBLISHED/i.test(String(x.status||""))});
+  let list=planItemsForClient(client).filter(function(x){return !/PUBBLICAT|PUBLISHED/i.test(String(x.status||""))});
   if(!list.length)return alert("Non ci sono nuovi contenuti da programmare.");
   try{
+    if(list.some(function(x){return (x.f1_content_media||[]).some(isHeicMedia)})){
+      await window.f1ConvertExistingHeicForClient();
+      list=planItemsForClient(client).filter(function(x){return !/PUBBLICAT|PUBLISHED/i.test(String(x.status||""))});
+    }
     const u=await sb.from("f1_content_clients").update({auto_publish:true,automation_status:"AUTOMAZIONE ATTIVA"}).eq("id",client.id);if(u.error)throw u.error;
     client.auto_publish=true;
     let ready=0;
