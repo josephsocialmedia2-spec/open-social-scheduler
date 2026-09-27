@@ -3,7 +3,7 @@ from __future__ import annotations
 import unittest
 
 from publisher.cloud_publisher.browser.base import expected_handle
-from publisher.cloud_publisher.main import api_ready
+from publisher.cloud_publisher.runtime import api_ready
 from publisher.cloud_publisher.queue import PublicationJob, normalize_platform
 
 
