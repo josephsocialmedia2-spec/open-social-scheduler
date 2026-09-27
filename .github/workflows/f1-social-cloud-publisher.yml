@@ -37,21 +37,30 @@ jobs:
   browser-fallback:
     needs: sync-cloud-queue
     if: ${{ vars.F1_BROWSER_FALLBACK_ENABLED == 'true' }}
-    runs-on: [self-hosted, linux, f1-social-browser]
+    runs-on: [self-hosted, Windows, X64, f1-social-local-pc]
     timeout-minutes: 45
     env:
       SUPABASE_URL: ${{ vars.SUPABASE_URL || 'https://nqnmlsmeiynxbdojeyjt.supabase.co' }}
       SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
-      F1_BROWSER_ROOT: /srv/f1social/browser-profiles
+      F1_BROWSER_ROOT: 'C:\F1Social\BrowserProfiles'
+      F1_BROWSER_CHANNEL: chrome
+      F1_BROWSER_HEADLESS: 'true'
       DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run || 'false' }}
       GITHUB_RUN_ID: ${{ github.run_id }}
       GITHUB_SHA: ${{ github.sha }}
     steps:
       - uses: actions/checkout@v4
-      - name: Verify persistent F1 browser environment
-        shell: bash
+      - name: Verify always-on Windows browser environment
+        shell: powershell
         run: |
-          test -x /opt/f1-browser-venv/bin/python
-          /opt/f1-browser-venv/bin/python -m playwright --version
-      - name: Sync after API publisher and run browser fallback
-        run: /opt/f1-browser-venv/bin/python -m publisher.cloud_publisher.main --browser-only
+          if (-not (Test-Path 'C:\F1Social\venv\Scripts\python.exe')) {
+            throw 'F1 Social Python environment missing'
+          }
+          if (-not (Test-Path 'C:\F1Social\BrowserProfiles')) {
+            New-Item -ItemType Directory -Force -Path 'C:\F1Social\BrowserProfiles' | Out-Null
+          }
+          & 'C:\F1Social\venv\Scripts\python.exe' -c "import playwright; print('Playwright OK')"
+      - name: Sync after API publisher and run local Chrome fallback
+        shell: powershell
+        run: |
+          & 'C:\F1Social\venv\Scripts\python.exe' -m publisher.cloud_publisher.main --browser-only
