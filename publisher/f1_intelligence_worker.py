@@ -840,7 +840,7 @@ def process_directory_jobs(limit: int = 8) -> dict[str, int]:
         "f1_directory_jobs",
         {
             "select": "*",
-            "status": "in.(QUEUED,RETRY)",
+            "status": "eq.QUEUED",
             "order": "priority.desc,created_at.asc",
             "limit": str(max(1, limit)),
         },
@@ -853,7 +853,7 @@ def process_directory_jobs(limit: int = 8) -> dict[str, int]:
         rest_patch(
             "f1_directory_jobs",
             {"id": jid},
-            {"status": "RUNNING", "attempts": attempts, "claimed_at": now_iso(), "updated_at": now_iso(), "last_error": ""},
+            {"status": "CLAIMED", "attempts": attempts, "claimed_at": now_iso(), "updated_at": now_iso(), "last_error": ""},
         )
         try:
             query = " ".join(
@@ -911,7 +911,7 @@ def process_directory_jobs(limit: int = 8) -> dict[str, int]:
                 "f1_directory_jobs",
                 {"id": jid},
                 {
-                    "status": "COMPLETED",
+                    "status": "DONE",
                     "result_count": found,
                     "seller_signal": "INDIZIO_AGENZIA" if found else (job.get("seller_signal") or "NON_DETERMINATO"),
                     "completed_at": now_iso(),
@@ -927,7 +927,7 @@ def process_directory_jobs(limit: int = 8) -> dict[str, int]:
                 "f1_directory_jobs",
                 {"id": jid},
                 {
-                    "status": "RETRY" if retry else "ERROR",
+                    "status": "QUEUED" if retry else "ERROR",
                     "updated_at": now_iso(),
                     "last_error": str(exc)[:1500],
                 },
