@@ -1,0 +1,70 @@
+name: F1 Social Intelligence - Autonomous
+
+on:
+  workflow_dispatch:
+    inputs:
+      content_limit:
+        description: 'Maximum Content Hub items to inspect'
+        required: true
+        default: '250'
+        type: string
+      agency_limit:
+        description: 'Maximum real-estate directory jobs to process'
+        required: true
+        default: '8'
+        type: string
+  schedule:
+    - cron: '*/5 * * * *'
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: f1-social-intelligence-autopilot
+  cancel-in-progress: false
+
+jobs:
+  intelligence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      SUPABASE_URL: ${{ vars.SUPABASE_URL || 'https://nqnmlsmeiynxbdojeyjt.supabase.co' }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+      F1_WHISPER_MODEL: ${{ vars.F1_WHISPER_MODEL || 'base' }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: publisher/intelligence_requirements.txt
+
+      - name: Cache Whisper model
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface
+          key: f1-whisper-${{ runner.os }}-${{ env.F1_WHISPER_MODEL }}
+
+      - name: Install Intelligence dependencies
+        run: pip install -r publisher/intelligence_requirements.txt
+
+      - name: Ensure ffmpeg is available
+        shell: bash
+        run: |
+          if ! command -v ffmpeg >/dev/null 2>&1 || ! command -v ffprobe >/dev/null 2>&1; then
+            sudo apt-get update
+            sudo apt-get install -y ffmpeg
+          fi
+
+      - name: Run autonomous Content + Agency Intelligence
+        shell: bash
+        run: |
+          CONTENT_LIMIT="${{ github.event_name == 'workflow_dispatch' && inputs.content_limit || '250' }}"
+          AGENCY_LIMIT="${{ github.event_name == 'workflow_dispatch' && inputs.agency_limit || '8' }}"
+          python publisher/f1_intelligence_worker.py             --content-limit "$CONTENT_LIMIT"             --agency-limit "$AGENCY_LIMIT"
+
+      - name: Reconcile newly scheduled content into publisher queue
+        run: python publisher/supabase_queue_bridge.py
