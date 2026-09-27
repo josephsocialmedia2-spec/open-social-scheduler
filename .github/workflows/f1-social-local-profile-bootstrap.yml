@@ -1,5 +1,7 @@
 name: F1 Social Local Profile Bootstrap
 
+# dependency profile: windows-compatible
+
 on:
   push:
     branches: [main]
