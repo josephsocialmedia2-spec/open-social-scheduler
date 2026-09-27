@@ -459,6 +459,7 @@ let droppedFiles = [];
 let tiktokContext = null;
 let calendarWeekOffset = 0;
 let calendarViewMode = "week";
+let intelligenceAutoRefreshBusy = false;
 
 const el = (id) => document.getElementById(id);
 const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, function(m){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]});
@@ -1732,6 +1733,21 @@ sb.auth.onAuthStateChange(function(event,session){
   }
   if(event==="SIGNED_OUT"){user=null;showAuth()}
 });
+
+// F1_INTELLIGENCE_AUTO_REFRESH: la dashboard osserva il backend, non lo comanda.
+setInterval(async function(){
+  if(!user || document.hidden || intelligenceAutoRefreshBusy)return;
+  intelligenceAutoRefreshBusy=true;
+  try{
+    await loadAll();
+    await renderAll();
+  }catch(e){
+    console.warn("F1 Intelligence refresh",e);
+  }finally{
+    intelligenceAutoRefreshBusy=false;
+  }
+},10000);
+
 authState();
 </script>
 <script src="./vendor/heic2any-0.0.4.min.js"></script>
