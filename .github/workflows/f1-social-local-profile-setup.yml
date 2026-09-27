@@ -1,0 +1,49 @@
+name: F1 Social Local Chrome Setup
+
+on:
+  workflow_dispatch:
+    inputs:
+      timeout_per_client:
+        description: 'Seconds to wait for manual login/2FA per client'
+        required: true
+        default: '600'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: f1-social-local-profile-setup
+  cancel-in-progress: false
+
+jobs:
+  configure-local-profiles:
+    runs-on: [self-hosted, Windows, X64, f1-social-local-pc]
+    timeout-minutes: 90
+    env:
+      SUPABASE_URL: ${{ vars.SUPABASE_URL || 'https://nqnmlsmeiynxbdojeyjt.supabase.co' }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+      F1_BROWSER_ROOT: 'C:\F1Social\BrowserProfiles'
+      F1_BROWSER_CHANNEL: chrome
+      F1_BROWSER_HEADLESS: 'false'
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify local Windows environment
+        shell: powershell
+        run: |
+          if (-not (Test-Path 'C:\F1Social\venv\Scripts\python.exe')) {
+            throw 'F1 Social Python environment missing. Run install_f1_social_windows_runner.ps1 first.'
+          }
+          if (-not (Get-Command chrome.exe -ErrorAction SilentlyContinue)) {
+            $chromeCandidates = @(
+              "$env:ProgramFiles\Google\Chrome\Application\chrome.exe",
+              "${env:ProgramFiles(x86)}\Google\Chrome\Application\chrome.exe",
+              "$env:LOCALAPPDATA\Google\Chrome\Application\chrome.exe"
+            )
+            if (-not ($chromeCandidates | Where-Object { Test-Path $_ } | Select-Object -First 1)) {
+              throw 'Google Chrome not found.'
+            }
+          }
+      - name: Open and verify missing client social sessions
+        shell: powershell
+        run: |
+          & 'C:\F1Social\venv\Scripts\python.exe' scripts\f1_windows_prepare_clients.py --auto-wait --timeout ${{ inputs.timeout_per_client }}
