@@ -1,4 +1,4 @@
-name: F1 Social Intelligence - Autonomous
+name: F1 Social Intelligence - Autonomous Content
 
 on:
   push:
@@ -12,11 +12,6 @@ on:
         required: true
         default: '250'
         type: string
-      agency_limit:
-        description: 'Maximum real-estate directory jobs to process'
-        required: true
-        default: '8'
-        type: string
   schedule:
     - cron: '*/5 * * * *'
 
@@ -25,32 +20,10 @@ permissions:
   actions: read
 
 concurrency:
-  group: f1-social-intelligence-autopilot
+  group: f1-social-intelligence-content
   cancel-in-progress: false
 
 jobs:
-  agency-intelligence:
-    runs-on: ubuntu-latest
-    timeout-minutes: 12
-    env:
-      SUPABASE_URL: ${{ vars.SUPABASE_URL || 'https://nqnmlsmeiynxbdojeyjt.supabase.co' }}
-      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
-
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-          cache: pip
-          cache-dependency-path: publisher/agency_requirements.txt
-      - name: Install agency discovery dependencies
-        run: pip install -r publisher/agency_requirements.txt
-      - name: Discover real-estate agencies automatically
-        shell: bash
-        run: |
-          AGENCY_LIMIT="${{ github.event_name == 'workflow_dispatch' && inputs.agency_limit || '8' }}"
-          python publisher/f1_intelligence_worker.py --skip-content --agency-limit "$AGENCY_LIMIT"
-
   content-intelligence:
     runs-on: ubuntu-latest
     timeout-minutes: 45
