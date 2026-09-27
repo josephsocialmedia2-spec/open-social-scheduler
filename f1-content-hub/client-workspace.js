@@ -13,6 +13,8 @@ let railFilter="TUTTI";
 let railSort="recenti";
 const railThumbUrlCache=new Map();
 let uploadRetryFiles=[];
+let heicAutoMigrationRunning=false;
+const heicAutoMigrationAttempted=new Set();
 let uploadBatchState={
   totalFiles:0,completedFiles:0,failedFiles:0,totalBytes:0,uploadedBytes:0,
   currentFileName:"",currentFileNumber:0,currentStage:"",startedAt:0,bytesPerSecond:0,
@@ -269,13 +271,14 @@ async function convertExistingHeicMedia(media){
   return replacement;
 }
 window.f1ConvertExistingHeicMedia=convertExistingHeicMedia;
-window.f1ConvertExistingHeicForClient=async function(){
-  const client=currentClient();if(!client)return alert("Seleziona prima un cliente.");
+window.f1ConvertExistingHeicForClient=async function(options){
+  const opts=options||{};
+  const client=currentClient();if(!client){if(!opts.automatic)alert("Seleziona prima un cliente.");return}
   const mediaRows=[];
   (items||[]).filter(function(x){return x.client_id===client.id}).forEach(function(item){
     (item.f1_content_media||[]).forEach(function(media){if(isHeicMedia(media))mediaRows.push(media)});
   });
-  if(!mediaRows.length)return alert("Nessun HEIC/HEIF da convertire per "+client.name+".");
+  if(!mediaRows.length){if(!opts.automatic)alert("Nessun HEIC/HEIF da convertire per "+client.name+".");return}
   resetUploadBatch(mediaRows.map(function(m){return {name:m.file_name,size:Number(m.file_size)||0}}));
   uploadBatchState.totalFiles=mediaRows.length;
   uploadBatchState.totalBytes=mediaRows.reduce(function(sum,m){return sum+(Number(m.file_size)||0)},0);
@@ -719,6 +722,16 @@ window.f1RenderClientPublisherWorkspace=async function(){
   '</section>';
   renderUploadProgress();
   await previewMedia();
+  if(heicCount&&!heicAutoMigrationRunning&&!heicAutoMigrationAttempted.has(client.id)){
+    heicAutoMigrationAttempted.add(client.id);
+    setTimeout(async function(){
+      if(heicAutoMigrationRunning)return;
+      heicAutoMigrationRunning=true;
+      try{await window.f1ConvertExistingHeicForClient({automatic:true})}
+      catch(e){console.error("HEIC_AUTO_MIGRATION",e)}
+      finally{heicAutoMigrationRunning=false}
+    },350);
+  }
 };
 
 window.f1WorkspaceSaveTime=async function(clientId,platform,value){
