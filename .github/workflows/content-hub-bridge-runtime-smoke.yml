@@ -83,6 +83,12 @@ jobs:
           PY
           python publisher/buffer_queue_publish.py --job-id lasacra-buffer-smoke --dry-run --strict
 
+      - name: Discover all Antica Cappella Buffer channels
+        shell: bash
+        run: |
+          set -euo pipefail
+          python publisher/buffer_queue_publish.py --discover-client antica-cappella
+
       - name: Verify Antica Cappella Buffer routing without publishing
         shell: bash
         run: |
