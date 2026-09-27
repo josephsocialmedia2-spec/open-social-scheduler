@@ -35,8 +35,12 @@ jobs:
           const sw=fs.readFileSync('f1-content-hub/sw.js','utf8');
           for(const required of [
             'id="clientPublisherWorkspace"',
+            'id="contentRail"',
+            'id="contentRailList"',
+            'id="contentRailSearch"',
             'client-workspace.css',
             'client-workspace.js',
+            'f1RenderContentRail',
             'f1RenderClientPublisherWorkspace'
           ]){
             if(!html.includes(required)) throw new Error('Missing Content Hub wiring: '+required);
@@ -45,6 +49,31 @@ jobs:
             throw new Error('Service worker is not caching workspace assets');
           }
           console.log('CONTENT_HUB_WORKSPACE_WIRING_OK');
+          NODE
+      - name: Check inline Content Hub JavaScript syntax
+        run: |
+          node <<'NODE'
+          const fs=require('fs');
+          const html=fs.readFileSync('f1-content-hub/index.html','utf8');
+          const scripts=[...html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/gi)].map(m=>m[1]).filter(x=>x.trim());
+          scripts.forEach((code,i)=>{ new Function(code); console.log('INLINE_SCRIPT_OK',i+1); });
+          NODE
+      - name: Check Content Rail logic markers
+        run: |
+          node <<'NODE'
+          const fs=require('fs');
+          const js=fs.readFileSync('f1-content-hub/client-workspace.js','utf8');
+          for(const required of [
+            'selectedRailContentId',
+            'railScopedItems',
+            'f1SelectRailContent',
+            'f1QuickProgramFromRail',
+            'f1WorkspaceScheduleItem',
+            'data-distribution-item'
+          ]){
+            if(!js.includes(required)) throw new Error('Missing Content Rail logic: '+required);
+          }
+          console.log('CONTENT_RAIL_LOGIC_OK');
           NODE
       - name: Check publisher bridge syntax
         run: python -m py_compile publisher/supabase_queue_bridge.py
