@@ -18,6 +18,8 @@ jobs:
       SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
       LASACRA_BUFFER_API_KEY: ${{ secrets.LASACRA_BUFFER_API_KEY }}
       ANTICACAPPELLA_BUFFER_API_KEY: ${{ secrets.ANTICACAPPELLA_BUFFER_API_KEY }}
+      ANTICACAPPELLA_FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.ANTICACAPPELLA_FACEBOOK_PAGE_ACCESS_TOKEN }}
+      META_GRAPH_VERSION: ${{ vars.META_GRAPH_VERSION || 'v23.0' }}
       CLOUDINARY_URL: ${{ secrets.CLOUDINARY_URL }}
     steps:
       - uses: actions/checkout@v4
@@ -88,6 +90,39 @@ jobs:
         run: |
           set -euo pipefail
           python publisher/buffer_queue_publish.py --discover-client antica-cappella
+
+      - name: Verify Antica Cappella dedicated Facebook token identity
+        continue-on-error: true
+        shell: bash
+        run: |
+          python - <<'PY'
+          import os, requests, sys
+          token=os.environ.get('ANTICACAPPELLA_FACEBOOK_PAGE_ACCESS_TOKEN','').strip()
+          expected='61550077453442'
+          version=os.environ.get('META_GRAPH_VERSION','v23.0').strip()
+          if not token:
+              print('FACEBOOK_DIRECT_TOKEN_PRESENT=false')
+              sys.exit(2)
+          print('FACEBOOK_DIRECT_TOKEN_PRESENT=true')
+          r=requests.get(
+              f'https://graph.facebook.com/{version}/me',
+              params={'fields':'id,name,link','access_token':token},
+              timeout=30,
+          )
+          if not r.ok:
+              print('FACEBOOK_DIRECT_TOKEN_VALID=false')
+              print('FACEBOOK_GRAPH_HTTP_STATUS='+str(r.status_code))
+              sys.exit(3)
+          data=r.json()
+          page_id=str(data.get('id') or '')
+          print('FACEBOOK_DIRECT_TOKEN_VALID=true')
+          print('FACEBOOK_DIRECT_PAGE_ID='+page_id)
+          print('FACEBOOK_DIRECT_PAGE_NAME='+str(data.get('name') or ''))
+          if page_id != expected:
+              print('FACEBOOK_DIRECT_PAGE_MATCH=false')
+              sys.exit(4)
+          print('FACEBOOK_DIRECT_PAGE_MATCH=true')
+          PY
 
       - name: Verify Antica Cappella Buffer routing without publishing
         shell: bash
