@@ -39,7 +39,8 @@
     "buffer_channels": {
       "facebook": "6ab2b713ea19ca0bdeb8103d",
       "instagram": "6ab2b6e7ea19ca0bdeb80e19"
-    }
+    },
+    "manual_publish_only": true
   },
   "integrations": {
     "facebook": {
@@ -50,5 +51,13 @@
       "id": "buffer:6ab2b6e7ea19ca0bdeb80e19",
       "required": true
     }
+  },
+  "approval": {
+    "required": true,
+    "mode": "manual_final_confirmation"
+  },
+  "planning": {
+    "manual_publish_only": true,
+    "autonomous_preparation": true
   }
 }
