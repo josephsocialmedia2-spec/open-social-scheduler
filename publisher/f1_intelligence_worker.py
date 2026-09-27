@@ -42,6 +42,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SUPABASE_URL = os.getenv("SUPABASE_URL", "").rstrip("/")
 SERVICE_KEY = os.getenv("SUPABASE_SERVICE_ROLE_KEY", "").strip()
 WHISPER_MODEL_NAME = os.getenv("F1_WHISPER_MODEL", "base").strip() or "base"
+HEIC_BATCH_SIZE = max(1, int(os.getenv("F1_HEIC_BATCH_SIZE", "8")))
 REQUEST_TIMEOUT = 90
 ROME = ZoneInfo("Europe/Rome")
 HEIC_EXTS = {".heic", ".heif"}
@@ -317,6 +318,7 @@ def convert_heic_media(
     heics = [m for m in media_rows if is_heic(m)]
     if not heics:
         return media_rows
+    batch = heics[:HEIC_BATCH_SIZE]
 
     owner_id = str(item["owner_id"])
     client_id = str(item["client_id"])
@@ -327,7 +329,7 @@ def convert_heic_media(
     register_heif_opener()
     out_rows = list(media_rows)
 
-    for media in heics:
+    for media in batch:
         emit_event(
             owner_id, client_id, content_id, str(job["id"]),
             "CONVERSIONE_HEIC", "RUNNING",
@@ -422,6 +424,14 @@ def convert_heic_media(
                 f"PNG verificato ({width}×{height}); HEIC originale eliminato dal cloud", 44,
                 {"media_id": created[0].get("id"), "width": width, "height": height},
             )
+    remaining = [m for m in out_rows if is_heic(m)]
+    if remaining:
+        emit_event(
+            owner_id, client_id, content_id, str(job["id"]),
+            "CONVERSIONE_HEIC", "WAITING",
+            f"Lotto completato; {len(remaining)} HEIC/HEIF restano in coda automatica", 45,
+            {"remaining": len(remaining), "batch_size": HEIC_BATCH_SIZE},
+        )
     return out_rows
 
 
@@ -765,6 +775,14 @@ def process_content(
     if any(is_heic(m) for m in media_rows):
         update_job(job, "RUNNING", "CONVERSIONE_HEIC")
         media_rows = convert_heic_media(client, item, media_rows, job)
+        if any(is_heic(m) for m in media_rows):
+            update_job(
+                job, "WAITING", "CONVERSIONE_HEIC",
+                run_after=(datetime.now(timezone.utc) + timedelta(minutes=5)).isoformat(),
+                last_error=None,
+                result={"remaining_heic": sum(1 for m in media_rows if is_heic(m))},
+            )
+            return {"published": 0, "scheduled": 0, "blocked": 0}
 
     processing: dict[str, Any] = {"status": "COMPLETED"}
     if any(is_video(m) for m in media_rows):
