@@ -64,6 +64,94 @@ def assert_no_auth_wall(page: Any, platform: str) -> None:
         )
 
 
+def assert_authenticated_session(page: Any, platform: str) -> None:
+    cookie_names: set[str] = set()
+    try:
+        cookie_names = {
+            str(item.get("name") or "")
+            for item in page.context.cookies()
+        }
+    except Exception:
+        pass
+
+    accepted = {
+        "facebook": {"c_user"},
+        "instagram": {"sessionid", "ds_user_id"},
+        "tiktok": {"sessionid", "sessionid_ss", "sid_tt"},
+        "linkedin-page": {"li_at"},
+        "youtube": {
+            "SID",
+            "SAPISID",
+            "APISID",
+            "SSID",
+            "__Secure-1PSID",
+            "__Secure-3PSID",
+        },
+    }.get(platform, set())
+
+    if accepted and not (cookie_names & accepted):
+        raise BrowserPublishError(
+            "No authenticated browser session was detected for this social platform",
+            "AUTH_REQUIRED",
+            auth_required=True,
+        )
+
+
+def assert_manageable_target(page: Any, platform: str) -> None:
+    try:
+        body = " ".join(
+            page.locator("body").inner_text(timeout=5000).lower().split()
+        )
+    except Exception:
+        body = ""
+
+    markers = {
+        "facebook": [
+            "professional dashboard",
+            "dashboard per professionisti",
+            "manage",
+            "gestisci",
+            "create post",
+            "crea post",
+            "what's on your mind",
+            "a cosa stai pensando",
+        ],
+        "instagram": [
+            "edit profile",
+            "modifica profilo",
+            "professional dashboard",
+            "dashboard per professionisti",
+        ],
+        "tiktok": [
+            "edit profile",
+            "modifica profilo",
+            "tiktok studio",
+            "business suite",
+        ],
+        "linkedin-page": [
+            "admin view",
+            "visualizzazione amministratore",
+            "manage page",
+            "gestisci pagina",
+            "view as member",
+            "visualizza come membro",
+        ],
+        "youtube": [
+            "customize channel",
+            "personalizza canale",
+            "manage videos",
+            "gestisci video",
+            "youtube studio",
+        ],
+    }.get(platform, [])
+
+    if markers and not any(marker in body for marker in markers):
+        raise BrowserPublishError(
+            "The authenticated session does not expose management controls for the expected account",
+            "ACCOUNT_WRONG",
+        )
+
+
 def verify_expected_account(
     page: Any,
     *,
@@ -73,6 +161,7 @@ def verify_expected_account(
     expected_name: str | None,
 ) -> str:
     assert_no_auth_wall(page, platform)
+    assert_authenticated_session(page, platform)
     current = page.url
     try:
         title = page.title().lower()
