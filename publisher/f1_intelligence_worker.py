@@ -135,6 +135,18 @@ def rest_patch(table: str, match: dict[str, str], payload: dict[str, Any]) -> No
         raise IntelligenceError(f"PATCH {table}: {r.status_code} {r.text[:700]}")
 
 
+def rest_delete(table: str, match: dict[str, str]) -> None:
+    params = {k: f"eq.{v}" for k, v in match.items()}
+    r = requests.delete(
+        f"{SUPABASE_URL}/rest/v1/{table}",
+        headers=headers({"Prefer": "return=minimal"}),
+        params=params,
+        timeout=REQUEST_TIMEOUT,
+    )
+    if not r.ok:
+        raise IntelligenceError(f"DELETE {table}: {r.status_code} {r.text[:700]}")
+
+
 def storage_download(storage_path: str, dest: Path) -> None:
     encoded = "/".join(quote(part, safe="") for part in storage_path.lstrip("/").split("/"))
     r = requests.get(
@@ -166,6 +178,20 @@ def storage_upload(storage_path: str, src: Path, content_type: str) -> None:
         )
     if not r.ok:
         raise IntelligenceError(f"Storage upload: {r.status_code} {r.text[:500]}")
+
+
+def storage_delete(storage_paths: list[str]) -> None:
+    paths = [str(x).lstrip("/") for x in storage_paths if str(x or "").strip()]
+    if not paths:
+        return
+    r = requests.delete(
+        f"{SUPABASE_URL}/storage/v1/object/f1-content-media",
+        headers=headers(),
+        json={"prefixes": paths},
+        timeout=REQUEST_TIMEOUT,
+    )
+    if not r.ok:
+        raise IntelligenceError(f"Storage delete: {r.status_code} {r.text[:500]}")
 
 
 def is_heic(media: dict[str, Any]) -> bool:
@@ -280,6 +306,123 @@ def emit_event(
             "details": details or {},
         },
     )
+
+
+def convert_heic_media(
+    client: dict[str, Any],
+    item: dict[str, Any],
+    media_rows: list[dict[str, Any]],
+    job: dict[str, Any],
+) -> list[dict[str, Any]]:
+    heics = [m for m in media_rows if is_heic(m)]
+    if not heics:
+        return media_rows
+
+    owner_id = str(item["owner_id"])
+    client_id = str(item["client_id"])
+    content_id = str(item["id"])
+    from PIL import Image, ImageOps
+    from pillow_heif import register_heif_opener
+
+    register_heif_opener()
+    out_rows = list(media_rows)
+
+    for media in heics:
+        emit_event(
+            owner_id, client_id, content_id, str(job["id"]),
+            "CONVERSIONE_HEIC", "RUNNING",
+            f"Conversione automatica {media.get('file_name') or 'HEIC'} → PNG", 34,
+        )
+        stem = Path(str(media.get("file_name") or "immagine.heic")).stem
+        existing = next(
+            (
+                x for x in out_rows
+                if str(x.get("source") or "").upper() == "F1_INTELLIGENCE_HEIC_PNG"
+                and Path(str(x.get("file_name") or "")).stem.lower() == stem.lower()
+            ),
+            None,
+        )
+        if existing:
+            try:
+                storage_delete([str(media.get("storage_path") or "")])
+                rest_delete("f1_content_media", {"id": str(media["id"]), "owner_id": owner_id, "client_id": client_id})
+                out_rows = [x for x in out_rows if str(x.get("id")) != str(media.get("id"))]
+            except Exception as exc:
+                print(f"WARN HEIC cleanup after reusable PNG: {exc}")
+            continue
+
+        with tempfile.TemporaryDirectory(prefix="f1-heic-") as td:
+            td_path = Path(td)
+            src = td_path / (str(media.get("file_name") or "input.heic"))
+            png = td_path / (re.sub(r"[^A-Za-z0-9._-]+", "_", stem).strip("._") or "immagine")
+            png = png.with_suffix(".png")
+            verify = td_path / "verify.png"
+
+            storage_download(str(media["storage_path"]), src)
+            with Image.open(src) as image:
+                image = ImageOps.exif_transpose(image)
+                if image.mode not in {"RGB", "RGBA"}:
+                    image = image.convert("RGBA" if "A" in image.getbands() else "RGB")
+                image.save(png, format="PNG", optimize=True)
+
+            if not png.exists() or png.stat().st_size <= 0:
+                raise IntelligenceError("Conversione HEIC → PNG ha prodotto un file vuoto")
+            with Image.open(png) as check:
+                check.verify()
+            with Image.open(png) as check:
+                width, height = check.size
+                if width <= 0 or height <= 0:
+                    raise IntelligenceError("PNG convertito senza dimensioni valide")
+
+            filename = png.name
+            storage_path = f"{owner_id}/{client_id}/{content_id}/intelligence-{uuid.uuid4().hex[:12]}-{filename}"
+            storage_upload(storage_path, png, "image/png")
+            storage_download(storage_path, verify)
+            with Image.open(verify) as check:
+                check.verify()
+
+            created = rest_post(
+                "f1_content_media",
+                {
+                    "owner_id": owner_id,
+                    "content_id": content_id,
+                    "client_id": client_id,
+                    "file_name": filename,
+                    "mime_type": "image/png",
+                    "storage_path": storage_path,
+                    "file_size": png.stat().st_size,
+                    "source": "F1_INTELLIGENCE_HEIC_PNG",
+                    "whatsapp_message_id": media.get("whatsapp_message_id"),
+                },
+                return_rows=True,
+            )
+            if not created:
+                try:
+                    storage_delete([storage_path])
+                finally:
+                    raise IntelligenceError("Record PNG convertito non creato")
+
+            try:
+                storage_delete([str(media["storage_path"])])
+                rest_delete(
+                    "f1_content_media",
+                    {"id": str(media["id"]), "owner_id": owner_id, "client_id": client_id},
+                )
+            except Exception:
+                # Keep both references rather than losing a successfully verified PNG.
+                raise
+
+            out_rows = [
+                x for x in out_rows
+                if str(x.get("id")) != str(media.get("id"))
+            ] + created
+            emit_event(
+                owner_id, client_id, content_id, str(job["id"]),
+                "CONVERSIONE_HEIC", "COMPLETED",
+                f"PNG verificato ({width}×{height}); HEIC originale eliminato dal cloud", 44,
+                {"media_id": created[0].get("id"), "width": width, "height": height},
+            )
+    return out_rows
 
 
 def probe_has_audio(path: Path) -> bool:
@@ -516,7 +659,10 @@ def ensure_calendar_for_item(
     content_id = str(item["id"])
     preferred = next(
         (m for m in reversed(media_rows) if str(m.get("source") or "").upper() == "F1_INTELLIGENCE_SUBTITLED"),
-        media_rows[0] if media_rows else None,
+        next(
+            (m for m in reversed(media_rows) if str(m.get("source") or "").upper() == "F1_INTELLIGENCE_HEIC_PNG"),
+            media_rows[0] if media_rows else None,
+        ),
     )
     if not preferred:
         emit_event(owner_id, client_id, content_id, str(job["id"]), "MEDIA", "BLOCKED", "Nessun media disponibile", 70)
@@ -617,9 +763,8 @@ def process_content(
         return {"published": 0, "scheduled": 0, "blocked": 1}
 
     if any(is_heic(m) for m in media_rows):
-        emit_event(owner_id, client_id, content_id, str(job["id"]), "CONVERSIONE_HEIC", "BLOCKED", "HEIC/HEIF rilevato: conversione PNG richiesta prima della pubblicazione", 30)
-        update_job(job, "BLOCKED", "CONVERSIONE_HEIC", last_error="CONVERSIONE_HEIC")
-        return {"published": 0, "scheduled": 0, "blocked": 1}
+        update_job(job, "RUNNING", "CONVERSIONE_HEIC")
+        media_rows = convert_heic_media(client, item, media_rows, job)
 
     processing: dict[str, Any] = {"status": "COMPLETED"}
     if any(is_video(m) for m in media_rows):
