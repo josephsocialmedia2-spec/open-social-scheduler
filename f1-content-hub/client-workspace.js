@@ -8,6 +8,10 @@ const WS_PLATFORMS=[
   {id:"youtube",label:"YouTube",time:"21:00"},
   {id:"linkedin-page",label:"LinkedIn",time:"09:30"}
 ];
+let selectedRailContentId="";
+let railFilter="TUTTI";
+let railSort="recenti";
+const railThumbUrlCache=new Map();
 
 function h(value){return String(value==null?"":value).replace(/[&<>"']/g,function(m){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]})}
 function clone(v){return JSON.parse(JSON.stringify(v||{}))}
@@ -158,7 +162,7 @@ async function updatePlan(item,plan){
 }
 async function previewMedia(){
   const client=currentClient();if(!client)return;
-  const rows=(items||[]).filter(function(x){return x.client_id===client.id&&x.distribution_plan&&x.distribution_plan.platforms}).slice(0,12);
+  const rows=planItemsForClient(client);
   for(const item of rows){
     const host=document.querySelector('[data-ws-preview="'+item.id+'"]');if(!host)continue;
     const media=(item.f1_content_media||[])[0];if(!media)continue;
@@ -170,9 +174,168 @@ async function previewMedia(){
     }catch(_){}
   }
 }
+function isImmutableItem(item){
+  return !!item&&(/PUBBLICAT|PUBLISHED/i.test(String(item.status||""))||String(item.status||"")==="ARCHIVIATO");
+}
+function railItemMime(item){
+  const media=(item&&item.f1_content_media||[])[0];
+  return String(media&&media.mime_type||"").toLowerCase();
+}
+function railItemType(item){
+  const mime=railItemMime(item),ct=String(item&&item.content_type||"").toLowerCase();
+  if(mime.startsWith("image/")||/foto|image|immagine/.test(ct))return "FOTO";
+  if(mime.startsWith("video/")||/video|reel|short/.test(ct))return "VIDEO";
+  if(mime.startsWith("audio/")||/audio/.test(ct))return "AUDIO";
+  return "ALTRO";
+}
+function railCalendarRows(item){
+  return (calendar||[]).filter(function(x){return x.content_id===item.id});
+}
+function railIsScheduled(item){
+  return item.status==="PROGRAMMATO"||railCalendarRows(item).some(function(x){return /PROGRAMM|SCHEDULE|QUEUE|PUBLISHING|IN PUBBLICAZIONE/i.test(String(x.status||""))});
+}
+function railIsPublished(item){
+  return item.status==="PUBBLICATO"||railCalendarRows(item).some(function(x){return /PUBBLICAT|PUBLISHED|COMPLETED/i.test(String(x.status||""))});
+}
+function railMatchesFilter(item){
+  if(railFilter==="TUTTI")return true;
+  if(railFilter==="FOTO")return railItemType(item)==="FOTO";
+  if(railFilter==="VIDEO")return railItemType(item)==="VIDEO";
+  if(railFilter==="DA_LAVORARE")return ["IN ARRIVO","DA CLASSIFICARE","DA LAVORARE","IN LAVORAZIONE","DA APPROVARE"].includes(String(item.status||""));
+  if(railFilter==="PRONTI")return ["PRONTO","APPROVATO"].includes(String(item.status||""));
+  if(railFilter==="PROGRAMMATI")return railIsScheduled(item);
+  if(railFilter==="PUBBLICATI")return railIsPublished(item);
+  if(railFilter==="ARCHIVIATI")return String(item.status||"")==="ARCHIVIATO";
+  return true;
+}
+function railScopedItems(){
+  let rows=(items||[]).slice();
+  if(selectedClientId)rows=rows.filter(function(x){return x.client_id===selectedClientId});
+  const input=document.getElementById("contentRailSearch");
+  const q=String(input&&input.value||"").trim().toLowerCase();
+  if(q){
+    rows=rows.filter(function(item){
+      const client=(clients||[]).find(function(x){return x.id===item.client_id});
+      const plan=item.distribution_plan&&typeof item.distribution_plan==="object"?item.distribution_plan:{};
+      const hay=[
+        item.title,item.description,item.campaign,item.status,item.content_type,
+        plan.category,client&&client.name,(item.tags||[]).join(" ")
+      ].join(" ").toLowerCase();
+      return hay.includes(q);
+    });
+  }
+  rows=rows.filter(railMatchesFilter);
+  if(railSort==="vecchi"){
+    rows.sort(function(a,b){return new Date(a.created_at||0)-new Date(b.created_at||0)});
+  }else if(railSort==="programmati"){
+    rows.sort(function(a,b){
+      const aa=railCalendarRows(a).map(function(x){return new Date(x.publication_at||0).getTime()}).filter(Boolean).sort()[0]||Number.MAX_SAFE_INTEGER;
+      const bb=railCalendarRows(b).map(function(x){return new Date(x.publication_at||0).getTime()}).filter(Boolean).sort()[0]||Number.MAX_SAFE_INTEGER;
+      return aa-bb;
+    });
+  }else if(railSort==="da_lavorare"){
+    const rank={"DA LAVORARE":0,"IN ARRIVO":1,"DA CLASSIFICARE":2,"IN LAVORAZIONE":3,"DA APPROVARE":4};
+    rows.sort(function(a,b){return (rank[a.status]??99)-(rank[b.status]??99)||new Date(b.created_at||0)-new Date(a.created_at||0)});
+  }else{
+    rows.sort(function(a,b){return new Date(b.created_at||0)-new Date(a.created_at||0)});
+  }
+  if(selectedRailContentId&&!rows.some(function(x){return x.id===selectedRailContentId})){
+    const selected=(items||[]).find(function(x){return x.id===selectedRailContentId});
+    if(!selectedClientId||!selected||selected.client_id!==selectedClientId)selectedRailContentId="";
+  }
+  return rows;
+}
+function railBadgeClass(item){
+  if(railIsPublished(item))return "green";
+  if(railIsScheduled(item)||["PRONTO","APPROVATO"].includes(String(item.status||"")))return "amber";
+  return "";
+}
+window.f1SetRailFilter=function(value){
+  railFilter=String(value||"TUTTI");
+  document.querySelectorAll("[data-rail-filter]").forEach(function(btn){btn.classList.toggle("active",btn.dataset.railFilter===railFilter)});
+  window.f1RenderContentRail();
+};
+window.f1SetRailSort=function(value){railSort=String(value||"recenti");window.f1RenderContentRail()};
+window.f1ToggleContentRail=function(force){
+  const rail=document.getElementById("contentRail");if(!rail)return;
+  const next=typeof force==="boolean"?force:!rail.classList.contains("open");
+  rail.classList.toggle("open",next);
+};
+window.f1ClearRailSelection=async function(){
+  selectedRailContentId="";
+  await window.f1RenderContentRail();
+  if(window.f1RenderClientPublisherWorkspace)await window.f1RenderClientPublisherWorkspace();
+};
+window.f1SelectRailContent=async function(contentId){
+  const item=(items||[]).find(function(x){return x.id===contentId});
+  if(!item)return;
+  if(selectedClientId&&item.client_id!==selectedClientId)return alert("Il contenuto non appartiene al cliente selezionato.");
+  selectedRailContentId=item.id;
+  await window.f1RenderContentRail();
+  if(window.f1RenderClientPublisherWorkspace)await window.f1RenderClientPublisherWorkspace();
+  const target=document.querySelector('[data-distribution-item="'+item.id+'"]');
+  if(target)target.scrollIntoView({behavior:"smooth",block:"start"});
+  if(window.matchMedia&&window.matchMedia("(max-width:1050px)").matches)window.f1ToggleContentRail(false);
+};
+window.f1QuickProgramFromRail=async function(contentId){
+  const item=(items||[]).find(function(x){return x.id===contentId});
+  if(!item)return;
+  if(selectedClientId&&item.client_id!==selectedClientId)return alert("Il contenuto non appartiene al cliente selezionato.");
+  if(isImmutableItem(item))return alert("Il contenuto è già pubblicato o archiviato e non viene modificato.");
+  if(!(item.f1_content_media||[]).length)return alert("MEDIA_MISSING — aggiungi prima un file multimediale.");
+  selectedRailContentId=item.id;
+  if(window.f1WorkspaceScheduleItem)await window.f1WorkspaceScheduleItem(item.id);
+};
+window.f1HydrateRailThumbs=async function(rows){
+  for(const item of rows){
+    const box=document.querySelector('[data-rail-thumb="'+item.id+'"]');if(!box)continue;
+    const media=(item.f1_content_media||[])[0];if(!media){box.textContent="MEDIA MANCANTE";continue}
+    try{
+      const key=String(media.storage_path||media.id||item.id);
+      let url=railThumbUrlCache.get(key);
+      if(!url){url=await signedUrl(media);if(url)railThumbUrlCache.set(key,url)}
+      if(!url){box.textContent="NESSUNA ANTEPRIMA";continue}
+      const mime=String(media.mime_type||"");
+      if(mime.startsWith("image/"))box.innerHTML='<img loading="lazy" src="'+h(url)+'" alt="">';
+      else if(mime.startsWith("video/"))box.innerHTML='<video src="'+h(url)+'" muted playsinline preload="metadata"></video>';
+      else box.textContent=media.file_name||"FILE";
+    }catch(_){box.textContent="ANTEPRIMA NON DISPONIBILE"}
+  }
+};
+window.f1RenderContentRail=async function(){
+  const host=document.getElementById("contentRailList");if(!host)return;
+  const rows=railScopedItems();
+  const count=document.getElementById("contentRailCount");if(count)count.textContent=rows.length+" contenut"+(rows.length===1?"o":"i");
+  document.querySelectorAll("[data-rail-filter]").forEach(function(btn){btn.classList.toggle("active",btn.dataset.railFilter===railFilter)});
+  if(!rows.length){host.innerHTML='<div class="content-rail-empty">Nessun contenuto disponibile con i filtri selezionati.</div>';return}
+  host.innerHTML=rows.map(function(item){
+    const client=(clients||[]).find(function(x){return x.id===item.client_id});
+    const active=selectedRailContentId===item.id?" active":"";
+    const immutable=isImmutableItem(item),media=(item.f1_content_media||[])[0];
+    const state=railIsPublished(item)?"PUBBLICATO":(railIsScheduled(item)?"PROGRAMMATO":String(item.status||"BOZZA"));
+    const clientLine=selectedClientId?"":('<div class="rail-meta">'+h(client&&client.name||"Cliente")+'</div>');
+    return '<article class="rail-card'+active+'" onclick="window.f1SelectRailContent(\''+item.id+'\')">'+
+      '<div class="rail-thumb" data-rail-thumb="'+item.id+'">'+(media?"ANTEPRIMA":"MEDIA MANCANTE")+'</div>'+
+      '<div class="rail-source">'+h(item.source||"WEB")+'</div>'+
+      '<div class="rail-title">'+h(item.title||"Senza titolo")+'</div>'+clientLine+
+      '<div class="rail-meta">'+h(new Date(item.created_at).toLocaleString("it-IT",{dateStyle:"short",timeStyle:"short"}))+'</div>'+
+      '<div class="rail-badges"><span class="rail-badge">'+h(railItemType(item))+'</span><span class="rail-badge '+railBadgeClass(item)+'">'+h(state)+'</span></div>'+
+      '<div class="rail-actions"><button class="btn small ghost" onclick="event.stopPropagation();window.f1SelectRailContent(\''+item.id+'\')">USA</button>'+
+      '<button class="btn small primary" '+(immutable?"disabled":"")+' onclick="event.stopPropagation();window.f1QuickProgramFromRail(\''+item.id+'\')">PROGRAMMA</button></div>'+
+      '</article>';
+  }).join("");
+  await window.f1HydrateRailThumbs(rows);
+};
+window.f1SelectedRailContentId=function(){return selectedRailContentId};
+
 function planItemsForClient(client){
-  return (items||[]).filter(function(x){
-    return x.client_id===client.id&&x.status!=="ARCHIVIATO"&&!/PUBBLICAT|PUBLISHED/i.test(String(x.status||""));
+  const own=(items||[]).filter(function(x){return x.client_id===client.id});
+  if(selectedRailContentId){
+    const selected=own.find(function(x){return x.id===selectedRailContentId});
+    return selected?[selected]:[];
+  }
+  return own.filter(function(x){
+    return x.status!=="ARCHIVIATO"&&!/PUBBLICAT|PUBLISHED/i.test(String(x.status||""));
   }).slice(0,12);
 }
 window.f1RenderClientPublisherWorkspace=async function(){
@@ -187,18 +350,19 @@ window.f1RenderClientPublisherWorkspace=async function(){
   const rows=planItemsForClient(client);
   const cards=rows.map(function(item){
     const plan=itemPlan(item,client),media=(item.f1_content_media||[])[0],mime=media&&media.mime_type||"";
+    const locked=isImmutableItem(item);
     const pRows=WS_PLATFORMS.map(function(p){
       const data=plan.platforms[p.id]||{},state=planState(client.id,p.id,mime,item);
       const shown=data.scheduled_at?"PROGRAMMATO":(data.status||state);
       return '<div class="distribution-row">'+
         '<div><b>'+h(p.label)+'</b><div class="meta">'+h(data.time||prefFor(client,p.id).time)+'</div></div>'+
         '<div><span class="badge '+(shown==="PROGRAMMATO"||shown==="PRONTO"?"green":shown==="COLLEGATO"?"green":"")+'">'+h(shown)+'</span>'+(data.scheduled_at?'<div class="meta">'+h(new Date(data.scheduled_at).toLocaleString("it-IT",{dateStyle:"short",timeStyle:"short"}))+'</div>':"")+'</div>'+
-        '<textarea onchange="window.f1WorkspaceSaveCaption(\''+item.id+'\',\''+p.id+'\',this.value)">'+h(data.caption||"")+'</textarea>'+
-        '<div class="row-actions"><button class="btn tiny ghost" onclick="window.f1WorkspaceRegenerate(\''+item.id+'\',\''+p.id+'\')">RIGENERA</button><button class="btn tiny ghost" onclick="window.f1WorkspaceResetCaption(\''+item.id+'\',\''+p.id+'\')">RIPRISTINA</button><button class="btn tiny ghost" onclick="window.f1WorkspaceCopyCaption(\''+item.id+'\',\''+p.id+'\')">COPIA</button></div>'+
+        '<textarea '+(locked?'readonly title="Contenuto pubblicato/archiviato: sola lettura"':'onchange="window.f1WorkspaceSaveCaption(\''+item.id+'\',\''+p.id+'\',this.value)"')+'>'+h(data.caption||"")+'</textarea>'+
+        '<div class="row-actions">'+(locked?'':'<button class="btn tiny ghost" onclick="window.f1WorkspaceRegenerate(\''+item.id+'\',\''+p.id+'\')">RIGENERA</button><button class="btn tiny ghost" onclick="window.f1WorkspaceResetCaption(\''+item.id+'\',\''+p.id+'\')">RIPRISTINA</button>')+'<button class="btn tiny ghost" onclick="window.f1WorkspaceCopyCaption(\''+item.id+'\',\''+p.id+'\')">COPIA</button></div>'+
       '</div>';
     }).join("");
-    return '<article class="distribution-card">'+
-      '<div class="distribution-main"><div class="distribution-preview" data-ws-preview="'+item.id+'">ANTEPRIMA</div><div class="distribution-title"><div class="publisher-source">'+h(sourceLabel(item.source))+'</div><h3>'+h(item.title||"Contenuto")+'</h3><div class="meta">'+h(plan.category||item.campaign||"CONTENUTO")+' · '+h(item.status||"")+'</div><div class="row"><button class="btn small green" onclick="window.f1WorkspaceScheduleItem(\''+item.id+'\')">PROGRAMMA SU TUTTI I SOCIAL</button></div></div></div>'+
+    return '<article class="distribution-card '+(selectedRailContentId===item.id?'rail-focused':'')+'" data-distribution-item="'+item.id+'">'+
+      '<div class="distribution-main"><div class="distribution-preview" data-ws-preview="'+item.id+'">ANTEPRIMA</div><div class="distribution-title"><div class="publisher-source">'+h(sourceLabel(item.source))+'</div><h3>'+h(item.title||"Contenuto")+'</h3><div class="meta">'+h(plan.category||item.campaign||"CONTENUTO")+' · '+h(item.status||"")+(locked?' · SOLA LETTURA':'')+'</div><div class="row">'+(locked?'':'<button class="btn small green" onclick="window.f1WorkspaceScheduleItem(\''+item.id+'\')">PROGRAMMA SU TUTTI I SOCIAL</button>')+'</div></div></div>'+
       '<div class="distribution-channels">'+pRows+'</div></article>';
   }).join("");
   root.innerHTML='<section class="publisher-console">'+
@@ -266,6 +430,7 @@ async function quickUploadFiles(files,source){
 }
 window.f1WorkspaceSaveCaption=async function(itemId,platform,value){
   const item=(items||[]).find(function(x){return x.id===itemId}),client=item&&(clients||[]).find(function(x){return x.id===item.client_id});if(!item||!client)return;
+  if(isImmutableItem(item))return alert("Il contenuto pubblicato o archiviato è in sola lettura.");
   const plan=itemPlan(item,client);if(!plan.platforms[platform])return;
   plan.platforms[platform].caption=String(value||"");
   try{
@@ -280,12 +445,14 @@ window.f1WorkspaceSaveCaption=async function(itemId,platform,value){
 };
 window.f1WorkspaceRegenerate=async function(itemId,platform){
   const item=(items||[]).find(function(x){return x.id===itemId}),client=item&&(clients||[]).find(function(x){return x.id===item.client_id});if(!item||!client)return;
+  if(isImmutableItem(item))return alert("Il contenuto pubblicato o archiviato è in sola lettura.");
   const plan=itemPlan(item,client),category=plan.category||classify(item.title),generated=captionFor(client,item.title,category,baseCaption(client,item.title,category,item.source_text||""),platform);
   plan.platforms[platform].generated_caption=generated;plan.platforms[platform].caption=generated;
   await updatePlan(item,plan);await window.f1RenderClientPublisherWorkspace();
 };
 window.f1WorkspaceResetCaption=async function(itemId,platform){
   const item=(items||[]).find(function(x){return x.id===itemId}),client=item&&(clients||[]).find(function(x){return x.id===item.client_id});if(!item||!client)return;
+  if(isImmutableItem(item))return alert("Il contenuto pubblicato o archiviato è in sola lettura.");
   const plan=itemPlan(item,client);plan.platforms[platform].caption=plan.platforms[platform].generated_caption||"";
   await updatePlan(item,plan);await window.f1RenderClientPublisherWorkspace();
 };
@@ -330,6 +497,7 @@ async function scheduleOne(item,dayOffset){
 }
 window.f1WorkspaceScheduleItem=async function(itemId){
   const item=(items||[]).find(function(x){return x.id===itemId});if(!item)return;
+  if(isImmutableItem(item))return alert("Il contenuto è già pubblicato o archiviato e non viene riprogrammato.");
   const client=(clients||[]).find(function(x){return x.id===item.client_id});
   try{
     if(client&&!client.auto_publish){
