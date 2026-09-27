@@ -50,21 +50,22 @@ jobs:
       GITHUB_SHA: ${{ github.sha }}
     steps:
       - uses: actions/checkout@v4
-      - name: Verify always-on Windows browser environment
+      - name: Ensure Windows publisher dependencies
         shell: powershell
         run: |
           if (-not (Test-Path 'C:\F1Social\venv\Scripts\python.exe')) {
             throw 'F1 Social Python environment missing'
           }
+          & 'C:\F1Social\venv\Scripts\python.exe' -m pip install --disable-pip-version-check -r publisher\cloud_publisher\requirements.txt
+          if ($LASTEXITCODE -ne 0) { throw 'Unable to install F1 Social publisher dependencies.' }
+
+      - name: Verify always-on Windows browser environment
+        shell: powershell
+        run: |
           if (-not (Test-Path 'C:\F1Social\BrowserProfiles')) {
             New-Item -ItemType Directory -Force -Path 'C:\F1Social\BrowserProfiles' | Out-Null
           }
-          & 'C:\F1Social\venv\Scripts\python.exe' -c "import playwright; print('Playwright OK')"
-      - name: Ensure Windows publisher dependencies
-        shell: powershell
-        run: |
-          & 'C:\F1Social\venv\Scripts\python.exe' -m pip install --disable-pip-version-check -r publisher\cloud_publisher\requirements.txt
-          if ($LASTEXITCODE -ne 0) { throw 'Unable to install F1 Social publisher dependencies.' }
+          & 'C:\F1Social\venv\Scripts\python.exe' -c "import requests, playwright; print('Windows browser dependencies OK')"
 
       - name: Sync after API publisher and run local Chrome fallback
         shell: powershell
