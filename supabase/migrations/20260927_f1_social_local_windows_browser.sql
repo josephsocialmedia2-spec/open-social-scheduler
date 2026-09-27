@@ -76,3 +76,18 @@ $$;
 
 revoke all on function public.f1_seed_cloud_browser_for_client() from public,anon,authenticated;
 grant execute on function public.f1_seed_cloud_browser_for_client() to service_role;
+
+
+-- Backfill browser account identity from the social channel registry when available.
+update public.f1_client_browser_social_sessions bs
+set
+  expected_profile_url = s.profile_url,
+  expected_account_id = coalesce(bs.expected_account_id,s.external_channel_id),
+  expected_account_name = coalesce(nullif(bs.expected_account_name,''),s.account_name),
+  updated_at = now()
+from public.f1_client_social_channels s
+where s.client_id=bs.client_id
+  and s.owner_id=bs.owner_id
+  and s.platform=bs.platform
+  and s.profile_url is not null
+  and (bs.expected_profile_url is null or bs.expected_profile_url='');
