@@ -1,0 +1,66 @@
+name: F1 Social Local Runner Diagnostics
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.f1/local-runner-diagnostics-trigger.txt'
+      - '.github/workflows/f1-social-local-runner-diagnostics.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: f1-social-local-runner-diagnostics
+  cancel-in-progress: true
+
+jobs:
+  diagnostics:
+    runs-on: [self-hosted, Windows, X64, f1-social-local-pc]
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify local F1 Social directories
+        shell: powershell
+        run: |
+          if (-not (Test-Path 'C:\F1Social\venv\Scripts\python.exe')) { throw 'Python venv missing' }
+          if (-not (Test-Path 'C:\F1Social\BrowserProfiles')) { New-Item -ItemType Directory -Force -Path 'C:\F1Social\BrowserProfiles' | Out-Null }
+          Write-Host "RUNNER=$env:RUNNER_NAME"
+          Write-Host "MACHINE=$env:COMPUTERNAME"
+          Write-Host "BROWSER_ROOT=C:\F1Social\BrowserProfiles"
+      - name: Repair and verify Python dependencies
+        shell: powershell
+        run: |
+          & 'C:\F1Social\venv\Scripts\python.exe' -m pip install --disable-pip-version-check --retries 5 --timeout 30 -r publisher\cloud_publisher\requirements.txt
+          if ($LASTEXITCODE -ne 0) { throw 'Dependency installation failed' }
+          & 'C:\F1Social\venv\Scripts\python.exe' -c "import requests, playwright, publisher, publisher.cloud_publisher; print('IMPORTS_OK'); print('requests='+requests.__version__); print('playwright=1.48.0')"
+          if ($LASTEXITCODE -ne 0) { throw 'Import smoke test failed' }
+      - name: Verify prepare-clients entrypoint from repository root
+        shell: powershell
+        run: |
+          & 'C:\F1Social\venv\Scripts\python.exe' scripts\f1_windows_prepare_clients.py --help
+          if ($LASTEXITCODE -ne 0) { throw 'prepare-clients --help failed' }
+      - name: Verify prepare-clients entrypoint from another working directory
+        shell: powershell
+        run: |
+          Push-Location 'C:\Windows\Temp'
+          try {
+            & 'C:\F1Social\venv\Scripts\python.exe' "$env:GITHUB_WORKSPACE\scripts\f1_windows_prepare_clients.py" --help
+            if ($LASTEXITCODE -ne 0) { throw 'prepare-clients external working-directory test failed' }
+          } finally {
+            Pop-Location
+          }
+      - name: Verify browser-session entrypoint imports
+        shell: powershell
+        run: |
+          & 'C:\F1Social\venv\Scripts\python.exe' scripts\f1_browser_session.py --help
+          if ($LASTEXITCODE -ne 0) { throw 'browser-session --help failed' }
+      - name: Confirm browser publishing remains disabled
+        shell: powershell
+        run: |
+          $workflow = Get-Content '.github\workflows\f1-social-cloud-publisher.yml' -Raw
+          if ($workflow -notmatch 'if:\s*\$\{\{\s*false\s*\}\}') {
+            throw 'Browser fallback is not explicitly disabled'
+          }
+          Write-Host 'BROWSER_FALLBACK_DISABLED_OK'
