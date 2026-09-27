@@ -101,3 +101,7 @@
 .delete-modal-meta{display:grid;gap:8px;margin:12px 0}.delete-modal-meta .subpanel{margin:0}.delete-modal-actions{display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap;margin-top:14px}
 .deleting{opacity:.55;pointer-events:none}
 @media(max-width:760px){.upload-summary{grid-template-columns:1fr 1fr}}
+
+.btn.amber{background:#d69b31;color:#181004;border:1px solid #f2b84b}
+.btn.amber:hover{background:#f2b84b}
+.heic-state{color:#f7d48a;border-color:#866521}
