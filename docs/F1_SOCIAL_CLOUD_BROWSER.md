@@ -58,15 +58,28 @@ Il token è temporaneo e non deve essere salvato nel repository.
 
 ## Primo login di ogni cliente
 
-Ogni cliente effettua una sola volta il login nel proprio browser cloud. Serve una sessione grafica remota/VNC/RDP perché password, CAPTCHA e 2FA devono essere completati dall'utente autorizzato.
+Ogni cliente effettua una sola volta il login nel proprio browser cloud. Password, CAPTCHA, checkpoint e 2FA restano operazioni dell'utente autorizzato.
+
+Sul VPS avvia il desktop di configurazione:
 
 ```bash
+cd open-social-scheduler
+bash scripts/start_f1_browser_desktop.sh
+```
+
+Il desktop noVNC ascolta soltanto su `127.0.0.1`. Dal computer dell'operatore crea temporaneamente il tunnel SSH indicato dallo script e apri `http://127.0.0.1:6080/vnc.html`. Questo serve solo alla configurazione iniziale: la pubblicazione ordinaria continuerà sul VPS senza il computer locale.
+
+Poi sul VPS:
+
+```bash
+export DISPLAY=:99
 source /opt/f1-browser-venv/bin/activate
+cd open-social-scheduler
 export SUPABASE_SERVICE_ROLE_KEY='...'
 python scripts/f1_browser_session.py antica-cappella facebook
 ```
 
-Ripeti per i social necessari. Lo script registra nel database solo `READY/CONNECTED`, mai password o cookie.
+Lo script apre esclusivamente il profilo persistente del cliente, richiede il login manuale quando necessario e verifica l'identità attesa prima di salvare lo stato `CONNECTED`. Ripeti per i social necessari. Password e cookie non vengono scritti in Supabase o GitHub.
 
 ## Attivazione
 
