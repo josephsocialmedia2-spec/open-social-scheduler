@@ -667,6 +667,43 @@ window.f1RenderContentRail=async function(){
 };
 window.f1SelectedRailContentId=function(){return selectedRailContentId};
 
+function intelligenceTimelineHtml(item){
+  const events=(typeof intelligenceEvents!=="undefined"?intelligenceEvents:[]).filter(function(x){return x.content_id===item.id}).slice().sort(function(a,b){return new Date(a.created_at)-new Date(b.created_at)});
+  const latestByStage=new Map();
+  events.forEach(function(ev){latestByStage.set(String(ev.stage||"FASE"),ev)});
+  const ordered=["RILEVATO","CARICATO","ANALISI","CONVERSIONE_HEIC","ANALISI_AUDIO","TRASCRIZIONE","SOTTOTITOLAZIONE","CAPTION","PROGRAMMATO","PRONTO_PER_APPROVAZIONE","PUBBLICATO","ERRORE"];
+  const rows=[];
+  ordered.forEach(function(stage){if(latestByStage.has(stage))rows.push(latestByStage.get(stage))});
+  latestByStage.forEach(function(ev,stage){if(!ordered.includes(stage))rows.push(ev)});
+  if(!rows.length){
+    rows.push({stage:"RILEVATO",status:"WAITING",message:"F1 Social Intelligence prenderà automaticamente in carico il contenuto.",progress:5});
+  }
+  return '<div class="intelligence-timeline">'+rows.map(function(ev){
+    const state=String(ev.status||"").toUpperCase();
+    const cls=state==="COMPLETED"?"done":(state==="ERROR"?"error":(state==="BLOCKED"?"blocked":"running"));
+    return '<div class="intel-step '+cls+'"><span class="intel-dot"></span><div><b>'+h(String(ev.stage||"FASE").replaceAll("_"," "))+'</b><small>'+h(ev.message||state||"In lavorazione")+'</small></div></div>';
+  }).join("")+'</div>';
+}
+function intelligenceApprovalLabel(client){
+  return client&&client.approval_required?"IMMOBILIARE · APPROVAZIONE FINALE":"AUTOPILOT · PUBBLICAZIONE AUTOMATICA";
+}
+window.f1ToggleIntelligenceTimes=function(show){
+  const panel=document.getElementById("intelligenceTimePanel");if(!panel)return;
+  panel.classList.toggle("hidden",!show);
+};
+window.f1KeepCurrentTimes=function(){
+  window.f1ToggleIntelligenceTimes(false);
+  const client=currentClient();if(!client)return;
+  const note=document.getElementById("intelligenceTimeNote");
+  if(note)note.textContent="Orari attuali mantenuti. Intelligence prosegue automaticamente.";
+};
+window.f1ProceedIntelligence=async function(){
+  const client=currentClient();if(!client)return;
+  const note=document.getElementById("intelligenceTimeNote");
+  if(note)note.textContent=client.approval_required?"Preparazione immediata: la pubblicazione immobiliare resterà in approvazione.":"Preparazione immediata: i contenuti pronti entreranno in programmazione.";
+  await window.f1WorkspaceProgramAll();
+};
+
 function planItemsForClient(client){
   const own=(items||[]).filter(function(x){return x.client_id===client.id});
   if(selectedRailContentId){
@@ -703,10 +740,15 @@ window.f1RenderClientPublisherWorkspace=async function(){
     }).join("");
     return '<article class="distribution-card '+(selectedRailContentId===item.id?'rail-focused':'')+'" data-distribution-item="'+item.id+'">'+
       '<div class="distribution-main"><div class="distribution-preview" data-ws-preview="'+item.id+'">ANTEPRIMA</div><div class="distribution-title"><div class="publisher-source">'+h(sourceLabel(item.source))+'</div><h3>'+h(item.title||"Contenuto")+'</h3><div class="meta">'+h(plan.category||item.campaign||"CONTENUTO")+' · '+h(item.status||"")+(locked?' · SOLA LETTURA':'')+'</div><div class="row">'+(locked?'':'<button class="btn small green" onclick="window.f1WorkspaceScheduleItem(\''+item.id+'\')">PROGRAMMA SU TUTTI I SOCIAL</button>')+'<button class="btn small danger-bright" onclick="window.f1ConfirmDeleteContent(\''+item.id+'\')">ELIMINA</button></div></div></div>'+
+      intelligenceTimelineHtml(item)+
       '<div class="distribution-channels">'+pRows+'</div></article>';
   }).join("");
+  const folderPath=client.profile_metadata&&client.profile_metadata.fixed_folder_path||("C:\\F1Social\\Clients\\"+String(client.slug||"cliente")+"\\INBOX");
+  const rec=(typeof operatorPreferences!=="undefined"&&operatorPreferences[0]&&operatorPreferences[0].screen_recording_enabled&&operatorPreferences[0].screen_recording_consented_at);
   root.innerHTML='<section class="publisher-console">'+
-    '<div class="publisher-head"><div><h2>Carica contenuti · '+h(client.name)+'</h2><div class="muted">Carica una volta, controlla caption e orari, poi distribuisci sui canali social del cliente.</div></div><div class="publisher-actions"><span class="badge '+(client.auto_publish?"green":"amber")+'">'+(client.auto_publish?"PUBBLICAZIONE AUTOMATICA ATTIVA":"AUTOMAZIONE DA ATTIVARE")+'</span>'+(heicCount?'<button class="btn small amber" onclick="window.f1ConvertExistingHeicForClient()">CONVERTI HEIC IN CLOUD ('+heicCount+')</button>':'')+'<button class="btn small green" onclick="window.f1WorkspaceProgramAll()">PROGRAMMA TUTTO</button></div></div>'+
+    '<div class="publisher-head"><div><h2>F1 Social Intelligence · '+h(client.name)+'</h2><div class="muted">Il caricamento avvia automaticamente analisi, elaborazione, pianificazione e pubblicazione dove consentito.</div></div><div class="publisher-actions"><span class="badge green">INTELLIGENCE ATTIVA</span><span class="badge '+(client.approval_required?"amber":"green")+'">'+h(intelligenceApprovalLabel(client))+'</span>'+(rec?'<span class="badge rec-consent">● REC CONSENSO ATTIVO</span>':'')+(heicCount?'<button class="btn small amber" onclick="window.f1ConvertExistingHeicForClient()">CONVERTI HEIC IN CLOUD ('+heicCount+')</button>':'')+'<button class="btn small green" onclick="window.f1WorkspaceProgramAll()">PROGRAMMA TUTTO</button></div></div>'+
+    '<div class="intelligence-command"><div><span class="intel-kicker">CARTELLA AUTOMATICA CLIENTE</span><b>'+h(folderPath)+'</b><small>Il percorso è assegnato dal software. Inserendo un file in INBOX il PC Agent lo carica senza altre operazioni.</small></div><div class="intel-command-actions"><button class="btn small ghost" onclick="window.f1KeepCurrentTimes()">MANTIENI ORARI ATTUALI</button><button class="btn small ghost" onclick="window.f1ToggleIntelligenceTimes(true)">MODIFICA ORARI</button><button class="btn small green" onclick="window.f1ProceedIntelligence()">PROCEDI</button></div></div>'+
+    '<div id="intelligenceTimeNote" class="intel-note">'+(client.approval_required?'Elaborazione automatica attiva. Le pubblicazioni immobiliari attendono la tua approvazione finale.':'Nessun intervento necessario: se non modifichi nulla, Intelligence usa gli orari salvati e prosegue automaticamente.')+'</div>'+
     '<div class="ingest-grid">'+
       '<button class="ingest-action" onclick="window.f1WorkspaceOpenWhatsApp()"><b>DA WHATSAPP</b><span>Importa messaggi e media ricevuti per questo cliente.</span></button>'+
       '<button class="ingest-action" onclick="document.getElementById(\'workspaceFolderInput\').click()"><b>DA CARTELLA</b><span>Seleziona una cartella con immagini e video.</span></button>'+
@@ -716,7 +758,7 @@ window.f1RenderClientPublisherWorkspace=async function(){
       '<input id="workspaceFolderInput" type="file" webkitdirectory directory multiple hidden onchange="window.f1WorkspaceInputFiles(this.files,\'CARTELLA\')">'+
     '</div>'+
     '<div id="workspaceUploadProgress" class="upload-progress hidden"></div>'+
-    '<div class="section-title" style="margin-top:12px"><h3 style="margin:0">Orari di distribuzione</h3><span class="muted">Modificabili per cliente e piattaforma</span></div><div class="publish-times">'+prefs+'</div>'+
+    '<div id="intelligenceTimePanel" class="intelligence-time-panel hidden"><div class="section-title" style="margin-top:12px"><h3 style="margin:0">Modifica orari di distribuzione</h3><button class="btn small ghost" onclick="window.f1ToggleIntelligenceTimes(false)">CHIUDI</button></div><div class="publish-times">'+prefs+'</div></div>'+
     '<div class="section-title" style="margin-top:14px"><h3 style="margin:0">Come verranno distribuiti</h3><span class="muted">Le caption restano modificabili fino alla pubblicazione</span></div>'+
     '<div class="distribution-list">'+(cards||'<div class="publisher-empty">Nessun contenuto con piano di distribuzione. Carica un file da WhatsApp, cartella o trascinamento.</div>')+'</div>'+
   '</section>';
@@ -737,7 +779,7 @@ window.f1RenderClientPublisherWorkspace=async function(){
 window.f1WorkspaceSaveTime=async function(clientId,platform,value){
   const client=(clients||[]).find(function(x){return x.id===clientId});if(!client||!/^\d{2}:\d{2}$/.test(value))return;
   const prefs=clone(client.publishing_preferences||{}),current=prefs[platform]&&typeof prefs[platform]==="object"?prefs[platform]:{};
-  prefs[platform]=Object.assign({},current,{time:value,enabled:true});prefs.timezone=client.timezone||"Europe/Rome";prefs.review_before_schedule=true;
+  prefs[platform]=Object.assign({},current,{time:value,enabled:true});prefs.timezone=client.timezone||"Europe/Rome";prefs.review_before_schedule=!!client.approval_required;prefs.intelligence_auto_pipeline=true;prefs.auto_schedule=true;
   const r=await sb.from("f1_content_clients").update({publishing_preferences:prefs,updated_at:new Date().toISOString()}).eq("id",clientId);
   if(r.error)return alert(r.error.message);
   client.publishing_preferences=prefs;
@@ -788,7 +830,7 @@ async function quickUploadFiles(files,source){
       }
       const ins=await sb.from("f1_content_items").insert({
         owner_id:user.id,client_id:client.id,title:title,description:base,source_text:base,
-        content_type:contentTypeFromMime(mime),source:source,status:"DA APPROVARE",priority:"NORMALE",
+        content_type:contentTypeFromMime(mime),source:source,status:"IN ARRIVO",priority:"NORMALE",
         campaign:category,tags:hashtags(client,category).map(function(x){return x.replace(/^#/,"")}),
         notes:prepared.converted?("HEIC convertito localmente in PNG con heic2any 0.0.4. Originale: "+originalFile.name):"Piano di distribuzione automatico generato al caricamento.",
         distribution_plan:plan
@@ -821,6 +863,11 @@ async function quickUploadFiles(files,source){
         await verifyConvertedMedia(mr.data);
         uploadBatchState.convertedHeic++;
       }
+      await sb.from("f1_intelligence_events").insert({
+        owner_id:user.id,client_id:client.id,content_id:insertedId,stage:"CARICATO",status:"COMPLETED",
+        message:"Contenuto caricato nel cloud. F1 Social Intelligence prosegue automaticamente.",progress:15,
+        details:{source:source||"WEB",file_name:safe}
+      });
       successfulBytes+=Number(uploadFile.size)||0;
       uploadBatchState.completedFiles++;
       uploadBatchState.uploadedBytes=successfulBytes;
@@ -988,7 +1035,7 @@ async function scheduleOne(item,dayOffset){
     if(state==="MEDIA_MISSING"||state==="CONVERSIONE_HEIC"||state==="FORMATO_NON_SUPPORTATO"||state==="TIKTOK_PHOTO_URL_REQUIRED"||state==="TIKTOK_REVIEW_REQUIRED"){
       data.status=state;data.scheduled_at=null;plan.platforms[p.id]=data;continue;
     }
-    const calendarStatus=state==="PRONTO"?"PROGRAMMATO":"CANALE_DA_COLLEGARE";
+    const calendarStatus=state==="PRONTO"?(client.approval_required?"APPROVAZIONE_RICHIESTA":"PROGRAMMATO"):"CANALE_DA_COLLEGARE";
     const payload={
       owner_id:user.id,content_id:item.id,client_id:client.id,platform:p.id,publication_at:target.toISOString(),
       status:calendarStatus,provider:ch&&ch.provider||"oauth_broker",retry_count:0,error:null,
@@ -1004,10 +1051,10 @@ async function scheduleOne(item,dayOffset){
       const ins=await sb.from("f1_content_calendar").insert(payload);if(ins.error)throw ins.error;
     }
     data.status=calendarStatus;data.scheduled_at=target.toISOString();plan.platforms[p.id]=data;
-    if(calendarStatus==="PROGRAMMATO")scheduled++;
+    if(calendarStatus==="PROGRAMMATO"||calendarStatus==="APPROVAZIONE_RICHIESTA")scheduled++;
   }
   await updatePlan(item,plan);
-  const status=Object.values(plan.platforms).some(function(x){return x.scheduled_at})?"PROGRAMMATO":"DA APPROVARE";
+  const status=Object.values(plan.platforms).some(function(x){return x.scheduled_at})?(client.approval_required?"DA APPROVARE":"PROGRAMMATO"):"PRONTO";
   const u=await sb.from("f1_content_items").update({status:status}).eq("id",item.id);if(u.error)throw u.error;
   item.status=status;
   return scheduled;
@@ -1027,7 +1074,7 @@ window.f1WorkspaceScheduleItem=async function(itemId){
       client.auto_publish=true;
     }
     const count=await scheduleOne(item,0);await loadAll();await renderAll();
-    alert("Piano creato. "+count+" canali già collegati sono pronti alla pubblicazione; gli altri restano in attesa del collegamento.");
+    alert(client&&client.approval_required?("Piano creato. "+count+" pubblicazioni immobiliari sono pronte e attendono la tua approvazione finale."):("Piano creato. "+count+" canali già collegati proseguiranno automaticamente; gli altri restano in attesa del collegamento."));
   }catch(e){alert(e.message||String(e))}
 };
 window.f1WorkspaceProgramAll=async function(){
@@ -1045,7 +1092,7 @@ window.f1WorkspaceProgramAll=async function(){
     const ordered=list.slice().reverse();
     for(let i=0;i<ordered.length;i++)ready+=await scheduleOne(ordered[i],i);
     await loadAll();await renderAll();
-    alert("Programmazione completata per "+ordered.length+" contenuti. "+ready+" pubblicazioni sono su canali già collegati; i canali non collegati restano predisposti e separati.");
+    alert(client.approval_required?("Preparazione completata per "+ordered.length+" contenuti. "+ready+" pubblicazioni immobiliari attendono approvazione finale."):("Programmazione automatica completata per "+ordered.length+" contenuti. "+ready+" pubblicazioni sono pronte sui canali collegati."));
   }catch(e){alert("Programmazione non completata: "+(e.message||String(e)))}
 };
 
@@ -1091,7 +1138,7 @@ window.f1WorkspaceImportWhatsApp=async function(logId){
     }
     const first=(mediaSource.data||[])[0],mime=first&&first.mime_type||"";
     const plan=buildPlan(client,title,category,base,mime,"WHATSAPP",null);
-    const ins=await sb.from("f1_content_items").insert({owner_id:user.id,client_id:client.id,title:title,description:base,source_text:base,content_type:mime?contentTypeFromMime(mime):"TESTO",source:"WHATSAPP",status:"DA APPROVARE",campaign:category,tags:hashtags(client,category).map(function(x){return x.replace(/^#/,"")}),notes:"Importato dal registro WhatsApp.",whatsapp_thread_key:key,distribution_plan:plan}).select().single();
+    const ins=await sb.from("f1_content_items").insert({owner_id:user.id,client_id:client.id,title:title,description:base,source_text:base,content_type:mime?contentTypeFromMime(mime):"TESTO",source:"WHATSAPP",status:"IN ARRIVO",campaign:category,tags:hashtags(client,category).map(function(x){return x.replace(/^#/,"")}),notes:"Importato dal registro WhatsApp.",whatsapp_thread_key:key,distribution_plan:plan}).select().single();
     if(ins.error)throw ins.error;
     for(const m of (mediaSource.data||[])){
       const cp=await sb.from("f1_content_media").insert({owner_id:user.id,content_id:ins.data.id,client_id:client.id,file_name:m.file_name,mime_type:m.mime_type,storage_path:m.storage_path,file_size:m.file_size,source:"WHATSAPP",whatsapp_message_id:m.whatsapp_message_id});
