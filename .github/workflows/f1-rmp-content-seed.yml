@@ -1,0 +1,43 @@
+name: Real Media Pro - Autonomous Content Seed
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '20 5 * * *'
+  push:
+    branches: [main]
+    paths:
+      - '.f1-rmp-content-trigger'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: f1-rmp-content-seed
+  cancel-in-progress: false
+
+jobs:
+  seed-rmp-content:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    env:
+      SUPABASE_URL: ${{ vars.SUPABASE_URL || 'https://nqnmlsmeiynxbdojeyjt.supabase.co' }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+      RMP_SEED_LIMIT: '3'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install generator dependencies
+        run: pip install requests==2.32.5 Pillow==11.3.0
+      - name: Generate Real Media Pro owned creatives
+        run: python publisher/rmp_content_seed_worker.py
+
+  start-intelligence:
+    needs: seed-rmp-content
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Confirm handoff
+        run: echo "Content created in Supabase. The scheduled F1 Social Intelligence worker will process it within five minutes."
