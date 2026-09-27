@@ -43,7 +43,12 @@ jobs:
       - name: Compile Windows browser scripts
         shell: powershell
         run: |
-          python -m py_compile publisher/cloud_publisher/*.py publisher/cloud_publisher/browser/*.py scripts/f1_browser_session.py scripts/f1_windows_prepare_clients.py
+          $files = @()
+          $files += Get-ChildItem 'publisher/cloud_publisher' -Filter '*.py' -File | ForEach-Object { $_.FullName }
+          $files += Get-ChildItem 'publisher/cloud_publisher/browser' -Filter '*.py' -File | ForEach-Object { $_.FullName }
+          $files += (Resolve-Path 'scripts/f1_browser_session.py').Path
+          $files += (Resolve-Path 'scripts/f1_windows_prepare_clients.py').Path
+          python -m py_compile $files
       - name: Parse Windows installer PowerShell
         shell: powershell
         run: |
