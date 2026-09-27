@@ -215,10 +215,15 @@ def is_image(media: dict[str, Any]) -> bool:
 
 
 def is_real_estate(client: dict[str, Any]) -> bool:
+    """Manual approval is reserved for real-estate clients/agencies.
+
+    Do not treat a generic approval flag as proof of sector: the operator's
+    policy is sector-based and non-real-estate clients must stay autonomous.
+    """
     text = " ".join(
         str(client.get(k) or "") for k in ("category", "business_sector", "name", "slug")
     ).lower()
-    return bool(client.get("approval_required")) or "immobil" in text
+    return any(token in text for token in ("immobil", "real estate", "agenzia immobiliare"))
 
 
 def ensure_job(
