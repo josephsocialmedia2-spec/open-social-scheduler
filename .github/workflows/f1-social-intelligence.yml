@@ -29,7 +29,29 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  intelligence:
+  agency-intelligence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    env:
+      SUPABASE_URL: ${{ vars.SUPABASE_URL || 'https://nqnmlsmeiynxbdojeyjt.supabase.co' }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: publisher/agency_requirements.txt
+      - name: Install agency discovery dependencies
+        run: pip install -r publisher/agency_requirements.txt
+      - name: Discover real-estate agencies automatically
+        shell: bash
+        run: |
+          AGENCY_LIMIT="${{ github.event_name == 'workflow_dispatch' && inputs.agency_limit || '8' }}"
+          python publisher/f1_intelligence_worker.py --skip-content --agency-limit "$AGENCY_LIMIT"
+
+  content-intelligence:
     runs-on: ubuntu-latest
     timeout-minutes: 45
     env:
@@ -39,22 +61,18 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
           cache: pip
           cache-dependency-path: publisher/intelligence_requirements.txt
-
       - name: Cache Whisper model
         uses: actions/cache@v4
         with:
           path: ~/.cache/huggingface
           key: f1-whisper-${{ runner.os }}-${{ env.F1_WHISPER_MODEL }}
-
       - name: Install Intelligence dependencies
         run: pip install -r publisher/intelligence_requirements.txt
-
       - name: Ensure ffmpeg is available
         shell: bash
         run: |
@@ -62,13 +80,25 @@ jobs:
             sudo apt-get update
             sudo apt-get install -y ffmpeg
           fi
-
-      - name: Run autonomous Content + Agency Intelligence
+      - name: Run autonomous Content Intelligence
         shell: bash
         run: |
           CONTENT_LIMIT="${{ github.event_name == 'workflow_dispatch' && inputs.content_limit || '250' }}"
-          AGENCY_LIMIT="${{ github.event_name == 'workflow_dispatch' && inputs.agency_limit || '8' }}"
-          python publisher/f1_intelligence_worker.py             --content-limit "$CONTENT_LIMIT"             --agency-limit "$AGENCY_LIMIT"
+          python publisher/f1_intelligence_worker.py --skip-agencies --content-limit "$CONTENT_LIMIT"
 
+  reconcile-publisher:
+    needs: content-intelligence
+    if: ${{ always() && needs.content-intelligence.result == 'success' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      SUPABASE_URL: ${{ vars.SUPABASE_URL || 'https://nqnmlsmeiynxbdojeyjt.supabase.co' }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install requests==2.32.5
       - name: Reconcile newly scheduled content into publisher queue
         run: python publisher/supabase_queue_bridge.py
