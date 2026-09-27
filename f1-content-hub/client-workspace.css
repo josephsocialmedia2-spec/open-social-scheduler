@@ -23,3 +23,55 @@
 .publisher-source{font-size:10px;text-transform:uppercase;color:#7ef0b0;font-weight:900}
 @media(max-width:1050px){.publish-times{grid-template-columns:repeat(3,1fr)}.distribution-row{grid-template-columns:90px 95px 1fr}.distribution-row .row-actions{grid-column:3}}
 @media(max-width:760px){.ingest-grid{grid-template-columns:1fr}.publish-times{grid-template-columns:1fr 1fr}.distribution-main{grid-template-columns:1fr}.distribution-row{grid-template-columns:1fr}.distribution-row .row-actions{grid-column:auto;justify-content:flex-start}}
+
+
+/* Content Rail — vertical content chooser between navigation and workspace */
+.shell{grid-template-columns:250px 340px minmax(0,1fr)}
+.main{min-width:0}
+.content-rail{position:sticky;top:0;height:100vh;min-width:0;background:#081522;border-right:1px solid var(--line);padding:14px 12px;display:flex;flex-direction:column;overflow:hidden;z-index:20}
+.content-rail-head{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:10px}
+.content-rail-head h2{margin:0;font-size:20px}
+.content-rail-head .muted{font-size:11px}
+.content-rail-tools{display:grid;gap:8px;margin-bottom:10px}
+.content-rail-filters{display:flex;gap:5px;flex-wrap:wrap}
+.content-rail-filter{border:1px solid #35516f;background:#0b1b2b;color:#b8c6d8;border-radius:999px;padding:5px 7px;font-size:9px;font-weight:900}
+.content-rail-filter.active{background:#163c2e;border-color:#39f28a;color:#d8ffe8}
+.content-rail-sort{padding:8px 9px;font-size:11px}
+.content-rail-list{display:grid;gap:10px;overflow-y:auto;overscroll-behavior:contain;padding:1px 4px 20px 0;scrollbar-width:thin;flex:1}
+.content-rail-list::-webkit-scrollbar{width:7px}.content-rail-list::-webkit-scrollbar-thumb{background:#29435e;border-radius:99px}
+.rail-card{background:#0d1f32;border:1px solid #27425f;border-radius:14px;padding:9px;cursor:pointer;transition:border-color .16s ease,transform .16s ease,background .16s ease}
+.rail-card:hover{border-color:#4b7596;transform:translateY(-1px)}
+.rail-card.active{border-color:#39f28a;background:#102a2c;box-shadow:0 0 0 1px rgba(57,242,138,.22) inset}
+.rail-thumb{height:174px;border-radius:11px;background:#12263b;display:grid;place-items:center;overflow:hidden;color:#8fa4bb;font-size:11px;text-align:center;margin-bottom:9px}
+.rail-thumb img,.rail-thumb video{width:100%;height:100%;object-fit:cover}
+.rail-source{font-size:9px;line-height:1.2;font-weight:900;text-transform:uppercase;color:#7ef0b0;margin-bottom:4px;word-break:break-word}
+.rail-title{font-size:13px;font-weight:900;line-height:1.3;margin-bottom:5px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.rail-meta{font-size:10px;color:#9fb1c7;margin-bottom:7px}
+.rail-badges{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px}
+.rail-badge{padding:3px 6px;border:1px solid #35516f;border-radius:999px;font-size:9px;font-weight:900}
+.rail-badge.green{border-color:#24734b;color:#7ef0b0}.rail-badge.amber{border-color:#866521;color:#f7d48a}
+.rail-actions{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.rail-actions .btn{width:100%}
+.content-rail-empty{padding:20px 8px;text-align:center;color:#8fa4bb;border:1px dashed #35516f;border-radius:12px}
+.content-rail-toggle{display:none}
+.content-rail-close{display:none}
+.rail-count{font-size:10px;color:#9fb1c7;margin-top:2px}
+.distribution-card.rail-focused{border-color:#39f28a;box-shadow:0 0 0 1px rgba(57,242,138,.18) inset}
+
+@media(max-width:1250px){
+  .shell{grid-template-columns:220px 300px minmax(0,1fr)}
+  .rail-thumb{height:155px}
+}
+@media(max-width:1050px){
+  .shell{grid-template-columns:220px minmax(0,1fr)}
+  .content-rail{position:fixed;left:220px;top:0;bottom:0;width:330px;height:100vh;transform:translateX(-110%);transition:transform .2s ease;box-shadow:14px 0 30px rgba(0,0,0,.34);z-index:45}
+  .content-rail.open{transform:translateX(0)}
+  .content-rail-toggle{display:inline-flex}
+  .content-rail-close{display:inline-flex}
+}
+@media(max-width:760px){
+  .shell{display:block}
+  .content-rail{left:0;width:min(92vw,360px)}
+  .content-rail.open{transform:translateX(0)}
+  .rail-thumb{height:185px}
+}
