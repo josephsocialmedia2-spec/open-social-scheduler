@@ -12,6 +12,12 @@ Questa integrazione prepara YouTube, TikTok e LinkedIn per un consenso OAuth ini
 
 ## Callback da registrare
 
+Meta / Facebook:
+https://nqnmlsmeiynxbdojeyjt.supabase.co/functions/v1/f1-social-oauth/callback/facebook
+
+Meta / Instagram:
+https://nqnmlsmeiynxbdojeyjt.supabase.co/functions/v1/f1-social-oauth/callback/instagram
+
 YouTube / Google:
 https://nqnmlsmeiynxbdojeyjt.supabase.co/functions/v1/f1-social-oauth/callback/youtube
 
@@ -24,6 +30,14 @@ https://nqnmlsmeiynxbdojeyjt.supabase.co/functions/v1/f1-social-oauth/callback/l
 ## Secret Supabase da configurare soltanto nella fase OAuth finale
 
 La chiave interna di cifratura non richiede intervento: viene generata e conservata in Supabase Vault. La variabile F1_OAUTH_ENCRYPTION_KEY resta solo un override opzionale.
+
+Meta / Facebook / Instagram:
+- META_APP_ID
+- META_APP_SECRET
+- opzionale META_OAUTH_SCOPES
+- opzionale META_GRAPH_VERSION
+
+Il META_APP_SECRET deve restare esclusivamente nei secret della Edge Function Supabase: non inserirlo nel repository, in GitHub Pages, localStorage o nel codice JavaScript del browser.
 
 Google:
 - GOOGLE_OAUTH_CLIENT_ID
