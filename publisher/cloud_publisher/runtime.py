@@ -66,10 +66,6 @@ def auth_required(
         session.get("id") if session else None,
         {"status": "AUTH_REQUIRED", "error_code": code, "error_message": message[:1000]},
     )
-    db.update_browser_profile(
-        profile.get("id") if profile else None,
-        {"status": "AUTH_REQUIRED"},
-    )
 
 
 def process_one(db: Database, settings, row: dict) -> str:
