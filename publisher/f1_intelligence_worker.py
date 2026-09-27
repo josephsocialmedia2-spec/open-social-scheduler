@@ -257,6 +257,28 @@ def ensure_job(
     return created[0]
 
 
+def parse_iso(value: Any) -> datetime | None:
+    raw = str(value or "").strip()
+    if not raw:
+        return None
+    try:
+        return datetime.fromisoformat(raw.replace("Z", "+00:00"))
+    except Exception:
+        return None
+
+
+def job_is_available(job: dict[str, Any]) -> bool:
+    now = datetime.now(timezone.utc)
+    status = str(job.get("status") or "").upper()
+    claimed = parse_iso(job.get("claimed_at"))
+    run_after = parse_iso(job.get("run_after"))
+    if status == "RUNNING" and claimed and claimed > now - timedelta(minutes=30):
+        return False
+    if status == "WAITING" and run_after and run_after > now:
+        return False
+    return True
+
+
 def update_job(job: dict[str, Any], status: str, stage: str, **extra: Any) -> None:
     payload: dict[str, Any] = {
         "status": status,
@@ -755,6 +777,8 @@ def process_content(
         f"content-autopilot:{content_id}",
         {"pipeline": "F1_INTELLIGENCE_V1"},
     )
+    if not job_is_available(job):
+        return {"published": 0, "scheduled": 0, "blocked": 0}
     if str(item.get("status") or "") == "PUBBLICATO":
         emit_event(owner_id, client_id, content_id, str(job["id"]), "PUBBLICATO", "COMPLETED", "Pubblicazione confermata dalla piattaforma", 100)
         update_job(job, "COMPLETED", "PUBBLICATO", completed_at=now_iso(), result={"status": "PUBBLICATO"})
