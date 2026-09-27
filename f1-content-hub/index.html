@@ -48,6 +48,7 @@
 @media(max-width:1050px){.content-toolbar{grid-template-columns:1fr 1fr}}
 @media(max-width:760px){.content-toolbar{grid-template-columns:1fr}.calendar-modes{width:100%;justify-content:space-between}}
 </style>
+  <link rel="stylesheet" href="./client-workspace.css?v=20260927a">
 </head>
 <body>
 <div id="authView" class="auth">
@@ -97,6 +98,7 @@
       </div>
     </div>
     <div id="clientContext" class="client-context"></div>
+    <div id="clientPublisherWorkspace" class="client-publisher-workspace hidden"></div>
 
     <section id="tab-dashboard">
       <div class="metrics" id="metrics"></div>
@@ -697,6 +699,7 @@ function renderClients(){
 }
 async function renderAll(){
   renderMetrics();renderClients();renderClientContext();
+  if(window.f1RenderClientPublisherWorkspace)await window.f1RenderClientPublisherWorkspace();
   await renderGrid("latestGrid",filteredItems(12));await renderGrid("archiveGrid",filteredItems());
   renderCalendar();renderAnalytics();renderAutomation();renderPublicationCenter();renderProblems();renderReports();
 }
@@ -1687,5 +1690,6 @@ sb.auth.onAuthStateChange(function(event,session){
 });
 authState();
 </script>
+<script src="./client-workspace.js?v=20260927a"></script>
 </body>
 </html>
