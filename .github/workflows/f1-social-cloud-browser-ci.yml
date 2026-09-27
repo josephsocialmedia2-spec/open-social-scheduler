@@ -8,9 +8,12 @@ on:
       - 'scripts/f1_browser_session.py'
       - 'scripts/install_f1_social_browser_runner.sh'
       - 'scripts/start_f1_browser_desktop.sh'
+      - 'scripts/install_f1_social_windows_runner.ps1'
+      - 'scripts/f1_windows_prepare_clients.py'
       - '.github/workflows/f1-social-cloud-publisher.yml'
       - '.github/workflows/f1-social-cloud-browser-ci.yml'
       - 'supabase/migrations/*cloud_browser*'
+      - 'supabase/migrations/*local_windows*'
   workflow_dispatch:
 
 permissions:
@@ -26,5 +29,31 @@ jobs:
           python-version: '3.12'
       - run: pip install requests==2.32.5
       - run: python -m unittest discover -s publisher/cloud_publisher/tests -v
-      - run: python -m py_compile publisher/cloud_publisher/*.py publisher/cloud_publisher/browser/*.py scripts/f1_browser_session.py
+      - run: python -m py_compile publisher/cloud_publisher/*.py publisher/cloud_publisher/browser/*.py scripts/f1_browser_session.py scripts/f1_windows_prepare_clients.py
       - run: bash -n scripts/install_f1_social_browser_runner.sh scripts/start_f1_browser_desktop.sh
+
+  windows-validation:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install requests==2.32.5
+      - name: Compile Windows browser scripts
+        shell: powershell
+        run: |
+          python -m py_compile publisher/cloud_publisher/*.py publisher/cloud_publisher/browser/*.py scripts/f1_browser_session.py scripts/f1_windows_prepare_clients.py
+      - name: Parse Windows installer PowerShell
+        shell: powershell
+        run: |
+          $errors = $null
+          [void][System.Management.Automation.Language.Parser]::ParseFile(
+            (Resolve-Path 'scripts/install_f1_social_windows_runner.ps1'),
+            [ref]$null,
+            [ref]$errors
+          )
+          if ($errors.Count -gt 0) {
+            $errors | ForEach-Object { Write-Error $_.Message }
+            exit 1
+          }
