@@ -1,0 +1,32 @@
+#cloud-config
+package_update: true
+package_upgrade: true
+
+users:
+  - default
+  - name: f1admin
+    groups: [sudo]
+    shell: /bin/bash
+    sudo: ["ALL=(ALL) NOPASSWD:ALL"]
+
+ssh_pwauth: false
+disable_root: true
+
+write_files:
+  - path: /etc/ufw/applications.d/f1-social
+    permissions: '0644'
+    content: |
+      [F1 Social SSH]
+      title=F1 Social SSH only
+      description=Only SSH is exposed publicly
+      ports=22/tcp
+
+runcmd:
+  - [bash, -lc, "apt-get install -y git curl jq ufw ca-certificates"]
+  - [bash, -lc, "ufw default deny incoming"]
+  - [bash, -lc, "ufw default allow outgoing"]
+  - [bash, -lc, "ufw allow 22/tcp"]
+  - [bash, -lc, "ufw --force enable"]
+  - [bash, -lc, "mkdir -p /opt/f1social && chown f1admin:f1admin /opt/f1social"]
+  - [bash, -lc, "sudo -u f1admin git clone https://github.com/josephsocialmedia2-spec/open-social-scheduler.git /opt/f1social/open-social-scheduler"]
+  - [bash, -lc, "echo 'F1 Social base VPS provisioned. Complete runner registration with scripts/install_f1_social_browser_runner.sh' > /etc/motd"]
