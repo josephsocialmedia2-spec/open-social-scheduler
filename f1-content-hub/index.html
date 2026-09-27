@@ -1379,9 +1379,13 @@ window.f1ConnectSocial=async function(clientId,platform,options){
         if(opts.wizard)localStorage.removeItem("f1-antica-connect-all");
         const row=socialChannels.find(function(x){return x.client_id===clientId&&x.platform===platform});
         const message=row&&row.profile_url
-          ?("Il profilo "+platformLabel(platform)+" è già registrato, ma la configurazione OAuth del provider non è ancora disponibile. Nessun altro account viene usato.")
+          ?("Il profilo "+platformLabel(platform)+" è già registrato correttamente, ma il collegamento OAuth del provider non è ancora attivo. Nessun altro account viene usato.")
           :("Configurazione OAuth non ancora completata per "+platformLabel(platform)+".");
-        alert(message);
+        const missing=Array.isArray(data.missing)?data.missing.filter(Boolean):[];
+        const details=[];
+        if(missing.length)details.push("Configurazione server mancante: "+missing.join(", ")+".");
+        if(data.callback_url)details.push("Callback da registrare nel provider: "+data.callback_url);
+        alert(message+(details.length?"\n\n"+details.join("\n"):""));
         return false;
       }
       if(data.error==="already_connected"){
