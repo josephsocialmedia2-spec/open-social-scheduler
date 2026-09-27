@@ -30,7 +30,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: pip install -r publisher/cloud_publisher/requirements.txt
+      - run: pip install requests==2.32.5
       - name: Reconcile Content Hub calendar into durable cloud queue
         run: python -m publisher.cloud_publisher.main --sync-only
 
