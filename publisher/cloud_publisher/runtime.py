@@ -113,7 +113,7 @@ def process_one(db: Database, settings, row: dict) -> str:
             profile,
             session,
             "AUTH_REQUIRED",
-            "Cloud browser profile or social session is not READY/CONNECTED",
+            "Local Chrome profile or social session is not READY/CONNECTED",
         )
         return "auth"
 
@@ -129,12 +129,17 @@ def process_one(db: Database, settings, row: dict) -> str:
         )
         return "auth"
 
-    profile_path = Path(
-        str(
-            profile.get("profile_path")
-            or settings.browser_root / job.client_id / "chrome-profile"
+    configured_profile_path = str(profile.get("profile_path") or "").strip()
+    if configured_profile_path:
+        candidate = Path(configured_profile_path)
+        profile_path = (
+            candidate
+            if candidate.is_absolute()
+            else settings.browser_root / candidate
         )
-    )
+    else:
+        profile_path = settings.browser_root / job.client_id / "chrome-profile"
+
     try:
         profile_path.resolve().relative_to(settings.browser_root.resolve())
     except ValueError:
@@ -227,7 +232,7 @@ def process_one(db: Database, settings, row: dict) -> str:
                 job.calendar_id,
                 {
                     "status": "PUBBLICATO",
-                    "provider": "browser-cloud",
+                    "provider": "browser-local-pc",
                     "external_post_id": result.external_post_id,
                     "external_url": result.external_post_url,
                     "error": None,
