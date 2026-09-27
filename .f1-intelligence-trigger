@@ -1,3 +1,4 @@
 bootstrap=2026-09-27
 mode=all-clients
 real-estate=approval-required
+parallel-safe-cycle=2
