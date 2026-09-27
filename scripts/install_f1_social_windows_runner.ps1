@@ -4,7 +4,8 @@ param(
 
 $ErrorActionPreference = "Stop"
 
-$RepoUrl = "https://github.com/josephsocialmedia2-spec/open-social-scheduler"
+$RepoFullName = "josephsocialmedia2-spec/open-social-scheduler"
+$RepoUrl = "https://github.com/$RepoFullName"
 $Root = "C:\F1Social"
 $RepoDir = Join-Path $Root "open-social-scheduler"
 $VenvDir = Join-Path $Root "venv"
@@ -24,6 +25,7 @@ function Ensure-Command {
 
 Ensure-Command "git" "Git.Git"
 Ensure-Command "python" "Python.Python.3.12"
+Ensure-Command "gh" "GitHub.cli"
 
 $ChromeCandidates = @(
     "$env:ProgramFiles\Google\Chrome\Application\chrome.exe",
@@ -64,20 +66,27 @@ if (-not (Test-Path (Join-Path $RunnerDir "run.cmd"))) {
 
 if (-not (Test-Path (Join-Path $RunnerDir ".runner"))) {
     if ([string]::IsNullOrWhiteSpace($RunnerToken)) {
-        Write-Host ""
-        Write-Host "Dipendenze installate. Manca solo il token temporaneo del GitHub Runner." -ForegroundColor Yellow
-        Write-Host "Apri:"
-        Write-Host "https://github.com/josephsocialmedia2-spec/open-social-scheduler/settings/actions/runners/new"
-        Write-Host ""
-        Write-Host "Poi in PowerShell:"
-        Write-Host '$env:GITHUB_RUNNER_TOKEN="TOKEN_TEMPORANEO"'
-        Write-Host 'powershell -ExecutionPolicy Bypass -File .\scripts\install_f1_social_windows_runner.ps1'
-        exit 10
+        gh auth status -h github.com *> $null
+        if ($LASTEXITCODE -ne 0) {
+            Write-Host "Autorizza GitHub una sola volta nel browser..." -ForegroundColor Yellow
+            gh auth login -h github.com -p https -w
+            if ($LASTEXITCODE -ne 0) {
+                throw "Autorizzazione GitHub non completata."
+            }
+        }
+
+        $RunnerToken = gh api -X POST "repos/$RepoFullName/actions/runners/registration-token" --jq ".token"
+        if ($LASTEXITCODE -ne 0 -or [string]::IsNullOrWhiteSpace($RunnerToken)) {
+            throw "Impossibile ottenere automaticamente il token temporaneo del runner."
+        }
     }
 
     Push-Location $RunnerDir
     try {
         & .\config.cmd --unattended --url $RepoUrl --token $RunnerToken --name "F1-Social-PC-$env:COMPUTERNAME" --labels "f1-social-browser,f1-social-local-pc" --work "_work" --replace
+        if ($LASTEXITCODE -ne 0) {
+            throw "Configurazione GitHub Runner non riuscita."
+        }
     } finally {
         Pop-Location
     }
@@ -104,16 +113,33 @@ start "" /min cmd /c "C:\F1Social\start-f1-social-runner.cmd"
 [Environment]::SetEnvironmentVariable("F1_BROWSER_CHANNEL","chrome","User")
 [Environment]::SetEnvironmentVariable("F1_BROWSER_HEADLESS","true","User")
 
+if (-not (Get-Process -Name "Runner.Listener" -ErrorAction SilentlyContinue)) {
+    Start-Process -FilePath $Launcher -WorkingDirectory $Root -WindowStyle Minimized
+    Start-Sleep -Seconds 5
+}
+
+gh auth status -h github.com *> $null
+if ($LASTEXITCODE -eq 0) {
+    gh variable set F1_BROWSER_FALLBACK_ENABLED --body "true" -R $RepoFullName
+    if ($LASTEXITCODE -ne 0) {
+        Write-Warning "Runner pronto, ma non sono riuscito ad attivare automaticamente F1_BROWSER_FALLBACK_ENABLED."
+    }
+
+    $secretNames = gh secret list -R $RepoFullName --json name --jq ".[].name"
+    if ($secretNames -contains "SUPABASE_SERVICE_ROLE_KEY") {
+        gh workflow run f1-social-local-profile-setup.yml -R $RepoFullName -f timeout_per_client=600
+        if ($LASTEXITCODE -eq 0) {
+            Write-Host "Configurazione profili clienti avviata: compariranno le finestre Chrome dei social non configurati." -ForegroundColor Green
+        } else {
+            Write-Warning "Runner installato, ma il workflow di configurazione profili non e' stato avviato automaticamente."
+        }
+    } else {
+        Write-Warning "Manca il repository secret SUPABASE_SERVICE_ROLE_KEY. Impostalo in GitHub Actions Secrets prima del workflow di configurazione profili."
+    }
+}
+
 Write-Host ""
-Write-Host "F1 Social Windows Runner installato." -ForegroundColor Green
-Write-Host "Profili Chrome: $BrowserRoot"
-Write-Host "Runner: $RunnerDir"
-Write-Host "Avvio automatico al login: $StartupLauncher"
-Write-Host ""
-Write-Host "Avvio immediato:"
-Write-Host $Launcher
-Write-Host ""
-Write-Host "Configurazione account clienti:"
-Write-Host "cd $RepoDir"
-Write-Host '$env:SUPABASE_SERVICE_ROLE_KEY="<valore protetto>"'
-Write-Host "& `"$Python`" scripts\f1_windows_prepare_clients.py"
+Write-Host "F1 Social Windows Runner installato e avviato." -ForegroundColor Green
+Write-Host "Profili Chrome separati: $BrowserRoot"
+Write-Host "Avvio automatico al login Windows: $StartupLauncher"
+Write-Host "Il PC puo' ora eseguire la pubblicazione browser per i social non configurati."
