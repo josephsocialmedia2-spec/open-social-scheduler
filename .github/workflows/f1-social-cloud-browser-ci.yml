@@ -27,7 +27,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: pip install requests==2.32.5
+      - run: pip install requests==2.32.4
       - run: python -m unittest discover -s publisher/cloud_publisher/tests -v
       - run: python -m py_compile publisher/cloud_publisher/*.py publisher/cloud_publisher/browser/*.py scripts/f1_browser_session.py scripts/f1_windows_prepare_clients.py
       - run: bash -n scripts/install_f1_social_browser_runner.sh scripts/start_f1_browser_desktop.sh
@@ -39,7 +39,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: pip install requests==2.32.5
+      - run: pip install requests==2.32.4
       - name: Compile Windows browser scripts
         shell: powershell
         run: |
@@ -49,6 +49,14 @@ jobs:
           $files += (Resolve-Path 'scripts/f1_browser_session.py').Path
           $files += (Resolve-Path 'scripts/f1_windows_prepare_clients.py').Path
           python -m py_compile $files
+      - name: Verify package imports and script entrypoint
+        shell: powershell
+        run: |
+          pip install -r publisher/cloud_publisher/requirements.txt
+          python -c "import requests, playwright, publisher, publisher.cloud_publisher; print('IMPORTS_OK')"
+          python scripts/f1_windows_prepare_clients.py --help
+          if ($LASTEXITCODE -ne 0) { throw 'Windows prepare-clients entrypoint failed.' }
+
       - name: Parse Windows installer PowerShell
         shell: powershell
         run: |
