@@ -1,0 +1,39 @@
+name: F1 Social Autonomous Cloud CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'supabase/functions/f1-content-whatsapp/**'
+      - 'supabase/functions/f1-content-autopilot/**'
+      - 'supabase/functions/f1-social-daily-report/**'
+      - 'supabase/migrations/*autonomous_whatsapp*'
+      - '.github/workflows/f1-social-autonomous-cloud.yml'
+      - '.github/workflows/f1-social-autonomous-ci.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+      - name: Type-check autonomous Edge Functions
+        run: |
+          deno check supabase/functions/f1-content-whatsapp/index.ts
+          deno check supabase/functions/f1-content-autopilot/index.ts
+          deno check supabase/functions/f1-social-daily-report/index.ts
+      - name: Verify no embedded WhatsApp secret values
+        shell: bash
+        run: |
+          set -euo pipefail
+          if grep -R -E 'WHATSAPP_(ACCESS_TOKEN|APP_SECRET|VERIFY_TOKEN)\s*=\s*["'"'][^"'"']+["'"']' supabase/functions/f1-*; then
+            echo 'Hard-coded WhatsApp secret detected'
+            exit 1
+          fi
+          echo 'No hard-coded WhatsApp secrets found'
