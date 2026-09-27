@@ -1,4 +1,5 @@
 bootstrap=2026-09-27
 mode=automatic-agency-discovery
-retry=2026-09-27T08:21Z
-cycle=2
+retry=2026-09-27T08:36Z
+cycle=3
+requested_by=central-operator
