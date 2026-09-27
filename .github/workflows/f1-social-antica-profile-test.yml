@@ -1,0 +1,47 @@
+name: F1 Social Antica Cappella Profile Test
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.f1/antica-profile-test-trigger.txt'
+      - '.github/workflows/f1-social-antica-profile-test.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: f1-social-antica-profile-test
+  cancel-in-progress: true
+
+jobs:
+  antica-facebook-profile:
+    runs-on: [self-hosted, Windows, X64, f1-social-local-pc]
+    timeout-minutes: 15
+    env:
+      SUPABASE_URL: ${{ vars.SUPABASE_URL || 'https://nqnmlsmeiynxbdojeyjt.supabase.co' }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+      F1_BROWSER_ROOT: 'C:\F1Social\BrowserProfiles'
+      F1_BROWSER_CHANNEL: chrome
+      F1_BROWSER_HEADLESS: 'false'
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify safe test conditions
+        shell: powershell
+        run: |
+          $publisher = Get-Content '.github\workflows\f1-social-cloud-publisher.yml' -Raw
+          if ($publisher -notmatch 'if:\s*\$\{\{\s*false\s*\}\}') {
+            throw 'Live browser fallback must remain disabled during profile test'
+          }
+          Write-Host 'NO_PUBLICATION_PROFILE_TEST'
+      - name: Ensure local dependencies
+        shell: powershell
+        run: |
+          & 'C:\F1Social\venv\Scripts\python.exe' -m pip install --disable-pip-version-check -r publisher\cloud_publisher\requirements.txt
+          if ($LASTEXITCODE -ne 0) { throw 'Dependency installation failed' }
+      - name: Open Antica Cappella Facebook profile only
+        shell: powershell
+        run: |
+          & 'C:\F1Social\venv\Scripts\python.exe' scripts\f1_windows_prepare_clients.py --client antica-cappella --platform facebook --auto-wait --timeout 600
+          if ($LASTEXITCODE -ne 0) { throw 'Antica Cappella Facebook profile verification failed' }
