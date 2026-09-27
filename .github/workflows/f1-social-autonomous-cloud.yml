@@ -1,0 +1,57 @@
+name: F1 Social Autonomous Cloud
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+    inputs:
+      force_daily_report:
+        description: 'Generate the daily report immediately'
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+concurrency:
+  group: f1-social-autonomous-cloud
+  cancel-in-progress: false
+
+jobs:
+  autopilot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      SUPABASE_URL: ${{ vars.SUPABASE_URL || 'https://nqnmlsmeiynxbdojeyjt.supabase.co' }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+    steps:
+      - name: Run autonomous content intake
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "$SUPABASE_SERVICE_ROLE_KEY"
+          curl --fail-with-body --silent --show-error \
+            -X POST "$SUPABASE_URL/functions/v1/f1-content-autopilot" \
+            -H "Authorization: Bearer $SUPABASE_SERVICE_ROLE_KEY" \
+            -H "apikey: $SUPABASE_SERVICE_ROLE_KEY" \
+            -H "Content-Type: application/json" \
+            -d '{}' | tee /tmp/f1-autopilot.json
+
+      - name: Generate daily report when due
+        shell: bash
+        env:
+          FORCE_REPORT: ${{ github.event_name == 'workflow_dispatch' && inputs.force_daily_report || false }}
+        run: |
+          set -euo pipefail
+          if [ "$FORCE_REPORT" = "true" ]; then
+            payload='{"force":true}'
+          else
+            payload='{"force":false}'
+          fi
+          curl --fail-with-body --silent --show-error \
+            -X POST "$SUPABASE_URL/functions/v1/f1-social-daily-report" \
+            -H "Authorization: Bearer $SUPABASE_SERVICE_ROLE_KEY" \
+            -H "apikey: $SUPABASE_SERVICE_ROLE_KEY" \
+            -H "Content-Type: application/json" \
+            -d "$payload" | tee /tmp/f1-daily-report.json
