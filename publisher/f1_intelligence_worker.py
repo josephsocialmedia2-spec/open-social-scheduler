@@ -716,7 +716,9 @@ def ensure_calendar_for_item(
     verified = [
         ch for ch in channels
         if str(ch.get("client_id")) == client_id
-        and bool(ch.get("enabled")) and bool(ch.get("verified"))
+        and bool(ch.get("enabled"))
+        and bool(ch.get("verified"))
+        and str(ch.get("connection_status") or "").upper() == "COLLEGATO"
     ]
     created = 0
     approval = is_real_estate(client)
