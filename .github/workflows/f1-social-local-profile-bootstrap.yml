@@ -1,0 +1,39 @@
+name: F1 Social Local Profile Bootstrap
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/f1-social-local-profile-bootstrap.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: f1-social-local-profile-bootstrap
+  cancel-in-progress: false
+
+jobs:
+  bootstrap:
+    runs-on: [self-hosted, Windows, X64, f1-social-local-pc]
+    timeout-minutes: 90
+    env:
+      SUPABASE_URL: ${{ vars.SUPABASE_URL || 'https://nqnmlsmeiynxbdojeyjt.supabase.co' }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+      F1_BROWSER_ROOT: 'C:\F1Social\BrowserProfiles'
+      F1_BROWSER_CHANNEL: chrome
+      F1_BROWSER_HEADLESS: 'false'
+    steps:
+      - uses: actions/checkout@v4
+      - name: Repair Python environment
+        shell: powershell
+        run: |
+          if (-not (Test-Path 'C:\F1Social\venv\Scripts\python.exe')) {
+            throw 'F1 Social Python environment missing.'
+          }
+          & 'C:\F1Social\venv\Scripts\python.exe' -m pip install --disable-pip-version-check -r publisher\cloud_publisher\requirements.txt
+          if ($LASTEXITCODE -ne 0) { throw 'Dependency repair failed.' }
+      - name: Open missing social profiles
+        shell: powershell
+        run: |
+          & 'C:\F1Social\venv\Scripts\python.exe' scripts\f1_windows_prepare_clients.py --auto-wait --timeout 600
