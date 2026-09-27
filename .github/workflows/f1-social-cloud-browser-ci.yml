@@ -9,6 +9,7 @@ on:
       - 'scripts/install_f1_social_browser_runner.sh'
       - 'scripts/start_f1_browser_desktop.sh'
       - '.github/workflows/f1-social-cloud-publisher.yml'
+      - '.github/workflows/f1-social-cloud-browser-ci.yml'
       - 'supabase/migrations/*cloud_browser*'
   workflow_dispatch:
 
