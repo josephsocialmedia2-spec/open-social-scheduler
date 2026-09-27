@@ -1,0 +1,63 @@
+name: F1 Social Cloud VPS Diagnostics
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.f1/cloud-vps-diagnostics-trigger.txt'
+      - '.github/workflows/f1-social-cloud-vps-diagnostics.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: f1-social-cloud-vps-diagnostics
+  cancel-in-progress: true
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      SSH_HOST: ${{ secrets.POSTIZ_SSH_HOST }}
+      SSH_USER: ${{ secrets.POSTIZ_SSH_USER }}
+      SSH_KEY: ${{ secrets.POSTIZ_SSH_KEY }}
+    steps:
+      - name: Check configured VPS access without exposing secrets
+        id: access
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -z "${SSH_HOST:-}" ] || [ -z "${SSH_USER:-}" ] || [ -z "${SSH_KEY:-}" ]; then
+            echo "available=false" >> "$GITHUB_OUTPUT"
+            echo "CLOUD_VPS_SECRETS_MISSING"
+            exit 0
+          fi
+          echo "available=true" >> "$GITHUB_OUTPUT"
+          echo "CLOUD_VPS_SECRETS_PRESENT"
+
+      - name: Inspect remote runtime safely
+        if: steps.access.outputs.available == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          install -d -m 700 ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/f1social_vps
+          chmod 600 ~/.ssh/f1social_vps
+          ssh-keyscan -H "$SSH_HOST" > ~/.ssh/known_hosts 2>/dev/null
+          ssh -i ~/.ssh/f1social_vps -o BatchMode=yes -o ConnectTimeout=15 "$SSH_USER@$SSH_HOST" 'bash -s' <<'REMOTE'
+          set -euo pipefail
+          echo "REMOTE_CONNECT_OK"
+          echo "OS=$(uname -s)"
+          echo "ARCH=$(uname -m)"
+          echo "PYTHON=$(python3 --version 2>&1 || true)"
+          if command -v google-chrome >/dev/null 2>&1; then echo "CHROME=google-chrome";
+          elif command -v chromium >/dev/null 2>&1; then echo "CHROME=chromium";
+          elif command -v chromium-browser >/dev/null 2>&1; then echo "CHROME=chromium-browser";
+          else echo "CHROME=missing"; fi
+          if command -v docker >/dev/null 2>&1; then echo "DOCKER=present"; else echo "DOCKER=missing"; fi
+          echo "HOME_WRITABLE=$(test -w "$HOME" && echo yes || echo no)"
+          df -Pk "$HOME" | tail -1 | awk '{print "DISK_FREE_KB="$4}'
+          if command -v free >/dev/null 2>&1; then free -m | awk '/Mem:/{print "RAM_MB="$2" FREE_MB="$7}'; fi
+          REMOTE
