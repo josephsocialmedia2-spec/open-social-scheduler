@@ -304,6 +304,21 @@ function configured(platform) {
   const c = providerConfig(platform);
   return !!(c && c.clientId && c.clientSecret);
 }
+function providerMissing(platform) {
+  const p = canonicalPlatform(platform);
+  const c = providerConfig(p);
+  const names = {
+    facebook: ["META_APP_ID", "META_APP_SECRET"],
+    instagram: ["META_APP_ID", "META_APP_SECRET"],
+    youtube: ["GOOGLE_OAUTH_CLIENT_ID", "GOOGLE_OAUTH_CLIENT_SECRET"],
+    tiktok: ["TIKTOK_CLIENT_KEY", "TIKTOK_CLIENT_SECRET"],
+    linkedin: ["LINKEDIN_CLIENT_ID", "LINKEDIN_CLIENT_SECRET"]
+  }[p] || ["OAUTH_CLIENT_ID", "OAUTH_CLIENT_SECRET"];
+  const missing = [];
+  if (!c?.clientId) missing.push(names[0]);
+  if (!c?.clientSecret) missing.push(names[1]);
+  return missing;
+}
 async function shortFingerprint(value) {
   const bytes = new TextEncoder().encode(String(value || ""));
   const hash = new Uint8Array(await crypto.subtle.digest("SHA-256", bytes));
@@ -766,7 +781,16 @@ async function authorize(req, url) {
     return respond({ error: "already_connected", platform, provider: existingChannel.provider }, 409);
   }
   const c = providerConfig(platform);
-  if (!configured(platform)) return respond({ error: "configuration_missing", platform }, 503);
+  if (!configured(platform)) {
+    return respond({
+      error: "configuration_missing",
+      platform,
+      missing: providerMissing(platform),
+      callback_url: callbackUrl(platform),
+      scope: c?.scope || "",
+      setup_target: "supabase_edge_function_secrets"
+    }, 503);
+  }
   const state = await signState({
     uid: user.id,
     cid: client.id,
@@ -1240,6 +1264,12 @@ Deno.serve(async (req) => {
           youtube: configured("youtube"),
           tiktok: configured("tiktok"),
           linkedin: configured("linkedin")
+        },
+        meta: {
+          configured: configured("facebook"),
+          missing: providerMissing("facebook"),
+          facebook_callback_url: callbackUrl("facebook"),
+          instagram_callback_url: callbackUrl("instagram")
         },
         oauth_required_only_at_final_setup: true
       });
