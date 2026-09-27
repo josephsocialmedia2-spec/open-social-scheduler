@@ -167,4 +167,4 @@ jobs:
           grep -q 'CONVERSIONE_HEIC' publisher/supabase_queue_bridge.py
           grep -q 'CONVERSIONE_HEIC_REQUIRED' publisher/direct_api_publish.py
       - name: Check publisher bridge syntax
-        run: python -m py_compile publisher/supabase_queue_bridge.py
+        run: python -m py_compile publisher/supabase_queue_bridge.py publisher/direct_api_publish.py
