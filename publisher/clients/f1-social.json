@@ -25,14 +25,15 @@
   "publishing": {
     "backend": "direct_api",
     "secret_prefix": "F1SOCIAL",
-    "manual_publish_only": true,
+    "manual_publish_only": false,
     "require_media": true,
     "platforms": [
       "facebook",
       "instagram",
       "tiktok",
       "youtube"
-    ]
+    ],
+    "autonomous_publish": true
   },
   "authorized_accounts": {
     "facebook": {
@@ -70,5 +71,9 @@
     "status": "BOZZA",
     "require_original_media_asset": true,
     "publish_now_requires_preflight": true
+  },
+  "approval": {
+    "required": false,
+    "mode": "automatic"
   }
 }
