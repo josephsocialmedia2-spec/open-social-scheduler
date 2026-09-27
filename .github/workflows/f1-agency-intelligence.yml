@@ -1,0 +1,45 @@
+name: F1 Agency Intelligence - Autonomous
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.f1-agency-trigger'
+  workflow_dispatch:
+    inputs:
+      agency_limit:
+        description: 'Maximum directory jobs to process per run'
+        required: true
+        default: '12'
+        type: string
+  schedule:
+    - cron: '*/10 * * * *'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: f1-agency-intelligence
+  cancel-in-progress: false
+
+jobs:
+  agency-intelligence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    env:
+      SUPABASE_URL: ${{ vars.SUPABASE_URL || 'https://nqnmlsmeiynxbdojeyjt.supabase.co' }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: publisher/agency_requirements.txt
+      - name: Install agency discovery dependencies
+        run: pip install -r publisher/agency_requirements.txt
+      - name: Discover and classify real-estate agencies
+        shell: bash
+        run: |
+          AGENCY_LIMIT="${{ github.event_name == 'workflow_dispatch' && inputs.agency_limit || '12' }}"
+          python publisher/f1_intelligence_worker.py --skip-content --agency-limit "$AGENCY_LIMIT"
