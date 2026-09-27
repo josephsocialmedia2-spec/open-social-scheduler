@@ -136,7 +136,28 @@ async function sendWhatsapp(to, body) {
   };
 }
 
-async function buildForOwner(ownerId, reportDate, timeZone) {
+async function buildForOwner(ownerId, reportDate, timeZone, force = false) {
+  const existingReports = await db(
+    "f1_social_daily_reports?owner_id=eq." +
+      ownerId +
+      "&report_date=eq." +
+      reportDate +
+      "&select=id,delivery_status,summary,delivered_at&limit=1",
+  );
+  if (
+    !force &&
+    existingReports?.length &&
+    String(existingReports[0].delivery_status || "").toUpperCase() === "DELIVERED"
+  ) {
+    return {
+      owner_id: ownerId,
+      report_date: reportDate,
+      summary: existingReports[0].summary || {},
+      delivery_status: "ALREADY_DELIVERED",
+      delivered_at: existingReports[0].delivered_at || null,
+    };
+  }
+
   const start = localDateTimeToUtc(reportDate, "00:00", timeZone);
   const end = localDateTimeToUtc(reportDate, "23:59", timeZone);
   end.setUTCMinutes(end.getUTCMinutes() + 1);
@@ -266,7 +287,18 @@ async function buildForOwner(ownerId, reportDate, timeZone) {
         body,
         rows,
         summary,
-        delivery_status: "STORED",
+        delivery_status:
+          existingReports?.length &&
+          String(existingReports[0].delivery_status || "").toUpperCase() === "DELIVERED" &&
+          !force
+            ? "DELIVERED"
+            : "STORED",
+        delivered_at:
+          existingReports?.length &&
+          String(existingReports[0].delivery_status || "").toUpperCase() === "DELIVERED" &&
+          !force
+            ? existingReports[0].delivered_at || null
+            : null,
         updated_at: new Date().toISOString(),
       }),
     },
@@ -340,7 +372,7 @@ Deno.serve(async (req) => {
 
   const results = [];
   for (const ownerId of owners) {
-    results.push(await buildForOwner(ownerId, reportDate, timeZone));
+    results.push(await buildForOwner(ownerId, reportDate, timeZone, force));
   }
 
   return json({ ok: true, generated: results.length, results });
