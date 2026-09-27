@@ -281,7 +281,7 @@
         <div class="forms">
           <div class="field"><label>Numero mittente autorizzato</label><input id="waIdInput" class="input" placeholder="39..."></div>
           <div class="field"><label>Etichetta</label><input id="waLabelInput" class="input" value="WhatsApp contenuti"></div>
-          <div class="field"><label>Cliente associato</label><select id="waClientSelect" class="input"><option value="">Seleziona cliente...</option></select></div>
+          <div class="field"><label>Cliente associato</label><select id="waClientSelect" class="input"><option value="">Seleziona cliente...</option><option value="__REPORT_ONLY__">Solo destinatario resoconto</option></select></div>
           <div class="field"><label>Automazione</label><label class="checkline"><input id="waAutoProcess" type="checkbox" checked> <span>Elabora automaticamente</span></label></div>
           <div class="field"><label>Resoconto serale</label><label class="checkline"><input id="waReportRecipient" type="checkbox"> <span>Invia qui il resoconto delle 23:00</span></label></div>
           <div class="field" style="align-self:end"><button class="btn green" id="saveWaSenderBtn">SALVA NUMERO</button></div>
@@ -294,6 +294,10 @@
           Restano da inserire come secret Supabase: <code>WHATSAPP_VERIFY_TOKEN</code>, <code>WHATSAPP_APP_SECRET</code>, <code>WHATSAPP_ACCESS_TOKEN</code>, <code>WHATSAPP_PHONE_NUMBER_ID</code>, <code>META_GRAPH_VERSION</code>.
         </div>
         <div id="waSenders"></div>
+      </div>
+      <div class="panel">
+        <div class="section-title"><h2>Ultimo resoconto giornaliero</h2><span class="muted">Cliente · contenuto · social · ora · stato</span></div>
+        <div id="waDailyReport" class="log-list"><div class="empty">Nessun resoconto disponibile.</div></div>
       </div>
       <div class="panel">
         <div class="section-title"><h2>Log WhatsApp</h2><span class="muted">Ultimi 50 eventi</span></div>
@@ -1692,7 +1696,7 @@ async function loadWhatsApp(){
   const rl=await sb.from("f1_whatsapp_logs").select("*, f1_content_clients(name)").order("created_at",{ascending:false}).limit(50);
   const select=el("waClientSelect");
   if(select){
-    select.innerHTML='<option value="">Seleziona cliente...</option>'+clients.map(function(c){return '<option value="'+c.id+'">'+esc(c.name)+'</option>'}).join("");
+    select.innerHTML='<option value="">Seleziona cliente...</option><option value="__REPORT_ONLY__">Solo destinatario resoconto</option>'+clients.map(function(c){return '<option value="'+c.id+'">'+esc(c.name)+'</option>'}).join("");
     if(selectedClientId)select.value=selectedClientId;
   }
   const list=rs.data||[];
@@ -1703,14 +1707,24 @@ async function loadWhatsApp(){
       x.auto_process?'<span class="badge green">AUTOMATICO</span>':'<span class="badge amber">REVISIONE</span>',
       x.report_recipient?'<span class="badge green">REPORT 23:00</span>':''
     ].join(" ");
-    return '<div class="lineitem"><b>'+esc(x.wa_id)+'</b><div>'+esc(x.label)+'<div class="meta">'+esc(client?client.name:"CLIENTE NON ASSOCIATO")+'</div></div><div>'+badges+'</div></div>';
+    return '<div class="lineitem"><b>'+esc(x.wa_id)+'</b><div>'+esc(x.label)+'<div class="meta">'+esc(client?client.name:(x.report_recipient?"SOLO RESOCONTO":"CLIENTE NON ASSOCIATO"))+'</div></div><div>'+badges+'</div></div>';
   }).join("")||'<div class="empty">Nessun numero registrato.</div>';
   el("waLogs").innerHTML=(rl.data||[]).map(function(x){return '<div class="lineitem"><b>'+esc(fmt(x.created_at))+'</b><div><b>'+esc(x.result)+'</b><div class="meta">'+esc(x.f1_content_clients?x.f1_content_clients.name:"")+' · '+esc(x.message_type||"")+' · '+esc(x.message_text||"")+'</div>'+(x.error?'<div class="meta" style="color:#ff9ca3">'+esc(x.error)+'</div>':"")+'</div><span class="badge">'+esc(x.wa_id||"")+'</span></div>'}).join("")||'<div class="empty">Nessun evento WhatsApp.</div>';
+  const rr=await sb.from("f1_social_daily_reports").select("*").order("report_date",{ascending:false}).limit(1);
+  const latest=rr.data&&rr.data[0];
+  if(el("waDailyReport")){
+    if(!latest)el("waDailyReport").innerHTML='<div class="empty">Nessun resoconto disponibile.</div>';
+    else el("waDailyReport").innerHTML='<div class="notice"><b>'+esc(latest.report_date)+'</b> · '+esc(latest.delivery_status||"STORED")+'</div><pre style="white-space:pre-wrap;margin:12px 0 0;font:inherit;line-height:1.55">'+esc(latest.body||"")+'</pre>';
+  }
 }
 el("saveWaSenderBtn").onclick=async function(){
   const wa=el("waIdInput").value.replace(/\D/g,"");if(wa.length<8)return alert("Numero non valido.");
-  const clientId=el("waClientSelect").value;if(!clientId)return alert("Seleziona il cliente associato a questo numero.");
+  const rawClientId=el("waClientSelect").value;
   const reportRecipient=!!el("waReportRecipient").checked;
+  const reportOnly=rawClientId==="__REPORT_ONLY__";
+  const clientId=reportOnly?null:rawClientId;
+  if(!clientId&&!reportRecipient)return alert("Seleziona il cliente associato oppure abilita Solo destinatario resoconto.");
+  if(reportOnly&&!reportRecipient)return alert("Per la modalità Solo destinatario resoconto abilita il resoconto delle 23:00.");
   if(reportRecipient){
     const clear=await sb.from("f1_whatsapp_senders").update({report_recipient:false}).eq("owner_id",user.id);
     if(clear.error)return alert(clear.error.message);
@@ -1718,9 +1732,9 @@ el("saveWaSenderBtn").onclick=async function(){
   const row={
     owner_id:user.id,
     wa_id:wa,
-    label:el("waLabelInput").value.trim()||"WhatsApp contenuti",
+    label:el("waLabelInput").value.trim()||(reportOnly?"Destinatario resoconto":"WhatsApp contenuti"),
     client_id:clientId,
-    auto_process:!!el("waAutoProcess").checked,
+    auto_process:reportOnly?false:!!el("waAutoProcess").checked,
     report_recipient:reportRecipient,
     suppress_operational_notifications:true,
     active:true
