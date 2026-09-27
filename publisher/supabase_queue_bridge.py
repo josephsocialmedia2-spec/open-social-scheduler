@@ -331,7 +331,7 @@ def build_or_update_jobs(queue: dict[str, Any]) -> dict[str, int]:
                 row["error"] = "Nessun media disponibile nel Content Hub o nella scheda immobile"
 
         fmt = "reel" if (mime.startswith("video/") or any(Path(p).suffix.lower() in {".mp4", ".mov", ".m4v"} for p in media_paths)) else "post"
-        caption = str(item.get("description") or item.get("source_text") or "").strip()
+        caption = str(platform_metadata.get("caption") or item.get("description") or item.get("source_text") or "").strip()
         job = by_id.get(job_id)
         new_job = {
             "id": job_id,
