@@ -181,24 +181,46 @@ def client_dirs(client: dict[str, Any]) -> dict[str, Path]:
     return dirs
 
 
-def already_ingested(owner_id: str, digest: str) -> bool:
+def local_unique_key(client_id: str, digest: str) -> str:
+    # The same photograph can legitimately belong to different client libraries.
+    # Dedupe only inside one client tenant, never globally for the operator.
+    return f"local-file:{client_id}:{digest}"
+
+
+def already_ingested(owner_id: str, client_id: str, digest: str) -> bool:
+    active = {"COMPLETED", "RUNNING", "QUEUED"}
     rows = get(
         "f1_intelligence_jobs",
         {
             "select": "id,status",
             "owner_id": f"eq.{owner_id}",
+            "client_id": f"eq.{client_id}",
+            "unique_key": f"eq.{local_unique_key(client_id, digest)}",
+            "limit": "1",
+        },
+    )
+    if rows and str(rows[0].get("status") or "") in active:
+        return True
+
+    # Backward compatibility with jobs created before client-scoped keys existed.
+    legacy = get(
+        "f1_intelligence_jobs",
+        {
+            "select": "id,status",
+            "owner_id": f"eq.{owner_id}",
+            "client_id": f"eq.{client_id}",
             "unique_key": f"eq.local-file:{digest}",
             "limit": "1",
         },
     )
-    return bool(rows and str(rows[0].get("status") or "") in {"COMPLETED", "RUNNING", "QUEUED"})
+    return bool(legacy and str(legacy[0].get("status") or "") in active)
 
 
 def ingest_one(client: dict[str, Any], source: Path) -> str:
     owner_id = str(client["owner_id"])
     client_id = str(client["id"])
     digest = sha256_file(source)
-    if already_ingested(owner_id, digest):
+    if already_ingested(owner_id, client_id, digest):
         return "DUPLICATE"
 
     title = re.sub(r"[_-]+", " ", source.stem).strip() or "Contenuto"
@@ -264,7 +286,7 @@ def ingest_one(client: dict[str, Any], source: Path) -> str:
                 "job_type": "LOCAL_INGEST",
                 "status": "COMPLETED",
                 "stage": "CARICATO",
-                "unique_key": f"local-file:{digest}",
+                "unique_key": local_unique_key(client_id, digest),
                 "payload": {"source_name": source.name, "sha256": digest},
                 "result": {"media_id": media_rows[0].get("id"), "storage_path": storage_path},
                 "completed_at": now_iso(),
@@ -288,6 +310,17 @@ def ingest_one(client: dict[str, Any], source: Path) -> str:
         # The Intelligence worker will never see a half-valid media row.
         raise
     return content_id
+
+
+def inbox_files(inbox: Path) -> list[Path]:
+    """Return every supported media file in INBOX, including nested folders."""
+    return sorted(
+        (
+            path for path in inbox.rglob("*")
+            if path.is_file() and path.suffix.lower() in ALLOWED_SUFFIXES
+        ),
+        key=lambda path: str(path.relative_to(inbox)).lower(),
+    )
 
 
 def find_f1_window_title() -> str:
@@ -420,9 +453,7 @@ def main() -> int:
             dirs = client_dirs(client)
             owner_id = str(client["owner_id"])
             prefs = operator_preferences(owner_id)
-            for source in sorted(dirs["inbox"].iterdir()):
-                if not source.is_file() or source.suffix.lower() not in ALLOWED_SUFFIXES:
-                    continue
+            for source in inbox_files(dirs["inbox"]):
                 key = str(source.resolve())
                 stat = source.stat()
                 prior = seen.get(key)
@@ -432,7 +463,9 @@ def main() -> int:
                 if time.time() - prior[2] < STABLE_SECONDS:
                     continue
 
-                processing = dirs["processing"] / source.name
+                relative = source.relative_to(dirs["inbox"])
+                processing = dirs["processing"] / relative
+                processing.parent.mkdir(parents=True, exist_ok=True)
                 try:
                     shutil.move(str(source), str(processing))
                     rec: VisibleRecorder | None = None
@@ -449,7 +482,8 @@ def main() -> int:
                     finally:
                         if rec:
                             rec.stop()
-                    target = dirs["done"] / processing.name
+                    target = dirs["done"] / relative
+                    target.parent.mkdir(parents=True, exist_ok=True)
                     shutil.move(str(processing), str(target))
                     if rec and recording.exists():
                         upload_demo(owner_id, client, recording)
@@ -461,10 +495,14 @@ def main() -> int:
                     print(f"ERROR {client.get('name')} {source.name}: {exc}", file=sys.stderr)
                     if processing.exists():
                         if failures[key] >= MAX_ATTEMPTS:
-                            shutil.move(str(processing), str(dirs["error"] / processing.name))
+                            failed_target = dirs["error"] / relative
+                            failed_target.parent.mkdir(parents=True, exist_ok=True)
+                            shutil.move(str(processing), str(failed_target))
                             seen.pop(key, None)
                         else:
-                            shutil.move(str(processing), str(dirs["inbox"] / processing.name))
+                            retry_target = dirs["inbox"] / relative
+                            retry_target.parent.mkdir(parents=True, exist_ok=True)
+                            shutil.move(str(processing), str(retry_target))
                     time.sleep(2)
         time.sleep(POLL_SECONDS)
 
