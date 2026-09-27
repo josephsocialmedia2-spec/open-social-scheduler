@@ -92,6 +92,9 @@ def media_paths(job: dict[str, Any]) -> list[Path]:
     missing = [str(path) for path in paths if not path.exists()]
     if missing:
         raise PublishError(f"{job.get('id')}: missing media: {', '.join(missing)}")
+    heic = [str(path) for path in paths if path.suffix.lower() in {".heic", ".heif"}]
+    if heic:
+        raise PublishError(f"{job.get('id')}: CONVERSIONE_HEIC_REQUIRED: HEIC/HEIF non è ammesso dal publisher: {', '.join(heic)}")
     return paths
 
 
