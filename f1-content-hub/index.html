@@ -280,8 +280,14 @@
         <p class="muted">Registra qui il numero WhatsApp dal quale invierai i contenuti. Il numero va inserito in formato internazionale, solo cifre, ad esempio 393XXXXXXXXX.</p>
         <div class="forms">
           <div class="field"><label>Numero mittente autorizzato</label><input id="waIdInput" class="input" placeholder="39..."></div>
-          <div class="field"><label>Etichetta</label><input id="waLabelInput" class="input" value="Joseph"></div>
+          <div class="field"><label>Etichetta</label><input id="waLabelInput" class="input" value="WhatsApp contenuti"></div>
+          <div class="field"><label>Cliente associato</label><select id="waClientSelect" class="input"><option value="">Seleziona cliente...</option></select></div>
+          <div class="field"><label>Automazione</label><label class="checkline"><input id="waAutoProcess" type="checkbox" checked> <span>Elabora automaticamente</span></label></div>
+          <div class="field"><label>Resoconto serale</label><label class="checkline"><input id="waReportRecipient" type="checkbox"> <span>Invia qui il resoconto delle 23:00</span></label></div>
           <div class="field" style="align-self:end"><button class="btn green" id="saveWaSenderBtn">SALVA NUMERO</button></div>
+        </div>
+        <div class="notice" style="margin-top:12px">
+          <b>Modalità autonoma:</b> il numero viene associato in modo deterministico al cliente selezionato. I contenuti validi vengono archiviati, controllati, classificati e programmati senza richieste operative. Le notifiche ordinarie restano silenziose; ricevi solo il resoconto giornaliero sul numero marcato come destinatario.
         </div>
         <div class="notice warn">
           Webhook da configurare in Meta: <code>https://nqnmlsmeiynxbdojeyjt.supabase.co/functions/v1/f1-content-whatsapp</code><br>
@@ -1684,13 +1690,47 @@ el("createClientBtn").onclick=async function(){
 async function loadWhatsApp(){
   const rs=await sb.from("f1_whatsapp_senders").select("*").order("created_at",{ascending:false});
   const rl=await sb.from("f1_whatsapp_logs").select("*, f1_content_clients(name)").order("created_at",{ascending:false}).limit(50);
-  el("waSenders").innerHTML=(rs.data||[]).map(function(x){return '<div class="lineitem"><b>'+esc(x.wa_id)+'</b><div>'+esc(x.label)+'</div><span class="badge green">'+(x.active?"ATTIVO":"OFF")+'</span></div>'}).join("")||'<div class="empty">Nessun numero registrato.</div>';
+  const select=el("waClientSelect");
+  if(select){
+    select.innerHTML='<option value="">Seleziona cliente...</option>'+clients.map(function(c){return '<option value="'+c.id+'">'+esc(c.name)+'</option>'}).join("");
+    if(selectedClientId)select.value=selectedClientId;
+  }
+  const list=rs.data||[];
+  el("waSenders").innerHTML=list.map(function(x){
+    const client=clients.find(function(c){return c.id===x.client_id});
+    const badges=[
+      '<span class="badge '+(x.active?"green":"")+'">'+(x.active?"ATTIVO":"OFF")+'</span>',
+      x.auto_process?'<span class="badge green">AUTOMATICO</span>':'<span class="badge amber">REVISIONE</span>',
+      x.report_recipient?'<span class="badge green">REPORT 23:00</span>':''
+    ].join(" ");
+    return '<div class="lineitem"><b>'+esc(x.wa_id)+'</b><div>'+esc(x.label)+'<div class="meta">'+esc(client?client.name:"CLIENTE NON ASSOCIATO")+'</div></div><div>'+badges+'</div></div>';
+  }).join("")||'<div class="empty">Nessun numero registrato.</div>';
   el("waLogs").innerHTML=(rl.data||[]).map(function(x){return '<div class="lineitem"><b>'+esc(fmt(x.created_at))+'</b><div><b>'+esc(x.result)+'</b><div class="meta">'+esc(x.f1_content_clients?x.f1_content_clients.name:"")+' · '+esc(x.message_type||"")+' · '+esc(x.message_text||"")+'</div>'+(x.error?'<div class="meta" style="color:#ff9ca3">'+esc(x.error)+'</div>':"")+'</div><span class="badge">'+esc(x.wa_id||"")+'</span></div>'}).join("")||'<div class="empty">Nessun evento WhatsApp.</div>';
 }
 el("saveWaSenderBtn").onclick=async function(){
   const wa=el("waIdInput").value.replace(/\D/g,"");if(wa.length<8)return alert("Numero non valido.");
-  const r=await sb.from("f1_whatsapp_senders").upsert({owner_id:user.id,wa_id:wa,label:el("waLabelInput").value.trim()||"WhatsApp personale",active:true},{onConflict:"wa_id"});
-  if(r.error)return alert(r.error.message);el("waIdInput").value="";await loadWhatsApp();
+  const clientId=el("waClientSelect").value;if(!clientId)return alert("Seleziona il cliente associato a questo numero.");
+  const reportRecipient=!!el("waReportRecipient").checked;
+  if(reportRecipient){
+    const clear=await sb.from("f1_whatsapp_senders").update({report_recipient:false}).eq("owner_id",user.id);
+    if(clear.error)return alert(clear.error.message);
+  }
+  const row={
+    owner_id:user.id,
+    wa_id:wa,
+    label:el("waLabelInput").value.trim()||"WhatsApp contenuti",
+    client_id:clientId,
+    auto_process:!!el("waAutoProcess").checked,
+    report_recipient:reportRecipient,
+    suppress_operational_notifications:true,
+    active:true
+  };
+  const r=await sb.from("f1_whatsapp_senders").upsert(row,{onConflict:"wa_id"});
+  if(r.error)return alert(r.error.message);
+  el("waIdInput").value="";
+  el("waReportRecipient").checked=false;
+  await loadAll();
+  await loadWhatsApp();
 };
 
 async function importLegacy(){
