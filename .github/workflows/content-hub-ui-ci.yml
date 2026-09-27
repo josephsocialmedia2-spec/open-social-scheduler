@@ -11,6 +11,8 @@ on:
       - 'publisher/local_agent/**'
       - 'publisher/clients/**'
       - '.github/workflows/f1-social-intelligence.yml'
+      - '.github/workflows/f1-agency-intelligence.yml'
+      - 'publisher/agency_requirements.txt'
       - '.github/workflows/content-hub-ui-ci.yml'
   pull_request:
     paths:
@@ -21,6 +23,8 @@ on:
       - 'publisher/local_agent/**'
       - 'publisher/clients/**'
       - '.github/workflows/f1-social-intelligence.yml'
+      - '.github/workflows/f1-agency-intelligence.yml'
+      - 'publisher/agency_requirements.txt'
       - '.github/workflows/content-hub-ui-ci.yml'
 
 permissions:
@@ -204,6 +208,10 @@ jobs:
           grep -Fq "cron: '*/5 * * * *'" .github/workflows/f1-social-intelligence.yml
           grep -q 'f1_intelligence_worker.py' .github/workflows/f1-social-intelligence.yml
           grep -q 'faster-whisper==1.2.0' publisher/intelligence_requirements.txt
+          grep -q 'pillow-heif==1.8.0' publisher/intelligence_requirements.txt
+          grep -Fq "cron: '*/10 * * * *'" .github/workflows/f1-agency-intelligence.yml
+          grep -q -- '--skip-content' .github/workflows/f1-agency-intelligence.yml
+          grep -q 'ddgs' publisher/agency_requirements.txt
           grep -q 'manual_final_confirmation' publisher/clients/immobiliare-la-sacra.json
           grep -q '"autonomous_publish": true' publisher/clients/real-media-pro.json
           grep -q '"autonomous_publish": true' publisher/clients/f1-social.json
