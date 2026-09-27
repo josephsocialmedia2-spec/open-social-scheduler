@@ -301,7 +301,7 @@ def build_or_update_jobs(queue: dict[str, Any]) -> dict[str, int]:
         auto_publish = bool(client.get("auto_publish")) or manual_publish_now
         approval_required = bool(client.get("approval_required", True))
         item_status = str(item.get("status") or "")
-        approval_ok = (not approval_required) or item_status in {"APPROVATO", "PROGRAMMATO", "IN PUBBLICAZIONE", "PUBBLICATO"}
+        approval_ok = (not approval_required) or item_status in {"APPROVATO", "IN PUBBLICAZIONE", "PUBBLICATO"}
 
         reason = ""
         shared_identity = bool(
