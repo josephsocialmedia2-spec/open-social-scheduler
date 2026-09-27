@@ -66,6 +66,49 @@ def _permalink(page: Any, patterns: list[str]) -> str | None:
     return None
 
 
+def _verify_after_publish(
+    page: Any,
+    *,
+    platform: str,
+    profile_url: str,
+    caption: str,
+    permalink_patterns: list[str],
+    success_markers: list[str],
+) -> tuple[str | None, bool]:
+    page.wait_for_timeout(5000)
+    assert_no_auth_wall(page, platform)
+    url = _permalink(page, permalink_patterns)
+    if url:
+        return url, True
+
+    try:
+        body = page.locator("body").inner_text(timeout=4000).lower()
+    except Exception:
+        body = ""
+    if any(marker.lower() in body for marker in success_markers):
+        return None, True
+
+    # Stronger verification: reload the assigned client's profile and require
+    # the newly submitted caption to be visible there. This avoids declaring
+    # success merely because the Publish button was clicked.
+    try:
+        page.goto(profile_url, wait_until="domcontentloaded", timeout=60000)
+        page.wait_for_timeout(3500)
+        assert_no_auth_wall(page, platform)
+        body = " ".join(page.locator("body").inner_text(timeout=5000).lower().split())
+        snippet = " ".join(str(caption or "").lower().split())[:72].strip()
+        url = _permalink(page, permalink_patterns)
+        if url:
+            return url, True
+        if snippet and len(snippet) >= 12 and snippet in body:
+            return None, True
+    except BrowserPublishError:
+        raise
+    except Exception:
+        pass
+    return None, False
+
+
 def publish_facebook(
     page: Any,
     *,
@@ -117,14 +160,23 @@ def publish_facebook(
             "PUBLISH_BUTTON_NOT_FOUND",
         )
     button.click()
-    page.wait_for_timeout(5000)
-    assert_no_auth_wall(page, "facebook")
+    post_url, verified = _verify_after_publish(
+        page,
+        platform="facebook",
+        profile_url=expected_url,
+        caption=caption,
+        permalink_patterns=["/posts/", "story_fbid", "/reel/"],
+        success_markers=[
+            "il tuo post è stato pubblicato",
+            "post pubblicato",
+            "your post was published",
+            "your post is now published",
+        ],
+    )
     return PublishResult(
-        external_post_url=_permalink(
-            page,
-            ["/posts/", "story_fbid", "/reel/"],
-        ),
+        external_post_url=post_url,
         actual_account=actual,
+        verified=verified,
     )
 
 
@@ -186,11 +238,23 @@ def publish_instagram(
             "PUBLISH_BUTTON_NOT_FOUND",
         )
     share.click()
-    page.wait_for_timeout(5000)
-    assert_no_auth_wall(page, "instagram")
+    post_url, verified = _verify_after_publish(
+        page,
+        platform="instagram",
+        profile_url=expected_url,
+        caption=caption,
+        permalink_patterns=["/p/", "/reel/"],
+        success_markers=[
+            "il tuo post è stato condiviso",
+            "post condiviso",
+            "your post has been shared",
+            "your reel has been shared",
+        ],
+    )
     return PublishResult(
-        external_post_url=_permalink(page, ["/p/", "/reel/"]),
+        external_post_url=post_url,
         actual_account=actual,
+        verified=verified,
     )
 
 
@@ -241,11 +305,23 @@ def publish_tiktok(
             "PUBLISH_BUTTON_NOT_FOUND",
         )
     post.click()
-    page.wait_for_timeout(5000)
-    assert_no_auth_wall(page, "tiktok")
+    post_url, verified = _verify_after_publish(
+        page,
+        platform="tiktok",
+        profile_url=expected_url,
+        caption=caption,
+        permalink_patterns=["/video/"],
+        success_markers=[
+            "video pubblicato",
+            "post pubblicato",
+            "video posted",
+            "post published",
+        ],
+    )
     return PublishResult(
-        external_post_url=_permalink(page, ["/video/"]),
+        external_post_url=post_url,
         actual_account=actual,
+        verified=verified,
     )
 
 
@@ -315,14 +391,22 @@ def publish_linkedin(
             "PUBLISH_BUTTON_NOT_FOUND",
         )
     post.click()
-    page.wait_for_timeout(4500)
-    assert_no_auth_wall(page, "linkedin-page")
+    post_url, verified = _verify_after_publish(
+        page,
+        platform="linkedin-page",
+        profile_url=expected_url,
+        caption=caption,
+        permalink_patterns=["/feed/update/", "/posts/"],
+        success_markers=[
+            "post pubblicato",
+            "post published",
+            "your post is live",
+        ],
+    )
     return PublishResult(
-        external_post_url=_permalink(
-            page,
-            ["/feed/update/", "/posts/"],
-        ),
+        external_post_url=post_url,
         actual_account=actual,
+        verified=verified,
     )
 
 
