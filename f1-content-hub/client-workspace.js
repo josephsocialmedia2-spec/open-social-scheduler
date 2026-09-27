@@ -1051,6 +1051,15 @@ window.f1WorkspaceOpenWhatsApp=async function(){
     return '<div class="lineitem"><b>'+h(new Date(x.created_at).toLocaleString("it-IT",{dateStyle:"short",timeStyle:"short"}))+'</b><div><b>'+h(x.message_type||"Messaggio")+'</b><div class="meta">'+h(x.message_text||"")+(x.media_count?' · '+x.media_count+' media':"")+'</div></div><button class="btn small primary" onclick="window.f1WorkspaceImportWhatsApp('+Number(x.id)+')">IMPORTA</button></div>';
   }).join("")||'<div class="publisher-empty">Nessun contenuto WhatsApp associato a '+h(client.name)+'. Quando arriveranno messaggi/media del cliente compariranno qui automaticamente.</div>';
 };
+window.f1HeicDiagnostics={
+  isHeicFile:isHeicFile,
+  isHeicMedia:isHeicMedia,
+  heicPngName:heicPngName,
+  convertHeicToPng:convertHeicToPng,
+  processMediaBeforeUpload:processMediaBeforeUpload,
+  verifyPngBlob:verifyPngBlob
+};
+
 window.f1WorkspaceImportWhatsApp=async function(logId){
   const client=currentClient();if(!client)return;
   try{
