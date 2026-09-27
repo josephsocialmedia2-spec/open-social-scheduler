@@ -340,6 +340,7 @@ def process_one(db: Database, settings, row: dict) -> str:
         return result_key
 
     except DownloadError as exc:
+        completed = datetime.now(timezone.utc).isoformat()
         db.update_job(
             job.id,
             {
@@ -351,10 +352,30 @@ def process_one(db: Database, settings, row: dict) -> str:
                 "lock_expires_at": None,
             },
         )
+        db.audit(
+            {
+                "publication_id": job.id,
+                "owner_id": job.owner_id,
+                "client_id": job.client_id,
+                "platform": job.platform,
+                "method": "BROWSER",
+                "expected_account": exp_url,
+                "started_at": started,
+                "completed_at": completed,
+                "media_count": len(files),
+                "github_run_id": os.getenv("GITHUB_RUN_ID"),
+                "github_sha": os.getenv("GITHUB_SHA"),
+                "browser_profile_id": profile.get("id"),
+                "status": "ERROR",
+                "error_code": "NETWORK_ERROR",
+                "error_message": str(exc)[:1000],
+            }
+        )
         return "error"
 
     except Exception as exc:
         code = "UPLOAD_TIMEOUT" if "timeout" in str(exc).lower() else "TEMPORARY_PLATFORM_ERROR"
+        completed = datetime.now(timezone.utc).isoformat()
         db.update_job(
             job.id,
             {
@@ -365,6 +386,25 @@ def process_one(db: Database, settings, row: dict) -> str:
                 "locked_by": None,
                 "lock_expires_at": None,
             },
+        )
+        db.audit(
+            {
+                "publication_id": job.id,
+                "owner_id": job.owner_id,
+                "client_id": job.client_id,
+                "platform": job.platform,
+                "method": "BROWSER",
+                "expected_account": exp_url,
+                "started_at": started,
+                "completed_at": completed,
+                "media_count": len(files),
+                "github_run_id": os.getenv("GITHUB_RUN_ID"),
+                "github_sha": os.getenv("GITHUB_SHA"),
+                "browser_profile_id": profile.get("id"),
+                "status": "ERROR",
+                "error_code": code,
+                "error_message": str(exc)[:1000],
+            }
         )
         return "error"
 
