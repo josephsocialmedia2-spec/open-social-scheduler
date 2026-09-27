@@ -1,6 +1,10 @@
 name: F1 Social Intelligence - Autonomous
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - '.f1-intelligence-trigger'
   workflow_dispatch:
     inputs:
       content_limit:
