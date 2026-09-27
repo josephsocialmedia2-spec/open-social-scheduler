@@ -201,7 +201,7 @@ jobs:
           python -m py_compile             publisher/f1_intelligence_worker.py             publisher/local_agent/f1_pc_agent.py             publisher/supabase_queue_bridge.py             publisher/direct_api_publish.py
       - name: Check autonomous Intelligence workflow
         run: |
-          grep -q "cron: '*/5 \* \* \* \*'" .github/workflows/f1-social-intelligence.yml
+          grep -Fq "cron: '*/5 * * * *'" .github/workflows/f1-social-intelligence.yml
           grep -q 'f1_intelligence_worker.py' .github/workflows/f1-social-intelligence.yml
           grep -q 'faster-whisper==1.2.0' publisher/intelligence_requirements.txt
           grep -q 'manual_final_confirmation' publisher/clients/immobiliare-la-sacra.json
