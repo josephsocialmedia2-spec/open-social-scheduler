@@ -5,6 +5,9 @@ const SERVICE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || "";
 const ACCESS_TOKEN = Deno.env.get("WHATSAPP_ACCESS_TOKEN") || "";
 const PHONE_NUMBER_ID = Deno.env.get("WHATSAPP_PHONE_NUMBER_ID") || "";
 const GRAPH_VERSION = Deno.env.get("META_GRAPH_VERSION") || "";
+const MS_GRAPH_CLIENT_ID = Deno.env.get("MS_GRAPH_CLIENT_ID") || "";
+const MS_GRAPH_CLIENT_SECRET = Deno.env.get("MS_GRAPH_CLIENT_SECRET") || "";
+const MS_GRAPH_REFRESH_TOKEN = Deno.env.get("MS_GRAPH_REFRESH_TOKEN") || "";
 
 const json = (data, status = 200) =>
   new Response(JSON.stringify(data), {
@@ -134,6 +137,69 @@ async function sendWhatsapp(to, body) {
     status: res.status,
     response: raw.slice(0, 800),
   };
+}
+
+async function graphAccessToken() {
+  if (!MS_GRAPH_CLIENT_ID || !MS_GRAPH_CLIENT_SECRET || !MS_GRAPH_REFRESH_TOKEN) {
+    return null;
+  }
+  const body = new URLSearchParams({
+    client_id: MS_GRAPH_CLIENT_ID,
+    client_secret: MS_GRAPH_CLIENT_SECRET,
+    grant_type: "refresh_token",
+    refresh_token: MS_GRAPH_REFRESH_TOKEN,
+    scope: "offline_access Mail.Send openid profile",
+  });
+  const res = await fetch(
+    "https://login.microsoftonline.com/consumers/oauth2/v2.0/token",
+    {
+      method: "POST",
+      headers: { "content-type": "application/x-www-form-urlencoded" },
+      body,
+    },
+  );
+  if (!res.ok) return null;
+  const data = await res.json().catch(() => ({}));
+  return data?.access_token ? String(data.access_token) : null;
+}
+
+async function sendEmail(to, body, reportDate) {
+  if (!to) return { ok: false, reason: "NO_EMAIL_RECIPIENT" };
+  const accessToken = await graphAccessToken();
+  if (!accessToken) {
+    return { ok: false, reason: "EMAIL_REPORT_CONFIGURATION_MISSING" };
+  }
+  const res = await fetch("https://graph.microsoft.com/v1.0/me/sendMail", {
+    method: "POST",
+    headers: {
+      Authorization: "Bearer " + accessToken,
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({
+      message: {
+        subject: "F1 Social — resoconto " + displayDate(reportDate),
+        body: { contentType: "Text", content: body },
+        toRecipients: [{ emailAddress: { address: to } }],
+      },
+      saveToSentItems: true,
+    }),
+  });
+  const raw = await res.text();
+  return {
+    ok: res.ok,
+    status: res.status,
+    response: raw.slice(0, 800),
+  };
+}
+
+async function ownerEmail(ownerId) {
+  const rows = await db(
+    "f1_staff_profiles?user_id=eq." +
+      ownerId +
+      "&select=company_email&limit=1",
+  );
+  const email = String(rows?.[0]?.company_email || "").trim();
+  return email || null;
 }
 
 async function buildForOwner(ownerId, reportDate, timeZone, force = false) {
@@ -312,15 +378,34 @@ async function buildForOwner(ownerId, reportDate, timeZone, force = false) {
   );
 
   let delivery = { ok: false, reason: "NO_REPORT_RECIPIENT" };
+  let deliveryChannel = null;
+
   if (recipients?.length) {
     delivery = await sendWhatsapp(recipients[0].wa_id, body);
+    if (delivery.ok) deliveryChannel = "WHATSAPP";
+  }
+
+  if (!delivery.ok) {
+    const email = await ownerEmail(ownerId);
+    if (email) {
+      const emailDelivery = await sendEmail(email, body, reportDate);
+      if (emailDelivery.ok) {
+        delivery = emailDelivery;
+        deliveryChannel = "EMAIL";
+      } else if (
+        delivery.reason === "NO_REPORT_RECIPIENT" ||
+        delivery.reason === "WHATSAPP_REPORT_CONFIGURATION_MISSING"
+      ) {
+        delivery = emailDelivery;
+      }
+    }
   }
 
   await db("f1_social_daily_reports?id=eq." + report.id, {
     method: "PATCH",
     headers: { Prefer: "return=minimal" },
     body: JSON.stringify({
-      delivery_channel: delivery.ok ? "WHATSAPP" : null,
+      delivery_channel: delivery.ok ? deliveryChannel : null,
       delivery_status: delivery.ok
         ? "DELIVERED"
         : delivery.reason || "DELIVERY_FAILED",
@@ -333,6 +418,7 @@ async function buildForOwner(ownerId, reportDate, timeZone, force = false) {
     owner_id: ownerId,
     report_date: reportDate,
     summary,
+    delivery_channel: delivery.ok ? deliveryChannel : null,
     delivery_status: delivery.ok
       ? "DELIVERED"
       : delivery.reason || "DELIVERY_FAILED",
