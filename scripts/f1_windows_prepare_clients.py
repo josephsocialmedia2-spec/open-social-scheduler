@@ -16,6 +16,7 @@ import requests
 
 from publisher.cloud_publisher.browser.base import (
     BrowserPublishError,
+    assert_manageable_target,
     verify_expected_account,
 )
 
@@ -83,6 +84,17 @@ def main() -> int:
         description="Prepare dedicated local Chrome profiles for F1 Social clients"
     )
     parser.add_argument(
+        "--client",
+        default="",
+        help="Optional client slug or UUID; empty means all active clients",
+    )
+    parser.add_argument(
+        "--platform",
+        default="",
+        choices=["", "facebook", "instagram", "tiktok", "youtube", "linkedin-page"],
+        help="Optional single social platform",
+    )
+    parser.add_argument(
         "--auto-wait",
         action="store_true",
         help="Poll opened social tabs until the correct accounts are available",
@@ -111,6 +123,14 @@ def main() -> int:
             "order": "name.asc",
         },
     )
+    if args.client:
+        clients = [
+            item for item in clients
+            if str(item.get("slug") or "") == args.client
+            or str(item.get("id") or "") == args.client
+        ]
+        if not clients:
+            raise SystemExit("Requested client not found or not active")
     channels = get(
         "f1_client_social_channels",
         {"select": "*", "limit": "1000"},
@@ -155,6 +175,8 @@ def main() -> int:
                 "youtube",
                 "linkedin-page",
             ):
+                if args.platform and platform != args.platform:
+                    continue
                 channel = channel_map.get((client_id, platform))
                 session = session_map.get((client_id, platform))
                 if not session:
@@ -260,6 +282,7 @@ def main() -> int:
                                     or client["name"]
                                 ),
                             )
+                            assert_manageable_target(page, platform)
                             now = datetime.now(
                                 timezone.utc
                             ).isoformat()
