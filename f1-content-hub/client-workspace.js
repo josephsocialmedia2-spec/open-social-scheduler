@@ -15,8 +15,8 @@ const railThumbUrlCache=new Map();
 let uploadRetryFiles=[];
 let uploadBatchState={
   totalFiles:0,completedFiles:0,failedFiles:0,totalBytes:0,uploadedBytes:0,
-  currentFileName:"",currentFileNumber:0,startedAt:0,bytesPerSecond:0,
-  estimatedSecondsRemaining:null,status:"IDLE",samples:[],failed:[]
+  currentFileName:"",currentFileNumber:0,currentStage:"",startedAt:0,bytesPerSecond:0,
+  estimatedSecondsRemaining:null,status:"IDLE",samples:[],failed:[],convertedHeic:0
 };
 
 function h(value){return String(value==null?"":value).replace(/[&<>"']/g,function(m){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]})}
@@ -53,7 +53,7 @@ function calculateUploadSpeed(bytesNow){
   return speed;
 }
 function uploadStatusLabel(status){
-  return {IDLE:"",PREPARING:"PREPARAZIONE",UPLOADING:"CARICAMENTO IN CORSO",SAVING:"SALVATAGGIO IN CLOUD",PROCESSING:"ELABORAZIONE",COMPLETED:"COMPLETATO",PARTIAL_ERROR:"CARICAMENTO PARZIALE",ERROR:"ERRORE"}[status]||status;
+  return {IDLE:"",PREPARING:"PREPARAZIONE",CONVERTING_HEIC:"CONVERSIONE HEIC → PNG",UPLOADING:"CARICAMENTO IN CORSO",SAVING:"SALVATAGGIO IN CLOUD",PROCESSING:"ELABORAZIONE",COMPLETED:"COMPLETATO",PARTIAL_ERROR:"CARICAMENTO PARZIALE",ERROR:"ERRORE"}[status]||status;
 }
 function renderUploadProgress(){
   const box=document.getElementById("workspaceUploadProgress");if(!box)return;
@@ -61,13 +61,13 @@ function renderUploadProgress(){
   if(s.status==="IDLE"){box.className="upload-progress hidden";box.innerHTML="";return}
   const pct=calculateUploadProgress(),elapsed=s.startedAt?((performance.now()-s.startedAt)/1000):0;
   const doneLabel=s.completedFiles+" / "+s.totalFiles+" contenuti";
-  const detail=s.currentFileName?("FILE "+Math.max(1,s.currentFileNumber)+" DI "+s.totalFiles+" · "+s.currentFileName):"";
+  const detail=s.currentFileName?("FILE "+Math.max(1,s.currentFileNumber)+" DI "+s.totalFiles+" · "+s.currentFileName+(s.currentStage?" · "+s.currentStage:"")):"";
   const speed=s.bytesPerSecond>0?formatBytes(s.bytesPerSecond)+"/s":"CALCOLO IN CORSO...";
   const eta=s.status==="COMPLETED"?"0 sec":formatDuration(s.estimatedSecondsRemaining);
   const klass=s.status==="COMPLETED"?" completed":(s.status==="PARTIAL_ERROR"?" partial":(s.status==="ERROR"?" error":""));
   let final="";
   if(s.status==="COMPLETED"){
-    final='<div class="upload-cloud"><b>☁ CONTENUTI IN CLOUD</b><span>'+s.completedFiles+' contenuti caricati correttamente · completato in '+formatDuration(elapsed)+'</span></div>';
+    final='<div class="upload-cloud"><b>☁ CONTENUTI IN CLOUD</b><span>'+s.completedFiles+' contenuti caricati correttamente'+(s.convertedHeic?' · '+s.convertedHeic+' HEIC convertiti automaticamente in PNG':'')+' · completato in '+formatDuration(elapsed)+'</span></div>';
   }else if(s.status==="PARTIAL_ERROR"||s.status==="ERROR"){
     final='<div class="upload-cloud"><b>⚠ CARICAMENTO PARZIALE</b><span>'+s.completedFiles+' / '+s.totalFiles+' contenuti caricati · '+s.failedFiles+' errori</span>'+(s.failedFiles?'<button class="btn small danger-bright upload-retry" onclick="window.f1RetryFailedUploads()">RIPROVA '+s.failedFiles+' FILE</button>':'')+'</div>';
   }
@@ -82,9 +82,9 @@ function resetUploadBatch(files){
   uploadBatchState={
     totalFiles:list.length,completedFiles:0,failedFiles:0,
     totalBytes:list.reduce(function(sum,f){return sum+(Number(f.size)||0)},0),
-    uploadedBytes:0,currentFileName:"",currentFileNumber:0,
+    uploadedBytes:0,currentFileName:"",currentFileNumber:0,currentStage:"",
     startedAt:performance.now(),bytesPerSecond:0,estimatedSecondsRemaining:null,
-    status:"PREPARING",samples:[],failed:[]
+    status:"PREPARING",samples:[],failed:[],convertedHeic:0
   };
   uploadRetryFiles=[];
   renderUploadProgress();
@@ -116,6 +116,197 @@ async function storageUploadWithProgress(file,path,mime,onProgress){
     xhr.onabort=function(){reject(new Error("Caricamento annullato."))};
     xhr.send(file);
   });
+}
+
+function isHeicName(value){return /\.(heic|heif)$/i.test(String(value||"").trim())}
+function isHeicMime(value){
+  return ["image/heic","image/heif","image/heic-sequence","image/heif-sequence"].includes(String(value||"").toLowerCase());
+}
+function isHeicFile(file){return !!file&&(isHeicName(file.name)||isHeicMime(file.type))}
+function isHeicMedia(media){return !!media&&(isHeicName(media.file_name)||isHeicName(media.storage_path)||isHeicMime(media.mime_type))}
+function heicPngName(name){
+  const raw=String(name||"immagine.heic").replace(/\.(heic|heif)$/i,"");
+  return (raw||"immagine")+".png";
+}
+async function verifyPngBlob(blob){
+  if(!blob||!(blob instanceof Blob))throw new Error("PNG non valido: Blob mancante.");
+  if(blob.size<=0)throw new Error("PNG non valido: file vuoto.");
+  if(String(blob.type||"").toLowerCase()!=="image/png")throw new Error("PNG non valido: MIME "+String(blob.type||"sconosciuto")+".");
+  let width=0,height=0,bitmap=null,url="";
+  try{
+    if(typeof createImageBitmap==="function"){
+      bitmap=await createImageBitmap(blob);width=bitmap.width;height=bitmap.height;
+    }else{
+      url=URL.createObjectURL(blob);
+      const dims=await new Promise(function(resolve,reject){
+        const img=new Image();
+        img.onload=function(){resolve({width:img.naturalWidth||img.width,height:img.naturalHeight||img.height})};
+        img.onerror=function(){reject(new Error("Decodifica PNG non riuscita."))};
+        img.src=url;
+      });
+      width=dims.width;height=dims.height;
+    }
+  }finally{
+    if(bitmap&&bitmap.close)bitmap.close();
+    if(url)URL.revokeObjectURL(url);
+  }
+  if(!(width>0&&height>0))throw new Error("PNG non valido: dimensioni immagine mancanti.");
+  return {width:width,height:height,size:blob.size};
+}
+async function convertHeicToPng(file){
+  if(!isHeicFile(file))throw new Error("Il file non è HEIC/HEIF.");
+  if(typeof window.heic2any!=="function")throw new Error("Motore HEIC non disponibile. Ricarica la pagina.");
+  const converted=await window.heic2any({blob:file,toType:"image/png"});
+  const blob=Array.isArray(converted)?converted[0]:converted;
+  await verifyPngBlob(blob);
+  return new File([blob],heicPngName(file.name),{type:"image/png",lastModified:file.lastModified||Date.now()});
+}
+async function processMediaBeforeUpload(file){
+  if(!isHeicFile(file))return {file:file,converted:false,originalFile:file};
+  uploadBatchState.status="CONVERTING_HEIC";
+  uploadBatchState.currentStage="HEIC RILEVATO · CONVERSIONE AUTOMATICA IN PNG";
+  uploadBatchState.samples=[];
+  uploadBatchState.bytesPerSecond=0;
+  uploadBatchState.estimatedSecondsRemaining=null;
+  renderUploadProgress();
+  const png=await convertHeicToPng(file);
+  uploadBatchState.totalBytes=Math.max(0,uploadBatchState.totalBytes-(Number(file.size)||0)+(Number(png.size)||0));
+  uploadBatchState.convertedHeic++;
+  uploadBatchState.currentStage="✓ CONVERSIONE COMPLETATA · "+png.name;
+  renderUploadProgress();
+  return {file:png,converted:true,originalFile:file,engine:"heic2any-0.0.4"};
+}
+async function verifyConvertedMedia(media){
+  if(!media||String(media.owner_id)!==String(user.id))throw new Error("Verifica PNG bloccata: owner_id non corrispondente.");
+  if(selectedClientId&&String(media.client_id)!==String(selectedClientId))throw new Error("Verifica PNG bloccata: client_id non corrispondente.");
+  const dl=await sb.storage.from("f1-content-media").download(media.storage_path);
+  if(dl.error)throw dl.error;
+  await verifyPngBlob(dl.data);
+  return true;
+}
+async function cleanupOriginalHeic(media){
+  if(!media||!isHeicMedia(media))return;
+  if(String(media.owner_id)!==String(user.id))throw new Error("Pulizia HEIC bloccata: owner_id non corrispondente.");
+  if(selectedClientId&&String(media.client_id)!==String(selectedClientId))throw new Error("Pulizia HEIC bloccata: client_id non corrispondente.");
+  const ownerPrefix=String(user.id)+"/";
+  if(!String(media.storage_path||"").startsWith(ownerPrefix))throw new Error("Pulizia HEIC bloccata: storage_path fuori owner.");
+  const refs=await sb.from("f1_content_media").select("id,content_id,storage_path").eq("storage_path",media.storage_path).neq("id",media.id).eq("owner_id",user.id);
+  if(refs.error)throw refs.error;
+  if(!(refs.data||[]).length){
+    const rm=await sb.storage.from("f1-content-media").remove([media.storage_path]);
+    if(rm.error)throw rm.error;
+  }
+  const del=await sb.from("f1_content_media").delete().eq("id",media.id).eq("owner_id",user.id).eq("client_id",media.client_id);
+  if(del.error)throw del.error;
+}
+async function replaceHeicWithPngMedia(media,pngFile){
+  if(!media||!isHeicMedia(media))throw new Error("Media HEIC non valido.");
+  if(String(media.owner_id)!==String(user.id))throw new Error("Conversione bloccata: owner_id non corrispondente.");
+  if(selectedClientId&&String(media.client_id)!==String(selectedClientId))throw new Error("Conversione bloccata: client_id non corrispondente.");
+  const pngName=heicPngName(media.file_name),base=pngName.toLowerCase();
+  const existing=await sb.from("f1_content_media").select("*").eq("content_id",media.content_id).eq("client_id",media.client_id).eq("owner_id",user.id);
+  if(existing.error)throw existing.error;
+  const reusable=(existing.data||[]).find(function(x){return String(x.file_name||"").toLowerCase()===base&&String(x.mime_type||"").toLowerCase()==="image/png"});
+  if(reusable){
+    await verifyConvertedMedia(reusable);
+    await cleanupOriginalHeic(media);
+    return reusable;
+  }
+  const safe=pngName.replace(/[^a-zA-Z0-9._-]+/g,"_");
+  const path=user.id+"/"+media.client_id+"/"+media.content_id+"/"+crypto.randomUUID()+"-"+safe;
+  await storageUploadWithProgress(pngFile,path,"image/png",function(loaded,total){
+    uploadBatchState.status="UPLOADING";
+    uploadBatchState.currentStage="UPLOAD PNG IN CLOUD";
+    uploadBatchState.uploadedBytes=Math.min(uploadBatchState.totalBytes,uploadBatchState.uploadedBytes+Math.max(0,(Number(loaded)||0)-(Number(uploadBatchState._lastExistingLoaded)||0)));
+    uploadBatchState._lastExistingLoaded=Number(loaded)||0;
+    calculateUploadSpeed(uploadBatchState.uploadedBytes);renderUploadProgress();
+  });
+  uploadBatchState._lastExistingLoaded=0;
+  const ins=await sb.from("f1_content_media").insert({
+    owner_id:user.id,content_id:media.content_id,client_id:media.client_id,file_name:safe,
+    mime_type:"image/png",storage_path:path,file_size:pngFile.size,source:"HEIC2ANY"
+  }).select().single();
+  if(ins.error){
+    try{await sb.storage.from("f1-content-media").remove([path])}catch(_){}
+    throw ins.error;
+  }
+  try{
+    await verifyConvertedMedia(ins.data);
+  }catch(e){
+    try{await sb.storage.from("f1-content-media").remove([path])}catch(_){}
+    try{await sb.from("f1_content_media").delete().eq("id",ins.data.id).eq("owner_id",user.id)}catch(_){}
+    throw e;
+  }
+  await cleanupOriginalHeic(media);
+  return ins.data;
+}
+async function convertExistingHeicMedia(media){
+  if(!media||!isHeicMedia(media))return null;
+  if(String(media.owner_id)!==String(user.id))throw new Error("Conversione bloccata: owner_id non corrispondente.");
+  if(selectedClientId&&String(media.client_id)!==String(selectedClientId))throw new Error("Conversione bloccata: client_id non corrispondente.");
+  uploadBatchState.status="CONVERTING_HEIC";
+  uploadBatchState.currentFileName=media.file_name||"HEIC";
+  uploadBatchState.currentStage="DOWNLOAD HEIC DAL CLOUD · CONVERSIONE IN PNG";
+  renderUploadProgress();
+  const dl=await sb.storage.from("f1-content-media").download(media.storage_path);
+  if(dl.error)throw dl.error;
+  const original=new File([dl.data],media.file_name||"immagine.heic",{type:isHeicMime(media.mime_type)?media.mime_type:"image/heic"});
+  const png=await convertHeicToPng(original);
+  uploadBatchState.totalBytes=Math.max(uploadBatchState.totalBytes,uploadBatchState.uploadedBytes+png.size);
+  const replacement=await replaceHeicWithPngMedia(media,png);
+  const item=(items||[]).find(function(x){return x.id===media.content_id});
+  if(item){
+    const client=(clients||[]).find(function(x){return x.id===item.client_id});
+    if(client){
+      const plan=itemPlan(item,client);
+      plan.media_conversion={converted_from:"HEIC",original_file_name:media.file_name,conversion_engine:"heic2any-0.0.4",conversion_status:"COMPLETED",converted_at:new Date().toISOString()};
+      WS_PLATFORMS.forEach(function(p){
+        if(plan.platforms[p.id]&&!plan.platforms[p.id].scheduled_at)plan.platforms[p.id].status=planState(client.id,p.id,"image/png",Object.assign({},item,{f1_content_media:[replacement]}));
+      });
+      await sb.from("f1_content_items").update({content_type:"FOTO",distribution_plan:plan,updated_at:new Date().toISOString()}).eq("id",item.id).eq("owner_id",user.id).eq("client_id",item.client_id);
+    }
+  }
+  return replacement;
+}
+window.f1ConvertExistingHeicMedia=convertExistingHeicMedia;
+window.f1ConvertExistingHeicForClient=async function(){
+  const client=currentClient();if(!client)return alert("Seleziona prima un cliente.");
+  const mediaRows=[];
+  (items||[]).filter(function(x){return x.client_id===client.id}).forEach(function(item){
+    (item.f1_content_media||[]).forEach(function(media){if(isHeicMedia(media))mediaRows.push(media)});
+  });
+  if(!mediaRows.length)return alert("Nessun HEIC/HEIF da convertire per "+client.name+".");
+  resetUploadBatch(mediaRows.map(function(m){return {name:m.file_name,size:Number(m.file_size)||0}}));
+  uploadBatchState.totalFiles=mediaRows.length;
+  uploadBatchState.totalBytes=mediaRows.reduce(function(sum,m){return sum+(Number(m.file_size)||0)},0);
+  let ok=0;const failed=[];
+  for(let i=0;i<mediaRows.length;i++){
+    const media=mediaRows[i];
+    uploadBatchState.currentFileNumber=i+1;
+    uploadBatchState.currentFileName=media.file_name||("HEIC "+(i+1));
+    uploadBatchState.convertedHeic=ok;
+    uploadBatchState._lastExistingLoaded=0;
+    try{
+      await convertExistingHeicMedia(media);
+      ok++;uploadBatchState.completedFiles=ok;uploadBatchState.convertedHeic=ok;
+    }catch(e){
+      failed.push({file:{name:media.file_name||"HEIC"},error:e&&e.message?e.message:String(e)});
+      uploadBatchState.failedFiles=failed.length;
+    }
+    renderUploadProgress();
+  }
+  await loadAll();await renderAll();
+  uploadBatchState.currentFileName="";uploadBatchState.currentStage="";
+  uploadBatchState.failed=failed;
+  uploadBatchState.status=failed.length?(ok?"PARTIAL_ERROR":"ERROR"):"COMPLETED";
+  uploadBatchState.completedFiles=ok;uploadBatchState.failedFiles=failed.length;uploadBatchState.convertedHeic=ok;
+  if(!failed.length)uploadBatchState.uploadedBytes=uploadBatchState.totalBytes;
+  renderUploadProgress();
+}
+window.f1HeicCountForClient=function(clientId){
+  let count=0;
+  (items||[]).filter(function(x){return x.client_id===clientId}).forEach(function(item){(item.f1_content_media||[]).forEach(function(m){if(isHeicMedia(m))count++})});
+  return count;
 }
 
 function currentClient(){return (clients||[]).find(function(x){return x.id===selectedClientId})||null}
@@ -208,6 +399,8 @@ function captionFor(client,title,category,base,platform){
 }
 function planState(clientId,platform,mime,item){
   const type=String(mime||"").toLowerCase();
+  const media=(item&&item.f1_content_media||[])[0];
+  if(isHeicMedia(media)||isHeicMime(type))return "CONVERSIONE_HEIC";
   const isVideo=type.startsWith("video/"),isImage=type.startsWith("image/");
   if(!type)return "MEDIA_MISSING";
   if(!isVideo&&!isImage)return "FORMATO_NON_SUPPORTATO";
@@ -269,6 +462,7 @@ async function previewMedia(){
   for(const item of rows){
     const host=document.querySelector('[data-ws-preview="'+item.id+'"]');if(!host)continue;
     const media=(item.f1_content_media||[])[0];if(!media)continue;
+    if(isHeicMedia(media)){host.textContent="HEIC · CONVERSIONE NECESSARIA";continue}
     try{
       const url=await signedUrl(media);if(!url)continue;
       if(String(media.mime_type||"").startsWith("image/"))host.innerHTML='<img src="'+h(url)+'" alt="">';
@@ -285,7 +479,9 @@ function railItemMime(item){
   return String(media&&media.mime_type||"").toLowerCase();
 }
 function railItemType(item){
+  const media=(item&&item.f1_content_media||[])[0];
   const mime=railItemMime(item),ct=String(item&&item.content_type||"").toLowerCase();
+  if(isHeicMedia(media))return "HEIC";
   if(mime.startsWith("image/")||/foto|image|immagine/.test(ct))return "FOTO";
   if(mime.startsWith("video/")||/video|reel|short/.test(ct))return "VIDEO";
   if(mime.startsWith("audio/")||/audio/.test(ct))return "AUDIO";
@@ -391,6 +587,7 @@ window.f1QuickProgramFromRail=async function(contentId){
   if(selectedClientId&&item.client_id!==selectedClientId)return alert("Il contenuto non appartiene al cliente selezionato.");
   if(isImmutableItem(item))return alert("Il contenuto è già pubblicato o archiviato e non viene modificato.");
   if(!(item.f1_content_media||[]).length)return alert("MEDIA_MISSING — aggiungi prima un file multimediale.");
+  if((item.f1_content_media||[]).some(isHeicMedia))return alert("CONVERSIONE_HEIC — converti prima il file in PNG.");
   selectedRailContentId=item.id;
   if(window.f1WorkspaceScheduleItem)await window.f1WorkspaceScheduleItem(item.id);
 };
@@ -398,6 +595,7 @@ window.f1HydrateRailThumbs=async function(rows){
   for(const item of rows){
     const box=document.querySelector('[data-rail-thumb="'+item.id+'"]');if(!box)continue;
     const media=(item.f1_content_media||[])[0];if(!media){box.textContent="MEDIA MANCANTE";continue}
+    if(isHeicMedia(media)){box.textContent="HEIC · CONVERSIONE NECESSARIA";continue}
     try{
       const key=String(media.storage_path||media.id||item.id);
       let url=railThumbUrlCache.get(key);
@@ -454,6 +652,7 @@ window.f1RenderClientPublisherWorkspace=async function(){
   const client=currentClient();
   if(!client){root.classList.add("hidden");root.innerHTML="";return}
   root.classList.remove("hidden");
+  const heicCount=window.f1HeicCountForClient?window.f1HeicCountForClient(client.id):0;
   const prefs=WS_PLATFORMS.map(function(p){
     const pref=prefFor(client,p.id),state=channelState(client.id,p.id);
     return '<div class="publish-time"><b>'+h(p.label)+' · '+h(state)+'</b><input type="time" value="'+h(pref.time)+'" onchange="window.f1WorkspaceSaveTime(\''+client.id+'\',\''+p.id+'\',this.value)"></div>';
@@ -477,7 +676,7 @@ window.f1RenderClientPublisherWorkspace=async function(){
       '<div class="distribution-channels">'+pRows+'</div></article>';
   }).join("");
   root.innerHTML='<section class="publisher-console">'+
-    '<div class="publisher-head"><div><h2>Carica contenuti · '+h(client.name)+'</h2><div class="muted">Carica una volta, controlla caption e orari, poi distribuisci sui canali social del cliente.</div></div><div class="publisher-actions"><span class="badge '+(client.auto_publish?"green":"amber")+'">'+(client.auto_publish?"PUBBLICAZIONE AUTOMATICA ATTIVA":"AUTOMAZIONE DA ATTIVARE")+'</span><button class="btn small green" onclick="window.f1WorkspaceProgramAll()">PROGRAMMA TUTTO</button></div></div>'+
+    '<div class="publisher-head"><div><h2>Carica contenuti · '+h(client.name)+'</h2><div class="muted">Carica una volta, controlla caption e orari, poi distribuisci sui canali social del cliente.</div></div><div class="publisher-actions"><span class="badge '+(client.auto_publish?"green":"amber")+'">'+(client.auto_publish?"PUBBLICAZIONE AUTOMATICA ATTIVA":"AUTOMAZIONE DA ATTIVARE")+'</span>'+(heicCount?'<button class="btn small amber" onclick="window.f1ConvertExistingHeicForClient()">CONVERTI HEIC IN CLOUD ('+heicCount+')</button>':'')+'<button class="btn small green" onclick="window.f1WorkspaceProgramAll()">PROGRAMMA TUTTO</button></div></div>'+
     '<div class="ingest-grid">'+
       '<button class="ingest-action" onclick="window.f1WorkspaceOpenWhatsApp()"><b>DA WHATSAPP</b><span>Importa messaggi e media ricevuti per questo cliente.</span></button>'+
       '<button class="ingest-action" onclick="document.getElementById(\'workspaceFolderInput\').click()"><b>DA CARTELLA</b><span>Seleziona una cartella con immagini e video.</span></button>'+
@@ -522,56 +721,76 @@ async function quickUploadFiles(files,source){
   let successfulBytes=0;
   const failed=[];
   for(let index=0;index<list.length;index++){
-    const file=list[index],mime=file.type||"application/octet-stream";
-    let insertedId="",path="",storageCompleted=false;
-    uploadBatchState.currentFileName=file.name||("file-"+(index+1));
+    const originalFile=list[index];
+    let prepared=null,uploadFile=originalFile,mime=originalFile.type||"application/octet-stream";
+    let insertedId="",path="";
+    uploadBatchState.currentFileName=originalFile.name||("file-"+(index+1));
     uploadBatchState.currentFileNumber=index+1;
-    uploadBatchState.status="UPLOADING";
+    uploadBatchState.currentStage=isHeicFile(originalFile)?"HEIC RILEVATO":"PREPARAZIONE FILE";
+    uploadBatchState.status=isHeicFile(originalFile)?"CONVERTING_HEIC":"UPLOADING";
     uploadBatchState.uploadedBytes=successfulBytes;
     uploadBatchState.samples=[];
     uploadBatchState.bytesPerSecond=0;
     uploadBatchState.estimatedSecondsRemaining=null;
     renderUploadProgress();
     try{
-      const title=cleanTitle(file.name),category=classify(file.name),base=baseCaption(client,title,category,"");
+      prepared=await processMediaBeforeUpload(originalFile);
+      uploadFile=prepared.file;
+      mime=uploadFile.type||"application/octet-stream";
+      const title=cleanTitle(originalFile.name),category=classify(originalFile.name),base=baseCaption(client,title,category,"");
       const plan=buildPlan(client,title,category,base,mime,source,null);
+      if(prepared.converted){
+        plan.media_conversion={
+          converted_from:"HEIC",original_file_name:originalFile.name,
+          conversion_engine:prepared.engine||"heic2any-0.0.4",
+          conversion_status:"COMPLETED",converted_at:new Date().toISOString()
+        };
+      }
       const ins=await sb.from("f1_content_items").insert({
         owner_id:user.id,client_id:client.id,title:title,description:base,source_text:base,
         content_type:contentTypeFromMime(mime),source:source,status:"DA APPROVARE",priority:"NORMALE",
         campaign:category,tags:hashtags(client,category).map(function(x){return x.replace(/^#/,"")}),
-        notes:"Piano di distribuzione automatico generato al caricamento.",distribution_plan:plan
+        notes:prepared.converted?("HEIC convertito localmente in PNG con heic2any 0.0.4. Originale: "+originalFile.name):"Piano di distribuzione automatico generato al caricamento.",
+        distribution_plan:plan
       }).select().single();
       if(ins.error)throw ins.error;
       insertedId=ins.data.id;
-      const safe=file.name.replace(/[^a-zA-Z0-9._-]+/g,"_");
+      const safe=uploadFile.name.replace(/[^a-zA-Z0-9._-]+/g,"_");
       path=user.id+"/"+client.id+"/"+insertedId+"/"+crypto.randomUUID()+"-"+safe;
-      await storageUploadWithProgress(file,path,mime,function(loaded,total){
+      uploadBatchState.status="UPLOADING";
+      uploadBatchState.currentStage=prepared.converted?"UPLOAD PNG IN CLOUD":"UPLOAD IN CLOUD";
+      renderUploadProgress();
+      await storageUploadWithProgress(uploadFile,path,mime,function(loaded,total){
         uploadBatchState.status="UPLOADING";
-        uploadBatchState.uploadedBytes=successfulBytes+Math.min(Number(loaded)||0,Number(total)||file.size||0);
+        uploadBatchState.currentStage=prepared&&prepared.converted?"UPLOAD PNG IN CLOUD":"UPLOAD IN CLOUD";
+        uploadBatchState.uploadedBytes=successfulBytes+Math.min(Number(loaded)||0,Number(total)||uploadFile.size||0);
         calculateUploadSpeed(uploadBatchState.uploadedBytes);
         renderUploadProgress();
       });
-      storageCompleted=true;
       uploadBatchState.status="SAVING";
-      uploadBatchState.uploadedBytes=successfulBytes+(Number(file.size)||0);
+      uploadBatchState.currentStage="REGISTRAZIONE MEDIA";
+      uploadBatchState.uploadedBytes=successfulBytes+(Number(uploadFile.size)||0);
       calculateUploadSpeed(uploadBatchState.uploadedBytes);
       renderUploadProgress();
       const mr=await sb.from("f1_content_media").insert({
         owner_id:user.id,content_id:insertedId,client_id:client.id,file_name:safe,
-        mime_type:mime,storage_path:path,file_size:file.size,source:source
-      });
+        mime_type:mime,storage_path:path,file_size:uploadFile.size,source:prepared.converted?"HEIC2ANY":source
+      }).select().single();
       if(mr.error)throw mr.error;
-      successfulBytes+=Number(file.size)||0;
+      if(prepared.converted)await verifyConvertedMedia(mr.data);
+      successfulBytes+=Number(uploadFile.size)||0;
       uploadBatchState.completedFiles++;
       uploadBatchState.uploadedBytes=successfulBytes;
+      uploadBatchState.currentStage=prepared.converted?"✓ PNG VERIFICATO":"✓ FILE VERIFICATO";
       renderUploadProgress();
     }catch(e){
       if(path){try{await sb.storage.from("f1-content-media").remove([path])}catch(_){}}
       if(insertedId){try{await sb.from("f1_content_items").delete().eq("id",insertedId).eq("owner_id",user.id).eq("client_id",client.id)}catch(_){}}
-      failed.push({file:file,error:e&&e.message?e.message:String(e)});
+      failed.push({file:originalFile,error:e&&e.message?e.message:String(e)});
       uploadBatchState.failedFiles=failed.length;
       uploadBatchState.failed=failed.slice();
       uploadBatchState.uploadedBytes=successfulBytes;
+      uploadBatchState.currentStage=isHeicFile(originalFile)?"CONVERSIONE HEIC NON COMPLETATA · ORIGINALE CONSERVATO":"ERRORE FILE";
       uploadBatchState.samples=[];
       uploadBatchState.bytesPerSecond=0;
       uploadBatchState.estimatedSecondsRemaining=null;
@@ -579,6 +798,7 @@ async function quickUploadFiles(files,source){
     }
   }
   uploadBatchState.currentFileName="";
+  uploadBatchState.currentStage="";
   uploadBatchState.currentFileNumber=uploadBatchState.totalFiles;
   uploadBatchState.status="PROCESSING";
   uploadBatchState.uploadedBytes=successfulBytes;
@@ -594,6 +814,7 @@ async function quickUploadFiles(files,source){
   renderUploadProgress();
   if(window.f1RenderContentRail)await window.f1RenderContentRail();
 }
+
 window.f1RetryFailedUploads=async function(){
   const retry=uploadRetryFiles.slice();
   if(!retry.length)return;
@@ -799,7 +1020,14 @@ window.f1WorkspaceImportWhatsApp=async function(logId){
     const exists=await sb.from("f1_content_items").select("id").eq("client_id",client.id).eq("whatsapp_thread_key",key).limit(1);
     if(exists.data&&exists.data.length)return alert("Questo contenuto WhatsApp è già stato importato.");
     const title="WhatsApp · "+new Date(log.created_at).toLocaleDateString("it-IT"),category=classify(log.message_text||""),base=baseCaption(client,title,category,log.message_text||"");
-    const mediaSource=await sb.from("f1_content_media").select("*").eq("client_id",client.id).eq("whatsapp_message_id",log.message_id||"");
+    let mediaSource=await sb.from("f1_content_media").select("*").eq("client_id",client.id).eq("whatsapp_message_id",log.message_id||"");
+    if(mediaSource.error)throw mediaSource.error;
+    const whatsappHeic=(mediaSource.data||[]).filter(isHeicMedia);
+    for(const m of whatsappHeic)await convertExistingHeicMedia(m);
+    if(whatsappHeic.length){
+      mediaSource=await sb.from("f1_content_media").select("*").eq("client_id",client.id).eq("whatsapp_message_id",log.message_id||"");
+      if(mediaSource.error)throw mediaSource.error;
+    }
     const first=(mediaSource.data||[])[0],mime=first&&first.mime_type||"";
     const plan=buildPlan(client,title,category,base,mime,"WHATSAPP",null);
     const ins=await sb.from("f1_content_items").insert({owner_id:user.id,client_id:client.id,title:title,description:base,source_text:base,content_type:mime?contentTypeFromMime(mime):"TESTO",source:"WHATSAPP",status:"DA APPROVARE",campaign:category,tags:hashtags(client,category).map(function(x){return x.replace(/^#/,"")}),notes:"Importato dal registro WhatsApp.",whatsapp_thread_key:key,distribution_plan:plan}).select().single();
