@@ -19,6 +19,7 @@ class CloudPublisherTests(unittest.TestCase):
                     "enabled": True,
                     "verified": True,
                     "reauthorization_required": False,
+                    "connection_status": "COLLEGATO",
                     "provider": "oauth_broker",
                 }
             )
@@ -29,6 +30,7 @@ class CloudPublisherTests(unittest.TestCase):
                     "enabled": True,
                     "verified": False,
                     "reauthorization_required": False,
+                    "connection_status": "COLLEGATO",
                     "provider": "oauth_broker",
                 }
             )
@@ -39,6 +41,18 @@ class CloudPublisherTests(unittest.TestCase):
                     "enabled": True,
                     "verified": True,
                     "reauthorization_required": True,
+                    "connection_status": "COLLEGATO",
+                    "provider": "oauth_broker",
+                }
+            )
+        )
+        self.assertFalse(
+            api_ready(
+                {
+                    "enabled": True,
+                    "verified": True,
+                    "reauthorization_required": False,
+                    "connection_status": "ACCOUNT_CONDIVISO",
                     "provider": "oauth_broker",
                 }
             )
