@@ -24,6 +24,7 @@ class PublishResult:
     external_post_id: str | None = None
     external_post_url: str | None = None
     actual_account: str | None = None
+    verified: bool = False
 
 
 def expected_handle(platform: str, profile_url: str | None) -> str:
@@ -86,7 +87,9 @@ def verify_expected_account(
     id_ok = bool(expected_id and str(expected_id).lower() in hay)
     handle_ok = bool(handle and handle in hay)
     name_ok = bool(expected_name and str(expected_name).strip().lower() in hay)
-    if expected_url and not (id_ok or handle_ok or name_ok):
+    strong_expected = bool(expected_id or handle)
+    strong_ok = id_ok or handle_ok
+    if expected_url and ((strong_expected and not strong_ok) or (not strong_expected and not name_ok)):
         raise BrowserPublishError(
             "Opened social account does not match the client account guard",
             "ACCOUNT_WRONG",
