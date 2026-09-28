@@ -931,7 +931,18 @@ def main() -> int:
             report.append({"job_id": job.get("id"), "status": "blocked_by_queue", "queue_status": job.get("status"), "reason": job.get("blocked_reason")})
             all_ok = False
             continue
-        results, ok = publish_job(job, only, args.dry_run)
+        try:
+            results, ok = publish_job(job, only, args.dry_run)
+        except PublishError as exc:
+            # One malformed/missing-media job must not stop unrelated clients.
+            # Record the job-level failure and continue processing the remaining due jobs.
+            results = [{
+                "platform": "system",
+                "status": "blocked",
+                "error": str(exc),
+                "error_code": "PUBLISH_JOB_MEDIA_OR_PREFLIGHT_ERROR",
+            }]
+            ok = False
         job.setdefault("direct_api_results", []).append({"at": datetime.now(timezone.utc).isoformat(timespec="seconds"), "dry_run": args.dry_run, "results": results})
         report.append({"job_id": job.get("id"), "results": results})
         all_ok = all_ok and ok
