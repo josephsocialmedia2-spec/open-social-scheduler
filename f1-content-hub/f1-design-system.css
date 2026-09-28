@@ -538,3 +538,254 @@ body::after{
   body::before,body::after{display:none!important}
   .panel,.calendar-row,.property,.content-card{box-shadow:none!important;background:#fff!important;border-color:#ddd!important}
 }
+
+
+/* =========================================================
+   F1 UI ALIGNMENT HARDENING — 2026-09-28
+   Single geometry and spacing contract for every F1 Social view.
+   Keeps page-specific functions intact while making the shell,
+   headings, panels, forms and responsive behavior consistent.
+   ========================================================= */
+:root{
+  --f1-sidebar-w:244px;
+  --f1-rail-w:324px;
+  --f1-page-max:1640px;
+  --f1-space-1:6px;
+  --f1-space-2:10px;
+  --f1-space-3:14px;
+  --f1-space-4:18px;
+  --f1-space-5:24px;
+  --f1-control-h:42px;
+  --f1-header-h:88px;
+}
+
+/* Global shell: one grid, one axis, no drifting columns. */
+.shell{
+  display:grid!important;
+  grid-template-columns:var(--f1-sidebar-w) var(--f1-rail-w) minmax(0,1fr)!important;
+  min-height:100vh;
+  width:100%;
+  align-items:stretch;
+}
+.sidebar,
+.content-rail{
+  min-width:0;
+  height:100vh;
+  position:sticky;
+  top:0;
+  align-self:start;
+}
+.main{
+  min-width:0!important;
+  width:100%;
+  padding:var(--f1-space-4) var(--f1-space-5) 88px!important;
+  box-sizing:border-box;
+}
+.main > .topbar,
+.main > .client-context,
+.main > .client-publisher-workspace,
+.main > section{
+  width:min(100%,var(--f1-page-max));
+  margin-left:auto!important;
+  margin-right:auto!important;
+  box-sizing:border-box;
+}
+
+/* Header: identical geometry in every section. */
+.topbar{
+  min-height:var(--f1-header-h)!important;
+  margin:0 auto var(--f1-space-4)!important;
+  padding:var(--f1-space-3) var(--f1-space-4)!important;
+  border:1px solid rgba(32,199,255,.28)!important;
+  border-radius:var(--f1-radius)!important;
+  display:grid!important;
+  grid-template-columns:minmax(220px,1fr) auto;
+  align-items:center!important;
+  gap:var(--f1-space-4)!important;
+}
+.topbar > div:first-child{min-width:0}
+.topbar h1{margin:0!important;line-height:1.06!important}
+.topbar .muted{margin-top:5px}
+.top-actions{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-end!important;
+  gap:var(--f1-space-2)!important;
+  flex-wrap:wrap;
+}
+
+/* Page rhythm: every functional page starts on the same visual grid. */
+.main > section{padding:0!important}
+.main > section > .panel:first-child,
+.main > section > .metrics:first-child{margin-top:0!important}
+.panel,
+.publisher-console,
+.client-context{
+  margin-bottom:var(--f1-space-3)!important;
+}
+.panel{
+  padding:var(--f1-space-4)!important;
+}
+.subpanel{
+  padding:var(--f1-space-3)!important;
+  border-radius:var(--f1-radius-sm)!important;
+}
+.section-title{
+  min-height:42px;
+  display:flex!important;
+  align-items:center!important;
+  gap:var(--f1-space-2)!important;
+  margin-bottom:var(--f1-space-3)!important;
+}
+.section-title h2,
+.section-title h3{margin:0!important;line-height:1.15!important}
+.section-title .muted{margin-top:4px}
+
+/* Cards/KPIs: one height and one spacing language. */
+.metrics,
+.analytics-grid,
+.clients,
+.content-grid{
+  gap:var(--f1-space-3)!important;
+}
+.metrics,
+.analytics-grid{
+  grid-template-columns:repeat(auto-fit,minmax(155px,1fr))!important;
+  margin-bottom:var(--f1-space-3)!important;
+}
+.metric,
+.analytics-card{
+  min-height:104px!important;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+.client-card,
+.content-card,
+.property-card,
+.distribution-card,
+.calendar-row{
+  border-radius:var(--f1-radius-sm)!important;
+}
+
+/* Forms/filters: same control height and baseline. */
+.input,
+select,
+textarea,
+.btn{
+  box-sizing:border-box;
+}
+.input,
+select,
+.btn:not(.fab){
+  min-height:var(--f1-control-h)!important;
+}
+.toolbar,
+.content-toolbar,
+.forms{
+  gap:var(--f1-space-2)!important;
+  align-items:end!important;
+}
+.toolbar .input,
+.toolbar select,
+.content-toolbar .input,
+.content-toolbar select{
+  width:100%;
+}
+label{
+  display:block;
+  margin-bottom:6px;
+  color:#9fc9e8!important;
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.045em;
+}
+
+/* Blue/cyan is the primary interaction language; green is status only. */
+.calendar-modes .btn.active-mode,
+.workspace-nav .btn.primary,
+.content-rail-filter.active{
+  color:#fff!important;
+  background:linear-gradient(135deg,#155ee8,#168fff)!important;
+  border-color:#38d5ff!important;
+  box-shadow:0 0 17px rgba(27,130,255,.34)!important;
+}
+.btn.green{
+  /* Keep green only for explicit positive actions/status, not generic navigation. */
+  font-weight:850;
+}
+
+/* Dedicated client/archive blocks inherit the same visual family. */
+.la-sacra-summary{
+  background:linear-gradient(110deg,rgba(3,35,70,.98),rgba(3,29,60,.92))!important;
+  border-color:var(--f1-border)!important;
+  box-shadow:var(--f1-glow)!important;
+}
+.la-sacra-kpis span,
+.la-sacra-slots span,
+.property-detail-lines>div{
+  background:rgba(5,40,76,.82)!important;
+  border-color:rgba(32,199,255,.32)!important;
+}
+.property-card{
+  background:linear-gradient(145deg,rgba(4,34,66,.98),rgba(2,23,48,.97))!important;
+  border-color:rgba(32,199,255,.38)!important;
+}
+
+/* Tables/lists align content consistently. */
+.calendar-list,
+.log-list,
+.distribution-list{display:grid;gap:var(--f1-space-2)!important}
+.lineitem,
+.calendar-row{
+  padding:var(--f1-space-3)!important;
+  align-items:center;
+}
+
+/* Explicit focus treatment for keyboard users. */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible{
+  outline:2px solid var(--f1-cyan)!important;
+  outline-offset:2px!important;
+}
+
+/* Medium screens: remove rail before compressing the main workspace. */
+@media(max-width:1180px){
+  .shell{grid-template-columns:220px minmax(0,1fr)!important}
+  .content-rail{display:none!important}
+  .main{padding:var(--f1-space-4)!important;padding-bottom:88px!important}
+  .topbar{grid-template-columns:1fr!important}
+  .top-actions{justify-content:flex-start!important}
+}
+
+/* Mobile: same design, reduced density, no horizontal drift. */
+@media(max-width:760px){
+  .shell{display:block!important}
+  .sidebar{display:none!important}
+  .main{padding:12px 12px 92px!important}
+  .main > .topbar,
+  .main > .client-context,
+  .main > .client-publisher-workspace,
+  .main > section{width:100%!important}
+  .topbar{
+    min-height:0!important;
+    margin:0 0 12px!important;
+    padding:12px!important;
+    border-radius:14px!important;
+  }
+  .top-actions{width:100%!important;display:grid!important;grid-template-columns:1fr 1fr!important}
+  .top-actions .global-client-select{grid-column:1/-1;max-width:none!important;width:100%!important}
+  .top-actions .btn{width:100%}
+  .panel{padding:13px!important}
+  .section-title{align-items:flex-start!important;flex-wrap:wrap}
+  .metrics,.analytics-grid{grid-template-columns:1fr 1fr!important}
+  .content-grid,.clients{grid-template-columns:1fr!important}
+}
+@media(max-width:460px){
+  .metrics,.analytics-grid{grid-template-columns:1fr!important}
+  .top-actions{grid-template-columns:1fr!important}
+  .top-actions .global-client-select{grid-column:auto}
+}
