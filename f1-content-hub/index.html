@@ -47,6 +47,8 @@
 .week-day.drop-ready{outline:2px dashed var(--green);outline-offset:-4px}
 @media(max-width:1050px){.content-toolbar{grid-template-columns:1fr 1fr}}
 @media(max-width:760px){.content-toolbar{grid-template-columns:1fr}.calendar-modes{width:100%;justify-content:space-between}}
+
+.la-sacra-summary{grid-column:1/-1;background:#0a1827;border:1px solid #2d4a68;border-radius:16px;padding:16px;display:grid;grid-template-columns:minmax(240px,1.4fr) minmax(260px,1fr) auto;gap:14px;align-items:center}.la-sacra-summary h2{margin:2px 0 6px}.la-sacra-summary p{margin:0;color:var(--muted);max-width:760px}.la-sacra-summary small{color:#7ef0b0;font-weight:900;letter-spacing:.08em}.la-sacra-kpis{display:grid;grid-template-columns:1fr 1fr;gap:7px}.la-sacra-kpis span{background:#102238;border:1px solid var(--line);border-radius:10px;padding:9px;color:#b9c8da;font-size:11px}.la-sacra-kpis b{display:block;color:#fff;font-size:21px}.la-sacra-slots{display:grid;grid-template-columns:repeat(3,auto);gap:6px;align-items:center}.la-sacra-slots strong{grid-column:1/-1;color:#9eb0c7;font-size:10px;letter-spacing:.08em}.la-sacra-slots span{background:#163354;border:1px solid #335f8a;border-radius:999px;padding:7px 10px;font-weight:900}.property-card{background:#0b1a2a;border:1px solid var(--line);border-radius:14px;overflow:hidden;min-width:0}.property-cover{height:190px;background:#13283e;overflow:hidden}.property-cover img{width:100%;height:100%;object-fit:cover}.property-no-image{height:100%;display:grid;place-items:center;color:#f5dc9e;background:#2d2411;font-size:11px;font-weight:900}.property-body{padding:12px}.property-body h3{margin:3px 0 8px;font-size:15px;line-height:1.3}.property-price{font-weight:1000;font-size:20px}.property-next{padding:8px 0;color:#b9c8da;font-size:11px}.property-social-counts{display:flex;gap:8px;flex-wrap:wrap;color:#9eb0c7;font-size:11px;margin:6px 0 10px}.property-detail-lines{display:grid;gap:8px}.property-detail-lines>div{padding:9px;border:1px solid var(--line);border-radius:9px;background:#0a1827}.property-card .badge.amber{color:#f7d48a;border-color:#866521}@media(max-width:1000px){.la-sacra-summary{grid-template-columns:1fr}.la-sacra-slots{justify-content:start}}@media(max-width:620px){.la-sacra-kpis{grid-template-columns:1fr 1fr}.property-cover{height:180px}}
 </style>
   <link rel="stylesheet" href="./client-workspace.css?v=20260927a">
   <link rel="stylesheet" href="./f1-design-system.css?v=20260927b">
@@ -460,6 +462,7 @@ let socialChannels = [];
 let browserProfiles = [];
 let browserSessions = [];
 let cloudPublicationQueue = [];
+let properties = [];
 let webSources = [];
 let storeCycles = [];
 let publicationEvents = [];
@@ -577,9 +580,10 @@ async function loadAll(){
     f1QueryWithRetry(function(){return sb.from("f1_operator_preferences").select("*").limit(5)},"Preferenze operatore",2),
     f1QueryWithRetry(function(){return sb.from("f1_client_browser_profiles").select("*").order("updated_at",{ascending:false})},"Browser cloud",2),
     f1QueryWithRetry(function(){return sb.from("f1_client_browser_social_sessions").select("*").order("updated_at",{ascending:false})},"Sessioni browser",2),
-    f1QueryWithRetry(function(){return sb.from("f1_publication_queue").select("*").order("scheduled_at",{ascending:true}).limit(500)},"Coda cloud",2)
+    f1QueryWithRetry(function(){return sb.from("f1_publication_queue").select("*").order("scheduled_at",{ascending:true}).limit(500)},"Coda cloud",2),
+    f1QueryWithRetry(function(){return sb.from("f1_content_properties").select("*").order("updated_at",{ascending:false}).limit(500)},"Immobili",2)
   ]);
-  const ri=results[0],rcal=results[1],rch=results[2],rws=results[3],rsc=results[4],rpe=results[5],rwas=results[6],ras=results[7],rie=results[8],rop=results[9],rbp=results[10],rbs=results[11],rcq=results[12];
+  const ri=results[0],rcal=results[1],rch=results[2],rws=results[3],rsc=results[4],rpe=results[5],rwas=results[6],ras=results[7],rie=results[8],rop=results[9],rbp=results[10],rbs=results[11],rcq=results[12],rprop=results[13];
   if(ri&&!ri.error)items=ri.data||[];
   if(rcal&&!rcal.error)calendar=rcal.data||[];
   if(rch&&!rch.error)socialChannels=rch.data||[];
@@ -593,6 +597,7 @@ async function loadAll(){
   if(rbp&&!rbp.error)browserProfiles=rbp.data||[];
   if(rbs&&!rbs.error)browserSessions=rbs.data||[];
   if(rcq&&!rcq.error)cloudPublicationQueue=rcq.data||[];
+  if(rprop&&!rprop.error)properties=rprop.data||[];
 }
 function fillClientSelects(){
   const options='<option value="">Tutti i clienti</option>'+clients.map(function(c){return '<option value="'+c.id+'">'+esc(c.name)+'</option>'}).join("");
@@ -690,6 +695,101 @@ async function renderGrid(target,list){
   if(!list.length){el(target).innerHTML='<div class="empty">Nessun contenuto.</div>';return}
   const html=await Promise.all(list.map(cardHtml));el(target).innerHTML=html.join("");
 }
+function f1PropertyPrice(p){
+  const direct=p&&p.raw_data&&p.raw_data.price_display;
+  if(direct)return String(direct);
+  if(p&&p.price!=null&&Number.isFinite(Number(p.price))){
+    const eur=Number(p.price)/100;
+    return eur.toLocaleString("it-IT",{style:"currency",currency:"EUR",maximumFractionDigits:0});
+  }
+  return "Prezzo non disponibile";
+}
+function f1PropertyItems(propertyId){
+  return items.filter(function(x){return x.property_id===propertyId});
+}
+function f1PropertyCalendar(propertyId){
+  const ids=new Set(f1PropertyItems(propertyId).map(function(x){return x.id}));
+  return calendar.filter(function(x){return ids.has(x.content_id)});
+}
+window.f1OpenPropertySource=function(id){
+  const p=properties.find(function(x){return x.id===id});
+  if(p&&p.listing_url)window.open(p.listing_url,"_blank","noopener");
+};
+window.f1ShowPropertyCampaign=function(id){
+  const p=properties.find(function(x){return x.id===id});if(!p)return;
+  const its=f1PropertyItems(id),cal=f1PropertyCalendar(id);
+  const now=Date.now();
+  const future=cal.filter(function(x){return new Date(x.publication_at).getTime()>=now}).sort(function(a,b){return new Date(a.publication_at)-new Date(b.publication_at)});
+  const published=cal.filter(function(x){return /PUBBLICAT|PUBLISHED|COMPLETED/i.test(String(x.status||""))}).length;
+  const details=[
+    "<b>"+esc(p.title)+"</b>",
+    esc(p.comune||"Località non disponibile"),
+    esc(f1PropertyPrice(p)),
+    "Campagna: "+esc((p.raw_data&&p.raw_data.campaign_name)||"LA SACRA · ROTAZIONE 08-14-20"),
+    "Contenuti creati: "+its.length,
+    "Pubblicazioni programmate: "+future.length,
+    "Pubblicazioni confermate: "+published,
+    future[0]?("Prossima: "+esc(fmt(future[0].publication_at))+" · "+esc(platformLabel(future[0].platform))):"Prossima: nessuna"
+  ];
+  let modal=document.getElementById("propertyInfoModal");
+  if(!modal){
+    modal=document.createElement("div");modal.id="propertyInfoModal";modal.className="modal";
+    modal.innerHTML='<div class="modal-card"><div class="section-title"><h2 id="propertyInfoTitle">Scheda immobile</h2><button class="btn small ghost" onclick="closeModal(\'propertyInfoModal\')">CHIUDI</button></div><div id="propertyInfoBody"></div></div>';
+    document.body.appendChild(modal);
+  }
+  document.getElementById("propertyInfoTitle").textContent=p.title||"Scheda immobile";
+  document.getElementById("propertyInfoBody").innerHTML='<div class="property-detail-lines">'+details.map(function(x){return "<div>"+x+"</div>"}).join("")+'</div><div class="row" style="margin-top:12px"><button class="btn primary" onclick="window.f1OpenPropertySource(\''+id+'\')">APRI SCHEDA PUBBLICA</button><button class="btn ghost" onclick="closeModal(\'propertyInfoModal\');setTab(\'calendar\')">VAI AL CALENDARIO</button></div>';
+  openModal("propertyInfoModal");
+};
+async function renderLaSacraArchive(){
+  const client=clients.find(function(x){return x.slug==="immobiliare-la-sacra"});
+  if(!client){el("archiveGrid").innerHTML='<div class="empty">Cliente Immobiliare La Sacra non trovato.</div>';return}
+  let list=properties.filter(function(p){return p.client_id===client.id&&p.status!=="ARCHIVIATO"});
+  const q=(el("searchInput")&&el("searchInput").value||"").toLowerCase().trim();
+  const status=(el("statusFilter")&&el("statusFilter").value||"").trim();
+  if(q)list=list.filter(function(p){return [p.title,p.comune,p.description,p.listing_url].join(" ").toLowerCase().includes(q)});
+  if(status)list=list.filter(function(p){return String(p.status||"").toUpperCase()===status.toUpperCase()});
+  const ids=new Set(list.map(function(p){return p.id}));
+  const campaignItems=items.filter(function(x){return ids.has(x.property_id)});
+  const future=calendar.filter(function(x){return campaignItems.some(function(i){return i.id===x.content_id})&&new Date(x.publication_at).getTime()>=Date.now()});
+  const connected=socialChannels.filter(function(x){return x.client_id===client.id&&x.enabled&&x.verified&&String(x.connection_status||"").toUpperCase()==="COLLEGATO"}).length;
+  const active=list.filter(function(p){return p.status==="ATTIVO"}).length;
+  const campaigns=new Set(campaignItems.map(function(x){return x.campaign}).filter(Boolean)).size;
+  let html='<div class="la-sacra-summary">'+
+    '<div><small>IMMOBILIARE LA SACRA</small><h2>Archivio immobili e campagne</h2><p>Gli URL pubblici sono gestiti dall’amministrazione. F1 Social usa le schede immobili come fonte per campagne e calendario.</p></div>'+
+    '<div class="la-sacra-kpis"><span><b>'+active+'</b> immobili attivi</span><span><b>'+campaigns+'</b> campagne</span><span><b>'+future.length+'</b> programmazioni</span><span><b>'+connected+'</b> social collegati</span></div>'+
+    '<div class="la-sacra-slots"><strong>CICLO CLIENTE</strong><span>08:00</span><span>14:00</span><span>20:00</span></div>'+
+    '</div>';
+  if(!list.length){el("archiveGrid").innerHTML=html+'<div class="empty">Nessun immobile corrispondente ai filtri.</div>';return}
+  list.sort(function(a,b){return String(a.title||"").localeCompare(String(b.title||""),"it")});
+  html+=list.map(function(p){
+    const its=f1PropertyItems(p.id),cal=f1PropertyCalendar(p.id);
+    const now=Date.now();
+    const next=cal.filter(function(x){return new Date(x.publication_at).getTime()>=now&&!/ANNULLATO|CANCELED/i.test(String(x.status||""))}).sort(function(a,b){return new Date(a.publication_at)-new Date(b.publication_at)})[0];
+    const fb=cal.filter(function(x){return String(x.platform||"").toLowerCase()==="facebook"}).length;
+    const ig=cal.filter(function(x){return String(x.platform||"").toLowerCase()==="instagram"}).length;
+    const cover=p.cover_image_url?'<img loading="lazy" src="'+esc(p.cover_image_url)+'" alt="'+esc(p.title)+'">':'<div class="property-no-image">MEDIA DA VERIFICARE</div>';
+    const state=String(p.status||"DA VERIFICARE").toUpperCase();
+    const stateCls=state==="ATTIVO"?"green":(state==="DA_VERIFICARE"?"amber":"");
+    return '<article class="property-card">'+
+      '<div class="property-cover">'+cover+'</div>'+
+      '<div class="property-body">'+
+      '<div class="meta">'+esc(p.comune||"Località non disponibile")+'</div>'+
+      '<h3>'+esc(p.title||"Immobile")+'</h3>'+
+      '<div class="property-price">'+esc(f1PropertyPrice(p))+'</div>'+
+      '<div class="badges"><span class="badge '+stateCls+'">'+esc(state.replaceAll("_"," "))+'</span><span class="badge">'+its.length+' CONTENUTI</span></div>'+
+      '<div class="property-next"><b>Prossimo contenuto:</b> '+(next?esc(fmt(next.publication_at)):"non programmato")+'</div>'+
+      '<div class="property-social-counts"><span>Facebook '+fb+'</span><span>Instagram '+ig+'</span></div>'+
+      '<div class="card-actions"><button class="btn small primary" onclick="window.f1OpenPropertySource(\''+p.id+'\')">APRI</button><button class="btn small ghost" onclick="window.f1ShowPropertyCampaign(\''+p.id+'\')">CAMPAGNA</button><button class="btn small ghost" onclick="setTab(\'calendar\')">CALENDARIO</button></div>'+
+      '</div></article>';
+  }).join("");
+  el("archiveGrid").innerHTML=html;
+}
+async function renderArchiveCurrent(){
+  const client=clients.find(function(x){return x.id===selectedClientId});
+  if(client&&client.slug==="immobiliare-la-sacra")return renderLaSacraArchive();
+  return renderGrid("archiveGrid",filteredItems());
+}
 function f1DateKey(value,timeZone){
   if(!value)return "";
   try{
@@ -765,7 +865,7 @@ async function renderAll(){
   renderMetrics();renderClients();renderClientContext();
   if(window.f1RenderContentRail)await window.f1RenderContentRail();
   if(window.f1RenderClientPublisherWorkspace)await window.f1RenderClientPublisherWorkspace();
-  await renderGrid("latestGrid",filteredItems(12));await renderGrid("archiveGrid",filteredItems());
+  await renderGrid("latestGrid",filteredItems(12));await renderArchiveCurrent();
   renderCalendar();renderAnalytics();renderAutomation();renderPublicationCenter();renderProblems();renderReports();
 }
 window.f1SetClientScope=function(id){
@@ -1780,9 +1880,9 @@ async function importLegacy(){
   }catch(e){msg("legacyResult",e.message||String(e),"error")}
 }
 el("legacyImportBtn").onclick=importLegacy;
-el("searchInput").oninput=function(){renderGrid("archiveGrid",filteredItems())};el("statusFilter").onchange=function(){renderGrid("archiveGrid",filteredItems())};el("clientFilter").onchange=function(){window.f1SetClientScope(this.value)};
-if(el("typeFilter"))el("typeFilter").onchange=function(){renderGrid("archiveGrid",filteredItems())};
-if(el("usageFilter"))el("usageFilter").onchange=function(){renderGrid("archiveGrid",filteredItems())};
+el("searchInput").oninput=function(){renderArchiveCurrent()};el("statusFilter").onchange=function(){renderArchiveCurrent()};el("clientFilter").onchange=function(){window.f1SetClientScope(this.value)};
+if(el("typeFilter"))el("typeFilter").onchange=function(){renderArchiveCurrent()};
+if(el("usageFilter"))el("usageFilter").onchange=function(){renderArchiveCurrent()};
 if(el("problemQuickBtn"))el("problemQuickBtn").onclick=function(){setTab("problems")};
 if(el("reportRange"))el("reportRange").onchange=renderReports;
 if(el("exportReportBtn"))el("exportReportBtn").onclick=window.f1ExportReport;
