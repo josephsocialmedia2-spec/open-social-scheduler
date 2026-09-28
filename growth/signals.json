@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-25T10:23:57+00:00",
+  "updated_at": "2026-09-28T11:56:01+00:00",
   "signals": [
     {
       "id": "FBS-64D8E3A2C4",
@@ -373,6 +373,18 @@
       "source_query": "site:facebook.com/groups \"Giaveno\" \"vendesi casa\"",
       "status": "NEW",
       "discovered_at": "2026-09-25T10:14:33+00:00"
+    },
+    {
+      "id": "FBS-7D4786DFAE",
+      "brand": "f1-immobiliare",
+      "territory": "Rosta",
+      "group_url": "https://www.facebook.com/groups/seidirostase/",
+      "source_url": "https://www.facebook.com/groups/seidirostase/posts/3589214161214568/",
+      "title": "Sei Di Rosta Se... | Questa bici è appoggiata al muro di ...",
+      "snippet": "Questa bici è appoggiata al muro di cinta della casa tra Via Stazione e Via Nino Costa. Magari qualcuno la sta cercando.",
+      "source_query": "site:facebook.com/groups \"Rosta\" \"vendesi casa\"",
+      "status": "NEW",
+      "discovered_at": "2026-09-28T11:46:31+00:00"
     }
   ]
 }
