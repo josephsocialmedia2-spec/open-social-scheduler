@@ -755,7 +755,9 @@ textarea:focus-visible{
 /* Medium screens: remove rail before compressing the main workspace. */
 @media(max-width:1180px){
   .shell{grid-template-columns:220px minmax(0,1fr)!important}
-  .content-rail{display:none!important}
+  /* The content rail becomes an off-canvas drawer; component positioning
+     remains in client-workspace.css so the feature stays available on tablet. */
+  .content-rail{display:flex!important}
   .main{padding:var(--f1-space-4)!important;padding-bottom:88px!important}
   .topbar{grid-template-columns:1fr!important}
   .top-actions{justify-content:flex-start!important}
