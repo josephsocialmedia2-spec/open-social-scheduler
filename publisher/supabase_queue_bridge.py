@@ -224,17 +224,38 @@ def channel_key(client_id: str, platform: str) -> str:
 
 
 def load_source_rows() -> tuple[list[dict[str, Any]], dict[str, dict[str, Any]], dict[str, dict[str, Any]]]:
+    # Fetch base tables separately instead of relying on a deeply nested
+    # PostgREST relationship select. This keeps the bridge deterministic when
+    # the calendar is regenerated in bulk (for example La Sacra 08/14/20).
     calendars = rest_get(
         "f1_content_calendar",
         {
             "select": (
                 "id,owner_id,content_id,client_id,platform,publication_at,status,queue_job_id,"
-                "provider,external_post_id,external_url,retry_count,error,platform_metadata,"
-                "f1_content_items(id,title,description,source_text,status,campaign,property_id,source,tiktok_settings,"
-                "f1_content_media(id,file_name,mime_type,storage_path,file_size)),"
-                "f1_content_clients(id,name,slug,timezone,auto_publish,approval_required)"
+                "provider,external_post_id,external_url,retry_count,error,platform_metadata"
             ),
             "order": "publication_at.asc",
+            "limit": "1000",
+        },
+    )
+    items = rest_get(
+        "f1_content_items",
+        {
+            "select": "id,title,description,source_text,status,campaign,property_id,source,tiktok_settings",
+            "limit": "1000",
+        },
+    )
+    media = rest_get(
+        "f1_content_media",
+        {
+            "select": "id,content_id,file_name,mime_type,storage_path,file_size",
+            "limit": "2000",
+        },
+    )
+    clients = rest_get(
+        "f1_content_clients",
+        {
+            "select": "id,name,slug,timezone,auto_publish,approval_required",
             "limit": "1000",
         },
     )
@@ -246,13 +267,33 @@ def load_source_rows() -> tuple[list[dict[str, Any]], dict[str, dict[str, Any]],
         "f1_content_properties",
         {"select": "id,cover_image_url,image_urls", "limit": "1000"},
     )
+
+    media_by_content: dict[str, list[dict[str, Any]]] = {}
+    for row in media:
+        media_by_content.setdefault(str(row.get("content_id") or ""), []).append(row)
+
+    item_map: dict[str, dict[str, Any]] = {}
+    for row in items:
+        item = dict(row)
+        item["f1_content_media"] = media_by_content.get(str(row.get("id") or ""), [])
+        item_map[str(row.get("id") or "")] = item
+
+    client_map = {str(row.get("id")): row for row in clients}
+    for row in calendars:
+        row["f1_content_items"] = item_map.get(str(row.get("content_id") or ""))
+        row["f1_content_clients"] = client_map.get(str(row.get("client_id") or ""))
+
     channel_map = {
-        channel_key(str(row.get("client_id")), normalize_platform(str(row.get("platform")))): row
+        channel_key(str(row.get("client_id")), normalize_platform(str(row.get("platform") or ""))): row
         for row in channels
     }
     property_map = {str(row.get("id")): row for row in properties}
+    print(
+        "BRIDGE_SOURCE_COUNTS "
+        f"calendars={len(calendars)} items={len(items)} media={len(media)} "
+        f"clients={len(clients)} channels={len(channels)} properties={len(properties)}"
+    )
     return calendars, channel_map, property_map
-
 
 def event(row: dict[str, Any], action: str, status: str, **extra: Any) -> None:
     payload = {
