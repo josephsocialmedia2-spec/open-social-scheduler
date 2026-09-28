@@ -157,25 +157,32 @@ async function nextSlot(client, platform) {
     youtube: "21:00",
     "linkedin-page": "09:30",
   };
-  const hhmm = prefs?.[platform]?.time || defaultTimes[platform] || "12:00";
+  const configuredSlots = Array.isArray(prefs.slots)
+    ? prefs.slots.map((x) => String(x || "").trim()).filter((x) => /^\\d{2}:\\d{2}$/.test(x))
+    : [];
+  const times = configuredSlots.length
+    ? configuredSlots
+    : [prefs?.[platform]?.time || defaultTimes[platform] || "12:00"];
   let localDate = localDateString(new Date(), timeZone);
   const now = Date.now();
 
   for (let dayOffset = 0; dayOffset < 30; dayOffset += 1) {
     if (dayOffset > 0) localDate = addLocalDays(localDate, 1);
-    const slot = localDateTimeToUtc(localDate, hhmm, timeZone);
-    if (slot.getTime() <= now + 5 * 60 * 1000) continue;
+    for (const hhmm of times) {
+      const slot = localDateTimeToUtc(localDate, hhmm, timeZone);
+      if (slot.getTime() <= now + 5 * 60 * 1000) continue;
 
-    const collision = await db(
-      "f1_content_calendar?client_id=eq." +
-        client.id +
-        "&platform=eq." +
-        encodeURIComponent(platform) +
-        "&publication_at=eq." +
-        encodeURIComponent(slot.toISOString()) +
-        "&select=id&limit=1",
-    );
-    if (!collision?.length) return { slot, timeZone };
+      const collision = await db(
+        "f1_content_calendar?client_id=eq." +
+          client.id +
+          "&platform=eq." +
+          encodeURIComponent(platform) +
+          "&publication_at=eq." +
+          encodeURIComponent(slot.toISOString()) +
+          "&select=id&limit=1",
+      );
+      if (!collision?.length) return { slot, timeZone };
+    }
   }
   throw new Error("NO_FREE_SLOT_30_DAYS");
 }
