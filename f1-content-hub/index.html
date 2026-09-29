@@ -50,7 +50,7 @@
 
 .la-sacra-summary{grid-column:1/-1;background:#0a1827;border:1px solid #2d4a68;border-radius:16px;padding:16px;display:grid;grid-template-columns:minmax(240px,1.4fr) minmax(260px,1fr) auto;gap:14px;align-items:center}.la-sacra-summary h2{margin:2px 0 6px}.la-sacra-summary p{margin:0;color:var(--muted);max-width:760px}.la-sacra-summary small{color:#7ef0b0;font-weight:900;letter-spacing:.08em}.la-sacra-kpis{display:grid;grid-template-columns:1fr 1fr;gap:7px}.la-sacra-kpis span{background:#102238;border:1px solid var(--line);border-radius:10px;padding:9px;color:#b9c8da;font-size:11px}.la-sacra-kpis b{display:block;color:#fff;font-size:21px}.la-sacra-slots{display:grid;grid-template-columns:repeat(3,auto);gap:6px;align-items:center}.la-sacra-slots strong{grid-column:1/-1;color:#9eb0c7;font-size:10px;letter-spacing:.08em}.la-sacra-slots span{background:#163354;border:1px solid #335f8a;border-radius:999px;padding:7px 10px;font-weight:900}.property-card{background:#0b1a2a;border:1px solid var(--line);border-radius:14px;overflow:hidden;min-width:0}.property-cover{height:190px;background:#13283e;overflow:hidden}.property-cover img{width:100%;height:100%;object-fit:cover}.property-no-image{height:100%;display:grid;place-items:center;color:#f5dc9e;background:#2d2411;font-size:11px;font-weight:900}.property-body{padding:12px}.property-body h3{margin:3px 0 8px;font-size:15px;line-height:1.3}.property-price{font-weight:1000;font-size:20px}.property-next{padding:8px 0;color:#b9c8da;font-size:11px}.property-social-counts{display:flex;gap:8px;flex-wrap:wrap;color:#9eb0c7;font-size:11px;margin:6px 0 10px}.property-detail-lines{display:grid;gap:8px}.property-detail-lines>div{padding:9px;border:1px solid var(--line);border-radius:9px;background:#0a1827}.property-card .badge.amber{color:#f7d48a;border-color:#866521}@media(max-width:1000px){.la-sacra-summary{grid-template-columns:1fr}.la-sacra-slots{justify-content:start}}@media(max-width:620px){.la-sacra-kpis{grid-template-columns:1fr 1fr}.property-cover{height:180px}}
 </style>
-  <link rel="stylesheet" href="./client-workspace.css?v=20260928d">
+  <link rel="stylesheet" href="./client-workspace.css?v=20260929a">
   <link rel="stylesheet" href="./f1-design-system.css?v=20260928d">
 </head>
 <body class="f1-main-app">
@@ -1195,6 +1195,69 @@ el("tiktokConfirmBtn").onclick=async function(){
   }
 };
 
+const F1_CLIENT_SOCIAL_PROFILE_FALLBACKS={
+  "antica-cappella":{
+    facebook:"https://www.facebook.com/profile.php?id=61550077453442",
+    instagram:"https://www.instagram.com/anticacappella/",
+    tiktok:"https://www.tiktok.com/@ristoranteanticacappella",
+    youtube:"https://www.youtube.com/@ristoranteanticacappella"
+  },
+  "cartolibreria-10-e-lode":{
+    facebook:"https://www.facebook.com/profile.php?id=61576475002477",
+    instagram:"https://www.instagram.com/10_e_lode_cartolibreria/",
+    tiktok:"https://www.tiktok.com/@10elode1",
+    youtube:"https://www.youtube.com/@10eLodeCartolibreriaTorino"
+  },
+  "f1-immobiliare":{
+    facebook:"https://www.facebook.com/F1ImmobiliareValdiSusa",
+    instagram:"https://www.instagram.com/joseph_malafronte/",
+    tiktok:"https://www.tiktok.com/@f1immobiliare",
+    youtube:"https://www.youtube.com/@F1Immobiliare",
+    linkedin:"https://www.linkedin.com/in/josephmalafronte/",
+    pinterest:"https://it.pinterest.com/josephmalafronte/"
+  },
+  "f1-social":{
+    facebook:"https://www.facebook.com/josephrealmedia",
+    instagram:"https://www.instagram.com/realmediaproageency/",
+    tiktok:"https://www.tiktok.com/@realmediapro_agency",
+    youtube:"https://www.youtube.com/channel/UC4G1Oq0z-_b0UTwRmYBxbCA"
+  },
+  "marta-ruffino":{
+    facebook:"https://www.facebook.com/martaruffinoriflessologa/reels/",
+    instagram:"https://www.instagram.com/pelvicamente.marta/",
+    youtube:"https://www.youtube.com/@martaruffino2697"
+  }
+};
+function f1SocialIconSvg(platform){
+  const icons={
+    facebook:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.7 21v-8h2.8l.4-3h-3.2V8.1c0-.9.3-1.5 1.6-1.5H17V3.9c-.3 0-1.3-.1-2.4-.1-2.4 0-4 1.4-4 4.1V10H8v3h2.6v8h3.1Z"/></svg>',
+    instagram:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.2 2h9.6A5.2 5.2 0 0 1 22 7.2v9.6a5.2 5.2 0 0 1-5.2 5.2H7.2A5.2 5.2 0 0 1 2 16.8V7.2A5.2 5.2 0 0 1 7.2 2Zm-.1 2A3.1 3.1 0 0 0 4 7.1v9.8A3.1 3.1 0 0 0 7.1 20h9.8a3.1 3.1 0 0 0 3.1-3.1V7.1A3.1 3.1 0 0 0 16.9 4H7.1Zm10.1 1.5a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4ZM12 7.2A4.8 4.8 0 1 1 12 16.8 4.8 4.8 0 0 1 12 7.2Zm0 2A2.8 2.8 0 1 0 12 14.8 2.8 2.8 0 0 0 12 9.2Z"/></svg>',
+    tiktok:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.2 3h3c.2 1.5 1.1 2.8 2.8 3.5v3a8.2 8.2 0 0 1-3.7-1.2v7.1A5.6 5.6 0 1 1 11 9.8v3a2.8 2.8 0 1 0 2.2 2.7V3h1Z"/></svg>',
+    youtube:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.6 7.1a2.9 2.9 0 0 0-2-2C17.8 4.6 12 4.6 12 4.6s-5.8 0-7.6.5a2.9 2.9 0 0 0-2 2A30 30 0 0 0 2 12a30 30 0 0 0 .4 4.9 2.9 2.9 0 0 0 2 2c1.8.5 7.6.5 7.6.5s5.8 0 7.6-.5a2.9 2.9 0 0 0 2-2A30 30 0 0 0 22 12a30 30 0 0 0-.4-4.9ZM10 15.3V8.7L15.7 12 10 15.3Z"/></svg>',
+    linkedin:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.1 3.7A2.1 2.1 0 1 1 5 7.9a2.1 2.1 0 0 1 .1-4.2ZM3.3 9h3.5v11.3H3.3V9Zm5.8 0h3.4v1.5h.1c.5-.9 1.6-1.9 3.4-1.9 3.6 0 4.3 2.4 4.3 5.5v6.2h-3.5v-5.5c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9v5.6H9.1V9Z"/></svg>',
+    pinterest:'<span class="social-letter" aria-hidden="true">P</span>'
+  };
+  return icons[platform]||'<span class="social-letter" aria-hidden="true">'+esc(String(platform||"?").slice(0,2).toUpperCase())+'</span>';
+}
+function f1ClientSocialLinks(c){
+  if(!c)return "";
+  const urls={};
+  const slug=String(c.slug||"").toLowerCase();
+  const fallback=F1_CLIENT_SOCIAL_PROFILE_FALLBACKS[slug]||{};
+  Object.keys(fallback).forEach(function(p){const u=safeSocialHref(fallback[p]);if(u)urls[p]=u});
+  (socialChannels||[]).filter(function(row){return row.client_id===c.id}).forEach(function(row){
+    const p=String(row.platform||"").toLowerCase()==="linkedin-page"?"linkedin":String(row.platform||"").toLowerCase();
+    const u=safeSocialHref(row.profile_url);
+    if(u)urls[p]=u;
+  });
+  const order=["facebook","instagram","tiktok","youtube","linkedin","pinterest"];
+  const labels={facebook:"Facebook",instagram:"Instagram",tiktok:"TikTok",youtube:"YouTube",linkedin:"LinkedIn",pinterest:"Pinterest"};
+  const links=order.filter(function(p){return !!urls[p]}).map(function(p){
+    const label=labels[p]||p;
+    return '<a class="client-social-btn '+p+'" href="'+esc(urls[p])+'" target="_blank" rel="noopener noreferrer" title="Apri '+esc(label)+' di '+esc(c.name)+'" aria-label="Apri '+esc(label)+' di '+esc(c.name)+'">'+f1SocialIconSvg(p)+'</a>';
+  }).join("");
+  return links?'<span class="client-social-links" aria-label="Profili social del cliente">'+links+'</span>':"";
+}
 function renderClientContext(){
   const box=el("clientContext");
   if(!box)return;
@@ -1221,6 +1284,7 @@ function renderClientContext(){
     '<button class="btn small ghost" onclick="setTab(\'reports\')">REPORT</button>'+
     '<button class="btn small ghost" onclick="setTab(\'problems\')">PROBLEMI</button>'+
     '<button class="btn small danger" onclick="window.f1SetClientScope(\'\')">TUTTI I CLIENTI</button>'+
+    f1ClientSocialLinks(c)+
   '</div>';
 }
 function mondayForDate(value){
