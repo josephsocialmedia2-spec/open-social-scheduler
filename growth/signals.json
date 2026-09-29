@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-28T11:56:01+00:00",
+  "updated_at": "2026-09-29T11:34:29+00:00",
   "signals": [
     {
       "id": "FBS-64D8E3A2C4",
@@ -385,6 +385,18 @@
       "source_query": "site:facebook.com/groups \"Rosta\" \"vendesi casa\"",
       "status": "NEW",
       "discovered_at": "2026-09-28T11:46:31+00:00"
+    },
+    {
+      "id": "FBS-F5151E97A3",
+      "brand": "f1-immobiliare",
+      "territory": "Almese",
+      "group_url": "https://www.facebook.com/groups/307179086293602/",
+      "source_url": "https://www.facebook.com/groups/307179086293602/permalink/2908801929464625/",
+      "title": "Vendo, compro, Val di Susa ( Avigliana/ Almese / Ferriera ...",
+      "snippet": "Aug 18, 2026 · CERCHIAMO CASA IN VAL SUSA: Villetta o Indipendente con Affitto a Riscatto (Rent to Buy) Famiglia di 4 persone è alla ricerca di una soluzione abitativa spaziosa in Val Susa. Valutiamo...",
+      "source_query": "site:facebook.com/groups \"Almese\" \"vendo compro\"",
+      "status": "NEW",
+      "discovered_at": "2026-09-29T11:23:54+00:00"
     }
   ]
 }
