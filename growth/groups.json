@@ -4267,8 +4267,25 @@
       "member_at": null,
       "last_post_at": null,
       "notes": ""
+    },
+    {
+      "id": "FBG-AC20D2F0FD",
+      "brand": "real-media-pro",
+      "territory": "Torino",
+      "name": "operatori olistici Torino e Piemonte",
+      "url": "https://www.facebook.com/groups/366612546705531/",
+      "source_query": "site:facebook.com/groups \"Torino\" \"professionisti\"",
+      "snippet": "2 days ago · praticanti di discipline naturali uniamoci! :-) Questo gruppo aperto riunisce studenti, praticanti amatoriali e professionisti nel campo della naturopatia, massaggio olistico in genere, e discipline del benessere.",
+      "status": "PENDING_APPROVAL",
+      "batch_id": "20260930-111056",
+      "discovered_at": "2026-09-30T11:20:11+00:00",
+      "approved_at": null,
+      "join_requested_at": null,
+      "member_at": null,
+      "last_post_at": null,
+      "notes": ""
     }
   ],
-  "updated_at": "2026-09-29T11:34:29+00:00",
-  "last_batch_id": "20260929-112329"
+  "updated_at": "2026-09-30T11:24:06+00:00",
+  "last_batch_id": "20260930-111056"
 }

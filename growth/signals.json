@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-29T11:34:29+00:00",
+  "updated_at": "2026-09-30T11:24:06+00:00",
   "signals": [
     {
       "id": "FBS-64D8E3A2C4",
@@ -397,6 +397,18 @@
       "source_query": "site:facebook.com/groups \"Almese\" \"vendo compro\"",
       "status": "NEW",
       "discovered_at": "2026-09-29T11:23:54+00:00"
+    },
+    {
+      "id": "FBS-603732D75E",
+      "brand": "f1-immobiliare",
+      "territory": "Rubiana",
+      "group_url": "https://www.facebook.com/groups/363225840487171/",
+      "source_url": "https://www.facebook.com/groups/363225840487171/permalink/4008481275961591/",
+      "title": "Sei di Rubiana se... | Buonasera, il pullman delle ore 6:45 ...",
+      "snippet": "Buongiorno, affitto per brevi periodi, preferibilmente ad insegnanti fuori sede, un bilocale nella piazza principale di RUBIANA, paese nella bassa valle di Susa, a 30 km da Torino, comodo con auto e bus.",
+      "source_query": "site:facebook.com/groups \"Rubiana\" \"sei di\"",
+      "status": "NEW",
+      "discovered_at": "2026-09-30T11:17:31+00:00"
     }
   ]
 }
