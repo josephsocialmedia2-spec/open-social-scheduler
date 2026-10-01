@@ -106,4 +106,19 @@ jobs:
             exit 0
           fi
           git commit -m 'Sync public Open Social Scheduler controls'
-          git push origin HEAD:gh-pages
+          for attempt in 1 2 3 4 5; do
+            if git push origin HEAD:gh-pages; then
+              echo "Public pages synchronized on attempt $attempt."
+              exit 0
+            fi
+            echo "gh-pages moved concurrently; rebasing before retry $attempt/5."
+            git fetch origin gh-pages:refs/remotes/origin/gh-pages
+            if ! git rebase -X theirs origin/gh-pages; then
+              git rebase --abort || true
+              echo "Unable to reconcile concurrent gh-pages update."
+              exit 1
+            fi
+            sleep $((attempt * 2))
+          done
+          echo "Unable to push gh-pages after 5 attempts."
+          exit 1
