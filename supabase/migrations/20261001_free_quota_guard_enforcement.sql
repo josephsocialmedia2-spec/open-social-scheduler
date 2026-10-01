@@ -49,7 +49,10 @@ begin
    where owner_id=v_owner and service_key='supabase_storage_media'
    returning used_value into v_used;
 
-  return coalesce(new,old);
+  if tg_op = 'DELETE' then
+    return old;
+  end if;
+  return new;
 end;
 $$;
 
