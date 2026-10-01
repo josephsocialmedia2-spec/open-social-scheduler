@@ -28,6 +28,16 @@ function respond(data, status = 200, extra = {}) {
 function redirect(location) {
   return new Response(null, { status: 302, headers: { location, "cache-control": "no-store" } });
 }
+function hubReturnUrl(client, oauthState, platform) {
+  const target = new URL(HUB_URL);
+  if (client?.slug) target.searchParams.set("client", String(client.slug));
+  else if (client?.id) target.searchParams.set("client_id", String(client.id));
+  target.searchParams.set("view", "connections");
+  target.searchParams.set("oauth", String(oauthState || "connected"));
+  if (platform) target.searchParams.set("platform", canonicalPlatform(platform));
+  if (client?.id) target.searchParams.set("client_id", String(client.id));
+  return target.toString();
+}
 function nowIso() { return new Date().toISOString(); }
 function authRequiredError(message) {
   const err = new Error(message);
@@ -822,6 +832,8 @@ async function callback(url, platform) {
   if (!state || canonicalPlatform(state.platform) !== canonicalPlatform(platform)) {
     return respond({ error: "invalid_state" }, 401);
   }
+  const callbackClient = await clientForUser(state.cid, state.uid);
+  if (!callbackClient) return respond({ error: "client_not_found" }, 404);
   if (url.searchParams.get("error")) {
     await patchChannel(state.uid, state.cid, platform, {
       enabled: false,
@@ -829,14 +841,13 @@ async function callback(url, platform) {
       connection_status: "AUTORIZZAZIONE_NEGATA",
       reauthorization_required: true
     });
-    return redirect(HUB_URL + "?oauth=denied&platform=" + encodeURIComponent(platform));
+    return redirect(hubReturnUrl(callbackClient, "denied", platform));
   }
   const code = String(url.searchParams.get("code") || "");
   if (!code) return respond({ error: "authorization_code_missing" }, 400);
   try {
     const tokenData = await exchangeCode(platform, code);
-    const client = await clientForUser(state.cid, state.uid);
-    if (!client) throw new Error("client_not_found");
+    const client = callbackClient;
     if (platform === "facebook" || platform === "instagram") {
       const current = await channelRow(state.uid, state.cid, platform);
       const meta = await metaProfileFromSelection(platform, String(tokenData.access_token || ""), null, current?.profile_url || null);
@@ -854,7 +865,7 @@ async function callback(url, platform) {
           verified: false,
           enabled: false
         });
-        return redirect(HUB_URL + "?oauth=select_account&platform=" + encodeURIComponent(platform) + "&client_id=" + encodeURIComponent(state.cid));
+        return redirect(hubReturnUrl(client, "select_account", platform));
       }
       const selected = meta.selected;
       await assertExpectedAccount(state.uid, client, platform, selected, tokenData.scope || "");
@@ -873,7 +884,7 @@ async function callback(url, platform) {
       await assertExpectedAccount(state.uid, client, platform, profile, tokenData.scope || "");
       await upsertToken(state.uid, state.cid, platform, tokenData, profile);
     }
-    return redirect(HUB_URL + "?oauth=connected&platform=" + encodeURIComponent(platform) + "&client_id=" + encodeURIComponent(state.cid));
+    return redirect(hubReturnUrl(client, "connected", platform));
   } catch (e) {
     await patchChannel(state.uid, state.cid, platform, {
       enabled: false,
@@ -881,7 +892,7 @@ async function callback(url, platform) {
       connection_status: "ERRORE",
       oauth_metadata: { error: String(e), at: nowIso() }
     });
-    return redirect(HUB_URL + "?oauth=error&platform=" + encodeURIComponent(platform));
+    return redirect(hubReturnUrl(callbackClient, "error", platform));
   }
 }
 async function status(req, url) {
