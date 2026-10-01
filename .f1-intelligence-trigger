@@ -8,3 +8,4 @@ pipeline=F1_INTELLIGENCE_V2_GRAPHIC_CAPTION
 caption_quality=GRAPHIC_TEXT_V2_CLEAN
 video_resilience=pyav-lt19-fail-open
 run_at=2026-10-01T12:22Z
+caption-refresh-all-clients=2026-10-01T14:36:30+02:00
