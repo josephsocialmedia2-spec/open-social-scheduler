@@ -38,6 +38,15 @@ function hubReturnUrl(client, oauthState, platform) {
   if (client?.id) target.searchParams.set("client_id", String(client.id));
   return target.toString();
 }
+function inviteReturnUrl(oauthState, platform) {
+  const target = new URL("connect.html", HUB_URL);
+  target.searchParams.set("oauth", String(oauthState || "connected"));
+  if (platform) target.searchParams.set("platform", canonicalPlatform(platform));
+  return target.toString();
+}
+function oauthReturnUrl(client, state, oauthState, platform) {
+  return state?.invite_id ? inviteReturnUrl(oauthState, platform) : hubReturnUrl(client, oauthState, platform);
+}
 function nowIso() { return new Date().toISOString(); }
 function authRequiredError(message) {
   const err = new Error(message);
@@ -300,7 +309,7 @@ function providerConfig(platform) {
     return {
       clientId: Deno.env.get("LINKEDIN_CLIENT_ID") || "",
       clientSecret: Deno.env.get("LINKEDIN_CLIENT_SECRET") || "",
-      scope: Deno.env.get("LINKEDIN_OAUTH_SCOPES") || "openid profile w_member_social",
+      scope: Deno.env.get("LINKEDIN_OAUTH_SCOPES") || "openid profile w_organization_social r_organization_admin",
       authUrl: "https://www.linkedin.com/oauth/v2/authorization",
       tokenUrl: "https://www.linkedin.com/oauth/v2/accessToken"
     };
@@ -514,6 +523,69 @@ async function profileFor(platform, accessToken) {
   return {};
 }
 
+async function linkedinOrganizations(accessToken) {
+  const headers = {
+    authorization: "Bearer " + accessToken,
+    "X-Restli-Protocol-Version": "2.0.0",
+    "Linkedin-Version": LINKEDIN_VERSION,
+    "content-type": "application/json",
+    "cache-control": "no-store"
+  };
+  const aclUrl = "https://api.linkedin.com/rest/organizationAcls?q=roleAssignee&state=APPROVED&count=100";
+  const aclRes = await fetch(aclUrl, { headers });
+  let acl = {};
+  try { acl = await aclRes.json(); } catch (_) {}
+  if (!aclRes.ok) {
+    const err = new Error("LINKEDIN_ORGANIZATION_ACCESS_REQUIRED");
+    err.detail = acl;
+    throw err;
+  }
+  const allowedRoles = new Set(["ADMINISTRATOR","DIRECT_SPONSORED_CONTENT_POSTER","CONTENT_ADMIN","CONTENT_ADMINISTRATOR","RECRUITING_POSTER"]);
+  const urns = Array.from(new Set((acl.elements || [])
+    .filter((x) => String(x.state || "").toUpperCase() === "APPROVED" && allowedRoles.has(String(x.role || "").toUpperCase()))
+    .map((x) => String(x.organizationTarget || x.organization || ""))
+    .filter((x) => /^urn:li:organization:\d+$/.test(x))));
+  const out = [];
+  for (const urn of urns.slice(0, 50)) {
+    const id = urn.split(":").pop() || "";
+    let name = "LinkedIn Page " + id;
+    let vanity = "";
+    try {
+      const orgRes = await fetch("https://api.linkedin.com/rest/organizations/" + encodeURIComponent(id), { headers });
+      if (orgRes.ok) {
+        const org = await orgRes.json();
+        name = String(org.localizedName || org.name?.localized && Object.values(org.name.localized)[0] || name);
+        vanity = String(org.vanityName || "");
+      }
+    } catch (_) {}
+    out.push({
+      subject: urn,
+      account_id: id,
+      account_name: name,
+      author_urn: urn,
+      organization_urn: urn,
+      profile_url: vanity ? "https://www.linkedin.com/company/" + vanity + "/" : null,
+      role_verified: true
+    });
+  }
+  return out;
+}
+function chooseLinkedInOrganization(existingProfileUrl, candidates) {
+  if (existingProfileUrl) {
+    const exact = (candidates || []).find((x) => x.profile_url && sameProfileUrl(existingProfileUrl, x.profile_url));
+    if (exact) return exact;
+    try {
+      const expectedPath = new URL(existingProfileUrl).pathname.toLowerCase().replace(/\/+$/, "");
+      const fuzzy = (candidates || []).find((x) => {
+        if (!x.profile_url) return false;
+        try { return new URL(x.profile_url).pathname.toLowerCase().replace(/\/+$/, "") === expectedPath; } catch (_) { return false; }
+      });
+      if (fuzzy) return fuzzy;
+    } catch (_) {}
+  }
+  return (candidates || []).length === 1 ? candidates[0] : null;
+}
+
 function cleanProfileUrl(value) {
   const raw = String(value || "").trim();
   if (!raw) return null;
@@ -605,7 +677,7 @@ function requiredPublishScope(platform) {
   if (p === "instagram") return "instagram_content_publish";
   if (p === "tiktok") return "video.publish";
   if (p === "youtube") return "https://www.googleapis.com/auth/youtube.upload";
-  if (p === "linkedin") return "w_member_social";
+  if (p === "linkedin") return "w_organization_social";
   return "";
 }
 function tokenScopes(value) {
@@ -845,7 +917,7 @@ async function callback(url, platform) {
       connection_status: "AUTORIZZAZIONE_NEGATA",
       reauthorization_required: true
     });
-    return redirect(hubReturnUrl(callbackClient, "denied", platform));
+    return redirect(oauthReturnUrl(callbackClient, state, "denied", platform));
   }
   const code = String(url.searchParams.get("code") || "");
   if (!code) return respond({ error: "authorization_code_missing" }, 400);
@@ -869,7 +941,7 @@ async function callback(url, platform) {
           verified: false,
           enabled: false
         });
-        return redirect(hubReturnUrl(client, "select_account", platform));
+        return redirect(oauthReturnUrl(client, state, "select_account", platform));
       }
       const selected = meta.selected;
       await assertExpectedAccount(state.uid, client, platform, selected, tokenData.scope || "");
@@ -883,12 +955,27 @@ async function callback(url, platform) {
         username: selected.username || null,
         meta_candidates: safeCandidates
       });
+    } else if (platform === "linkedin") {
+      const current = await channelRow(state.uid,state.cid,"linkedin");
+      const organizations = await linkedinOrganizations(String(tokenData.access_token || ""));
+      const selected = chooseLinkedInOrganization(current?.profile_url || client.linkedin || null, organizations);
+      if (!selected) {
+        await upsertToken(state.uid,state.cid,platform,tokenData,{
+          subject:null,account_id:null,account_name:null,profile_url:current?.profile_url||client.linkedin||null,
+          linkedin_candidates:organizations
+        });
+        await patchChannel(state.uid,state.cid,platform,{connection_status:"ACCOUNT_DA_SELEZIONARE",verified:false,enabled:false});
+        return redirect(oauthReturnUrl(client,state,"select_account",platform));
+      }
+      await assertExpectedAccount(state.uid,client,platform,selected,tokenData.scope||"");
+      await upsertToken(state.uid,state.cid,platform,tokenData,selected);
     } else {
       const profile = await profileFor(platform, String(tokenData.access_token || ""));
       await assertExpectedAccount(state.uid, client, platform, profile, tokenData.scope || "");
       await upsertToken(state.uid, state.cid, platform, tokenData, profile);
     }
-    return redirect(hubReturnUrl(client, "connected", platform));
+    await markInvitePlatformConnected(state.invite_id, platform);
+    return redirect(oauthReturnUrl(client, state, "connected", platform));
   } catch (e) {
     await patchChannel(state.uid, state.cid, platform, {
       enabled: false,
@@ -896,7 +983,7 @@ async function callback(url, platform) {
       connection_status: "ERRORE",
       oauth_metadata: { error: String(e), at: nowIso() }
     });
-    return redirect(hubReturnUrl(callbackClient, "error", platform));
+    return redirect(oauthReturnUrl(callbackClient, state, "error", platform));
   }
 }
 async function status(req, url) {
@@ -948,7 +1035,15 @@ async function workerToken(req, url) {
         account_shared: false
       });
     }
-    const liveProfile = await profileFor(platform, token.access_token);
+    let liveProfile;
+    if(platform==="linkedin"){
+      const organizations=await linkedinOrganizations(token.access_token);
+      const expected=String(channel.external_channel_id||"");
+      liveProfile=organizations.find((x)=>String(x.author_urn)===expected||String(x.account_id)===expected.replace(/^urn:li:organization:/,""))||null;
+      if(!liveProfile)return respond({error:"ACCOUNT_ERRATO",detail:"LinkedIn organization role unavailable"},409);
+    }else{
+      liveProfile=await profileFor(platform,token.access_token);
+    }
     try { await assertExpectedAccount(client.owner_id, client, platform, liveProfile, row?.scope || ""); }
     catch (e) {
       const msg=String(e);
@@ -1120,6 +1215,27 @@ async function metaSelect(req) {
   });
   return respond({ ok: true, account: selected });
 }
+async function linkedinSelect(req) {
+  const user=await authUser(req);
+  if(!user)return respond({error:"unauthorized"},401);
+  const body=await req.json();
+  const clientId=String(body.client_id||"");
+  const accountId=String(body.account_id||"");
+  const client=await clientForUser(clientId,user.id);
+  if(!client||!accountId)return respond({error:"invalid_request"},400);
+  const token=await usableToken(user.id,client.id,"linkedin");
+  const row=await tokenRow(user.id,client.id,"linkedin");
+  const candidates=await linkedinOrganizations(token.access_token);
+  const selected=candidates.find((x)=>String(x.account_id)===accountId||String(x.author_urn)===accountId);
+  if(!selected)return respond({error:"account_not_available"},404);
+  await assertExpectedAccount(user.id,client,"linkedin",selected,row?.scope||"");
+  const seconds=token.expires_at?Math.max(60,Math.floor((new Date(token.expires_at).getTime()-Date.now())/1000)):0;
+  await upsertToken(user.id,client.id,"linkedin",{access_token:token.access_token,expires_in:seconds||undefined,scope:row?.scope||providerConfig("linkedin")?.scope||""},{
+    ...selected,linkedin_candidates:candidates
+  });
+  return respond({ok:true,account:selected});
+}
+
 async function verifyChannel(req) {
   const user = await authUser(req);
   if (!user) return respond({ error: "unauthorized" }, 401);
@@ -1149,10 +1265,18 @@ async function verifyChannel(req) {
         await patchChannel(user.id, client.id, platform, { verified:false, connection_status:"ACCOUNT_ERRATO", last_verified_at:nowIso() });
         return respond({ error:"ACCOUNT_ERRATO" },409);
       }
+    } else if (platform === "linkedin") {
+      const candidates=await linkedinOrganizations(token.access_token);
+      const selectedId=String(row.external_channel_id||"").replace(/^urn:li:organization:/,"");
+      profile=candidates.find((x)=>String(x.account_id)===selectedId||String(x.author_urn)===String(row.external_channel_id||""))||null;
+      if(!profile){
+        await patchChannel(user.id,client.id,platform,{verified:false,enabled:false,connection_status:"ACCOUNT_ERRATO",last_verified_at:nowIso()});
+        return respond({error:"ACCOUNT_ERRATO",detail:"LinkedIn organization role not available"},409);
+      }
     } else {
       profile = await profileFor(platform, token.access_token);
     }
-    const liveId = String(profile?.account_id || profile?.subject || "");
+    const liveId = String(profile?.author_urn || profile?.account_id || profile?.subject || "");
     await assertExpectedAccount(user.id, client, platform, profile, (await tokenRow(user.id, client.id, platform))?.scope || "");
     if (row.external_channel_id && liveId && String(row.external_channel_id) !== liveId) {
       await patchChannel(user.id, client.id, platform, { verified:false, connection_status:"ACCOUNT_ERRATO", last_verified_at:nowIso() });
@@ -1228,6 +1352,196 @@ async function discoverSocials(req) {
   return respond({ ok:true, found, saved });
 }
 
+async function sha256Text(value) {
+  const bytes = new TextEncoder().encode(String(value || ""));
+  const hash = new Uint8Array(await crypto.subtle.digest("SHA-256", bytes));
+  return Array.from(hash).map((b) => b.toString(16).padStart(2, "0")).join("");
+}
+function randomInviteToken() {
+  return base64url(crypto.getRandomValues(new Uint8Array(32)));
+}
+async function inviteByToken(rawToken) {
+  const tokenHash = await sha256Text(rawToken);
+  const rows = await db(
+    "f1_social_client_invites?token_hash=eq." + encodeURIComponent(tokenHash) +
+    "&select=*&limit=1"
+  );
+  return rows && rows[0] ? rows[0] : null;
+}
+async function validInvite(rawToken, allowCompleted = true) {
+  const invite = await inviteByToken(rawToken);
+  if (!invite) return { error: "INVITO_NON_VALIDO", status: 404 };
+  if (invite.revoked_at || invite.status === "REVOCATO") return { error: "INVITO_REVOCATO", status: 410 };
+  if (new Date(invite.expires_at).getTime() <= Date.now()) {
+    await db("f1_social_client_invites?id=eq." + encodeURIComponent(invite.id), {
+      method:"PATCH", headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({status:"SCADUTO",updated_at:nowIso()})
+    });
+    return { error: "INVITO_SCADUTO", status: 410 };
+  }
+  if (!allowCompleted && invite.status === "COMPLETATO") return { error: "INVITO_COMPLETATO", status: 409 };
+  return { invite };
+}
+async function createClientInvite(req) {
+  const user = await authUser(req);
+  if (!user) return respond({ error:"unauthorized" },401);
+  const body = await req.json();
+  const clientId = String(body.client_id || "");
+  const client = await clientForUser(clientId,user.id);
+  if (!client) return respond({ error:"client_not_found" },404);
+  const requested = Array.isArray(body.platforms) ? body.platforms : ["facebook","instagram","tiktok","youtube","linkedin"];
+  const platforms = Array.from(new Set(requested.map(canonicalPlatform).filter(isSupported)));
+  if (!platforms.length) return respond({ error:"platforms_required" },400);
+  const hours = Math.min(168,Math.max(1,Number(body.expires_hours || 48)));
+  const rawToken = randomInviteToken();
+  const tokenHash = await sha256Text(rawToken);
+  await db(
+    "f1_social_client_invites?owner_id=eq." + encodeURIComponent(user.id) +
+    "&client_id=eq." + encodeURIComponent(client.id) +
+    "&status=eq.ATTIVO",
+    {method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({status:"REVOCATO",revoked_at:nowIso(),updated_at:nowIso()})}
+  );
+  const expiresAt = new Date(Date.now()+hours*3600000).toISOString();
+  const inserted = await db("f1_social_client_invites",{
+    method:"POST",
+    headers:{Prefer:"return=representation"},
+    body:JSON.stringify({
+      owner_id:user.id,client_id:client.id,token_hash:tokenHash,
+      allowed_platforms:platforms,connected_platforms:[],status:"ATTIVO",expires_at:expiresAt
+    })
+  });
+  const inviteUrl = new URL("connect.html",HUB_URL);
+  inviteUrl.searchParams.set("invite",rawToken);
+  return respond({ok:true,invite_id:inserted?.[0]?.id||null,client:{id:client.id,name:client.name},platforms,expires_at:expiresAt,invite_url:inviteUrl.toString()});
+}
+async function inviteInfo(url) {
+  const rawToken = String(url.searchParams.get("token") || "");
+  if (!rawToken) return respond({error:"token_required"},400);
+  const check = await validInvite(rawToken,true);
+  if (!check.invite) return respond({error:check.error},check.status);
+  const invite = check.invite;
+  const client = await clientForUser(invite.client_id,invite.owner_id);
+  if (!client) return respond({error:"client_not_found"},404);
+  const rows = await db(
+    "f1_client_social_channels?owner_id=eq." + encodeURIComponent(invite.owner_id) +
+    "&client_id=eq." + encodeURIComponent(invite.client_id) +
+    "&select=platform,enabled,verified,connection_status,account_name,profile_url,token_expires_at,reauthorization_required,scopes"
+  );
+  await db("f1_social_client_invites?id=eq."+encodeURIComponent(invite.id),{
+    method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({last_access_at:nowIso(),updated_at:nowIso()})
+  });
+  const channels = (invite.allowed_platforms||[]).map((platform)=>{
+    const cp=channelPlatform(platform);
+    const row=(rows||[]).find((x)=>x.platform===cp);
+    let state=row?.connection_status||"CANALE_DA_COLLEGARE";
+    if(row?.reauthorization_required)state="DA_RIAUTORIZZARE";
+    else if(row?.token_expires_at&&new Date(row.token_expires_at).getTime()<=Date.now())state="TOKEN_SCADUTO";
+    else if(row?.enabled&&row?.verified)state="COLLEGATO";
+    return {platform,connected:state==="COLLEGATO",state,account_name:row?.account_name||null,profile_url:row?.profile_url||null};
+  });
+  return respond({ok:true,client:{name:client.name},status:invite.status,expires_at:invite.expires_at,platforms:channels});
+}
+async function inviteAuthorize(url) {
+  const rawToken = String(url.searchParams.get("token") || "");
+  const platform = canonicalPlatform(url.searchParams.get("platform"));
+  if (!rawToken || !isSupported(platform)) return respond({error:"invalid_request"},400);
+  const check = await validInvite(rawToken,false);
+  if (!check.invite) return respond({error:check.error},check.status);
+  const invite = check.invite;
+  if (!(invite.allowed_platforms||[]).map(canonicalPlatform).includes(platform)) return respond({error:"platform_not_allowed"},403);
+  const client = await clientForUser(invite.client_id,invite.owner_id);
+  if (!client) return respond({error:"client_not_found"},404);
+  const cfg = providerConfig(platform);
+  if (!configured(platform)) return respond({error:"configuration_missing",platform,missing:providerMissing(platform),callback_url:callbackUrl(platform)},503);
+  const state = await signState({
+    uid:invite.owner_id,cid:invite.client_id,platform,invite_id:invite.id,
+    nonce:crypto.randomUUID(),exp:Date.now()+10*60*1000
+  });
+  const auth = new URL(cfg.authUrl);
+  if(platform==="tiktok")auth.searchParams.set("client_key",cfg.clientId);else auth.searchParams.set("client_id",cfg.clientId);
+  auth.searchParams.set("response_type","code");
+  auth.searchParams.set("redirect_uri",callbackUrl(platform));
+  auth.searchParams.set("scope",cfg.scope);
+  auth.searchParams.set("state",state);
+  if(platform==="youtube"){
+    auth.searchParams.set("access_type","offline");
+    auth.searchParams.set("include_granted_scopes","true");
+    auth.searchParams.set("prompt","consent");
+  }
+  await patchChannel(invite.owner_id,invite.client_id,platform,{provider:"oauth_broker",connection_status:"AUTORIZZAZIONE_RICHIESTA",reauthorization_required:false});
+  return respond({authorization_url:auth.toString(),platform,client:client.name});
+}
+async function markInvitePlatformConnected(inviteId, platform) {
+  if(!inviteId)return;
+  const rows=await db("f1_social_client_invites?id=eq."+encodeURIComponent(inviteId)+"&select=*&limit=1");
+  const invite=rows&&rows[0];
+  if(!invite)return;
+  const connected=Array.from(new Set([...(invite.connected_platforms||[]),canonicalPlatform(platform)]));
+  const allowed=(invite.allowed_platforms||[]).map(canonicalPlatform);
+  const complete=allowed.length>0&&allowed.every((p)=>connected.includes(p));
+  await db("f1_social_client_invites?id=eq."+encodeURIComponent(invite.id),{
+    method:"PATCH",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({connected_platforms:connected,status:complete?"COMPLETATO":"ATTIVO",completed_at:complete?nowIso():null,updated_at:nowIso()})
+  });
+}
+function doctorMessage(platform, code, accountName) {
+  const label={facebook:"Facebook",instagram:"Instagram",tiktok:"TikTok",youtube:"YouTube",linkedin:"LinkedIn"}[canonicalPlatform(platform)]||platform;
+  const account=accountName?" ("+accountName+")":"";
+  const messages={
+    OK:[label+account+" è collegato e ha i permessi di pubblicazione richiesti.","Nessuna azione."],
+    SERVER_CONFIG_MISSING:[label+": configurazione OAuth server incompleta.","Configura le credenziali app del provider."],
+    TOKEN_SCADUTO:[label+account+": autorizzazione scaduta.","Ricollega il profilo."],
+    DA_RIAUTORIZZARE:[label+account+": è necessaria una nuova autorizzazione.","Ricollega il profilo."],
+    PERMESSI_INSUFFICIENTI:[label+account+": manca il permesso necessario alla pubblicazione.","Riautorizza concedendo i permessi richiesti."],
+    ACCOUNT_CONDIVISO:[label+account+": lo stesso account è associato a più clienti.","Seleziona l'account corretto per questo cliente."],
+    ACCOUNT_ERRATO:[label+": l'account autorizzato non corrisponde a quello previsto.","Ricollega e seleziona l'account corretto."],
+    NON_COLLEGATO:[label+": profilo non collegato.","Collega il profilo con OAuth."],
+    LINKEDIN_PAGE_REQUIRED:["LinkedIn: serve una Pagina aziendale amministrata, non il solo profilo personale.","Autorizza una Pagina con w_organization_social e ruolo idoneo."]
+  };
+  return messages[code]||[label+": connessione da verificare.","Apri Connessioni e verifica il canale."];
+}
+async function connectionDoctor(req, url) {
+  const user=await authUser(req);
+  if(!user)return respond({error:"unauthorized"},401);
+  const clientId=String(url.searchParams.get("client_id")||"");
+  const client=await clientForUser(clientId,user.id);
+  if(!client)return respond({error:"client_not_found"},404);
+  const rows=await db(
+    "f1_client_social_channels?owner_id=eq."+encodeURIComponent(user.id)+
+    "&client_id=eq."+encodeURIComponent(client.id)+"&select=*"
+  );
+  const platforms=["facebook","instagram","tiktok","youtube","linkedin"];
+  const checks=[];
+  for(const platform of platforms){
+    const row=(rows||[]).find((x)=>x.platform===channelPlatform(platform));
+    let code="OK",severity="ok",status="COLLEGATO";
+    if(!configured(platform)){code="SERVER_CONFIG_MISSING";severity="critical";status="ERRORE";}
+    else if(!row||!(row.enabled&&row.verified)){code="NON_COLLEGATO";severity="warning";status=row?.connection_status||"SCOLLEGATO";}
+    if(row?.reauthorization_required){code="DA_RIAUTORIZZARE";severity="critical";status="DA_RIAUTORIZZARE";}
+    if(row?.token_expires_at&&new Date(row.token_expires_at).getTime()<=Date.now()){code="TOKEN_SCADUTO";severity="critical";status="TOKEN_SCADUTO";}
+    if(["ACCOUNT_ERRATO","ACCOUNT_NON_AUTORIZZATO"].includes(String(row?.connection_status||""))){code="ACCOUNT_ERRATO";severity="critical";status=String(row.connection_status);}
+    if(String(row?.connection_status||"")==="ACCOUNT_CONDIVISO"){code="ACCOUNT_CONDIVISO";severity="critical";status="ACCOUNT_CONDIVISO";}
+    const required=requiredPublishScope(platform);
+    const scopes=new Set((row?.scopes||[]).map(String));
+    if(row?.enabled&&row?.verified&&required&&!scopes.has(required)){code="PERMESSI_INSUFFICIENTI";severity="critical";status="PERMESSI_INSUFFICIENTI";}
+    if(platform==="linkedin"&&row?.enabled&&row?.verified&&!String(row.external_channel_id||"").startsWith("urn:li:organization:")){
+      code="LINKEDIN_PAGE_REQUIRED";severity="critical";status="ACCOUNT_NON_IDONEO";
+    }
+    const [human,recommended]=doctorMessage(platform,code,row?.account_name);
+    const payload={
+      owner_id:user.id,client_id:client.id,platform:channelPlatform(platform),status,severity,code,
+      human_message:human,recommended_action:recommended,
+      details:{required_scope:required||null,provider_configured:configured(platform),connection_status:row?.connection_status||null},
+      checked_at:nowIso(),updated_at:nowIso()
+    };
+    await db("f1_social_connection_health?on_conflict=owner_id,client_id,platform",{
+      method:"POST",headers:{Prefer:"resolution=merge-duplicates,return=minimal"},body:JSON.stringify(payload)
+    });
+    checks.push({platform:channelPlatform(platform),status,severity,code,message:human,action:recommended});
+  }
+  return respond({ok:true,client:{id:client.id,name:client.name},checks});
+}
+
 async function disconnect(req) {
   const user = await authUser(req);
   if (!user) return respond({ error: "unauthorized" }, 401);
@@ -1290,13 +1604,17 @@ Deno.serve(async (req) => {
       });
     }
     if (route === "tiktok" && routeParts[1] === "config-check" && req.method === "GET") return await tiktokConfigCheck();
+    if (route === "invite" && req.method === "POST") return await createClientInvite(req);
+    if (route === "invite" && routeParts[1] === "info" && req.method === "GET") return await inviteInfo(url);
+    if (route === "invite" && routeParts[1] === "authorize" && req.method === "GET") return await inviteAuthorize(url);
+    if (route === "doctor" && req.method === "GET") return await connectionDoctor(req,url);
     if (route === "authorize" && req.method === "GET") return await authorize(req, url);
     if (route === "callback" && req.method === "GET") return await callback(url, canonicalPlatform(routeParts[1]));
     if (route === "status" && req.method === "GET") return await status(req, url);
     if (route === "verify" && req.method === "POST") return await verifyChannel(req);
     if (route === "profile-url" && req.method === "POST") return await saveProfileUrl(req);
     if (route === "discover-socials" && req.method === "POST") return await discoverSocials(req);
-    if (route === "meta" && routeParts[1] === "select" && req.method === "POST") return await metaSelect(req);
+    if (route === "meta" && routeParts[1] === "select" && req.method === "POST") return await metaSelect(req);\n    if (route === "linkedin" && routeParts[1] === "select" && req.method === "POST") return await linkedinSelect(req);
     if (route === "tiktok" && routeParts[1] === "creator-info" && req.method === "GET") return await tiktokCreatorInfo(req, url);
     if (route === "token" && req.method === "GET") return await workerToken(req, url);
     if (route === "disconnect" && req.method === "POST") return await disconnect(req);
