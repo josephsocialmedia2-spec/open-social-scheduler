@@ -76,8 +76,16 @@ def token(
             f"OAuth broker returned invalid JSON ({response.status_code})"
         ) from exc
 
-    if response.status_code == 409 and payload.get("error") == "AUTH_REQUIRED":
-        raise BrokerError("OAuth authorization required", auth_required=True)
+    if response.status_code == 409 and payload.get("error") in {
+        "AUTH_REQUIRED",
+        "PERMESSI_INSUFFICIENTI",
+        "PAGINA_NON_ACCESSIBILE",
+        "ACCOUNT_DA_SELEZIONARE",
+    }:
+        raise BrokerError(
+            str(payload.get("detail") or payload.get("error") or "OAuth authorization required"),
+            auth_required=True,
+        )
     if not response.ok:
         raise BrokerError(
             f"OAuth broker {response.status_code}: "
