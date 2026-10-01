@@ -1,0 +1,41 @@
+name: Later Personal Manager QA
+
+on:
+  push:
+    branches:
+      - feat/later-personal-manager-20261001
+  pull_request:
+    paths:
+      - 'f1-content-hub/**'
+      - 'supabase/functions/f1-social-oauth/**'
+      - 'supabase/migrations/20261001_later_personal_manager.sql'
+      - '.github/workflows/later-personal-manager-qa.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Dashboard health tests
+        run: node f1-content-hub/tests/client-health.test.cjs
+      - name: Install Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+      - name: OAuth broker syntax/type check
+        run: deno check supabase/functions/f1-social-oauth/index.ts
+      - name: Security contract checks
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q "f1-social-client-invite" f1-content-hub/connect.html
+          grep -q "sessionStorage.setItem" f1-content-hub/connect.html
+          ! grep -q "localStorage.setItem.*invite" f1-content-hub/connect.html
+          grep -q "token_hash" supabase/migrations/20261001_later_personal_manager.sql
+          grep -q "w_organization_social" supabase/functions/f1-social-oauth/index.ts
+          grep -q "Connection Doctor" f1-content-hub/index.html
+          grep -q "health-green" f1-content-hub/later-personal.css
