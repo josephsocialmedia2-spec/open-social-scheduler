@@ -6,147 +6,20 @@ param(
 
 $ErrorActionPreference = 'Stop'
 $Root = (Resolve-Path (Join-Path $PSScriptRoot '..\..')).Path
-$Worker = Join-Path $Root 'publisher\chatgpt_query_runner\worker.py'
 $StartInbox = Join-Path $PSScriptRoot 'START_INBOX.ps1'
-$EnsurePoller = Join-Path $PSScriptRoot 'ENSURE_F1_NEWS_POLLER.ps1'
-$EnsureRunner = Join-Path $PSScriptRoot 'ENSURE_F1_GITHUB_RUNNER.ps1'
-$NewsPoller = Join-Path $PSScriptRoot 'RUN_F1_NEWS_POLLER.ps1'
-$LogDir = Join-Path $PSScriptRoot 'logs'
-New-Item -ItemType Directory -Force -Path $LogDir | Out-Null
-$Stamp = Get-Date -Format 'yyyyMMdd-HHmmss'
-$Log = Join-Path $LogDir "f1-grafiche-$Stamp.log"
-$PyOut = Join-Path $LogDir "worker-$Stamp-out.log"
-$PyErr = Join-Path $LogDir "worker-$Stamp-err.log"
-
-function Write-Log {
-    param([string]$Message)
-    $line = "$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss') $Message"
-    Add-Content -Path $Log -Value $line -Encoding UTF8
-    Write-Host $line
-}
-
-function Show-WorkerLogs {
-    if (Test-Path $PyOut) {
-        Get-Content $PyOut -ErrorAction SilentlyContinue | ForEach-Object {
-            Add-Content -Path $Log -Value $_ -Encoding UTF8
-            Write-Host $_
-        }
-    }
-    if (Test-Path $PyErr) {
-        Get-Content $PyErr -ErrorAction SilentlyContinue | ForEach-Object {
-            Add-Content -Path $Log -Value $_ -Encoding UTF8
-            Write-Host $_ -ForegroundColor Red
-        }
-    }
-}
-
-Write-Log 'RUN START - F1 Grafiche'
 Set-Location $Root
 
-$PythonCmd = Get-Command python -ErrorAction SilentlyContinue
-if (-not $PythonCmd) { throw 'Python non trovato nel PATH.' }
-$PythonExe = $PythonCmd.Source
+Write-Host 'F1 MANUAL PUBLISH ONLY' -ForegroundColor Green
+Write-Host 'Il vecchio ciclo grafico notturno e stato ritirato.' -ForegroundColor Yellow
+Write-Host 'Nessuna AI, browser, prompt, render o rigenerazione verra avviata.' -ForegroundColor Cyan
 
-$env:F1_CREATIVE_BACKEND = 'free_browser_router'
-$env:F1_QUERY_BATCH_SIZE = '4'
-$env:F1_INBOX_PORT = '8877'
-$env:F1_MAX_ATTEMPTS = '6'
+& $StartInbox -Restart
+if ($LASTEXITCODE -ne 0) { throw 'F1 Pubblicatore Manuale non disponibile.' }
 
-# Prima aggiorna il codice, poi riavvia il server: nessun processo Flask resta con codice vecchio.
-try {
-    $dirty = git status --porcelain
-    if (-not $dirty) {
-        git pull --ff-only origin main 2>&1 | ForEach-Object { Write-Log $_ }
-    } else {
-        Write-Log 'Repository con modifiche locali non ignorate: salto git pull per non sovrascriverle.'
-    }
-} catch {
-    Write-Log "Git pull non riuscito, continuo con la versione locale: $($_.Exception.Message)"
+$Health = Invoke-RestMethod -Uri 'http://127.0.0.1:8877/api/health' -TimeoutSec 4
+if (-not $Health.ok -or $Health.mode -ne 'manual-publish-only' -or $Health.ai_image_generation -ne $false) {
+    throw 'F1 Pubblicatore Manuale non in modalita manual-publish-only.'
 }
 
-try {
-    if (Test-Path $EnsureRunner) {
-        & $EnsureRunner
-        if ($LASTEXITCODE -eq 0) { Write-Log 'F1 GitHub Runner verificato/avviato.' }
-        else { Write-Log "F1 GitHub Runner non disponibile, codice $LASTEXITCODE." }
-    }
-} catch {
-    Write-Log "Bootstrap F1 GitHub Runner non riuscito: $($_.Exception.Message)"
-}
-
-try {
-    if (Test-Path $EnsurePoller) {
-        & $EnsurePoller
-        Write-Log 'F1 News GitHub Poller verificato/installato.'
-        if (Test-Path $NewsPoller) { & $NewsPoller }
-    }
-} catch {
-    Write-Log "Installazione poller F1 News non riuscita: $($_.Exception.Message)"
-}
-
-$depsOk = $true
-python -c "import pyautogui, pyperclip, pygetwindow, uiautomation, flask, tzdata; from PIL import Image" 2>$null
-if ($LASTEXITCODE -ne 0) { $depsOk = $false }
-if (-not $depsOk) {
-    Write-Log 'Installazione dipendenze Python mancanti.'
-    python -m pip install -r publisher\chatgpt_query_runner\requirements.txt
-    if ($LASTEXITCODE -ne 0) { throw 'Installazione dipendenze runner fallita.' }
-    python -m pip install -r publisher\manual_asset_inbox\requirements.txt
-    if ($LASTEXITCODE -ne 0) { throw 'Installazione dipendenze Inbox fallita.' }
-}
-
-try {
-    & $StartInbox -Restart
-    Write-Log 'Raccolta F1 aggiornata e disponibile su http://127.0.0.1:8877/.'
-} catch {
-    Write-Log "ERRORE Raccolta: $($_.Exception.Message)"
-    throw
-}
-
-Remove-Item $PyOut,$PyErr -Force -ErrorAction SilentlyContinue
-
-if ($Test) {
-    Write-Log 'Modalita PROVA 1 QUERY: nuovo batch da una query.'
-    $WorkerArgs = @($Worker, '--batch-size', '1', '--fresh-run')
-} elseif ($Test4) {
-    Write-Log 'Modalita PROVA 4 QUERY: nuovo batch completo.'
-    $WorkerArgs = @($Worker, '--batch-size', '4', '--fresh-run')
-} elseif ($Manual) {
-    Write-Log 'Modalita MANUALE: quattro query, con recovery di eventuale batch incompleto.'
-    $WorkerArgs = @($Worker, '--batch-size', '4')
-} else {
-    Write-Log 'Modalita AUTOMATICA 23:00: recupero fino a 4 comunicati NEW/ERROR/stale rimasti incompleti.'
-    $WorkerArgs = @($Worker, '--scheduled', '--batch-size', '4')
-}
-
-$QuotedArgs = $WorkerArgs | ForEach-Object {
-    if ($_ -match '\s') { '"' + ($_ -replace '"','\"') + '"' } else { $_ }
-}
-
-$Process = Start-Process `
-    -FilePath $PythonExe `
-    -ArgumentList $QuotedArgs `
-    -WorkingDirectory $Root `
-    -RedirectStandardOutput $PyOut `
-    -RedirectStandardError $PyErr `
-    -NoNewWindow `
-    -Wait `
-    -PassThru
-
-Show-WorkerLogs
-$WorkerExit = $Process.ExitCode
-
-if ($WorkerExit -eq 0) {
-    Write-Log 'RUN END - ciclo worker completato/verificato.'
-    exit 0
-}
-
-Write-Log "RUN END - non completato, codice worker $WorkerExit."
-Write-Host ''
-Write-Host 'ERRORE/ESITO COMPLETO DEL WORKER:' -ForegroundColor Yellow
-if (Test-Path $PyErr) {
-    Get-Content $PyErr -ErrorAction SilentlyContinue | Select-Object -Last 100 | ForEach-Object { Write-Host $_ -ForegroundColor Red }
-}
-Write-Host "Log: $Log" -ForegroundColor Yellow
-Start-Process 'http://127.0.0.1:8877/ready'
-exit $WorkerExit
+Write-Host 'Apri http://127.0.0.1:8877/ e carica la grafica definitiva.' -ForegroundColor White
+exit 0
