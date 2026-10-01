@@ -99,6 +99,27 @@ class GraphicCaptionIntelligenceTests(unittest.TestCase):
         self.assertIn('"caption_pipeline_continues": True', src)
         self.assertIn("la caption continua dal frame/testo grafico", src)
 
+    def test_brand_template_lines_are_not_public_caption_body(self):
+        client = {"name": "Real Media Pro"}
+        lines = worker.meaningful_graphic_lines(
+            "REAL MEDIA PRO Promozione aziendale, visibilità e acquisizione di contatti.\n"
+            "NESSUN PROBLEMA\n"
+            "Ti possiamo guidare passo passo.\n"
+            "Social Intelligence for real results",
+            client,
+        )
+        joined = "\n".join(lines)
+        self.assertIn("NESSUN PROBLEMA", joined)
+        self.assertIn("Ti possiamo guidare passo passo.", joined)
+        self.assertNotIn("Promozione aziendale", joined)
+        self.assertNotIn("Social Intelligence for real results", joined)
+
+    def test_confidence_ocr_helper_is_present(self):
+        src = (ROOT / "publisher" / "f1_intelligence_worker.py").read_text(encoding="utf-8")
+        self.assertIn("def _ocr_confident_text", src)
+        self.assertIn("for psm in (11, 6)", src)
+        self.assertIn("confidence < 48.0", src)
+
     def test_workspace_marks_manual_caption_and_allows_all_clients(self):
         js = (ROOT / "f1-content-hub" / "client-workspace.js").read_text(encoding="utf-8")
         self.assertIn('caption_manual=true', js)
