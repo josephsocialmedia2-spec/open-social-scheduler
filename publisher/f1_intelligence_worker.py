@@ -822,7 +822,15 @@ def regenerate_graphic_captions(
         current = platforms.get(platform) if isinstance(platforms.get(platform), dict) else {}
         current = dict(current)
         generated = caption_from_graphic(platform, client, item, str(graphic.get("text") or ""))
-        manual = bool(current.get("caption_manual"))
+        current_caption = str(current.get("caption") or "").strip()
+        previous_generated = str(current.get("generated_caption") or "").strip()
+        legacy_manual = bool(
+            "caption_manual" not in current
+            and current_caption
+            and previous_generated
+            and current_caption != previous_generated
+        )
+        manual = bool(current.get("caption_manual")) or legacy_manual
         current["generated_caption"] = generated
         current["caption_source"] = "MANUAL" if manual else str(graphic.get("source") or "GRAPHIC_TEXT")
         current["graphic_media_fingerprint"] = str(graphic.get("media_fingerprint") or "")
