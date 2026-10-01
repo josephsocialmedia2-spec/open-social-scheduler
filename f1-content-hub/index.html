@@ -1484,10 +1484,12 @@ function localConnectionDoctor(clientId,platform,row,state){
     "TOKEN_SCADUTO":["bad","Token scaduto","Ricollega "+p+" per ottenere una nuova autorizzazione."],
     "DA_RIAUTORIZZARE":["bad","Riautorizzazione necessaria","Ricollega "+p+"."],
     "AUTH_REQUIRED":["bad","Permessi insufficienti","Riautorizza "+p+" concedendo i permessi richiesti."],
+    "PERMESSI_INSUFFICIENTI":["bad","Permessi insufficienti","Meta ha autenticato l'utente, ma non risultano tutti i permessi necessari alla pubblicazione."],
     "ACCOUNT_ERRATO":["bad","Account errato","Ricollega e seleziona l'account corretto del cliente."],
     "ACCOUNT_CONDIVISO":["bad","Account condiviso","Lo stesso account è associato a più clienti: seleziona quello corretto."],
-    "ACCOUNT_DA_SELEZIONARE":["warn","Account da selezionare","L'autorizzazione è arrivata, ma devi scegliere il profilo/Pagina corretto."],
-    "CANALE_DA_COLLEGARE":["warn","Profilo scollegato","Collega il profilo con OAuth ufficiale."],
+    "ACCOUNT_DA_SELEZIONARE":["warn",platform==="facebook"?"Pagina da selezionare":"Account da selezionare",platform==="facebook"?"Autorizzazione ricevuta. Seleziona la Pagina Facebook corretta.":"L'autorizzazione è arrivata, ma devi scegliere il profilo/Pagina corretto."],
+    "PAGINA_NON_ACCESSIBILE":["bad","Pagina non accessibile","La Pagina Facebook prevista non compare tra quelle che Meta rende gestibili all'utente autorizzato."],
+    "CANALE_DA_COLLEGARE":["warn",platform==="facebook"?"Pagina Facebook scollegata":"Profilo scollegato",platform==="facebook"?"Premi COLLEGA: Meta mostrerà le Pagine a cui l'utente ha accesso.":"Collega il profilo con OAuth ufficiale."],
     "NON CONFIGURATO":["warn","Profilo non configurato","Inserisci il profilo previsto e avvia il collegamento OAuth."]
   };
   const m=messages[state]||["warn","Da verificare",String(state||"Connessione incompleta").replaceAll("_"," ")];
@@ -1517,18 +1519,18 @@ function renderSocialConnections(){
         if(connected) actions+=' <button class="btn small ghost" onclick="window.f1VerifySocial(\''+c.id+'\',\''+p+'\')">VERIFICA</button>';
       }else{
         if(state==="ACCOUNT_DA_SELEZIONARE" && (p==="facebook"||p==="instagram")){
-          actions+=' <button class="btn small primary" onclick="window.f1SelectMetaAccount(\''+c.id+'\',\''+p+'\')">SELEZIONA ACCOUNT</button>';
+          actions+=' <button class="btn small primary" onclick="window.f1SelectMetaAccount(\''+c.id+'\',\''+p+'\')">'+(p==="facebook"?"SELEZIONA PAGINA":"SELEZIONA ACCOUNT")+'</button>';
         }else if(state==="ACCOUNT_DA_SELEZIONARE" && p==="linkedin-page"){
           actions+=' <button class="btn small primary" onclick="window.f1SelectLinkedInAccount(\''+c.id+'\')">SELEZIONA PAGINA</button>';
-        }else if((!connected || ["DA_RIAUTORIZZARE","TOKEN_SCADUTO","CANALE_DA_COLLEGARE","CONFIGURAZIONE_PRONTA","AUTORIZZAZIONE_RICHIESTA","ACCOUNT_ERRATO","ACCOUNT_CONDIVISO"].includes(state))&&!anticaMissingLinkedin&&!rmpMissingProfile&&!rmpLinkedinPending){
-          actions+=' <button class="btn small primary" onclick="window.f1ConnectSocial(\''+c.id+'\',\''+p+'\')">'+(["DA_RIAUTORIZZARE","TOKEN_SCADUTO","ACCOUNT_CONDIVISO"].includes(state)?"RIAUTORIZZA":"COLLEGA")+'</button>';
+        }else if((!connected || ["DA_RIAUTORIZZARE","TOKEN_SCADUTO","CANALE_DA_COLLEGARE","CONFIGURAZIONE_PRONTA","AUTORIZZAZIONE_RICHIESTA","ACCOUNT_ERRATO","ACCOUNT_CONDIVISO","PAGINA_NON_ACCESSIBILE","PERMESSI_INSUFFICIENTI","AUTH_REQUIRED"].includes(state))&&!anticaMissingLinkedin&&!rmpMissingProfile&&!rmpLinkedinPending){
+          actions+=' <button class="btn small primary" onclick="window.f1ConnectSocial(\''+c.id+'\',\''+p+'\')">'+(["DA_RIAUTORIZZARE","TOKEN_SCADUTO","ACCOUNT_CONDIVISO","PAGINA_NON_ACCESSIBILE","PERMESSI_INSUFFICIENTI","AUTH_REQUIRED"].includes(state)?"RIAUTORIZZA":"COLLEGA")+'</button>';
         }
         if(connected) actions+=' <button class="btn small ghost" onclick="window.f1VerifySocial(\''+c.id+'\',\''+p+'\')">VERIFICA</button>';
         if(connected) actions+=' <button class="btn small danger" onclick="window.f1DisconnectSocial(\''+c.id+'\',\''+p+'\')">DISCONNETTI</button>';
       }
       const collisionNote=state==="ACCOUNT_CONDIVISO"?'<div class="meta" style="color:#ffcf66">Lo stesso account è associato a più clienti. La pubblicazione automatica deve essere verificata.</div>':"";
       const onboardingNote=(c.slug==="antica-cappella"&&p==="facebook"&&!connected)
-        ?'<div class="meta" style="color:#f7d48a">Usa COLLEGA per autorizzare esclusivamente la Pagina Facebook Antica Cappella tramite Meta OAuth. Instagram Buffer non viene modificato.</div>'
+        ?'<div class="meta" style="color:#f7d48a">Usa COLLEGA solo per Facebook. Il sistema verifica il Page ID reale e l\'accesso alla Pagina tramite Meta: non richiede di trasformarla automaticamente in una “pagina aziendale”. Instagram Buffer non viene modificato.</div>'
         :(c.slug==="antica-cappella"&&p==="tiktok"&&!connected)
           ?'<div class="meta" style="color:#f7d48a">Usa COLLEGA e accedi a TikTok con @ristoranteanticacappella. L\'account viene verificato prima del salvataggio.</div>'
           :(c.slug==="antica-cappella"&&p==="youtube"&&!connected)
@@ -1629,9 +1631,11 @@ window.f1ConnectSocial=async function(clientId,platform,options){
       if(data.error==="configuration_missing"){
         if(opts.wizard){localStorage.removeItem("f1-antica-connect-all");localStorage.removeItem("f1-rmp-connect-all");}
         const row=socialChannels.find(function(x){return x.client_id===clientId&&x.platform===platform});
-        const message=row&&row.profile_url
-          ?("Il profilo "+platformLabel(platform)+" è già registrato correttamente, ma il collegamento OAuth del provider non è ancora attivo. Nessun altro account viene usato.")
-          :("Configurazione OAuth non ancora completata per "+platformLabel(platform)+".");
+        const message=platform==="facebook"
+          ?("La Pagina Facebook prevista è registrata, ma l'app Meta del gestionale non è ancora configurata sul server. Il tipo di Pagina non è la causa di questo errore.")
+          :(row&&row.profile_url
+            ?("Il profilo "+platformLabel(platform)+" è già registrato correttamente, ma il collegamento OAuth del provider non è ancora attivo. Nessun altro account viene usato.")
+            :("Configurazione OAuth non ancora completata per "+platformLabel(platform)+"."));
         const missing=Array.isArray(data.missing)?data.missing.filter(Boolean):[];
         const details=[];
         if(missing.length)details.push("Configurazione server mancante: "+missing.join(", ")+".");
@@ -1799,8 +1803,11 @@ window.f1SelectMetaAccount=async function(clientId,platform){
   const row=socialChannels.find(function(x){return x.client_id===clientId&&x.platform===platform});
   const candidates=(row&&row.oauth_metadata&&row.oauth_metadata.meta_candidates)||[];
   if(!candidates.length)return alert("Nessun account disponibile. Ripeti COLLEGA.");
-  const lines=candidates.map(function(x,i){return (i+1)+". "+(x.account_name||x.account_id)+(x.profile_url?" — "+x.profile_url:"")}).join("\n");
-  const choice=prompt("Seleziona l'account per "+platformLabel(platform)+":\n\n"+lines+"\n\nInserisci il numero:");
+  const lines=candidates.map(function(x,i){
+    const tasks=Array.isArray(x.tasks)&&x.tasks.length?(" · accesso: "+x.tasks.join(", ")):"";
+    return (i+1)+". "+(x.account_name||x.account_id)+(x.page_id?" · ID "+x.page_id:"")+(x.profile_url?" — "+x.profile_url:"")+tasks;
+  }).join("\n");
+  const choice=prompt((platform==="facebook"?"Seleziona la Pagina Facebook":"Seleziona l'account per "+platformLabel(platform))+":\n\n"+lines+"\n\nInserisci il numero:");
   const idx=Number(choice)-1;
   if(!Number.isInteger(idx)||idx<0||idx>=candidates.length)return;
   try{
