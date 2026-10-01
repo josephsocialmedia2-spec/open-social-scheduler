@@ -51,7 +51,7 @@
 .la-sacra-summary{grid-column:1/-1;background:#0a1827;border:1px solid #2d4a68;border-radius:16px;padding:16px;display:grid;grid-template-columns:minmax(240px,1.4fr) minmax(260px,1fr) auto;gap:14px;align-items:center}.la-sacra-summary h2{margin:2px 0 6px}.la-sacra-summary p{margin:0;color:var(--muted);max-width:760px}.la-sacra-summary small{color:#7ef0b0;font-weight:900;letter-spacing:.08em}.la-sacra-kpis{display:grid;grid-template-columns:1fr 1fr;gap:7px}.la-sacra-kpis span{background:#102238;border:1px solid var(--line);border-radius:10px;padding:9px;color:#b9c8da;font-size:11px}.la-sacra-kpis b{display:block;color:#fff;font-size:21px}.la-sacra-slots{display:grid;grid-template-columns:repeat(3,auto);gap:6px;align-items:center}.la-sacra-slots strong{grid-column:1/-1;color:#9eb0c7;font-size:10px;letter-spacing:.08em}.la-sacra-slots span{background:#163354;border:1px solid #335f8a;border-radius:999px;padding:7px 10px;font-weight:900}.property-card{background:#0b1a2a;border:1px solid var(--line);border-radius:14px;overflow:hidden;min-width:0}.property-cover{height:190px;background:#13283e;overflow:hidden}.property-cover img{width:100%;height:100%;object-fit:cover}.property-no-image{height:100%;display:grid;place-items:center;color:#f5dc9e;background:#2d2411;font-size:11px;font-weight:900}.property-body{padding:12px}.property-body h3{margin:3px 0 8px;font-size:15px;line-height:1.3}.property-price{font-weight:1000;font-size:20px}.property-next{padding:8px 0;color:#b9c8da;font-size:11px}.property-social-counts{display:flex;gap:8px;flex-wrap:wrap;color:#9eb0c7;font-size:11px;margin:6px 0 10px}.property-detail-lines{display:grid;gap:8px}.property-detail-lines>div{padding:9px;border:1px solid var(--line);border-radius:9px;background:#0a1827}.property-card .badge.amber{color:#f7d48a;border-color:#866521}@media(max-width:1000px){.la-sacra-summary{grid-template-columns:1fr}.la-sacra-slots{justify-content:start}}@media(max-width:620px){.la-sacra-kpis{grid-template-columns:1fr 1fr}.property-cover{height:180px}}
 </style>
   <link rel="stylesheet" href="./client-workspace.css?v=20261001b">
-  <link rel="stylesheet" href="./f1-design-system.css?v=20261001e">
+  <link rel="stylesheet" href="./f1-design-system.css?v=20261001e">\n  <link rel="stylesheet" href="./later-personal.css?v=20261001">
 </head>
 <body class="f1-main-app">
 <div id="authView" class="auth">
@@ -435,7 +435,7 @@
   </div>
 </div>
 
-<script src="./vendor/supabase.min.js"></script>
+<script src="./vendor/supabase.min.js"></script>\n<script src="./client-health.js?v=20261001"></script>
 <script>
 const { createClient } = window.F1Supabase;
 
@@ -473,7 +473,7 @@ let whatsappSenders = [];
 let loadWarnings = [];
 let selectedClientId = "";
 let droppedFiles = [];
-let tiktokContext = null;
+let tiktokContext = null;\nlet connectionDoctorResults = {};
 let calendarWeekOffset = 0;
 let calendarViewMode = "week";
 let intelligenceAutoRefreshBusy = false;
@@ -806,64 +806,47 @@ function scopedClientIds(){
   return selectedClientId?[selectedClientId]:clients.map(function(c){return c.id});
 }
 function renderMetrics(){
-  const ids=new Set(scopedClientIds());
-  const scopedItems=items.filter(function(x){return ids.has(x.client_id)});
-  const scopedCal=calendar.filter(function(x){return ids.has(x.client_id)});
-  const scopedEv=publicationEvents.filter(function(x){return !x.client_id||ids.has(x.client_id)});
-  const scopedCh=socialChannels.filter(function(x){return ids.has(x.client_id)});
-  const tz=(selectedClientId&&(clients.find(function(x){return x.id===selectedClientId})||{}).timezone)||"Europe/Rome";
-  const today=f1DateKey(new Date(),tz);
-  const activeClients=clients.filter(function(x){return (!selectedClientId||x.id===selectedClientId)&&x.status==="ATTIVO"}).length;
-  const collisions=socialCollisionMap();
-  const connected=scopedCh.filter(function(x){return effectiveSocialState(x,collisions)==="COLLEGATO"}).length;
-  const plannedToday=scopedCal.filter(function(x){return f1DateKey(x.publication_at,tz)===today&&!["ANNULLATO","CANCELED"].includes(String(x.status||"").toUpperCase())}).length;
-  const publishedToday=scopedEv.filter(function(x){return f1DateKey(x.created_at,tz)===today&&eventIsSuccess(x)&&/PUBBLICAT|PUBLISHED|SUCCESS|COMPLETED/i.test(String(x.status||"")+" "+String(x.action||""))}).length;
-  const waiting=scopedItems.filter(function(x){return ["DA LAVORARE","IN LAVORAZIONE","PRONTO","DA APPROVARE","APPROVATO","BOZZA"].includes(x.status)}).length;
-  const errors=scopedEv.filter(function(x){return eventIsError(x)}).slice(0,100).length+scopedCal.filter(function(x){return x.error||/ERRORE|FAIL|ERROR/i.test(String(x.status||""))}).length;
-  const now=Date.now(),soon=now+7*86400000;
-  const renew=scopedCh.filter(function(x){const exp=x.token_expires_at?new Date(x.token_expires_at).getTime():null;return !!x.reauthorization_required||(exp!==null&&exp<=soon)}).length;
+  const health=globalThis.F1ClientHealth
+    ? F1ClientHealth.dashboard(clients,socialChannels,calendar,items)
+    : [];
+  const counts=globalThis.F1ClientHealth
+    ? F1ClientHealth.counters(health)
+    : {active:clients.filter(function(x){return x.status==="ATTIVO"}).length,warning:0,critical:0};
   const data=[
-    ["CLIENTI ATTIVI",activeClients,"ambiente selezionato"],
-    ["SOCIAL COLLEGATI",connected,"account verificati"],
-    ["PROGRAMMATI OGGI",plannedToday,"calendario reale"],
-    ["PUBBLICATI OGGI",publishedToday,"eventi confermati"],
-    ["IN ATTESA",waiting,"contenuti da lavorare"],
-    ["ERRORI",errors,"eventi / calendario"],
-    ["DA RINNOVARE",renew,"entro 7 giorni"]
+    ["CLIENTI ATTIVI",counts.active,"solo clienti operativi"],
+    ["DA CONTROLLARE",counts.warning,"una connessione da sistemare"],
+    ["CRITICI",counts.critical,"richiedono intervento"]
   ];
+  el("metrics").classList.add("client-health-summary");
   el("metrics").innerHTML=data.map(function(x){return '<div class="metric"><b>'+x[1]+'</b><span>'+x[0]+'</span><small class="kpi-caption">'+x[2]+'</small></div>'}).join("");
 }
 function renderClients(){
-  const collisions=socialCollisionMap();
-  const order=["facebook","instagram","tiktok","youtube"];
-  const now=Date.now();
-  const html=clients.map(function(c){
-    const ownItems=items.filter(function(i){return i.client_id===c.id});
-    const ownCal=calendar.filter(function(i){return i.client_id===c.id});
-    const ownEv=publicationEvents.filter(function(i){return i.client_id===c.id});
-    const next=ownCal.filter(function(x){return new Date(x.publication_at).getTime()>=now&&!["ANNULLATO","CANCELED"].includes(String(x.status||"").toUpperCase())}).sort(function(a,b){return new Date(a.publication_at)-new Date(b.publication_at)})[0];
-    const pub=ownItems.filter(function(x){return x.status==="PUBBLICATO"}).length;
-    const plan=ownCal.filter(function(x){return /PROGRAMM|SCHEDULE|QUEUE/i.test(String(x.status||""))}).length;
-    const errors=ownEv.filter(eventIsError).length+ownCal.filter(function(x){return x.error||/ERRORE|FAIL|ERROR/i.test(String(x.status||""))}).length;
-    const territory=[c.city,c.province].filter(Boolean).join(" · ")||"Territorio non impostato";
-    const social=order.map(function(p){
-      const row=socialChannels.find(function(x){return x.client_id===c.id&&x.platform===p});
-      const state=effectiveSocialState(row,collisions);
-      const cls=state==="COLLEGATO"?"ok":(["TOKEN_SCADUTO","DA_RIAUTORIZZARE","ACCOUNT_CONDIVISO","AUTORIZZAZIONE_RICHIESTA","CONFIGURAZIONE_PRONTA"].includes(state)?"warn":(row?"bad":""));
-      const label={facebook:"FB",instagram:"IG",tiktok:"TK",youtube:"YT"}[p];
-      return '<span class="social-pill '+cls+'" title="'+esc(state)+'"><i></i>'+label+'</span>';
-    }).join("");
-    const nextText=next?('<b>Prossimo:</b> '+esc(fmt(next.publication_at))+' · '+esc(platformLabel(next.platform))):'<b>Prossimo:</b> nessuna pubblicazione';
+  if(!globalThis.F1ClientHealth){
+    el("clientCards").innerHTML='<div class="empty">Controllo stato clienti non disponibile.</div>';
+    return;
+  }
+  const health=F1ClientHealth.dashboard(clients,socialChannels,calendar,items);
+  const dashboardHtml=health.map(function(x){
+    const active=selectedClientId===x.clientId?" active":"";
+    return '<button type="button" class="client-health-card health-'+x.color+active+'" '+
+      'title="'+esc(x.reason)+'" aria-label="'+esc(x.name)+': '+esc(x.reason)+'" '+
+      'onclick="window.f1SetClientScope(\''+x.clientId+'\')">'+esc(x.name)+'</button>';
+  }).join("");
+  el("clientCards").classList.add("client-health-grid");
+  el("clientCards").innerHTML=dashboardHtml||'<div class="empty">Nessun cliente attivo.</div>';
+
+  const adminHtml=clients.map(function(c){
+    const state=health.find(function(x){return x.clientId===c.id});
+    const stateLabel=state?state.color.toUpperCase():"ARCHIVIATO";
+    const stateClass=state&&state.color==="green"?"green":(state&&state.color==="orange"?"amber":"");
     return '<article class="client-card '+(selectedClientId===c.id?"active":"")+'">'+
-      '<div class="client-top"><div><small>'+esc(c.category||"Cliente")+'</small><h3>'+esc(c.name)+'</h3><div class="client-territory">'+esc(territory)+'</div></div><span class="badge '+(errors?"":"green")+'">'+(errors?errors+" PROBLEMI":"OK")+'</span></div>'+
-      '<div class="social-strip">'+social+'</div>'+
-      '<div class="client-stats"><span>'+ownItems.length+' contenuti</span><span>'+plan+' programmati</span><span>'+pub+' pubblicati</span></div>'+
-      '<div class="client-next">'+nextText+'</div>'+
-      '<button class="btn small primary client-open" onclick="window.f1SetClientScope(\''+c.id+'\')">APRI CLIENTE</button>'+
+      '<div class="client-top"><div><small>'+esc(c.status||"Cliente")+'</small><h3>'+esc(c.name)+'</h3></div>'+
+      '<span class="badge '+stateClass+'">'+esc(stateLabel)+'</span></div>'+
+      '<div class="meta">'+esc(state?state.reason:"Cliente non attivo")+'</div>'+
+      '<button class="btn small primary client-open" style="margin-top:10px" onclick="window.f1SetClientScope(\''+c.id+'\')">APRI CLIENTE</button>'+
       '</article>';
   }).join("");
-  el("clientCards").innerHTML=html||'<div class="empty">Nessun cliente.</div>';
-  el("clientsAdmin").innerHTML=html||'<div class="empty">Nessun cliente.</div>';
+  el("clientsAdmin").innerHTML=adminHtml||'<div class="empty">Nessun cliente.</div>';
 }
 async function renderAll(){
   renderMetrics();renderClients();renderClientContext();
@@ -935,7 +918,7 @@ window.f1AttachTestMedia=function(itemId,clientId){
   input.click();
 };
 function f1ScopeRequired(platform){
-  return {facebook:"pages_manage_posts",instagram:"instagram_content_publish",tiktok:"video.publish","linkedin-page":"w_member_social",youtube:"https://www.googleapis.com/auth/youtube.upload"}[platform]||"";
+  return {facebook:"pages_manage_posts",instagram:"instagram_content_publish",tiktok:"video.publish","linkedin-page":"w_organization_social",youtube:"https://www.googleapis.com/auth/youtube.upload"}[platform]||"";
 }
 function f1ConnectionPreflight(clientId,platform){
   const row=socialChannels.find(function(x){return x.client_id===clientId&&x.platform===platform});
@@ -1488,6 +1471,27 @@ function socialStateClass(row,state){
   if(["CONFIGURAZIONE_PRONTA","AUTORIZZAZIONE_RICHIESTA","ACCOUNT_DA_SELEZIONARE","ACCOUNT_CONDIVISO","DA_RIAUTORIZZARE","TOKEN_SCADUTO","ACCOUNT GOOGLE DA AUTORIZZARE"].includes(state))return "amber";
   return "";
 }
+function localConnectionDoctor(clientId,platform,row,state){
+  const server=(connectionDoctorResults[clientId]||[]).find(function(x){return x.platform===platform||x.platform===oauthPlatform(platform)});
+  if(server){
+    const cls=server.severity==="ok"?"ok":(server.severity==="warning"?"warn":"bad");
+    return '<div class="connection-doctor '+cls+'"><b>Connection Doctor · '+esc(server.code)+'</b>'+esc(server.message)+(server.action?'<div>'+esc(server.action)+'</div>':"")+'</div>';
+  }
+  const p=platformLabel(platform);
+  const messages={
+    "COLLEGATO":["ok","Connessione verificata","Account abilitato e verificato."],
+    "TOKEN_SCADUTO":["bad","Token scaduto","Ricollega "+p+" per ottenere una nuova autorizzazione."],
+    "DA_RIAUTORIZZARE":["bad","Riautorizzazione necessaria","Ricollega "+p+"."],
+    "AUTH_REQUIRED":["bad","Permessi insufficienti","Riautorizza "+p+" concedendo i permessi richiesti."],
+    "ACCOUNT_ERRATO":["bad","Account errato","Ricollega e seleziona l'account corretto del cliente."],
+    "ACCOUNT_CONDIVISO":["bad","Account condiviso","Lo stesso account è associato a più clienti: seleziona quello corretto."],
+    "ACCOUNT_DA_SELEZIONARE":["warn","Account da selezionare","L'autorizzazione è arrivata, ma devi scegliere il profilo/Pagina corretto."],
+    "CANALE_DA_COLLEGARE":["warn","Profilo scollegato","Collega il profilo con OAuth ufficiale."],
+    "NON CONFIGURATO":["warn","Profilo non configurato","Inserisci il profilo previsto e avvia il collegamento OAuth."]
+  };
+  const m=messages[state]||["warn","Da verificare",String(state||"Connessione incompleta").replaceAll("_"," ")];
+  return '<div class="connection-doctor '+m[0]+'"><b>Connection Doctor · '+esc(m[1])+'</b>'+esc(m[2])+'</div>';
+}
 function renderSocialConnections(){
   const order=["facebook","instagram","linkedin-page","tiktok","youtube"];
   const collisions=socialCollisionMap();
@@ -1513,6 +1517,8 @@ function renderSocialConnections(){
       }else{
         if(state==="ACCOUNT_DA_SELEZIONARE" && (p==="facebook"||p==="instagram")){
           actions+=' <button class="btn small primary" onclick="window.f1SelectMetaAccount(\''+c.id+'\',\''+p+'\')">SELEZIONA ACCOUNT</button>';
+        }else if(state==="ACCOUNT_DA_SELEZIONARE" && p==="linkedin-page"){
+          actions+=' <button class="btn small primary" onclick="window.f1SelectLinkedInAccount(\''+c.id+'\')">SELEZIONA PAGINA</button>';
         }else if((!connected || ["DA_RIAUTORIZZARE","TOKEN_SCADUTO","CANALE_DA_COLLEGARE","CONFIGURAZIONE_PRONTA","AUTORIZZAZIONE_RICHIESTA","ACCOUNT_ERRATO","ACCOUNT_CONDIVISO"].includes(state))&&!anticaMissingLinkedin&&!rmpMissingProfile&&!rmpLinkedinPending){
           actions+=' <button class="btn small primary" onclick="window.f1ConnectSocial(\''+c.id+'\',\''+p+'\')">'+(["DA_RIAUTORIZZARE","TOKEN_SCADUTO","ACCOUNT_CONDIVISO"].includes(state)?"RIAUTORIZZA":"COLLEGA")+'</button>';
         }
@@ -1534,7 +1540,8 @@ function renderSocialConnections(){
                   :(c.slug==="real-media-pro"&&profileUrl&&!connected
                     ?'<div class="meta" style="color:#9fdb7a">OAuth protetto Real Media Pro: verrà accettato solo il profilo ufficiale salvato qui sopra.</div>':""))));
       const verifiedAt=row&&row.last_verified_at?'<div class="meta">Ultima verifica: '+esc(fmt(row.last_verified_at))+'</div>':"";
-      return '<div class="lineitem" style="align-items:flex-start"><b>'+esc(platformLabel(p))+'</b><div style="flex:1"><span class="badge '+socialStateClass(row,state)+'">'+esc(state)+'</span><div class="meta"><b>'+esc(account)+'</b></div><div class="meta">Provider: '+esc(provider)+(row&&row.external_channel_id?' · ID: '+esc(row.external_channel_id):"")+'</div>'+verifiedAt+collisionNote+onboardingNote+urlEditor+'</div><div class="row" style="justify-content:flex-end">'+actions+'</div></div>';
+      const doctor=localConnectionDoctor(c.id,p,row,state);
+      return '<div class="lineitem" style="align-items:flex-start"><b>'+esc(platformLabel(p))+'</b><div style="flex:1"><span class="badge '+socialStateClass(row,state)+'">'+esc(state)+'</span><div class="meta"><b>'+esc(account)+'</b></div><div class="meta">Provider: '+esc(provider)+(row&&row.external_channel_id?' · ID: '+esc(row.external_channel_id):"")+'</div>'+verifiedAt+collisionNote+onboardingNote+doctor+urlEditor+'</div><div class="row" style="justify-content:flex-end">'+actions+'</div></div>';
     }).join("");
     const discover=c.website?'<button class="btn small ghost" onclick="window.f1DiscoverSocials(\''+c.id+'\')">SCOPRI SOCIAL</button>':'';
     const connectAll=c.slug==="antica-cappella"
@@ -1542,7 +1549,9 @@ function renderSocialConnections(){
       :(c.slug==="real-media-pro"
         ?'<button class="btn small green" onclick="window.f1ConnectAllRmpOAuth(\''+c.id+'\')">COLLEGA TUTTI OAUTH</button><button class="btn small ghost" onclick="window.f1CheckOAuthHealth(\''+c.id+'\')">VERIFICA OAUTH</button>'
         :'');
-    const allActions='<div class="row" style="justify-content:flex-end;gap:6px">'+connectAll+discover+'</div>';
+    const invite='<button class="btn small primary" onclick="window.f1CreateSocialInvite(\''+c.id+'\')">INVITA CLIENTE</button>';
+    const doctorBtn='<button class="btn small ghost" onclick="window.f1RunConnectionDoctor(\''+c.id+'\')">CONNECTION DOCTOR</button>';
+    const allActions='<div class="row" style="justify-content:flex-end;gap:6px">'+invite+doctorBtn+connectAll+discover+'</div>';
     const wizardStatus=(c.slug==="antica-cappella"||c.slug==="real-media-pro")?'<div id="connect-all-status-'+c.id+'" class="meta" style="margin:6px 0 10px"></div>':'';
     return '<div style="margin-bottom:22px;padding:14px;border:1px solid #263a56;border-radius:14px"><div class="section-title"><h3 style="margin:0">'+esc(c.name)+'</h3>'+allActions+'</div>'+wizardStatus+rows+'</div>';
   }).join("");
@@ -1562,6 +1571,48 @@ async function brokerPost(path,payload){
   if(!r.ok){const e=new Error(data.detail||data.error||"Errore");e.payload=data;e.status=r.status;throw e}
   return data;
 }
+async function brokerGet(path){
+  const session=await oauthSession();
+  const r=await fetch(OAUTH_BROKER_URL+path,{headers:{Authorization:"Bearer "+session.access_token,apikey:SUPABASE_KEY,"cache-control":"no-store"}});
+  let data={};try{data=await r.json()}catch(_){}
+  if(!r.ok){const e=new Error(data.detail||data.error||"Errore");e.payload=data;e.status=r.status;throw e}
+  return data;
+}
+window.f1CreateSocialInvite=async function(clientId){
+  const client=clients.find(function(x){return x.id===clientId});if(!client)return;
+  try{
+    const platforms=["facebook","instagram","tiktok","youtube","linkedin"];
+    const data=await brokerPost("/invite",{client_id:clientId,platforms:platforms,expires_hours:48});
+    let copied=false;
+    try{await navigator.clipboard.writeText(data.invite_url);copied=true}catch(_){}
+    const message="Link sicuro creato per "+client.name+".\nScade: "+new Date(data.expires_at).toLocaleString("it-IT")+
+      (copied?"\n\nIl link è già stato copiato negli appunti.":"\n\nCopia questo link e invialo al cliente:\n"+data.invite_url);
+    alert(message);
+  }catch(e){alert("Invito non creato: "+(e.message||String(e)))}
+};
+window.f1RunConnectionDoctor=async function(clientId){
+  try{
+    const data=await brokerGet("/doctor?client_id="+encodeURIComponent(clientId));
+    connectionDoctorResults[clientId]=data.checks||[];
+    renderSocialConnections();
+    const critical=(data.checks||[]).filter(function(x){return x.severity==="critical"}).length;
+    const warning=(data.checks||[]).filter(function(x){return x.severity==="warning"}).length;
+    alert("Connection Doctor completato: "+critical+" critici, "+warning+" da controllare.");
+  }catch(e){alert("Connection Doctor: "+(e.message||String(e)))}
+};
+window.f1SelectLinkedInAccount=async function(clientId){
+  const row=socialChannels.find(function(x){return x.client_id===clientId&&x.platform==="linkedin-page"});
+  const candidates=row&&row.oauth_metadata&&Array.isArray(row.oauth_metadata.linkedin_candidates)?row.oauth_metadata.linkedin_candidates:[];
+  if(!candidates.length)return alert("Nessuna Pagina LinkedIn amministrata disponibile. Verifica i permessi dell'app e il ruolo sulla Pagina.");
+  const list=candidates.map(function(x,i){return (i+1)+". "+(x.account_name||x.author_urn||x.account_id)}).join("\n");
+  const raw=prompt("Seleziona la Pagina LinkedIn da collegare:\n\n"+list,"1");
+  const idx=Number(raw)-1;if(!Number.isInteger(idx)||idx<0||idx>=candidates.length)return;
+  try{
+    await brokerPost("/linkedin/select",{client_id:clientId,account_id:candidates[idx].account_id});
+    await loadAll();renderAll();
+    alert("Pagina LinkedIn collegata e verificata.");
+  }catch(e){alert("LinkedIn: "+(e.message||String(e)))}
+};
 window.f1AnticaYoutubeHelp=function(){
   const text="Per collegare YouTube di Antica Cappella:\n\n1. Apri Google Cloud Console del progetto che contiene il client OAuth F1 Social.\n2. Vai in Google Auth Platform → Pubblico / Audience.\n3. In Utenti di test premi Aggiungi utenti.\n4. Aggiungi: anticacappella.avigliana@gmail.com\n5. Salva.\n6. Torna qui e premi COLLEGA YouTube.\n\nFinché l'account non è tra i tester, Google risponde 403 access_denied.";
   alert(text);

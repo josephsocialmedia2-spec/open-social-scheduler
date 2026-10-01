@@ -93,3 +93,8 @@ Ogni cliente e ogni pubblicazione sono file JSON separati con ID stabile. Un com
 6. Viene creato il collegamento **Open Social Scheduler** sul desktop.
 
 Sul secondo computer esegui lo stesso `INSTALLA.bat` usando lo stesso account Google Drive.
+
+
+## Later Personal Manager
+
+The multi-client hub now includes an original Later-inspired operational layer: active-client traffic-light dashboard, secure passwordless client OAuth invitations, Connection Doctor diagnostics and zero-cost guard documentation. See `docs/LATER_PERSONAL_MANAGER.md`, `docs/SOCIAL-CONNECTIONS.md` and `docs/ZERO-COST.md`.
