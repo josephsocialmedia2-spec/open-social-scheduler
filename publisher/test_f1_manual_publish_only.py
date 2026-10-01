@@ -382,10 +382,14 @@ def assert_no_generation_in_manual_runtime() -> None:
     assert '"state_history": state_history' in server_text_exact
 
     workspace = (ROOT / "f1-content-hub" / "client-workspace.js").read_text(encoding="utf-8")
-    assert 'client.slug==="f1-immobiliare"' in workspace
-    assert "Nessuna grafica o caption viene generata automaticamente." in workspace
-    assert 'manualF1?String(base||"").trim():captionFor' in workspace
-    assert 'F1 Immobiliare è in modalità manual publish-only' in workspace
+    # Manual-publish-only continues to prohibit image generation and autonomous
+    # F1 publishing, but captions may now be derived from an operator-supplied
+    # final graphic. Caption intelligence must not create/modify the graphic.
+    assert "Il caricamento legge il testo della grafica e rigenera automaticamente le caption" in workspace
+    assert "caption_manual=true" in workspace
+    assert "f1WorkspaceRegenerate" in workspace
+    assert "F1 Immobiliare è in modalità manual publish-only: inserisci la caption manualmente." not in workspace
+    assert "Nessuna grafica o caption viene generata automaticamente." not in workspace
 
 
 def main() -> int:

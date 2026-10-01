@@ -106,7 +106,9 @@ jobs:
             'F1 Social Intelligence',
             'APPROVAZIONE_RICHIESTA',
             'intelligenceTimePanel',
-            'CARTELLA AUTOMATICA CLIENTE'
+            'intel-folder-mini',
+            'caption_manual=true',
+            'graphic_caption'
           ]){
             if(!js.includes(required)) throw new Error('Missing Content Rail logic: '+required);
           }
@@ -142,9 +144,9 @@ jobs:
           }
           console.log('F1_GLOBAL_DESIGN_SYSTEM_OK');
           NODE
-      - name: Check cache version v15
+      - name: Check cache version v16
         run: |
-          grep -q 'f1-content-hub-v15' f1-content-hub/sw.js
+          grep -q 'f1-content-hub-v16' f1-content-hub/sw.js
           grep -q 'f1-design-system.css' f1-content-hub/sw.js
           grep -q 'heic2any-0.0.4.min.js' f1-content-hub/sw.js
           grep -q 'heic2any-0.0.4.min.js' f1-content-hub/index.html
@@ -241,6 +243,9 @@ jobs:
           grep -q 'f1_intelligence_worker.py' .github/workflows/f1-social-intelligence.yml
           grep -q 'faster-whisper==1.2.0' publisher/intelligence_requirements.txt
           grep -q 'pillow-heif==1.8.0' publisher/intelligence_requirements.txt
+          grep -q 'pytesseract==0.3.13' publisher/intelligence_requirements.txt
+          grep -q 'tesseract-ocr-ita' .github/workflows/f1-social-intelligence.yml
+          grep -q 'F1_INTELLIGENCE_V2_GRAPHIC_CAPTION' publisher/f1_intelligence_worker.py
           grep -Fq "cron: '*/10 * * * *'" .github/workflows/f1-agency-intelligence.yml
           grep -q -- '--skip-content' .github/workflows/f1-agency-intelligence.yml
           grep -q 'ddgs' publisher/agency_requirements.txt
