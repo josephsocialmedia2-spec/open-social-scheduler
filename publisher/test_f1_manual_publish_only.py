@@ -189,6 +189,12 @@ def assert_no_generation_in_manual_runtime() -> None:
         "f1-news-pc-immediate.yml",
         "f1-valle-susa-news.yml",
         "f1-qualified-14d.yml",
+        "f1-feed-preview.yml",
+        "f1-golden-master-smoke.yml",
+        "f1-preview-today.yml",
+        "renderer-v2-qualified-smoke.yml",
+        "social-preview-weekly-index.yml",
+        "f1-design-v2.yml",
     ]
     for name in archived:
         text = (ROOT / ".github" / "workflows" / name).read_text(encoding="utf-8")
@@ -209,6 +215,29 @@ def assert_no_generation_in_manual_runtime() -> None:
 
     buffer_code = (PUBLISHER / "buffer_twice_daily.py").read_text(encoding="utf-8")
     assert "job.get('ai_assisted') is False" in buffer_code
+
+    installer = (PUBLISHER / "f1_graphics_automation" / "INSTALLA_AUTOMAZIONE_23.ps1").read_text(encoding="utf-8")
+    assert "Unregister-ScheduledTask" in installer
+    for task in ("F1_Grafiche_23", "F1_News_ValleSusa", "F1_News_GitHub_Poller"):
+        assert task in installer
+    assert "New-ScheduledTaskTrigger -Daily -At 23:00" not in installer
+    assert "chatgpt_query_runner\\requirements.txt" not in installer
+
+    start_inbox = (PUBLISHER / "f1_graphics_automation" / "START_INBOX.ps1").read_text(encoding="utf-8")
+    assert "manual-publish-only" in start_inbox
+    for forbidden in ("ENSURE_F1_NEWS_POLLER", "ENSURE_F1_GITHUB_RUNNER", "free_browser_router", "chatgpt_query_runner.worker"):
+        assert forbidden not in start_inbox
+
+    for relative in (
+        "RUN_NOTTURNO_23.ps1",
+        "RUN_F1_DAILY_CREATIVE_TEST.ps1",
+        "RUN_F1_NEWS_SLOT.ps1",
+        "RUN_F1_NEWS_POLLER.ps1",
+    ):
+        text = (PUBLISHER / "f1_graphics_automation" / relative).read_text(encoding="utf-8")
+        assert "MANUAL PUBLISH ONLY" in text
+        for forbidden in ("chatgpt_query_runner.worker", "free_browser_router", "F1_CREATIVE_BACKEND"):
+            assert forbidden not in text
 
 
 def main() -> int:
