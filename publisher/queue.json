@@ -269744,6 +269744,59 @@
               ]
             }
           ]
+        },
+        {
+          "at": "2026-10-01T20:07:19+00:00",
+          "dry_run": false,
+          "results": [
+            {
+              "platform": "facebook",
+              "status": "blocked",
+              "missing": [
+                "RMP_FACEBOOK_PAGE_ACCESS_TOKEN"
+              ]
+            },
+            {
+              "platform": "instagram",
+              "status": "blocked",
+              "missing": [
+                "RMP_INSTAGRAM_ACCESS_TOKEN",
+                "RMP_INSTAGRAM_USER_ID"
+              ]
+            },
+            {
+              "platform": "tiktok",
+              "status": "blocked",
+              "missing": [
+                "RMP_TIKTOK_ACCESS_TOKEN"
+              ]
+            },
+            {
+              "platform": "linkedin",
+              "status": "blocked",
+              "missing": [
+                "RMP_LINKEDIN_ACCESS_TOKEN",
+                "RMP_LINKEDIN_AUTHOR_URN"
+              ]
+            },
+            {
+              "platform": "youtube",
+              "status": "blocked",
+              "missing": [
+                "RMP_YOUTUBE_CLIENT_ID",
+                "RMP_YOUTUBE_CLIENT_SECRET",
+                "RMP_YOUTUBE_REFRESH_TOKEN"
+              ]
+            },
+            {
+              "platform": "pinterest",
+              "status": "blocked",
+              "missing": [
+                "RMP_PINTEREST_ACCESS_TOKEN",
+                "RMP_PINTEREST_BOARD_ID"
+              ]
+            }
+          ]
         }
       ]
     },
@@ -269843,6 +269896,59 @@
       "direct_api_results": [
         {
           "at": "2026-10-01T14:46:45+00:00",
+          "dry_run": false,
+          "results": [
+            {
+              "platform": "facebook",
+              "status": "blocked",
+              "missing": [
+                "RMP_FACEBOOK_PAGE_ACCESS_TOKEN"
+              ]
+            },
+            {
+              "platform": "instagram",
+              "status": "blocked",
+              "missing": [
+                "RMP_INSTAGRAM_ACCESS_TOKEN",
+                "RMP_INSTAGRAM_USER_ID"
+              ]
+            },
+            {
+              "platform": "tiktok",
+              "status": "blocked",
+              "missing": [
+                "RMP_TIKTOK_ACCESS_TOKEN"
+              ]
+            },
+            {
+              "platform": "linkedin",
+              "status": "blocked",
+              "missing": [
+                "RMP_LINKEDIN_ACCESS_TOKEN",
+                "RMP_LINKEDIN_AUTHOR_URN"
+              ]
+            },
+            {
+              "platform": "youtube",
+              "status": "blocked",
+              "missing": [
+                "RMP_YOUTUBE_CLIENT_ID",
+                "RMP_YOUTUBE_CLIENT_SECRET",
+                "RMP_YOUTUBE_REFRESH_TOKEN"
+              ]
+            },
+            {
+              "platform": "pinterest",
+              "status": "blocked",
+              "missing": [
+                "RMP_PINTEREST_ACCESS_TOKEN",
+                "RMP_PINTEREST_BOARD_ID"
+              ]
+            }
+          ]
+        },
+        {
+          "at": "2026-10-01T20:07:19+00:00",
           "dry_run": false,
           "results": [
             {
@@ -270042,6 +270148,59 @@
               ]
             }
           ]
+        },
+        {
+          "at": "2026-10-01T20:07:19+00:00",
+          "dry_run": false,
+          "results": [
+            {
+              "platform": "facebook",
+              "status": "blocked",
+              "missing": [
+                "RMP_FACEBOOK_PAGE_ACCESS_TOKEN"
+              ]
+            },
+            {
+              "platform": "instagram",
+              "status": "blocked",
+              "missing": [
+                "RMP_INSTAGRAM_ACCESS_TOKEN",
+                "RMP_INSTAGRAM_USER_ID"
+              ]
+            },
+            {
+              "platform": "tiktok",
+              "status": "blocked",
+              "missing": [
+                "RMP_TIKTOK_ACCESS_TOKEN"
+              ]
+            },
+            {
+              "platform": "linkedin",
+              "status": "blocked",
+              "missing": [
+                "RMP_LINKEDIN_ACCESS_TOKEN",
+                "RMP_LINKEDIN_AUTHOR_URN"
+              ]
+            },
+            {
+              "platform": "youtube",
+              "status": "blocked",
+              "missing": [
+                "RMP_YOUTUBE_CLIENT_ID",
+                "RMP_YOUTUBE_CLIENT_SECRET",
+                "RMP_YOUTUBE_REFRESH_TOKEN"
+              ]
+            },
+            {
+              "platform": "pinterest",
+              "status": "blocked",
+              "missing": [
+                "RMP_PINTEREST_ACCESS_TOKEN",
+                "RMP_PINTEREST_BOARD_ID"
+              ]
+            }
+          ]
         }
       ]
     },
@@ -270137,7 +270296,62 @@
       "visual_transform": "original-generated-ecommerce-mockup-plus-presenter-footer",
       "visual_count": 1,
       "fresh_visual_count": 1,
-      "reused_visual_count": 0
+      "reused_visual_count": 0,
+      "direct_api_results": [
+        {
+          "at": "2026-10-01T20:07:19+00:00",
+          "dry_run": false,
+          "results": [
+            {
+              "platform": "facebook",
+              "status": "blocked",
+              "missing": [
+                "RMP_FACEBOOK_PAGE_ACCESS_TOKEN"
+              ]
+            },
+            {
+              "platform": "instagram",
+              "status": "blocked",
+              "missing": [
+                "RMP_INSTAGRAM_ACCESS_TOKEN",
+                "RMP_INSTAGRAM_USER_ID"
+              ]
+            },
+            {
+              "platform": "tiktok",
+              "status": "blocked",
+              "missing": [
+                "RMP_TIKTOK_ACCESS_TOKEN"
+              ]
+            },
+            {
+              "platform": "linkedin",
+              "status": "blocked",
+              "missing": [
+                "RMP_LINKEDIN_ACCESS_TOKEN",
+                "RMP_LINKEDIN_AUTHOR_URN"
+              ]
+            },
+            {
+              "platform": "youtube",
+              "status": "blocked",
+              "missing": [
+                "RMP_YOUTUBE_CLIENT_ID",
+                "RMP_YOUTUBE_CLIENT_SECRET",
+                "RMP_YOUTUBE_REFRESH_TOKEN"
+              ]
+            },
+            {
+              "platform": "pinterest",
+              "status": "blocked",
+              "missing": [
+                "RMP_PINTEREST_ACCESS_TOKEN",
+                "RMP_PINTEREST_BOARD_ID"
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "real-media-pro-2026-10-01-c16-05-05-creative-testing",
@@ -270231,7 +270445,62 @@
       "visual_transform": "original-generated-ecommerce-mockup-plus-presenter-footer",
       "visual_count": 1,
       "fresh_visual_count": 1,
-      "reused_visual_count": 0
+      "reused_visual_count": 0,
+      "direct_api_results": [
+        {
+          "at": "2026-10-01T20:07:19+00:00",
+          "dry_run": false,
+          "results": [
+            {
+              "platform": "facebook",
+              "status": "blocked",
+              "missing": [
+                "RMP_FACEBOOK_PAGE_ACCESS_TOKEN"
+              ]
+            },
+            {
+              "platform": "instagram",
+              "status": "blocked",
+              "missing": [
+                "RMP_INSTAGRAM_ACCESS_TOKEN",
+                "RMP_INSTAGRAM_USER_ID"
+              ]
+            },
+            {
+              "platform": "tiktok",
+              "status": "blocked",
+              "missing": [
+                "RMP_TIKTOK_ACCESS_TOKEN"
+              ]
+            },
+            {
+              "platform": "linkedin",
+              "status": "blocked",
+              "missing": [
+                "RMP_LINKEDIN_ACCESS_TOKEN",
+                "RMP_LINKEDIN_AUTHOR_URN"
+              ]
+            },
+            {
+              "platform": "youtube",
+              "status": "blocked",
+              "missing": [
+                "RMP_YOUTUBE_CLIENT_ID",
+                "RMP_YOUTUBE_CLIENT_SECRET",
+                "RMP_YOUTUBE_REFRESH_TOKEN"
+              ]
+            },
+            {
+              "platform": "pinterest",
+              "status": "blocked",
+              "missing": [
+                "RMP_PINTEREST_ACCESS_TOKEN",
+                "RMP_PINTEREST_BOARD_ID"
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "supabase-calendar-15749242-83c1-44c4-a0c5-b2bfcf8672e7",
@@ -270279,7 +270548,7 @@
       "client_id": "real-media-pro",
       "client_name": "Real Media Pro",
       "title": "Un e-commerce bello non basta",
-      "caption": "Un e-commerce bello non basta\n\nUn e-commerce che performa collega prodotto, offerta, pagina, fiducia, checkout e traffico. Real Media Pro parte dal percorso di acquisto, non dal solo layout. Richiedi un'analisi strategica gratuita.",
+      "caption": "Un e-commerce che performa collega prodotto, offerta, pagina, fiducia, checkout e traffico. Real Media Pro parte dal percorso di acquisto, non dal solo layout. Richiedi un'analisi strategica gratuita.",
       "format": "post",
       "media": [],
       "scheduled_at": "2026-09-27T17:15:00+00:00",
@@ -270472,7 +270741,7 @@
       "client_id": "real-media-pro",
       "client_name": "Real Media Pro",
       "title": "Meta Ads: il problema spesso è la creatività",
-      "caption": "Meta Ads: il problema spesso è la creatività\n\nSu Meta la creatività è una variabile decisiva: hook, dimostrazione, prova e CTA devono essere progettati per il feed e testati in più varianti. Richiedi un'analisi strategica gratuita.",
+      "caption": "Su Meta la creatività è una variabile decisiva: hook, dimostrazione, prova e CTA devono essere progettati per il feed e testati in più varianti. Richiedi un'analisi strategica gratuita.",
       "format": "post",
       "media": [],
       "scheduled_at": "2026-09-28T17:15:00+00:00",
@@ -270821,7 +271090,7 @@
       "client_id": "real-media-pro",
       "client_name": "Real Media Pro",
       "title": "Google Ads intercetta domanda già attiva",
-      "caption": "Google Ads intercetta domanda già attiva\n\nGoogle Ads funziona quando keyword, feed, annuncio e pagina di destinazione rispondono allo stesso intento. Richiedi un'analisi strategica gratuita.",
+      "caption": "Google Ads funziona quando keyword, feed, annuncio e pagina di destinazione rispondono allo stesso intento. Richiedi un'analisi strategica gratuita.",
       "format": "post",
       "media": [],
       "scheduled_at": "2026-09-29T17:15:00+00:00",
@@ -271361,7 +271630,7 @@
       "client_id": "f1-social",
       "client_name": "F1 Social",
       "title": "761a2bc3 3401 46c4 a427 dd8c33347af5",
-      "caption": "COMPETENZA | TERRITORIO | RISULTATI Y +\n\nIMMOBILIARE __< %\nCASA E IMPRESE a\nLA TUA CASA, IL NOSTRO OBIETTIVO a de ta a | i\nRII\nMe (ta SÌ coral\nd ia i | |} ima ai\n= radi N (1 il), Atm è\nPIANO TERRA TAVERNETTA ' VICINO STAZIONE — = 4 ¥\nse. cd >\nPer nostra clientela referenziata siamo alla ricerca\ndi un alloggio con 1 camera, preferibilmente al piano terri\ncon tavernetta e in posizione comoda alla stazione. ; a\nP ZONE DI RICERCA ,\n9 CAPRIE * NOVARETTO * CONDOVE A ‘\nALMESE © SANT’ANTONINO DI SUSA\nHAI UN IMMOBILE di D\nDA PROPORCI? gie OVI\nScrivici su WhatsApp “a nl)\n© flimmobiliare.com 7",
+      "caption": "761a2bc3 3401 46c4 a427 dd8c33347af5",
       "format": "post",
       "media": [],
       "scheduled_at": "2026-10-01T12:28:05.817+00:00",
@@ -271384,9 +271653,9 @@
       "tiktok_settings": {},
       "retry_count": 0,
       "created_by": "supabase-queue-bridge",
-      "autonomous_publish": false,
-      "manual_publish_now": true,
-      "expected_media_sha256": "4668d813290cc0d8a738bfacd6930a939f3e002fd5b4cce8ee0b2265c77f3fe5",
+      "autonomous_publish": true,
+      "manual_publish_now": false,
+      "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
       "blocked_reason": "CANALE_DA_COLLEGARE"
@@ -271472,7 +271741,7 @@
       "client_id": "f1-social",
       "client_name": "F1 Social",
       "title": "761a2bc3 3401 46c4 a427 dd8c33347af5",
-      "caption": "COMPETENZA | TERRITORIO | RISULTATI Y +\n\nIMMOBILIARE __< %\nCASA E IMPRESE a\nLA TUA CASA, IL NOSTRO OBIETTIVO a de ta a | i\nRII\nMe (ta SÌ coral\nd ia i | |} ima ai\n= radi N (1 il), Atm è\nPIANO TERRA TAVERNETTA ' VICINO STAZIONE — = 4 ¥\nse. cd >\nPer nostra clientela referenziata siamo alla ricerca\ndi un alloggio con 1 camera, preferibilmente al piano terri\ncon tavernetta e in posizione comoda alla stazione. ; a\nP ZONE DI RICERCA ,\n9 CAPRIE * NOVARETTO * CONDOVE A ‘\nALMESE © SANT’ANTONINO DI SUSA\nHAI UN IMMOBILE di D\nDA PROPORCI? gie OVI\nScrivici su WhatsApp “a nl)\n© flimmobiliare.com 7",
+      "caption": "761a2bc3 3401 46c4 a427 dd8c33347af5",
       "format": "post",
       "media": [],
       "scheduled_at": "2026-10-01T16:30:00+00:00",
@@ -271504,8 +271773,8 @@
     },
     {
       "id": "supabase-calendar-c98055a4-a5c2-4d2c-bef7-d0cb6f3a6c33",
-      "enabled": true,
-      "status": "buffer_scheduled",
+      "enabled": false,
+      "status": "published",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "PRESENTAZIONE · APPARTAMENTO DUE LOCALI IN VENDITA A RUBIANA DISPONIBILE SUBITO",
@@ -271539,6 +271808,21 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
+      "buffer_posts": [
+        {
+          "service": "instagram",
+          "channel_id": "6ab2b6e7ea19ca0bdeb80e19",
+          "post_id": "6abe71bd0cb7860019bc21d3",
+          "buffer_status": "sent",
+          "due_at": "2026-10-01T18:00:00.000Z",
+          "created_at": "2026-10-01T14:44:13+00:00",
+          "sent_at": "2026-10-01T18:01:17.749Z",
+          "external_link": "https://www.instagram.com/p/Dd9gSP9Gn6s/"
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "instagram"
+      ],
       "cloudinary_assets": [
         {
           "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790612430/f1-buffer/supabase-calendar-c98055a4-a5c2-4d2c-bef7-d0cb6f3a6c33/video.png",
@@ -271547,24 +271831,13 @@
           "bytes": "2643887"
         }
       ],
-      "buffer_posts": [
-        {
-          "service": "instagram",
-          "channel_id": "6ab2b6e7ea19ca0bdeb80e19",
-          "post_id": "6abe71bd0cb7860019bc21d3",
-          "buffer_status": "scheduled",
-          "due_at": "2026-10-01T18:00:00.000Z",
-          "created_at": "2026-10-01T14:44:13+00:00"
-        }
-      ],
-      "buffer_scheduled_platforms": [
-        "instagram"
-      ]
+      "external_post_id": "6abe71bd0cb7860019bc21d3",
+      "external_url": "https://www.instagram.com/p/Dd9gSP9Gn6s/"
     },
     {
       "id": "supabase-calendar-66ded8f6-a396-49cc-bb18-1f790e62672f",
-      "enabled": true,
-      "status": "buffer_scheduled",
+      "enabled": false,
+      "status": "published",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "PRESENTAZIONE · APPARTAMENTO DUE LOCALI IN VENDITA A RUBIANA DISPONIBILE SUBITO",
@@ -271598,6 +271871,21 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
+      "buffer_posts": [
+        {
+          "service": "facebook",
+          "channel_id": "6ab2b713ea19ca0bdeb8103d",
+          "post_id": "6abe71bf8b671f6cc5dc79ef",
+          "buffer_status": "sent",
+          "due_at": "2026-10-01T18:00:00.000Z",
+          "created_at": "2026-10-01T14:44:15+00:00",
+          "sent_at": "2026-10-01T18:01:00.422Z",
+          "external_link": "https://www.facebook.com/122138682843201564/posts/122141778489201564"
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "facebook"
+      ],
       "cloudinary_assets": [
         {
           "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790612428/f1-buffer/supabase-calendar-66ded8f6-a396-49cc-bb18-1f790e62672f/video.png",
@@ -271606,19 +271894,8 @@
           "bytes": "2643887"
         }
       ],
-      "buffer_posts": [
-        {
-          "service": "facebook",
-          "channel_id": "6ab2b713ea19ca0bdeb8103d",
-          "post_id": "6abe71bf8b671f6cc5dc79ef",
-          "buffer_status": "scheduled",
-          "due_at": "2026-10-01T18:00:00.000Z",
-          "created_at": "2026-10-01T14:44:15+00:00"
-        }
-      ],
-      "buffer_scheduled_platforms": [
-        "facebook"
-      ]
+      "external_post_id": "6abe71bf8b671f6cc5dc79ef",
+      "external_url": "https://www.facebook.com/122138682843201564/posts/122141778489201564"
     },
     {
       "id": "supabase-calendar-9e4eef32-3db3-4926-b968-403cb39c661f",
@@ -271694,14 +271971,6 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "cloudinary_assets": [
-        {
-          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790612435/f1-buffer/supabase-calendar-2d14b16f-0de2-47ea-b33c-5d84401416bd/video.png",
-          "public_id": "f1-buffer/supabase-calendar-2d14b16f-0de2-47ea-b33c-5d84401416bd/video",
-          "resource_type": "image",
-          "bytes": "2667452"
-        }
-      ],
       "buffer_posts": [
         {
           "service": "instagram",
@@ -271709,17 +271978,27 @@
           "post_id": "6abe71c14fa130013a7770ba",
           "buffer_status": "scheduled",
           "due_at": "2026-10-02T06:00:00.000Z",
-          "created_at": "2026-10-01T14:44:17+00:00"
+          "created_at": "2026-10-01T14:44:17+00:00",
+          "sent_at": null,
+          "external_link": null
         }
       ],
       "buffer_scheduled_platforms": [
         "instagram"
+      ],
+      "cloudinary_assets": [
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790612435/f1-buffer/supabase-calendar-2d14b16f-0de2-47ea-b33c-5d84401416bd/video.png",
+          "public_id": "f1-buffer/supabase-calendar-2d14b16f-0de2-47ea-b33c-5d84401416bd/video",
+          "resource_type": "image",
+          "bytes": "2667452"
+        }
       ]
     },
     {
       "id": "supabase-calendar-4c77b587-7dca-40a8-96d1-bc06acd62272",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "buffer_scheduled",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "PRESENTAZIONE · DUE ALLOGGI IN IN QUADRIFAMILARE VILLAR DORA",
@@ -271761,7 +272040,19 @@
           "bytes": "2667452"
         }
       ],
-      "blocked_reason": "Buffer facebook: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
+      "buffer_posts": [
+        {
+          "service": "facebook",
+          "channel_id": "6ab2b713ea19ca0bdeb8103d",
+          "post_id": "6abebd369178244f470b9678",
+          "buffer_status": "scheduled",
+          "due_at": "2026-10-02T06:00:00.000Z",
+          "created_at": "2026-10-01T20:06:14+00:00"
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "facebook"
+      ]
     },
     {
       "id": "supabase-calendar-a807edc6-2731-45e8-8b36-f0d25b6cebe6",
@@ -271955,7 +272246,7 @@
     {
       "id": "supabase-calendar-757bf128-919d-470b-a8d6-00b8a52b3ed4",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "buffer_scheduled",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "PUNTO DI FORZA · APPARTAMENTO A GRUGLIASCO",
@@ -271997,7 +272288,19 @@
           "bytes": "2468982"
         }
       ],
-      "blocked_reason": "Buffer facebook: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
+      "buffer_posts": [
+        {
+          "service": "facebook",
+          "channel_id": "6ab2b713ea19ca0bdeb8103d",
+          "post_id": "6abebd38ff1f8cde664274c9",
+          "buffer_status": "scheduled",
+          "due_at": "2026-10-02T12:00:00.000Z",
+          "created_at": "2026-10-01T20:06:16+00:00"
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "facebook"
+      ]
     },
     {
       "id": "supabase-calendar-76a1f077-f136-4447-ab95-58433d1b1653",
@@ -272036,14 +272339,6 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "cloudinary_assets": [
-        {
-          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790612441/f1-buffer/supabase-calendar-76a1f077-f136-4447-ab95-58433d1b1653/video.png",
-          "public_id": "f1-buffer/supabase-calendar-76a1f077-f136-4447-ab95-58433d1b1653/video",
-          "resource_type": "image",
-          "bytes": "2468982"
-        }
-      ],
       "buffer_posts": [
         {
           "service": "instagram",
@@ -272051,17 +272346,27 @@
           "post_id": "6abe71c9b00d1de1165e195d",
           "buffer_status": "scheduled",
           "due_at": "2026-10-02T12:00:00.000Z",
-          "created_at": "2026-10-01T14:44:26+00:00"
+          "created_at": "2026-10-01T14:44:26+00:00",
+          "sent_at": null,
+          "external_link": null
         }
       ],
       "buffer_scheduled_platforms": [
         "instagram"
+      ],
+      "cloudinary_assets": [
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790612441/f1-buffer/supabase-calendar-76a1f077-f136-4447-ab95-58433d1b1653/video.png",
+          "public_id": "f1-buffer/supabase-calendar-76a1f077-f136-4447-ab95-58433d1b1653/video",
+          "resource_type": "image",
+          "bytes": "2468982"
+        }
       ]
     },
     {
       "id": "supabase-calendar-44751bc7-c56b-46b0-9adf-cb44d11d8453",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "buffer_scheduled",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "PUNTO DI FORZA · AVIGLIANA ATTIVITA' BAR RISTORANTE TABACCHI LOTTO",
@@ -272103,7 +272408,19 @@
           "bytes": "2919495"
         }
       ],
-      "blocked_reason": "Buffer instagram: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
+      "buffer_posts": [
+        {
+          "service": "instagram",
+          "channel_id": "6ab2b6e7ea19ca0bdeb80e19",
+          "post_id": "6abebd399178244f470b96b0",
+          "buffer_status": "scheduled",
+          "due_at": "2026-10-02T18:00:00.000Z",
+          "created_at": "2026-10-01T20:06:17+00:00"
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "instagram"
+      ]
     },
     {
       "id": "supabase-calendar-2a59ba06-c3e8-4ed5-8794-c9e21e6359b6",
@@ -272202,7 +272519,7 @@
     {
       "id": "supabase-calendar-18234fc1-87d1-453f-9a1a-fb1e212ebe55",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "buffer_scheduled",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "PUNTO DI FORZA · CHALET AD AVIGLIANA",
@@ -272244,7 +272561,19 @@
           "bytes": "308805"
         }
       ],
-      "blocked_reason": "Buffer instagram: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
+      "buffer_posts": [
+        {
+          "service": "instagram",
+          "channel_id": "6ab2b6e7ea19ca0bdeb80e19",
+          "post_id": "6abebd3bd22f25b4088a2d98",
+          "buffer_status": "scheduled",
+          "due_at": "2026-10-03T06:00:00.000Z",
+          "created_at": "2026-10-01T20:06:19+00:00"
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "instagram"
+      ]
     },
     {
       "id": "supabase-calendar-ea24087d-ec06-43aa-bbed-354e0091aee6",
@@ -272335,7 +272664,7 @@
     {
       "id": "supabase-calendar-f2a6aba8-002e-40a9-afd8-6d6e3cc85748",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "buffer_scheduled",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "PUNTO DI FORZA · APPARTAMENTO A BUTTIGLIERA ALTA",
@@ -272377,7 +272706,19 @@
           "bytes": "265605"
         }
       ],
-      "blocked_reason": "Buffer instagram: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
+      "buffer_posts": [
+        {
+          "service": "instagram",
+          "channel_id": "6ab2b6e7ea19ca0bdeb80e19",
+          "post_id": "6abebd3d2f7034519e767661",
+          "buffer_status": "scheduled",
+          "due_at": "2026-10-03T12:00:00.000Z",
+          "created_at": "2026-10-01T20:06:22+00:00"
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "instagram"
+      ]
     },
     {
       "id": "supabase-calendar-d99011a2-179f-4a50-acd6-55cd90409aaa",
@@ -275106,14 +275447,6 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "cloudinary_assets": [
-        {
-          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790612560/f1-buffer/supabase-calendar-6aa8ce33-8c9c-4b2a-a8b4-e9a14783c435/video.jpg",
-          "public_id": "f1-buffer/supabase-calendar-6aa8ce33-8c9c-4b2a-a8b4-e9a14783c435/video",
-          "resource_type": "image",
-          "bytes": "5334141"
-        }
-      ],
       "buffer_posts": [
         {
           "service": "instagram",
@@ -275121,11 +275454,21 @@
           "post_id": "6abe723bb00d1de1165e2d1b",
           "buffer_status": "scheduled",
           "due_at": "2026-10-18T11:30:00.000Z",
-          "created_at": "2026-10-01T14:46:19+00:00"
+          "created_at": "2026-10-01T14:46:19+00:00",
+          "sent_at": null,
+          "external_link": null
         }
       ],
       "buffer_scheduled_platforms": [
         "instagram"
+      ],
+      "cloudinary_assets": [
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790612560/f1-buffer/supabase-calendar-6aa8ce33-8c9c-4b2a-a8b4-e9a14783c435/video.jpg",
+          "public_id": "f1-buffer/supabase-calendar-6aa8ce33-8c9c-4b2a-a8b4-e9a14783c435/video",
+          "resource_type": "image",
+          "bytes": "5334141"
+        }
       ]
     },
     {
@@ -275368,14 +275711,6 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "cloudinary_assets": [
-        {
-          "url": "https://res.cloudinary.com/xqrptpae/video/upload/v1790612567/f1-buffer/supabase-calendar-65715ace-b98f-4bbe-a8c9-e08b27c09494/video.mp4",
-          "public_id": "f1-buffer/supabase-calendar-65715ace-b98f-4bbe-a8c9-e08b27c09494/video",
-          "resource_type": "video",
-          "bytes": "14583096"
-        }
-      ],
       "buffer_posts": [
         {
           "service": "instagram",
@@ -275383,11 +275718,21 @@
           "post_id": "6abe72468b671f6cc5dc8c60",
           "buffer_status": "scheduled",
           "due_at": "2026-10-21T11:30:00.000Z",
-          "created_at": "2026-10-01T14:46:30+00:00"
+          "created_at": "2026-10-01T14:46:30+00:00",
+          "sent_at": null,
+          "external_link": null
         }
       ],
       "buffer_scheduled_platforms": [
         "instagram"
+      ],
+      "cloudinary_assets": [
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/video/upload/v1790612567/f1-buffer/supabase-calendar-65715ace-b98f-4bbe-a8c9-e08b27c09494/video.mp4",
+          "public_id": "f1-buffer/supabase-calendar-65715ace-b98f-4bbe-a8c9-e08b27c09494/video",
+          "resource_type": "video",
+          "bytes": "14583096"
+        }
       ]
     },
     {
@@ -275871,9 +276216,46 @@
           "bytes": "4364512"
         }
       ]
+    },
+    {
+      "id": "supabase-calendar-8ffde05e-b39e-48b7-822f-11fc6b15509e",
+      "enabled": false,
+      "status": "blocked",
+      "client_id": "antica-cappella",
+      "client_name": "Antica Cappella",
+      "title": "Tradizione, territorio e ospitalità ad Avigliana",
+      "caption": "Un ristorante non è soltanto il luogo in cui si mangia. È uno spazio in cui si incontrano persone, tradizioni e ricordi. Ad Avigliana, il territorio racconta una storia fatta di cucina piemontese, ospitalità e occasioni da condividere. Quando si sceglie un ristorante per una cena, una ricorrenza o un evento, contano la qualità delle materie prime, l'attenzione al servizio e la capacità di far sentire ogni ospite accolto. Anche i dettagli hanno un ruolo importante: il ritmo della sala, la cura della tavola e un menu pensato per l'occasione. Antica Cappella porta avanti questa idea di convivialità ad Avigliana, tra tradizione e momenti speciali. Se stai organizzando un pranzo, una cena o un evento, scopri gli spazi e la proposta del ristorante e scegli la soluzione più adatta alla tua occasione.\n\n#AnticaCappella #Avigliana #ValleDiSusa #Torino #CucinaPiemontese #Ristorante #Eventi",
+      "format": "post",
+      "media": [],
+      "scheduled_at": "2026-09-24T16:30:00+00:00",
+      "platforms": [
+        "instagram"
+      ],
+      "published_platforms": [],
+      "source": "SUPABASE_CONTENT_HUB",
+      "supabase_calendar_id": "8ffde05e-b39e-48b7-822f-11fc6b15509e",
+      "supabase_content_id": "f43dbdbf-0245-4e2e-9ff1-50e025a6a13c",
+      "supabase_client_id": "b5975210-70de-4fe9-ba4c-54558d5cd990",
+      "campaign": "QA_SOCIAL_FREE_SPOKEN_20260926",
+      "property_id": null,
+      "provider": "buffer",
+      "provider_channel_id": "6ab5cfc6ea19ca0bdedecef3",
+      "expected_account": "https://www.instagram.com/anticacappella/",
+      "detected_account_id": "6ab5cfc6ea19ca0bdedecef3",
+      "detected_account_name": "anticacappella",
+      "provider_secret_prefix": "ANTICACAPPELLA",
+      "tiktok_settings": {},
+      "retry_count": 0,
+      "created_by": "supabase-queue-bridge",
+      "autonomous_publish": true,
+      "manual_publish_now": false,
+      "expected_media_sha256": null,
+      "public_media_urls": [],
+      "tiktok_photo_urls": [],
+      "blocked_reason": "ERRORE_MEDIA"
     }
   ],
-  "updated_at": "2026-10-01T15:17:54+00:00",
+  "updated_at": "2026-10-01T20:07:39+00:00",
   "updated_by": "Automatic renderer · F1 manual-only aware",
   "current_cycle": "2026-10-01T16:00",
   "history_days": 14,
