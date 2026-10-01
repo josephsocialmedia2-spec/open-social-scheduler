@@ -39,8 +39,13 @@ jobs:
           assert data.get('ok') is True, data
           assert data.get('encryption_ready') is True, data
           providers=data.get('providers') or {}
-          assert providers.get('facebook') is True, providers
-          assert providers.get('instagram') is True, providers
+          required_keys={'facebook','instagram','youtube','tiktok','linkedin'}
+          assert required_keys.issubset(providers), providers
           print('RMP_OAUTH_BROKER_HEALTH_OK')
           print(json.dumps(providers,sort_keys=True))
+          missing=[p for p,v in providers.items() if not v]
+          if missing:
+              print('RMP_OAUTH_PROVIDER_CONFIGURATION_REQUIRED=' + ','.join(sorted(missing)))
+          else:
+              print('RMP_OAUTH_ALL_PROVIDERS_CONFIGURED')
           PY
