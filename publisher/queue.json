@@ -269797,6 +269797,59 @@
               ]
             }
           ]
+        },
+        {
+          "at": "2026-10-01T23:31:35+00:00",
+          "dry_run": false,
+          "results": [
+            {
+              "platform": "facebook",
+              "status": "blocked",
+              "missing": [
+                "RMP_FACEBOOK_PAGE_ACCESS_TOKEN"
+              ]
+            },
+            {
+              "platform": "instagram",
+              "status": "blocked",
+              "missing": [
+                "RMP_INSTAGRAM_ACCESS_TOKEN",
+                "RMP_INSTAGRAM_USER_ID"
+              ]
+            },
+            {
+              "platform": "tiktok",
+              "status": "blocked",
+              "missing": [
+                "RMP_TIKTOK_ACCESS_TOKEN"
+              ]
+            },
+            {
+              "platform": "linkedin",
+              "status": "blocked",
+              "missing": [
+                "RMP_LINKEDIN_ACCESS_TOKEN",
+                "RMP_LINKEDIN_AUTHOR_URN"
+              ]
+            },
+            {
+              "platform": "youtube",
+              "status": "blocked",
+              "missing": [
+                "RMP_YOUTUBE_CLIENT_ID",
+                "RMP_YOUTUBE_CLIENT_SECRET",
+                "RMP_YOUTUBE_REFRESH_TOKEN"
+              ]
+            },
+            {
+              "platform": "pinterest",
+              "status": "blocked",
+              "missing": [
+                "RMP_PINTEREST_ACCESS_TOKEN",
+                "RMP_PINTEREST_BOARD_ID"
+              ]
+            }
+          ]
         }
       ]
     },
@@ -269949,6 +270002,59 @@
         },
         {
           "at": "2026-10-01T20:07:19+00:00",
+          "dry_run": false,
+          "results": [
+            {
+              "platform": "facebook",
+              "status": "blocked",
+              "missing": [
+                "RMP_FACEBOOK_PAGE_ACCESS_TOKEN"
+              ]
+            },
+            {
+              "platform": "instagram",
+              "status": "blocked",
+              "missing": [
+                "RMP_INSTAGRAM_ACCESS_TOKEN",
+                "RMP_INSTAGRAM_USER_ID"
+              ]
+            },
+            {
+              "platform": "tiktok",
+              "status": "blocked",
+              "missing": [
+                "RMP_TIKTOK_ACCESS_TOKEN"
+              ]
+            },
+            {
+              "platform": "linkedin",
+              "status": "blocked",
+              "missing": [
+                "RMP_LINKEDIN_ACCESS_TOKEN",
+                "RMP_LINKEDIN_AUTHOR_URN"
+              ]
+            },
+            {
+              "platform": "youtube",
+              "status": "blocked",
+              "missing": [
+                "RMP_YOUTUBE_CLIENT_ID",
+                "RMP_YOUTUBE_CLIENT_SECRET",
+                "RMP_YOUTUBE_REFRESH_TOKEN"
+              ]
+            },
+            {
+              "platform": "pinterest",
+              "status": "blocked",
+              "missing": [
+                "RMP_PINTEREST_ACCESS_TOKEN",
+                "RMP_PINTEREST_BOARD_ID"
+              ]
+            }
+          ]
+        },
+        {
+          "at": "2026-10-01T23:31:35+00:00",
           "dry_run": false,
           "results": [
             {
@@ -270201,6 +270307,59 @@
               ]
             }
           ]
+        },
+        {
+          "at": "2026-10-01T23:31:35+00:00",
+          "dry_run": false,
+          "results": [
+            {
+              "platform": "facebook",
+              "status": "blocked",
+              "missing": [
+                "RMP_FACEBOOK_PAGE_ACCESS_TOKEN"
+              ]
+            },
+            {
+              "platform": "instagram",
+              "status": "blocked",
+              "missing": [
+                "RMP_INSTAGRAM_ACCESS_TOKEN",
+                "RMP_INSTAGRAM_USER_ID"
+              ]
+            },
+            {
+              "platform": "tiktok",
+              "status": "blocked",
+              "missing": [
+                "RMP_TIKTOK_ACCESS_TOKEN"
+              ]
+            },
+            {
+              "platform": "linkedin",
+              "status": "blocked",
+              "missing": [
+                "RMP_LINKEDIN_ACCESS_TOKEN",
+                "RMP_LINKEDIN_AUTHOR_URN"
+              ]
+            },
+            {
+              "platform": "youtube",
+              "status": "blocked",
+              "missing": [
+                "RMP_YOUTUBE_CLIENT_ID",
+                "RMP_YOUTUBE_CLIENT_SECRET",
+                "RMP_YOUTUBE_REFRESH_TOKEN"
+              ]
+            },
+            {
+              "platform": "pinterest",
+              "status": "blocked",
+              "missing": [
+                "RMP_PINTEREST_ACCESS_TOKEN",
+                "RMP_PINTEREST_BOARD_ID"
+              ]
+            }
+          ]
         }
       ]
     },
@@ -270350,6 +270509,59 @@
               ]
             }
           ]
+        },
+        {
+          "at": "2026-10-01T23:31:35+00:00",
+          "dry_run": false,
+          "results": [
+            {
+              "platform": "facebook",
+              "status": "blocked",
+              "missing": [
+                "RMP_FACEBOOK_PAGE_ACCESS_TOKEN"
+              ]
+            },
+            {
+              "platform": "instagram",
+              "status": "blocked",
+              "missing": [
+                "RMP_INSTAGRAM_ACCESS_TOKEN",
+                "RMP_INSTAGRAM_USER_ID"
+              ]
+            },
+            {
+              "platform": "tiktok",
+              "status": "blocked",
+              "missing": [
+                "RMP_TIKTOK_ACCESS_TOKEN"
+              ]
+            },
+            {
+              "platform": "linkedin",
+              "status": "blocked",
+              "missing": [
+                "RMP_LINKEDIN_ACCESS_TOKEN",
+                "RMP_LINKEDIN_AUTHOR_URN"
+              ]
+            },
+            {
+              "platform": "youtube",
+              "status": "blocked",
+              "missing": [
+                "RMP_YOUTUBE_CLIENT_ID",
+                "RMP_YOUTUBE_CLIENT_SECRET",
+                "RMP_YOUTUBE_REFRESH_TOKEN"
+              ]
+            },
+            {
+              "platform": "pinterest",
+              "status": "blocked",
+              "missing": [
+                "RMP_PINTEREST_ACCESS_TOKEN",
+                "RMP_PINTEREST_BOARD_ID"
+              ]
+            }
+          ]
         }
       ]
     },
@@ -270449,6 +270661,59 @@
       "direct_api_results": [
         {
           "at": "2026-10-01T20:07:19+00:00",
+          "dry_run": false,
+          "results": [
+            {
+              "platform": "facebook",
+              "status": "blocked",
+              "missing": [
+                "RMP_FACEBOOK_PAGE_ACCESS_TOKEN"
+              ]
+            },
+            {
+              "platform": "instagram",
+              "status": "blocked",
+              "missing": [
+                "RMP_INSTAGRAM_ACCESS_TOKEN",
+                "RMP_INSTAGRAM_USER_ID"
+              ]
+            },
+            {
+              "platform": "tiktok",
+              "status": "blocked",
+              "missing": [
+                "RMP_TIKTOK_ACCESS_TOKEN"
+              ]
+            },
+            {
+              "platform": "linkedin",
+              "status": "blocked",
+              "missing": [
+                "RMP_LINKEDIN_ACCESS_TOKEN",
+                "RMP_LINKEDIN_AUTHOR_URN"
+              ]
+            },
+            {
+              "platform": "youtube",
+              "status": "blocked",
+              "missing": [
+                "RMP_YOUTUBE_CLIENT_ID",
+                "RMP_YOUTUBE_CLIENT_SECRET",
+                "RMP_YOUTUBE_REFRESH_TOKEN"
+              ]
+            },
+            {
+              "platform": "pinterest",
+              "status": "blocked",
+              "missing": [
+                "RMP_PINTEREST_ACCESS_TOKEN",
+                "RMP_PINTEREST_BOARD_ID"
+              ]
+            }
+          ]
+        },
+        {
+          "at": "2026-10-01T23:31:35+00:00",
           "dry_run": false,
           "results": [
             {
@@ -272032,14 +272297,6 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "cloudinary_assets": [
-        {
-          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790612432/f1-buffer/supabase-calendar-4c77b587-7dca-40a8-96d1-bc06acd62272/video.png",
-          "public_id": "f1-buffer/supabase-calendar-4c77b587-7dca-40a8-96d1-bc06acd62272/video",
-          "resource_type": "image",
-          "bytes": "2667452"
-        }
-      ],
       "buffer_posts": [
         {
           "service": "facebook",
@@ -272047,11 +272304,21 @@
           "post_id": "6abebd369178244f470b9678",
           "buffer_status": "scheduled",
           "due_at": "2026-10-02T06:00:00.000Z",
-          "created_at": "2026-10-01T20:06:14+00:00"
+          "created_at": "2026-10-01T20:06:14+00:00",
+          "sent_at": null,
+          "external_link": null
         }
       ],
       "buffer_scheduled_platforms": [
         "facebook"
+      ],
+      "cloudinary_assets": [
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790612432/f1-buffer/supabase-calendar-4c77b587-7dca-40a8-96d1-bc06acd62272/video.png",
+          "public_id": "f1-buffer/supabase-calendar-4c77b587-7dca-40a8-96d1-bc06acd62272/video",
+          "resource_type": "image",
+          "bytes": "2667452"
+        }
       ]
     },
     {
@@ -272280,14 +272547,6 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "cloudinary_assets": [
-        {
-          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790612439/f1-buffer/supabase-calendar-757bf128-919d-470b-a8d6-00b8a52b3ed4/video.png",
-          "public_id": "f1-buffer/supabase-calendar-757bf128-919d-470b-a8d6-00b8a52b3ed4/video",
-          "resource_type": "image",
-          "bytes": "2468982"
-        }
-      ],
       "buffer_posts": [
         {
           "service": "facebook",
@@ -272295,11 +272554,21 @@
           "post_id": "6abebd38ff1f8cde664274c9",
           "buffer_status": "scheduled",
           "due_at": "2026-10-02T12:00:00.000Z",
-          "created_at": "2026-10-01T20:06:16+00:00"
+          "created_at": "2026-10-01T20:06:16+00:00",
+          "sent_at": null,
+          "external_link": null
         }
       ],
       "buffer_scheduled_platforms": [
         "facebook"
+      ],
+      "cloudinary_assets": [
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790612439/f1-buffer/supabase-calendar-757bf128-919d-470b-a8d6-00b8a52b3ed4/video.png",
+          "public_id": "f1-buffer/supabase-calendar-757bf128-919d-470b-a8d6-00b8a52b3ed4/video",
+          "resource_type": "image",
+          "bytes": "2468982"
+        }
       ]
     },
     {
@@ -272400,14 +272669,6 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "cloudinary_assets": [
-        {
-          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790612444/f1-buffer/supabase-calendar-44751bc7-c56b-46b0-9adf-cb44d11d8453/video.png",
-          "public_id": "f1-buffer/supabase-calendar-44751bc7-c56b-46b0-9adf-cb44d11d8453/video",
-          "resource_type": "image",
-          "bytes": "2919495"
-        }
-      ],
       "buffer_posts": [
         {
           "service": "instagram",
@@ -272415,11 +272676,21 @@
           "post_id": "6abebd399178244f470b96b0",
           "buffer_status": "scheduled",
           "due_at": "2026-10-02T18:00:00.000Z",
-          "created_at": "2026-10-01T20:06:17+00:00"
+          "created_at": "2026-10-01T20:06:17+00:00",
+          "sent_at": null,
+          "external_link": null
         }
       ],
       "buffer_scheduled_platforms": [
         "instagram"
+      ],
+      "cloudinary_assets": [
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790612444/f1-buffer/supabase-calendar-44751bc7-c56b-46b0-9adf-cb44d11d8453/video.png",
+          "public_id": "f1-buffer/supabase-calendar-44751bc7-c56b-46b0-9adf-cb44d11d8453/video",
+          "resource_type": "image",
+          "bytes": "2919495"
+        }
       ]
     },
     {
@@ -272553,14 +272824,6 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "cloudinary_assets": [
-        {
-          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790612447/f1-buffer/supabase-calendar-18234fc1-87d1-453f-9a1a-fb1e212ebe55/video.jpg",
-          "public_id": "f1-buffer/supabase-calendar-18234fc1-87d1-453f-9a1a-fb1e212ebe55/video",
-          "resource_type": "image",
-          "bytes": "308805"
-        }
-      ],
       "buffer_posts": [
         {
           "service": "instagram",
@@ -272568,11 +272831,21 @@
           "post_id": "6abebd3bd22f25b4088a2d98",
           "buffer_status": "scheduled",
           "due_at": "2026-10-03T06:00:00.000Z",
-          "created_at": "2026-10-01T20:06:19+00:00"
+          "created_at": "2026-10-01T20:06:19+00:00",
+          "sent_at": null,
+          "external_link": null
         }
       ],
       "buffer_scheduled_platforms": [
         "instagram"
+      ],
+      "cloudinary_assets": [
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790612447/f1-buffer/supabase-calendar-18234fc1-87d1-453f-9a1a-fb1e212ebe55/video.jpg",
+          "public_id": "f1-buffer/supabase-calendar-18234fc1-87d1-453f-9a1a-fb1e212ebe55/video",
+          "resource_type": "image",
+          "bytes": "308805"
+        }
       ]
     },
     {
@@ -272698,14 +272971,6 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "cloudinary_assets": [
-        {
-          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790612455/f1-buffer/supabase-calendar-f2a6aba8-002e-40a9-afd8-6d6e3cc85748/video.jpg",
-          "public_id": "f1-buffer/supabase-calendar-f2a6aba8-002e-40a9-afd8-6d6e3cc85748/video",
-          "resource_type": "image",
-          "bytes": "265605"
-        }
-      ],
       "buffer_posts": [
         {
           "service": "instagram",
@@ -272713,11 +272978,21 @@
           "post_id": "6abebd3d2f7034519e767661",
           "buffer_status": "scheduled",
           "due_at": "2026-10-03T12:00:00.000Z",
-          "created_at": "2026-10-01T20:06:22+00:00"
+          "created_at": "2026-10-01T20:06:22+00:00",
+          "sent_at": null,
+          "external_link": null
         }
       ],
       "buffer_scheduled_platforms": [
         "instagram"
+      ],
+      "cloudinary_assets": [
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790612455/f1-buffer/supabase-calendar-f2a6aba8-002e-40a9-afd8-6d6e3cc85748/video.jpg",
+          "public_id": "f1-buffer/supabase-calendar-f2a6aba8-002e-40a9-afd8-6d6e3cc85748/video",
+          "resource_type": "image",
+          "bytes": "265605"
+        }
       ]
     },
     {
@@ -276255,7 +276530,7 @@
       "blocked_reason": "ERRORE_MEDIA"
     }
   ],
-  "updated_at": "2026-10-01T20:07:39+00:00",
+  "updated_at": "2026-10-01T23:31:56+00:00",
   "updated_by": "Automatic renderer · F1 manual-only aware",
   "current_cycle": "2026-10-01T16:00",
   "history_days": 14,
