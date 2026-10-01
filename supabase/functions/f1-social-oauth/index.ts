@@ -787,7 +787,7 @@ async function authorize(req, url) {
   if (!isSupported(platform)) return respond({ error: "unsupported_platform" }, 400);
   const client = await clientForUser(clientId, user.id);
   if (!client) return respond({ error: "client_not_found" }, 404);
-  if (exclusiveWhitelist(client) && !expectedProfileUrl(client, platform)) {
+  if (exclusiveWhitelist(client, platform) && !expectedProfileUrl(client, platform)) {
     return respond({ error:"ACCOUNT_NON_AUTORIZZATO", platform }, 409);
   }
   const existingChannel = await channelRow(user.id, client.id, platform);
@@ -1065,7 +1065,7 @@ async function saveProfileUrl(req) {
   if (!client) return respond({ error: "client_not_found" }, 404);
   const profileUrl = validateProfileUrl(platform, body.profile_url);
   await patchChannel(user.id, client.id, platform, { profile_url: profileUrl, updated_at: nowIso() });
-  if (exclusiveWhitelist(client)) {
+  if (exclusiveWhitelist(client, platform)) {
     const column = {
       facebook: "facebook",
       instagram: "instagram",
@@ -1081,7 +1081,7 @@ async function saveProfileUrl(req) {
       );
     }
   }
-  return respond({ ok: true, profile_url: profileUrl, whitelist_updated: exclusiveWhitelist(client) });
+  return respond({ ok: true, profile_url: profileUrl, whitelist_updated: exclusiveWhitelist(client, platform) });
 }
 async function metaSelect(req) {
   const user = await authUser(req);
