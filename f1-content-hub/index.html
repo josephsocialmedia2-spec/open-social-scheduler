@@ -511,7 +511,7 @@ async function enterApp(){
     el("clientContext").innerHTML='<div class="notice error" style="margin:0;width:100%"><b>Accesso riconosciuto, ma alcuni dati non sono stati caricati.</b><br>'+esc(e.message||String(e))+'<br><button class="btn small primary" style="margin-top:8px" onclick="location.reload()">RIPROVA</button></div>';
   }
   const params=new URLSearchParams(location.search);
-  const requestedClient=params.get("client");
+  const requestedClient=params.get("client")||params.get("client_id");
   if(requestedClient){
     const match=clients.find(function(c){return c.slug===requestedClient||c.id===requestedClient});
     if(match)selectedClientId=match.id;
@@ -523,8 +523,12 @@ async function enterApp(){
   if(oauthState){
     if(window.f1ResumePendingPublishNow)await window.f1ResumePendingPublishNow();
     if(window.f1ContinueConnectAllSocials)await window.f1ContinueConnectAllSocials(false);
-    setTab("automation");
-    const cleanUrl=new URL(location.href);cleanUrl.searchParams.delete("oauth");
+    if(window.f1ContinueRmpOAuth)await window.f1ContinueRmpOAuth(false);
+    setTab(requestedView||"connections");
+    const cleanUrl=new URL(location.href);
+    cleanUrl.searchParams.delete("oauth");
+    cleanUrl.searchParams.delete("client_id");
+    cleanUrl.searchParams.delete("platform");
     history.replaceState({},document.title,cleanUrl.pathname+(cleanUrl.searchParams.toString()?"?"+cleanUrl.searchParams.toString():""));
   }
 }
@@ -1502,13 +1506,15 @@ function renderSocialConnections(){
       const connected=!!(row&&row.enabled&&row.verified);
       const isBuffer=provider==="buffer";
       const anticaMissingLinkedin=(c.slug==="antica-cappella"&&p==="linkedin-page"&&!profileUrl);
+      const rmpLinkedinPending=(c.slug==="real-media-pro"&&p==="linkedin-page");
+      const rmpMissingProfile=(c.slug==="real-media-pro"&&!rmpLinkedinPending&&!profileUrl);
       if(isBuffer){
         if(connected) actions+=' <button class="btn small ghost" onclick="window.f1VerifySocial(\''+c.id+'\',\''+p+'\')">VERIFICA</button>';
       }else{
         if(state==="ACCOUNT_DA_SELEZIONARE" && (p==="facebook"||p==="instagram")){
           actions+=' <button class="btn small primary" onclick="window.f1SelectMetaAccount(\''+c.id+'\',\''+p+'\')">SELEZIONA ACCOUNT</button>';
-        }else if((!connected || ["DA_RIAUTORIZZARE","TOKEN_SCADUTO","CANALE_DA_COLLEGARE","CONFIGURAZIONE_PRONTA","AUTORIZZAZIONE_RICHIESTA","ACCOUNT_ERRATO"].includes(state))&&!anticaMissingLinkedin){
-          actions+=' <button class="btn small primary" onclick="window.f1ConnectSocial(\''+c.id+'\',\''+p+'\')">'+(["DA_RIAUTORIZZARE","TOKEN_SCADUTO"].includes(state)?"RIAUTORIZZA":"COLLEGA")+'</button>';
+        }else if((!connected || ["DA_RIAUTORIZZARE","TOKEN_SCADUTO","CANALE_DA_COLLEGARE","CONFIGURAZIONE_PRONTA","AUTORIZZAZIONE_RICHIESTA","ACCOUNT_ERRATO","ACCOUNT_CONDIVISO"].includes(state))&&!anticaMissingLinkedin&&!rmpMissingProfile&&!rmpLinkedinPending){
+          actions+=' <button class="btn small primary" onclick="window.f1ConnectSocial(\''+c.id+'\',\''+p+'\')">'+(["DA_RIAUTORIZZARE","TOKEN_SCADUTO","ACCOUNT_CONDIVISO"].includes(state)?"RIAUTORIZZA":"COLLEGA")+'</button>';
         }
         if(connected) actions+=' <button class="btn small ghost" onclick="window.f1VerifySocial(\''+c.id+'\',\''+p+'\')">VERIFICA</button>';
         if(connected) actions+=' <button class="btn small danger" onclick="window.f1DisconnectSocial(\''+c.id+'\',\''+p+'\')">DISCONNETTI</button>';
@@ -1520,14 +1526,24 @@ function renderSocialConnections(){
           ?'<div class="meta" style="color:#f7d48a">Usa COLLEGA e accedi a TikTok con @ristoranteanticacappella. L\'account viene verificato prima del salvataggio.</div>'
           :(c.slug==="antica-cappella"&&p==="youtube"&&!connected)
             ?'<div class="meta" style="color:#f7d48a">Usa COLLEGA e accedi con l\'account Google proprietario di @ristoranteanticacappella.</div>'
-            :(anticaMissingLinkedin?'<div class="meta">Nessun profilo LinkedIn ufficiale verificato: canale non configurato.</div>':"");
+            :(anticaMissingLinkedin?'<div class="meta">Nessun profilo LinkedIn ufficiale verificato: canale non configurato.</div>'
+              :(rmpLinkedinPending
+                ?'<div class="meta" style="color:#f7d48a"><b>LINKEDIN IN ATTESA.</b> Il publisher distingue profilo personale e pagina aziendale: non verrà collegato automaticamente finché non è definito il tipo di autore ufficiale Real Media Pro.</div>'
+                :(c.slug==="real-media-pro"&&rmpMissingProfile
+                  ?'<div class="meta" style="color:#f7d48a"><b>PROFILO UFFICIALE RICHIESTO.</b> Inserisci l\'URL ufficiale, premi SALVA LINK e poi COLLEGA. OAuth non accetterà un account diverso.</div>'
+                  :(c.slug==="real-media-pro"&&profileUrl&&!connected
+                    ?'<div class="meta" style="color:#9fdb7a">OAuth protetto Real Media Pro: verrà accettato solo il profilo ufficiale salvato qui sopra.</div>':""))));
       const verifiedAt=row&&row.last_verified_at?'<div class="meta">Ultima verifica: '+esc(fmt(row.last_verified_at))+'</div>':"";
       return '<div class="lineitem" style="align-items:flex-start"><b>'+esc(platformLabel(p))+'</b><div style="flex:1"><span class="badge '+socialStateClass(row,state)+'">'+esc(state)+'</span><div class="meta"><b>'+esc(account)+'</b></div><div class="meta">Provider: '+esc(provider)+(row&&row.external_channel_id?' · ID: '+esc(row.external_channel_id):"")+'</div>'+verifiedAt+collisionNote+onboardingNote+urlEditor+'</div><div class="row" style="justify-content:flex-end">'+actions+'</div></div>';
     }).join("");
     const discover=c.website?'<button class="btn small ghost" onclick="window.f1DiscoverSocials(\''+c.id+'\')">SCOPRI SOCIAL</button>':'';
-    const connectAll=c.slug==="antica-cappella"?'<button class="btn small green" onclick="window.f1ConnectAllSocials(\''+c.id+'\')">COLLEGA TUTTI</button>':'';
+    const connectAll=c.slug==="antica-cappella"
+      ?'<button class="btn small green" onclick="window.f1ConnectAllSocials(\''+c.id+'\')">COLLEGA TUTTI</button>'
+      :(c.slug==="real-media-pro"
+        ?'<button class="btn small green" onclick="window.f1ConnectAllRmpOAuth(\''+c.id+'\')">COLLEGA TUTTI OAUTH</button><button class="btn small ghost" onclick="window.f1CheckOAuthHealth(\''+c.id+'\')">VERIFICA OAUTH</button>'
+        :'');
     const allActions='<div class="row" style="justify-content:flex-end;gap:6px">'+connectAll+discover+'</div>';
-    const wizardStatus=c.slug==="antica-cappella"?'<div id="connect-all-status-'+c.id+'" class="meta" style="margin:6px 0 10px"></div>':'';
+    const wizardStatus=(c.slug==="antica-cappella"||c.slug==="real-media-pro")?'<div id="connect-all-status-'+c.id+'" class="meta" style="margin:6px 0 10px"></div>':'';
     return '<div style="margin-bottom:22px;padding:14px;border:1px solid #263a56;border-radius:14px"><div class="section-title"><h3 style="margin:0">'+esc(c.name)+'</h3>'+allActions+'</div>'+wizardStatus+rows+'</div>';
   }).join("");
   el("socialConnections").innerHTML=html||'<div class="empty">Nessun cliente.</div>';
@@ -1559,7 +1575,7 @@ window.f1ConnectSocial=async function(clientId,platform,options){
     const data=await r.json();
     if(!r.ok){
       if(data.error==="configuration_missing"){
-        if(opts.wizard)localStorage.removeItem("f1-antica-connect-all");
+        if(opts.wizard){localStorage.removeItem("f1-antica-connect-all");localStorage.removeItem("f1-rmp-connect-all");}
         const row=socialChannels.find(function(x){return x.client_id===clientId&&x.platform===platform});
         const message=row&&row.profile_url
           ?("Il profilo "+platformLabel(platform)+" è già registrato correttamente, ma il collegamento OAuth del provider non è ancora attivo. Nessun altro account viene usato.")
@@ -1569,6 +1585,11 @@ window.f1ConnectSocial=async function(clientId,platform,options){
         if(missing.length)details.push("Configurazione server mancante: "+missing.join(", ")+".");
         if(data.callback_url)details.push("Callback da registrare nel provider: "+data.callback_url);
         alert(message+(details.length?"\n\n"+details.join("\n"):""));
+        return false;
+      }
+      if(data.error==="ACCOUNT_NON_AUTORIZZATO"){
+        if(opts.wizard)localStorage.removeItem("f1-rmp-connect-all");
+        alert("Real Media Pro: prima inserisci e salva l’URL del profilo ufficiale per "+platformLabel(platform)+". OAuth non collegherà account non dichiarati.");
         return false;
       }
       if(data.error==="already_connected"){
@@ -1581,7 +1602,7 @@ window.f1ConnectSocial=async function(clientId,platform,options){
     location.href=data.authorization_url;
     return true;
   }catch(e){
-    if(opts.wizard)localStorage.removeItem("f1-antica-connect-all");
+    if(opts.wizard){localStorage.removeItem("f1-antica-connect-all");localStorage.removeItem("f1-rmp-connect-all");}
     alert(e.message||String(e));
     return false;
   }
@@ -1626,6 +1647,73 @@ window.f1ContinueConnectAllSocials=async function(manualStart){
   plan.current=next;
   localStorage.setItem("f1-antica-connect-all",JSON.stringify(plan));
   if(statusEl)statusEl.textContent="Prossimo collegamento: "+platformLabel(next)+". Instagram già collegato viene mantenuto.";
+  await window.f1ConnectSocial(plan.clientId,next,{wizard:true,silent:true});
+};
+
+window.f1CheckOAuthHealth=async function(clientId){
+  const statusEl=el("connect-all-status-"+clientId);
+  try{
+    const r=await fetch(OAUTH_BROKER_URL+"/health",{cache:"no-store"});
+    const data=await r.json();
+    if(!r.ok||!data.ok)throw new Error(data.detail||data.error||"Broker OAuth non disponibile");
+    const names={facebook:"Meta / Facebook",instagram:"Meta / Instagram",youtube:"Google / YouTube",tiktok:"TikTok",linkedin:"LinkedIn"};
+    const lines=Object.keys(names).map(function(p){return names[p]+": "+(data.providers&&data.providers[p]?"PRONTO":"CONFIGURAZIONE SERVER MANCANTE")});
+    if(statusEl)statusEl.innerHTML="<b>OAuth broker attivo.</b> "+lines.join(" · ");
+    return data;
+  }catch(e){
+    if(statusEl)statusEl.textContent="OAuth broker non verificabile: "+(e.message||String(e));
+    alert("Verifica OAuth: "+(e.message||String(e)));
+    return null;
+  }
+};
+window.f1ConnectAllRmpOAuth=async function(clientId){
+  const client=clients.find(function(x){return x.id===clientId});
+  if(!client||client.slug!=="real-media-pro")return alert("Questa procedura è riservata a Real Media Pro.");
+  const plan={clientId:clientId,current:null,startedAt:new Date().toISOString()};
+  localStorage.setItem("f1-rmp-connect-all",JSON.stringify(plan));
+  await window.f1ContinueRmpOAuth(true);
+};
+window.f1ContinueRmpOAuth=async function(manualStart){
+  let plan=null;
+  try{plan=JSON.parse(localStorage.getItem("f1-rmp-connect-all")||"null")}catch(_){}
+  if(!plan||!plan.clientId)return;
+  await loadAll();
+  const client=clients.find(function(x){return x.id===plan.clientId});
+  if(!client||client.slug!=="real-media-pro"){localStorage.removeItem("f1-rmp-connect-all");return}
+  selectedClientId=client.id;
+  const statusEl=el("connect-all-status-"+plan.clientId);
+  const targets=["facebook","instagram","tiktok","youtube"];
+  const collisions=socialCollisionMap();
+  const rowFor=function(p){return socialChannels.find(function(x){return x.client_id===plan.clientId&&x.platform===p})};
+  const connected=function(p){
+    const row=rowFor(p);
+    return effectiveSocialState(row,collisions)==="COLLEGATO";
+  };
+  if(plan.current){
+    if(!connected(plan.current)){
+      const row=rowFor(plan.current),state=effectiveSocialState(row,collisions);
+      localStorage.removeItem("f1-rmp-connect-all");
+      if(statusEl)statusEl.textContent="OAuth non completato per "+platformLabel(plan.current)+": "+state+".";
+      if(!manualStart)alert("Real Media Pro: completa "+platformLabel(plan.current)+" prima di proseguire. Stato: "+state+".");
+      return;
+    }
+    plan.current=null;
+    localStorage.setItem("f1-rmp-connect-all",JSON.stringify(plan));
+  }
+  const connectable=targets.filter(function(p){const row=rowFor(p);return !!safeSocialHref(row&&row.profile_url)});
+  const missing=targets.filter(function(p){const row=rowFor(p);return !safeSocialHref(row&&row.profile_url)});
+  const next=connectable.find(function(p){return !connected(p)});
+  if(!next){
+    localStorage.removeItem("f1-rmp-connect-all");
+    const connectedCount=targets.filter(connected).length;
+    const missingText=missing.length?(" Mancano URL ufficiali per: "+missing.map(platformLabel).join(", ")+"."):"";
+    if(statusEl)statusEl.textContent=connectedCount+" / "+targets.length+" canali OAuth collegati."+missingText;
+    alert("Real Media Pro: collegamento OAuth completato per i canali configurabili."+missingText);
+    return;
+  }
+  plan.current=next;
+  localStorage.setItem("f1-rmp-connect-all",JSON.stringify(plan));
+  if(statusEl)statusEl.textContent="OAuth Real Media Pro: prossimo consenso "+platformLabel(next)+".";
   await window.f1ConnectSocial(plan.clientId,next,{wizard:true,silent:true});
 };
 

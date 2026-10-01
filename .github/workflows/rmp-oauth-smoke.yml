@@ -1,0 +1,60 @@
+name: Real Media Pro OAuth Smoke
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'f1-content-hub/index.html'
+      - 'publisher/clients/real-media-pro.json'
+      - 'publisher/test_social_oauth_ui.py'
+      - 'supabase/functions/f1-social-oauth/index.ts'
+      - '.github/workflows/rmp-oauth-smoke.yml'
+  pull_request:
+    paths:
+      - 'f1-content-hub/index.html'
+      - 'publisher/clients/real-media-pro.json'
+      - 'publisher/test_social_oauth_ui.py'
+      - 'supabase/functions/f1-social-oauth/index.ts'
+      - '.github/workflows/rmp-oauth-smoke.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  oauth-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      - name: Run OAuth UI contract tests
+        run: python -m unittest publisher.test_social_oauth_ui -v
+
+      - name: Check deployed OAuth broker health
+        shell: bash
+        run: |
+          set -euo pipefail
+          URL='https://nqnmlsmeiynxbdojeyjt.supabase.co/functions/v1/f1-social-oauth/health'
+          curl --fail --silent --show-error --retry 3 --retry-delay 2 "$URL" -o /tmp/oauth-health.json
+          python - <<'PY'
+          import json
+          data=json.load(open('/tmp/oauth-health.json',encoding='utf-8'))
+          assert data.get('ok') is True, data
+          assert data.get('encryption_ready') is True, data
+          providers=data.get('providers') or {}
+          required_keys={'facebook','instagram','youtube','tiktok','linkedin'}
+          assert required_keys.issubset(providers), providers
+          print('RMP_OAUTH_BROKER_HEALTH_OK')
+          print(json.dumps(providers,sort_keys=True))
+          missing=[p for p,v in providers.items() if not v]
+          if missing:
+              print('RMP_OAUTH_PROVIDER_CONFIGURATION_REQUIRED=' + ','.join(sorted(missing)))
+          else:
+              print('RMP_OAUTH_ALL_PROVIDERS_CONFIGURED')
+          PY

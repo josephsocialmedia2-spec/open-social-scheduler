@@ -28,6 +28,16 @@ function respond(data, status = 200, extra = {}) {
 function redirect(location) {
   return new Response(null, { status: 302, headers: { location, "cache-control": "no-store" } });
 }
+function hubReturnUrl(client, oauthState, platform) {
+  const target = new URL(HUB_URL);
+  if (client?.slug) target.searchParams.set("client", String(client.slug));
+  else if (client?.id) target.searchParams.set("client_id", String(client.id));
+  target.searchParams.set("view", "connections");
+  target.searchParams.set("oauth", String(oauthState || "connected"));
+  if (platform) target.searchParams.set("platform", canonicalPlatform(platform));
+  if (client?.id) target.searchParams.set("client_id", String(client.id));
+  return target.toString();
+}
 function nowIso() { return new Date().toISOString(); }
 function authRequiredError(message) {
   const err = new Error(message);
@@ -531,8 +541,12 @@ function sameProfileUrl(a, b) {
   const bb = normalize(b);
   return !!aa && !!bb && aa === bb;
 }
-function exclusiveWhitelist(client) {
-  return client?.slug === "f1-social" || client?.profile_metadata?.exclusive_account_whitelist === true;
+function exclusiveWhitelist(client, platform = null) {
+  if (client?.slug === "f1-social" || client?.profile_metadata?.exclusive_account_whitelist === true) return true;
+  const configured = Array.isArray(client?.profile_metadata?.oauth_whitelist_platforms)
+    ? client.profile_metadata.oauth_whitelist_platforms.map(canonicalPlatform)
+    : [];
+  return !!platform && configured.includes(canonicalPlatform(platform));
 }
 function expectedProfileUrl(client, platform) {
   const p = canonicalPlatform(platform);
@@ -564,7 +578,7 @@ function facebookIdFromUrl(value) {
   return "";
 }
 function expectedAccountMatches(client, platform, profile) {
-  if (!exclusiveWhitelist(client)) return true;
+  if (!exclusiveWhitelist(client, platform)) return true;
   const p = canonicalPlatform(platform);
   const expected = expectedProfileUrl(client, p);
   if (!expected) return false;
@@ -613,7 +627,7 @@ async function accountCollision(ownerId, clientId, platform, accountId) {
 }
 async function assertExpectedAccount(ownerId, client, platform, profile, scopeValue = "") {
   const accountId = String(profile?.account_id || profile?.subject || profile?.author_urn || "");
-  if (exclusiveWhitelist(client) && !expectedProfileUrl(client, platform)) {
+  if (exclusiveWhitelist(client, platform) && !expectedProfileUrl(client, platform)) {
     await patchChannel(ownerId, client.id, platform, {
       enabled:false, verified:false, connection_status:"ACCOUNT_NON_AUTORIZZATO",
       oauth_metadata:{ reason:"platform_not_whitelisted", at:nowIso() }
@@ -773,7 +787,7 @@ async function authorize(req, url) {
   if (!isSupported(platform)) return respond({ error: "unsupported_platform" }, 400);
   const client = await clientForUser(clientId, user.id);
   if (!client) return respond({ error: "client_not_found" }, 404);
-  if (exclusiveWhitelist(client) && !expectedProfileUrl(client, platform)) {
+  if (exclusiveWhitelist(client, platform) && !expectedProfileUrl(client, platform)) {
     return respond({ error:"ACCOUNT_NON_AUTORIZZATO", platform }, 409);
   }
   const existingChannel = await channelRow(user.id, client.id, platform);
@@ -822,6 +836,8 @@ async function callback(url, platform) {
   if (!state || canonicalPlatform(state.platform) !== canonicalPlatform(platform)) {
     return respond({ error: "invalid_state" }, 401);
   }
+  const callbackClient = await clientForUser(state.cid, state.uid);
+  if (!callbackClient) return respond({ error: "client_not_found" }, 404);
   if (url.searchParams.get("error")) {
     await patchChannel(state.uid, state.cid, platform, {
       enabled: false,
@@ -829,14 +845,13 @@ async function callback(url, platform) {
       connection_status: "AUTORIZZAZIONE_NEGATA",
       reauthorization_required: true
     });
-    return redirect(HUB_URL + "?oauth=denied&platform=" + encodeURIComponent(platform));
+    return redirect(hubReturnUrl(callbackClient, "denied", platform));
   }
   const code = String(url.searchParams.get("code") || "");
   if (!code) return respond({ error: "authorization_code_missing" }, 400);
   try {
     const tokenData = await exchangeCode(platform, code);
-    const client = await clientForUser(state.cid, state.uid);
-    if (!client) throw new Error("client_not_found");
+    const client = callbackClient;
     if (platform === "facebook" || platform === "instagram") {
       const current = await channelRow(state.uid, state.cid, platform);
       const meta = await metaProfileFromSelection(platform, String(tokenData.access_token || ""), null, current?.profile_url || null);
@@ -854,7 +869,7 @@ async function callback(url, platform) {
           verified: false,
           enabled: false
         });
-        return redirect(HUB_URL + "?oauth=select_account&platform=" + encodeURIComponent(platform) + "&client_id=" + encodeURIComponent(state.cid));
+        return redirect(hubReturnUrl(client, "select_account", platform));
       }
       const selected = meta.selected;
       await assertExpectedAccount(state.uid, client, platform, selected, tokenData.scope || "");
@@ -873,7 +888,7 @@ async function callback(url, platform) {
       await assertExpectedAccount(state.uid, client, platform, profile, tokenData.scope || "");
       await upsertToken(state.uid, state.cid, platform, tokenData, profile);
     }
-    return redirect(HUB_URL + "?oauth=connected&platform=" + encodeURIComponent(platform) + "&client_id=" + encodeURIComponent(state.cid));
+    return redirect(hubReturnUrl(client, "connected", platform));
   } catch (e) {
     await patchChannel(state.uid, state.cid, platform, {
       enabled: false,
@@ -881,7 +896,7 @@ async function callback(url, platform) {
       connection_status: "ERRORE",
       oauth_metadata: { error: String(e), at: nowIso() }
     });
-    return redirect(HUB_URL + "?oauth=error&platform=" + encodeURIComponent(platform));
+    return redirect(hubReturnUrl(callbackClient, "error", platform));
   }
 }
 async function status(req, url) {
@@ -1050,7 +1065,7 @@ async function saveProfileUrl(req) {
   if (!client) return respond({ error: "client_not_found" }, 404);
   const profileUrl = validateProfileUrl(platform, body.profile_url);
   await patchChannel(user.id, client.id, platform, { profile_url: profileUrl, updated_at: nowIso() });
-  if (exclusiveWhitelist(client)) {
+  if (exclusiveWhitelist(client, platform)) {
     const column = {
       facebook: "facebook",
       instagram: "instagram",
@@ -1066,7 +1081,7 @@ async function saveProfileUrl(req) {
       );
     }
   }
-  return respond({ ok: true, profile_url: profileUrl, whitelist_updated: exclusiveWhitelist(client) });
+  return respond({ ok: true, profile_url: profileUrl, whitelist_updated: exclusiveWhitelist(client, platform) });
 }
 async function metaSelect(req) {
   const user = await authUser(req);

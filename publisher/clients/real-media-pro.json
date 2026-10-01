@@ -211,28 +211,55 @@
   "integrations": {
     "facebook": {
       "id": "direct-api",
-      "required": true
+      "required": true,
+      "auth": "oauth_broker"
     },
     "instagram": {
       "id": "direct-api",
-      "required": true
+      "required": true,
+      "auth": "oauth_broker"
     },
     "tiktok": {
       "id": "direct-api",
-      "required": false
+      "required": false,
+      "auth": "oauth_broker"
     },
     "linkedin": {
       "id": "direct-api",
-      "required": false
+      "required": false,
+      "auth": "pending_author_type"
     },
     "youtube": {
       "id": "direct-api",
-      "required": false
+      "required": false,
+      "auth": "oauth_broker"
     },
     "pinterest": {
       "id": "direct-api",
       "required": false,
       "board": ""
     }
+  },
+  "oauth": {
+    "enabled": true,
+    "provider": "supabase_edge_function",
+    "broker_function": "f1-social-oauth",
+    "token_storage": "supabase_encrypted",
+    "account_lock": true,
+    "account_lock_platforms": [
+      "facebook",
+      "instagram",
+      "tiktok",
+      "youtube"
+    ],
+    "callback_view": "connections",
+    "platforms": [
+      "facebook",
+      "instagram",
+      "tiktok",
+      "youtube"
+    ],
+    "linkedin_mode": "pending_author_type",
+    "pinterest_supported": false
   }
 }
