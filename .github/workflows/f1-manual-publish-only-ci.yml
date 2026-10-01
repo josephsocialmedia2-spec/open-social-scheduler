@@ -15,6 +15,9 @@ on:
       - 'publisher/f1_design_v2.py'
       - 'publisher/generate_next_villar_asset.py'
       - 'publisher/render_f1_unique_visuals.py'
+      - 'publisher/f1_premium_renderer.py'
+      - 'publisher/rendering/content_engine.py'
+      - 'publisher/rendering/openai_visual_engine.py'
       - 'publisher/build_cycle_queue.py'
       - 'publisher/apply_photo_only.py'
       - 'publisher/render_photos_only.py'
@@ -57,6 +60,9 @@ jobs:
             publisher/f1_design_v2.py \
             publisher/generate_next_villar_asset.py \
             publisher/render_f1_unique_visuals.py \
+            publisher/f1_premium_renderer.py \
+            publisher/rendering/content_engine.py \
+            publisher/rendering/openai_visual_engine.py \
             publisher/build_cycle_queue.py \
             publisher/apply_photo_only.py \
             publisher/render_photos_only.py \
