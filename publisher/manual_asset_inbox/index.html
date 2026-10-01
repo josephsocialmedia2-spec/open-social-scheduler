@@ -16,7 +16,7 @@
     .platforms{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px}.platforms label{font-weight:700;font-size:13px}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}button{border:0;border-radius:12px;padding:13px 18px;font-weight:800;cursor:pointer}button:disabled{opacity:.55}.primary{background:#4e9e15;color:#fff}.light{background:#e7eee3;color:#111}
     .approval{display:flex;gap:10px;align-items:flex-start;margin-top:18px;padding:14px;border:1px solid #d5dfcf;background:#f7faf5;border-radius:12px;font-weight:700;line-height:1.45}.approval input{margin-top:3px;transform:scale(1.2)}
     .status{display:none;margin-top:14px;padding:12px;border-radius:10px;white-space:pre-wrap}.status.ok{display:block;background:#eaf7e3;color:#245c06}.status.err{display:block;background:#fdeaea;color:#8b1616}
-    .queue{display:grid;gap:9px}.qrow{display:grid;grid-template-columns:1.6fr .8fr 1fr;gap:10px;padding:11px;border:1px solid var(--line);border-radius:10px;font-size:13px}.badge{font-weight:800}.good{color:#2d6c0a}.warn{color:#8a5a00}.bad{color:#9c2020}
+    .queue{display:grid;gap:9px}.qrow{display:grid;grid-template-columns:1.4fr .7fr 1.6fr .8fr;gap:10px;padding:11px;border:1px solid var(--line);border-radius:10px;font-size:13px}.badge{font-weight:800}.good{color:#2d6c0a}.warn{color:#8a5a00}.bad{color:#9c2020}.caption-preview{white-space:pre-wrap;max-height:90px;overflow:auto}.qactions{display:flex;gap:6px;flex-wrap:wrap}.qactions button{padding:7px 9px;font-size:11px}
     @media(max-width:700px){header{align-items:flex-start;flex-direction:column}.qrow{grid-template-columns:1fr}.grid{grid-template-columns:1fr}}
   </style>
 </head>
@@ -140,6 +140,15 @@ async function sendManual(){
   finally{$('sendManualBtn').disabled=false}
 }
 function stateClass(s){s=String(s||'');return /PUBLISHED|READY|SCHEDULED/.test(s)?'good':(/ERROR/.test(s)?'bad':'warn')}
+async function archiveItem(id){
+  if(!confirm('Archiviare '+id+'?'))return;
+  try{
+    const r=await fetch('/api/archive',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({content_id:id})});
+    const d=await r.json();
+    if(!r.ok||!d.ok)throw new Error(d.error||'Errore archivio');
+    await loadQueue();
+  }catch(e){alert('ERRORE ARCHIVIO — '+e.message)}
+}
 async function loadQueue(){
   const box=$('queueStatus');
   try{
@@ -148,7 +157,14 @@ async function loadQueue(){
     box.innerHTML=rows.map(x=>{
       const links=(x.published_urls||[]).map(u=>'<a href="'+esc(u)+'" target="_blank">POST</a>').join(' · ');
       const status=x.publication_status||x.status||'N/D';
-      return '<div class="qrow"><div><b>'+esc(x.title||x.id)+'</b><br><small>'+esc(x.id)+'</small></div><div class="badge '+stateClass(status)+'">'+esc(status)+'</div><div>'+esc((x.platforms||[]).join(' · '))+(links?'<br>'+links:'')+(x.last_error?'<br><span class="bad">'+esc(x.last_error)+'</span>':'')+'</div></div>';
+      const when=x.scheduled_at?new Date(x.scheduled_at).toLocaleString('it-IT',{dateStyle:'short',timeStyle:'short'}):'—';
+      const archive=x.archived?'ARCHIVIATO':'<button class="light" onclick="archiveItem(\''+esc(x.id)+'\')">ARCHIVIA</button>';
+      return '<div class="qrow">'+
+        '<div><b>'+esc(x.title||x.id)+'</b><br><small>ID '+esc(x.id)+'</small><br><small>'+esc(when)+'</small></div>'+
+        '<div class="badge '+stateClass(status)+'">'+esc(status)+'</div>'+
+        '<div><div class="caption-preview">'+esc(x.caption||'CAPTION MANCANTE')+'</div><small>'+esc((x.platforms||[]).join(' · '))+'</small>'+(links?'<br>'+links:'')+(x.last_error?'<br><span class="bad">'+esc(x.last_error)+'</span>':'')+'</div>'+
+        '<div class="qactions">'+archive+'</div>'+
+      '</div>';
     }).join('');
   }catch(e){box.innerHTML='<div class="bad">Stato coda non disponibile.</div>'}
 }
