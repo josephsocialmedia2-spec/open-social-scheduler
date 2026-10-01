@@ -541,8 +541,12 @@ function sameProfileUrl(a, b) {
   const bb = normalize(b);
   return !!aa && !!bb && aa === bb;
 }
-function exclusiveWhitelist(client) {
-  return client?.slug === "f1-social" || client?.profile_metadata?.exclusive_account_whitelist === true;
+function exclusiveWhitelist(client, platform = null) {
+  if (client?.slug === "f1-social" || client?.profile_metadata?.exclusive_account_whitelist === true) return true;
+  const configured = Array.isArray(client?.profile_metadata?.oauth_whitelist_platforms)
+    ? client.profile_metadata.oauth_whitelist_platforms.map(canonicalPlatform)
+    : [];
+  return !!platform && configured.includes(canonicalPlatform(platform));
 }
 function expectedProfileUrl(client, platform) {
   const p = canonicalPlatform(platform);
@@ -574,7 +578,7 @@ function facebookIdFromUrl(value) {
   return "";
 }
 function expectedAccountMatches(client, platform, profile) {
-  if (!exclusiveWhitelist(client)) return true;
+  if (!exclusiveWhitelist(client, platform)) return true;
   const p = canonicalPlatform(platform);
   const expected = expectedProfileUrl(client, p);
   if (!expected) return false;
@@ -623,7 +627,7 @@ async function accountCollision(ownerId, clientId, platform, accountId) {
 }
 async function assertExpectedAccount(ownerId, client, platform, profile, scopeValue = "") {
   const accountId = String(profile?.account_id || profile?.subject || profile?.author_urn || "");
-  if (exclusiveWhitelist(client) && !expectedProfileUrl(client, platform)) {
+  if (exclusiveWhitelist(client, platform) && !expectedProfileUrl(client, platform)) {
     await patchChannel(ownerId, client.id, platform, {
       enabled:false, verified:false, connection_status:"ACCOUNT_NON_AUTORIZZATO",
       oauth_metadata:{ reason:"platform_not_whitelisted", at:nowIso() }
