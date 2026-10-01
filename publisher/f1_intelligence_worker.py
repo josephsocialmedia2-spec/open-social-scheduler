@@ -49,6 +49,9 @@ HEIC_EXTS = {".heic", ".heif"}
 HEIC_MIMES = {"image/heic", "image/heif", "image/heic-sequence", "image/heif-sequence"}
 VIDEO_EXTS = {".mp4", ".mov", ".m4v", ".webm", ".avi", ".mkv"}
 IMAGE_EXTS = {".jpg", ".jpeg", ".png", ".webp", ".gif"}
+CAPTION_PLATFORMS = ("facebook", "instagram", "tiktok", "youtube", "linkedin-page", "pinterest")
+GRAPHIC_TEXT_LIMIT = max(300, int(os.getenv("F1_GRAPHIC_TEXT_LIMIT", "2600")))
+OCR_MEDIA_LIMIT = max(1, int(os.getenv("F1_OCR_MEDIA_LIMIT", "4")))
 PORTAL_DOMAINS = {
     "immobiliare.it", "idealista.it", "casa.it", "subito.it", "wikicasa.it",
     "trovacasa.it", "case24.it", "facebook.com", "instagram.com", "youtube.com",
@@ -623,12 +626,283 @@ def process_video(
         }
 
 
+
+def graphic_media_fingerprint(media_rows: list[dict[str, Any]]) -> str:
+    parts: list[str] = []
+    for media in media_rows:
+        if not (is_image(media) or is_video(media)):
+            continue
+        parts.append("|".join([
+            str(media.get("id") or ""),
+            str(media.get("storage_path") or ""),
+            str(media.get("file_size") or ""),
+            str(media.get("mime_type") or ""),
+            str(media.get("source") or ""),
+        ]))
+    return hashlib.sha256("\n".join(parts).encode("utf-8")).hexdigest() if parts else ""
+
+
+def clean_graphic_text(raw: str) -> str:
+    rows: list[str] = []
+    seen: set[str] = set()
+    for value in StringIOText(raw).splitlines():
+        line = re.sub(r"\s+", " ", value).strip(" \t|_")
+        if len(line) < 2:
+            continue
+        key = line.casefold()
+        if key in seen:
+            continue
+        seen.add(key)
+        rows.append(line)
+    return "\n".join(rows)[:GRAPHIC_TEXT_LIMIT].strip()
+
+
+def StringIOText(value: Any) -> str:
+    return str(value or "").replace("\r\n", "\n").replace("\r", "\n")
+
+
+def ocr_image_file(path: Path) -> str:
+    import pytesseract
+    from PIL import Image, ImageEnhance, ImageOps
+
+    with Image.open(path) as source:
+        try:
+            source.seek(0)
+        except Exception:
+            pass
+        image = ImageOps.exif_transpose(source).convert("RGB")
+        width, height = image.size
+        longest = max(width, height)
+        if longest and longest < 1800:
+            scale = min(3.0, 1800.0 / float(longest))
+            image = image.resize(
+                (max(1, int(width * scale)), max(1, int(height * scale))),
+                Image.Resampling.LANCZOS,
+            )
+        gray = ImageOps.grayscale(image)
+        gray = ImageOps.autocontrast(gray)
+        gray = ImageEnhance.Contrast(gray).enhance(1.35)
+        try:
+            raw = pytesseract.image_to_string(gray, lang="ita+eng", config="--psm 6")
+        except Exception:
+            raw = pytesseract.image_to_string(gray, lang="eng", config="--psm 6")
+    return clean_graphic_text(raw)
+
+
+def extract_video_frame(path: Path, dest: Path) -> bool:
+    result = subprocess.run(
+        [
+            "ffmpeg", "-y", "-loglevel", "error",
+            "-ss", "1", "-i", str(path), "-frames:v", "1", str(dest),
+        ],
+        capture_output=True,
+        text=True,
+        check=False,
+        timeout=90,
+    )
+    return result.returncode == 0 and dest.exists() and dest.stat().st_size > 0
+
+
+def extract_graphic_text(
+    item: dict[str, Any],
+    media_rows: list[dict[str, Any]],
+) -> dict[str, Any]:
+    plan = item.get("distribution_plan") if isinstance(item.get("distribution_plan"), dict) else {}
+    intelligence = plan.get("intelligence") if isinstance(plan.get("intelligence"), dict) else {}
+    previous = intelligence.get("graphic_caption") if isinstance(intelligence.get("graphic_caption"), dict) else {}
+    fingerprint = graphic_media_fingerprint(media_rows)
+
+    previous_text = clean_graphic_text(str(previous.get("text") or ""))
+    if fingerprint and fingerprint == str(previous.get("media_fingerprint") or "") and previous_text:
+        return {
+            **previous,
+            "text": previous_text,
+            "media_fingerprint": fingerprint,
+            "reused": True,
+        }
+
+    texts: list[str] = []
+    media_ids: list[str] = []
+    ocr_errors: list[str] = []
+    candidates = [m for m in media_rows if is_image(m) or is_video(m)][:OCR_MEDIA_LIMIT]
+    with tempfile.TemporaryDirectory(prefix="f1-graphic-caption-") as td:
+        root = Path(td)
+        for index, media in enumerate(candidates, 1):
+            storage_path = str(media.get("storage_path") or "").strip()
+            if not storage_path:
+                continue
+            media_id = str(media.get("id") or "")
+            suffix = Path(str(media.get("file_name") or storage_path)).suffix.lower()
+            if not suffix:
+                suffix = ".mp4" if is_video(media) else ".png"
+            local = root / f"source-{index}{suffix}"
+            try:
+                storage_download(storage_path, local)
+                target = local
+                if is_video(media):
+                    frame = root / f"frame-{index}.png"
+                    if not extract_video_frame(local, frame):
+                        raise IntelligenceError("frame_video_non_estratto")
+                    target = frame
+                value = ocr_image_file(target)
+                if value:
+                    texts.append(value)
+                    if media_id:
+                        media_ids.append(media_id)
+            except Exception as exc:
+                ocr_errors.append(f"{media_id or index}: {str(exc)[:180]}")
+
+    combined = clean_graphic_text("\n".join(texts))
+    fallback = clean_graphic_text(
+        str(item.get("description") or item.get("source_text") or item.get("title") or "")
+    )
+    text = combined or fallback
+    return {
+        "text": text,
+        "media_fingerprint": fingerprint,
+        "media_ids": media_ids,
+        "ocr_used": bool(combined),
+        "source": "GRAPHIC_TEXT" if combined else "CONTENT_TEXT_FALLBACK",
+        "engine": "tesseract_ita_eng",
+        "extracted_at": now_iso(),
+        "errors": ocr_errors[:6],
+        "reused": False,
+    }
+
+
+def caption_from_graphic(
+    platform: str,
+    client: dict[str, Any],
+    item: dict[str, Any],
+    graphic_text: str,
+) -> str:
+    cleaned = clean_graphic_text(graphic_text)
+    fallback = clean_graphic_text(
+        str(item.get("description") or item.get("source_text") or item.get("title") or "")
+    )
+    base = cleaned or fallback or re.sub(r"\s+", " ", str(item.get("title") or "Contenuto")).strip()
+    lines = [x.strip() for x in base.splitlines() if x.strip()]
+    title = lines[0] if lines else str(item.get("title") or "Contenuto").strip()
+    detail = "\n".join(lines[1:]).strip()
+    name = str(client.get("name") or "").strip()
+
+    if platform == "instagram":
+        return (base + ("\n\n" + name if name else ""))[:2200].strip()
+    if platform == "tiktok":
+        return base[:1800].strip()
+    if platform == "youtube":
+        body = detail or base
+        return f"{title}\n\n{body}"[:4500].strip()
+    if platform == "linkedin-page":
+        return (base + ("\n\n" + name if name else ""))[:3000].strip()
+    if platform == "pinterest":
+        return base[:800].strip()
+    return base[:5000].strip()
+
+
+def regenerate_graphic_captions(
+    client: dict[str, Any],
+    item: dict[str, Any],
+    media_rows: list[dict[str, Any]],
+    calendars: list[dict[str, Any]],
+    job: dict[str, Any],
+    processing: dict[str, Any],
+) -> dict[str, Any]:
+    owner_id = str(item["owner_id"])
+    client_id = str(item["client_id"])
+    content_id = str(item["id"])
+    graphic = extract_graphic_text(item, media_rows)
+
+    plan = item.get("distribution_plan") if isinstance(item.get("distribution_plan"), dict) else {}
+    plan = dict(plan)
+    platforms = plan.get("platforms") if isinstance(plan.get("platforms"), dict) else {}
+    platforms = dict(platforms)
+
+    for platform in CAPTION_PLATFORMS:
+        current = platforms.get(platform) if isinstance(platforms.get(platform), dict) else {}
+        current = dict(current)
+        generated = caption_from_graphic(platform, client, item, str(graphic.get("text") or ""))
+        manual = bool(current.get("caption_manual"))
+        current["generated_caption"] = generated
+        current["caption_source"] = "MANUAL" if manual else str(graphic.get("source") or "GRAPHIC_TEXT")
+        current["graphic_media_fingerprint"] = str(graphic.get("media_fingerprint") or "")
+        if not manual or not str(current.get("caption") or "").strip():
+            current["caption"] = generated
+            current["caption_manual"] = False
+        platforms[platform] = current
+
+    intelligence = plan.get("intelligence") if isinstance(plan.get("intelligence"), dict) else {}
+    intelligence = dict(intelligence)
+    intelligence.update({
+        "version": "F1_INTELLIGENCE_V2_GRAPHIC_CAPTION",
+        "processed_at": now_iso(),
+        "media_processing": processing,
+        "approval_required": is_real_estate(client),
+        "graphic_caption": graphic,
+    })
+    plan["platforms"] = platforms
+    plan["intelligence"] = intelligence
+    plan["caption_autopilot_version"] = "GRAPHIC_TEXT_V1"
+
+    rest_patch(
+        "f1_content_items",
+        {"id": content_id},
+        {"distribution_plan": plan, "updated_at": now_iso()},
+    )
+    item["distribution_plan"] = plan
+
+    for row in calendars:
+        if str(row.get("content_id")) != content_id:
+            continue
+        if re.search(r"PUBBLICAT|PUBLISHED|COMPLETED", str(row.get("status") or ""), re.I):
+            continue
+        platform = str(row.get("platform") or "")
+        data = platforms.get(platform)
+        if not isinstance(data, dict):
+            continue
+        metadata = row.get("platform_metadata") if isinstance(row.get("platform_metadata"), dict) else {}
+        metadata = dict(metadata)
+        metadata.update({
+            "caption": str(data.get("caption") or ""),
+            "generated_caption": str(data.get("generated_caption") or ""),
+            "caption_source": str(data.get("caption_source") or ""),
+            "graphic_media_fingerprint": str(graphic.get("media_fingerprint") or ""),
+            "pipeline_version": "F1_INTELLIGENCE_V2_GRAPHIC_CAPTION",
+        })
+        rest_patch("f1_content_calendar", {"id": str(row["id"])}, {"platform_metadata": metadata})
+        row["platform_metadata"] = metadata
+
+    event_message = (
+        "Testo della grafica letto automaticamente e usato per le caption"
+        if graphic.get("ocr_used")
+        else "Testo grafica non rilevato: caption create dal testo contenuto disponibile"
+    )
+    emit_event(
+        owner_id, client_id, content_id, str(job["id"]),
+        "LETTURA_GRAFICA", "COMPLETED", event_message, 72,
+        {
+            "source": graphic.get("source"),
+            "media_ids": graphic.get("media_ids") or [],
+            "media_fingerprint": graphic.get("media_fingerprint"),
+        },
+    )
+    emit_event(
+        owner_id, client_id, content_id, str(job["id"]),
+        "CAPTION_GRAFICA", "COMPLETED",
+        "Caption rigenerate automaticamente dalla grafica per tutti i social", 78,
+        {"platforms": list(CAPTION_PLATFORMS), "source": graphic.get("source")},
+    )
+    return plan
+
+
 def caption_for(platform: str, client: dict[str, Any], item: dict[str, Any]) -> str:
     plan = item.get("distribution_plan") if isinstance(item.get("distribution_plan"), dict) else {}
     platforms = plan.get("platforms") if isinstance(plan.get("platforms"), dict) else {}
     existing = platforms.get(platform) if isinstance(platforms.get(platform), dict) else {}
     if str(existing.get("caption") or "").strip():
         return str(existing["caption"]).strip()
+    if str(existing.get("generated_caption") or "").strip():
+        return str(existing["generated_caption"]).strip()
 
     title = re.sub(r"\s+", " ", str(item.get("title") or "Contenuto")).strip()
     body = re.sub(r"\s+", " ", str(item.get("description") or item.get("source_text") or "")).strip()
@@ -744,7 +1018,7 @@ def ensure_calendar_for_item(
                     "generated_caption": True,
                     "intelligence": True,
                     "selected_time": platform_time(client, platform),
-                    "pipeline_version": "F1_INTELLIGENCE_V1",
+                    "pipeline_version": "F1_INTELLIGENCE_V2_GRAPHIC_CAPTION",
                     "media_id": preferred.get("id"),
                 },
             },
@@ -782,7 +1056,7 @@ def process_content(
     job = ensure_job(
         owner_id, client_id, content_id, "CONTENT_AUTOPILOT",
         f"content-autopilot:{content_id}",
-        {"pipeline": "F1_INTELLIGENCE_V1"},
+        {"pipeline": "F1_INTELLIGENCE_V2_GRAPHIC_CAPTION"},
     )
     if not job_is_available(job):
         return {"published": 0, "scheduled": 0, "blocked": 0}
@@ -820,20 +1094,7 @@ def process_content(
         update_job(job, "RUNNING", "VIDEO_INTELLIGENCE")
         media_rows, processing = process_video(client, item, media_rows, job)
 
-    plan = item.get("distribution_plan") if isinstance(item.get("distribution_plan"), dict) else {}
-    plan = dict(plan)
-    plan["intelligence"] = {
-        "version": "F1_INTELLIGENCE_V1",
-        "processed_at": now_iso(),
-        "media_processing": processing,
-        "approval_required": is_real_estate(client),
-    }
-    rest_patch(
-        "f1_content_items",
-        {"id": content_id},
-        {"distribution_plan": plan, "updated_at": now_iso()},
-    )
-    emit_event(owner_id, client_id, content_id, str(job["id"]), "CAPTION", "COMPLETED", "Caption per piattaforma preparate automaticamente", 78)
+    regenerate_graphic_captions(client, item, media_rows, calendars, job, processing)
 
     created = ensure_calendar_for_item(client, item, media_rows, channels, calendars, occupied, job)
     update_job(
