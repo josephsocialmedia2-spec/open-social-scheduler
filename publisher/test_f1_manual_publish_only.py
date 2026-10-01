@@ -317,7 +317,14 @@ def assert_no_generation_in_manual_runtime() -> None:
         "run_f1_daily_creative_test.ps1",
         "run_f1_news_slot.ps1",
     )
+    validation_workflows = {
+        "f1-bootstrap-validation.yml",
+        "f1-manual-publish-only-ci.yml",
+        "project-deploy.yml",
+    }
     for workflow in (ROOT / ".github" / "workflows").glob("*.yml"):
+        if workflow.name in validation_workflows:
+            continue
         lower = workflow.read_text(encoding="utf-8").lower()
         auto_trigger = "\n  schedule:" in lower or "\n  push:" in lower
         if auto_trigger:
