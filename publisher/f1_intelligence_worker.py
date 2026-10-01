@@ -1216,7 +1216,22 @@ def process_content(
     processing: dict[str, Any] = {"status": "COMPLETED"}
     if any(is_video(m) for m in media_rows):
         update_job(job, "RUNNING", "VIDEO_INTELLIGENCE")
-        media_rows, processing = process_video(client, item, media_rows, job)
+        try:
+            media_rows, processing = process_video(client, item, media_rows, job)
+        except Exception as exc:
+            processing = {
+                "status": "DEGRADED",
+                "speech_detected": False,
+                "caption_pipeline_continues": True,
+                "video_processing_error": str(exc)[:500],
+            }
+            emit_event(
+                owner_id, client_id, content_id, str(job["id"]),
+                "VIDEO_INTELLIGENCE", "WARNING",
+                "Trascrizione video non disponibile: la caption continua dal frame/testo grafico",
+                68,
+                {"error": str(exc)[:500]},
+            )
 
     regenerate_graphic_captions(client, item, media_rows, calendars, job, processing)
 
