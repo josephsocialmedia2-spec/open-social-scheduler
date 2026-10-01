@@ -227,6 +227,17 @@ def _prepare_records(items: list[dict], queue: dict) -> list[dict]:
 
 def build_queue_job(row: dict, rel: str, created_at: str) -> dict:
     approved_at = created_at if row["approved"] and row["caption"].strip() else None
+    state_history = [{"state": "CARICATO", "at": created_at}]
+    if row["publication_status"] == "READY_TO_PUBLISH":
+        state_history.extend(
+            [
+                {"state": "APPROVATO", "at": created_at},
+                {"state": "PROGRAMMATO", "at": created_at},
+                {"state": "READY_TO_PUBLISH", "at": created_at},
+            ]
+        )
+    else:
+        state_history.append({"state": row["publication_status"], "at": created_at})
     return {
         "id": row["content_id"],
         "client_id": "f1-immobiliare",
@@ -250,6 +261,8 @@ def build_queue_job(row: dict, rel: str, created_at: str) -> dict:
         "scheduled_at": row["scheduled_at"],
         "status": row["status"],
         "publication_status": row["publication_status"],
+        "workflow_state": row["publication_status"],
+        "state_history": state_history,
         "last_step": row["publication_status"],
         "attempt_count": 0,
         "publish_attempts": 0,
@@ -366,13 +379,60 @@ def api_queue_status():
                 "status": job.get("status"),
                 "publication_status": job.get("publication_status"),
                 "scheduled_at": job.get("scheduled_at"),
+                "caption": job.get("caption") or "",
                 "platforms": job.get("platforms") or [],
+                "archived": bool(job.get("archived") or str(job.get("status") or "") == "ARCHIVED"),
                 "published_urls": job.get("published_urls") or job.get("remote_post_urls") or [],
                 "last_error": job.get("last_error") or job.get("error"),
                 "sha256": ((job.get("assets") or [{}])[0] or {}).get("sha256"),
             }
         )
     return jsonify({"mode": "manual-publish-only", "counts": counts, "recent": recent})
+
+
+@app.post("/api/archive")
+def archive():
+    payload = request.get_json(silent=True) or {}
+    content_id = str(payload.get("content_id") or "").strip()
+    if not content_id:
+        return jsonify({"ok": False, "error": "content_id mancante"}), 400
+
+    try:
+        ensure_repo_ready()
+        queue = load_queue()
+        job = next(
+            (
+                row
+                for row in _manual_jobs(queue)
+                if str(row.get("id") or "") == content_id
+            ),
+            None,
+        )
+        if not job:
+            return jsonify({"ok": False, "error": "Contenuto manuale non trovato"}), 404
+
+        stamp = now_iso()
+        job["archived"] = True
+        job["archived_at"] = stamp
+        job["workflow_state"] = "ARCHIVED"
+        job["publication_status"] = "ARCHIVED"
+        job["last_step"] = "ARCHIVED"
+        job["updated_at"] = stamp
+        job["autonomous_publish"] = False
+        if str(job.get("status") or "") not in {"PUBLISHED", "PUBLISHED_VERIFIED"}:
+            job["status"] = "ARCHIVED"
+        history = list(job.get("state_history") or [])
+        history.append({"state": "ARCHIVED", "at": stamp})
+        job["state_history"] = history[-50:]
+        queue["updated_at"] = stamp
+        QUEUE_PATH.write_text(json.dumps(queue, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        commit_and_push(
+            ["publisher/final_content_queue.json"],
+            f"Archive manual F1 content {content_id}",
+        )
+        return jsonify({"ok": True, "id": content_id, "status": job.get("status"), "publication_status": "ARCHIVED"})
+    except Exception as exc:
+        return jsonify({"ok": False, "error": str(exc)}), 500
 
 
 @app.post("/api/ingest")
