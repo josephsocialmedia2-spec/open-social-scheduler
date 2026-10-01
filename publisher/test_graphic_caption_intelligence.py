@@ -94,6 +94,11 @@ class GraphicCaptionIntelligenceTests(unittest.TestCase):
         for platform, limit in limits.items():
             self.assertLessEqual(len(worker.caption_from_graphic(platform, client, item, graphic)), limit)
 
+    def test_video_transcription_failure_is_caption_fail_open(self):
+        src = (ROOT / "publisher" / "f1_intelligence_worker.py").read_text(encoding="utf-8")
+        self.assertIn('"caption_pipeline_continues": True', src)
+        self.assertIn("la caption continua dal frame/testo grafico", src)
+
     def test_workspace_marks_manual_caption_and_allows_all_clients(self):
         js = (ROOT / "f1-content-hub" / "client-workspace.js").read_text(encoding="utf-8")
         self.assertIn('caption_manual=true', js)
