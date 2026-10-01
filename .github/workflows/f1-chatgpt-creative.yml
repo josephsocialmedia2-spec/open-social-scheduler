@@ -1,88 +1,17 @@
-name: F1 Free Browser Creative Engine - Validation
+name: F1 Creative Engine (ARCHIVED - F1 MANUAL PUBLISH ONLY)
+
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - 'publisher/chatgpt_query_runner/**'
-      - '.github/workflows/f1-chatgpt-creative.yml'
 
 permissions:
   contents: read
 
 jobs:
-  validate-free-browser-engine:
+  archived:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-python@v6
-        with:
-          python-version: '3.12'
-
-      - name: Install validation dependencies
-        run: python -m pip install pillow
-
-      - name: Compile free-browser creative modules
+      - name: Manual-only policy
         run: |
-          python -m py_compile             publisher/chatgpt_query_runner/core.py             publisher/chatgpt_query_runner/free_provider_router.py             publisher/chatgpt_query_runner/ultrarealism.py             publisher/chatgpt_query_runner/browser_visual_qa.py             publisher/chatgpt_query_runner/worker.py
-
-      - name: Validate provider registry
-        run: |
-          python - <<'PY'
-          import json
-          from pathlib import Path
-          p=Path('publisher/chatgpt_query_runner/providers.json')
-          data=json.loads(p.read_text(encoding='utf-8'))
-          assert data['default_backend']=='free_browser_router'
-          eligible=[
-              x for x in data['providers']
-              if x.get('enabled')
-              and x.get('supports_photorealism')
-              and x.get('supports_download')
-              and x.get('commercial_use_allowed') is True
-          ]
-          assert len(eligible) >= 2, eligible
-          assert all(x.get('mode')=='browser' for x in eligible)
-          print('Eligible zero-cost browser providers:', [x['name'] for x in eligible])
-          PY
-
-      - name: Validate F1 intent batch and ultrarealism
-        run: |
-          python - <<'PY'
-          import json
-          from pathlib import Path
-          from publisher.chatgpt_query_runner.ultrarealism import enforce_ultrarealism_prompt
-
-          path=Path('publisher/chatgpt_query_runner/f1_browser_creative_queries.json')
-          data=json.loads(path.read_text(encoding='utf-8'))
-          rows=data['queries']
-          assert len(rows)==12
-          ids=[x['id'] for x in rows]
-          assert len(set(ids))==12
-          intents={x['query'] for x in rows}
-          assert len(intents)==6
-          for row in rows:
-              prompt=enforce_ultrarealism_prompt(row['prompt'])
-              assert 'ultra-realistic' in prompt.lower()
-              assert 'no 3d render' in prompt.lower()
-              assert 'no watermark' in prompt.lower()
-          print('6 intents / 12 variants / ultrarealism prompt gate OK')
-          PY
-
-      - name: Ensure paid OpenAI API is not required by this workflow
-        run: |
-          if grep -R -n 'OPENAI_API_KEY' publisher/chatgpt_query_runner/providers.json publisher/chatgpt_query_runner/worker.py publisher/chatgpt_query_runner/free_provider_router.py; then
-            echo "::error::Paid OpenAI API key must not be required by the free browser runtime"
-            exit 1
-          fi
-          echo "Paid OpenAI API key not required by free browser runtime"
-
-      - name: Architecture summary
-        run: |
-          echo "Generation runtime: Windows local browser worker"
-          echo "Backend: free_browser_router"
-          echo "Providers: ChatGPT browser -> Leonardo free -> Adobe Firefly free"
-          echo "Microsoft Image Creator: disabled for F1 commercial marketing"
-          echo "Hugging Face: disabled until exact Space/model licence is verified"
-          echo "Publication safety gate: ULTRAREALISM_PASS required"
+          echo "ARCHIVED: F1 no longer generates graphics."
+          echo "Upload the final operator-created graphic to the F1 manual publisher."
+          echo "No ChatGPT, Leonardo, Firefly, renderer or image-generation runtime is executed."
