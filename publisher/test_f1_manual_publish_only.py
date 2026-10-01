@@ -125,6 +125,109 @@ def assert_manual_ingest_and_pixel_identity() -> None:
             pass
 
 
+
+def assert_mock_publisher_end_to_end() -> None:
+    data = png_bytes()
+    digest = hashlib.sha256(data).hexdigest()
+    row = inbox._prepare_records(
+        [{
+            "data": data,
+            "filename": "e2e-final.png",
+            "meta": {
+                "content_id": "F1-CI-E2E-001",
+                "title": "E2E manual asset",
+                "caption": "Caption E2E fornita dall'operatore.",
+                "platforms": ["facebook", "instagram"],
+                "territory": "Avigliana",
+                "scope": "territory",
+                "scheduled_at": "2099-01-01T10:30:00+01:00",
+                "approved": True,
+            },
+        }],
+        {"jobs": []},
+    )[0]
+
+    ci_dir = PUBLISHER / "final_assets" / "manual_inbox" / "_ci"
+    ci_dir.mkdir(parents=True, exist_ok=True)
+    target = ci_dir / "F1-CI-E2E-001.png"
+    target.write_bytes(data)
+    rel = target.relative_to(ROOT).as_posix()
+    job = inbox.build_queue_job(row, rel, inbox.now_iso())
+    queue = {"jobs": [job]}
+
+    states = [x["state"] for x in job.get("state_history") or []]
+    assert states == ["CARICATO", "APPROVATO", "PROGRAMMATO", "READY_TO_PUBLISH"]
+    assert job["status"] == "READY"
+    assert job["publication_status"] == "READY_TO_PUBLISH"
+
+    originals = {
+        "persist_queue": final_pub.persist_queue,
+        "resolve_job_channels": final_pub.territory_router.resolve_job_channels,
+        "ensure_cloudinary_assets": final_pub.base.ensure_cloudinary_assets,
+        "create_buffer_post": final_pub.base.create_buffer_post,
+        "get_buffer_post": final_pub.base.get_buffer_post,
+    }
+
+    try:
+        final_pub.persist_queue = lambda _queue: None
+        final_pub.territory_router.resolve_job_channels = lambda _key, _job: (
+            "org-ci",
+            {
+                "facebook": {"id": "channel-facebook"},
+                "instagram": {"id": "channel-instagram"},
+            },
+        )
+        final_pub.base.ensure_cloudinary_assets = lambda _job, _cloud: [
+            {"url": "https://cdn.example.test/f1-ci-e2e.png"}
+        ]
+
+        def fake_create(_key, channel_id, service, _buffer_job, _hosted, _now):
+            return {
+                "post_id": f"post-{service}",
+                "service": service,
+                "channel_id": channel_id,
+                "buffer_status": "pending",
+            }
+
+        def fake_get(_key, post_id):
+            service = "facebook" if "facebook" in post_id else "instagram"
+            return {
+                "post_id": post_id,
+                "buffer_status": "sent",
+                "sent_at": "2099-01-01T10:31:00Z",
+                "external_link": f"https://social.example.test/{service}/F1-CI-E2E-001",
+                "channel_id": f"channel-{service}",
+            }
+
+        final_pub.base.create_buffer_post = fake_create
+        final_pub.base.get_buffer_post = fake_get
+
+        before = hashlib.sha256(target.read_bytes()).hexdigest()
+        rc = final_pub.publish_job(queue, job, "buffer-ci-key", "cloudinary://ci", dry_run=False)
+        after = hashlib.sha256(target.read_bytes()).hexdigest()
+
+        assert rc == 0
+        assert before == digest == after
+        assert job["published_asset_sha256"] == [digest]
+        assert job["status"] == "PUBLISHED_VERIFIED"
+        assert job["provider"] == "buffer"
+        assert len(job.get("remote_post_ids") or []) == 2
+        assert len(job.get("published_urls") or []) == 2
+        assert job["remote_post_url"].startswith("https://social.example.test/")
+        assert set(job.get("buffer_scheduled_platforms") or []) == {"facebook", "instagram"}
+    finally:
+        final_pub.persist_queue = originals["persist_queue"]
+        final_pub.territory_router.resolve_job_channels = originals["resolve_job_channels"]
+        final_pub.base.ensure_cloudinary_assets = originals["ensure_cloudinary_assets"]
+        final_pub.base.create_buffer_post = originals["create_buffer_post"]
+        final_pub.base.get_buffer_post = originals["get_buffer_post"]
+        target.unlink(missing_ok=True)
+        try:
+            ci_dir.rmdir()
+        except OSError:
+            pass
+
+
 def assert_caption_missing_holds() -> None:
     data = png_bytes()
     rows = inbox._prepare_records(
@@ -195,6 +298,7 @@ def assert_no_generation_in_manual_runtime() -> None:
         "renderer-v2-qualified-smoke.yml",
         "social-preview-weekly-index.yml",
         "f1-design-v2.yml",
+        "renderer-v2-ci.yml",
     ]
     for name in archived:
         text = (ROOT / ".github" / "workflows" / name).read_text(encoding="utf-8")
@@ -239,6 +343,19 @@ def assert_no_generation_in_manual_runtime() -> None:
         for forbidden in ("chatgpt_query_runner.worker", "free_browser_router", "F1_CREATIVE_BACKEND"):
             assert forbidden not in text
 
+    content_engine = (PUBLISHER / "rendering" / "content_engine.py").read_text(encoding="utf-8")
+    assert "Renderer V2 cannot create or modify F1 graphics" in content_engine
+
+    openai_visual = (PUBLISHER / "rendering" / "openai_visual_engine.py").read_text(encoding="utf-8")
+    assert "OpenAI Images is disabled for F1 before API-key lookup" in openai_visual
+
+    premium = (PUBLISHER / "f1_premium_renderer.py").read_text(encoding="utf-8")
+    assert "premium renderer installation skipped" in premium
+
+    server_text_exact = (PUBLISHER / "manual_asset_inbox" / "server.py").read_text(encoding="utf-8")
+    assert '@app.post("/api/archive")' in server_text_exact
+    assert '"state_history": state_history' in server_text_exact
+
     workspace = (ROOT / "f1-content-hub" / "client-workspace.js").read_text(encoding="utf-8")
     assert 'client.slug==="f1-immobiliare"' in workspace
     assert "Nessuna grafica o caption viene generata automaticamente." in workspace
@@ -249,6 +366,7 @@ def assert_no_generation_in_manual_runtime() -> None:
 def main() -> int:
     assert_manual_config()
     assert_manual_ingest_and_pixel_identity()
+    assert_mock_publisher_end_to_end()
     assert_caption_missing_holds()
     assert_corrupt_file_rejected()
     assert_no_generation_in_manual_runtime()
