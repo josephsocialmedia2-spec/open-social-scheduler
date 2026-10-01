@@ -20,6 +20,19 @@ CAPTION_DIR = OUTPUT_DIR / "captions"
 DOWNLOAD_DIR = ROOT / "publisher" / "f1_graphics_hourly" / "downloads"
 PROFILE_DIR = Path.home() / ".f1_chatgpt_chrome_profile"
 RECRUITING_CAPTIONS_FILE = ROOT / "publisher" / "f1_graphics_hourly" / "RICERCA_PERSONALE_CAPTIONS.md"
+F1_CLIENT_CONFIG = ROOT / "publisher" / "clients" / "f1-immobiliare.json"
+
+
+def generation_disabled():
+    try:
+        cfg = json.loads(F1_CLIENT_CONFIG.read_text(encoding="utf-8"))
+    except Exception:
+        return False
+    return (
+        str(cfg.get("graphics_source") or "") == "manual_only"
+        and cfg.get("ai_image_generation") is False
+        and cfg.get("publish_only") is True
+    )
 
 CHAT_URL = "https://chatgpt.com/g/g-6a9c210485488191b072eb694c2f114c-generatore-grafica-f1/c/6a9c2a0a-abdc-83eb-9bf4-3a4dbeb6f82f"
 GRAPHIC_SUFFIX = "l modello è già allegato qui in chat"
@@ -310,6 +323,9 @@ def ensure_logged_in(driver):
 
 
 def main():
+    if generation_disabled():
+        print("F1 MANUAL PUBLISH ONLY: hourly graphic generation is disabled.")
+        return 0
     if not INPUT_XLSX.exists():
         raise RuntimeError(f"File Excel mancante: {INPUT_XLSX}")
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
