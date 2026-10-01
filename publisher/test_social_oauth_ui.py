@@ -83,7 +83,12 @@ class SocialOAuthUiTests(unittest.TestCase):
         self.assertIn("function hubReturnUrl", edge)
         self.assertIn('target.searchParams.set("view", "connections")', edge)
         self.assertIn('target.searchParams.set("client", String(client.slug))', edge)
-        self.assertIn('return redirect(hubReturnUrl(client, "connected", platform))', edge)
+        self.assertIn("function oauthReturnUrl", edge)
+        self.assertIn(
+            'return state?.invite_id ? inviteReturnUrl(oauthState, platform) : hubReturnUrl(client, oauthState, platform);',
+            edge,
+        )
+        self.assertIn('return redirect(oauthReturnUrl(client, state, "connected", platform))', edge)
         self.assertIn('return redirect(hubReturnUrl(client, "select_account", platform))', edge)
 
     def test_oauth_account_lock_can_be_scoped_per_platform(self):
