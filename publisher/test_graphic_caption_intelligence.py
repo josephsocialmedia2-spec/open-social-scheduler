@@ -39,6 +39,46 @@ class GraphicCaptionIntelligenceTests(unittest.TestCase):
         self.assertFalse(result["ocr_used"])
         self.assertIn("Testo disponibile senza grafica", result["text"])
 
+    def test_template_noise_is_removed_from_public_caption(self):
+        client = {"name": "Real Media Pro"}
+        item = {
+            "title": "Google Ads intercetta domanda già attiva",
+            "description": "Google Ads funziona quando keyword, annuncio e pagina rispondono allo stesso intento.",
+        }
+        graphic = (
+            "F1 SOCIAL INTELLIGENCE - REAL MEDIA PRO\n"
+            "ATTRACT\n"
+            "Google Ads intercetta\n"
+            "m N n\n"
+            "domanda gia attiva\n"
+            "STRATEGIA : AUTOMAZIONE - CRESCITA\n"
+            "Real Media Pro\n"
+            "Social Intelligence for real results"
+        )
+        caption = worker.caption_from_graphic("facebook", client, item, graphic, "GRAPHIC_TEXT")
+        self.assertIn("Google Ads intercetta domanda già attiva", caption)
+        self.assertIn("keyword, annuncio e pagina", caption)
+        self.assertNotIn("m N n", caption)
+        self.assertNotIn("ATTRACT", caption)
+        self.assertNotIn("STRATEGIA : AUTOMAZIONE", caption)
+        self.assertNotIn("Social Intelligence for real results", caption)
+
+    def test_fallback_caption_uses_clean_content_context(self):
+        client = {"name": "F1 Immobiliare"}
+        item = {
+            "title": "Vendere casa: il prezzo è solo il punto di partenza",
+            "description": "Una valutazione considera dati, immobile e mercato.",
+        }
+        caption = worker.caption_from_graphic(
+            "facebook",
+            client,
+            item,
+            item["description"],
+            "CONTENT_TEXT_FALLBACK",
+        )
+        self.assertTrue(caption.startswith(item["title"]))
+        self.assertIn(item["description"], caption)
+
     def test_platform_lengths_are_bounded(self):
         client = {"name": "Cliente Demo"}
         item = {"title": "Test"}
