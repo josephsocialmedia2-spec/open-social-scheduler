@@ -2,6 +2,15 @@ name: Real Media Pro OAuth Smoke
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'f1-content-hub/index.html'
+      - 'publisher/clients/real-media-pro.json'
+      - 'publisher/test_social_oauth_ui.py'
+      - 'supabase/functions/f1-social-oauth/index.ts'
+      - '.github/workflows/rmp-oauth-smoke.yml'
   pull_request:
     paths:
       - 'f1-content-hub/index.html'
