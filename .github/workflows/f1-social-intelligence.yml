@@ -46,13 +46,19 @@ jobs:
           key: f1-whisper-${{ runner.os }}-${{ env.F1_WHISPER_MODEL }}
       - name: Install Intelligence dependencies
         run: pip install -r publisher/intelligence_requirements.txt
-      - name: Ensure ffmpeg is available
+      - name: Ensure ffmpeg and local OCR are available
         shell: bash
         run: |
-          if ! command -v ffmpeg >/dev/null 2>&1 || ! command -v ffprobe >/dev/null 2>&1; then
+          NEED_APT=0
+          command -v ffmpeg >/dev/null 2>&1 || NEED_APT=1
+          command -v ffprobe >/dev/null 2>&1 || NEED_APT=1
+          command -v tesseract >/dev/null 2>&1 || NEED_APT=1
+          if [ "$NEED_APT" = "1" ]; then
             sudo apt-get update
-            sudo apt-get install -y ffmpeg
+            sudo apt-get install -y ffmpeg tesseract-ocr tesseract-ocr-ita
           fi
+      - name: Run graphic-caption unit tests
+        run: python -m unittest publisher.test_graphic_caption_intelligence -v
       - name: Run autonomous Content Intelligence
         shell: bash
         run: |
