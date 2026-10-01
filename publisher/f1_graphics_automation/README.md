@@ -1,85 +1,116 @@
-# F1 Grafiche automatiche ore 23:00
+# F1 Immobiliare — Pubblicazione manuale
+
+## Regola definitiva
+
+Le grafiche F1 Immobiliare vengono create e approvate dall'operatore.
+
+Il sistema non genera, non ritocca, non impagina e non rigenera immagini.
+
+**PIXEL IN → PIXEL OUT.**
 
 ## Flusso operativo
 
-1. Doppio clic su `F1 GRAFICHE` oppure avvio automatico Windows alle 23:00.
-2. Viene utilizzato il normale Google Chrome dell'utente, senza profilo dedicato e senza Selenium.
-3. Si apre il GPT F1:
-   `https://chatgpt.com/g/g-6a9c210485488191b072eb694c2f114c-generatore-grafica-f1`
-4. Le query arrivano da `publisher/github_graphics/queries.json`.
-5. Ogni query viene trasformata esclusivamente in:
-   `Genera un'immagine ultrarealistica, cerchiamo [QUERY].`
-6. Il composer viene identificato tramite Windows UI Automation/accessibility tree.
-7. Prima di usare Ctrl+A/Backspace viene verificato che il focus sia realmente nel composer.
-8. Il testo inserito viene riletto e confrontato con il prompt atteso.
-9. Dopo Enter viene verificato l'invio osservando la UI.
-10. La generazione viene monitorata; un semplice timeout non viene considerato successo.
-11. La query diventa `COMPLETED` solo dopo rilevamento e salvataggio di una nuova immagine.
-12. L'immagine viene salvata in `publisher/final_assets/chatgpt_generated/YYYYMMDD/`.
-13. La Raccolta F1 su `http://127.0.0.1:8877/` mostra automaticamente le immagini salvate.
-14. L'operatore controlla e approva; solo allora il file entra in GitHub e nella coda `READY`.
+1. Aprire il pannello F1 su `http://127.0.0.1:8877/`.
+2. Caricare una grafica definitiva PNG, JPG/JPEG o WEBP.
+3. Inserire o verificare caption, piattaforme e data/ora.
+4. Approvare il pacchetto.
+5. Il server verifica tecnicamente il file e calcola SHA256.
+6. Il file viene salvato senza modifiche in `publisher/final_assets/manual_inbox/YYYYMMDD/`.
+7. Il contenuto entra in `publisher/final_content_queue.json`.
+8. `f1-final-assets-publisher.yml` seleziona esclusivamente job F1 `manual_only`.
+9. Il publisher invia il contenuto ai social configurati.
+10. Lo stato viene verificato e aggiornato fino a `PUBLISHED_VERIFIED` quando disponibile.
 
-## Stato per query
+## Cosa è disabilitato
 
-`QUERY_CARICATA → PROMPT_COSTRUITO → COMPOSER_TROVATO → TESTO_INSERITO → TESTO_VERIFICATO → PROMPT_INVIATO → INVIO_VERIFICATO → GENERAZIONE_IN_CORSO → GENERAZIONE_TERMINATA → IMMAGINE_RILEVATA → IMMAGINE_SALVATA → COMPLETED`
+Per F1 Immobiliare non vengono più usati:
 
-`next_index` avanza esclusivamente dopo `COMPLETED` con `image_path` valido.
+- GPT Generatore Grafica F1;
+- ChatGPT browser automation;
+- Leonardo;
+- Adobe Firefly;
+- OpenAI Images API;
+- free provider router;
+- ultrarealism/regeneration loop;
+- brand layer automatico;
+- renderer F1 automatici;
+- generazione news grafica;
+- generazione notturna alle 23:00;
+- generazione automatica di caption nel workspace F1.
 
-## Stato finale batch
+I moduli legacy possono rimanere nel repository per compatibilità o storico, ma la configurazione
+`publisher/clients/f1-immobiliare.json` impedisce loro di entrare nel runtime F1.
 
-`GRAFICHE_PRONTE` richiede che tutte le query previste siano `COMPLETED` e che tutte le immagini siano state salvate. In caso contrario lo stato è `PARZIALE` oppure `ERRORE`.
+## Installazione Windows
 
-## Installazione
+I vecchi nomi dei launcher sono mantenuti solo per compatibilità con collegamenti già esistenti.
 
-Dalla cartella principale del repository:
+`INSTALLA_F1_GRAFICHE_23.bat` ora installa **soltanto** il pubblicatore manuale.
 
-`INSTALLA_F1_GRAFICHE_23.bat`
+L'installatore:
 
-L'installatore si eleva come amministratore, installa le dipendenze, registra e verifica:
+- rimuove `F1_Grafiche_23`;
+- rimuove `F1_News_ValleSusa`;
+- rimuove `F1_News_GitHub_Poller`;
+- mantiene/crea soltanto `F1_Inbox_Logon`;
+- crea il collegamento Desktop `F1 PUBBLICA GRAFICHE`;
+- avvia il pannello locale sulla porta 8877.
 
-- `F1_Grafiche_23` ogni giorno alle 23:00;
-- `F1_Inbox_Logon` all'accesso Windows;
-- `WakeToRun` e `StartWhenAvailable`;
-- comando PowerShell, working directory e trigger 23:00;
-- health check della Raccolta F1 sulla porta 8877;
-- collegamenti desktop.
+Nessun task Windows viene registrato per generare grafiche.
 
-## Collegamenti Desktop
+## Pannello
 
-- `F1 GRAFICHE` — produzione normale/recovery, 4 query.
-- `F1 - Prova 1 Query` — nuovo test end-to-end con una query.
-- `F1 - Prova 4 Query` — nuovo test end-to-end con quattro query.
-- `F1 - Raccolta Grafiche` — apre solo la Raccolta F1.
-
-## Raccolta F1
-
-- Raccolta: `http://127.0.0.1:8877/`
-- Stato mattutino: `http://127.0.0.1:8877/ready`
+- Pubblicatore: `http://127.0.0.1:8877/`
+- Stato: `http://127.0.0.1:8877/ready`
 - Health: `http://127.0.0.1:8877/api/health`
-- Stato ultima esecuzione: `http://127.0.0.1:8877/api/run-status`
-- Grafiche automatiche: `http://127.0.0.1:8877/api/generated`
+- Stato coda manuale: `http://127.0.0.1:8877/api/queue-status`
 
-La porta 8765 non viene usata da F1.
+L'endpoint di health deve riportare:
 
-## Retry e recovery
+- `service = f1-manual-asset-inbox`
+- `mode = manual-publish-only`
+- `ai_image_generation = false`
 
-Ogni query dispone di retry limitati. In caso di errore vengono salvati stato, errore, screenshot e accessibility tree. Un batch incompleto viene ripreso al successivo avvio normale; i vecchi record creati dalla precedente logica non verificata non vengono considerati completamenti attendibili.
+## Stati principali
 
-## Percorsi locali
+Per i nuovi contenuti manuali vengono usati gli stati operativi del publisher, tra cui:
 
-- Stato: `publisher/chatgpt_query_runner/state.json`
-- Ultima esecuzione: `publisher/chatgpt_query_runner/last_run.json`
-- Immagini automatiche: `publisher/final_assets/chatgpt_generated/YYYYMMDD/`
-- Log: `publisher/f1_graphics_automation/logs/`
-- Screenshot errori: `publisher/f1_graphics_automation/logs/screenshots/`
-- Accessibility diagnostics: `publisher/f1_graphics_automation/logs/accessibility/`
+- `HOLD / CAPTION_MISSING`;
+- `HOLD / DA_APPROVARE`;
+- `READY / READY_TO_PUBLISH`;
+- `SCHEDULED`;
+- `PUBLISHED`;
+- `PUBLISHED_VERIFIED`;
+- `ERROR`.
 
-Questi dati di runtime sono ignorati da Git fino all'approvazione umana.
+Gli stati legacy di generazione AI non vengono creati dai nuovi contenuti F1.
 
-## Vincoli reali
+## Sicurezza anti-duplicato
 
-L'automazione grafica richiede una sessione Windows interattiva perché controlla il normale Chrome dell'utente. `WakeToRun` può riattivare il PC dalla sospensione se Windows/hardware consentono i wake timer; non può eseguire Chrome se il computer è completamente spento. Il normale profilo Chrome deve essere già autenticato a ChatGPT.
+Ogni file riceve SHA256. Una grafica con hash già presente nella coda viene rifiutata come duplicato.
 
-## GitHub Actions
+Il publisher ricontrolla l'hash prima della consegna.
 
-`F1 Project Deploy Validation` esegue compilazione, unit test della state machine, verifica del formato prompt, coda e contratti dei launcher. Questi test non sostituiscono la prova end-to-end sul Chrome reale Windows.
+## Test
+
+I controlli principali sono:
+
+- `publisher/test_f1_manual_publish_only.py`;
+- `.github/workflows/f1-manual-publish-only-ci.yml`;
+- `.github/workflows/project-deploy.yml`;
+- `.github/workflows/f1-bootstrap-validation.yml`.
+
+I test verificano tra l'altro:
+
+- SHA256 invariato;
+- file corrotti rifiutati;
+- caption mancante in HOLD;
+- selezione publisher solo di asset manuali;
+- generatori F1 disabilitati;
+- workflow grafici archiviati;
+- task Windows legacy rimossi;
+- nessuna dipendenza da browser AI per la pubblicazione manuale.
+
+## Principio operativo
+
+**L'OPERATORE CREA LA GRAFICA. F1 LA PUBBLICA.**
