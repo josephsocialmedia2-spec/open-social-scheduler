@@ -77,6 +77,7 @@ function renderUploadProgress(){
   box.innerHTML='<div class="upload-progress-head"><div><div class="upload-progress-title">CARICAMENTO CONTENUTI</div><div class="upload-progress-status">'+h(uploadStatusLabel(s.status))+'</div></div><div class="upload-percent">'+pct.toFixed(0)+'%</div></div>'+
     '<div class="upload-track"><div class="upload-fill" style="width:'+pct.toFixed(2)+'%"></div></div>'+
     '<div class="upload-summary"><div class="upload-stat"><b>'+h(doneLabel)+'</b><span>CONTENUTI</span></div><div class="upload-stat"><b>'+h(speed)+'</b><span>VELOCITÀ</span></div><div class="upload-stat"><b>'+h(eta)+'</b><span>TEMPO RIMANENTE</span></div><div class="upload-stat"><b>'+h(formatBytes(s.uploadedBytes))+' / '+h(formatBytes(s.totalBytes))+'</b><span>DATI</span></div></div>'+
+    (s.quotaWarning?'<div class="upload-current">'+h(s.quotaWarning)+'</div>':'')+
     (detail?'<div class="upload-current">'+h(detail)+'</div>':'')+final;
 }
 function resetUploadBatch(files){
@@ -86,7 +87,7 @@ function resetUploadBatch(files){
     totalBytes:list.reduce(function(sum,f){return sum+(Number(f.size)||0)},0),
     uploadedBytes:0,currentFileName:"",currentFileNumber:0,currentStage:"",
     startedAt:performance.now(),bytesPerSecond:0,estimatedSecondsRemaining:null,
-    status:"PREPARING",samples:[],failed:[],convertedHeic:0
+    status:"PREPARING",samples:[],failed:[],convertedHeic:0,quotaWarning:""
   };
   uploadRetryFiles=[];
   renderUploadProgress();
@@ -98,9 +99,15 @@ async function checkFreeMediaQuota(incomingBytes){
   });
   if(quota.error)throw new Error("FREE QUOTA GUARD non disponibile: "+(quota.error.message||"verifica fallita"));
   const state=quota.data||{};
+  const pct=Number(state.projected_percent||state.usage_percent||0);
   if(state.allowed!==true){
-    const pct=Number(state.projected_percent||state.usage_percent||0);
     throw new Error("FREE QUOTA GUARD: caricamento bloccato"+(pct?" al "+pct.toFixed(1)+"% della quota gratuita":"")+". Nessun passaggio automatico a pagamento.");
+  }
+  if(uploadBatchState){
+    uploadBatchState.quotaWarning=pct>=85
+      ? "⚠ QUOTA GRATUITA: "+pct.toFixed(1)+"% previsto · soglia di blocco 95%"
+      : (pct>=70 ? "Quota gratuita: "+pct.toFixed(1)+"% previsto" : "");
+    if(uploadBatchState.quotaWarning)renderUploadProgress();
   }
   return state;
 }
