@@ -89,7 +89,7 @@ class SocialOAuthUiTests(unittest.TestCase):
             edge,
         )
         self.assertIn('return redirect(oauthReturnUrl(client, state, "connected", platform))', edge)
-        self.assertIn('return redirect(hubReturnUrl(client, "select_account", platform))', edge)
+        self.assertIn('return redirect(oauthReturnUrl(client, state, "select_account", platform))', edge)
 
     def test_oauth_account_lock_can_be_scoped_per_platform(self):
         edge = (ROOT / "supabase" / "functions" / "f1-social-oauth" / "index.ts").read_text(encoding="utf-8")
