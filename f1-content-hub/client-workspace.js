@@ -91,7 +91,21 @@ function resetUploadBatch(files){
   uploadRetryFiles=[];
   renderUploadProgress();
 }
+async function checkFreeMediaQuota(incomingBytes){
+  const quota=await sb.rpc("f1_check_free_quota",{
+    p_service_key:"supabase_storage_media",
+    p_incoming_value:Math.max(0,Number(incomingBytes)||0)
+  });
+  if(quota.error)throw new Error("FREE QUOTA GUARD non disponibile: "+(quota.error.message||"verifica fallita"));
+  const state=quota.data||{};
+  if(state.allowed!==true){
+    const pct=Number(state.projected_percent||state.usage_percent||0);
+    throw new Error("FREE QUOTA GUARD: caricamento bloccato"+(pct?" al "+pct.toFixed(1)+"% della quota gratuita":"")+". Nessun passaggio automatico a pagamento.");
+  }
+  return state;
+}
 async function storageUploadWithProgress(file,path,mime,onProgress){
+  await checkFreeMediaQuota(file&&file.size);
   const auth=await sb.auth.getSession();
   if(auth.error)throw auth.error;
   const session=auth.data&&auth.data.session;
