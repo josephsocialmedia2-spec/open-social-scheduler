@@ -110,11 +110,14 @@
       "commune": "Condove",
       "query": "immobili in vendita a Condove",
       "source": {
-        "query": "Villa da privato \"Condove\"",
-        "url": "https://media.clickcase.it/image/i-a5184091-b7a9-4339-82e8-dff670a0f103/noresize.jpg",
-        "title": "Bellissima casa in montagna - Vendita Villetta a schiera da Privato a ..."
+        "query": "synthetic fallback",
+        "url": "",
+        "title": "Fallback residenziale neutro - Condove",
+        "fallback": true,
+        "errors": [],
+        "reason": "no verified private-listing image; agency-branded sources rejected"
       },
-      "fallback": false,
+      "fallback": true,
       "output": "property-preview/07.jpg"
     },
     {
