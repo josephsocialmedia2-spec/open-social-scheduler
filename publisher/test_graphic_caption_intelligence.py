@@ -121,5 +121,24 @@ class GraphicCaptionIntelligenceTests(unittest.TestCase):
         self.assertIn(".workspace-nav .btn{padding:4px 6px;font-size:9px", html)
 
 
+    def test_graphic_caption_autopilot_pages_all_content_by_default(self):
+        src = (ROOT / "publisher" / "f1_intelligence_worker.py").read_text(encoding="utf-8")
+        workflow = (ROOT / ".github" / "workflows" / "f1-social-intelligence.yml").read_text(encoding="utf-8")
+        self.assertIn("def rest_get_all(", src)
+        self.assertIn("def run_content_autopilot(limit: int = 0)", src)
+        self.assertIn("max_rows=max(0, int(limit or 0))", src)
+        self.assertIn('default=0, help="0 = tutti i contenuti', src)
+        self.assertIn("0 = all clients/all content", workflow)
+        self.assertIn("|| '0'", workflow)
+
+    def test_compact_navigation_wins_over_design_system(self):
+        css = (ROOT / "f1-content-hub" / "f1-design-system.css").read_text(encoding="utf-8")
+        workspace = (ROOT / "f1-content-hub" / "client-workspace.css").read_text(encoding="utf-8")
+        self.assertIn("min-height:25px!important", css)
+        self.assertIn("font-size:9px!important", css)
+        self.assertIn(".intel-folder-mini{width:29px;height:25px", workspace)
+        self.assertIn(".intel-folder-mini svg{width:17px;height:17px", workspace)
+
+
 if __name__ == "__main__":
     unittest.main()

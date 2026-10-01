@@ -8,9 +8,9 @@ on:
   workflow_dispatch:
     inputs:
       content_limit:
-        description: 'Maximum Content Hub items to inspect'
+        description: 'Maximum Content Hub items to inspect (0 = all clients/all content)'
         required: true
-        default: '250'
+        default: '0'
         type: string
   schedule:
     - cron: '*/5 * * * *'
@@ -62,7 +62,7 @@ jobs:
       - name: Run autonomous Content Intelligence
         shell: bash
         run: |
-          CONTENT_LIMIT="${{ github.event_name == 'workflow_dispatch' && inputs.content_limit || '250' }}"
+          CONTENT_LIMIT="${{ github.event_name == 'workflow_dispatch' && inputs.content_limit || '0' }}"
           python publisher/f1_intelligence_worker.py --skip-agencies --content-limit "$CONTENT_LIMIT"
 
   reconcile-publisher:

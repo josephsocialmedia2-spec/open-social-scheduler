@@ -299,9 +299,14 @@ body::after{
 }
 .client-context .ctx-name{font-size:18px!important;color:#fff}
 .client-context .ctx-meta{color:#a8c9eb!important}
-.workspace-nav{gap:9px!important}
+.workspace-nav{gap:4px!important;margin-top:6px!important}
 .workspace-nav .btn{
-  min-height:38px;
+  min-height:25px!important;
+  height:25px;
+  padding:4px 6px!important;
+  font-size:9px!important;
+  line-height:1!important;
+  border-radius:7px!important;
   background:linear-gradient(180deg,rgba(4,37,73,.95),rgba(2,24,50,.95))!important;
   border-color:rgba(32,140,225,.54)!important;
 }
