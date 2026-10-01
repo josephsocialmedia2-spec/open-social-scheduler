@@ -96,6 +96,43 @@ class SocialOAuthUiTests(unittest.TestCase):
         self.assertIn("oauth_whitelist_platforms", edge)
         self.assertIn("exclusiveWhitelist(client, platform)", edge)
 
+    def test_facebook_oauth_is_page_only_and_does_not_request_instagram_scopes(self):
+        edge = (ROOT / "supabase" / "functions" / "f1-social-oauth" / "index.ts").read_text(encoding="utf-8")
+        self.assertIn("function metaScopeFor(platform)", edge)
+        self.assertIn("META_FACEBOOK_OAUTH_SCOPES", edge)
+        self.assertIn('["pages_show_list","pages_read_engagement","pages_manage_posts"]', edge)
+        self.assertIn("META_INSTAGRAM_OAUTH_SCOPES", edge)
+
+    def test_meta_granted_scopes_are_verified_after_oauth(self):
+        edge = (ROOT / "supabase" / "functions" / "f1-social-oauth" / "index.ts").read_text(encoding="utf-8")
+        self.assertIn("async function metaGrantedScopes", edge)
+        self.assertIn("/me/permissions?access_token=", edge)
+        self.assertIn('status || "").toLowerCase() === "granted"', edge)
+        self.assertIn('scope: grantedScopes.join(" ")', edge)
+
+    def test_facebook_profile_php_page_id_is_matched_directly(self):
+        edge = (ROOT / "supabase" / "functions" / "f1-social-oauth" / "index.ts").read_text(encoding="utf-8")
+        self.assertIn("facebookIdFromUrl(profileUrl)", edge)
+        self.assertIn("String(x.page_id || x.account_id || "") === expectedId", edge)
+        self.assertIn('chooseCandidate(platform, existingProfileUrl, candidates)', edge)
+
+    def test_facebook_page_access_states_are_preserved_and_diagnosed(self):
+        edge = (ROOT / "supabase" / "functions" / "f1-social-oauth" / "index.ts").read_text(encoding="utf-8")
+        for token in [
+            "PAGINA_NON_ACCESSIBILE",
+            "PAGINA_DA_SELEZIONARE",
+            "PERMESSI_INSUFFICIENTI",
+            "facebookPageCanPublish",
+            "expected_facebook_page_not_returned_by_me_accounts",
+        ]:
+            self.assertIn(token, edge)
+
+    def test_antica_instagram_buffer_remains_outside_meta_oauth(self):
+        html = (ROOT / "f1-content-hub" / "index.html").read_text(encoding="utf-8")
+        self.assertIn('provider==="buffer"', html)
+        self.assertIn("Instagram Buffer non viene modificato", html)
+        self.assertIn('const targets=["facebook","tiktok","youtube"]', html)
+
 
 if __name__ == "__main__":
     unittest.main()
