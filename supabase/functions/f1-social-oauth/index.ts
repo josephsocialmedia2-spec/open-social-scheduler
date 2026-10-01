@@ -276,13 +276,29 @@ async function markReauth(ownerId, clientId, platform, reason) {
     oauth_metadata: { reason, at: nowIso() }
   });
 }
+function metaScopeFor(platform) {
+  const p = canonicalPlatform(platform);
+  const shared = String(Deno.env.get("META_OAUTH_SCOPES") || "").split(/[\s,]+/).filter(Boolean);
+  if (p === "facebook") {
+    const explicit = String(Deno.env.get("META_FACEBOOK_OAUTH_SCOPES") || "").trim();
+    if (explicit) return explicit;
+    const pageOnly = shared.filter((scope) => scope.startsWith("pages_"));
+    return (pageOnly.length ? pageOnly : ["pages_show_list","pages_read_engagement","pages_manage_posts"]).join(",");
+  }
+  if (p === "instagram") {
+    const explicit = String(Deno.env.get("META_INSTAGRAM_OAUTH_SCOPES") || "").trim();
+    if (explicit) return explicit;
+    return (shared.length ? shared : ["pages_show_list","pages_read_engagement","instagram_basic","instagram_content_publish"]).join(",");
+  }
+  return "";
+}
 function providerConfig(platform) {
   const p = canonicalPlatform(platform);
   if (p === "facebook" || p === "instagram") {
     return {
       clientId: (Deno.env.get("META_APP_ID") || "").trim(),
       clientSecret: (Deno.env.get("META_APP_SECRET") || "").trim(),
-      scope: Deno.env.get("META_OAUTH_SCOPES") || "pages_show_list,pages_read_engagement,pages_manage_posts,instagram_basic,instagram_content_publish",
+      scope: metaScopeFor(p),
       authUrl: "https://www.facebook.com/" + META_GRAPH_VERSION + "/dialog/oauth",
       tokenUrl: "https://graph.facebook.com/" + META_GRAPH_VERSION + "/oauth/access_token"
     };
@@ -407,6 +423,19 @@ async function tiktokConfigCheck() {
     tiktok_error_message: errorMessage || null
   }, res.ok ? 200 : 502);
 }
+async function metaGrantedScopes(userToken) {
+  const res = await fetch(
+    "https://graph.facebook.com/" + META_GRAPH_VERSION + "/me/permissions?access_token=" + encodeURIComponent(userToken),
+    { headers: { "cache-control": "no-store" } }
+  );
+  const data = await res.json();
+  if (!res.ok || data.error) throw new Error("Meta permissions failed: " + JSON.stringify(data).slice(0, 900));
+  return (Array.isArray(data.data) ? data.data : [])
+    .filter((item) => String(item?.status || "").toLowerCase() === "granted")
+    .map((item) => String(item?.permission || "").trim())
+    .filter(Boolean);
+}
+
 async function exchangeCode(platform, code) {
   const p = canonicalPlatform(platform);
   const c = providerConfig(p);
@@ -432,7 +461,8 @@ async function exchangeCode(platform, code) {
     if (!longRes.ok || longData.error || !longData.access_token) {
       throw new Error("Meta long-lived token exchange failed: " + JSON.stringify(longData).slice(0, 900));
     }
-    return { ...longData, scope: c.scope };
+    const grantedScopes = await metaGrantedScopes(String(longData.access_token));
+    return { ...longData, scope: grantedScopes.join(" ") };
   }
   const body = new URLSearchParams();
   if (p === "tiktok") body.set("client_key", c.clientId);
@@ -722,11 +752,19 @@ async function assertExpectedAccount(ownerId, client, platform, profile, scopeVa
   }
   if (!hasRequiredPublishScope(platform, scopeValue)) {
     await patchChannel(ownerId, client.id, platform, {
-      enabled:false, verified:false, connection_status:"AUTH_REQUIRED",
+      enabled:false, verified:false, connection_status:"PERMESSI_INSUFFICIENTI",
       reauthorization_required:true,
       oauth_metadata:{ reason:"publish_scope_missing", required_scope:requiredPublishScope(platform), at:nowIso() }
     });
-    throw authRequiredError("AUTH_REQUIRED");
+    throw authRequiredError("PERMESSI_INSUFFICIENTI");
+  }
+  if (canonicalPlatform(platform) === "facebook" && Array.isArray(profile?.tasks) && profile.tasks.length && !facebookPageCanPublish(profile.tasks)) {
+    await patchChannel(ownerId, client.id, platform, {
+      enabled:false, verified:false, connection_status:"PERMESSI_INSUFFICIENTI",
+      reauthorization_required:true,
+      oauth_metadata:{ reason:"facebook_page_create_content_task_missing", page_id:accountId || null, tasks:profile.tasks, at:nowIso() }
+    });
+    throw authRequiredError("PERMESSI_INSUFFICIENTI");
   }
   const collisions = await accountCollision(ownerId, client.id, platform, accountId);
   if (collisions.length) {
@@ -778,8 +816,25 @@ function metaCandidates(platform, pages) {
   }
   return out.filter(x => x.account_id);
 }
-function chooseCandidate(profileUrl, candidates) {
+function facebookPageCanPublish(tasks) {
+  const allowed = new Set([
+    "CREATE_CONTENT","MANAGE","PROFILE_PLUS_CREATE_CONTENT",
+    "PROFILE_PLUS_MANAGE","PROFILE_PLUS_FULL_CONTROL"
+  ]);
+  return (Array.isArray(tasks) ? tasks : []).some((task) => allowed.has(String(task || "").toUpperCase()));
+}
+function chooseCandidate(platform, profileUrl, candidates) {
+  const p = canonicalPlatform(platform);
   if (profileUrl) {
+    if (p === "facebook") {
+      const expectedId = facebookIdFromUrl(profileUrl);
+      if (expectedId) {
+        const byPageId = candidates.find((x) =>
+          String(x.page_id || x.account_id || "") === expectedId
+        );
+        if (byPageId) return byPageId;
+      }
+    }
     const exact = candidates.find(x => sameProfileUrl(profileUrl, x.profile_url));
     if (exact) return exact;
     try {
@@ -799,7 +854,7 @@ async function metaProfileFromSelection(platform, userToken, selectionId, existi
   const pages = await metaAccounts(userToken);
   const candidates = metaCandidates(platform, pages);
   let selected = selectionId ? candidates.find(x => x.account_id === selectionId) : null;
-  if (!selected) selected = chooseCandidate(existingProfileUrl, candidates);
+  if (!selected) selected = chooseCandidate(platform, existingProfileUrl, candidates);
   return { selected, candidates };
 }
 async function metaPageToken(userToken, pageId) {
@@ -931,17 +986,27 @@ async function callback(url, platform) {
         ({account_id,account_name,profile_url,page_id,page_name,username,tasks})
       );
       if (!meta.selected) {
+        const expectedFacebookId = platform === "facebook" ? facebookIdFromUrl(current?.profile_url || client.facebook || "") : "";
+        const missingExpectedPage = !!expectedFacebookId && !meta.candidates.some((x) => String(x.page_id || x.account_id || "") === expectedFacebookId);
+        const unresolvedState = missingExpectedPage ? "PAGINA_NON_ACCESSIBILE" : "ACCOUNT_DA_SELEZIONARE";
         await upsertToken(state.uid, state.cid, platform, tokenData, {
           subject: null, account_id: null, account_name: null,
           profile_url: current?.profile_url || null,
+          expected_page_id: expectedFacebookId || null,
           meta_candidates: safeCandidates
         });
         await patchChannel(state.uid, state.cid, platform, {
-          connection_status: "ACCOUNT_DA_SELEZIONARE",
+          connection_status: unresolvedState,
           verified: false,
-          enabled: false
+          enabled: false,
+          oauth_metadata: {
+            expected_page_id: expectedFacebookId || null,
+            meta_candidates: safeCandidates,
+            reason: missingExpectedPage ? "expected_facebook_page_not_returned_by_me_accounts" : "meta_account_selection_required",
+            at: nowIso()
+          }
         });
-        return redirect(oauthReturnUrl(client, state, "select_account", platform));
+        return redirect(oauthReturnUrl(client, state, missingExpectedPage ? "page_not_accessible" : "select_account", platform));
       }
       const selected = meta.selected;
       await assertExpectedAccount(state.uid, client, platform, selected, tokenData.scope || "");
@@ -977,12 +1042,20 @@ async function callback(url, platform) {
     await markInvitePlatformConnected(state.invite_id, platform);
     return redirect(oauthReturnUrl(client, state, "connected", platform));
   } catch (e) {
-    await patchChannel(state.uid, state.cid, platform, {
-      enabled: false,
-      verified: false,
-      connection_status: "ERRORE",
-      oauth_metadata: { error: String(e), at: nowIso() }
-    });
+    const current = await channelRow(state.uid, state.cid, platform);
+    const preserved = new Set([
+      "PERMESSI_INSUFFICIENTI","PAGINA_NON_ACCESSIBILE","ACCOUNT_ERRATO",
+      "ACCOUNT_NON_AUTORIZZATO","ACCOUNT_CONDIVISO","DA_RIAUTORIZZARE",
+      "TOKEN_SCADUTO","ACCOUNT_DA_SELEZIONARE"
+    ]);
+    if (!preserved.has(String(current?.connection_status || ""))) {
+      await patchChannel(state.uid, state.cid, platform, {
+        enabled: false,
+        verified: false,
+        connection_status: "ERRORE",
+        oauth_metadata: { error: String(e), at: nowIso() }
+      });
+    }
     return redirect(oauthReturnUrl(callbackClient, state, "error", platform));
   }
 }
@@ -1019,7 +1092,12 @@ async function workerToken(req, url) {
       const pages = await metaAccounts(token.access_token);
       const candidates = metaCandidates(platform, pages);
       const selected = candidates.find(x => x.account_id === selection);
-      if (!selected) return respond({ error: "ACCOUNT_ERRATO" }, 409);
+      if (!selected) {
+        return respond({
+          error: platform === "facebook" ? "PAGINA_NON_ACCESSIBILE" : "ACCOUNT_ERRATO",
+          detail: platform === "facebook" ? "selected_facebook_page_not_returned_by_me_accounts" : "selected_meta_account_not_available"
+        }, 409);
+      }
       try { await assertExpectedAccount(client.owner_id, client, platform, selected, row?.scope || ""); }
       catch (e) { return respond({ error:String(e).includes("ACCOUNT_CONDIVISO")?"ACCOUNT_CONDIVISO":"ACCOUNT_ERRATO" },409); }
       const pageToken = await metaPageToken(token.access_token, selected.page_id);
@@ -1262,8 +1340,21 @@ async function verifyChannel(req) {
       const meta = await metaProfileFromSelection(platform, token.access_token, accountId, row.profile_url || null);
       profile = meta.selected;
       if (!profile) {
-        await patchChannel(user.id, client.id, platform, { verified:false, connection_status:"ACCOUNT_ERRATO", last_verified_at:nowIso() });
-        return respond({ error:"ACCOUNT_ERRATO" },409);
+        const expectedFacebookId = platform === "facebook" ? facebookIdFromUrl(row.profile_url || client.facebook || "") : "";
+        const pageMissing = !!expectedFacebookId;
+        await patchChannel(user.id, client.id, platform, {
+          verified:false,
+          enabled:false,
+          connection_status:pageMissing ? "PAGINA_NON_ACCESSIBILE" : "ACCOUNT_ERRATO",
+          last_verified_at:nowIso(),
+          oauth_metadata:{
+            ...(row.oauth_metadata || {}),
+            expected_page_id:expectedFacebookId || null,
+            reason:pageMissing ? "expected_facebook_page_not_returned_by_me_accounts" : "meta_account_not_available",
+            at:nowIso()
+          }
+        });
+        return respond({ error:pageMissing ? "PAGINA_NON_ACCESSIBILE" : "ACCOUNT_ERRATO" },409);
       }
     } else if (platform === "linkedin") {
       const candidates=await linkedinOrganizations(token.access_token);
@@ -1496,6 +1587,11 @@ function doctorMessage(platform, code, accountName) {
     ACCOUNT_CONDIVISO:[label+account+": lo stesso account è associato a più clienti.","Seleziona l'account corretto per questo cliente."],
     ACCOUNT_ERRATO:[label+": l'account autorizzato non corrisponde a quello previsto.","Ricollega e seleziona l'account corretto."],
     NON_COLLEGATO:[label+": profilo non collegato.","Collega il profilo con OAuth."],
+    PAGINA_DA_SELEZIONARE:["Facebook: autorizzazione ricevuta, ma devi scegliere la Pagina corretta.","Seleziona la Pagina Facebook del cliente."],
+    PAGINA_NON_ACCESSIBILE:["Facebook: la Pagina prevista non compare tra le Pagine restituite da Meta per questo utente.","Verifica su Facebook che l'utente abbia accesso alla Pagina, poi ripeti COLLEGA."],
+    APP_REVIEW_REQUIRED:["Facebook: la configurazione tecnica è pronta, ma il permesso richiesto non è disponibile per l'utente corrente.","Verifica lo stato dell'app e l'eventuale Advanced Access/App Review in Meta for Developers."],
+    BUSINESS_VERIFICATION_REQUIRED:["Facebook: Meta richiede una verifica Business per la funzione richiesta.","Completa la verifica solo se Meta la segnala esplicitamente."],
+    FACEBOOK_PAGE_UNSUPPORTED:["Facebook: questa risorsa non è stata restituita come Pagina gestibile dalla Pages API.","Verifica il tipo di risorsa e l'accesso in Facebook; non convertirla automaticamente."],
     LINKEDIN_PAGE_REQUIRED:["LinkedIn: serve una Pagina aziendale amministrata, non il solo profilo personale.","Autorizza una Pagina con w_organization_social e ruolo idoneo."]
   };
   return messages[code]||[label+": connessione da verificare.","Apri Connessioni e verifica il canale."];
@@ -1519,8 +1615,12 @@ async function connectionDoctor(req, url) {
     else if(!row||!(row.enabled&&row.verified)){code="NON_COLLEGATO";severity="warning";status=row?.connection_status||"SCOLLEGATO";}
     if(row?.reauthorization_required){code="DA_RIAUTORIZZARE";severity="critical";status="DA_RIAUTORIZZARE";}
     if(row?.token_expires_at&&new Date(row.token_expires_at).getTime()<=Date.now()){code="TOKEN_SCADUTO";severity="critical";status="TOKEN_SCADUTO";}
-    if(["ACCOUNT_ERRATO","ACCOUNT_NON_AUTORIZZATO"].includes(String(row?.connection_status||""))){code="ACCOUNT_ERRATO";severity="critical";status=String(row.connection_status);}
-    if(String(row?.connection_status||"")==="ACCOUNT_CONDIVISO"){code="ACCOUNT_CONDIVISO";severity="critical";status="ACCOUNT_CONDIVISO";}
+    const rawState=String(row?.connection_status||"");
+    if(rawState==="ACCOUNT_DA_SELEZIONARE"&&platform==="facebook"){code="PAGINA_DA_SELEZIONARE";severity="warning";status=rawState;}
+    if(rawState==="PAGINA_NON_ACCESSIBILE"&&platform==="facebook"){code="PAGINA_NON_ACCESSIBILE";severity="critical";status=rawState;}
+    if(rawState==="PERMESSI_INSUFFICIENTI"||rawState==="AUTH_REQUIRED"){code="PERMESSI_INSUFFICIENTI";severity="critical";status="PERMESSI_INSUFFICIENTI";}
+    if(["ACCOUNT_ERRATO","ACCOUNT_NON_AUTORIZZATO"].includes(rawState)){code="ACCOUNT_ERRATO";severity="critical";status=rawState;}
+    if(rawState==="ACCOUNT_CONDIVISO"){code="ACCOUNT_CONDIVISO";severity="critical";status="ACCOUNT_CONDIVISO";}
     const required=requiredPublishScope(platform);
     const scopes=new Set((row?.scopes||[]).map(String));
     if(row?.enabled&&row?.verified&&required&&!scopes.has(required)){code="PERMESSI_INSUFFICIENTI";severity="critical";status="PERMESSI_INSUFFICIENTI";}

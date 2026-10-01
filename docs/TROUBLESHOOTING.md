@@ -10,3 +10,10 @@
 - `LINKEDIN_PAGE_REQUIRED`: a member profile was authorized where an organization Page is required.
 
 Never solve these errors by storing the client's password or by browser automation that bypasses the provider API.
+
+
+## Facebook Pages
+- `PAGINA_DA_SELEZIONARE`: OAuth riuscito; scegliere la Pagina corretta.
+- `PAGINA_NON_ACCESSIBILE`: il Page ID previsto non compare in `/me/accounts`; verificare l'accesso Facebook dell'utente alla Pagina e ripetere OAuth.
+- `PERMESSI_INSUFFICIENTI`: manca `pages_manage_posts` oppure i task restituiti da Meta non consentono creazione contenuti.
+- Non interpretare automaticamente questi stati come "Pagina non aziendale". Business Verification/App Review vanno indicati solo se Meta li richiede realmente.

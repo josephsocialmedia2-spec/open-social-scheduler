@@ -28,3 +28,7 @@ GitHub Pages never receives provider client secrets or stored OAuth refresh toke
 
 ## UI
 The dashboard is intentionally sparse: active clients only, name-only cards, ordered red → orange → green. Detailed connection state lives in the client/Connections workspace.
+
+
+## Facebook Page adapter
+Il Meta adapter tratta Facebook Pages e Instagram come due flussi OAuth distinti pur condividendo App ID/Secret. Facebook seleziona la Pagina per Page ID quando disponibile, verifica scope concessi e Page task, quindi fornisce al publisher un Page Access Token server-side. Vedi `docs/FACEBOOK_PAGE_CONNECTION_STANDARD.md`.

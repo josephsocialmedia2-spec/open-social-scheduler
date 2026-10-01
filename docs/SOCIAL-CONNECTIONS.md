@@ -15,3 +15,7 @@ The doctor classifies configuration missing, disconnected account, expired token
 
 ## Client invitation
 The administrator creates an expiring URL. Only SHA-256 of its bearer token is stored. The client authorizes on the provider site; the app never asks for the social password.
+
+
+## Facebook Page Connection Standard
+Facebook è trattato come Pages API, non come profilo personale generico. Il broker usa `/me/accounts`, Page ID, Page Access Token, task Pagina e scope realmente concessi. Gli URL `profile.php?id=...` vengono riconosciuti per ID. Vedi `FACEBOOK_PAGE_CONNECTION_STANDARD.md`.

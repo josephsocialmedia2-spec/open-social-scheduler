@@ -20,3 +20,7 @@ Required publishing scopes are validated at runtime:
 - LinkedIn Page: `w_organization_social`
 
 Meta/TikTok/Google/LinkedIn can require provider-side app review, testing users, business verification or product access before production use. The app must report those as external requirements instead of simulating success.
+
+
+## Facebook-only Meta OAuth
+Per Facebook il consenso è separato da Instagram. Default Facebook: `pages_show_list,pages_read_engagement,pages_manage_posts`. È possibile impostare `META_FACEBOOK_OAUTH_SCOPES`; Instagram può usare `META_INSTAGRAM_OAUTH_SCOPES`. Dopo il token exchange il broker controlla i permessi realmente concessi con `/me/permissions`.
