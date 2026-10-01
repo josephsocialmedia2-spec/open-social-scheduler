@@ -1092,7 +1092,12 @@ async function workerToken(req, url) {
       const pages = await metaAccounts(token.access_token);
       const candidates = metaCandidates(platform, pages);
       const selected = candidates.find(x => x.account_id === selection);
-      if (!selected) return respond({ error: "ACCOUNT_ERRATO" }, 409);
+      if (!selected) {
+        return respond({
+          error: platform === "facebook" ? "PAGINA_NON_ACCESSIBILE" : "ACCOUNT_ERRATO",
+          detail: platform === "facebook" ? "selected_facebook_page_not_returned_by_me_accounts" : "selected_meta_account_not_available"
+        }, 409);
+      }
       try { await assertExpectedAccount(client.owner_id, client, platform, selected, row?.scope || ""); }
       catch (e) { return respond({ error:String(e).includes("ACCOUNT_CONDIVISO")?"ACCOUNT_CONDIVISO":"ACCOUNT_ERRATO" },409); }
       const pageToken = await metaPageToken(token.access_token, selected.page_id);
@@ -1335,8 +1340,21 @@ async function verifyChannel(req) {
       const meta = await metaProfileFromSelection(platform, token.access_token, accountId, row.profile_url || null);
       profile = meta.selected;
       if (!profile) {
-        await patchChannel(user.id, client.id, platform, { verified:false, connection_status:"ACCOUNT_ERRATO", last_verified_at:nowIso() });
-        return respond({ error:"ACCOUNT_ERRATO" },409);
+        const expectedFacebookId = platform === "facebook" ? facebookIdFromUrl(row.profile_url || client.facebook || "") : "";
+        const pageMissing = !!expectedFacebookId;
+        await patchChannel(user.id, client.id, platform, {
+          verified:false,
+          enabled:false,
+          connection_status:pageMissing ? "PAGINA_NON_ACCESSIBILE" : "ACCOUNT_ERRATO",
+          last_verified_at:nowIso(),
+          oauth_metadata:{
+            ...(row.oauth_metadata || {}),
+            expected_page_id:expectedFacebookId || null,
+            reason:pageMissing ? "expected_facebook_page_not_returned_by_me_accounts" : "meta_account_not_available",
+            at:nowIso()
+          }
+        });
+        return respond({ error:pageMissing ? "PAGINA_NON_ACCESSIBILE" : "ACCOUNT_ERRATO" },409);
       }
     } else if (platform === "linkedin") {
       const candidates=await linkedinOrganizations(token.access_token);
