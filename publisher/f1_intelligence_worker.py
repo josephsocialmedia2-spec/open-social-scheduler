@@ -661,6 +661,53 @@ def StringIOText(value: Any) -> str:
     return str(value or "").replace("\r\n", "\n").replace("\r", "\n")
 
 
+def _ocr_confident_text(pytesseract: Any, image: Any, lang: str, psm: int) -> tuple[str, float]:
+    data = pytesseract.image_to_data(
+        image,
+        lang=lang,
+        config=f"--psm {psm}",
+        output_type=pytesseract.Output.DICT,
+    )
+    grouped: dict[tuple[int, int, int, int], list[tuple[str, float]]] = defaultdict(list)
+    for idx, raw_word in enumerate(data.get("text") or []):
+        word = re.sub(r"\\s+", " ", str(raw_word or "")).strip()
+        if not word:
+            continue
+        try:
+            confidence = float((data.get("conf") or [])[idx])
+        except Exception:
+            confidence = -1.0
+        if confidence < 48.0:
+            continue
+        key = (
+            int((data.get("page_num") or [0])[idx] or 0),
+            int((data.get("block_num") or [0])[idx] or 0),
+            int((data.get("par_num") or [0])[idx] or 0),
+            int((data.get("line_num") or [0])[idx] or 0),
+        )
+        grouped[key].append((word, confidence))
+
+    lines: list[str] = []
+    weighted_conf = 0.0
+    weighted_chars = 0
+    for words in grouped.values():
+        line = " ".join(word for word, _ in words)
+        line = re.sub(r"\\s+", " ", line).strip(" \\t|_")
+        if len(line) < 2:
+            continue
+        chars = sum(max(1, len(word)) for word, _ in words)
+        avg = sum(conf * max(1, len(word)) for word, conf in words) / max(1, chars)
+        if avg < 52.0:
+            continue
+        lines.append(line)
+        weighted_conf += avg * max(1, len(line))
+        weighted_chars += max(1, len(line))
+
+    text = clean_graphic_text("\n".join(lines))
+    score = (weighted_conf / weighted_chars if weighted_chars else 0.0) + min(18.0, len(text) / 90.0)
+    return text, score
+
+
 def ocr_image_file(path: Path) -> str:
     import pytesseract
     from PIL import Image, ImageEnhance, ImageOps
@@ -673,19 +720,36 @@ def ocr_image_file(path: Path) -> str:
         image = ImageOps.exif_transpose(source).convert("RGB")
         width, height = image.size
         longest = max(width, height)
-        if longest and longest < 1800:
-            scale = min(3.0, 1800.0 / float(longest))
+        if longest and longest < 2200:
+            scale = min(3.0, 2200.0 / float(longest))
             image = image.resize(
                 (max(1, int(width * scale)), max(1, int(height * scale))),
                 Image.Resampling.LANCZOS,
             )
         gray = ImageOps.grayscale(image)
         gray = ImageOps.autocontrast(gray)
-        gray = ImageEnhance.Contrast(gray).enhance(1.35)
+        gray = ImageEnhance.Contrast(gray).enhance(1.45)
+
+        candidates: list[tuple[str, float]] = []
+        for lang in ("ita+eng", "eng"):
+            try:
+                for psm in (11, 6):
+                    value, score = _ocr_confident_text(pytesseract, gray, lang, psm)
+                    if value:
+                        candidates.append((value, score))
+                if candidates:
+                    break
+            except Exception:
+                candidates = []
+
+        if candidates:
+            candidates.sort(key=lambda pair: (pair[1], len(pair[0])), reverse=True)
+            return clean_graphic_text(candidates[0][0])
+
         try:
-            raw = pytesseract.image_to_string(gray, lang="ita+eng", config="--psm 6")
+            raw = pytesseract.image_to_string(gray, lang="ita+eng", config="--psm 11")
         except Exception:
-            raw = pytesseract.image_to_string(gray, lang="eng", config="--psm 6")
+            raw = pytesseract.image_to_string(gray, lang="eng", config="--psm 11")
     return clean_graphic_text(raw)
 
 
@@ -794,11 +858,19 @@ def meaningful_graphic_lines(graphic_text: str, client: dict[str, Any]) -> list[
         low = re.sub(r"^fl\s+social\b", "f1 social", low)
         if name and low == name:
             continue
+        if name and name in low and (
+            "promozione aziendale" in low
+            or "acquisizione di contatti" in low
+            or "social intelligence" in low
+        ):
+            continue
         if re.search(r"\bf[1li]\s+social\s+intelligence\b", low):
             continue
         if low in {"attract", "nurture", "convert", "branding", "awareness"}:
             continue
         if "social intelligence for real results" in low:
+            continue
+        if "promozione aziendale" in low and "acquisizione di contatti" in low:
             continue
         if low.startswith("strategia") and any(x in low for x in ("automazione", "crescita", "intelligence")):
             continue
