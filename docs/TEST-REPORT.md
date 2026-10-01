@@ -22,34 +22,23 @@ Workflow **Real Media Pro OAuth Smoke** sul commit `0e12379cbea0853761a9611e1ecd
 
 ### Frontend e deploy
 Workflow **F1 Content Hub UI CI** sul commit `78e852ca5b4edeead796616485a98e7f0f0a94b3`: SUCCESS.
-- JavaScript workspace: OK
-- wiring Content Hub: OK
-- JavaScript inline: OK
-- media rail/design system: OK
-- HEIC → PNG browser conversion: OK
-- publisher safety checks: OK
-
 Workflow **Sync Open Social Scheduler Pages** sullo stesso commit: SUCCESS.
+Una successiva modifica collega il guard al conteggio project-wide; la relativa CI deve restare verde prima della chiusura definitiva.
 
 ### Backend
 - migrazione `later_personal_manager`: applicata
-- migrazione `free_quota_guard_enforcement`: applicata
-- migrazione `free_quota_guard_seed`: applicata
-- migrazione `free_quota_guard_status`: applicata
+- migrazioni Free Quota Guard: applicate
 - Edge Function `f1-social-oauth`: versione 17 ACTIVE
 - tabelle presenti: `f1_social_client_invites`, `f1_social_connection_health`, `f1_free_quota_usage`
 
 ### Free Quota Guard
-Stato misurato durante il test:
-- media tracciati: 924,832,087 byte
-- limite configurato: 1,073,741,824 byte
-- utilizzo: 86.13%
-- disponibile: 13.87%
-- stato: AVVISO
-
-Prove:
-- +1 MiB proiettato: consentito (86.23%)
-- +150,000,000 byte proiettati: BLOCCATO (`FREE_QUOTA_GUARD_95`)
+Il controllo usa `storage.objects` project-wide.
+Stato misurato:
+- 1,185,481,484 byte usati
+- 1,000,000,000 byte riferimento configurato
+- 118.55%
+- stato `BLOCCO`
+- +1 byte proiettato: rifiutato con `FREE_QUOTA_GUARD_95`
 
 ### Security
 - raw invite token non persistito: database conserva SHA-256
