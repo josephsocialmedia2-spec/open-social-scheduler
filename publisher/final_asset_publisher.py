@@ -64,7 +64,17 @@ def local_asset(path_value: str) -> Path:
         raise base.BufferAutomationError(f"Asset outside publisher/final_assets: {path_value}") from exc
     if not path.exists() or not path.is_file():
         raise base.BufferAutomationError(f"Missing final asset: {path_value}")
-    if path.stat().st_size < 10_000:
+    size = path.stat().st_size
+    manual_root = (ROOT / "publisher" / "final_assets" / "manual_inbox").resolve()
+    try:
+        path.relative_to(manual_root)
+        is_manual = True
+    except ValueError:
+        is_manual = False
+    if is_manual:
+        if size <= 0:
+            raise base.BufferAutomationError(f"Manual final asset is empty: {path_value}")
+    elif size < 10_000:
         raise base.BufferAutomationError(f"Final asset unexpectedly small: {path_value}")
     return path
 
