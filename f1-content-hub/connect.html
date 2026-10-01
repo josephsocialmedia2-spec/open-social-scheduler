@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0b1726">
+<title>Collega i tuoi profili social</title>
+<style>
+:root{font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;color:#142033;background:#f4f7fb}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:linear-gradient(145deg,#eef5fb,#fff 45%,#f6edf1)}
+.wrap{width:min(760px,calc(100% - 28px));margin:0 auto;padding:44px 0 70px}
+.hero{background:#fff;border:1px solid #e3e8f0;border-radius:24px;padding:26px;box-shadow:0 20px 60px #142a4812}
+.brand{font-weight:950;color:#284d78;letter-spacing:.08em;font-size:12px}.hero h1{font-size:30px;margin:8px 0 8px}.lead{color:#68758a;line-height:1.55;margin:0 0 20px}
+.notice{padding:12px 14px;border-radius:12px;margin:12px 0;background:#eef6ff;border:1px solid #cfe3fa;color:#244c77}
+.notice.ok{background:#DCFCE7;border-color:#16A34A;color:#14532D}.notice.bad{background:#FEE2E2;border-color:#DC2626;color:#7F1D1D}
+.socials{display:grid;gap:10px;margin-top:18px}.social{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;border:1px solid #e0e6ee;border-radius:15px;padding:14px 15px;background:#fff}
+.social b{display:block;font-size:16px}.social small{display:block;color:#748196;margin-top:3px}
+button{border:0;border-radius:11px;padding:10px 14px;font:inherit;font-weight:850;cursor:pointer;background:#284d78;color:white}
+button.done{background:#16A34A}button:disabled{opacity:.62;cursor:not-allowed}
+.foot{color:#758196;font-size:12px;line-height:1.5;margin:18px 4px}.loader{padding:25px;text-align:center;color:#758196}
+@media(max-width:540px){.wrap{padding-top:20px}.hero{padding:20px}.hero h1{font-size:25px}.social{grid-template-columns:1fr}.social button{width:100%}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <section class="hero">
+    <div class="brand">F1 SOCIAL · CONNESSIONE SICURA</div>
+    <h1>Collega i tuoi profili social</h1>
+    <p class="lead" id="lead">Autorizza solo i profili che vuoi far gestire. Le password restano sempre presso Facebook, Instagram, TikTok, Google o LinkedIn.</p>
+    <div id="message"></div>
+    <div id="content" class="loader">Verifica invito…</div>
+  </section>
+  <p class="foot">Il collegamento usa OAuth ufficiale. Questa pagina non chiede e non memorizza le password dei social. L’invito è temporaneo e può essere revocato dall’amministratore.</p>
+</main>
+<script>
+const SUPABASE_URL="https://nqnmlsmeiynxbdojeyjt.supabase.co";
+const SUPABASE_KEY="sb_publishable_Clz5qPTkTtvwV0rqWTcfMQ_sCDSRgnu";
+const BROKER=SUPABASE_URL+"/functions/v1/f1-social-oauth";
+const TOKEN_KEY="f1-social-client-invite";
+const label={facebook:"Facebook",instagram:"Instagram",tiktok:"TikTok",youtube:"YouTube",linkedin:"LinkedIn"};
+const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
+function setMessage(text,type){document.getElementById("message").innerHTML=text?'<div class="notice '+(type||"")+'">'+esc(text)+'</div>':""}
+async function api(path){
+  const r=await fetch(BROKER+path,{headers:{apikey:SUPABASE_KEY,"cache-control":"no-store"}});
+  let data={};try{data=await r.json()}catch(_){}
+  if(!r.ok)throw new Error(data.error||data.detail||"Connessione non disponibile");
+  return data;
+}
+function token(){
+  const params=new URLSearchParams(location.search);
+  const incoming=params.get("invite");
+  if(incoming){
+    sessionStorage.setItem(TOKEN_KEY,incoming);
+    params.delete("invite");
+    history.replaceState({},document.title,location.pathname+(params.toString()?"?"+params.toString():""));
+    return incoming;
+  }
+  return sessionStorage.getItem(TOKEN_KEY)||"";
+}
+async function connect(platform){
+  const raw=token();if(!raw)return;
+  try{
+    document.querySelectorAll("button").forEach(b=>b.disabled=true);
+    const data=await api("/invite/authorize?token="+encodeURIComponent(raw)+"&platform="+encodeURIComponent(platform));
+    location.href=data.authorization_url;
+  }catch(e){
+    document.querySelectorAll("button").forEach(b=>b.disabled=false);
+    setMessage(e.message||String(e),"bad");
+  }
+}
+async function load(){
+  const raw=token();
+  const params=new URLSearchParams(location.search);
+  const oauth=params.get("oauth");
+  if(oauth==="connected")setMessage("Profilo collegato correttamente.","ok");
+  else if(oauth==="select_account")setMessage("Autorizzazione ricevuta. È necessario selezionare l'account corretto dall'amministratore.","");
+  else if(oauth==="denied")setMessage("Autorizzazione annullata. Nessun profilo è stato collegato.","bad");
+  else if(oauth==="error")setMessage("Il provider non ha completato la connessione. Puoi riprovare.","bad");
+  if(!raw){document.getElementById("content").innerHTML='<div class="notice bad">Invito mancante o non più disponibile.</div>';return}
+  try{
+    const data=await api("/invite/info?token="+encodeURIComponent(raw));
+    document.getElementById("lead").innerHTML="Collega i profili social di <b>"+esc(data.client.name)+"</b>. Autorizza soltanto gli account corretti.";
+    const rows=(data.platforms||[]).map(p=>{
+      const done=!!p.connected;
+      const status=done?"Collegato":String(p.state||"Da collegare").replaceAll("_"," ");
+      return '<div class="social"><div><b>'+esc(label[p.platform]||p.platform)+'</b><small>'+esc(p.account_name||status)+'</small></div>'+
+        '<button class="'+(done?"done":"")+'" '+(done?"disabled":"")+' onclick="connect(\''+esc(p.platform)+'\')">'+(done?"COLLEGATO":"COLLEGA")+'</button></div>';
+    }).join("");
+    const all=(data.platforms||[]).length&&(data.platforms||[]).every(p=>p.connected);
+    document.getElementById("content").className="socials";
+    document.getElementById("content").innerHTML=rows||'<div class="notice">Nessun profilo previsto per questo invito.</div>';
+    if(all)setMessage("Connessione completata. Puoi chiudere questa pagina.","ok");
+  }catch(e){
+    document.getElementById("content").innerHTML='<div class="notice bad">'+esc(e.message||String(e))+'</div>';
+  }
+}
+load();
+</script>
+</body>
+</html>
