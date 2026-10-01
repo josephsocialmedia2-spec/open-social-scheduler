@@ -21,9 +21,9 @@ Workflow **Real Media Pro OAuth Smoke** sul commit `0e12379cbea0853761a9611e1ecd
 - provider app configuration rilevata: TikTok e YouTube configurati; Facebook, Instagram e LinkedIn richiedono configurazione provider/app
 
 ### Frontend e deploy
-Workflow **F1 Content Hub UI CI** sul commit `78e852ca5b4edeead796616485a98e7f0f0a94b3`: SUCCESS.
+Workflow **F1 Content Hub UI CI** sul commit finale frontend `d1fb18c59dbd43e80ea2fcd74d9579198530bd4d`: SUCCESS.
 Workflow **Sync Open Social Scheduler Pages** sullo stesso commit: SUCCESS.
-Una successiva modifica collega il guard al conteggio project-wide; la relativa CI deve restare verde prima della chiusura definitiva.
+La versione pubblicata include il Free Quota Guard project-wide.
 
 ### Backend
 - migrazione `later_personal_manager`: applicata
