@@ -1,54 +1,17 @@
-name: F1 News PC Immediate
+name: F1 News PC Graphic Generation (ARCHIVED - F1 MANUAL PUBLISH ONLY)
 
 on:
   workflow_dispatch:
-    inputs:
-      slot:
-        description: "F1 News slot to execute on the Windows browser runner"
-        required: true
-        default: "evening"
-        type: choice
-        options:
-          - evening
-          - midday
-          - immediate
-  push:
-    branches: [main]
-    paths:
-      - 'publisher/news/F1_NEWS_PC_IMMEDIATE'
 
 permissions:
   contents: read
 
-concurrency:
-  group: f1-news-pc-immediate
-  cancel-in-progress: true
-
 jobs:
-  execute-browser-job:
-    runs-on: self-hosted
-    timeout-minutes: 45
-
+  archived:
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout main
-        uses: actions/checkout@v5
-        with:
-          ref: main
-          fetch-depth: 0
-
-      - name: Confirm Windows interactive runner
-        shell: powershell
+      - name: Manual-only policy
         run: |
-          if ($env:OS -ne 'Windows_NT') { throw 'The connected self-hosted runner is not Windows.' }
-          Write-Host "COMPUTERNAME=$env:COMPUTERNAME"
-          Write-Host "USERNAME=$env:USERNAME"
-          Write-Host "SESSIONNAME=$env:SESSIONNAME"
-          if ($env:SESSIONNAME -eq 'Services') {
-            throw 'Self-hosted runner is running as a Windows service; ChatGPT browser automation requires an interactive desktop session.'
-          }
-
-      - name: Execute exact queued F1 News browser job now
-        shell: powershell
-        run: |
-          $slot = if ('${{ github.event_name }}' -eq 'workflow_dispatch') { '${{ inputs.slot }}' } else { 'evening' }
-          powershell.exe -NoProfile -ExecutionPolicy Bypass -File "publisher\f1_graphics_automation\RUN_F1_NEWS_SLOT.ps1" -Slot $slot
+          echo "ARCHIVED: F1 no longer generates graphics."
+          echo "Upload the final operator-created graphic to the F1 manual publisher."
+          echo "No ChatGPT, Leonardo, Firefly, renderer or image-generation runtime is executed."
