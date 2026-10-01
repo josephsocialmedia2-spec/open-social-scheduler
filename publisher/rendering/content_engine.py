@@ -30,6 +30,7 @@ except ImportError:
     from f1_mandatory_cta import apply_graphic_cta
 
 ROOT = Path(__file__).resolve().parents[2]
+F1_CLIENT_CONFIG = ROOT / "publisher" / "clients" / "f1-immobiliare.json"
 STATIC_TYPES = {"static", "photo", "carousel"}
 VIDEO_TYPES = {"reel", "video", "story", "ugc"}
 
@@ -49,6 +50,24 @@ DEFAULT_BRAND = {
 
 class ContentSpecError(ValueError):
     pass
+
+
+def f1_manual_publish_only() -> bool:
+    try:
+        cfg = json.loads(F1_CLIENT_CONFIG.read_text(encoding="utf-8"))
+    except Exception:
+        return False
+    return (
+        str(cfg.get("graphics_source") or "") == "manual_only"
+        and cfg.get("automatic_rendering") is False
+        and cfg.get("publish_only") is True
+    )
+
+
+def targets_f1(raw: dict[str, Any]) -> bool:
+    brand = dict(raw.get("brand") or {})
+    name = str(brand.get("name") or DEFAULT_BRAND["name"]).strip().upper()
+    return name.startswith("F1")
 
 
 def normalize_spec(raw: dict[str, Any]) -> dict[str, Any]:
@@ -139,6 +158,8 @@ def generate_content(
     output: str | Path | None = None,
     allow_fallback: bool = True,
 ) -> dict[str, Any]:
+    if targets_f1(content_spec) and f1_manual_publish_only():
+        raise RuntimeError("F1 MANUAL PUBLISH ONLY: Renderer V2 cannot create or modify F1 graphics.")
     spec = normalize_spec(content_spec)
     out = Path(output) if output else default_output(spec)
     if not out.is_absolute():
