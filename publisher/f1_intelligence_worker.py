@@ -1081,8 +1081,30 @@ def process_content(
     emit_event(owner_id, client_id, content_id, str(job["id"]), "ANALISI", "RUNNING", "Analisi automatica formato, media e compatibilità", 20)
 
     if not media_rows:
-        emit_event(owner_id, client_id, content_id, str(job["id"]), "MEDIA", "BLOCKED", "MEDIA_MISSING", 25)
-        update_job(job, "BLOCKED", "MEDIA", last_error="MEDIA_MISSING")
+        regenerate_graphic_captions(
+            client,
+            item,
+            [],
+            calendars,
+            job,
+            {"status": "MEDIA_MISSING", "caption_source": "CONTENT_TEXT_FALLBACK"},
+        )
+        emit_event(
+            owner_id, client_id, content_id, str(job["id"]),
+            "MEDIA", "BLOCKED",
+            "MEDIA_MISSING · caption automatica creata dal testo disponibile", 80,
+        )
+        update_job(
+            job,
+            "BLOCKED",
+            "MEDIA",
+            last_error="MEDIA_MISSING",
+            result={
+                "caption_generated": True,
+                "caption_source": "CONTENT_TEXT_FALLBACK",
+                "publication_blocked": True,
+            },
+        )
         return {"published": 0, "scheduled": 0, "blocked": 1}
 
     if any(is_heic(m) for m in media_rows):
