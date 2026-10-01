@@ -239,6 +239,12 @@ def assert_no_generation_in_manual_runtime() -> None:
         for forbidden in ("chatgpt_query_runner.worker", "free_browser_router", "F1_CREATIVE_BACKEND"):
             assert forbidden not in text
 
+    workspace = (ROOT / "f1-content-hub" / "client-workspace.js").read_text(encoding="utf-8")
+    assert 'client.slug==="f1-immobiliare"' in workspace
+    assert "Nessuna grafica o caption viene generata automaticamente." in workspace
+    assert 'manualF1?String(base||"").trim():captionFor' in workspace
+    assert 'F1 Immobiliare è in modalità manual publish-only' in workspace
+
 
 def main() -> int:
     assert_manual_config()
