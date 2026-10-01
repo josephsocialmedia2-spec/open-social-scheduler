@@ -1,8 +1,17 @@
-name: F1 Design V2 (ARCHIVED - ChatGPT Creative replaces final graphics)
+name: f1 design v2 (ARCHIVED - F1 MANUAL PUBLISH ONLY)
+
 on:
   workflow_dispatch:
+
+permissions:
+  contents: read
+
 jobs:
   archived:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "ARCHIVED. Final F1 creative production now uses .github/workflows/f1-chatgpt-creative.yml"
+      - name: Manual-only policy
+        run: |
+          echo "ARCHIVED: F1 graphics are supplied manually by the operator."
+          echo "This legacy preview/render workflow no longer generates, renders or republishes F1 graphics."
+          echo "Use publisher/manual_asset_inbox and the manual final-asset publisher."
