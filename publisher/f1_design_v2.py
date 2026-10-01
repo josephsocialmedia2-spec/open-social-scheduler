@@ -5,7 +5,14 @@ from io import BytesIO
 import requests
 from PIL import Image,ImageDraw,ImageFont,ImageFilter,ImageEnhance,ImageOps
 
-OUT=Path("publisher/media/generated/f1-design-v2"); OUT.mkdir(parents=True,exist_ok=True)
+CLIENT=Path("publisher/clients/f1-immobiliare.json")
+
+def generation_disabled():
+ import json
+ cfg=json.loads(CLIENT.read_text(encoding="utf-8"))
+ return str(cfg.get("graphics_source") or "")=="manual_only" and cfg.get("automatic_rendering") is False and cfg.get("publish_only") is True
+
+OUT=Path("publisher/media/generated/f1-design-v2")
 GREEN=(78,158,21); DARK=(10,13,10); WHITE=(248,248,244); MUTED=(213,218,210)
 BASE="https://github.com/josephsocialmedia2-spec/open-social-scheduler/releases/download/f1-feed-latest"
 items={
@@ -68,5 +75,14 @@ def render(code):
  out=OUT/(f"{code}-V2-cover.jpg" if reel else f"{code}-V2-slide-01.jpg")
  im.save(out,"JPEG",quality=95,optimize=True)
  return out
-for c in items:
- p=render(c); print(p)
+def main():
+ if generation_disabled():
+  print("F1 MANUAL PUBLISH ONLY: Design V2 renderer is disabled.")
+  return 0
+ OUT.mkdir(parents=True,exist_ok=True)
+ for c in items:
+  p=render(c); print(p)
+ return 0
+
+if __name__=="__main__":
+ raise SystemExit(main())
