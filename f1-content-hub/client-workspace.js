@@ -94,7 +94,7 @@ function resetUploadBatch(files){
 }
 async function checkFreeMediaQuota(incomingBytes){
   const quota=await sb.rpc("f1_check_free_quota",{
-    p_service_key:"supabase_storage_media",
+    p_service_key:"supabase_storage_project",
     p_incoming_value:Math.max(0,Number(incomingBytes)||0)
   });
   if(quota.error)throw new Error("FREE QUOTA GUARD non disponibile: "+(quota.error.message||"verifica fallita"));
