@@ -1,7 +1,8 @@
-bootstrap=2026-09-27
+bootstrap=2026-10-01
 mode=all-clients
-focus_client=antica-cappella
+focus_client=all
 real-estate=approval-required
 requested_by=central-operator
-reason=test-and-start-antica-cappella-work
-run_at=2026-09-27T09:36Z
+reason=regenerate-captions-from-graphic-text
+pipeline=F1_INTELLIGENCE_V2_GRAPHIC_CAPTION
+run_at=2026-10-01T12:05Z
