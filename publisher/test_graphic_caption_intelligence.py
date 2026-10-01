@@ -28,6 +28,17 @@ class GraphicCaptionIntelligenceTests(unittest.TestCase):
             self.assertIn("VALUTAZIONE IMMOBILE", caption)
             self.assertIn("Richiedi informazioni", caption)
 
+    def test_missing_graphic_falls_back_to_content_text(self):
+        item = {
+            "title": "Titolo contenuto",
+            "description": "Testo disponibile senza grafica",
+            "distribution_plan": {},
+        }
+        result = worker.extract_graphic_text(item, [])
+        self.assertEqual(result["source"], "CONTENT_TEXT_FALLBACK")
+        self.assertFalse(result["ocr_used"])
+        self.assertIn("Testo disponibile senza grafica", result["text"])
+
     def test_platform_lengths_are_bounded(self):
         client = {"name": "Cliente Demo"}
         item = {"title": "Test"}
