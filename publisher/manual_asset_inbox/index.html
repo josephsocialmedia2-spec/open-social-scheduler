@@ -1,140 +1,179 @@
 <!doctype html>
 <html lang="it">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>F1 Immobiliare — Raccolta Grafiche</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>F1 Immobiliare — Pubblicazione grafiche</title>
   <style>
-    :root{--g:#4E9E15;--gb:#64C800;--d:#0A0D0A;--w:#fff;--m:#e9eee6;--t:#5a6257;--r:#a51f1f;--a:#fff7df}
-    *{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f4f6f2;color:var(--d)}
-    header{background:var(--d);color:#fff;padding:22px 28px;display:flex;justify-content:space-between;align-items:center;gap:20px}header b{font-size:24px}header span{color:var(--gb);font-weight:700}
-    main{max-width:1240px;margin:28px auto;padding:0 22px 60px}.panel{background:#fff;border:1px solid #dfe5dc;border-radius:18px;padding:22px;box-shadow:0 8px 28px rgba(10,13,10,.05);margin-bottom:20px}
-    h1{margin:0 0 8px;font-size:34px}h2{margin:0 0 10px;font-size:23px}.muted{color:var(--t)}.notice{background:#eef8e8;border-left:5px solid var(--g);padding:14px 16px;border-radius:10px;font-weight:700;line-height:1.45}
-    .summary{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}.pill{background:#f2f5f0;border:1px solid #dfe5dc;border-radius:999px;padding:8px 12px;font-weight:800;font-size:13px}.pill.good{background:#e9f8e2;color:#245c06}.pill.warn{background:#fff2cf;color:#6e4b00}
-    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-top:18px}.card{background:#fff;border:1px solid #dfe5dc;border-radius:16px;overflow:hidden;box-shadow:0 6px 20px rgba(10,13,10,.05)}.thumb{width:100%;aspect-ratio:4/5;object-fit:cover;background:#e8ece6}.card-body{padding:14px}
-    .tag{display:inline-block;background:#edf6e8;color:#2f6c0a;padding:5px 9px;border-radius:999px;font-size:12px;font-weight:800;margin-bottom:8px}.tag.err{background:#fdeaea;color:#8b1616}.tag.warn{background:#fff4d8;color:#705000}.small{font-size:12px;color:#6a7167;line-height:1.4}.prompt{font-size:12px;background:#f5f7f3;border-radius:9px;padding:9px;margin:8px 0;line-height:1.35}
-    label.field{display:block;font-size:12px;font-weight:800;margin:10px 0 5px;color:#3f463d}select,input[type=text],input[type=datetime-local],textarea{width:100%;border:1px solid #cfd8cb;border-radius:10px;padding:10px;font:inherit;background:#fff}textarea{min-height:90px;resize:vertical}
-    .drop{border:2px dashed #9eb792;border-radius:18px;padding:30px;text-align:center;background:#fbfdf9;cursor:pointer;display:block}.drop strong{font-size:20px;display:block;margin-bottom:8px}input[type=file]{display:none}
-    .actions{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0}button,a.btn{border:0;border-radius:12px;padding:13px 18px;font-weight:800;cursor:pointer;text-decoration:none;display:inline-block}button:disabled{opacity:.55;cursor:not-allowed}.primary{background:var(--g);color:#fff}.dark{background:var(--d);color:#fff}.light{background:#e7eee3;color:var(--d)}
-    .approval{display:flex;gap:10px;align-items:flex-start;background:var(--a);border:1px solid #ecd7a3;padding:14px;border-radius:12px;margin-top:16px;font-weight:700;line-height:1.4}.approval input{margin-top:3px;transform:scale(1.2)}.selectline{display:flex;gap:8px;align-items:center;font-weight:800}.selectline input{transform:scale(1.25)}
-    .status{padding:12px 14px;border-radius:10px;margin-top:14px;display:none;white-space:pre-wrap}.status.ok{display:block;background:#eaf7e3;color:#245c06}.status.err{display:block;background:#fdeaea;color:#8b1616}.empty{padding:25px;text-align:center;border:1px dashed #ccd6c8;border-radius:14px;color:#6a7167}
-    @media(max-width:700px){h1{font-size:27px}header{align-items:flex-start;flex-direction:column}}
+    :root{--g:#64c800;--d:#0a0d0a;--w:#fff;--bg:#f4f6f2;--line:#dfe5dc;--muted:#657064;--err:#a51f1f}
+    *{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--d)}
+    header{background:var(--d);color:#fff;padding:22px 28px;display:flex;justify-content:space-between;gap:16px;align-items:center}header b{font-size:24px}header span{color:var(--g);font-weight:800}
+    main{max-width:1180px;margin:28px auto;padding:0 20px 60px}.panel{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;margin-bottom:18px;box-shadow:0 8px 28px rgba(10,13,10,.05)}
+    h1,h2{margin:0 0 10px}.muted{color:var(--muted);line-height:1.5}.notice{padding:14px 16px;border-left:5px solid var(--g);background:#edf8e8;border-radius:10px;font-weight:700;line-height:1.45}
+    .drop{border:2px dashed #9eb792;border-radius:18px;padding:34px;text-align:center;background:#fbfdf9;cursor:pointer;display:block}.drop strong{display:block;font-size:22px;margin-bottom:7px}input[type=file]{display:none}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:16px;margin-top:18px}.card{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#fff}.thumb{width:100%;aspect-ratio:4/5;object-fit:cover;background:#e8ece6}.body{padding:14px}
+    label.field{display:block;font-size:12px;font-weight:800;margin:11px 0 5px}input[type=text],input[type=datetime-local],textarea{width:100%;border:1px solid #cfd8cb;border-radius:10px;padding:10px;font:inherit}textarea{min-height:110px;resize:vertical}
+    .platforms{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px}.platforms label{font-weight:700;font-size:13px}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}button{border:0;border-radius:12px;padding:13px 18px;font-weight:800;cursor:pointer}button:disabled{opacity:.55}.primary{background:#4e9e15;color:#fff}.light{background:#e7eee3;color:#111}
+    .approval{display:flex;gap:10px;align-items:flex-start;margin-top:18px;padding:14px;border:1px solid #d5dfcf;background:#f7faf5;border-radius:12px;font-weight:700;line-height:1.45}.approval input{margin-top:3px;transform:scale(1.2)}
+    .status{display:none;margin-top:14px;padding:12px;border-radius:10px;white-space:pre-wrap}.status.ok{display:block;background:#eaf7e3;color:#245c06}.status.err{display:block;background:#fdeaea;color:#8b1616}
+    .queue{display:grid;gap:9px}.qrow{display:grid;grid-template-columns:1.4fr .7fr 1.6fr .8fr;gap:10px;padding:11px;border:1px solid var(--line);border-radius:10px;font-size:13px}.badge{font-weight:800}.good{color:#2d6c0a}.warn{color:#8a5a00}.bad{color:#9c2020}.caption-preview{white-space:pre-wrap;max-height:90px;overflow:auto}.qactions{display:flex;gap:6px;flex-wrap:wrap}.qactions button{padding:7px 9px;font-size:11px}
+    @media(max-width:700px){header{align-items:flex-start;flex-direction:column}.qrow{grid-template-columns:1fr}.grid{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
-<header><b>F1 IMMOBILIARE <span>AUTOPUBLISHER</span></b><div>Comunicato → Grafica → Pubblicazione automatica</div></header>
+<header><b>F1 IMMOBILIARE <span>PUBLISH ONLY</span></b><div>Tu crei la grafica · il sistema la pubblica</div></header>
 <main>
-  <section class="panel" id="autonomousPanel">
-    <h1>Nuovo comunicato</h1>
-    <p class="muted">Inserisci il testo da comunicare alla clientela. Da questo momento il sistema procede autonomamente: crea la grafica, la verifica, la inserisce nella coda di pubblicazione, la invia ai social configurati e controlla l'esito.</p>
-    <label class="field" for="communicationInput">COMUNICATO</label>
-    <textarea id="communicationInput" style="min-height:170px;font-size:18px;line-height:1.5" placeholder="Scrivi qui il comunicato per la clientela..."></textarea>
-    <div class="actions"><button class="primary" id="publishCommunicationBtn">PUBBLICA</button></div>
-    <div id="communicationStatus" class="status"></div>
-    <div id="communicationHistory" class="summary"></div>
+  <section class="panel">
+    <h1>Carica le grafiche definitive</h1>
+    <p class="muted">Il sistema non genera, non ritocca e non impagina immagini. Il file che carichi viene salvato senza modifiche, verificato tecnicamente con SHA256 e consegnato al publisher.</p>
+    <div class="notice">PIXEL IN → PIXEL OUT. Nessun GPT grafico, nessun brand layer, nessuna rigenerazione.</div>
   </section>
 
   <section class="panel">
-    <h2>Raccolta tecnica — fallback</h2>
-    <p class="muted">Questa sezione non è necessaria nel flusso normale. Serve solo per diagnosi o recupero manuale se un'automazione esterna non può completare il ciclo.</p>
-    <div class="notice">Se il ciclo notturno è riuscito, non devi scaricare e ricaricare i file: sono già disponibili nella sezione “Generate automaticamente”. Il trascinamento manuale resta come fallback.</div>
-    <div class="summary">
-      <span class="pill"><span id="generatedCount">0</span> generate automaticamente</span>
-      <span class="pill"><span id="manualCount">0</span> caricate manualmente</span>
-      <span class="pill" id="runPill">Stato: caricamento…</span>
-    </div>
-    <div class="actions"><a class="btn dark" href="https://chatgpt.com/g/g-6a9c210485488191b072eb694c2f114c-generatore-grafica-f1" target="_blank">APRI GENERATORE GRAFICA F1</a><button class="light" id="refreshBtn">AGGIORNA RACCOLTA</button></div>
-  </section>
-
-  <section class="panel">
-    <h2>Generate automaticamente — fallback tecnico</h2>
-    <p class="muted">Vengono mostrate solo immagini che il worker ha realmente rilevato e salvato su disco.</p>
-    <div id="generatedGrid" class="grid"></div>
-    <div class="approval"><input id="approveGenerated" type="checkbox"><label for="approveGenerated">Ho controllato le grafiche selezionate, gli abbinamenti e gli orari. Autorizzo l'invio a GitHub e l'inserimento nella coda READY.</label></div>
-    <div class="actions"><button class="primary" id="sendGeneratedBtn">APPROVA SELEZIONATE E METTI IN CODA</button></div>
-    <div id="generatedStatus" class="status"></div>
-  </section>
-
-  <section class="panel">
-    <h2>Caricamento manuale — fallback</h2>
-    <label class="drop" id="dropZone" for="fileInput"><strong>TRASCINA QUI LE GRAFICHE</strong>PNG, JPG, JPEG o WEBP — solo se il download automatico non è disponibile</label>
+    <label class="drop" id="dropZone" for="fileInput"><strong>TRASCINA QUI LE GRAFICHE</strong>PNG, JPG/JPEG o WEBP</label>
     <input id="fileInput" type="file" accept="image/png,image/jpeg,image/webp" multiple>
     <div id="manualGrid" class="grid"></div>
-    <div class="approval"><input id="approveManual" type="checkbox"><label for="approveManual">Ho controllato i file caricati, query e orari. Autorizzo l'invio a GitHub e la coda READY.</label></div>
-    <div class="actions"><button class="primary" id="sendManualBtn">APPROVA FILE MANUALI E METTI IN CODA</button><button class="light" id="clearManualBtn">SVUOTA</button></div>
+    <div class="approval"><input id="approveManual" type="checkbox"><label for="approveManual">Confermo che le grafiche sono definitive e approvo grafica, caption, piattaforme e data/ora. Se una caption è vuota, quel contenuto resterà in attesa e non verrà pubblicato.</label></div>
+    <div class="actions"><button class="primary" id="sendManualBtn">APPROVA E METTI IN CODA</button><button class="light" id="clearManualBtn">SVUOTA</button></div>
     <div id="manualStatus" class="status"></div>
+  </section>
+
+  <section class="panel">
+    <h2>Stato pubblicazioni manuali</h2>
+    <p class="muted">Qui vedi gli ultimi contenuti F1 entrati nella coda manuale e gli eventuali link dei post pubblicati.</p>
+    <div id="queueStatus" class="queue"></div>
   </section>
 </main>
 <script>
-let queries=[], generated=[], manual=[];
+let manual=[];
 const $=id=>document.getElementById(id);
-
-async function loadCommunications(){
-  const box=$('communicationHistory');
-  try{
-    const r=await fetch('/api/communications',{cache:'no-store'}),d=await r.json();
-    const items=(d.items||[]).slice().reverse().slice(0,5);
-    if(!items.length){box.innerHTML='<span class="pill">Nessun comunicato ancora inviato</span>';return}
-    box.innerHTML=items.map(x=>{
-      const status=String(x.status||'N/D');
-      const cls=status==='PUBLISHED'?'good':(status==='ERROR'?'warn':'');
-      const links=(x.published_urls||[]).map(u=>'<a href="'+esc(u)+'" target="_blank">POST</a>').join(' · ');
-      return '<span class="pill '+cls+'">'+esc(x.id)+' · '+esc(status)+(links?' · '+links:'')+'</span>';
-    }).join('');
-  }catch(e){box.innerHTML='<span class="pill warn">Stato pubblicazione non disponibile</span>'}
-}
-
-async function publishCommunication(){
-  const input=$('communicationInput'),st=$('communicationStatus'),btn=$('publishCommunicationBtn');
-  const communication=String(input.value||'').trim();
-  st.className='status';st.textContent='';
-  if(!communication){st.className='status err';st.textContent='Inserisci il comunicato.';return}
-  btn.disabled=true;
-  try{
-    const r=await fetch('/api/communications',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({communication})
-    });
-    const d=await r.json();
-    if(!r.ok||!d.ok)throw new Error(d.error||'Avvio non riuscito');
-    input.value='';
-    st.className='status ok';
-    st.textContent='AVVIATO — '+d.id+'. Il sistema procede automaticamente fino alla pubblicazione.';
-    await loadCommunications();
-  }catch(e){
-    st.className='status err';
-    st.textContent='ERRORE — '+e.message;
-  }finally{btn.disabled=false}
-}
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
-function nextSchedule(){const d=new Date(),m=new Date(d);if(d.getHours()<10)m.setHours(10,30,0,0);else if(d.getHours()<18)m.setHours(18,30,0,0);else{m.setDate(m.getDate()+1);m.setHours(10,30,0,0)}const off=m.getTimezoneOffset();return new Date(m.getTime()-off*60000).toISOString().slice(0,16)}
-function qrow(id){return queries.find(q=>String(q.id||'')===String(id||''))||{}}
-async function loadAll(){
-  const [qr,gr,sr]=await Promise.all([fetch('/api/queries',{cache:'no-store'}),fetch('/api/generated',{cache:'no-store'}),fetch('/api/run-status',{cache:'no-store'})]);
-  const qd=await qr.json(),gd=await gr.json(),sd=await sr.json();queries=qd.queries||[];
-  generated=(gd.generated||[]).map((x,i)=>({...x,selected:true,caption:'',scheduled_at:nextSchedule(),family:qrow(x.query_id).family||'property'}));
-  $('generatedCount').textContent=generated.length;$('runPill').textContent=`Stato: ${sd.status||'N/D'}`;$('runPill').className='pill '+(sd.status==='GRAFICHE_PRONTE'?'good':sd.status==='PARZIALE'?'warn':'');renderGenerated();
+
+function nextSchedule(){
+  const d=new Date(),m=new Date(d);
+  if(d.getHours()<10)m.setHours(10,30,0,0);
+  else if(d.getHours()<18)m.setHours(18,30,0,0);
+  else{m.setDate(m.getDate()+1);m.setHours(10,30,0,0)}
+  const off=m.getTimezoneOffset();
+  return new Date(m.getTime()-off*60000).toISOString().slice(0,16);
 }
-function renderGenerated(){
-  $('generatedCount').textContent=generated.length;
-  if(!generated.length){$('generatedGrid').innerHTML='<div class="empty">Nessuna immagine verificata e salvata nell’ultima esecuzione.</div>';return}
-  $('generatedGrid').innerHTML=generated.map((x,i)=>`<article class="card"><img class="thumb" src="${esc(x.image_url)}?t=${Date.now()}" alt="grafica F1"><div class="card-body"><label class="selectline"><input type="checkbox" data-gsel="${i}" ${x.selected?'checked':''}> SELEZIONA</label><span class="tag ${x.status==='COMPLETED'?'':'warn'}">${esc(x.status)}</span><div><b>${esc(x.query_id)}</b></div><div class="small">${esc(x.query)}</div><div class="prompt">${esc(x.prompt)}</div><div class="small">Acquisizione: ${esc(x.capture_mode||'n/d')} · retry: ${x.retry_count||0}</div><label class="field">Data/ora pubblicazione</label><input type="datetime-local" data-gschedule="${i}" value="${esc(x.scheduled_at)}"><label class="field">Caption facoltativa</label><textarea data-gcaption="${i}" placeholder="Vuota = caption automatica">${esc(x.caption)}</textarea></div></article>`).join('');
-  document.querySelectorAll('[data-gsel]').forEach(el=>el.onchange=()=>{generated[+el.dataset.gsel].selected=el.checked;$('approveGenerated').checked=false});
-  document.querySelectorAll('[data-gschedule]').forEach(el=>el.onchange=()=>{generated[+el.dataset.gschedule].scheduled_at=el.value;$('approveGenerated').checked=false});
-  document.querySelectorAll('[data-gcaption]').forEach(el=>el.oninput=()=>{generated[+el.dataset.gcaption].caption=el.value;$('approveGenerated').checked=false});
+function addManual(list){
+  for(const f of list){
+    if(!f.type.startsWith('image/'))continue;
+    manual.push({
+      file:f,
+      title:f.name.replace(/\.[^.]+$/,''),
+      caption:'',
+      territory:'',
+      scheduled_at:nextSchedule(),
+      platforms:{facebook:true,instagram:true,linkedin:false}
+    });
+  }
+  $('approveManual').checked=false;
+  renderManual();
 }
-async function sendGenerated(){
-  const st=$('generatedStatus');st.className='status';st.textContent='';const chosen=generated.filter(x=>x.selected);
-  if(!chosen.length){st.className='status err';st.textContent='Seleziona almeno una grafica.';return}if(!$('approveGenerated').checked){st.className='status err';st.textContent='Spunta la conferma di approvazione.';return}
-  const items=chosen.map(x=>({image_path:x.image_path,query_id:x.query_id,query:x.query,family:x.family,caption:x.caption,scheduled_at:x.scheduled_at?new Date(x.scheduled_at).toISOString():''}));
-  $('sendGeneratedBtn').disabled=true;try{const r=await fetch('/api/ingest-generated',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({items})});const d=await r.json();if(!r.ok||!d.ok)throw new Error(d.error||'Errore');st.className='status ok';st.textContent=`OK — ${d.created.length} grafiche inviate a GitHub e messe in coda READY.`;$('approveGenerated').checked=false}catch(e){st.className='status err';st.textContent=`ERRORE — ${e.message}`}finally{$('sendGeneratedBtn').disabled=false}
+function renderManual(){
+  if(!manual.length){$('manualGrid').innerHTML='<div class="muted">Nessuna grafica caricata.</div>';return}
+  $('manualGrid').innerHTML=manual.map((x,i)=>{
+    const u=URL.createObjectURL(x.file);
+    return '<article class="card">'+
+      '<img class="thumb" src="'+u+'" alt="">'+
+      '<div class="body"><b>'+esc(x.file.name)+'</b>'+
+      '<label class="field">Titolo interno</label><input type="text" data-title="'+i+'" value="'+esc(x.title)+'">'+
+      '<label class="field">Caption</label><textarea data-caption="'+i+'" placeholder="Scrivi la caption esatta da pubblicare">'+esc(x.caption)+'</textarea>'+
+      '<label class="field">Comune / territorio (facoltativo)</label><input type="text" data-territory="'+i+'" value="'+esc(x.territory)+'" placeholder="es. Avigliana">'+
+      '<label class="field">Data e ora</label><input type="datetime-local" data-schedule="'+i+'" value="'+esc(x.scheduled_at)+'">'+
+      '<label class="field">Social</label><div class="platforms">'+
+        '<label><input type="checkbox" data-platform="'+i+'" data-p="facebook" '+(x.platforms.facebook?'checked':'')+'> Facebook</label>'+
+        '<label><input type="checkbox" data-platform="'+i+'" data-p="instagram" '+(x.platforms.instagram?'checked':'')+'> Instagram</label>'+
+        '<label><input type="checkbox" data-platform="'+i+'" data-p="linkedin" '+(x.platforms.linkedin?'checked':'')+'> LinkedIn</label>'+
+      '</div>'+
+      '<div class="actions"><button class="primary" data-now="'+i+'">PUBBLICA ORA</button><button class="light" data-remove="'+i+'">RIMUOVI</button></div></div></article>';
+  }).join('');
+
+  document.querySelectorAll('[data-title]').forEach(el=>el.oninput=()=>{manual[+el.dataset.title].title=el.value;$('approveManual').checked=false});
+  document.querySelectorAll('[data-caption]').forEach(el=>el.oninput=()=>{manual[+el.dataset.caption].caption=el.value;$('approveManual').checked=false});
+  document.querySelectorAll('[data-territory]').forEach(el=>el.oninput=()=>{manual[+el.dataset.territory].territory=el.value;$('approveManual').checked=false});
+  document.querySelectorAll('[data-schedule]').forEach(el=>el.onchange=()=>{manual[+el.dataset.schedule].scheduled_at=el.value;$('approveManual').checked=false});
+  document.querySelectorAll('[data-platform]').forEach(el=>el.onchange=()=>{manual[+el.dataset.platform].platforms[el.dataset.p]=el.checked;$('approveManual').checked=false});
+  document.querySelectorAll('[data-now]').forEach(el=>el.onclick=()=>{
+    const i=+el.dataset.now,d=new Date(),off=d.getTimezoneOffset();
+    manual[i].scheduled_at=new Date(d.getTime()-off*60000).toISOString().slice(0,16);
+    $('approveManual').checked=false;
+    renderManual();
+  });
+  document.querySelectorAll('[data-remove]').forEach(el=>el.onclick=()=>{manual.splice(+el.dataset.remove,1);$('approveManual').checked=false;renderManual()});
 }
-function addManual(list){for(const f of list){if(!f.type.startsWith('image/'))continue;manual.push({file:f,queryIndex:manual.length<queries.length?manual.length:0,caption:'',scheduled_at:nextSchedule()})}$('approveManual').checked=false;renderManual()}
-function renderManual(){$('manualCount').textContent=manual.length;if(!manual.length){$('manualGrid').innerHTML='';return}$('manualGrid').innerHTML=manual.map((x,i)=>{const u=URL.createObjectURL(x.file);return `<article class="card"><img class="thumb" src="${u}"><div class="card-body"><span class="tag">MANUALE ${i+1}</span><div class="small">${esc(x.file.name)}</div><label class="field">Query</label><select data-mq="${i}">${queries.map((q,qi)=>`<option value="${qi}" ${qi===x.queryIndex?'selected':''}>${esc(q.id)} — ${esc(q.query)}</option>`).join('')}</select><label class="field">Data/ora</label><input type="datetime-local" data-ms="${i}" value="${esc(x.scheduled_at)}"><label class="field">Caption</label><textarea data-mc="${i}">${esc(x.caption)}</textarea><button class="light" data-mr="${i}" style="margin-top:10px;width:100%">RIMUOVI</button></div></article>`}).join('');document.querySelectorAll('[data-mq]').forEach(el=>el.onchange=()=>{manual[+el.dataset.mq].queryIndex=+el.value;$('approveManual').checked=false});document.querySelectorAll('[data-ms]').forEach(el=>el.onchange=()=>{manual[+el.dataset.ms].scheduled_at=el.value;$('approveManual').checked=false});document.querySelectorAll('[data-mc]').forEach(el=>el.oninput=()=>{manual[+el.dataset.mc].caption=el.value;$('approveManual').checked=false});document.querySelectorAll('[data-mr]').forEach(el=>el.onclick=()=>{manual.splice(+el.dataset.mr,1);$('approveManual').checked=false;renderManual()})}
-async function sendManual(){const st=$('manualStatus');st.className='status';st.textContent='';if(!manual.length){st.className='status err';st.textContent='Carica almeno una grafica.';return}if(!$('approveManual').checked){st.className='status err';st.textContent='Spunta la conferma di approvazione.';return}const used=manual.map(x=>x.queryIndex);if(new Set(used).size!==used.length){st.className='status err';st.textContent='Due file sono associati alla stessa query.';return}const fd=new FormData(),meta=[];manual.forEach(x=>{const q=queries[x.queryIndex]||{};fd.append('files',x.file,x.file.name);meta.push({query_id:q.id||'',query:q.query||x.file.name,family:q.family||'property',caption:x.caption,scheduled_at:x.scheduled_at?new Date(x.scheduled_at).toISOString():''})});fd.append('metadata',JSON.stringify(meta));$('sendManualBtn').disabled=true;try{const r=await fetch('/api/ingest',{method:'POST',body:fd});const d=await r.json();if(!r.ok||!d.ok)throw new Error(d.error||'Errore');st.className='status ok';st.textContent=`OK — ${d.created.length} grafiche inviate a GitHub e messe in coda READY.`;manual=[];$('approveManual').checked=false;renderManual()}catch(e){st.className='status err';st.textContent=`ERRORE — ${e.message}`}finally{$('sendManualBtn').disabled=false}}
-$('publishCommunicationBtn').onclick=publishCommunication;
-$('refreshBtn').onclick=()=>loadAll().catch(e=>alert(e.message));$('sendGeneratedBtn').onclick=sendGenerated;$('sendManualBtn').onclick=sendManual;$('clearManualBtn').onclick=()=>{manual=[];$('approveManual').checked=false;renderManual()};$('fileInput').onchange=e=>addManual(e.target.files);['dragenter','dragover'].forEach(ev=>$('dropZone').addEventListener(ev,e=>{e.preventDefault()}));$('dropZone').addEventListener('drop',e=>{e.preventDefault();addManual(e.dataTransfer.files)});loadAll().catch(e=>{$('generatedGrid').innerHTML=`<div class="empty">Errore caricamento: ${esc(e.message)}</div>`});renderManual();loadCommunications();setInterval(loadCommunications,30000);
+async function sendManual(){
+  const st=$('manualStatus');st.className='status';st.textContent='';
+  if(!manual.length){st.className='status err';st.textContent='Carica almeno una grafica.';return}
+  if(!$('approveManual').checked){st.className='status err';st.textContent='Conferma prima l’approvazione del pacchetto.';return}
+  for(const x of manual){
+    if(!Object.values(x.platforms).some(Boolean)){st.className='status err';st.textContent='Seleziona almeno un social per ogni grafica.';return}
+  }
+  const fd=new FormData(),meta=[];
+  manual.forEach(x=>{
+    fd.append('files',x.file,x.file.name);
+    const platforms=Object.keys(x.platforms).filter(p=>x.platforms[p]);
+    meta.push({
+      title:x.title,
+      caption:x.caption,
+      territory:x.territory,
+      scope:x.territory?'territory':'network',
+      scheduled_at:x.scheduled_at?new Date(x.scheduled_at).toISOString():'',
+      platforms,
+      approved:true
+    });
+  });
+  fd.append('metadata',JSON.stringify(meta));
+  $('sendManualBtn').disabled=true;
+  try{
+    const r=await fetch('/api/ingest',{method:'POST',body:fd});
+    const d=await r.json();
+    if(!r.ok||!d.ok)throw new Error(d.error||'Errore');
+    const ready=(d.created||[]).filter(x=>x.status==='READY').length;
+    const hold=(d.created||[]).filter(x=>x.status==='HOLD').length;
+    st.className='status ok';
+    st.textContent='OK — '+ready+' contenuti pronti per la pubblicazione'+(hold?' · '+hold+' in attesa (caption mancante)':'')+'.';
+    manual=[];$('approveManual').checked=false;renderManual();await loadQueue();
+  }catch(e){st.className='status err';st.textContent='ERRORE — '+e.message}
+  finally{$('sendManualBtn').disabled=false}
+}
+function stateClass(s){s=String(s||'');return /PUBLISHED|READY|SCHEDULED/.test(s)?'good':(/ERROR/.test(s)?'bad':'warn')}
+async function archiveItem(id){
+  if(!confirm('Archiviare '+id+'?'))return;
+  try{
+    const r=await fetch('/api/archive',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({content_id:id})});
+    const d=await r.json();
+    if(!r.ok||!d.ok)throw new Error(d.error||'Errore archivio');
+    await loadQueue();
+  }catch(e){alert('ERRORE ARCHIVIO — '+e.message)}
+}
+async function loadQueue(){
+  const box=$('queueStatus');
+  try{
+    const r=await fetch('/api/queue-status',{cache:'no-store'}),d=await r.json(),rows=d.recent||[];
+    if(!rows.length){box.innerHTML='<div class="muted">Nessun contenuto manuale ancora presente.</div>';return}
+    box.innerHTML=rows.map(x=>{
+      const links=(x.published_urls||[]).map(u=>'<a href="'+esc(u)+'" target="_blank">POST</a>').join(' · ');
+      const status=x.publication_status||x.status||'N/D';
+      const when=x.scheduled_at?new Date(x.scheduled_at).toLocaleString('it-IT',{dateStyle:'short',timeStyle:'short'}):'—';
+      const archive=x.archived?'ARCHIVIATO':'<button class="light" onclick="archiveItem(\''+esc(x.id)+'\')">ARCHIVIA</button>';
+      return '<div class="qrow">'+
+        '<div><b>'+esc(x.title||x.id)+'</b><br><small>ID '+esc(x.id)+'</small><br><small>'+esc(when)+'</small></div>'+
+        '<div class="badge '+stateClass(status)+'">'+esc(status)+'</div>'+
+        '<div><div class="caption-preview">'+esc(x.caption||'CAPTION MANCANTE')+'</div><small>'+esc((x.platforms||[]).join(' · '))+'</small>'+(links?'<br>'+links:'')+(x.last_error?'<br><span class="bad">'+esc(x.last_error)+'</span>':'')+'</div>'+
+        '<div class="qactions">'+archive+'</div>'+
+      '</div>';
+    }).join('');
+  }catch(e){box.innerHTML='<div class="bad">Stato coda non disponibile.</div>'}
+}
+$('sendManualBtn').onclick=sendManual;
+$('clearManualBtn').onclick=()=>{manual=[];$('approveManual').checked=false;renderManual()};
+$('fileInput').onchange=e=>addManual(e.target.files);
+['dragenter','dragover'].forEach(ev=>$('dropZone').addEventListener(ev,e=>e.preventDefault()));
+$('dropZone').addEventListener('drop',e=>{e.preventDefault();addManual(e.dataTransfer.files)});
+renderManual();loadQueue();setInterval(loadQueue,30000);
 </script>
 </body>
 </html>

@@ -1,77 +1,17 @@
-name: F1 Valle di Susa News Contract Validation
+name: F1 Valle di Susa News Graphic Contract (ARCHIVED - F1 MANUAL PUBLISH ONLY)
 
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - 'publisher/news/**'
-      - 'publisher/chatgpt_query_runner/**'
-      - 'publisher/manual_asset_inbox/server.py'
-      - 'publisher/f1_graphics_automation/RUN_F1_NEWS_SLOT.ps1'
-      - 'publisher/f1_graphics_automation/INSTALLA_AUTOMAZIONE_23.ps1'
-      - '.github/workflows/f1-news-browser-control.yml'
-      - '.github/workflows/f1-valle-susa-news.yml'
 
 permissions:
   contents: read
 
 jobs:
-  validate:
+  archived:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
     steps:
-      - name: Checkout main
-        uses: actions/checkout@v5
-        with:
-          ref: main
-
-      - name: Setup Python
-        uses: actions/setup-python@v6
-        with:
-          python-version: '3.12'
-
-      - name: Install validation dependencies
-        run: python -m pip install --disable-pip-version-check requests pillow
-
-      - name: Validate Python and JSON
+      - name: Manual-only policy
         run: |
-          python -m py_compile             publisher/news/f1_valle_susa_news.py             publisher/news/f1_news_browser_control.py             publisher/news/f1_news_browser_consumer.py             publisher/chatgpt_query_runner/core.py             publisher/chatgpt_query_runner/worker.py             publisher/manual_asset_inbox/server.py
-          python -m json.tool publisher/news/f1_valle_susa_sources.json >/dev/null
-          python -m json.tool publisher/news/f1_news_browser_queue.json >/dev/null
-
-      - name: Assert GitHub prepares and PC browser executes
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-          control=Path('publisher/news/f1_news_browser_control.py').read_text(encoding='utf-8')
-          consumer=Path('publisher/news/f1_news_browser_consumer.py').read_text(encoding='utf-8')
-          runner=Path('publisher/f1_graphics_automation/RUN_F1_NEWS_SLOT.ps1').read_text(encoding='utf-8')
-          worker=Path('publisher/chatgpt_query_runner/worker.py').read_text(encoding='utf-8')
-
-          required={
-              'control':['QUEUED_FOR_PC','build_caption','build_visual_prompt','verify_source','slot_key'],
-              'consumer':['JOB_READY_FOR_BROWSER','f1_news_current.local.json'],
-              'runner':['origin/main:publisher/news/f1_news_browser_queue.json','chatgpt_browser','f1_news_current.local.json'],
-              'worker':['NEWS_QUERY_FILE','PUBLISHED_VERIFIED'],
-          }
-          bodies={'control':control,'consumer':consumer,'runner':runner,'worker':worker}
-          missing=[]
-          for name,tokens in required.items():
-              for token in tokens:
-                  if token not in bodies[name]:
-                      missing.append(f'{name}:{token}')
-          if missing:
-              raise SystemExit('Missing hybrid pipeline markers: '+', '.join(missing))
-          if 'generate_visual(' in control:
-              raise SystemExit('GitHub controller must never generate the image')
-          print('GITHUB_CONTROL_TO_CHATGPT_BROWSER_CONTRACT_OK')
-          PY
-
-      - name: Assert two daily Windows slots remain installed by same task definition
-        run: |
-          grep -q "F1_News_ValleSusa" publisher/f1_graphics_automation/INSTALLA_AUTOMAZIONE_23.ps1
-          grep -q "11:30" publisher/f1_graphics_automation/INSTALLA_AUTOMAZIONE_23.ps1
-          grep -q "19:30" publisher/f1_graphics_automation/INSTALLA_AUTOMAZIONE_23.ps1
-          grep -q "RUN_F1_NEWS_SLOT.ps1" publisher/f1_graphics_automation/INSTALLA_AUTOMAZIONE_23.ps1
-          echo WINDOWS_TASK_SLOTS_OK
+          echo "ARCHIVED: F1 no longer generates graphics."
+          echo "Upload the final operator-created graphic to the F1 manual publisher."
+          echo "No ChatGPT, Leonardo, Firefly, renderer or image-generation runtime is executed."

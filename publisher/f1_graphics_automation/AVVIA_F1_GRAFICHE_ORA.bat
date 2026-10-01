@@ -1,22 +1,17 @@
 @echo off
 setlocal
-title F1 GRAFICHE - Produzione completa
+title F1 - PUBBLICA GRAFICHE
 cd /d "%~dp0\..\.."
-echo.
-echo ===============================================
-echo   F1 GRAFICHE - AVVIO PRODUZIONE COMPLETA
-echo ===============================================
-echo.
-echo Avvio Chrome, Generatore Grafica F1 e 4 query.
-echo.
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0RUN_NOTTURNO_23.ps1" -Manual
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0START_INBOX.ps1" -Restart
 if errorlevel 1 (
-  echo.
-  echo PRODUZIONE NON COMPLETATA.
-  echo Controlla il messaggio sopra.
+  echo F1 Pubblicatore Manuale non disponibile.
   pause
   exit /b 1
 )
+start "F1 PUBBLICA GRAFICHE" http://127.0.0.1:8877/
 echo.
-echo PRODUZIONE COMPLETATA.
-pause
+echo F1 MANUAL PUBLISH ONLY
+echo Nessuna grafica viene generata o modificata automaticamente.
+echo Carica la grafica definitiva nel pannello aperto.
+echo.
+exit /b 0

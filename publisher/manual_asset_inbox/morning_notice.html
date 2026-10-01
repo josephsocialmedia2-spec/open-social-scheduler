@@ -3,44 +3,39 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>F1 — Stato grafiche</title>
+  <title>F1 — Pubblicazione manuale</title>
   <style>
-    *{box-sizing:border-box}body{margin:0;background:#090c09;color:#fff;font-family:Arial,Helvetica,sans-serif;display:grid;place-items:center;min-height:100vh;padding:24px}.box{width:min(940px,100%);padding:50px;border-radius:28px;background:#111611;border:1px solid #2d3a2b;text-align:center;box-shadow:0 24px 80px rgba(0,0,0,.42)}.eyebrow{font-size:14px;font-weight:800;letter-spacing:.14em;color:#9fb99a;margin-bottom:12px}h1{font-size:58px;margin:0 0 12px;color:#64C800;line-height:1}.lead{font-size:25px;line-height:1.4;color:#fff;margin:0 auto;max-width:760px;font-weight:800}.sub{font-size:17px;line-height:1.5;color:#cbd4c8;margin:12px auto 0;max-width:720px}.status{margin:26px auto 0;padding:16px 18px;border-radius:14px;background:#182018;border:1px solid #2f4230;color:#dfe8dc;max-width:760px;line-height:1.5}.status strong{color:#64C800}.status.error strong{color:#ff9b9b}.status.warn strong{color:#ffd572}.primary{display:block;margin:30px auto 0;background:#64C800;color:#091009;text-decoration:none;font-size:25px;font-weight:900;padding:22px 28px;border-radius:16px;max-width:560px}.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:26px 0 0;text-align:left}.step{background:#182018;border:1px solid #283428;border-radius:16px;padding:18px}.step b{display:block;color:#64C800;font-size:18px;margin-bottom:7px}.step span{color:#dfe6dc;line-height:1.4}.row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:18px}.row a{padding:14px 20px;border-radius:12px;text-decoration:none;font-weight:800;min-width:210px}.chat{background:#fff;color:#0A0D0A}.inbox{background:#243224;color:#fff;border:1px solid #3a4a39}@media(max-width:700px){h1{font-size:40px}.lead{font-size:21px}.steps{grid-template-columns:1fr}.box{padding:28px}.primary{font-size:20px}}
+    *{box-sizing:border-box}body{margin:0;background:#090c09;color:#fff;font-family:Arial,Helvetica,sans-serif;display:grid;place-items:center;min-height:100vh;padding:24px}
+    .box{width:min(900px,100%);padding:46px;border-radius:28px;background:#111611;border:1px solid #2d3a2b;text-align:center}
+    .eyebrow{font-size:14px;font-weight:800;letter-spacing:.14em;color:#9fb99a}.title{font-size:52px;margin:12px 0;color:#64c800}.lead{font-size:23px;line-height:1.4;font-weight:800}.sub{color:#cbd4c8;line-height:1.5}
+    .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:25px;text-align:left}.step{background:#182018;border:1px solid #283428;border-radius:16px;padding:18px}.step b{display:block;color:#64c800;margin-bottom:7px}
+    .status{margin:24px 0;padding:16px;border-radius:14px;background:#182018;border:1px solid #2f4230}.primary{display:inline-block;background:#64c800;color:#091009;text-decoration:none;font-weight:900;padding:18px 25px;border-radius:14px;margin-top:10px}
+    @media(max-width:700px){.steps{grid-template-columns:1fr}.title{font-size:38px}.box{padding:28px}}
   </style>
 </head>
 <body>
 <div class="box">
-  <div class="eyebrow">F1 IMMOBILIARE · PRODUZIONE AUTOMATICA ORE 23:00</div>
-  <h1 id="title">STATO AUTOPUBLISHER</h1>
-  <p class="lead" id="lead">Verifico l'esito dell'ultima produzione.</p>
-  <p class="sub">Il processo continua automaticamente dopo la generazione: immagine verificata, coda, Buffer e controllo dello stato di pubblicazione.</p>
-  <div id="runStatus" class="status"><strong>Stato:</strong> controllo ultima esecuzione…</div>
-  <a class="primary" href="http://127.0.0.1:8877/">APRI AUTOPUBLISHER F1</a>
+  <div class="eyebrow">F1 IMMOBILIARE · PUBLISH ONLY</div>
+  <div class="title">TU CREI. F1 PUBBLICA.</div>
+  <p class="lead">Le grafiche arrivano già definitive. Nessuna AI le genera o le modifica.</p>
+  <p class="sub">Il sistema controlla solo il file, conserva l'hash SHA256, lo mette in coda e verifica la pubblicazione.</p>
+  <div id="status" class="status">Carico lo stato della coda…</div>
+  <a class="primary" href="http://127.0.0.1:8877/">APRI PUBBLICATORE F1</a>
   <div class="steps">
-    <div class="step"><b>1. GENERA</b><span>ChatGPT crea e salva la grafica dal comunicato.</span></div>
-    <div class="step"><b>2. PUBBLICA</b><span>Il sistema invia automaticamente il contenuto al publisher configurato.</span></div>
-    <div class="step"><b>3. VERIFICA</b><span>Lo stato diventa PUBLISHED solo dopo la conferma del provider.</span></div>
+    <div class="step"><b>1. CARICA</b><span>Grafica definitiva, caption, social e data/ora.</span></div>
+    <div class="step"><b>2. PUBBLICA</b><span>Il publisher usa il file originale senza brand layer o render.</span></div>
+    <div class="step"><b>3. VERIFICA</b><span>Lo stato e gli URL pubblicati restano nello storico.</span></div>
   </div>
-  <div class="row"><a class="chat" href="https://chatgpt.com/g/g-6a9c210485488191b072eb694c2f114c-generatore-grafica-f1" target="_blank">APRI GENERATORE F1</a><a class="inbox" href="http://127.0.0.1:8877/" target="_blank">APRI RACCOLTA GRAFICHE</a></div>
 </div>
 <script>
-async function refreshStatus(){
-  const box=document.getElementById('runStatus'),title=document.getElementById('title'),lead=document.getElementById('lead');
+async function refresh(){
+  const box=document.getElementById('status');
   try{
-    const r=await fetch('/api/run-status',{cache:'no-store'}),d=await r.json(),c=d.counts||{};
-    const summary=`previste ${c.query_previste||0} · inviate ${c.query_inviate||0} · riuscite ${c.query_riuscite||0} · immagini salvate ${c.immagini_salvate||0}`;
-    if(d.status==='GRAFICHE_PRONTE'){
-      title.textContent='GRAFICHE PRONTE';lead.textContent='Le immagini sono state realmente generate e salvate. Il sistema prosegue automaticamente verso la pubblicazione.';box.className='status';box.innerHTML=`<strong>ULTIMA ESECUZIONE OK</strong><br>${summary}`;
-    }else if(d.status==='PARZIALE'){
-      title.textContent='PRODUZIONE PARZIALE';lead.textContent='Alcune grafiche sono pronte, altre no. Il sistema non le considera completate.';box.className='status warn';box.innerHTML=`<strong>PARZIALE</strong><br>${summary}<br>${d.error||''}`;
-    }else if(d.status==='ERRORE'){
-      title.textContent='ERRORE PRODUZIONE';lead.textContent='La produzione non ha raggiunto i criteri di completamento.';box.className='status error';box.innerHTML=`<strong>ERRORE NELL'ESECUZIONE</strong><br>${summary}<br>${String(d.error||'controllare i log')}`;
-    }else if(d.status==='RUNNING'){
-      title.textContent='PRODUZIONE IN CORSO';lead.textContent='Il sistema sta elaborando le query.';box.className='status';box.innerHTML=`<strong>IN CORSO</strong><br>${summary}`;
-    }else{title.textContent='CONTROLLO GRAFICHE';lead.textContent='Nessuna produzione verificata disponibile. Inserisci un comunicato nell'Autopublisher.';box.className='status';box.innerHTML=`<strong>STATO</strong> · ${String(d.status||'non disponibile')}`}
-  }catch(e){box.className='status error';box.innerHTML='<strong>RACCOLTA NON RAGGIUNGIBILE</strong> · avvia F1 Raccolta Grafiche.'}
+    const r=await fetch('/api/queue-status',{cache:'no-store'}),d=await r.json(),c=d.counts||{};
+    box.innerHTML='<b>MANUAL ONLY</b> · READY '+(c.READY||0)+' · SCHEDULED '+(c.SCHEDULED||0)+' · PUBLISHED '+((c.PUBLISHED||0)+(c.PUBLISHED_VERIFIED||0))+' · HOLD '+(c.HOLD||0)+' · ERROR '+(c.ERROR||0);
+  }catch(e){box.textContent='Pubblicatore non raggiungibile.'}
 }
-refreshStatus();setInterval(refreshStatus,15000);
+refresh();setInterval(refresh,15000);
 </script>
 </body>
 </html>

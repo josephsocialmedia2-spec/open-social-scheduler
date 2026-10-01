@@ -6,6 +6,10 @@ on:
       - '.project-deploy-trigger'
       - 'publisher/**'
       - '.github/workflows/project-deploy.yml'
+  pull_request:
+    paths:
+      - 'publisher/**'
+      - '.github/workflows/**'
   workflow_dispatch:
 
 permissions:
@@ -17,10 +21,10 @@ jobs:
     timeout-minutes: 20
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: '3.12'
 
@@ -28,6 +32,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r publisher/requirements.txt
+          pip install -r publisher/manual_asset_inbox/requirements.txt
 
       - name: Compile production pipeline
         run: |
@@ -35,129 +40,76 @@ jobs:
           python -m py_compile publisher/persist_final_queue_github.py
           python -m py_compile publisher/buffer_twice_daily.py
           python -m py_compile publisher/chatgpt_query_runner/core.py
-          python -m py_compile publisher/chatgpt_query_runner/ui_driver.py
-          python -m py_compile publisher/chatgpt_query_runner/f1_brand_layer.py
           python -m py_compile publisher/chatgpt_query_runner/worker.py
           python -m py_compile publisher/manual_asset_inbox/server.py
+          python -m py_compile publisher/build_cycle_queue.py
+          python -m py_compile publisher/apply_photo_only.py
+          python -m py_compile publisher/render_photos_only.py
+          python -m py_compile publisher/run_publication_renderer.py
+          python -m py_compile publisher/test_f1_manual_publish_only.py
 
-      - name: Test F1 graphics state machine
+      - name: Test legacy state compatibility
         run: python -m unittest discover -s publisher/chatgpt_query_runner/tests -v
 
-      - name: Validate exact image prompts
+      - name: Validate manual-publish-only contract
+        run: python publisher/test_f1_manual_publish_only.py
+
+      - name: Validate production queue and publisher
         run: |
           python - <<'PY'
           import json
           from pathlib import Path
-          from publisher.chatgpt_query_runner.core import build_prompt
 
-          payload = json.loads(Path('publisher/github_graphics/queries.json').read_text(encoding='utf-8'))
-          rows = payload.get('queries') or []
-          assert len(rows) >= 4, 'Expected at least 4 F1 queries'
-          for row in rows:
-              q = ' '.join(str(row['query']).split())
-              expected = f"Genera un'immagine ultrarealistica, usa i modelli che abbiamo caricato per cerchiamo {q}."
-              actual = build_prompt(row['query'])
-              assert actual == expected, (row.get('id'), actual, expected)
-              assert actual != q
-          print('Exact uploaded-model F1 image prompt contract OK')
-          PY
-
-      - name: Validate production queue
-        run: |
-          python - <<'PY'
-          import json
-          from pathlib import Path
-          data = json.loads(Path('publisher/final_content_queue.json').read_text(encoding='utf-8'))
-          assert data['pipeline'] == 'f1-final-assets'
-          assert data['asset_policy'] == 'immutable-final-layout'
-          assert data['brand'] == 'F1 Immobiliare'
+          data=json.loads(Path('publisher/final_content_queue.json').read_text(encoding='utf-8'))
+          assert data['pipeline']=='f1-final-assets'
+          assert data['asset_policy']=='immutable-final-layout'
+          assert data['brand']=='F1 Immobiliare'
           platforms=set(data['platforms'])
           assert {'facebook','instagram'}.issubset(platforms)
           assert platforms.issubset({'facebook','instagram','linkedin'})
-          print('Queue schema OK')
-          PY
 
-      - name: Validate F1 collection and launchers
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-          server = Path('publisher/manual_asset_inbox/server.py').read_text(encoding='utf-8')
-          worker = Path('publisher/chatgpt_query_runner/worker.py').read_text(encoding='utf-8')
-          driver = Path('publisher/chatgpt_query_runner/ui_driver.py').read_text(encoding='utf-8')
-          runner_requirements = Path('publisher/chatgpt_query_runner/requirements.txt').read_text(encoding='utf-8')
-          installer = Path('publisher/f1_graphics_automation/INSTALLA_AUTOMAZIONE_23.ps1').read_text(encoding='utf-8')
-          assert '8877' in server
-          assert '/api/generated' in server
-          assert '/api/communications' in server
-          assert 'chatgpt_generated' in server
-          assert 'COMMUNICATIONS_FILE' in server
-          assert '_communication_hash' in server and '_recent_duplicate' in server
-          assert '"communication_hash": digest' in server
-          assert 'IMMAGINE_SALVATA' in worker and 'advance_after_completed' in worker
-          assert 'auto_ingest_completed_run' in worker
-          assert '--communication-id' in worker
-          assert 'Selenium' not in worker
-          assert '_validate_image_file' in driver
-          assert 'Image.open(path)' in driver
-          assert 'Pillow==11.3.0' in runner_requirements
-          launcher = Path('AVVIA_F1_CREATIVE_WINDOWS.bat').read_text(encoding='utf-8')
-          query_payload = __import__('json').loads(Path('publisher/chatgpt_query_runner/f1_browser_creative_queries.json').read_text(encoding='utf-8'))
-          assert 'set "F1_QUERY_BATCH_SIZE=1"' in launcher
-          assert 'set "F1_MAX_ATTEMPTS=1"' in launcher
-          assert 'set "F1_MAX_DOWNLOAD_ATTEMPTS=3"' in launcher
-          assert 'set "F1_MAX_CHATGPT_TABS=1"' in launcher
-          assert '\\nset "F1_MAX_ATTEMPTS=1"' not in launcher
-          assert '--batch-size 1' in launcher
-          assert query_payload['queries'][0]['id'] == 'F1-SELLER-001-A'
-          assert query_payload['queries'][0]['query'] == 'Quanto vale casa mia'
-          assert query_payload['queries'][0]['variant'] == 'A'
-          assert 'MAX_DOWNLOAD_ATTEMPTS' in driver
-          assert 'F1_MAX_DOWNLOAD_ATTEMPTS' in driver
-          assert 'MAX_CHATGPT_TABS' in driver
-          assert 'F1_MAX_CHATGPT_TABS' in driver
-          assert 'for attempt in range(1, MAX_DOWNLOAD_ATTEMPTS + 1)' in driver
-          assert '"--new-tab"' not in driver
-          assert 'apply_f1_brand_layer' in worker
-          assert 'wait_for_publication_verification' in worker
-          assert 'PUBLISHED_VERIFIED' in worker
-          assert Path('publisher/chatgpt_query_runner/f1_brand_layer.py').exists()
-          assert "New-ScheduledTaskTrigger -Daily -At 23:00" in installer
-          assert "F1 AUTOPUBLISHER.lnk" in installer
-          for path in [
-              'publisher/f1_graphics_automation/AVVIA_F1_GRAFICHE_ORA.bat',
-              'publisher/f1_graphics_automation/PROVA_ORA.bat',
-              'publisher/f1_graphics_automation/PROVA_4_QUERY.bat',
-              'publisher/f1_graphics_automation/APRI_RACCOLTA_GRAFICHE.bat',
-              'publisher/manual_asset_inbox/index.html',
-              'publisher/manual_asset_inbox/morning_notice.html',
-              '.github/workflows/f1-final-assets-publisher.yml',
-          ]:
-              assert Path(path).exists(), path
-          final_publisher = Path('publisher/final_asset_publisher.py').read_text(encoding='utf-8')
-          buffer_base = Path('publisher/buffer_twice_daily.py').read_text(encoding='utf-8')
-          assert 'communications-only' in final_publisher
-          assert 'exclude-communications' in final_publisher
+          cfg=json.loads(Path('publisher/clients/f1-immobiliare.json').read_text(encoding='utf-8'))
+          assert cfg['graphics_source']=='manual_only'
+          assert cfg['ai_image_generation'] is False
+          assert cfg['automatic_brand_layer'] is False
+          assert cfg['automatic_rendering'] is False
+          assert cfg['manual_asset_required'] is True
+          assert cfg['publish_only'] is True
+
+          server=Path('publisher/manual_asset_inbox/server.py').read_text(encoding='utf-8')
+          assert '/api/ingest' in server
+          assert '/api/queue-status' in server
+          assert '/api/generated' not in server
+          assert '/api/communications' not in server
+          assert 'chatgpt_generated' not in server
+
+          worker=Path('publisher/chatgpt_query_runner/worker.py').read_text(encoding='utf-8')
+          assert 'f1_generation_disabled()' in worker
+          assert 'F1 MANUAL PUBLISH ONLY: image generation worker is disabled' in worker
+
+          final_publisher=Path('publisher/final_asset_publisher.py').read_text(encoding='utf-8')
+          assert '--manual-only' in final_publisher
+          assert 'is_manual_f1_job' in final_publisher
           assert 'refresh_publication_status' in final_publisher
-          assert 'mark_job' in final_publisher
-          assert '"attempt_count"' in final_publisher
-          assert '"last_step"' in final_publisher
-          assert '"last_error"' in final_publisher
-          assert '"PUBLISHED_VERIFIED"' in final_publisher
+          assert 'PUBLISHED_VERIFIED' in final_publisher
+
+          workflow=Path('.github/workflows/f1-final-assets-publisher.yml').read_text(encoding='utf-8').lower()
+          assert '--manual-only' in workflow
+          for forbidden in ('generate_next_villar_asset.py','chatgpt_query_runner','openai_api_key','leonardo','firefly'):
+              assert forbidden not in workflow, forbidden
+
+          buffer_base=Path('publisher/buffer_twice_daily.py').read_text(encoding='utf-8')
+          assert "job.get('ai_assisted') is False" in buffer_base
           assert 'get_buffer_post' in buffer_base
-          assert 'post_type = "reel" if is_reel else "post"' in buffer_base
-          persistence = Path('publisher/persist_final_queue_github.py').read_text(encoding='utf-8')
+
+          persistence=Path('publisher/persist_final_queue_github.py').read_text(encoding='utf-8')
           assert 'merge_queue' in persistence and 'MAX_ATTEMPTS = 5' in persistence
-          workflow = Path('.github/workflows/f1-final-assets-publisher.yml').read_text(encoding='utf-8')
-          prepare = Path('publisher/prepare_villar_plan.py').read_text(encoding='utf-8')
-          generator = Path('publisher/generate_next_villar_asset.py').read_text(encoding='utf-8')
-          assert '--communications-only' in workflow and '--verify' in workflow
-          assert 'extras=' in prepare and 'preserved external jobs' in prepare
-          assert "startswith('VD-')" in generator
-          print('F1 autonomous publication contract OK')
+          print('F1_MANUAL_DEPLOY_CONTRACT_OK')
           PY
 
       - name: Deployment summary
         run: |
           echo 'F1 deployment validation completed successfully.'
-          echo 'Prompt contract: uploaded F1 models + search query.'
-          echo 'Graphics flow: client communication -> normal Chrome -> verified prompt -> verified image -> autonomous ingest -> GitHub -> Buffer -> provider verification -> PUBLISHED.'
+          echo 'Graphics source: operator-created manual assets only.'
+          echo 'Flow: manual asset -> SHA validation -> approval/schedule -> publisher -> Buffer -> provider verification.'
+          echo 'AI graphic generation: disabled.'

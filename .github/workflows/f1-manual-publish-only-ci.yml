@@ -1,0 +1,76 @@
+name: F1 Manual Publish Only CI
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - f1-manual-publish-only
+    paths:
+      - 'publisher/manual_asset_inbox/**'
+      - 'publisher/final_asset_publisher.py'
+      - 'publisher/buffer_twice_daily.py'
+      - 'publisher/chatgpt_query_runner/worker.py'
+      - 'publisher/f1_graphics_hourly/worker.py'
+      - 'publisher/f1_chatgpt_creative_engine.py'
+      - 'publisher/f1_design_v2.py'
+      - 'publisher/generate_next_villar_asset.py'
+      - 'publisher/render_f1_unique_visuals.py'
+      - 'publisher/f1_premium_renderer.py'
+      - 'publisher/rendering/content_engine.py'
+      - 'publisher/rendering/openai_visual_engine.py'
+      - 'publisher/build_cycle_queue.py'
+      - 'publisher/apply_photo_only.py'
+      - 'publisher/render_photos_only.py'
+      - 'publisher/run_publication_renderer.py'
+      - 'publisher/clients/f1-immobiliare.json'
+      - '.github/workflows/f1-*.yml'
+      - '.github/workflows/social-engine-daily.yml'
+      - 'publisher/test_f1_manual_publish_only.py'
+  pull_request:
+    paths:
+      - 'publisher/**'
+      - '.github/workflows/**'
+
+permissions:
+  contents: read
+
+jobs:
+  manual-only-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      - name: Install focused test dependencies
+        run: python -m pip install --disable-pip-version-check Flask==3.1.2 tzdata>=2025.2 Pillow==11.3.0 requests==2.32.5
+
+      - name: Compile modified F1 runtime
+        run: |
+          python -m py_compile \
+            publisher/manual_asset_inbox/server.py \
+            publisher/final_asset_publisher.py \
+            publisher/buffer_twice_daily.py \
+            publisher/chatgpt_query_runner/worker.py \
+            publisher/f1_graphics_hourly/worker.py \
+            publisher/f1_chatgpt_creative_engine.py \
+            publisher/f1_design_v2.py \
+            publisher/generate_next_villar_asset.py \
+            publisher/render_f1_unique_visuals.py \
+            publisher/f1_premium_renderer.py \
+            publisher/rendering/content_engine.py \
+            publisher/rendering/openai_visual_engine.py \
+            publisher/build_cycle_queue.py \
+            publisher/apply_photo_only.py \
+            publisher/render_photos_only.py \
+            publisher/run_publication_renderer.py \
+            publisher/test_f1_manual_publish_only.py
+
+      - name: Validate configuration JSON
+        run: python -m json.tool publisher/clients/f1-immobiliare.json >/dev/null
+
+      - name: Run manual-publish-only contract tests
+        run: python publisher/test_f1_manual_publish_only.py

@@ -5,32 +5,11 @@ param(
 $ErrorActionPreference = 'Stop'
 $Root = (Resolve-Path (Join-Path $PSScriptRoot '..\..')).Path
 $Server = Join-Path $Root 'publisher\manual_asset_inbox\server.py'
-$EnsureRunner = Join-Path $PSScriptRoot 'ENSURE_F1_GITHUB_RUNNER.ps1'
-$EnsurePoller = Join-Path $PSScriptRoot 'ENSURE_F1_NEWS_POLLER.ps1'
 $Port = 8877
 $LogDir = Join-Path $PSScriptRoot 'logs'
-New-Item -ItemType Directory -Force -Path $LogDir | Out-Null
-
-# Bootstrap automatico F1 runner/poller. Eseguiti in processi PowerShell separati:
-# un runner GitHub assente/offline NON deve bloccare l'esecuzione diretta locale.
-try {
-    if (Test-Path $EnsureRunner) {
-        & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $EnsureRunner | Out-Host
-        if ($LASTEXITCODE -ne 0) {
-            Write-Warning "F1 runner non disponibile (exit=$LASTEXITCODE). Continuo in modalita locale diretta."
-        }
-    }
-} catch { Write-Warning "F1 runner bootstrap: $($_.Exception.Message)" }
-try {
-    if (Test-Path $EnsurePoller) {
-        & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $EnsurePoller | Out-Host
-        if ($LASTEXITCODE -ne 0) {
-            Write-Warning "F1 poller bootstrap non completato (exit=$LASTEXITCODE). La prova diretta puo comunque continuare."
-        }
-    }
-} catch { Write-Warning "F1 poller bootstrap: $($_.Exception.Message)" }
 $StdOutLog = Join-Path $LogDir 'inbox-stdout.log'
 $StdErrLog = Join-Path $LogDir 'inbox-stderr.log'
+New-Item -ItemType Directory -Force -Path $LogDir | Out-Null
 
 function Test-Port {
     param([int]$Port)
@@ -38,14 +17,15 @@ function Test-Port {
         $client = New-Object System.Net.Sockets.TcpClient
         $async = $client.BeginConnect('127.0.0.1', $Port, $null, $null)
         if (-not $async.AsyncWaitHandle.WaitOne(700)) { $client.Close(); return $false }
-        $client.EndConnect($async); $client.Close(); return $true
+        $client.EndConnect($async)
+        $client.Close()
+        return $true
     } catch { return $false }
 }
 
 function Get-F1Health {
-    try {
-        return Invoke-RestMethod -Uri "http://127.0.0.1:$Port/api/health" -TimeoutSec 2
-    } catch { return $null }
+    try { return Invoke-RestMethod -Uri "http://127.0.0.1:$Port/api/health" -TimeoutSec 2 }
+    catch { return $null }
 }
 
 function Stop-PortProcess {
@@ -60,51 +40,53 @@ function Stop-PortProcess {
             if ($line -and $line.Matches.Count) { $pidToStop = [int]$line.Matches[0].Groups[1].Value }
         } catch {}
     }
-    if ($pidToStop) {
-        Stop-Process -Id $pidToStop -Force -ErrorAction Stop
-        for ($i=0; $i -lt 20; $i++) {
-            if (-not (Test-Port -Port $Port)) { return }
-            Start-Sleep -Milliseconds 250
-        }
-        throw "Il processo sulla porta $Port non si e arrestato."
+    if (-not $pidToStop) { throw "Impossibile determinare il processo sulla porta $Port." }
+    Stop-Process -Id $pidToStop -Force -ErrorAction Stop
+    for ($i=0; $i -lt 20; $i++) {
+        if (-not (Test-Port -Port $Port)) { return }
+        Start-Sleep -Milliseconds 250
     }
-    throw "Impossibile determinare il processo in ascolto sulla porta $Port."
+    throw "Il processo sulla porta $Port non si e arrestato."
 }
 
 if (Test-Port -Port $Port) {
     $health = Get-F1Health
-    $isF1 = ($health -and $health.ok -eq $true -and $health.service -eq 'f1-manual-asset-inbox')
-    if (-not $isF1) {
-        throw 'La porta 8877 e occupata da un altro programma. F1 Inbox non verra avviata sulla porta sbagliata.'
-    }
+    $isF1 = (
+        $health -and
+        $health.ok -eq $true -and
+        $health.service -eq 'f1-manual-asset-inbox' -and
+        $health.mode -eq 'manual-publish-only' -and
+        $health.ai_image_generation -eq $false
+    )
+    if (-not $isF1) { throw 'La porta 8877 e occupata da un servizio diverso dal pubblicatore manuale F1.' }
     if (-not $Restart) {
-        Write-Host 'F1 Inbox gia attiva su http://127.0.0.1:8877/' -ForegroundColor Green
+        Write-Host 'F1 Pubblicatore Manuale gia attivo su http://127.0.0.1:8877/' -ForegroundColor Green
         exit 0
     }
-    Write-Host 'Riavvio F1 Inbox per caricare la versione aggiornata...' -ForegroundColor Yellow
+    Write-Host 'Riavvio F1 Pubblicatore Manuale...' -ForegroundColor Yellow
     Stop-PortProcess -Port $Port
 }
 
 $PythonCmd = Get-Command python -ErrorAction SilentlyContinue
 if (-not $PythonCmd) { throw 'Python non trovato nel PATH.' }
 $PythonExe = $PythonCmd.Source
-if (-not (Test-Path $Server)) { throw "Server Inbox non trovato: $Server" }
+if (-not (Test-Path $Server)) { throw "Server manuale F1 non trovato: $Server" }
 
 $env:F1_INBOX_PORT = "$Port"
 Remove-Item $StdOutLog,$StdErrLog -Force -ErrorAction SilentlyContinue
-$Process = Start-Process `
-    -FilePath $PythonExe `
-    -ArgumentList @('"' + $Server + '"') `
-    -WorkingDirectory $Root `
-    -RedirectStandardOutput $StdOutLog `
-    -RedirectStandardError $StdErrLog `
-    -WindowStyle Hidden `
-    -PassThru
+$Process = Start-Process -FilePath $PythonExe -ArgumentList @($Server) -WorkingDirectory $Root -RedirectStandardOutput $StdOutLog -RedirectStandardError $StdErrLog -WindowStyle Hidden -PassThru
 
 for ($i = 0; $i -lt 40; $i++) {
     $health = Get-F1Health
-    if ($health -and $health.ok -eq $true -and $health.service -eq 'f1-manual-asset-inbox') {
-        Write-Host 'F1 Inbox avviata: http://127.0.0.1:8877/' -ForegroundColor Green
+    if (
+        $health -and
+        $health.ok -eq $true -and
+        $health.service -eq 'f1-manual-asset-inbox' -and
+        $health.mode -eq 'manual-publish-only' -and
+        $health.ai_image_generation -eq $false
+    ) {
+        Write-Host 'F1 Pubblicatore Manuale avviato: http://127.0.0.1:8877/' -ForegroundColor Green
+        Write-Host 'AI GRAFICA: DISABILITATA. PIXEL IN -> PIXEL OUT.' -ForegroundColor Cyan
         exit 0
     }
     if ($Process.HasExited) { break }
@@ -115,4 +97,4 @@ $details = ''
 if (Test-Path $StdErrLog) { $details = (Get-Content $StdErrLog -Tail 40 -ErrorAction SilentlyContinue) -join [Environment]::NewLine }
 if (-not $details -and (Test-Path $StdOutLog)) { $details = (Get-Content $StdOutLog -Tail 40 -ErrorAction SilentlyContinue) -join [Environment]::NewLine }
 if (-not $details) { $details = 'Nessun dettaglio disponibile. Controllare publisher\f1_graphics_automation\logs.' }
-throw "F1 Inbox non si e avviata sulla porta 8877.`n$details"
+throw ("F1 Pubblicatore Manuale non si e avviato sulla porta 8877." + [Environment]::NewLine + $details)

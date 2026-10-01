@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""Build exactly 10 static-photo publications per 4-hour cycle: 5 per brand.
+"""Build automatic static-photo publications for clients that allow rendering.
 
-NO REELS / NO MP4. Every current-cycle job is a publication-ready photo post
-with a caption. Queue history is preserved for roughly 14 days by default.
+F1 Immobiliare can be configured as manual-publish-only. In that mode this
+builder MUST NOT create F1 jobs or media. Other active clients continue to use
+the legacy automatic cycle unchanged.
 """
 from __future__ import annotations
 
@@ -22,10 +23,8 @@ ROME = ZoneInfo("Europe/Rome")
 CYCLE_HOURS = (0, 4, 8, 12, 16, 20)
 BRANDS = ("f1-immobiliare", "real-media-pro")
 POSTS_PER_BRAND = 5
-TOTAL_POSTS = POSTS_PER_BRAND * len(BRANDS)
 HISTORY_DAYS = max(1, int(os.getenv("SOCIAL_HISTORY_DAYS", "14") or 14))
-# 10 posts/cycle * 6 cycles/day * 14 days = 840 jobs.
-QUEUE_HISTORY_LIMIT = max(120, int(os.getenv("SOCIAL_HISTORY_LIMIT", str(TOTAL_POSTS * len(CYCLE_HOURS) * HISTORY_DAYS)) or 840))
+QUEUE_HISTORY_LIMIT = max(120, int(os.getenv("SOCIAL_HISTORY_LIMIT", str(10 * len(CYCLE_HOURS) * HISTORY_DAYS)) or 840))
 
 
 def load(path: Path) -> dict:
@@ -67,6 +66,34 @@ def pick_five(candidates: list[dict], idx: int) -> list[dict]:
     return [copy.deepcopy(j) for j in selected]
 
 
+def automatic_rendering_enabled(client: dict) -> bool:
+    if not client.get("active", False):
+        return False
+    if str(client.get("graphics_source") or "") == "manual_only":
+        return False
+    if client.get("publish_only") is True:
+        return False
+    if client.get("automatic_rendering") is False:
+        return False
+    return True
+
+
+def _preserve_job_during_reset(job: dict) -> bool:
+    status = str(job.get("status") or "")
+    if status in {"published", "scheduled"}:
+        return True
+    if str(job.get("source") or "") == "SUPABASE_CONTENT_HUB":
+        return True
+    if job.get("cycle_key"):
+        if (
+            str(job.get("client_id") or "") == "f1-immobiliare"
+            and status not in {"published", "scheduled"}
+        ):
+            return False
+        return True
+    return False
+
+
 def build_current_cycle() -> int:
     now = datetime.now(ROME)
     hour = cycle_hour(now)
@@ -79,15 +106,20 @@ def build_current_cycle() -> int:
     jobs = [j for j in list(queue.get("jobs", [])) if str(j.get("cycle_key") or "") != cycle_key]
 
     if os.getenv("SOCIAL_RESET_LEGACY", "0").strip() == "1":
-        jobs = [j for j in jobs if j.get("status") in {"published", "scheduled"} or j.get("cycle_key")]
+        jobs = [j for j in jobs if _preserve_job_during_reset(j)]
 
     client_map = {c["id"]: c for c in base.clients()}
-    added: list[dict] = []
-
+    eligible_brands: list[str] = []
     for cid in BRANDS:
         client = client_map.get(cid)
-        if not client or not client.get("active", False):
-            raise RuntimeError(f"Required brand is not active: {cid}")
+        if not client:
+            raise RuntimeError(f"Missing client config: {cid}")
+        if automatic_rendering_enabled(client):
+            eligible_brands.append(cid)
+
+    added: list[dict] = []
+    for cid in eligible_brands:
+        client = client_map[cid]
         selected = pick_five(base.build_for_client(client, target), cycle_idx)
         for local_pos, job in enumerate(selected, start=1):
             minute = (0 if cid == "f1-immobiliare" else 30) + (local_pos - 1) * 6
@@ -100,7 +132,7 @@ def build_current_cycle() -> int:
             job["cycle_hour"] = hour
             job["cycle_index"] = cycle_idx
             job["cycle_position"] = local_pos
-            job["production_mode"] = "photos-only-10-every-4h"
+            job["production_mode"] = "automatic-static-photo-cycle"
             job["production_status"] = "PHOTO ONLY"
             job["format"] = "photo"
             job["media"] = photo_media(job, target, hour, local_pos)
@@ -109,22 +141,38 @@ def build_current_cycle() -> int:
                 job.pop(key, None)
             added.append(job)
 
-    if len(added) != TOTAL_POSTS:
-        raise RuntimeError(f"Cycle must contain exactly {TOTAL_POSTS} photo posts, got {len(added)}")
+    expected = POSTS_PER_BRAND * len(eligible_brands)
+    if len(added) != expected:
+        raise RuntimeError(f"Cycle expected {expected} automatic photo posts, got {len(added)}")
     if any(str(j.get("format")) != "photo" for j in added):
         raise RuntimeError("PHOTO-ONLY policy violation")
+    if any(str(j.get("client_id") or "") == "f1-immobiliare" for j in added):
+        f1 = client_map.get("f1-immobiliare") or {}
+        if not automatic_rendering_enabled(f1):
+            raise RuntimeError("F1 manual-only policy violation: automatic F1 job created")
 
     queue["jobs"] = jobs + added
     base.reconcile(queue, client_map)
     removed = base.cap_queue(queue, QUEUE_HISTORY_LIMIT)
     queue["updated_at"] = datetime.now().astimezone().isoformat(timespec="seconds")
-    queue["updated_by"] = "10-photo 4-hour cycle builder · 14-day history"
+    queue["updated_by"] = "automatic photo cycle builder · F1 manual-only aware"
     queue["current_cycle"] = cycle_key
     queue["history_days"] = HISTORY_DAYS
     queue["history_limit"] = QUEUE_HISTORY_LIMIT
-    queue["output_policy"] = "10 STATIC PHOTOS - 5 F1 + 5 RMP - JPG/PNG - NO REELS - NO MP4"
+
+    f1_client = client_map.get("f1-immobiliare") or {}
+    f1_manual = not automatic_rendering_enabled(f1_client)
+    queue["output_policy"] = (
+        "F1 MANUAL PUBLISH ONLY + 5 RMP STATIC PHOTOS"
+        if f1_manual and eligible_brands == ["real-media-pro"]
+        else f"AUTOMATIC STATIC PHOTOS: {', '.join(eligible_brands) or 'NONE'}"
+    )
     save(QUEUE, queue)
-    print(f"Built cycle {cycle_key}: {TOTAL_POSTS} static photo posts, 5 F1 + 5 RMP; history={len(queue['jobs'])}/{QUEUE_HISTORY_LIMIT}, removed={removed}")
+    print(
+        f"Built cycle {cycle_key}: automatic={len(added)} "
+        f"brands={eligible_brands}; F1_manual_only={f1_manual}; "
+        f"history={len(queue['jobs'])}/{QUEUE_HISTORY_LIMIT}, removed={removed}"
+    )
     return 0
 
 
@@ -136,9 +184,13 @@ def reconcile_only() -> int:
     queue["updated_at"] = datetime.now().astimezone().isoformat(timespec="seconds")
     queue["history_days"] = HISTORY_DAYS
     queue["history_limit"] = QUEUE_HISTORY_LIMIT
-    queue["output_policy"] = "10 STATIC PHOTOS - 5 F1 + 5 RMP - JPG/PNG - NO REELS - NO MP4"
+    f1_client = client_map.get("f1-immobiliare") or {}
+    queue["f1_manual_publish_only"] = not automatic_rendering_enabled(f1_client)
     save(QUEUE, queue)
-    print(f"Photo-only cycle queue reconciled; history={len(queue.get('jobs', []))}/{QUEUE_HISTORY_LIMIT}, removed={removed}")
+    print(
+        f"Automatic cycle queue reconciled; F1_manual_only={queue['f1_manual_publish_only']}; "
+        f"history={len(queue.get('jobs', []))}/{QUEUE_HISTORY_LIMIT}, removed={removed}"
+    )
     return 0
 
 

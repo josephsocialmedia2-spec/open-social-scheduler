@@ -23,6 +23,16 @@ ROOT = Path(__file__).resolve().parents[1]
 QUEUE = ROOT / "publisher" / "qualified_14d_queue.json"
 CACHE = ROOT / ".cache" / "f1-qualified-sources"
 OPENAI_CACHE = ROOT / ".cache" / "f1-openai-hero"
+CLIENT = ROOT / "publisher" / "clients" / "f1-immobiliare.json"
+
+
+def generation_disabled() -> bool:
+    cfg = json.loads(CLIENT.read_text(encoding="utf-8"))
+    return (
+        str(cfg.get("graphics_source") or "") == "manual_only"
+        and cfg.get("automatic_rendering") is False
+        and cfg.get("publish_only") is True
+    )
 
 
 def cache_path(url: str) -> Path:
@@ -115,6 +125,9 @@ def render_legacy(job: dict, src: Path) -> None:
 
 
 def main() -> int:
+    if generation_disabled():
+        print("F1 MANUAL PUBLISH ONLY: qualified visual renderer is disabled.")
+        return 0
     data = json.loads(QUEUE.read_text(encoding="utf-8"))
     jobs = list(data.get("jobs") or [])
     blocked = [j for j in jobs if j.get("gate_status") != "PASSED"]

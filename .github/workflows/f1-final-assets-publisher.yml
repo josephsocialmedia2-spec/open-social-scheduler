@@ -1,15 +1,14 @@
-name: F1 Final Assets Publisher
+name: F1 Manual Assets Publisher
 
 on:
   workflow_dispatch:
     inputs:
       dry_run:
-        description: 'Validate next READY final asset without creating Buffer posts'
+        description: 'Validate the next manual F1 asset without creating Buffer posts'
         required: true
         default: false
         type: boolean
   schedule:
-    - cron: '0 6,16 * * *'
     - cron: '7,22,37,52 * * * *'
   push:
     branches:
@@ -18,8 +17,6 @@ on:
       - '.github/workflows/f1-final-assets-publisher.yml'
       - 'publisher/final_asset_publisher.py'
       - 'publisher/persist_final_queue_github.py'
-      - 'publisher/prepare_villar_plan.py'
-      - 'publisher/generate_next_villar_asset.py'
       - 'publisher/territory_router.py'
       - 'publisher/territory_channels.json'
       - 'publisher/buffer_twice_daily.py'
@@ -30,11 +27,11 @@ permissions:
   contents: write
 
 concurrency:
-  group: f1-final-assets-publisher
+  group: f1-manual-assets-publisher
   cancel-in-progress: false
 
 jobs:
-  publish-final-layout:
+  publish-manual-assets:
     runs-on: ubuntu-latest
     timeout-minutes: 35
     env:
@@ -60,74 +57,39 @@ jobs:
           cache: pip
           cache-dependency-path: publisher/requirements.txt
 
-      - name: Install dependencies
+      - name: Install publisher dependencies
         run: python -m pip install --disable-pip-version-check -r publisher/requirements.txt
 
-      - name: Compile autonomous and territory publishers
+      - name: Validate manual-only publisher
         shell: bash
         run: |
           set -euxo pipefail
           python -m py_compile \
             publisher/final_asset_publisher.py \
-            publisher/prepare_villar_plan.py \
-            publisher/generate_next_villar_asset.py \
             publisher/territory_router.py \
             publisher/buffer_twice_daily.py
           python -m json.tool publisher/final_content_queue.json >/dev/null
-          python -m json.tool publisher/territory_channels.json >/dev/null
-
-      - name: Prepare Villar Dora 150-day queue
-        if: github.event_name == 'workflow_dispatch' || github.event.schedule == '0 6,16 * * *'
-        run: python publisher/prepare_villar_plan.py
-
-      - name: Validate Villar Dora territory pipeline
-        if: github.event_name == 'workflow_dispatch' || github.event.schedule == '0 6,16 * * *'
-        shell: bash
-        run: |
-          set -euxo pipefail
+          python -m json.tool publisher/clients/f1-immobiliare.json >/dev/null
           python - <<'PY'
           import json
-          q=json.load(open('publisher/final_content_queue.json',encoding='utf-8'))
-          t=json.load(open('publisher/territory_channels.json',encoding='utf-8'))
-          assert q.get('pipeline')=='f1-final-assets'
-          assert q.get('asset_policy')=='immutable-final-layout'
-          assert q.get('brand')=='F1 Immobiliare'
-          assert q.get('territory_plan',{}).get('territory')=='Villar Dora'
-          vd=[j for j in q.get('jobs',[]) if str(j.get('id') or '').startswith('VD-')]
-          assert len(vd)==300, len(vd)
-          assert t.get('territories',{}).get('villar-dora',{}).get('enabled') is True
-          print(f'F1 VILLAR DORA PIPELINE VALIDATED: {len(vd)} territory jobs; {len(q.get("jobs",[]))-len(vd)} external jobs preserved')
+          cfg=json.load(open('publisher/clients/f1-immobiliare.json',encoding='utf-8'))
+          assert cfg.get('graphics_source') == 'manual_only'
+          assert cfg.get('ai_image_generation') is False
+          assert cfg.get('automatic_brand_layer') is False
+          assert cfg.get('automatic_rendering') is False
+          assert cfg.get('publish_only') is True
+          print('F1_MANUAL_PUBLISH_ONLY_CONFIG_OK')
           PY
 
-      - name: Generate immutable graphic for next Villar READY job
-        if: github.event_name == 'workflow_dispatch' || github.event.schedule == '0 6,16 * * *'
-        run: python publisher/generate_next_villar_asset.py
-
-      - name: Publish next Villar final asset
-        if: github.event_name == 'workflow_dispatch' || github.event.schedule == '0 6,16 * * *'
-        shell: bash
-        run: |
-          set -euo pipefail
-          DRY='${{ inputs.dry_run }}'
-          if [ "$DRY" = "true" ]; then
-            python publisher/final_asset_publisher.py --exclude-communications --dry-run
-          else
-            python publisher/final_asset_publisher.py --exclude-communications
-          fi
-
-      - name: Publish and verify autonomous client communications
+      - name: Publish and verify manual F1 assets only
         shell: bash
         run: |
           set -euo pipefail
           DRY='${{ inputs.dry_run }}'
           if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "$DRY" = "true" ]; then
-            python publisher/final_asset_publisher.py --communications-only --dry-run
+            python publisher/final_asset_publisher.py --manual-only --dry-run
           else
-            python publisher/final_asset_publisher.py \
-              --communications-only \
-              --drain \
-              --verify \
-              --max-jobs 25
+            python publisher/final_asset_publisher.py --manual-only --drain --verify --max-jobs 25
           fi
 
       - name: Persist final asset queue state atomically
@@ -148,11 +110,10 @@ jobs:
           python - <<'PY'
           import json
           q=json.load(open('publisher/final_content_queue.json',encoding='utf-8'))
-          communications=[j for j in q.get('jobs',[]) if str(j.get('communication_id') or '').startswith('COMM-')]
+          rows=[j for j in q.get('jobs',[]) if j.get('graphics_source')=='manual_only' and j.get('source')=='manual-upload']
           counts={}
-          for job in communications:
+          for job in rows:
               counts[job.get('status','UNKNOWN')]=counts.get(job.get('status','UNKNOWN'),0)+1
-          print('Territory: Villar Dora legacy schedule preserved')
-          print('Autonomous communications:', len(communications), counts)
-          print('Completion rule: PUBLISHED only after Buffer status=sent for every target service')
+          print('F1 manual assets:', len(rows), counts)
+          print('Generation: DISABLED. Publisher input: manual assets only.')
           PY

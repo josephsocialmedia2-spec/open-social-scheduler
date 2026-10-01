@@ -1,119 +1,17 @@
-name: F1 Reference Feed V5 Smoke
+name: f1 golden master smoke (ARCHIVED - F1 MANUAL PUBLISH ONLY)
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/f1-golden-master-smoke.yml'
-      - 'publisher/rendering/f1_job_bridge.py'
-      - 'publisher/rendering/content_engine.py'
-      - 'publisher/rendering/visual_compliance.py'
-      - 'publisher/rendering/node/render-static.mjs'
-      - 'publisher/rendering/node/src/scenes/f1-reel.tsx'
   workflow_dispatch:
 
 permissions:
   contents: read
 
 jobs:
-  smoke:
+  archived:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
-    env:
-      RENDERER_V2_NO_FALLBACK: '1'
     steps:
-      - uses: actions/checkout@v5
-
-      - uses: actions/setup-python@v6
-        with:
-          python-version: '3.12'
-          cache: pip
-          cache-dependency-path: publisher/requirements.txt
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-          cache: npm
-          cache-dependency-path: publisher/rendering/node/package.json
-
-      - name: Install renderer dependencies
+      - name: Manual-only policy
         run: |
-          set -euxo pipefail
-          sudo apt-get update
-          sudo apt-get install -y ffmpeg fonts-dejavu-core
-          python -m pip install --disable-pip-version-check -r publisher/requirements.txt
-          cd publisher/rendering/node
-          npm install --no-audit --no-fund
-          npm run typecheck
-
-      - name: Prepare representative reference specs
-        run: |
-          set -euxo pipefail
-          mkdir -p /tmp/f1-reference-smoke
-          curl -fL --retry 4 --retry-delay 2 'https://images.pexels.com/photos/259588/pexels-photo-259588.jpeg' -o /tmp/f1-reference-smoke/property.jpg
-          curl -fL --retry 4 --retry-delay 2 'https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg' -o /tmp/f1-reference-smoke/recruit.jpg
-          PYTHONPATH=publisher python - <<'PY'
-          import json
-          from pathlib import Path
-          from rendering.f1_job_bridge import job_to_content_spec
-          folder=Path('/tmp/f1-reference-smoke')
-          property_job={
-            'id':'reference-property','source_item_id':'C01','format':'carousel','visual_family':'property',
-            'title':'Alloggio a Moncalieri','main_message':'Spazi, comfort e praticità in una posizione strategica.',
-            'caption':'Reference property','cta':'Prenota la tua visita','price':'€ 139.000','location':'Moncalieri · Strada Genova',
-            'features':['100 mq','4 locali','2 camere','1 bagno'],'topic_keywords':['AMBIENTI LUMINOSI','ZONA COMODA E SERVITA','IDEALE PER FAMIGLIE'],
-            'slides':['ALLOGGIO|A MONCALIERI','SALONE|DOPPIO'], 'unique_primary_visual':True,
-          }
-          recruit_job={
-            'id':'reference-recruit','source_item_id':'R01','format':'reel','visual_family':'recruiting',
-            'title':'Entra nella squadra F1','main_message':'Il tuo futuro nell’immobiliare parte da qui.',
-            'caption':'Reference recruiting','cta':'Candidati ora','topic_keywords':['FORMAZIONE INTERNA','ZONA ASSEGNATA','PERCORSO DI CRESCITA'],
-            'slides':['ENTRA NELLA|SQUADRA F1','DIVENTA|AGENTE IMMOBILIARE'],'reel_duration_seconds':5,'voiceover':'','audio_rights':'',
-          }
-          folder.joinpath('property.json').write_text(json.dumps(job_to_content_spec(property_job,folder/'property.jpg'),ensure_ascii=False,indent=2))
-          folder.joinpath('recruit.json').write_text(json.dumps(job_to_content_spec(recruit_job,folder/'recruit.jpg'),ensure_ascii=False,indent=2))
-          PY
-
-      - name: Render reference carousel and Reel
-        run: |
-          set -euxo pipefail
-          PYTHONPATH=publisher python publisher/rendering/content_engine.py --spec /tmp/f1-reference-smoke/property.json --output /tmp/f1-reference-smoke/property.jpg.out.jpg --no-fallback > /tmp/f1-reference-smoke/property-result.json
-          PYTHONPATH=publisher python publisher/rendering/content_engine.py --spec /tmp/f1-reference-smoke/recruit.json --output /tmp/f1-reference-smoke/recruit.mp4 --no-fallback > /tmp/f1-reference-smoke/recruit-result.json
-          ffmpeg -hide_banner -loglevel error -y -ss 0.2 -i /tmp/f1-reference-smoke/recruit.mp4 -frames:v 1 -q:v 2 /tmp/f1-reference-smoke/recruit-cover.jpg
-
-      - name: Assert strict reference compliance
-        run: |
-          python - <<'PY'
-          import json
-          from pathlib import Path
-          from PIL import Image
-          folder=Path('/tmp/f1-reference-smoke')
-          for result_name in ('property-result.json','recruit-result.json'):
-              result=json.load(open(folder/result_name,encoding='utf-8'))
-              assert result['fallback_used'] is False, result
-              assert result['quality_gate']['passed'] is True, result
-              visual=result['visual_compliance']
-              assert visual['passed'] is True, visual
-              assert visual['score']==100, visual
-              assert visual['golden_master']=='F1_REFERENCE_FEED_V5', visual
-          covers=[folder/'property.jpg.out-01.jpg',folder/'recruit-cover.jpg']
-          for p in covers:
-              assert p.exists() and p.stat().st_size>15000, p
-              with Image.open(p) as im:
-                  assert im.width==1080, (p,im.size)
-                  assert im.height in (1350,1920), (p,im.size)
-          print('F1 REFERENCE FEED V5 SMOKE PASS')
-          PY
-
-      - uses: actions/upload-artifact@v4
-        with:
-          name: F1-REFERENCE-FEED-V5-SMOKE
-          path: |
-            /tmp/f1-reference-smoke/property.jpg.out-01.jpg
-            /tmp/f1-reference-smoke/property.jpg.out-02.jpg
-            /tmp/f1-reference-smoke/recruit-cover.jpg
-            /tmp/f1-reference-smoke/recruit.mp4
-            /tmp/f1-reference-smoke/property-result.json
-            /tmp/f1-reference-smoke/recruit-result.json
-          if-no-files-found: error
-          retention-days: 7
+          echo "ARCHIVED: F1 graphics are supplied manually by the operator."
+          echo "This legacy preview/render workflow no longer generates, renders or republishes F1 graphics."
+          echo "Use publisher/manual_asset_inbox and the manual final-asset publisher."

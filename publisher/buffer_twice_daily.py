@@ -367,7 +367,7 @@ def create_buffer_post(
         "schedulingType: automatic",
         f"mode: {mode}",
         f"assets: {gql_assets(service, job, hosted)}",
-        "aiAssisted: true",
+        f"aiAssisted: {'false' if job.get('ai_assisted') is False else 'true'}",
         f"source: {gql_quote('f1-github-buffer')}",
     ]
     if due_at:

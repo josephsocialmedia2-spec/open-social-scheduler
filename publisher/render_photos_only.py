@@ -361,17 +361,30 @@ def main() -> int:
     q = load_json(QUEUE, {"jobs": []})
     cycle = q.get("current_cycle")
     jobs = [j for j in q.get("jobs", []) if j.get("cycle_key") == cycle]
-    if len(jobs) != 10:
-        raise RuntimeError(f"Expected 10 current-cycle jobs, got {len(jobs)}")
-    if sum(j.get("client_id") == "f1-immobiliare" for j in jobs) != 5:
-        raise RuntimeError("Expected exactly five F1 jobs")
-    if sum(j.get("client_id") == "real-media-pro" for j in jobs) != 5:
-        raise RuntimeError("Expected exactly five RMP jobs")
+    if not jobs:
+        raise RuntimeError("No current-cycle jobs to render")
     if any(j.get("format") != "photo" for j in jobs):
         raise RuntimeError("PHOTO-ONLY renderer received a non-photo job")
 
+    f1_cfg = load_json(F1_CFG, {})
+    f1_manual_only = (
+        str(f1_cfg.get("graphics_source") or "") == "manual_only"
+        and f1_cfg.get("publish_only") is True
+        and f1_cfg.get("automatic_rendering") is False
+    )
+    f1_jobs = [j for j in jobs if j.get("client_id") == "f1-immobiliare"]
+    rmp_jobs = [j for j in jobs if j.get("client_id") == "real-media-pro"]
+    if f1_manual_only and f1_jobs:
+        raise RuntimeError("F1 MANUAL PUBLISH ONLY violation: F1 job reached automatic renderer")
+    if not f1_manual_only and f1_jobs and len(f1_jobs) != 5:
+        raise RuntimeError(f"Expected exactly five automatic F1 jobs, got {len(f1_jobs)}")
+    if rmp_jobs and len(rmp_jobs) != 5:
+        raise RuntimeError(f"Expected exactly five RMP jobs, got {len(rmp_jobs)}")
+    if len(f1_jobs) + len(rmp_jobs) != len(jobs):
+        raise RuntimeError("Unexpected client in strict publication renderer")
+
     history = load_json(HISTORY, {"version": 1, "brands": {}})
-    local_urls = configured_f1_local_candidates()
+    local_urls = configured_f1_local_candidates() if f1_jobs else []
     f1_used: set[str] = set()
 
     for job in jobs:
@@ -436,11 +449,18 @@ def main() -> int:
         print(f"PHOTO READY {cid}: {out} <- {source_type}: {source_id}")
 
     history["updated_at"] = datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z")
-    q["output_policy"] = "10 STATIC PUBLICATIONS - F1 LOCAL + PRESENTER FOOTER - RMP SHOPIFY THEME STORE DESCRIPTION ONLY + ORIGINAL MOCKUPS"
-    q["updated_by"] = "Approved 5+5 publication renderer"
+    q["output_policy"] = (
+        "F1 MANUAL PUBLISH ONLY + 5 RMP STATIC PUBLICATIONS"
+        if f1_manual_only else
+        "AUTOMATIC STATIC PUBLICATIONS - F1 + RMP"
+    )
+    q["updated_by"] = "Automatic renderer · F1 manual-only aware"
     save_json(HISTORY, history)
     save_json(QUEUE, q)
-    print("DONE: 5 F1 + 5 RMP; local F1 visuals; zero copied Shopify theme images; presenter footer on every graphic")
+    print(
+        f"DONE: automatic F1={len(f1_jobs)} RMP={len(rmp_jobs)} "
+        f"F1_manual_only={f1_manual_only}"
+    )
     return 0
 
 

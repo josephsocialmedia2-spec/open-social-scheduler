@@ -7,6 +7,11 @@ from publisher.rendering.openai_visual_engine import generate_visual
 ROOT=Path(__file__).resolve().parents[1]
 INTENTS=ROOT/"publisher"/"f1_search_intents.json"
 OUT=ROOT/"publisher"/"media"/"generated"/"f1-chatgpt-creative-v1"
+CLIENT=ROOT/"publisher"/"clients"/"f1-immobiliare.json"
+
+def generation_disabled():
+ cfg=json.loads(CLIENT.read_text(encoding="utf-8"))
+ return str(cfg.get("graphics_source") or "")=="manual_only" and cfg.get("ai_image_generation") is False and cfg.get("publish_only") is True
 
 def brief(row:dict[str,Any],variant:str)->dict[str,Any]:
     mood="editorial, credible, contemporary Italian residential real estate"
@@ -24,6 +29,9 @@ def brief(row:dict[str,Any],variant:str)->dict[str,Any]:
        "creative_direction":mood,"scene":scene,"negative_constraints":"no text, no logo, no watermark, no fake signage, no luxury excess, no distorted anatomy, no stock-photo look"}}
 
 def main():
+ if generation_disabled():
+  print("F1 MANUAL PUBLISH ONLY: OpenAI/ChatGPT creative engine is disabled.")
+  return 0
  data=json.loads(INTENTS.read_text(encoding="utf-8")); rows=data["clusters"][:6]; OUT.mkdir(parents=True,exist_ok=True)
  manifest=[]
  for row in rows:

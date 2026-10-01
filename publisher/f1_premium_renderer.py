@@ -51,6 +51,15 @@ _original_get_remote_image = renderer.get_remote_image
 _request_count = 0
 
 
+def f1_manual_publish_only() -> bool:
+    cfg = load_json(F1_CFG, {})
+    return (
+        str(cfg.get("graphics_source") or "") == "manual_only"
+        and cfg.get("automatic_rendering") is False
+        and cfg.get("publish_only") is True
+    )
+
+
 def load_json(path: Path, default: dict) -> dict:
     if not path.exists():
         return default
@@ -461,6 +470,9 @@ def validate_f1_outputs() -> None:
 
 
 def install() -> None:
+    if f1_manual_publish_only():
+        print("F1 MANUAL PUBLISH ONLY: premium renderer installation skipped.")
+        return
     renderer.get_remote_image = robust_local_get
     renderer.configured_f1_local_candidates = smart_f1_candidates
     renderer.f1_composition = premium_f1_composition

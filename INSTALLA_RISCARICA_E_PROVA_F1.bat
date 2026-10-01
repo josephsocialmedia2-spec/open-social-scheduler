@@ -1,22 +1,27 @@
 @echo off
 setlocal
-title F1 AUTOMAZIONE - RISCARICA E PROVA
+title F1 - INSTALLA PUBBLICATORE MANUALE
 cd /d "%~dp0"
+
+net session >nul 2>&1
+if %errorlevel% neq 0 (
+  powershell.exe -NoProfile -Command "Start-Process -FilePath '%~f0' -Verb RunAs"
+  exit /b
+)
 
 echo.
 echo ============================================================
-echo   F1 AUTOMAZIONE - RISCARICA PROGRAMMA E PROVA REALE
+echo   F1 IMMOBILIARE - PUBBLICAZIONE MANUALE
 echo ============================================================
 echo.
 echo Il programma:
-echo   - scarica da zero open-social-scheduler da GitHub
-echo   - conserva la vecchia installazione come backup
-echo   - verifica Git, Python e Chrome
-echo   - installa le dipendenze F1
-echo   - crea il pulsante "F1 - AVVIA ORA E PUBBLICA" sul Desktop
-echo   - lancia subito una prova reale
+echo   - scarica open-social-scheduler da GitHub
+echo   - installa solo il pannello di caricamento manuale
+echo   - rimuove i vecchi task di generazione grafica
+echo   - crea il collegamento F1 PUBBLICA GRAFICHE
+echo   - verifica che AI grafica sia disabilitata
 echo.
-echo Durante la prova NON usare mouse o tastiera.
+echo NON vengono installati o avviati generatori ChatGPT, Leonardo o Firefly.
 echo.
 
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0F1_AUTO_REINSTALL_TEST.ps1"
@@ -24,14 +29,10 @@ set "RC=%ERRORLEVEL%"
 
 echo.
 if "%RC%"=="0" (
-  echo ============================================================
-  echo PROCEDURA F1 TERMINATA SENZA ERRORI DEL PROGRAMMA
-  echo ============================================================
+  echo F1 PUBBLICATORE MANUALE INSTALLATO E VERIFICATO.
 ) else (
-  echo ============================================================
   echo PROCEDURA F1 INTERROTTA - CODICE %RC%
   echo Controlla la cartella %%USERPROFILE%%\F1_Automazione\logs
-  echo ============================================================
 )
 echo.
 pause
