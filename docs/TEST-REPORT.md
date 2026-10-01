@@ -47,3 +47,35 @@ Stato misurato:
 - connection health/quota con RLS
 - LinkedIn Page usa `w_organization_social`
 - nessun falso `COLLEGATO` basato sul solo URL
+
+
+## Facebook Page Standard — Antica Cappella
+
+### Ricerca e diagnosi
+- URL Facebook previsto: `https://www.facebook.com/profile.php?id=61550077453442`
+- Page ID atteso ricavato dall'URL: `61550077453442`
+- prima della correzione: nessun `external_channel_id`, nessun OAuth token Meta, `enabled=false`, `verified=false`, stato `CANALE_DA_COLLEGARE`
+- Instagram Antica Cappella: provider `buffer`, `enabled=true`, `verified=true`, stato `COLLEGATO`; invariato dopo il lavoro
+
+### Modifiche verificate
+- Facebook OAuth separato da Instagram OAuth
+- scope Facebook Pages dedicati
+- verifica permessi Meta realmente concessi
+- matching diretto di `profile.php?id=PAGE_ID`
+- Page task validation
+- `PAGINA_NON_ACCESSIBILE`, `PAGINA_DA_SELEZIONARE`, `PERMESSI_INSUFFICIENTI`
+- publisher riceve Page Access Token solo dopo verifica server-side
+
+### CI finale
+PR #117: merged.
+Main merge commit: `3f0ab082fecfc8d654524c73ccbba2cd35d491cc`.
+- Real Media Pro OAuth Smoke: SUCCESS — 15/15
+- F1 Content Hub UI CI: SUCCESS
+- Direct API Visibility Engine CI: SUCCESS
+- F1 Project Deploy Validation: SUCCESS
+- Sync Open Social Scheduler Pages: SUCCESS
+- Edge Function `f1-social-oauth`: version 18 ACTIVE
+
+### Blocco esterno residuo
+Il broker live segnala `RMP_OAUTH_PROVIDER_CONFIGURATION_REQUIRED=facebook,instagram,linkedin`.
+Per Facebook mancano quindi ancora le credenziali applicative Meta server-side (`META_APP_ID` e `META_APP_SECRET`). Antica Cappella non viene marcata `COLLEGATO` finché un OAuth reale non conferma il Page ID tramite Meta.
