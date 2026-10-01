@@ -770,31 +770,119 @@ def extract_graphic_text(
     }
 
 
+def caption_text_tokens(value: str) -> list[str]:
+    import unicodedata
+
+    normalized = unicodedata.normalize("NFKD", str(value or ""))
+    normalized = "".join(ch for ch in normalized if not unicodedata.combining(ch)).lower()
+    return [
+        token
+        for token in re.findall(r"[a-z0-9]+", normalized)
+        if len(token) >= 3
+    ]
+
+
+def meaningful_graphic_lines(graphic_text: str, client: dict[str, Any]) -> list[str]:
+    name = re.sub(r"\s+", " ", str(client.get("name") or "")).strip().casefold()
+    output: list[str] = []
+    seen: set[str] = set()
+    for raw in clean_graphic_text(graphic_text).splitlines():
+        line = re.sub(r"\s+", " ", raw).strip(" \t|_·:-")
+        if not line:
+            continue
+        low = line.casefold()
+        low = re.sub(r"^fl\s+social\b", "f1 social", low)
+        if name and low == name:
+            continue
+        if re.search(r"\bf[1li]\s+social\s+intelligence\b", low):
+            continue
+        if low in {"attract", "nurture", "convert", "branding", "awareness"}:
+            continue
+        if "social intelligence for real results" in low:
+            continue
+        if low.startswith("strategia") and any(x in low for x in ("automazione", "crescita", "intelligence")):
+            continue
+
+        tokens = re.findall(r"[A-Za-zÀ-ÿ0-9]+", line)
+        if not tokens:
+            continue
+        if len(tokens) >= 2 and (sum(len(x) for x in tokens) / len(tokens)) <= 1.6:
+            continue
+        alnum = sum(ch.isalnum() for ch in line)
+        if len(line) >= 5 and alnum / max(1, len(line)) < 0.45:
+            continue
+
+        key = re.sub(r"[^a-z0-9]+", "", low)
+        if not key or key in seen:
+            continue
+        seen.add(key)
+        output.append(line)
+    return output
+
+
+def graphic_supports_title(graphic_text: str, title: str) -> bool:
+    title_tokens = caption_text_tokens(title)
+    if not title_tokens:
+        return False
+    graphic_tokens = set(caption_text_tokens(graphic_text))
+    if not graphic_tokens:
+        return False
+    hits = sum(1 for token in title_tokens if token in graphic_tokens)
+    return hits / len(title_tokens) >= 0.55
+
+
 def caption_from_graphic(
     platform: str,
     client: dict[str, Any],
     item: dict[str, Any],
     graphic_text: str,
+    graphic_source: str = "GRAPHIC_TEXT",
 ) -> str:
-    cleaned = clean_graphic_text(graphic_text)
-    fallback = clean_graphic_text(
-        str(item.get("description") or item.get("source_text") or item.get("title") or "")
-    )
-    base = cleaned or fallback or re.sub(r"\s+", " ", str(item.get("title") or "Contenuto")).strip()
-    lines = [x.strip() for x in base.splitlines() if x.strip()]
-    title = lines[0] if lines else str(item.get("title") or "Contenuto").strip()
-    detail = "\n".join(lines[1:]).strip()
+    title = re.sub(r"\s+", " ", str(item.get("title") or "Contenuto")).strip()
+    context = clean_graphic_text(str(item.get("description") or item.get("source_text") or ""))
+    source = str(graphic_source or "GRAPHIC_TEXT")
+    lines = meaningful_graphic_lines(graphic_text, client) if source == "GRAPHIC_TEXT" else []
+
+    headline = title
+    body = ""
+    if source == "GRAPHIC_TEXT" and lines:
+        semantic = " ".join(lines)
+        if graphic_supports_title(semantic, title):
+            # OCR establishes the subject; use the clean content title/body to
+            # avoid reproducing OCR artefacts in the public caption.
+            headline = title
+            body = context
+        else:
+            headline = lines[0]
+            consumed = 1
+            if len(lines) > 1 and len(headline) < 80 and len(headline + " " + lines[1]) <= 140:
+                headline = headline + " " + lines[1]
+                consumed = 2
+            body = "\n".join(lines[consumed:]).strip()
+    else:
+        headline = title
+        body = context
+
+    if not headline:
+        headline = title or "Contenuto"
+    if body and re.sub(r"\W+", "", body.casefold()) == re.sub(r"\W+", "", headline.casefold()):
+        body = ""
+
+    base = headline + (("\n\n" + body) if body else "")
+    base = base.strip()
     name = str(client.get("name") or "").strip()
+    branded = base
+    if name and name.casefold() not in base.casefold():
+        branded = base + "\n\n" + name
 
     if platform == "instagram":
-        return (base + ("\n\n" + name if name else ""))[:2200].strip()
+        return branded[:2200].strip()
     if platform == "tiktok":
         return base[:1800].strip()
     if platform == "youtube":
-        body = detail or base
-        return f"{title}\n\n{body}"[:4500].strip()
+        return base[:4500].strip()
     if platform == "linkedin-page":
-        return (base + ("\n\n" + name if name else ""))[:3000].strip()
+        return branded[:3000].strip()
     if platform == "pinterest":
         return base[:800].strip()
     return base[:5000].strip()
@@ -821,7 +909,13 @@ def regenerate_graphic_captions(
     for platform in CAPTION_PLATFORMS:
         current = platforms.get(platform) if isinstance(platforms.get(platform), dict) else {}
         current = dict(current)
-        generated = caption_from_graphic(platform, client, item, str(graphic.get("text") or ""))
+        generated = caption_from_graphic(
+            platform,
+            client,
+            item,
+            str(graphic.get("text") or ""),
+            str(graphic.get("source") or "GRAPHIC_TEXT"),
+        )
         current_caption = str(current.get("caption") or "").strip()
         previous_generated = str(current.get("generated_caption") or "").strip()
         legacy_manual = bool(
@@ -850,7 +944,7 @@ def regenerate_graphic_captions(
     })
     plan["platforms"] = platforms
     plan["intelligence"] = intelligence
-    plan["caption_autopilot_version"] = "GRAPHIC_TEXT_V1"
+    plan["caption_autopilot_version"] = "GRAPHIC_TEXT_V2_CLEAN"
 
     rest_patch(
         "f1_content_items",
