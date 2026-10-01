@@ -113,7 +113,7 @@ class SocialOAuthUiTests(unittest.TestCase):
     def test_facebook_profile_php_page_id_is_matched_directly(self):
         edge = (ROOT / "supabase" / "functions" / "f1-social-oauth" / "index.ts").read_text(encoding="utf-8")
         self.assertIn("facebookIdFromUrl(profileUrl)", edge)
-        self.assertIn("String(x.page_id || x.account_id || "") === expectedId", edge)
+        self.assertIn('String(x.page_id || x.account_id || "") === expectedId', edge)
         self.assertIn('chooseCandidate(platform, existingProfileUrl, candidates)', edge)
 
     def test_facebook_page_access_states_are_preserved_and_diagnosed(self):
