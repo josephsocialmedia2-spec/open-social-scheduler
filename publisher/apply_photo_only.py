@@ -21,6 +21,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 QUEUE = ROOT / "publisher" / "queue.json"
 F1_POLICY = ROOT / "publisher" / "f1_content_policy.json"
+F1_CLIENT = ROOT / "publisher" / "clients" / "f1-immobiliare.json"
 PHONE = "371 370 8294"
 PHONE_FRANCESCA = "371 424 6300"
 VALUATION_URL = "https://www.agentpricing.com/j.malafronte"
@@ -198,8 +199,17 @@ def main() -> int:
     q = json.loads(QUEUE.read_text(encoding="utf-8"))
     key = q.get("current_cycle")
     jobs = [j for j in q.get("jobs", []) if j.get("cycle_key") == key]
-    if len(jobs) != 10:
-        raise RuntimeError(f"Expected 10 jobs in current cycle, got {len(jobs)}")
+    if not jobs:
+        raise RuntimeError("No automatic jobs in current cycle")
+
+    f1_client = json.loads(F1_CLIENT.read_text(encoding="utf-8"))
+    f1_manual_only = (
+        str(f1_client.get("graphics_source") or "") == "manual_only"
+        and f1_client.get("publish_only") is True
+    )
+    f1_jobs = [j for j in jobs if str(j.get("client_id") or "") == "f1-immobiliare"]
+    if f1_manual_only and f1_jobs:
+        raise RuntimeError("F1 manual-only policy violation: automatic F1 jobs reached apply_photo_only")
 
     for j in jobs:
         cid = str(j.get("client_id") or "")
@@ -263,17 +273,23 @@ def main() -> int:
             j.pop("shopify_asset_required", None)
             j.pop("shopify_transform_required", None)
 
-    q["output_policy"] = "10 STATIC PUBLICATIONS - 5 F1 INSTITUTIONAL SERVICES + 5 RMP SHOPIFY THEME STORE ORIGINAL MOCKUPS"
+    rmp_count = sum(1 for j in jobs if str(j.get("client_id") or "") == "real-media-pro")
+    f1_count = len(f1_jobs)
+    q["output_policy"] = (
+        "F1 MANUAL PUBLISH ONLY + RMP AUTOMATIC STATIC PUBLICATIONS"
+        if f1_manual_only else
+        "F1 + RMP AUTOMATIC STATIC PUBLICATIONS"
+    )
     q["f1_content_policy_version"] = policy["version"]
     q["photo_policy"] = {
-        "contents_per_cycle": 10,
-        "f1": "5 institutional F1 posts across Agent Pricing, Piano di Vendita, Recruiting and official-source information policy; light white-green-black template only",
-        "real_media_pro": "5 original ecommerce mockups inspired only by official Shopify Theme Store descriptions; zero copied theme images; no hashtags; Francesca + Joseph footer",
+        "contents_per_cycle": len(jobs),
+        "f1": "manual publish only; no automatic graphic generation" if f1_manual_only else f"{f1_count} automatic F1 posts",
+        "real_media_pro": f"{rmp_count} original ecommerce mockups inspired only by official Shopify Theme Store descriptions",
         "video": False,
         "audio": False,
     }
     QUEUE.write_text(json.dumps(q, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print("PUBLICATION policy applied: F1 institutional services + RMP Shopify Theme Store")
+    print(f"PUBLICATION policy applied: F1_manual_only={f1_manual_only}; RMP={rmp_count}; F1_auto={f1_count}")
     return 0
 
 
