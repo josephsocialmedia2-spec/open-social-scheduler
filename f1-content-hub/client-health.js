@@ -38,7 +38,8 @@
     if(row.reauthorization_required)return "DA_RIAUTORIZZARE";
     if(row.token_expires_at&&new Date(row.token_expires_at).getTime()<=Number(now||Date.now()))return "TOKEN_SCADUTO";
     if(row.enabled&&row.verified)return "COLLEGATO";
-    return String(row.connection_status||"CANALE_DA_COLLEGARE").toUpperCase();
+    const raw=String(row.connection_status||"CANALE_DA_COLLEGARE").toUpperCase();
+    return raw==="COLLEGATO"?"CANALE_DA_COLLEGARE":raw;
   }
   function collisionMap(channels){
     const out={};
