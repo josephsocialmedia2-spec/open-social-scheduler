@@ -42,4 +42,9 @@ function content(id){return [{client_id:id,status:"PRONTO"}]}
  const result=H.dashboard([arch,active],rows,scheduled(active.id),content(active.id),{now});
  assert.deepEqual(result.map(x=>x.name),["Zeta"]);
 }
-console.log("client-health: 7 tests passed");
+{
+ const c={...base,id:"c7",name:"Stale status"};
+ const rows=[ch(c,"facebook"),ch(c,"instagram",{enabled:false,verified:false,connection_status:"COLLEGATO"})];
+ assert.equal(H.assess(c,rows,scheduled(c.id),content(c.id),{now}).color,"orange");
+}
+console.log("client-health: 8 tests passed");
