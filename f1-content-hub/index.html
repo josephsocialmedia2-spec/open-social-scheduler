@@ -1506,13 +1506,14 @@ function renderSocialConnections(){
       const connected=!!(row&&row.enabled&&row.verified);
       const isBuffer=provider==="buffer";
       const anticaMissingLinkedin=(c.slug==="antica-cappella"&&p==="linkedin-page"&&!profileUrl);
-      const rmpMissingProfile=(c.slug==="real-media-pro"&&!profileUrl);
+      const rmpLinkedinPending=(c.slug==="real-media-pro"&&p==="linkedin-page");
+      const rmpMissingProfile=(c.slug==="real-media-pro"&&!rmpLinkedinPending&&!profileUrl);
       if(isBuffer){
         if(connected) actions+=' <button class="btn small ghost" onclick="window.f1VerifySocial(\''+c.id+'\',\''+p+'\')">VERIFICA</button>';
       }else{
         if(state==="ACCOUNT_DA_SELEZIONARE" && (p==="facebook"||p==="instagram")){
           actions+=' <button class="btn small primary" onclick="window.f1SelectMetaAccount(\''+c.id+'\',\''+p+'\')">SELEZIONA ACCOUNT</button>';
-        }else if((!connected || ["DA_RIAUTORIZZARE","TOKEN_SCADUTO","CANALE_DA_COLLEGARE","CONFIGURAZIONE_PRONTA","AUTORIZZAZIONE_RICHIESTA","ACCOUNT_ERRATO","ACCOUNT_CONDIVISO"].includes(state))&&!anticaMissingLinkedin&&!rmpMissingProfile){
+        }else if((!connected || ["DA_RIAUTORIZZARE","TOKEN_SCADUTO","CANALE_DA_COLLEGARE","CONFIGURAZIONE_PRONTA","AUTORIZZAZIONE_RICHIESTA","ACCOUNT_ERRATO","ACCOUNT_CONDIVISO"].includes(state))&&!anticaMissingLinkedin&&!rmpMissingProfile&&!rmpLinkedinPending){
           actions+=' <button class="btn small primary" onclick="window.f1ConnectSocial(\''+c.id+'\',\''+p+'\')">'+(["DA_RIAUTORIZZARE","TOKEN_SCADUTO","ACCOUNT_CONDIVISO"].includes(state)?"RIAUTORIZZA":"COLLEGA")+'</button>';
         }
         if(connected) actions+=' <button class="btn small ghost" onclick="window.f1VerifySocial(\''+c.id+'\',\''+p+'\')">VERIFICA</button>';
@@ -1526,10 +1527,12 @@ function renderSocialConnections(){
           :(c.slug==="antica-cappella"&&p==="youtube"&&!connected)
             ?'<div class="meta" style="color:#f7d48a">Usa COLLEGA e accedi con l\'account Google proprietario di @ristoranteanticacappella.</div>'
             :(anticaMissingLinkedin?'<div class="meta">Nessun profilo LinkedIn ufficiale verificato: canale non configurato.</div>'
-              :(c.slug==="real-media-pro"&&rmpMissingProfile
-                ?'<div class="meta" style="color:#f7d48a"><b>PROFILO UFFICIALE RICHIESTO.</b> Inserisci l\'URL ufficiale, premi SALVA LINK e poi COLLEGA. OAuth non accetterà un account diverso.</div>'
-                :(c.slug==="real-media-pro"&&profileUrl&&!connected
-                  ?'<div class="meta" style="color:#9fdb7a">OAuth protetto Real Media Pro: verrà accettato solo il profilo ufficiale salvato qui sopra.</div>':"")));
+              :(rmpLinkedinPending
+                ?'<div class="meta" style="color:#f7d48a"><b>LINKEDIN IN ATTESA.</b> Il publisher distingue profilo personale e pagina aziendale: non verrà collegato automaticamente finché non è definito il tipo di autore ufficiale Real Media Pro.</div>'
+                :(c.slug==="real-media-pro"&&rmpMissingProfile
+                  ?'<div class="meta" style="color:#f7d48a"><b>PROFILO UFFICIALE RICHIESTO.</b> Inserisci l\'URL ufficiale, premi SALVA LINK e poi COLLEGA. OAuth non accetterà un account diverso.</div>'
+                  :(c.slug==="real-media-pro"&&profileUrl&&!connected
+                    ?'<div class="meta" style="color:#9fdb7a">OAuth protetto Real Media Pro: verrà accettato solo il profilo ufficiale salvato qui sopra.</div>':""))));
       const verifiedAt=row&&row.last_verified_at?'<div class="meta">Ultima verifica: '+esc(fmt(row.last_verified_at))+'</div>':"";
       return '<div class="lineitem" style="align-items:flex-start"><b>'+esc(platformLabel(p))+'</b><div style="flex:1"><span class="badge '+socialStateClass(row,state)+'">'+esc(state)+'</span><div class="meta"><b>'+esc(account)+'</b></div><div class="meta">Provider: '+esc(provider)+(row&&row.external_channel_id?' · ID: '+esc(row.external_channel_id):"")+'</div>'+verifiedAt+collisionNote+onboardingNote+urlEditor+'</div><div class="row" style="justify-content:flex-end">'+actions+'</div></div>';
     }).join("");
@@ -1679,7 +1682,7 @@ window.f1ContinueRmpOAuth=async function(manualStart){
   if(!client||client.slug!=="real-media-pro"){localStorage.removeItem("f1-rmp-connect-all");return}
   selectedClientId=client.id;
   const statusEl=el("connect-all-status-"+plan.clientId);
-  const targets=["facebook","instagram","linkedin-page","tiktok","youtube"];
+  const targets=["facebook","instagram","tiktok","youtube"];
   const collisions=socialCollisionMap();
   const rowFor=function(p){return socialChannels.find(function(x){return x.client_id===plan.clientId&&x.platform===p})};
   const connected=function(p){
