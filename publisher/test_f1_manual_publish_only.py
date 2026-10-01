@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import random
 import sys
 from io import BytesIO
 from pathlib import Path
@@ -20,8 +21,12 @@ import final_asset_publisher as final_pub  # noqa: E402
 
 def png_bytes() -> bytes:
     buffer = BytesIO()
-    Image.new("RGB", (1080, 1350), (244, 245, 241)).save(buffer, "PNG")
-    return buffer.getvalue()
+    rng = random.Random(20261001)
+    raw = rng.randbytes(1080 * 1350 * 3)
+    Image.frombytes("RGB", (1080, 1350), raw).save(buffer, "PNG")
+    data = buffer.getvalue()
+    assert len(data) > 20_000
+    return data
 
 
 def assert_manual_config() -> None:
