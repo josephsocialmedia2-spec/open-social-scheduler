@@ -12,6 +12,26 @@ from PIL import Image
 OPENAI_IMAGES_URL = "https://api.openai.com/v1/images/generations"
 OPENAI_EDITS_URL = "https://api.openai.com/v1/images/edits"
 DEFAULT_MODEL = os.getenv("OPENAI_IMAGE_MODEL", "gpt-image-1")
+ROOT = Path(__file__).resolve().parents[2]
+F1_CLIENT_CONFIG = ROOT / "publisher" / "clients" / "f1-immobiliare.json"
+
+
+def f1_manual_publish_only() -> bool:
+    try:
+        cfg = json.loads(F1_CLIENT_CONFIG.read_text(encoding="utf-8"))
+    except Exception:
+        return False
+    return (
+        str(cfg.get("graphics_source") or "") == "manual_only"
+        and cfg.get("ai_image_generation") is False
+        and cfg.get("publish_only") is True
+    )
+
+
+def targets_f1(spec: dict[str, Any]) -> bool:
+    brand = dict(spec.get("brand") or {})
+    name = str(brand.get("name") or "F1 IMMOBILIARE").strip().upper()
+    return name.startswith("F1")
 
 
 def _api_key() -> str:
@@ -73,6 +93,10 @@ def generate_visual(spec: dict[str, Any], output: str | Path, *, reference_image
     The final branded card is still rendered deterministically by the locked F1 renderer.
     Property listing photos should normally be supplied as factual source imagery and not regenerated.
     """
+    if targets_f1(spec) and f1_manual_publish_only():
+        raise RuntimeError(
+            "F1 MANUAL PUBLISH ONLY: OpenAI Images is disabled for F1 before API-key lookup."
+        )
     output = Path(output)
     output.parent.mkdir(parents=True, exist_ok=True)
     prompt = build_prompt(spec)
