@@ -104,6 +104,41 @@ def rest_get(table: str, params: dict[str, str] | None = None) -> list[dict[str,
     return data if isinstance(data, list) else []
 
 
+def rest_get_all(
+    table: str,
+    params: dict[str, str] | None = None,
+    *,
+    page_size: int = 250,
+    max_rows: int = 0,
+) -> list[dict[str, Any]]:
+    """Read a complete PostgREST result set in deterministic pages.
+
+    max_rows=0 means no artificial content limit. This is used by the
+    graphic-caption autopilot so every active client's content is eventually
+    inspected instead of repeatedly processing only the oldest first page.
+    """
+    base = dict(params or {})
+    base.pop("limit", None)
+    base.pop("offset", None)
+    size = max(1, min(int(page_size or 250), 1000))
+    rows: list[dict[str, Any]] = []
+    offset = 0
+    while True:
+        remaining = max_rows - len(rows) if max_rows > 0 else size
+        if max_rows > 0 and remaining <= 0:
+            break
+        take = min(size, remaining) if max_rows > 0 else size
+        page_params = dict(base)
+        page_params["limit"] = str(take)
+        page_params["offset"] = str(offset)
+        page = rest_get(table, page_params)
+        rows.extend(page)
+        if len(page) < take:
+            break
+        offset += len(page)
+    return rows
+
+
 def rest_post(
     table: str,
     payload: dict[str, Any] | list[dict[str, Any]],
@@ -1385,12 +1420,21 @@ def process_directory_jobs(limit: int = 8) -> dict[str, int]:
     return stats
 
 
-def run_content_autopilot(limit: int = 250) -> dict[str, int]:
-    clients = rest_get("f1_content_clients", {"select": "*", "status": "eq.ATTIVO", "order": "name.asc"})
-    items = rest_get("f1_content_items", {"select": "*", "order": "created_at.asc", "limit": str(limit)})
-    media = rest_get("f1_content_media", {"select": "*", "limit": "3000"})
-    channels = rest_get("f1_client_social_channels", {"select": "*", "limit": "2000"})
-    calendars = rest_get("f1_content_calendar", {"select": "*", "limit": "3000"})
+def run_content_autopilot(limit: int = 0) -> dict[str, int]:
+    clients = rest_get_all(
+        "f1_content_clients",
+        {"select": "*", "status": "eq.ATTIVO", "order": "name.asc"},
+        page_size=250,
+    )
+    items = rest_get_all(
+        "f1_content_items",
+        {"select": "*", "order": "created_at.asc"},
+        page_size=250,
+        max_rows=max(0, int(limit or 0)),
+    )
+    media = rest_get_all("f1_content_media", {"select": "*", "order": "created_at.asc"}, page_size=500)
+    channels = rest_get_all("f1_client_social_channels", {"select": "*", "order": "client_id.asc,platform.asc"}, page_size=500)
+    calendars = rest_get_all("f1_content_calendar", {"select": "*", "order": "publication_at.asc"}, page_size=500)
 
     clients_by_id = {str(c["id"]): c for c in clients}
     media_by_content: dict[str, list[dict[str, Any]]] = defaultdict(list)
@@ -1443,7 +1487,7 @@ def run_content_autopilot(limit: int = 250) -> dict[str, int]:
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--content-limit", type=int, default=250)
+    parser.add_argument("--content-limit", type=int, default=0, help="0 = tutti i contenuti; valore positivo = massimo contenuti")
     parser.add_argument("--agency-limit", type=int, default=8)
     parser.add_argument("--skip-agencies", action="store_true")
     parser.add_argument("--skip-content", action="store_true")
