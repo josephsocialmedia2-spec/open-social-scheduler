@@ -1614,7 +1614,8 @@ Deno.serve(async (req) => {
     if (route === "verify" && req.method === "POST") return await verifyChannel(req);
     if (route === "profile-url" && req.method === "POST") return await saveProfileUrl(req);
     if (route === "discover-socials" && req.method === "POST") return await discoverSocials(req);
-    if (route === "meta" && routeParts[1] === "select" && req.method === "POST") return await metaSelect(req);\n    if (route === "linkedin" && routeParts[1] === "select" && req.method === "POST") return await linkedinSelect(req);
+    if (route === "meta" && routeParts[1] === "select" && req.method === "POST") return await metaSelect(req);
+    if (route === "linkedin" && routeParts[1] === "select" && req.method === "POST") return await linkedinSelect(req);
     if (route === "tiktok" && routeParts[1] === "creator-info" && req.method === "GET") return await tiktokCreatorInfo(req, url);
     if (route === "token" && req.method === "GET") return await workerToken(req, url);
     if (route === "disconnect" && req.method === "POST") return await disconnect(req);
