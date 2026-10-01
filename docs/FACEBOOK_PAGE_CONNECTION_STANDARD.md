@@ -60,3 +60,13 @@ Il parser ricava come Page ID atteso:
 Questo ID viene usato per selezionare la Pagina corretta quando compare in `/me/accounts`. Non viene salvato come account verificato finché OAuth non ha confermato l'accesso.
 
 Instagram Antica Cappella resta sul provider Buffer e non viene modificato dal flusso Facebook.
+
+
+## Fonti ufficiali Meta
+Ricerca verificata il 2026-10-01:
+- Meta official Facebook API workspace (Postman): https://www.postman.com/meta/facebook/overview
+- Facebook API — Get Access Tokens of Pages You Manage: https://www.postman.com/meta/facebook/request/bqfxwbp/get-access-tokens-of-pages-you-manage
+- Facebook API documentation / Tokens: https://www.postman.com/meta/facebook/documentation/r56bjfd/facebook-api
+- Meta official Instagram API documentation, per distinguere il flusso Instagram da Facebook: https://www.postman.com/meta/instagram/documentation/6yqw8pt/instagram-api
+
+La documentazione ufficiale Facebook mostra `/me/accounts?fields=name,access_token,tasks` con User Access Token per ottenere Pagine gestite, Page ID, Page Access Token e task. Il sistema non usa l'etichetta "pagina aziendale" come criterio tecnico di collegamento.
