@@ -18,7 +18,10 @@
         "url": "",
         "title": "Fallback residenziale neutro - Chianocco",
         "fallback": true,
-        "errors": [],
+        "errors": [
+          "download: 404 Client Error: Not Found for url: https://pwm.im-cdn.it/image/1870802223/xxs-c.jpg",
+          "download: 404 Client Error: Not Found for url: https://pwm.im-cdn.it/image/1870801913/xxs-c.jpg"
+        ],
         "reason": "no verified private-listing image; agency-branded sources rejected"
       },
       "fallback": true,
@@ -66,7 +69,9 @@
         "url": "",
         "title": "Fallback residenziale neutro - San Giorio di Susa",
         "fallback": true,
-        "errors": [],
+        "errors": [
+          "download: small"
+        ],
         "reason": "no verified private-listing image; agency-branded sources rejected"
       },
       "fallback": true,
@@ -110,14 +115,11 @@
       "commune": "Condove",
       "query": "immobili in vendita a Condove",
       "source": {
-        "query": "synthetic fallback",
-        "url": "",
-        "title": "Fallback residenziale neutro - Condove",
-        "fallback": true,
-        "errors": [],
-        "reason": "no verified private-listing image; agency-branded sources rejected"
+        "query": "Villa da privato \"Condove\"",
+        "url": "https://static.casadaprivato.it/images/properties/largethumbs/376844/a5184091b7a9433982e8dff670a0f103.jpg",
+        "title": "Villetta a schiera in vendita da Privato a Condove, Borgo Frassinere 1 ..."
       },
-      "fallback": true,
+      "fallback": false,
       "output": "property-preview/07.jpg"
     },
     {
