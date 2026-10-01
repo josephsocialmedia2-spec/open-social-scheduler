@@ -449,7 +449,9 @@ function planState(clientId,platform,mime,item){
 function buildPlan(client,title,category,base,mime,source,item){
   const plan={version:1,source:source||"WEB",category:category||"BRANDING",created_at:new Date().toISOString(),platforms:{}};
   WS_PLATFORMS.forEach(function(p){
-    const pref=prefFor(client,p.id),generated=captionFor(client,title,category,base,p.id);
+    const pref=prefFor(client,p.id);
+    const manualF1=client&&client.slug==="f1-immobiliare";
+    const generated=manualF1?String(base||"").trim():captionFor(client,title,category,base,p.id);
     plan.platforms[p.id]={
       caption:generated,
       generated_caption:generated,
@@ -720,6 +722,7 @@ window.f1RenderClientPublisherWorkspace=async function(){
   if(!client){root.classList.add("hidden");root.innerHTML="";return}
   root.classList.remove("hidden");
   const heicCount=window.f1HeicCountForClient?window.f1HeicCountForClient(client.id):0;
+  const manualF1=client.slug==="f1-immobiliare";
   const prefs=WS_PLATFORMS.map(function(p){
     const pref=prefFor(client,p.id),state=channelState(client.id,p.id);
     return '<div class="publish-time"><b>'+h(p.label)+' · '+h(state)+'</b><input type="time" value="'+h(pref.time)+'" onchange="window.f1WorkspaceSaveTime(\''+client.id+'\',\''+p.id+'\',this.value)"></div>';
@@ -735,7 +738,7 @@ window.f1RenderClientPublisherWorkspace=async function(){
         '<div><b>'+h(p.label)+'</b><div class="meta">'+h(data.time||prefFor(client,p.id).time)+'</div></div>'+
         '<div><span class="badge '+(shown==="PROGRAMMATO"||shown==="PRONTO"?"green":shown==="COLLEGATO"?"green":"")+'">'+h(shown)+'</span>'+(data.scheduled_at?'<div class="meta">'+h(new Date(data.scheduled_at).toLocaleString("it-IT",{dateStyle:"short",timeStyle:"short"}))+'</div>':"")+'</div>'+
         '<textarea '+(locked?'readonly title="Contenuto pubblicato/archiviato: sola lettura"':'onchange="window.f1WorkspaceSaveCaption(\''+item.id+'\',\''+p.id+'\',this.value)"')+'>'+h(data.caption||"")+'</textarea>'+
-        '<div class="row-actions">'+(locked?'':'<button class="btn tiny ghost" onclick="window.f1WorkspaceRegenerate(\''+item.id+'\',\''+p.id+'\')">RIGENERA</button><button class="btn tiny ghost" onclick="window.f1WorkspaceResetCaption(\''+item.id+'\',\''+p.id+'\')">RIPRISTINA</button>')+'<button class="btn tiny ghost" onclick="window.f1WorkspaceCopyCaption(\''+item.id+'\',\''+p.id+'\')">COPIA</button></div>'+
+        '<div class="row-actions">'+(locked?'':(manualF1?'':'<button class="btn tiny ghost" onclick="window.f1WorkspaceRegenerate(\''+item.id+'\',\''+p.id+'\')">RIGENERA</button>')+'<button class="btn tiny ghost" onclick="window.f1WorkspaceResetCaption(\''+item.id+'\',\''+p.id+'\')">RIPRISTINA</button>')+'<button class="btn tiny ghost" onclick="window.f1WorkspaceCopyCaption(\''+item.id+'\',\''+p.id+'\')">COPIA</button></div>'+
       '</div>';
     }).join("");
     return '<article class="distribution-card '+(selectedRailContentId===item.id?'rail-focused':'')+'" data-distribution-item="'+item.id+'">'+
@@ -746,7 +749,7 @@ window.f1RenderClientPublisherWorkspace=async function(){
   const folderPath=client.profile_metadata&&client.profile_metadata.fixed_folder_path||("C:\\F1Social\\Clients\\"+String(client.slug||"cliente")+"\\INBOX");
   const rec=(typeof operatorPreferences!=="undefined"&&operatorPreferences[0]&&operatorPreferences[0].screen_recording_enabled&&operatorPreferences[0].screen_recording_consented_at);
   root.innerHTML='<section class="publisher-console">'+
-    '<div class="publisher-head"><div><h2>F1 Social Intelligence · '+h(client.name)+'</h2><div class="muted">Il caricamento avvia automaticamente analisi, elaborazione, pianificazione e pubblicazione dove consentito.</div></div><div class="publisher-actions"><span class="badge green">INTELLIGENCE ATTIVA</span><span class="badge '+(client.approval_required?"amber":"green")+'">'+h(intelligenceApprovalLabel(client))+'</span>'+(rec?'<span class="badge rec-consent">● REC CONSENSO ATTIVO</span>':'')+(heicCount?'<button class="btn small amber" onclick="window.f1ConvertExistingHeicForClient()">CONVERTI HEIC IN CLOUD ('+heicCount+')</button>':'')+'<button class="btn small green" onclick="window.f1WorkspaceProgramAll()">PROGRAMMA TUTTO</button></div></div>'+
+    '<div class="publisher-head"><div><h2>F1 Social Intelligence · '+h(client.name)+'</h2><div class="muted">'+(manualF1?'F1 Immobiliare: carica la grafica definitiva, inserisci la caption e programma la pubblicazione. Nessuna grafica o caption viene generata automaticamente.':'Il caricamento avvia automaticamente analisi, elaborazione, pianificazione e pubblicazione dove consentito.')+'</div></div><div class="publisher-actions"><span class="badge green">INTELLIGENCE ATTIVA</span><span class="badge '+(client.approval_required?"amber":"green")+'">'+h(intelligenceApprovalLabel(client))+'</span>'+(rec?'<span class="badge rec-consent">● REC CONSENSO ATTIVO</span>':'')+(heicCount?'<button class="btn small amber" onclick="window.f1ConvertExistingHeicForClient()">CONVERTI HEIC IN CLOUD ('+heicCount+')</button>':'')+'<button class="btn small green" onclick="window.f1WorkspaceProgramAll()">PROGRAMMA TUTTO</button></div></div>'+
     '<div class="intelligence-command"><div><span class="intel-kicker">CARTELLA AUTOMATICA CLIENTE</span><b>'+h(folderPath)+'</b><small>Il percorso è assegnato dal software. Inserendo un file in INBOX il PC Agent lo carica senza altre operazioni.</small></div><div class="intel-command-actions"><button class="btn small ghost" onclick="window.f1KeepCurrentTimes()">MANTIENI ORARI ATTUALI</button><button class="btn small ghost" onclick="window.f1ToggleIntelligenceTimes(true)">MODIFICA ORARI</button><button class="btn small green" onclick="window.f1ProceedIntelligence()">PROCEDI</button></div></div>'+
     '<div id="intelligenceTimeNote" class="intel-note">'+(client.approval_required?'Elaborazione automatica attiva. Le pubblicazioni immobiliari attendono la tua approvazione finale.':'Nessun intervento necessario: se non modifichi nulla, Intelligence usa gli orari salvati e prosegue automaticamente.')+'</div>'+
     '<div class="ingest-grid">'+
@@ -928,6 +931,7 @@ window.f1WorkspaceSaveCaption=async function(itemId,platform,value){
 };
 window.f1WorkspaceRegenerate=async function(itemId,platform){
   const item=(items||[]).find(function(x){return x.id===itemId}),client=item&&(clients||[]).find(function(x){return x.id===item.client_id});if(!item||!client)return;
+  if(client.slug==="f1-immobiliare")return alert("F1 Immobiliare è in modalità manual publish-only: inserisci la caption manualmente.");
   if(isImmutableItem(item))return alert("Il contenuto pubblicato o archiviato è in sola lettura.");
   const plan=itemPlan(item,client),category=plan.category||classify(item.title),generated=captionFor(client,item.title,category,baseCaption(client,item.title,category,item.source_text||""),platform);
   plan.platforms[platform].generated_caption=generated;plan.platforms[platform].caption=generated;

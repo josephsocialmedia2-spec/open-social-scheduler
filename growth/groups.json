@@ -4250,8 +4250,42 @@
       "member_at": null,
       "last_post_at": null,
       "notes": ""
+    },
+    {
+      "id": "FBG-CE159B7ED4",
+      "brand": "f1-immobiliare",
+      "territory": "Beinasco",
+      "name": "NO CASELLO BEINASCO SICUREZZA STRADALE",
+      "url": "https://www.facebook.com/groups/69791080942/",
+      "source_query": "site:facebook.com/groups \"Beinasco\" \"cittadini\"",
+      "snippet": "Che aggiunge: «Già adesso chi arriva di Pinerolo esce a Volvera per evitare il pedaggio, intasando le provinciali di Orbassano, Beinasco e Rivalta. Da oggi diventerà una prassi comune e a farne le spese saranno i cittadini e l’ambiente».",
+      "status": "PENDING_APPROVAL",
+      "batch_id": "20260929-112329",
+      "discovered_at": "2026-09-29T11:26:12+00:00",
+      "approved_at": null,
+      "join_requested_at": null,
+      "member_at": null,
+      "last_post_at": null,
+      "notes": ""
+    },
+    {
+      "id": "FBG-AC20D2F0FD",
+      "brand": "real-media-pro",
+      "territory": "Torino",
+      "name": "operatori olistici Torino e Piemonte",
+      "url": "https://www.facebook.com/groups/366612546705531/",
+      "source_query": "site:facebook.com/groups \"Torino\" \"professionisti\"",
+      "snippet": "2 days ago · praticanti di discipline naturali uniamoci! :-) Questo gruppo aperto riunisce studenti, praticanti amatoriali e professionisti nel campo della naturopatia, massaggio olistico in genere, e discipline del benessere.",
+      "status": "PENDING_APPROVAL",
+      "batch_id": "20260930-111056",
+      "discovered_at": "2026-09-30T11:20:11+00:00",
+      "approved_at": null,
+      "join_requested_at": null,
+      "member_at": null,
+      "last_post_at": null,
+      "notes": ""
     }
   ],
-  "updated_at": "2026-09-28T11:56:01+00:00",
-  "last_batch_id": "20260928-114240"
+  "updated_at": "2026-09-30T11:24:06+00:00",
+  "last_batch_id": "20260930-111056"
 }
