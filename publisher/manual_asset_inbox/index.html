@@ -88,7 +88,7 @@ function renderManual(){
         '<label><input type="checkbox" data-platform="'+i+'" data-p="instagram" '+(x.platforms.instagram?'checked':'')+'> Instagram</label>'+
         '<label><input type="checkbox" data-platform="'+i+'" data-p="linkedin" '+(x.platforms.linkedin?'checked':'')+'> LinkedIn</label>'+
       '</div>'+
-      '<div class="actions"><button class="light" data-remove="'+i+'">RIMUOVI</button></div></div></article>';
+      '<div class="actions"><button class="primary" data-now="'+i+'">PUBBLICA ORA</button><button class="light" data-remove="'+i+'">RIMUOVI</button></div></div></article>';
   }).join('');
 
   document.querySelectorAll('[data-title]').forEach(el=>el.oninput=()=>{manual[+el.dataset.title].title=el.value;$('approveManual').checked=false});
@@ -96,6 +96,12 @@ function renderManual(){
   document.querySelectorAll('[data-territory]').forEach(el=>el.oninput=()=>{manual[+el.dataset.territory].territory=el.value;$('approveManual').checked=false});
   document.querySelectorAll('[data-schedule]').forEach(el=>el.onchange=()=>{manual[+el.dataset.schedule].scheduled_at=el.value;$('approveManual').checked=false});
   document.querySelectorAll('[data-platform]').forEach(el=>el.onchange=()=>{manual[+el.dataset.platform].platforms[el.dataset.p]=el.checked;$('approveManual').checked=false});
+  document.querySelectorAll('[data-now]').forEach(el=>el.onclick=()=>{
+    const i=+el.dataset.now,d=new Date(),off=d.getTimezoneOffset();
+    manual[i].scheduled_at=new Date(d.getTime()-off*60000).toISOString().slice(0,16);
+    $('approveManual').checked=false;
+    renderManual();
+  });
   document.querySelectorAll('[data-remove]').forEach(el=>el.onclick=()=>{manual.splice(+el.dataset.remove,1);$('approveManual').checked=false;renderManual()});
 }
 async function sendManual(){
