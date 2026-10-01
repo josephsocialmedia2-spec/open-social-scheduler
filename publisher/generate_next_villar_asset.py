@@ -6,6 +6,11 @@ from PIL import Image, ImageDraw, ImageFont
 
 ROOT=Path(__file__).resolve().parents[1]
 QUEUE=ROOT/'publisher'/'final_content_queue.json'
+CLIENT=ROOT/'publisher'/'clients'/'f1-immobiliare.json'
+
+def generation_disabled():
+    cfg=json.loads(CLIENT.read_text(encoding='utf-8'))
+    return str(cfg.get('graphics_source') or '')=='manual_only' and cfg.get('automatic_rendering') is False and cfg.get('publish_only') is True
 GREEN='#6BC200'; DARK='#07100A'; WHITE='#FFFFFF'; MUTED='#EAF2E4'
 CTA_URL='https://www.agentpricing.com/j.malafronte'
 CTA='CLICCA SUL LINK 👉\n'+CTA_URL+'\n🏡“Contattaci per una Valutazione Strategica e di Posizionamento del tuo immobile: analizziamo prezzo, concorrenza e strategia di vendita per aumentare le possibilità di vendere meglio e in tempi più efficienti.”'
@@ -79,6 +84,9 @@ def render(job):
     print(path)
 
 def main():
+    if generation_disabled():
+        print('F1 MANUAL PUBLISH ONLY: Villar graphic generator is disabled.')
+        return 0
     data=json.loads(QUEUE.read_text(encoding='utf-8'))
     job=next_ready(data)
     if not job:
