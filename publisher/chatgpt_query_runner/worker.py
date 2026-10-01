@@ -57,6 +57,20 @@ CREATIVE_BACKEND = os.getenv("F1_CREATIVE_BACKEND", "free_browser_router").strip
 FINAL_QUEUE_PATH = ROOT / "publisher" / "final_content_queue.json"
 DAILY_QUERY_FILE = "f1_browser_creative_queries.json"
 NEWS_QUERY_FILE = "f1_news_current.local.json"
+F1_CLIENT_CONFIG = ROOT / "publisher" / "clients" / "f1-immobiliare.json"
+
+
+def f1_generation_disabled() -> bool:
+    try:
+        cfg = json.loads(F1_CLIENT_CONFIG.read_text(encoding="utf-8"))
+    except Exception:
+        return False
+    return (
+        str(cfg.get("graphics_source") or "") == "manual_only"
+        and cfg.get("ai_image_generation") is False
+        and cfg.get("publish_only") is True
+    )
+
 
 LOG_ROOT.mkdir(parents=True, exist_ok=True)
 RUN_LOG = LOG_ROOT / f"worker-{datetime.now(ROME):%Y%m%d-%H%M%S}.log"
@@ -771,6 +785,9 @@ def auto_ingest_completed_run(run: dict, *, daily_mode: bool = False) -> dict:
 
 
 def run(batch_size: int, *, fresh_run: bool = False, communication_id: str | None = None) -> int:
+    if f1_generation_disabled():
+        log("F1 MANUAL PUBLISH ONLY: image generation worker is disabled by client configuration.")
+        return 0
     start_inbox_server()
     queries = load_queries(communication_id)
     if communication_id:
