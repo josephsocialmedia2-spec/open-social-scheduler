@@ -306,6 +306,24 @@ def assert_no_generation_in_manual_runtime() -> None:
         assert "\n  schedule:" not in text
         assert "\n  push:" not in text
 
+    runtime_generation_commands = (
+        "python -m publisher.chatgpt_query_runner.worker",
+        "python publisher/f1_chatgpt_creative_engine.py",
+        "python publisher/f1_design_v2.py",
+        "python publisher/generate_next_villar_asset.py",
+        "python publisher/render_f1_unique_visuals.py",
+        "python publisher/rendering/content_engine.py",
+        "run_notturno_23.ps1",
+        "run_f1_daily_creative_test.ps1",
+        "run_f1_news_slot.ps1",
+    )
+    for workflow in (ROOT / ".github" / "workflows").glob("*.yml"):
+        lower = workflow.read_text(encoding="utf-8").lower()
+        auto_trigger = "\n  schedule:" in lower or "\n  push:" in lower
+        if auto_trigger:
+            for command in runtime_generation_commands:
+                assert command not in lower, f"{workflow.name}: automatic F1 generation command still reachable: {command}"
+
     social = (ROOT / ".github" / "workflows" / "social-engine-daily.yml").read_text(encoding="utf-8")
     assert "assert len(f1)==0" in social
     assert "F1_AUTOMATIC_GRAPHICS_DISABLED" in social
