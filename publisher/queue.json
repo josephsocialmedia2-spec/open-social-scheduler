@@ -271040,7 +271040,7 @@
     {
       "id": "supabase-calendar-15749242-83c1-44c4-a0c5-b2bfcf8672e7",
       "enabled": true,
-      "status": "buffer_review_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250412 183140",
@@ -271051,7 +271051,10 @@
       ],
       "scheduled_at": "2026-09-27T11:30:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -271074,12 +271077,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Scheduled time is more than 60 minutes in the past; manual review required"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-493dcbb0-f39f-41ac-ba76-7c86f8fbbed1",
       "enabled": false,
-      "status": "blocked",
+      "status": "awaiting_media",
       "client_id": "real-media-pro",
       "client_name": "Real Media Pro",
       "title": "Un e-commerce bello non basta",
@@ -271088,7 +271091,30 @@
       "media": [],
       "scheduled_at": "2026-09-27T17:15:00+00:00",
       "platforms": [
-        "tiktok"
+        {
+          "platform": "facebook",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "tiktok",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "linkedin",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "youtube",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "pinterest",
+          "integration_id": "direct-api"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -271111,12 +271137,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "CANALE_DA_COLLEGARE"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-6f24e770-68d3-4efb-94fe-d0904b06b744",
       "enabled": true,
-      "status": "buffer_review_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250412 183534",
@@ -271127,7 +271153,10 @@
       ],
       "scheduled_at": "2026-09-28T11:30:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -271150,12 +271179,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Scheduled time is more than 60 minutes in the past; manual review required"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-b0feebda-bd86-4b57-93b0-5dcded081e70",
       "enabled": true,
-      "status": "buffer_review_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250426 125451",
@@ -271166,7 +271195,10 @@
       ],
       "scheduled_at": "2026-09-28T11:30:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -271189,12 +271221,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Scheduled time is more than 60 minutes in the past; manual review required"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-b57e0b7c-7134-4a3b-a309-2d862225c49e",
       "enabled": true,
-      "status": "buffer_review_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250427 140804",
@@ -271205,7 +271237,10 @@
       ],
       "scheduled_at": "2026-09-28T11:30:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -271228,12 +271263,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Scheduled time is more than 60 minutes in the past; manual review required"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-32a7a69a-db1e-414d-889f-179fbf50cd6b",
       "enabled": true,
-      "status": "buffer_review_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250427 140719",
@@ -271244,7 +271279,10 @@
       ],
       "scheduled_at": "2026-09-28T13:45:54.563991+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -271267,12 +271305,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Scheduled time is more than 60 minutes in the past; manual review required"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-fdf726cb-27cb-4aa5-8048-e34cc26cb360",
       "enabled": false,
-      "status": "blocked",
+      "status": "awaiting_media",
       "client_id": "real-media-pro",
       "client_name": "Real Media Pro",
       "title": "Meta Ads: il problema spesso è la creatività",
@@ -271281,7 +271319,30 @@
       "media": [],
       "scheduled_at": "2026-09-28T17:15:00+00:00",
       "platforms": [
-        "tiktok"
+        {
+          "platform": "facebook",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "tiktok",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "linkedin",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "youtube",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "pinterest",
+          "integration_id": "direct-api"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -271304,12 +271365,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "CANALE_DA_COLLEGARE"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-af245494-0494-4cfd-bb29-f0fd8fdcf8a3",
       "enabled": true,
-      "status": "buffer_review_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250412 183947",
@@ -271320,7 +271381,10 @@
       ],
       "scheduled_at": "2026-09-28T18:00:56.05464+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -271343,12 +271407,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Scheduled time is more than 60 minutes in the past; manual review required"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-51692ddc-7843-41bd-b784-30d0353b0c90",
       "enabled": true,
-      "status": "buffer_review_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250426 123208 Copia",
@@ -271359,7 +271423,10 @@
       ],
       "scheduled_at": "2026-09-28T18:00:59.559924+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -271382,12 +271449,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Scheduled time is more than 60 minutes in the past; manual review required"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-e8cde4a6-e331-494f-bc72-686054fbe35a",
       "enabled": true,
-      "status": "buffer_review_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250426 123220",
@@ -271398,7 +271465,10 @@
       ],
       "scheduled_at": "2026-09-28T18:01:03.138712+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -271421,12 +271491,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Scheduled time is more than 60 minutes in the past; manual review required"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-5f81fe4b-2445-4bf1-bf1b-6d4683deaa34",
       "enabled": true,
-      "status": "buffer_review_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250426 123610 Copia",
@@ -271437,7 +271507,10 @@
       ],
       "scheduled_at": "2026-09-28T18:01:06.657842+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -271460,12 +271533,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Scheduled time is more than 60 minutes in the past; manual review required"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-f25646f2-1baa-496b-a15d-87545bf13c46",
       "enabled": true,
-      "status": "buffer_review_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250426 123621",
@@ -271476,7 +271549,10 @@
       ],
       "scheduled_at": "2026-09-28T18:01:10.286188+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -271499,12 +271575,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Scheduled time is more than 60 minutes in the past; manual review required"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-53062a2c-dcfb-404d-8a7b-de106adebda5",
       "enabled": true,
-      "status": "buffer_review_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250426 124059 Copia",
@@ -271515,7 +271591,10 @@
       ],
       "scheduled_at": "2026-09-28T18:01:34.598649+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -271538,12 +271617,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Scheduled time is more than 60 minutes in the past; manual review required"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-50407b84-2bfe-490b-81fd-eea363ef5480",
       "enabled": true,
-      "status": "buffer_review_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250426 125503",
@@ -271554,7 +271633,10 @@
       ],
       "scheduled_at": "2026-09-29T11:30:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -271577,12 +271659,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Scheduled time is more than 60 minutes in the past; manual review required"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-9944ab8f-6086-4f7d-bc84-a950929f99d0",
       "enabled": true,
-      "status": "buffer_review_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250427 140821",
@@ -271593,7 +271675,10 @@
       ],
       "scheduled_at": "2026-09-29T11:30:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -271616,12 +271701,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Scheduled time is more than 60 minutes in the past; manual review required"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-35cdacd5-90c0-429a-b761-3eb5057059d9",
       "enabled": false,
-      "status": "blocked",
+      "status": "awaiting_media",
       "client_id": "real-media-pro",
       "client_name": "Real Media Pro",
       "title": "Google Ads intercetta domanda già attiva",
@@ -271630,7 +271715,30 @@
       "media": [],
       "scheduled_at": "2026-09-29T17:15:00+00:00",
       "platforms": [
-        "tiktok"
+        {
+          "platform": "facebook",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "tiktok",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "linkedin",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "youtube",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "pinterest",
+          "integration_id": "direct-api"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -271653,12 +271761,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "CANALE_DA_COLLEGARE"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-517fd843-d1fb-43d6-b91a-e9309a5883e7",
       "enabled": true,
-      "status": "buffer_review_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250426 140824",
@@ -271669,7 +271777,10 @@
       ],
       "scheduled_at": "2026-09-30T11:30:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -271692,12 +271803,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Scheduled time is more than 60 minutes in the past; manual review required"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-1ad3a9ad-48fa-4a6f-a830-554648569fa7",
       "enabled": true,
-      "status": "buffer_review_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250427 141640",
@@ -271708,7 +271819,10 @@
       ],
       "scheduled_at": "2026-09-30T11:30:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -271731,12 +271845,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Scheduled time is more than 60 minutes in the past; manual review required"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-3f495b94-4747-4303-93e6-a531142cfb09",
       "enabled": true,
-      "status": "buffer_review_required",
+      "status": "awaiting_approval",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "PRESENTAZIONE · ALLOGGIO DI DUE LOCALI COLLEGNO",
@@ -271747,7 +271861,14 @@
       ],
       "scheduled_at": "2026-09-30T12:00:00+00:00",
       "platforms": [
-        "facebook"
+        {
+          "platform": "facebook",
+          "integration_id": "buffer:6ab2b713ea19ca0bdeb8103d"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab2b6e7ea19ca0bdeb80e19"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -271770,12 +271891,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Scheduled time is more than 60 minutes in the past; manual review required"
+      "blocked_reason": "approval required for "
     },
     {
       "id": "supabase-calendar-5d44c3dc-7730-4915-bdee-eb1662ccb0fb",
       "enabled": true,
-      "status": "buffer_review_required",
+      "status": "awaiting_approval",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "PRESENTAZIONE · ALLOGGIO DI DUE LOCALI COLLEGNO",
@@ -271786,7 +271907,14 @@
       ],
       "scheduled_at": "2026-09-30T12:00:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "facebook",
+          "integration_id": "buffer:6ab2b713ea19ca0bdeb8103d"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab2b6e7ea19ca0bdeb80e19"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -271809,12 +271937,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Scheduled time is more than 60 minutes in the past; manual review required"
+      "blocked_reason": "approval required for "
     },
     {
       "id": "supabase-calendar-290037e2-c8ef-407a-8eab-c698f207a7ea",
       "enabled": true,
-      "status": "buffer_review_required",
+      "status": "awaiting_approval",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "PRESENTAZIONE · DUE LOCALI IN CENTRO PAESE CON POSIZIONE STRATEGICA",
@@ -271825,7 +271953,14 @@
       ],
       "scheduled_at": "2026-09-30T18:00:00+00:00",
       "platforms": [
-        "facebook"
+        {
+          "platform": "facebook",
+          "integration_id": "buffer:6ab2b713ea19ca0bdeb8103d"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab2b6e7ea19ca0bdeb80e19"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -271848,12 +271983,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Scheduled time is more than 60 minutes in the past; manual review required"
+      "blocked_reason": "approval required for "
     },
     {
       "id": "supabase-calendar-b4d583e7-8840-4665-8346-6f5755037d38",
       "enabled": true,
-      "status": "buffer_review_required",
+      "status": "awaiting_approval",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "PRESENTAZIONE · CASA RISTRUTTURATA IN VENDITA CON CORTILE PRIVATO E ARREDO INCLUSO",
@@ -271864,7 +271999,14 @@
       ],
       "scheduled_at": "2026-10-01T06:00:00+00:00",
       "platforms": [
-        "facebook"
+        {
+          "platform": "facebook",
+          "integration_id": "buffer:6ab2b713ea19ca0bdeb8103d"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab2b6e7ea19ca0bdeb80e19"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -271887,12 +272029,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Scheduled time is more than 60 minutes in the past; manual review required"
+      "blocked_reason": "approval required for "
     },
     {
       "id": "supabase-calendar-6193bc87-a02d-495f-8469-ad0218277442",
       "enabled": true,
-      "status": "buffer_review_required",
+      "status": "awaiting_approval",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "PRESENTAZIONE · CASA RISTRUTTURATA IN VENDITA CON CORTILE PRIVATO E ARREDO INCLUSO",
@@ -271903,7 +272045,14 @@
       ],
       "scheduled_at": "2026-10-01T06:00:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "facebook",
+          "integration_id": "buffer:6ab2b713ea19ca0bdeb8103d"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab2b6e7ea19ca0bdeb80e19"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -271926,12 +272075,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Scheduled time is more than 60 minutes in the past; manual review required"
+      "blocked_reason": "approval required for "
     },
     {
       "id": "supabase-calendar-95cb0ab2-a1da-4c75-bafc-ff9fb76b7d2f",
       "enabled": true,
-      "status": "buffer_review_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250426 140851",
@@ -271942,7 +272091,10 @@
       ],
       "scheduled_at": "2026-10-01T11:30:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -271965,12 +272117,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Scheduled time is more than 60 minutes in the past; manual review required"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-574f6076-d844-4b6d-b3ee-b06615b2a557",
       "enabled": true,
-      "status": "buffer_review_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250427 141652",
@@ -271981,7 +272133,10 @@
       ],
       "scheduled_at": "2026-10-01T11:30:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -272004,12 +272159,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Scheduled time is more than 60 minutes in the past; manual review required"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-bcc8b57a-1945-408a-b3f5-69634cb9f67e",
       "enabled": true,
-      "status": "buffer_review_required",
+      "status": "awaiting_approval",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "PRESENTAZIONE · BILOCALE IN VENDITA A SANT’AMBROGIO DISPONIBILE SUBITO",
@@ -272020,7 +272175,14 @@
       ],
       "scheduled_at": "2026-10-01T12:00:00+00:00",
       "platforms": [
-        "facebook"
+        {
+          "platform": "facebook",
+          "integration_id": "buffer:6ab2b713ea19ca0bdeb8103d"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab2b6e7ea19ca0bdeb80e19"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -272043,12 +272205,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Scheduled time is more than 60 minutes in the past; manual review required"
+      "blocked_reason": "approval required for "
     },
     {
       "id": "supabase-calendar-6cc1217a-5c6d-42c4-b6de-0409661f08b0",
       "enabled": true,
-      "status": "buffer_review_required",
+      "status": "awaiting_approval",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "PRESENTAZIONE · BILOCALE IN VENDITA A SANT’AMBROGIO DISPONIBILE SUBITO",
@@ -272059,7 +272221,14 @@
       ],
       "scheduled_at": "2026-10-01T12:00:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "facebook",
+          "integration_id": "buffer:6ab2b713ea19ca0bdeb8103d"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab2b6e7ea19ca0bdeb80e19"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -272082,12 +272251,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Scheduled time is more than 60 minutes in the past; manual review required"
+      "blocked_reason": "approval required for "
     },
     {
       "id": "supabase-calendar-415d9710-2f14-4480-a299-d57252df9851",
       "enabled": false,
-      "status": "blocked",
+      "status": "awaiting_media",
       "client_id": "f1-social",
       "client_name": "F1 Social",
       "title": "761a2bc3 3401 46c4 a427 dd8c33347af5",
@@ -272095,9 +272264,7 @@
       "format": "post",
       "media": [],
       "scheduled_at": "2026-10-01T12:28:05.817+00:00",
-      "platforms": [
-        "instagram"
-      ],
+      "platforms": [],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
       "supabase_calendar_id": "415d9710-2f14-4480-a299-d57252df9851",
@@ -272119,12 +272286,12 @@
       "expected_media_sha256": "4668d813290cc0d8a738bfacd6930a939f3e002fd5b4cce8ee0b2265c77f3fe5",
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "CANALE_DA_COLLEGARE"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-f7047025-41e9-4074-8a2d-d4ef4b007530",
       "enabled": false,
-      "status": "blocked",
+      "status": "awaiting_media",
       "client_id": "f1-social",
       "client_name": "F1 Social",
       "title": "761a2bc3 3401 46c4 a427 dd8c33347af5",
@@ -272132,9 +272299,7 @@
       "format": "post",
       "media": [],
       "scheduled_at": "2026-10-01T12:28:05.817+00:00",
-      "platforms": [
-        "linkedin-page"
-      ],
+      "platforms": [],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
       "supabase_calendar_id": "f7047025-41e9-4074-8a2d-d4ef4b007530",
@@ -272156,12 +272321,12 @@
       "expected_media_sha256": "4668d813290cc0d8a738bfacd6930a939f3e002fd5b4cce8ee0b2265c77f3fe5",
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "CANALE_DA_COLLEGARE"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-54cdd578-d072-4b13-80f7-6cb9d99c4401",
       "enabled": false,
-      "status": "blocked",
+      "status": "awaiting_media",
       "client_id": "f1-social",
       "client_name": "F1 Social",
       "title": "761a2bc3 3401 46c4 a427 dd8c33347af5",
@@ -272169,9 +272334,7 @@
       "format": "post",
       "media": [],
       "scheduled_at": "2026-10-01T12:28:05.817+00:00",
-      "platforms": [
-        "tiktok"
-      ],
+      "platforms": [],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
       "supabase_calendar_id": "54cdd578-d072-4b13-80f7-6cb9d99c4401",
@@ -272193,12 +272356,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "CANALE_DA_COLLEGARE"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-ae1cc332-f9ec-4582-a6ed-d239c9812eb0",
       "enabled": false,
-      "status": "blocked",
+      "status": "awaiting_media",
       "client_id": "f1-social",
       "client_name": "F1 Social",
       "title": "761a2bc3 3401 46c4 a427 dd8c33347af5",
@@ -272206,9 +272369,7 @@
       "format": "post",
       "media": [],
       "scheduled_at": "2026-10-01T12:28:05.817+00:00",
-      "platforms": [
-        "facebook"
-      ],
+      "platforms": [],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
       "supabase_calendar_id": "ae1cc332-f9ec-4582-a6ed-d239c9812eb0",
@@ -272230,12 +272391,12 @@
       "expected_media_sha256": "4668d813290cc0d8a738bfacd6930a939f3e002fd5b4cce8ee0b2265c77f3fe5",
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "CANALE_DA_COLLEGARE"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-c985fdf4-3fa9-4480-ab2e-8ee7a930d35b",
       "enabled": false,
-      "status": "blocked",
+      "status": "awaiting_media",
       "client_id": "f1-social",
       "client_name": "F1 Social",
       "title": "761a2bc3 3401 46c4 a427 dd8c33347af5",
@@ -272243,9 +272404,7 @@
       "format": "post",
       "media": [],
       "scheduled_at": "2026-10-01T12:28:05.817+00:00",
-      "platforms": [
-        "youtube"
-      ],
+      "platforms": [],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
       "supabase_calendar_id": "c985fdf4-3fa9-4480-ab2e-8ee7a930d35b",
@@ -272267,12 +272426,12 @@
       "expected_media_sha256": "4668d813290cc0d8a738bfacd6930a939f3e002fd5b4cce8ee0b2265c77f3fe5",
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "CANALE_DA_COLLEGARE"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-731aec3e-0843-427a-94ad-911118d7cfd9",
       "enabled": false,
-      "status": "blocked",
+      "status": "awaiting_media",
       "client_id": "f1-social",
       "client_name": "F1 Social",
       "title": "761a2bc3 3401 46c4 a427 dd8c33347af5",
@@ -272280,9 +272439,7 @@
       "format": "post",
       "media": [],
       "scheduled_at": "2026-10-01T16:30:00+00:00",
-      "platforms": [
-        "tiktok"
-      ],
+      "platforms": [],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
       "supabase_calendar_id": "731aec3e-0843-427a-94ad-911118d7cfd9",
@@ -272304,7 +272461,7 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "CANALE_DA_COLLEGARE"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-c98055a4-a5c2-4d2c-bef7-d0cb6f3a6c33",
@@ -272435,7 +272592,7 @@
     {
       "id": "supabase-calendar-9e4eef32-3db3-4926-b968-403cb39c661f",
       "enabled": false,
-      "status": "blocked",
+      "status": "awaiting_media",
       "client_id": "f1-social",
       "client_name": "F1 Social",
       "title": "761a2bc3 3401 46c4 a427 dd8c33347af5",
@@ -272443,9 +272600,7 @@
       "format": "post",
       "media": [],
       "scheduled_at": "2026-10-01T19:00:00+00:00",
-      "platforms": [
-        "youtube"
-      ],
+      "platforms": [],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
       "supabase_calendar_id": "9e4eef32-3db3-4926-b968-403cb39c661f",
@@ -272467,7 +272622,7 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "CANALE_DA_COLLEGARE"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-2d14b16f-0de2-47ea-b33c-5d84401416bd",
@@ -272598,7 +272753,7 @@
     {
       "id": "supabase-calendar-a807edc6-2731-45e8-8b36-f0d25b6cebe6",
       "enabled": false,
-      "status": "blocked",
+      "status": "awaiting_media",
       "client_id": "f1-social",
       "client_name": "F1 Social",
       "title": "761a2bc3 3401 46c4 a427 dd8c33347af5",
@@ -272606,9 +272761,7 @@
       "format": "post",
       "media": [],
       "scheduled_at": "2026-10-02T07:30:00+00:00",
-      "platforms": [
-        "linkedin-page"
-      ],
+      "platforms": [],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
       "supabase_calendar_id": "a807edc6-2731-45e8-8b36-f0d25b6cebe6",
@@ -272630,12 +272783,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "CANALE_DA_COLLEGARE"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-1f7a0644-d354-43ea-bcd0-49209d78e090",
       "enabled": false,
-      "status": "blocked",
+      "status": "awaiting_media",
       "client_id": "f1-social",
       "client_name": "F1 Social",
       "title": "761a2bc3 3401 46c4 a427 dd8c33347af5",
@@ -272643,9 +272796,7 @@
       "format": "post",
       "media": [],
       "scheduled_at": "2026-10-02T09:00:00+00:00",
-      "platforms": [
-        "facebook"
-      ],
+      "platforms": [],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
       "supabase_calendar_id": "1f7a0644-d354-43ea-bcd0-49209d78e090",
@@ -272667,12 +272818,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "CANALE_DA_COLLEGARE"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-757eb418-2787-4d3a-ad21-5310c16efa31",
       "enabled": true,
-      "status": "buffer_review_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250427 141703",
@@ -272683,7 +272834,10 @@
       ],
       "scheduled_at": "2026-10-02T11:30:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -272706,12 +272860,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Scheduled time is more than 60 minutes in the past; manual review required"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-83835af8-0e3c-4bb5-8014-41b041056d7c",
       "enabled": true,
-      "status": "buffer_review_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250426 140917",
@@ -272722,7 +272876,10 @@
       ],
       "scheduled_at": "2026-10-02T11:30:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -272745,12 +272902,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Scheduled time is more than 60 minutes in the past; manual review required"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-a2c414ee-ad4d-4130-98d9-4b135c621472",
       "enabled": false,
-      "status": "blocked",
+      "status": "awaiting_media",
       "client_id": "f1-social",
       "client_name": "F1 Social",
       "title": "761a2bc3 3401 46c4 a427 dd8c33347af5",
@@ -272758,9 +272915,7 @@
       "format": "post",
       "media": [],
       "scheduled_at": "2026-10-02T11:30:00+00:00",
-      "platforms": [
-        "instagram"
-      ],
+      "platforms": [],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
       "supabase_calendar_id": "a2c414ee-ad4d-4130-98d9-4b135c621472",
@@ -272782,7 +272937,7 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "CANALE_DA_COLLEGARE"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-757bf128-919d-470b-a8d6-00b8a52b3ed4",
@@ -272913,7 +273068,7 @@
     {
       "id": "supabase-calendar-44751bc7-c56b-46b0-9adf-cb44d11d8453",
       "enabled": true,
-      "status": "buffer_scheduled",
+      "status": "awaiting_approval",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "PUNTO DI FORZA · AVIGLIANA ATTIVITA' BAR RISTORANTE TABACCHI LOTTO",
@@ -272924,7 +273079,14 @@
       ],
       "scheduled_at": "2026-10-02T18:00:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "facebook",
+          "integration_id": "buffer:6ab2b713ea19ca0bdeb8103d"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab2b6e7ea19ca0bdeb80e19"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -272969,12 +273131,13 @@
           "resource_type": "image",
           "bytes": "2919495"
         }
-      ]
+      ],
+      "blocked_reason": "approval required for "
     },
     {
       "id": "supabase-calendar-2a59ba06-c3e8-4ed5-8794-c9e21e6359b6",
       "enabled": true,
-      "status": "buffer_scheduled",
+      "status": "awaiting_approval",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "PUNTO DI FORZA · AVIGLIANA ATTIVITA' BAR RISTORANTE TABACCHI LOTTO",
@@ -272985,7 +273148,14 @@
       ],
       "scheduled_at": "2026-10-02T18:00:00+00:00",
       "platforms": [
-        "facebook"
+        {
+          "platform": "facebook",
+          "integration_id": "buffer:6ab2b713ea19ca0bdeb8103d"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab2b6e7ea19ca0bdeb80e19"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -273030,12 +273200,13 @@
           "resource_type": "image",
           "bytes": "2919495"
         }
-      ]
+      ],
+      "blocked_reason": "approval required for "
     },
     {
       "id": "supabase-calendar-2c3630eb-c203-436f-84f3-3a50cba2085c",
       "enabled": true,
-      "status": "buffer_scheduled",
+      "status": "awaiting_approval",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "PUNTO DI FORZA · CHALET AD AVIGLIANA",
@@ -273046,7 +273217,14 @@
       ],
       "scheduled_at": "2026-10-03T06:00:00+00:00",
       "platforms": [
-        "facebook"
+        {
+          "platform": "facebook",
+          "integration_id": "buffer:6ab2b713ea19ca0bdeb8103d"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab2b6e7ea19ca0bdeb80e19"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -273091,12 +273269,13 @@
           "resource_type": "image",
           "bytes": "308805"
         }
-      ]
+      ],
+      "blocked_reason": "approval required for "
     },
     {
       "id": "supabase-calendar-18234fc1-87d1-453f-9a1a-fb1e212ebe55",
       "enabled": true,
-      "status": "buffer_scheduled",
+      "status": "awaiting_approval",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "PUNTO DI FORZA · CHALET AD AVIGLIANA",
@@ -273107,7 +273286,14 @@
       ],
       "scheduled_at": "2026-10-03T06:00:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "facebook",
+          "integration_id": "buffer:6ab2b713ea19ca0bdeb8103d"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab2b6e7ea19ca0bdeb80e19"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -273152,12 +273338,13 @@
           "resource_type": "image",
           "bytes": "308805"
         }
-      ]
+      ],
+      "blocked_reason": "approval required for "
     },
     {
       "id": "supabase-calendar-ea24087d-ec06-43aa-bbed-354e0091aee6",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250426 141056",
@@ -273168,7 +273355,10 @@
       ],
       "scheduled_at": "2026-10-03T11:30:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -273191,12 +273381,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Cloudinary HTTP 400: {\"error\":{\"message\":\"File size too large. Got 12871989. Maximum is 10485760.\"},\"message\":\"Your file exceeds the Free plan upload limit. Upgrade to upload larger assets.\",\"upgrade_url\":\"https://console.cloudinary.com/app/settings/billing/change_plan/programmable_media\"}"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-bca661f5-2789-40f3-999e-1f528f3f3c49",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250427 141810",
@@ -273207,7 +273397,10 @@
       ],
       "scheduled_at": "2026-10-03T11:30:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -273238,12 +273431,12 @@
           "bytes": "9786863"
         }
       ],
-      "blocked_reason": "Buffer instagram: Invalid post: Image exceeds the 8.0MB file size limit (9.3MB)."
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-f2a6aba8-002e-40a9-afd8-6d6e3cc85748",
       "enabled": true,
-      "status": "buffer_scheduled",
+      "status": "awaiting_approval",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "PUNTO DI FORZA · APPARTAMENTO A BUTTIGLIERA ALTA",
@@ -273254,7 +273447,14 @@
       ],
       "scheduled_at": "2026-10-03T12:00:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "facebook",
+          "integration_id": "buffer:6ab2b713ea19ca0bdeb8103d"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab2b6e7ea19ca0bdeb80e19"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -273299,12 +273499,13 @@
           "resource_type": "image",
           "bytes": "265605"
         }
-      ]
+      ],
+      "blocked_reason": "approval required for "
     },
     {
       "id": "supabase-calendar-d99011a2-179f-4a50-acd6-55cd90409aaa",
       "enabled": true,
-      "status": "buffer_scheduled",
+      "status": "awaiting_approval",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "PUNTO DI FORZA · APPARTAMENTO A BUTTIGLIERA ALTA",
@@ -273315,7 +273516,14 @@
       ],
       "scheduled_at": "2026-10-03T12:00:00+00:00",
       "platforms": [
-        "facebook"
+        {
+          "platform": "facebook",
+          "integration_id": "buffer:6ab2b713ea19ca0bdeb8103d"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab2b6e7ea19ca0bdeb80e19"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -273358,12 +273566,13 @@
       ],
       "buffer_scheduled_platforms": [
         "facebook"
-      ]
+      ],
+      "blocked_reason": "approval required for "
     },
     {
       "id": "supabase-calendar-8111f0f1-25be-480b-827b-74f8ca683822",
       "enabled": true,
-      "status": "buffer_scheduled",
+      "status": "awaiting_approval",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "PUNTO DI FORZA · ALLOGGIO DI DUE LOCALI COLLEGNO",
@@ -273374,7 +273583,14 @@
       ],
       "scheduled_at": "2026-10-03T18:00:00+00:00",
       "platforms": [
-        "facebook"
+        {
+          "platform": "facebook",
+          "integration_id": "buffer:6ab2b713ea19ca0bdeb8103d"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab2b6e7ea19ca0bdeb80e19"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -273417,12 +273633,13 @@
       ],
       "buffer_scheduled_platforms": [
         "facebook"
-      ]
+      ],
+      "blocked_reason": "approval required for "
     },
     {
       "id": "supabase-calendar-ed030a5c-6259-498e-8aaa-98deb747b360",
       "enabled": true,
-      "status": "buffer_scheduled",
+      "status": "awaiting_approval",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "PUNTO DI FORZA · ALLOGGIO DI DUE LOCALI COLLEGNO",
@@ -273433,7 +273650,14 @@
       ],
       "scheduled_at": "2026-10-03T18:00:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "facebook",
+          "integration_id": "buffer:6ab2b713ea19ca0bdeb8103d"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab2b6e7ea19ca0bdeb80e19"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -273478,12 +273702,13 @@
           "resource_type": "image",
           "bytes": "2763758"
         }
-      ]
+      ],
+      "blocked_reason": "approval required for "
     },
     {
       "id": "supabase-calendar-9a462b0f-09e6-4e21-be44-f22fd4a150de",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_approval",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "PUNTO DI FORZA · DUE LOCALI IN CENTRO PAESE CON POSIZIONE STRATEGICA",
@@ -273494,7 +273719,14 @@
       ],
       "scheduled_at": "2026-10-04T06:00:00+00:00",
       "platforms": [
-        "facebook"
+        {
+          "platform": "facebook",
+          "integration_id": "buffer:6ab2b713ea19ca0bdeb8103d"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab2b6e7ea19ca0bdeb80e19"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -273525,12 +273757,12 @@
           "bytes": "1862334"
         }
       ],
-      "blocked_reason": "Buffer facebook: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
+      "blocked_reason": "approval required for "
     },
     {
       "id": "supabase-calendar-a6b5bade-b58f-42f2-b56f-4fa4aa0a7791",
       "enabled": true,
-      "status": "buffer_scheduled",
+      "status": "awaiting_approval",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "PUNTO DI FORZA · DUE LOCALI IN CENTRO PAESE CON POSIZIONE STRATEGICA",
@@ -273541,7 +273773,14 @@
       ],
       "scheduled_at": "2026-10-04T06:00:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "facebook",
+          "integration_id": "buffer:6ab2b713ea19ca0bdeb8103d"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab2b6e7ea19ca0bdeb80e19"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -273586,12 +273825,13 @@
           "resource_type": "image",
           "bytes": "1862334"
         }
-      ]
+      ],
+      "blocked_reason": "approval required for "
     },
     {
       "id": "supabase-calendar-4e0043f5-daff-42eb-94f6-740505cb01f2",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250426 141304",
@@ -273602,7 +273842,10 @@
       ],
       "scheduled_at": "2026-10-04T11:30:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -273625,12 +273868,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Cloudinary HTTP 400: {\"error\":{\"message\":\"File size too large. Got 14405830. Maximum is 10485760.\"},\"message\":\"Your file exceeds the Free plan upload limit. Upgrade to upload larger assets.\",\"upgrade_url\":\"https://console.cloudinary.com/app/settings/billing/change_plan/programmable_media\"}"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-f8880e6c-5f25-4e92-a105-d2e036421e54",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250427 141822",
@@ -273641,7 +273884,10 @@
       ],
       "scheduled_at": "2026-10-04T11:30:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -273664,12 +273910,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Cloudinary HTTP 400: {\"error\":{\"message\":\"File size too large. Got 12748455. Maximum is 10485760.\"},\"message\":\"Your file exceeds the Free plan upload limit. Upgrade to upload larger assets.\",\"upgrade_url\":\"https://console.cloudinary.com/app/settings/billing/change_plan/programmable_media\"}"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-b22d6cbf-330c-4a66-845c-1f76122b3fc2",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_approval",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "PUNTO DI FORZA · CASA RISTRUTTURATA IN VENDITA CON CORTILE PRIVATO E ARREDO INCLUSO",
@@ -273680,7 +273926,14 @@
       ],
       "scheduled_at": "2026-10-04T12:00:00+00:00",
       "platforms": [
-        "facebook"
+        {
+          "platform": "facebook",
+          "integration_id": "buffer:6ab2b713ea19ca0bdeb8103d"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab2b6e7ea19ca0bdeb80e19"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -273711,12 +273964,12 @@
           "bytes": "346902"
         }
       ],
-      "blocked_reason": "Buffer facebook: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
+      "blocked_reason": "approval required for "
     },
     {
       "id": "supabase-calendar-e4019c1a-7136-42e4-a47a-b87aa5237052",
       "enabled": true,
-      "status": "buffer_scheduled",
+      "status": "awaiting_approval",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "PUNTO DI FORZA · CASA RISTRUTTURATA IN VENDITA CON CORTILE PRIVATO E ARREDO INCLUSO",
@@ -273727,7 +273980,14 @@
       ],
       "scheduled_at": "2026-10-04T12:00:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "facebook",
+          "integration_id": "buffer:6ab2b713ea19ca0bdeb8103d"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab2b6e7ea19ca0bdeb80e19"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -273770,12 +274030,13 @@
       ],
       "buffer_scheduled_platforms": [
         "instagram"
-      ]
+      ],
+      "blocked_reason": "approval required for "
     },
     {
       "id": "supabase-calendar-f517eb8d-6f89-48bd-b0f0-b25ea6e013ec",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_approval",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "PUNTO DI FORZA · BILOCALE IN VENDITA A SANT’AMBROGIO DISPONIBILE SUBITO",
@@ -273786,7 +274047,14 @@
       ],
       "scheduled_at": "2026-10-04T18:00:00+00:00",
       "platforms": [
-        "facebook"
+        {
+          "platform": "facebook",
+          "integration_id": "buffer:6ab2b713ea19ca0bdeb8103d"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab2b6e7ea19ca0bdeb80e19"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -273817,12 +274085,12 @@
           "bytes": "2250206"
         }
       ],
-      "blocked_reason": "Buffer facebook: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
+      "blocked_reason": "approval required for "
     },
     {
       "id": "supabase-calendar-34a4ad78-80db-4579-95a2-ca3fca1d706a",
       "enabled": true,
-      "status": "buffer_scheduled",
+      "status": "awaiting_approval",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "PUNTO DI FORZA · BILOCALE IN VENDITA A SANT’AMBROGIO DISPONIBILE SUBITO",
@@ -273833,7 +274101,14 @@
       ],
       "scheduled_at": "2026-10-04T18:00:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "facebook",
+          "integration_id": "buffer:6ab2b713ea19ca0bdeb8103d"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab2b6e7ea19ca0bdeb80e19"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -273876,12 +274151,13 @@
       ],
       "buffer_scheduled_platforms": [
         "instagram"
-      ]
+      ],
+      "blocked_reason": "approval required for "
     },
     {
       "id": "supabase-calendar-787a590f-aedc-4649-a3c1-e61beff9922c",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_approval",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "PUNTO DI FORZA · APPARTAMENTO DUE LOCALI IN VENDITA A RUBIANA DISPONIBILE SUBITO",
@@ -273892,7 +274168,14 @@
       ],
       "scheduled_at": "2026-10-05T06:00:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "facebook",
+          "integration_id": "buffer:6ab2b713ea19ca0bdeb8103d"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab2b6e7ea19ca0bdeb80e19"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -273923,12 +274206,12 @@
           "bytes": "2643887"
         }
       ],
-      "blocked_reason": "Buffer instagram: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
+      "blocked_reason": "approval required for "
     },
     {
       "id": "supabase-calendar-3835264b-c31e-487b-b28d-4e18f4a8bdb6",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_approval",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "PUNTO DI FORZA · APPARTAMENTO DUE LOCALI IN VENDITA A RUBIANA DISPONIBILE SUBITO",
@@ -273939,7 +274222,14 @@
       ],
       "scheduled_at": "2026-10-05T06:00:00+00:00",
       "platforms": [
-        "facebook"
+        {
+          "platform": "facebook",
+          "integration_id": "buffer:6ab2b713ea19ca0bdeb8103d"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab2b6e7ea19ca0bdeb80e19"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -273970,12 +274260,12 @@
           "bytes": "2643887"
         }
       ],
-      "blocked_reason": "Buffer facebook: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
+      "blocked_reason": "approval required for "
     },
     {
       "id": "supabase-calendar-05a5ed74-c08c-4b59-88b5-87d3af1016d6",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250427 141831",
@@ -273986,7 +274276,10 @@
       ],
       "scheduled_at": "2026-10-05T11:30:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -274009,12 +274302,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Cloudinary HTTP 400: {\"error\":{\"message\":\"File size too large. Got 12525625. Maximum is 10485760.\"},\"message\":\"Your file exceeds the Free plan upload limit. Upgrade to upload larger assets.\",\"upgrade_url\":\"https://console.cloudinary.com/app/settings/billing/change_plan/programmable_media\"}"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-bbe51bd4-969c-418f-ae58-3d45d17e5382",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250426 141315",
@@ -274025,7 +274318,10 @@
       ],
       "scheduled_at": "2026-10-05T11:30:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -274048,12 +274344,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Cloudinary HTTP 400: {\"error\":{\"message\":\"File size too large. Got 14250395. Maximum is 10485760.\"},\"message\":\"Your file exceeds the Free plan upload limit. Upgrade to upload larger assets.\",\"upgrade_url\":\"https://console.cloudinary.com/app/settings/billing/change_plan/programmable_media\"}"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-c42f0fcc-c00a-472e-a948-efe7474b9112",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_approval",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "PUNTO DI FORZA · DUE ALLOGGI IN IN QUADRIFAMILARE VILLAR DORA",
@@ -274064,7 +274360,14 @@
       ],
       "scheduled_at": "2026-10-05T12:00:00+00:00",
       "platforms": [
-        "facebook"
+        {
+          "platform": "facebook",
+          "integration_id": "buffer:6ab2b713ea19ca0bdeb8103d"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab2b6e7ea19ca0bdeb80e19"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -274095,12 +274398,12 @@
           "bytes": "2667452"
         }
       ],
-      "blocked_reason": "Buffer facebook: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
+      "blocked_reason": "approval required for "
     },
     {
       "id": "supabase-calendar-00dd59ae-0f65-452a-b17e-e8924d9357b5",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_approval",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "PUNTO DI FORZA · DUE ALLOGGI IN IN QUADRIFAMILARE VILLAR DORA",
@@ -274111,7 +274414,14 @@
       ],
       "scheduled_at": "2026-10-05T12:00:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "facebook",
+          "integration_id": "buffer:6ab2b713ea19ca0bdeb8103d"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab2b6e7ea19ca0bdeb80e19"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -274142,12 +274452,12 @@
           "bytes": "2667452"
         }
       ],
-      "blocked_reason": "Buffer instagram: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
+      "blocked_reason": "approval required for "
     },
     {
       "id": "supabase-calendar-ac1c98f8-a2b5-4c8d-b9b6-28400fcb54e2",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_approval",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "INVITO ALLA VISITA · APPARTAMENTO A GRUGLIASCO",
@@ -274158,7 +274468,14 @@
       ],
       "scheduled_at": "2026-10-05T18:00:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "facebook",
+          "integration_id": "buffer:6ab2b713ea19ca0bdeb8103d"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab2b6e7ea19ca0bdeb80e19"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -274189,12 +274506,12 @@
           "bytes": "2468982"
         }
       ],
-      "blocked_reason": "Buffer instagram: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
+      "blocked_reason": "approval required for "
     },
     {
       "id": "supabase-calendar-c2fc9e96-e96f-44a8-bf37-11097157ae80",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_approval",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "INVITO ALLA VISITA · APPARTAMENTO A GRUGLIASCO",
@@ -274205,7 +274522,14 @@
       ],
       "scheduled_at": "2026-10-05T18:00:00+00:00",
       "platforms": [
-        "facebook"
+        {
+          "platform": "facebook",
+          "integration_id": "buffer:6ab2b713ea19ca0bdeb8103d"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab2b6e7ea19ca0bdeb80e19"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -274236,12 +274560,12 @@
           "bytes": "2468982"
         }
       ],
-      "blocked_reason": "Buffer facebook: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
+      "blocked_reason": "approval required for "
     },
     {
       "id": "supabase-calendar-7c27baf1-80de-4c58-997b-8f227eac6ba6",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_approval",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "INVITO ALLA VISITA · AVIGLIANA ATTIVITA' BAR RISTORANTE TABACCHI LOTTO",
@@ -274252,7 +274576,14 @@
       ],
       "scheduled_at": "2026-10-06T06:00:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "facebook",
+          "integration_id": "buffer:6ab2b713ea19ca0bdeb8103d"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab2b6e7ea19ca0bdeb80e19"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -274283,12 +274614,12 @@
           "bytes": "2919495"
         }
       ],
-      "blocked_reason": "Buffer instagram: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
+      "blocked_reason": "approval required for "
     },
     {
       "id": "supabase-calendar-2638e413-0405-473f-8c06-296fd8a4dd05",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_approval",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "INVITO ALLA VISITA · AVIGLIANA ATTIVITA' BAR RISTORANTE TABACCHI LOTTO",
@@ -274299,7 +274630,14 @@
       ],
       "scheduled_at": "2026-10-06T06:00:00+00:00",
       "platforms": [
-        "facebook"
+        {
+          "platform": "facebook",
+          "integration_id": "buffer:6ab2b713ea19ca0bdeb8103d"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab2b6e7ea19ca0bdeb80e19"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -274330,12 +274668,12 @@
           "bytes": "2919495"
         }
       ],
-      "blocked_reason": "Buffer facebook: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
+      "blocked_reason": "approval required for "
     },
     {
       "id": "supabase-calendar-8e5eb029-9aa2-4357-aad1-d17c43bdb152",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250427 141916",
@@ -274346,7 +274684,10 @@
       ],
       "scheduled_at": "2026-10-06T11:30:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -274369,12 +274710,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Cloudinary HTTP 400: {\"error\":{\"message\":\"File size too large. Got 12794407. Maximum is 10485760.\"},\"message\":\"Your file exceeds the Free plan upload limit. Upgrade to upload larger assets.\",\"upgrade_url\":\"https://console.cloudinary.com/app/settings/billing/change_plan/programmable_media\"}"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-e81c893b-7663-489f-86fc-bce4871a3dec",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250426 152653",
@@ -274385,7 +274726,10 @@
       ],
       "scheduled_at": "2026-10-06T11:30:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -274408,12 +274752,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Cloudinary HTTP 400: {\"error\":{\"message\":\"File size too large. Got 15403861. Maximum is 10485760.\"},\"message\":\"Your file exceeds the Free plan upload limit. Upgrade to upload larger assets.\",\"upgrade_url\":\"https://console.cloudinary.com/app/settings/billing/change_plan/programmable_media\"}"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-2c18bd54-c2fb-43f5-b9cb-812992b73612",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_approval",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "INVITO ALLA VISITA · CHALET AD AVIGLIANA",
@@ -274424,7 +274768,14 @@
       ],
       "scheduled_at": "2026-10-06T12:00:00+00:00",
       "platforms": [
-        "facebook"
+        {
+          "platform": "facebook",
+          "integration_id": "buffer:6ab2b713ea19ca0bdeb8103d"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab2b6e7ea19ca0bdeb80e19"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -274455,12 +274806,12 @@
           "bytes": "308805"
         }
       ],
-      "blocked_reason": "Buffer facebook: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
+      "blocked_reason": "approval required for "
     },
     {
       "id": "supabase-calendar-934962f2-4e39-42a1-84bb-74cd9e421555",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_approval",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "INVITO ALLA VISITA · CHALET AD AVIGLIANA",
@@ -274471,7 +274822,14 @@
       ],
       "scheduled_at": "2026-10-06T12:00:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "facebook",
+          "integration_id": "buffer:6ab2b713ea19ca0bdeb8103d"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab2b6e7ea19ca0bdeb80e19"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -274502,12 +274860,12 @@
           "bytes": "308805"
         }
       ],
-      "blocked_reason": "Buffer instagram: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
+      "blocked_reason": "approval required for "
     },
     {
       "id": "supabase-calendar-45a14b9d-faa4-4d14-8392-c901d164e652",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_approval",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "INVITO ALLA VISITA · APPARTAMENTO A BUTTIGLIERA ALTA",
@@ -274518,7 +274876,14 @@
       ],
       "scheduled_at": "2026-10-06T18:00:00+00:00",
       "platforms": [
-        "facebook"
+        {
+          "platform": "facebook",
+          "integration_id": "buffer:6ab2b713ea19ca0bdeb8103d"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab2b6e7ea19ca0bdeb80e19"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -274549,12 +274914,12 @@
           "bytes": "265605"
         }
       ],
-      "blocked_reason": "Buffer facebook: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
+      "blocked_reason": "approval required for "
     },
     {
       "id": "supabase-calendar-c41a2a30-da2c-4d9b-9192-5b8b9b20f0e3",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_approval",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "INVITO ALLA VISITA · APPARTAMENTO A BUTTIGLIERA ALTA",
@@ -274565,7 +274930,14 @@
       ],
       "scheduled_at": "2026-10-06T18:00:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "facebook",
+          "integration_id": "buffer:6ab2b713ea19ca0bdeb8103d"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab2b6e7ea19ca0bdeb80e19"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -274596,12 +274968,12 @@
           "bytes": "265605"
         }
       ],
-      "blocked_reason": "Buffer instagram: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
+      "blocked_reason": "approval required for "
     },
     {
       "id": "supabase-calendar-302ecde4-29ad-42bd-aa67-3835f22db9e9",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_approval",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "INVITO ALLA VISITA · ALLOGGIO DI DUE LOCALI COLLEGNO",
@@ -274612,7 +274984,14 @@
       ],
       "scheduled_at": "2026-10-07T06:00:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "facebook",
+          "integration_id": "buffer:6ab2b713ea19ca0bdeb8103d"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab2b6e7ea19ca0bdeb80e19"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -274643,12 +275022,12 @@
           "bytes": "2763758"
         }
       ],
-      "blocked_reason": "Buffer instagram: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
+      "blocked_reason": "approval required for "
     },
     {
       "id": "supabase-calendar-9477727e-b298-499f-8162-8a19b1ea3e7f",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_approval",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "INVITO ALLA VISITA · ALLOGGIO DI DUE LOCALI COLLEGNO",
@@ -274659,7 +275038,14 @@
       ],
       "scheduled_at": "2026-10-07T06:00:00+00:00",
       "platforms": [
-        "facebook"
+        {
+          "platform": "facebook",
+          "integration_id": "buffer:6ab2b713ea19ca0bdeb8103d"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab2b6e7ea19ca0bdeb80e19"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -274690,12 +275076,12 @@
           "bytes": "2763758"
         }
       ],
-      "blocked_reason": "Buffer facebook: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
+      "blocked_reason": "approval required for "
     },
     {
       "id": "supabase-calendar-9da485d8-3840-4db0-a0b2-528bcc19aaf0",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250426 154940",
@@ -274706,7 +275092,10 @@
       ],
       "scheduled_at": "2026-10-07T11:30:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -274729,12 +275118,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Cloudinary HTTP 400: {\"error\":{\"message\":\"File size too large. Got 19551520. Maximum is 10485760.\"},\"message\":\"Your file exceeds the Free plan upload limit. Upgrade to upload larger assets.\",\"upgrade_url\":\"https://console.cloudinary.com/app/settings/billing/change_plan/programmable_media\"}"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-cf4eefb3-0523-4d6e-835d-d8750bffbca2",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250427 141940",
@@ -274745,7 +275134,10 @@
       ],
       "scheduled_at": "2026-10-07T11:30:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -274768,12 +275160,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Cloudinary HTTP 400: {\"error\":{\"message\":\"File size too large. Got 14867157. Maximum is 10485760.\"},\"message\":\"Your file exceeds the Free plan upload limit. Upgrade to upload larger assets.\",\"upgrade_url\":\"https://console.cloudinary.com/app/settings/billing/change_plan/programmable_media\"}"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-b9ebe17b-1a89-4ff7-8c8d-9a5c621acc76",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_approval",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "INVITO ALLA VISITA · DUE LOCALI IN CENTRO PAESE CON POSIZIONE STRATEGICA",
@@ -274784,7 +275176,14 @@
       ],
       "scheduled_at": "2026-10-07T12:00:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "facebook",
+          "integration_id": "buffer:6ab2b713ea19ca0bdeb8103d"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab2b6e7ea19ca0bdeb80e19"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -274815,12 +275214,12 @@
           "bytes": "1862334"
         }
       ],
-      "blocked_reason": "Buffer instagram: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
+      "blocked_reason": "approval required for "
     },
     {
       "id": "supabase-calendar-6b3b2adb-0211-4684-a85c-7aa8c3518111",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_approval",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "INVITO ALLA VISITA · DUE LOCALI IN CENTRO PAESE CON POSIZIONE STRATEGICA",
@@ -274831,7 +275230,14 @@
       ],
       "scheduled_at": "2026-10-07T12:00:00+00:00",
       "platforms": [
-        "facebook"
+        {
+          "platform": "facebook",
+          "integration_id": "buffer:6ab2b713ea19ca0bdeb8103d"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab2b6e7ea19ca0bdeb80e19"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -274862,12 +275268,12 @@
           "bytes": "1862334"
         }
       ],
-      "blocked_reason": "Buffer facebook: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
+      "blocked_reason": "approval required for "
     },
     {
       "id": "supabase-calendar-55d6ff71-5eab-4362-9de7-b915ea90e724",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_approval",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "INVITO ALLA VISITA · CASA RISTRUTTURATA IN VENDITA CON CORTILE PRIVATO E ARREDO INCLUSO",
@@ -274878,7 +275284,14 @@
       ],
       "scheduled_at": "2026-10-07T18:00:00+00:00",
       "platforms": [
-        "facebook"
+        {
+          "platform": "facebook",
+          "integration_id": "buffer:6ab2b713ea19ca0bdeb8103d"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab2b6e7ea19ca0bdeb80e19"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -274909,12 +275322,12 @@
           "bytes": "346902"
         }
       ],
-      "blocked_reason": "Buffer facebook: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
+      "blocked_reason": "approval required for "
     },
     {
       "id": "supabase-calendar-9a9492dc-bdd4-4f24-863c-b412b992d689",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_approval",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "INVITO ALLA VISITA · CASA RISTRUTTURATA IN VENDITA CON CORTILE PRIVATO E ARREDO INCLUSO",
@@ -274925,7 +275338,14 @@
       ],
       "scheduled_at": "2026-10-07T18:00:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "facebook",
+          "integration_id": "buffer:6ab2b713ea19ca0bdeb8103d"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab2b6e7ea19ca0bdeb80e19"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -274956,12 +275376,12 @@
           "bytes": "346902"
         }
       ],
-      "blocked_reason": "Buffer instagram: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
+      "blocked_reason": "approval required for "
     },
     {
       "id": "supabase-calendar-e89a721b-980b-49d2-8884-b82788869ce3",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_approval",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "INVITO ALLA VISITA · BILOCALE IN VENDITA A SANT’AMBROGIO DISPONIBILE SUBITO",
@@ -274972,7 +275392,14 @@
       ],
       "scheduled_at": "2026-10-08T06:00:00+00:00",
       "platforms": [
-        "facebook"
+        {
+          "platform": "facebook",
+          "integration_id": "buffer:6ab2b713ea19ca0bdeb8103d"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab2b6e7ea19ca0bdeb80e19"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -275003,12 +275430,12 @@
           "bytes": "2250206"
         }
       ],
-      "blocked_reason": "Buffer facebook: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
+      "blocked_reason": "approval required for "
     },
     {
       "id": "supabase-calendar-c51c474e-0832-4cb0-b4d7-601301ad30d4",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_approval",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "INVITO ALLA VISITA · BILOCALE IN VENDITA A SANT’AMBROGIO DISPONIBILE SUBITO",
@@ -275019,7 +275446,14 @@
       ],
       "scheduled_at": "2026-10-08T06:00:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "facebook",
+          "integration_id": "buffer:6ab2b713ea19ca0bdeb8103d"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab2b6e7ea19ca0bdeb80e19"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -275050,12 +275484,12 @@
           "bytes": "2250206"
         }
       ],
-      "blocked_reason": "Buffer instagram: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
+      "blocked_reason": "approval required for "
     },
     {
       "id": "supabase-calendar-460bf4fd-1bc7-4f6e-983d-c58f7529dacb",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250426 154947",
@@ -275066,7 +275500,10 @@
       ],
       "scheduled_at": "2026-10-08T11:30:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -275089,12 +275526,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Cloudinary HTTP 400: {\"error\":{\"message\":\"File size too large. Got 18722677. Maximum is 10485760.\"},\"message\":\"Your file exceeds the Free plan upload limit. Upgrade to upload larger assets.\",\"upgrade_url\":\"https://console.cloudinary.com/app/settings/billing/change_plan/programmable_media\"}"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-c8c0e28c-4875-4cc7-b6d0-2d87036d9ca4",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250427 142105",
@@ -275105,7 +275542,10 @@
       ],
       "scheduled_at": "2026-10-08T11:30:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -275128,12 +275568,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Cloudinary HTTP 400: {\"error\":{\"message\":\"File size too large. Got 15186246. Maximum is 10485760.\"},\"message\":\"Your file exceeds the Free plan upload limit. Upgrade to upload larger assets.\",\"upgrade_url\":\"https://console.cloudinary.com/app/settings/billing/change_plan/programmable_media\"}"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-990e3c06-05af-42ae-b439-bf849d3f2c8d",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_approval",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "INVITO ALLA VISITA · APPARTAMENTO DUE LOCALI IN VENDITA A RUBIANA DISPONIBILE SUBITO",
@@ -275144,7 +275584,14 @@
       ],
       "scheduled_at": "2026-10-08T12:00:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "facebook",
+          "integration_id": "buffer:6ab2b713ea19ca0bdeb8103d"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab2b6e7ea19ca0bdeb80e19"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -275175,12 +275622,12 @@
           "bytes": "2643887"
         }
       ],
-      "blocked_reason": "Buffer instagram: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
+      "blocked_reason": "approval required for "
     },
     {
       "id": "supabase-calendar-57efcf32-a7bf-48b6-8c5b-497a0af06408",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_approval",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "INVITO ALLA VISITA · APPARTAMENTO DUE LOCALI IN VENDITA A RUBIANA DISPONIBILE SUBITO",
@@ -275191,7 +275638,14 @@
       ],
       "scheduled_at": "2026-10-08T12:00:00+00:00",
       "platforms": [
-        "facebook"
+        {
+          "platform": "facebook",
+          "integration_id": "buffer:6ab2b713ea19ca0bdeb8103d"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab2b6e7ea19ca0bdeb80e19"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -275222,12 +275676,12 @@
           "bytes": "2643887"
         }
       ],
-      "blocked_reason": "Buffer facebook: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
+      "blocked_reason": "approval required for "
     },
     {
       "id": "supabase-calendar-1e3c5c67-55bc-4dd7-bda4-00f38d712cd5",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_approval",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "INVITO ALLA VISITA · DUE ALLOGGI IN IN QUADRIFAMILARE VILLAR DORA",
@@ -275238,7 +275692,14 @@
       ],
       "scheduled_at": "2026-10-08T18:00:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "facebook",
+          "integration_id": "buffer:6ab2b713ea19ca0bdeb8103d"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab2b6e7ea19ca0bdeb80e19"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -275269,12 +275730,12 @@
           "bytes": "2667452"
         }
       ],
-      "blocked_reason": "Buffer instagram: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
+      "blocked_reason": "approval required for "
     },
     {
       "id": "supabase-calendar-937fb4aa-d679-4f84-806a-5caad151aab9",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_approval",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "INVITO ALLA VISITA · DUE ALLOGGI IN IN QUADRIFAMILARE VILLAR DORA",
@@ -275285,7 +275746,14 @@
       ],
       "scheduled_at": "2026-10-08T18:00:00+00:00",
       "platforms": [
-        "facebook"
+        {
+          "platform": "facebook",
+          "integration_id": "buffer:6ab2b713ea19ca0bdeb8103d"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab2b6e7ea19ca0bdeb80e19"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -275316,12 +275784,12 @@
           "bytes": "2667452"
         }
       ],
-      "blocked_reason": "Buffer facebook: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
+      "blocked_reason": "approval required for "
     },
     {
       "id": "supabase-calendar-681a780f-651f-4289-a209-e833502617ad",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250426 154955",
@@ -275332,7 +275800,10 @@
       ],
       "scheduled_at": "2026-10-09T11:30:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -275355,12 +275826,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Cloudinary HTTP 400: {\"error\":{\"message\":\"File size too large. Got 17206871. Maximum is 10485760.\"},\"message\":\"Your file exceeds the Free plan upload limit. Upgrade to upload larger assets.\",\"upgrade_url\":\"https://console.cloudinary.com/app/settings/billing/change_plan/programmable_media\"}"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-81c5d089-1676-4965-99b9-29fb17665cc4",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250427 142112",
@@ -275371,7 +275842,10 @@
       ],
       "scheduled_at": "2026-10-09T11:30:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -275394,12 +275868,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Cloudinary HTTP 400: {\"error\":{\"message\":\"File size too large. Got 14787150. Maximum is 10485760.\"},\"message\":\"Your file exceeds the Free plan upload limit. Upgrade to upload larger assets.\",\"upgrade_url\":\"https://console.cloudinary.com/app/settings/billing/change_plan/programmable_media\"}"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-1032d1e0-f6a6-46f3-adb4-71386f9051d6",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250426 155013",
@@ -275410,7 +275884,10 @@
       ],
       "scheduled_at": "2026-10-10T11:30:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -275433,12 +275910,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Cloudinary HTTP 400: {\"error\":{\"message\":\"File size too large. Got 18603864. Maximum is 10485760.\"},\"message\":\"Your file exceeds the Free plan upload limit. Upgrade to upload larger assets.\",\"upgrade_url\":\"https://console.cloudinary.com/app/settings/billing/change_plan/programmable_media\"}"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-865b1b0e-c3a3-4c11-a03e-d244ba095921",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250427 142127",
@@ -275449,7 +275926,10 @@
       ],
       "scheduled_at": "2026-10-10T11:30:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -275472,12 +275952,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Cloudinary HTTP 400: {\"error\":{\"message\":\"File size too large. Got 14485701. Maximum is 10485760.\"},\"message\":\"Your file exceeds the Free plan upload limit. Upgrade to upload larger assets.\",\"upgrade_url\":\"https://console.cloudinary.com/app/settings/billing/change_plan/programmable_media\"}"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-a206d087-77a2-41c9-b4b1-d55160580eeb",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250427 142320",
@@ -275488,7 +275968,10 @@
       ],
       "scheduled_at": "2026-10-11T11:30:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -275511,12 +275994,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Cloudinary HTTP 400: {\"error\":{\"message\":\"File size too large. Got 15489013. Maximum is 10485760.\"},\"message\":\"Your file exceeds the Free plan upload limit. Upgrade to upload larger assets.\",\"upgrade_url\":\"https://console.cloudinary.com/app/settings/billing/change_plan/programmable_media\"}"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-9a4004fe-9422-4460-bc05-9eaac9436b46",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250426 160047",
@@ -275527,7 +276010,10 @@
       ],
       "scheduled_at": "2026-10-11T11:30:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -275550,12 +276036,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Cloudinary HTTP 400: {\"error\":{\"message\":\"File size too large. Got 14207556. Maximum is 10485760.\"},\"message\":\"Your file exceeds the Free plan upload limit. Upgrade to upload larger assets.\",\"upgrade_url\":\"https://console.cloudinary.com/app/settings/billing/change_plan/programmable_media\"}"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-19e1bbd2-41d0-4034-9bbd-45a583324126",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250426 160100",
@@ -275566,7 +276052,10 @@
       ],
       "scheduled_at": "2026-10-12T11:30:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -275589,12 +276078,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Cloudinary HTTP 400: {\"error\":{\"message\":\"File size too large. Got 14144489. Maximum is 10485760.\"},\"message\":\"Your file exceeds the Free plan upload limit. Upgrade to upload larger assets.\",\"upgrade_url\":\"https://console.cloudinary.com/app/settings/billing/change_plan/programmable_media\"}"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-ccdd0b86-74dc-4dab-9942-5c5b950ec67c",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250427 142340",
@@ -275605,7 +276094,10 @@
       ],
       "scheduled_at": "2026-10-12T11:30:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -275628,12 +276120,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Cloudinary HTTP 400: {\"error\":{\"message\":\"File size too large. Got 12791712. Maximum is 10485760.\"},\"message\":\"Your file exceeds the Free plan upload limit. Upgrade to upload larger assets.\",\"upgrade_url\":\"https://console.cloudinary.com/app/settings/billing/change_plan/programmable_media\"}"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-d10028b7-2372-4af8-b611-92582e032072",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250426 160123",
@@ -275644,7 +276136,10 @@
       ],
       "scheduled_at": "2026-10-13T11:30:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -275667,12 +276162,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Cloudinary HTTP 400: {\"error\":{\"message\":\"File size too large. Got 14994331. Maximum is 10485760.\"},\"message\":\"Your file exceeds the Free plan upload limit. Upgrade to upload larger assets.\",\"upgrade_url\":\"https://console.cloudinary.com/app/settings/billing/change_plan/programmable_media\"}"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-475eddbb-7131-4d02-9ac8-ab4a966433bd",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250427 142849",
@@ -275683,7 +276178,10 @@
       ],
       "scheduled_at": "2026-10-13T11:30:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -275706,12 +276204,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Cloudinary HTTP 400: {\"error\":{\"message\":\"File size too large. Got 16666859. Maximum is 10485760.\"},\"message\":\"Your file exceeds the Free plan upload limit. Upgrade to upload larger assets.\",\"upgrade_url\":\"https://console.cloudinary.com/app/settings/billing/change_plan/programmable_media\"}"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-e345e95f-e0d0-4e51-898d-f39c82d17492",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250426 160303",
@@ -275722,7 +276220,10 @@
       ],
       "scheduled_at": "2026-10-14T11:30:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -275745,12 +276246,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Cloudinary HTTP 400: {\"error\":{\"message\":\"File size too large. Got 14899233. Maximum is 10485760.\"},\"message\":\"Your file exceeds the Free plan upload limit. Upgrade to upload larger assets.\",\"upgrade_url\":\"https://console.cloudinary.com/app/settings/billing/change_plan/programmable_media\"}"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-982c0716-293b-4fe2-bd60-e7168685b2fd",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250427 142949 Copia",
@@ -275761,7 +276262,10 @@
       ],
       "scheduled_at": "2026-10-14T11:30:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -275792,12 +276296,12 @@
           "bytes": "10192424"
         }
       ],
-      "blocked_reason": "Buffer instagram: Invalid post: Image exceeds the 8.0MB file size limit (9.7MB)."
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-4e9c0e1d-39d6-496e-b1b9-d220f148c6aa",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250427 143101 Copia",
@@ -275808,7 +276312,10 @@
       ],
       "scheduled_at": "2026-10-15T11:30:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -275831,12 +276338,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Cloudinary HTTP 400: {\"error\":{\"message\":\"File size too large. Got 13397085. Maximum is 10485760.\"},\"message\":\"Your file exceeds the Free plan upload limit. Upgrade to upload larger assets.\",\"upgrade_url\":\"https://console.cloudinary.com/app/settings/billing/change_plan/programmable_media\"}"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-86b94724-ddb3-447f-974a-28f8472e5de1",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250426 160447",
@@ -275847,7 +276354,10 @@
       ],
       "scheduled_at": "2026-10-15T11:30:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -275870,12 +276380,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Cloudinary HTTP 400: {\"error\":{\"message\":\"File size too large. Got 13240737. Maximum is 10485760.\"},\"message\":\"Your file exceeds the Free plan upload limit. Upgrade to upload larger assets.\",\"upgrade_url\":\"https://console.cloudinary.com/app/settings/billing/change_plan/programmable_media\"}"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-a07fa0b3-fde2-4f9b-a399-a7c370fd455a",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250427 145736",
@@ -275886,7 +276396,10 @@
       ],
       "scheduled_at": "2026-10-16T11:30:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -275909,12 +276422,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Cloudinary HTTP 400: {\"error\":{\"message\":\"File size too large. Got 13756793. Maximum is 10485760.\"},\"message\":\"Your file exceeds the Free plan upload limit. Upgrade to upload larger assets.\",\"upgrade_url\":\"https://console.cloudinary.com/app/settings/billing/change_plan/programmable_media\"}"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-8bf18f7c-ced4-4715-a2b9-86ca5ff1cf15",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250426 160454",
@@ -275925,7 +276438,10 @@
       ],
       "scheduled_at": "2026-10-16T11:30:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -275948,12 +276464,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Cloudinary HTTP 400: {\"error\":{\"message\":\"File size too large. Got 15203114. Maximum is 10485760.\"},\"message\":\"Your file exceeds the Free plan upload limit. Upgrade to upload larger assets.\",\"upgrade_url\":\"https://console.cloudinary.com/app/settings/billing/change_plan/programmable_media\"}"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-f0d378cb-2469-474a-a363-53b250089ba0",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250426 161107",
@@ -275964,7 +276480,10 @@
       ],
       "scheduled_at": "2026-10-17T11:30:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -275987,12 +276506,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Cloudinary HTTP 400: {\"error\":{\"message\":\"File size too large. Got 12987722. Maximum is 10485760.\"},\"message\":\"Your file exceeds the Free plan upload limit. Upgrade to upload larger assets.\",\"upgrade_url\":\"https://console.cloudinary.com/app/settings/billing/change_plan/programmable_media\"}"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-5fd00782-97ae-4ed5-b550-92906cf737b0",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250427 151613 Copia",
@@ -276003,7 +276522,10 @@
       ],
       "scheduled_at": "2026-10-17T11:30:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -276026,12 +276548,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Cloudinary HTTP 400: {\"error\":{\"message\":\"File size too large. Got 14137674. Maximum is 10485760.\"},\"message\":\"Your file exceeds the Free plan upload limit. Upgrade to upload larger assets.\",\"upgrade_url\":\"https://console.cloudinary.com/app/settings/billing/change_plan/programmable_media\"}"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-62b5da2c-cf76-4d39-9b4e-89a33e169882",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250426 161129",
@@ -276042,7 +276564,10 @@
       ],
       "scheduled_at": "2026-10-18T11:30:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -276065,12 +276590,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Cloudinary HTTP 400: {\"error\":{\"message\":\"File size too large. Got 13054767. Maximum is 10485760.\"},\"message\":\"Your file exceeds the Free plan upload limit. Upgrade to upload larger assets.\",\"upgrade_url\":\"https://console.cloudinary.com/app/settings/billing/change_plan/programmable_media\"}"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-6aa8ce33-8c9c-4b2a-a8b4-e9a14783c435",
       "enabled": true,
-      "status": "buffer_scheduled",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250412 183140",
@@ -276081,7 +276606,10 @@
       ],
       "scheduled_at": "2026-10-18T11:30:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -276126,12 +276654,13 @@
           "resource_type": "image",
           "bytes": "5334141"
         }
-      ]
+      ],
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-d04fcf5c-50d3-4bf2-bb2a-d973e6eae4f3",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250426 161155",
@@ -276142,7 +276671,10 @@
       ],
       "scheduled_at": "2026-10-19T11:30:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -276165,12 +276697,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Cloudinary HTTP 400: {\"error\":{\"message\":\"File size too large. Got 13808675. Maximum is 10485760.\"},\"message\":\"Your file exceeds the Free plan upload limit. Upgrade to upload larger assets.\",\"upgrade_url\":\"https://console.cloudinary.com/app/settings/billing/change_plan/programmable_media\"}"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-25f6c9de-43c4-4379-b142-7531e0d0d176",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250412 183303",
@@ -276181,7 +276713,10 @@
       ],
       "scheduled_at": "2026-10-19T11:30:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -276212,12 +276747,12 @@
           "bytes": "10049137"
         }
       ],
-      "blocked_reason": "Buffer instagram: Invalid post: Image exceeds the 8.0MB file size limit (9.6MB)."
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-1293c2df-9c13-4939-b411-6eda20418400",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250426 161212",
@@ -276228,7 +276763,10 @@
       ],
       "scheduled_at": "2026-10-20T11:30:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -276251,12 +276789,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Cloudinary HTTP 400: {\"error\":{\"message\":\"File size too large. Got 13415001. Maximum is 10485760.\"},\"message\":\"Your file exceeds the Free plan upload limit. Upgrade to upload larger assets.\",\"upgrade_url\":\"https://console.cloudinary.com/app/settings/billing/change_plan/programmable_media\"}"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-e98a504f-d26f-4743-a25a-93acbf1eb9fa",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250412 183310",
@@ -276267,7 +276805,10 @@
       ],
       "scheduled_at": "2026-10-20T11:30:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -276290,12 +276831,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Cloudinary HTTP 400: {\"error\":{\"message\":\"File size too large. Got 12466880. Maximum is 10485760.\"},\"message\":\"Your file exceeds the Free plan upload limit. Upgrade to upload larger assets.\",\"upgrade_url\":\"https://console.cloudinary.com/app/settings/billing/change_plan/programmable_media\"}"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-eaabfa36-039f-4028-b8fe-5d2311e97752",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250412 183331",
@@ -276306,7 +276847,10 @@
       ],
       "scheduled_at": "2026-10-21T11:30:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -276329,12 +276873,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Cloudinary HTTP 400: {\"error\":{\"message\":\"File size too large. Got 11075913. Maximum is 10485760.\"},\"message\":\"Your file exceeds the Free plan upload limit. Upgrade to upload larger assets.\",\"upgrade_url\":\"https://console.cloudinary.com/app/settings/billing/change_plan/programmable_media\"}"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-65715ace-b98f-4bbe-a8c9-e08b27c09494",
       "enabled": true,
-      "status": "buffer_scheduled",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250426 161327",
@@ -276345,7 +276889,10 @@
       ],
       "scheduled_at": "2026-10-21T11:30:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -276390,12 +276937,13 @@
           "resource_type": "video",
           "bytes": "14583096"
         }
-      ]
+      ],
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-01dd00bf-c9fa-4c7b-9137-11618e754b76",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250412 183534",
@@ -276406,7 +276954,10 @@
       ],
       "scheduled_at": "2026-10-22T11:30:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -276429,12 +276980,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Cloudinary HTTP 400: {\"error\":{\"message\":\"File size too large. Got 12559801. Maximum is 10485760.\"},\"message\":\"Your file exceeds the Free plan upload limit. Upgrade to upload larger assets.\",\"upgrade_url\":\"https://console.cloudinary.com/app/settings/billing/change_plan/programmable_media\"}"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-17d7ccde-e2b2-42ac-915c-8f4209f0e5bb",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250426 162725",
@@ -276445,7 +276996,10 @@
       ],
       "scheduled_at": "2026-10-22T11:30:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -276468,12 +277022,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Cloudinary HTTP 400: {\"error\":{\"message\":\"File size too large. Got 12884510. Maximum is 10485760.\"},\"message\":\"Your file exceeds the Free plan upload limit. Upgrade to upload larger assets.\",\"upgrade_url\":\"https://console.cloudinary.com/app/settings/billing/change_plan/programmable_media\"}"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-6d7be883-0b8d-4e10-9c22-5715186c387b",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250412 183635",
@@ -276484,7 +277038,10 @@
       ],
       "scheduled_at": "2026-10-23T11:30:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -276507,12 +277064,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Cloudinary HTTP 400: {\"error\":{\"message\":\"File size too large. Got 11846535. Maximum is 10485760.\"},\"message\":\"Your file exceeds the Free plan upload limit. Upgrade to upload larger assets.\",\"upgrade_url\":\"https://console.cloudinary.com/app/settings/billing/change_plan/programmable_media\"}"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-7ffc5c7d-9951-4638-ba7c-a11f2fb0d7cc",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250427 140153",
@@ -276523,7 +277080,10 @@
       ],
       "scheduled_at": "2026-10-23T11:30:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -276546,12 +277106,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Cloudinary HTTP 400: {\"error\":{\"message\":\"File size too large. Got 13305831. Maximum is 10485760.\"},\"message\":\"Your file exceeds the Free plan upload limit. Upgrade to upload larger assets.\",\"upgrade_url\":\"https://console.cloudinary.com/app/settings/billing/change_plan/programmable_media\"}"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-c0497833-ef68-4f95-a230-e61f4d3ef6f7",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250427 140237",
@@ -276562,7 +277122,10 @@
       ],
       "scheduled_at": "2026-10-24T11:30:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -276585,12 +277148,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Cloudinary HTTP 400: {\"error\":{\"message\":\"File size too large. Got 12959091. Maximum is 10485760.\"},\"message\":\"Your file exceeds the Free plan upload limit. Upgrade to upload larger assets.\",\"upgrade_url\":\"https://console.cloudinary.com/app/settings/billing/change_plan/programmable_media\"}"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-290f2e86-27c1-4002-bb24-5b4b5edf22c0",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250412 183751",
@@ -276601,7 +277164,10 @@
       ],
       "scheduled_at": "2026-10-24T11:30:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -276624,12 +277190,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Cloudinary HTTP 400: {\"error\":{\"message\":\"File size too large. Got 12427983. Maximum is 10485760.\"},\"message\":\"Your file exceeds the Free plan upload limit. Upgrade to upload larger assets.\",\"upgrade_url\":\"https://console.cloudinary.com/app/settings/billing/change_plan/programmable_media\"}"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-857563b5-16bf-4095-99a2-770d044df89d",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250412 183803",
@@ -276640,7 +277206,10 @@
       ],
       "scheduled_at": "2026-10-25T12:30:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -276663,12 +277232,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Cloudinary HTTP 400: {\"error\":{\"message\":\"File size too large. Got 12400380. Maximum is 10485760.\"},\"message\":\"Your file exceeds the Free plan upload limit. Upgrade to upload larger assets.\",\"upgrade_url\":\"https://console.cloudinary.com/app/settings/billing/change_plan/programmable_media\"}"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-8fa404b7-3901-4fc0-8397-3af210800513",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250427 140350",
@@ -276679,7 +277248,10 @@
       ],
       "scheduled_at": "2026-10-25T12:30:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -276702,12 +277274,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Cloudinary HTTP 400: {\"error\":{\"message\":\"File size too large. Got 14454370. Maximum is 10485760.\"},\"message\":\"Your file exceeds the Free plan upload limit. Upgrade to upload larger assets.\",\"upgrade_url\":\"https://console.cloudinary.com/app/settings/billing/change_plan/programmable_media\"}"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-5e21ce56-9ad9-47c6-a6cc-735518710458",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250412 183912",
@@ -276718,7 +277290,10 @@
       ],
       "scheduled_at": "2026-10-26T12:30:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -276741,12 +277316,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Cloudinary HTTP 400: {\"error\":{\"message\":\"File size too large. Got 12453000. Maximum is 10485760.\"},\"message\":\"Your file exceeds the Free plan upload limit. Upgrade to upload larger assets.\",\"upgrade_url\":\"https://console.cloudinary.com/app/settings/billing/change_plan/programmable_media\"}"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-3884ffba-2a7a-458f-a0dc-47cb2c6216ea",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250427 140552",
@@ -276757,7 +277332,10 @@
       ],
       "scheduled_at": "2026-10-26T12:30:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -276780,12 +277358,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Cloudinary HTTP 400: {\"error\":{\"message\":\"File size too large. Got 13986896. Maximum is 10485760.\"},\"message\":\"Your file exceeds the Free plan upload limit. Upgrade to upload larger assets.\",\"upgrade_url\":\"https://console.cloudinary.com/app/settings/billing/change_plan/programmable_media\"}"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "supabase-calendar-8ffde05e-b39e-48b7-822f-11fc6b15509e",
       "enabled": false,
-      "status": "blocked",
+      "status": "awaiting_media",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "Tradizione, territorio e ospitalità ad Avigliana",
@@ -276794,7 +277372,10 @@
       "media": [],
       "scheduled_at": "2026-09-24T16:30:00+00:00",
       "platforms": [
-        "instagram"
+        {
+          "platform": "instagram",
+          "integration_id": "buffer:6ab5cfc6ea19ca0bdedecef3"
+        }
       ],
       "published_platforms": [],
       "source": "SUPABASE_CONTENT_HUB",
@@ -276817,7 +277398,7 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "ERRORE_MEDIA"
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "real-media-pro-2026-10-02-c08-01-01-meta-ads-creative",
@@ -276875,7 +277456,7 @@
         }
       ],
       "enabled": true,
-      "status": "ready",
+      "status": "awaiting_media",
       "published_platforms": [],
       "postiz_results": [],
       "video_made_with_ai": false,
@@ -277019,7 +277600,8 @@
             }
           ]
         }
-      ]
+      ],
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "real-media-pro-2026-10-02-c08-02-02-audit-digitale",
@@ -277077,7 +277659,7 @@
         }
       ],
       "enabled": true,
-      "status": "ready",
+      "status": "awaiting_media",
       "published_platforms": [],
       "postiz_results": [],
       "video_made_with_ai": false,
@@ -277221,7 +277803,8 @@
             }
           ]
         }
-      ]
+      ],
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "real-media-pro-2026-10-02-c08-03-03-shopify-servizio",
@@ -277279,7 +277862,7 @@
         }
       ],
       "enabled": true,
-      "status": "ready",
+      "status": "awaiting_media",
       "published_platforms": [],
       "postiz_results": [],
       "video_made_with_ai": false,
@@ -277423,7 +278006,8 @@
             }
           ]
         }
-      ]
+      ],
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "real-media-pro-2026-10-02-c08-04-04-sito-che-perde-lead",
@@ -277481,7 +278065,7 @@
         }
       ],
       "enabled": true,
-      "status": "ready",
+      "status": "awaiting_media",
       "published_platforms": [],
       "postiz_results": [],
       "video_made_with_ai": false,
@@ -277625,7 +278209,8 @@
             }
           ]
         }
-      ]
+      ],
+      "blocked_reason": "rendered media is missing"
     },
     {
       "id": "real-media-pro-2026-10-02-c08-05-05-crm-followup",
@@ -277683,7 +278268,7 @@
         }
       ],
       "enabled": true,
-      "status": "ready",
+      "status": "awaiting_media",
       "published_platforms": [],
       "postiz_results": [],
       "video_made_with_ai": false,
@@ -277827,104 +278412,483 @@
             }
           ]
         }
-      ]
+      ],
+      "blocked_reason": "rendered media is missing"
     },
     {
-      "id": "f1-feed-R01",
-      "client_id": "f1-immobiliare",
-      "created_by": "buffer-feed-production",
-      "source_item_id": "R01",
-      "source_feed_id": "f1-qualified-2026-08-23-r01",
-      "source_feed_run_id": null,
-      "title": "Siamo alla ricerca di immobili in Valle di Susa",
-      "caption": "SIAMO ALLA RICERCA DI IMMOBILI IN VALLE DI SUSA.\n\nSe stai pensando di vendere casa, il primo passo non è pubblicare un annuncio con un prezzo scelto a sensazione. È capire quanto può valere realmente il tuo immobile e quale strategia può portarlo sul mercato nel modo corretto.\n\nF1 Immobiliare parte da una VALUTAZIONE PROFESSIONALE A 3 LIVELLI: valore minimo, valore centrale e valore massimo sostenibile. Analizziamo microzona, caratteristiche dell'immobile, concorrenza e target potenziale. Solo dopo costruiamo il Piano Marketing F1: valorizzazione degli ambienti, fotografie professionali, Reel e video verticali, copy dell'annuncio, grandi portali, sito F1, campagne Facebook/Instagram/Google e retargeting.\n\nScrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere. F1 Immobiliare · 371 370 8294.\n\n#F1Immobiliare #ValleDiSusa #VendereCasa #ValutazioneImmobiliare",
-      "cta": "Scrivi VALUTAZIONE in privato indicando COMUNE, TIPOLOGIA, MQ e QUANDO vorresti vendere.",
-      "format": "reel",
-      "media": "publisher/media/generated/buffer-feed-production/R01.mp4",
-      "scheduled_at": "2026-10-02T18:30:00+02:00",
+      "id": "real-media-pro-2026-10-02-c20-01-06-analisi-gratuita",
+      "client_id": "real-media-pro",
+      "client_name": "Real Media Pro",
+      "category": "convert",
+      "editorial_role": "convert",
+      "campaign": "Real Media Pro · Dalla visibilità alla crescita",
+      "format": "photo",
+      "title": "SHOPIFY: DAL PRODOTTO ALLA CONVERSIONE",
+      "caption": "SHOPIFY: DAL PRODOTTO ALLA CONVERSIONE.\n\nUn e-commerce deve rendere semplice capire il prodotto, confrontare le alternative e arrivare all'azione. Prendiamo ispirazione dalle logiche del tema Shopify Shapes: struttura creativa, sezioni modulari, quick buy e percorso di scoperta chiaro.\n\nLa grafica che mostriamo è originale: non copiamo immagini o creatività del tema.\n\nReal Media Pro progetta siti Shopify orientati a navigazione, prodotto e conversione.\n\nAnalisi strategica gratuita: 371 370 8294",
+      "hashtags": [],
+      "voiceover": "Ti mostriamo cosa sta funzionando, cosa sta limitando il percorso digitale e quali priorità affrontare per prime. Analisi strategica iniziale gratuita. Richiedi un'analisi strategica gratuita.",
+      "slides": [
+        "NON PARTIAMO DAI POST",
+        "PARTIAMO DAL BUSINESS",
+        "OFFERTA",
+        "TARGET",
+        "SITO",
+        "TRAFFICO",
+        "CONVERSIONE",
+        "RICHIEDI ANALISI"
+      ],
+      "visuals": [],
+      "cta": "Richiedi un'analisi strategica gratuita",
+      "media": "publisher/media/generated/real-media-pro/2026-10-02/cycle-20/01-10-02-c20-01-06-analisi-gratuita.jpg",
+      "scheduled_at": "2026-10-02T20:30:00+02:00",
+      "territory": "Valle di Susa",
+      "property_focus": {},
+      "approval_key": "",
       "platforms": [
         {
           "platform": "facebook",
-          "integration_id": "buffer"
+          "integration_id": "direct-api"
         },
         {
           "platform": "instagram",
-          "integration_id": "buffer"
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "tiktok",
+          "integration_id": "direct-api"
         },
         {
           "platform": "linkedin",
-          "integration_id": "buffer"
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "youtube",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "pinterest",
+          "integration_id": "direct-api"
         }
       ],
-      "status": "scheduled_in_buffer",
-      "buffer_posts": [
+      "enabled": true,
+      "status": "ready",
+      "published_platforms": [],
+      "postiz_results": [],
+      "video_made_with_ai": false,
+      "created_by": "open-social-scheduler",
+      "cycle_key": "2026-10-02T20:00",
+      "cycle_hour": 20,
+      "cycle_index": 5,
+      "cycle_position": 1,
+      "production_mode": "automatic-static-photo-cycle",
+      "production_status": "PHOTO READY",
+      "publication_ready": true,
+      "output_type": "static-photo",
+      "no_video": true,
+      "no_audio": true,
+      "no_reel": true,
+      "people_footer_required": true,
+      "visual_mode": "rmp-original-shopify-theme-inspired-mockup",
+      "shopify_theme_required": true,
+      "shopify_theme_store_only": true,
+      "copy_shopify_images": false,
+      "generated_original_mockup": true,
+      "theme_name": "Shapes",
+      "theme_source_url": "https://themes.shopify.com/themes/shapes/presets/shapes?locale=it",
+      "theme_description_it": "Shapes punta su una presentazione creativa e molto flessibile, con elementi grafici modulari, acquisto rapido, comparazione prodotto e strumenti pensati per rendere la scoperta del catalogo più immediata.",
+      "layout_profile": "creative_modular",
+      "design_reference_rule": "Use only the official Shopify Theme Store as inspiration. Never download, copy, crop, trace or republish theme screenshots or theme imagery. Generate an original ecommerce mockup from the described design principles.",
+      "search_query_override": "",
+      "search_queries": [],
+      "visual_asset_urls": [
+        "https://themes.shopify.com/themes/shapes/presets/shapes?locale=it"
+      ],
+      "visual_source": "shopify-theme-store-description-only",
+      "visual_transform": "original-generated-ecommerce-mockup-plus-presenter-footer",
+      "visual_count": 1,
+      "fresh_visual_count": 1,
+      "reused_visual_count": 0
+    },
+    {
+      "id": "real-media-pro-2026-10-02-c20-02-07-google-ads-intento",
+      "client_id": "real-media-pro",
+      "client_name": "Real Media Pro",
+      "category": "attract",
+      "editorial_role": "attract",
+      "campaign": "Real Media Pro · Dalla visibilità alla crescita",
+      "format": "photo",
+      "title": "MOBILE FIRST, PERCORSO CHIARO",
+      "caption": "MOBILE FIRST, PERCORSO CHIARO.\n\nIl tema Shopify Broadcast mette al centro sezioni personalizzabili, velocità, mobile, acquisto rapido e strumenti che accompagnano il cliente verso la vendita.\n\nDa questa logica costruiamo un concept Real Media Pro completamente originale: gerarchia chiara, CTA visibili, navigazione veloce e meno attrito da smartphone.\n\nNessuna immagine del tema viene copiata o ripubblicata.\n\nAnalisi strategica gratuita: 371 370 8294",
+      "hashtags": [],
+      "voiceover": "Google Ads funziona quando keyword, feed, annuncio e pagina di destinazione rispondono allo stesso intento. Richiedi un'analisi strategica gratuita.",
+      "slides": [
+        "CHI CERCA È GIÀ PIÙ VICINO",
+        "MA DEVI ESSERCI",
+        "SEARCH",
+        "SHOPPING",
+        "PERFORMANCE MAX",
+        "FEED PRODOTTI",
+        "LANDING COERENTE",
+        "RICHIEDI ANALISI"
+      ],
+      "visuals": [],
+      "cta": "Richiedi un'analisi strategica gratuita",
+      "media": "publisher/media/generated/real-media-pro/2026-10-02/cycle-20/02-10-02-c20-02-07-google-ads-intento.jpg",
+      "scheduled_at": "2026-10-02T20:36:00+02:00",
+      "territory": "Valle di Susa",
+      "property_focus": {},
+      "approval_key": "",
+      "platforms": [
         {
-          "service": "facebook",
-          "channel_id": "6a9afff8065799be468ade7a",
-          "post_id": "6abfc19d5f7061ee2f19bf82",
-          "buffer_status": "scheduled",
-          "due_at": "2026-10-02T16:30:00.000Z",
-          "created_at": "2026-10-02T14:37:17+00:00"
+          "platform": "facebook",
+          "integration_id": "direct-api"
         },
         {
-          "service": "instagram",
-          "channel_id": "6a9b0034065799be468adfe4",
-          "post_id": "6abfc19e0adf17f48c4e738f",
-          "buffer_status": "scheduled",
-          "due_at": "2026-10-02T16:30:00.000Z",
-          "created_at": "2026-10-02T14:37:18+00:00"
+          "platform": "instagram",
+          "integration_id": "direct-api"
         },
         {
-          "service": "linkedin",
-          "channel_id": "6a9b0062065799be468ae0b1",
-          "post_id": "6abfc19fe11203baed2b1363",
-          "buffer_status": "scheduled",
-          "due_at": "2026-10-02T16:30:00.000Z",
-          "created_at": "2026-10-02T14:37:19+00:00"
+          "platform": "tiktok",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "linkedin",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "youtube",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "pinterest",
+          "integration_id": "direct-api"
         }
       ],
-      "buffer_scheduled_platforms": [
-        "facebook",
-        "instagram",
-        "linkedin"
+      "enabled": true,
+      "status": "ready",
+      "published_platforms": [],
+      "postiz_results": [],
+      "video_made_with_ai": false,
+      "created_by": "open-social-scheduler",
+      "cycle_key": "2026-10-02T20:00",
+      "cycle_hour": 20,
+      "cycle_index": 5,
+      "cycle_position": 2,
+      "production_mode": "automatic-static-photo-cycle",
+      "production_status": "PHOTO READY",
+      "publication_ready": true,
+      "output_type": "static-photo",
+      "no_video": true,
+      "no_audio": true,
+      "no_reel": true,
+      "people_footer_required": true,
+      "visual_mode": "rmp-original-shopify-theme-inspired-mockup",
+      "shopify_theme_required": true,
+      "shopify_theme_store_only": true,
+      "copy_shopify_images": false,
+      "generated_original_mockup": true,
+      "theme_name": "Broadcast",
+      "theme_source_url": "https://themes.shopify.com/themes/broadcast/presets/broadcast?locale=it",
+      "theme_description_it": "Broadcast è un tema ricco di funzionalità con oltre 30 sezioni personalizzabili, strumenti di upsell, acquisto rapido e una struttura ottimizzata per dispositivi mobili e velocità.",
+      "layout_profile": "mobile_speed",
+      "design_reference_rule": "Use only the official Shopify Theme Store as inspiration. Never download, copy, crop, trace or republish theme screenshots or theme imagery. Generate an original ecommerce mockup from the described design principles.",
+      "search_query_override": "",
+      "search_queries": [],
+      "visual_asset_urls": [
+        "https://themes.shopify.com/themes/broadcast/presets/broadcast?locale=it"
       ],
-      "approval_required": false,
-      "manual_approval_required": false,
-      "autonomous_publish": true,
-      "production_source": "f1-feed-latest.json",
-      "quality_gate_passed": true,
-      "video_made_with_ai": true,
-      "buffer_organization_id": "6a9aff970f059f084a2c8a6d",
-      "buffer_channels": {
-        "facebook": {
-          "id": "6a9afff8065799be468ade7a",
-          "name": "F1immobiliare",
-          "service": "facebook"
-        },
-        "instagram": {
-          "id": "6a9b0034065799be468adfe4",
-          "name": "joseph_malafronte",
-          "service": "instagram"
-        },
-        "linkedin": {
-          "id": "6a9b0062065799be468ae0b1",
-          "name": "Joseph Malafronte",
-          "service": "linkedin"
-        }
-      },
-      "cloudinary_assets": [
+      "visual_source": "shopify-theme-store-description-only",
+      "visual_transform": "original-generated-ecommerce-mockup-plus-presenter-footer",
+      "visual_count": 1,
+      "fresh_visual_count": 1,
+      "reused_visual_count": 0
+    },
+    {
+      "id": "real-media-pro-2026-10-02-c20-03-08-creative-testing",
+      "client_id": "real-media-pro",
+      "client_name": "Real Media Pro",
+      "category": "nurture",
+      "editorial_role": "nurture",
+      "campaign": "Real Media Pro · Dalla visibilità alla crescita",
+      "format": "photo",
+      "title": "DESIGN PREMIUM, PRESTAZIONI VELOCI",
+      "caption": "DESIGN PREMIUM, PRESTAZIONI VELOCI.\n\nPrestige mostra come un e-commerce premium possa combinare immagine di marca, prodotto, sezioni configurabili, velocità e accessibilità.\n\nReal Media Pro traduce questi principi in un progetto originale costruito sull'identità del cliente: nessuna copia del tema, ma una struttura pensata per far percepire valore e facilitare l'acquisto.\n\nAnalisi strategica gratuita: 371 370 8294",
+      "hashtags": [],
+      "voiceover": "Il creative testing serve a capire quale messaggio, hook e formato producono davvero risposta. Le decisioni si prendono sui dati, non sulle preferenze estetiche. Richiedi un'analisi strategica gratuita.",
+      "slides": [
+        "UN SOLO VIDEO NON È UNA STRATEGIA",
+        "TESTA HOOK",
+        "TESTA ANGOLI",
+        "TESTA FORMAT",
+        "TESTA CTA",
+        "MISURA",
+        "TAGLIA I PERDENTI",
+        "SCALA I VINCENTI"
+      ],
+      "visuals": [],
+      "cta": "Richiedi un'analisi strategica gratuita",
+      "media": "publisher/media/generated/real-media-pro/2026-10-02/cycle-20/03-10-02-c20-03-08-creative-testing.jpg",
+      "scheduled_at": "2026-10-02T20:42:00+02:00",
+      "territory": "Valle di Susa",
+      "property_focus": {},
+      "approval_key": "",
+      "platforms": [
         {
-          "url": "https://res.cloudinary.com/xqrptpae/video/upload/v1788614921/f1-buffer/f1-feed-R01/video.mp4",
-          "public_id": "f1-buffer/f1-feed-R01/video",
-          "resource_type": "video",
-          "bytes": "4364512"
+          "platform": "facebook",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "tiktok",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "linkedin",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "youtube",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "pinterest",
+          "integration_id": "direct-api"
         }
-      ]
+      ],
+      "enabled": true,
+      "status": "ready",
+      "published_platforms": [],
+      "postiz_results": [],
+      "video_made_with_ai": false,
+      "created_by": "open-social-scheduler",
+      "cycle_key": "2026-10-02T20:00",
+      "cycle_hour": 20,
+      "cycle_index": 5,
+      "cycle_position": 3,
+      "production_mode": "automatic-static-photo-cycle",
+      "production_status": "PHOTO READY",
+      "publication_ready": true,
+      "output_type": "static-photo",
+      "no_video": true,
+      "no_audio": true,
+      "no_reel": true,
+      "people_footer_required": true,
+      "visual_mode": "rmp-original-shopify-theme-inspired-mockup",
+      "shopify_theme_required": true,
+      "shopify_theme_store_only": true,
+      "copy_shopify_images": false,
+      "generated_original_mockup": true,
+      "theme_name": "Prestige",
+      "theme_source_url": "https://themes.shopify.com/themes/prestige/presets/prestige?locale=it",
+      "theme_description_it": "Prestige è progettato per brand premium e di fascia alta, con oltre 30 sezioni configurabili, forte valorizzazione del prodotto, prestazioni rapide e attenzione all'accessibilità.",
+      "layout_profile": "premium",
+      "design_reference_rule": "Use only the official Shopify Theme Store as inspiration. Never download, copy, crop, trace or republish theme screenshots or theme imagery. Generate an original ecommerce mockup from the described design principles.",
+      "search_query_override": "",
+      "search_queries": [],
+      "visual_asset_urls": [
+        "https://themes.shopify.com/themes/prestige/presets/prestige?locale=it"
+      ],
+      "visual_source": "shopify-theme-store-description-only",
+      "visual_transform": "original-generated-ecommerce-mockup-plus-presenter-footer",
+      "visual_count": 1,
+      "fresh_visual_count": 1,
+      "reused_visual_count": 0
+    },
+    {
+      "id": "real-media-pro-2026-10-02-c20-04-09-seo-servizio",
+      "client_id": "real-media-pro",
+      "client_name": "Real Media Pro",
+      "category": "convert",
+      "editorial_role": "convert",
+      "campaign": "Real Media Pro · Dalla visibilità alla crescita",
+      "format": "photo",
+      "title": "SITI WEB CHE VALORIZZANO IL BRAND",
+      "caption": "SITI WEB CHE VALORIZZANO IL BRAND.\n\nAllure unisce semplicità, impatto visivo, scoperta dei prodotti e una struttura pensata per sostenere la vendita. È un riferimento utile per capire quanto design e percorso commerciale debbano lavorare insieme.\n\nNoi partiamo da questi principi per creare un sito originale, coerente con il brand e costruito attorno ai suoi prodotti e clienti.\n\nNessuna immagine Shopify viene copiata.\n\nAnalisi strategica gratuita: 371 370 8294",
+      "hashtags": [],
+      "voiceover": "SEO, contenuti, local search, reputazione e dati strutturati aiutano il business a essere trovato e compreso nei nuovi percorsi di ricerca. Richiedi un'analisi strategica gratuita.",
+      "slides": [
+        "ESSERE TROVATI",
+        "KEYWORD",
+        "PAGINE UTILI",
+        "DATI STRUTTURATI",
+        "LOCAL SEO",
+        "RECENSIONI",
+        "AI SEARCH",
+        "RICHIEDI ANALISI"
+      ],
+      "visuals": [],
+      "cta": "Richiedi un'analisi strategica gratuita",
+      "media": "publisher/media/generated/real-media-pro/2026-10-02/cycle-20/04-10-02-c20-04-09-seo-servizio.jpg",
+      "scheduled_at": "2026-10-02T20:48:00+02:00",
+      "territory": "Valle di Susa",
+      "property_focus": {},
+      "approval_key": "",
+      "platforms": [
+        {
+          "platform": "facebook",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "tiktok",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "linkedin",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "youtube",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "pinterest",
+          "integration_id": "direct-api"
+        }
+      ],
+      "enabled": true,
+      "status": "ready",
+      "published_platforms": [],
+      "postiz_results": [],
+      "video_made_with_ai": false,
+      "created_by": "open-social-scheduler",
+      "cycle_key": "2026-10-02T20:00",
+      "cycle_hour": 20,
+      "cycle_index": 5,
+      "cycle_position": 4,
+      "production_mode": "automatic-static-photo-cycle",
+      "production_status": "PHOTO READY",
+      "publication_ready": true,
+      "output_type": "static-photo",
+      "no_video": true,
+      "no_audio": true,
+      "no_reel": true,
+      "people_footer_required": true,
+      "visual_mode": "rmp-original-shopify-theme-inspired-mockup",
+      "shopify_theme_required": true,
+      "shopify_theme_store_only": true,
+      "copy_shopify_images": false,
+      "generated_original_mockup": true,
+      "theme_name": "Allure",
+      "theme_source_url": "https://themes.shopify.com/themes/allure/presets/allure?locale=it",
+      "theme_description_it": "Allure combina raffinatezza e semplicità con una vetrina moderna, dinamica e orientata alla scoperta dei prodotti, alla visibilità del catalogo e a pagine progettate per sostenere la vendita.",
+      "layout_profile": "brand_story",
+      "design_reference_rule": "Use only the official Shopify Theme Store as inspiration. Never download, copy, crop, trace or republish theme screenshots or theme imagery. Generate an original ecommerce mockup from the described design principles.",
+      "search_query_override": "",
+      "search_queries": [],
+      "visual_asset_urls": [
+        "https://themes.shopify.com/themes/allure/presets/allure?locale=it"
+      ],
+      "visual_source": "shopify-theme-store-description-only",
+      "visual_transform": "original-generated-ecommerce-mockup-plus-presenter-footer",
+      "visual_count": 1,
+      "fresh_visual_count": 1,
+      "reused_visual_count": 0
+    },
+    {
+      "id": "real-media-pro-2026-10-02-c20-05-10-shopify-che-converte",
+      "client_id": "real-media-pro",
+      "client_name": "Real Media Pro",
+      "category": "attract",
+      "editorial_role": "attract",
+      "campaign": "Real Media Pro · Dalla visibilità alla crescita",
+      "format": "photo",
+      "title": "SEZIONI MODULARI PER VENDERE MEGLIO",
+      "caption": "SEZIONI MODULARI PER VENDERE MEGLIO.\n\nVivid mette insieme struttura pulita, personalizzazione, ricerca, filtri e sezioni dedicate alla scoperta dei prodotti.\n\nPer Real Media Pro il punto non è replicare il tema: è utilizzare queste logiche per progettare un'esperienza originale che aiuti l'utente a trovare, capire e scegliere più facilmente.\n\nNessuna immagine del Theme Store viene riutilizzata.\n\nAnalisi strategica gratuita: 371 370 8294",
+      "hashtags": [],
+      "voiceover": "Un e-commerce che performa collega prodotto, offerta, pagina, fiducia, checkout e traffico. Real Media Pro parte dal percorso di acquisto, non dal solo layout. Richiedi un'analisi strategica gratuita.",
+      "slides": [
+        "IL TUO E-COMMERCE È BELLO?",
+        "MA CONVERTE?",
+        "PRODOTTO + OFFERTA",
+        "PAGINA PRODOTTO",
+        "PROVA SOCIALE",
+        "CHECKOUT SENZA ATTRITO",
+        "TRAFFICO QUALIFICATO",
+        "RICHIEDI ANALISI"
+      ],
+      "visuals": [],
+      "cta": "Richiedi un'analisi strategica gratuita",
+      "media": "publisher/media/generated/real-media-pro/2026-10-02/cycle-20/05-10-02-c20-05-10-shopify-che-converte.jpg",
+      "scheduled_at": "2026-10-02T20:54:00+02:00",
+      "territory": "Valle di Susa",
+      "property_focus": {},
+      "approval_key": "",
+      "platforms": [
+        {
+          "platform": "facebook",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "instagram",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "tiktok",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "linkedin",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "youtube",
+          "integration_id": "direct-api"
+        },
+        {
+          "platform": "pinterest",
+          "integration_id": "direct-api"
+        }
+      ],
+      "enabled": true,
+      "status": "ready",
+      "published_platforms": [],
+      "postiz_results": [],
+      "video_made_with_ai": false,
+      "created_by": "open-social-scheduler",
+      "cycle_key": "2026-10-02T20:00",
+      "cycle_hour": 20,
+      "cycle_index": 5,
+      "cycle_position": 5,
+      "production_mode": "automatic-static-photo-cycle",
+      "production_status": "PHOTO READY",
+      "publication_ready": true,
+      "output_type": "static-photo",
+      "no_video": true,
+      "no_audio": true,
+      "no_reel": true,
+      "people_footer_required": true,
+      "visual_mode": "rmp-original-shopify-theme-inspired-mockup",
+      "shopify_theme_required": true,
+      "shopify_theme_store_only": true,
+      "copy_shopify_images": false,
+      "generated_original_mockup": true,
+      "theme_name": "Vivid",
+      "theme_source_url": "https://themes.shopify.com/themes/vivid/presets/vivid?locale=it",
+      "theme_description_it": "Vivid combina design moderno, personalizzazione, funzioni avanzate per merchandising e scoperta del prodotto, ricerca e filtri, con una struttura pulita pensata per adattarsi al brand.",
+      "layout_profile": "catalog_discovery",
+      "design_reference_rule": "Use only the official Shopify Theme Store as inspiration. Never download, copy, crop, trace or republish theme screenshots or theme imagery. Generate an original ecommerce mockup from the described design principles.",
+      "search_query_override": "",
+      "search_queries": [],
+      "visual_asset_urls": [
+        "https://themes.shopify.com/themes/vivid/presets/vivid?locale=it"
+      ],
+      "visual_source": "shopify-theme-store-description-only",
+      "visual_transform": "original-generated-ecommerce-mockup-plus-presenter-footer",
+      "visual_count": 1,
+      "fresh_visual_count": 1,
+      "reused_visual_count": 0
     }
   ],
-  "updated_at": "2026-10-02T15:05:04+00:00",
+  "updated_at": "2026-10-02T18:50:59+00:00",
   "updated_by": "Automatic renderer · F1 manual-only aware",
-  "current_cycle": "2026-10-02T08:00",
+  "current_cycle": "2026-10-02T20:00",
   "history_days": 14,
   "history_limit": 840,
   "output_policy": "F1 MANUAL PUBLISH ONLY + 5 RMP STATIC PUBLICATIONS",
