@@ -269850,6 +269850,59 @@
               ]
             }
           ]
+        },
+        {
+          "at": "2026-10-02T02:27:54+00:00",
+          "dry_run": false,
+          "results": [
+            {
+              "platform": "facebook",
+              "status": "blocked",
+              "missing": [
+                "RMP_FACEBOOK_PAGE_ACCESS_TOKEN"
+              ]
+            },
+            {
+              "platform": "instagram",
+              "status": "blocked",
+              "missing": [
+                "RMP_INSTAGRAM_ACCESS_TOKEN",
+                "RMP_INSTAGRAM_USER_ID"
+              ]
+            },
+            {
+              "platform": "tiktok",
+              "status": "blocked",
+              "missing": [
+                "RMP_TIKTOK_ACCESS_TOKEN"
+              ]
+            },
+            {
+              "platform": "linkedin",
+              "status": "blocked",
+              "missing": [
+                "RMP_LINKEDIN_ACCESS_TOKEN",
+                "RMP_LINKEDIN_AUTHOR_URN"
+              ]
+            },
+            {
+              "platform": "youtube",
+              "status": "blocked",
+              "missing": [
+                "RMP_YOUTUBE_CLIENT_ID",
+                "RMP_YOUTUBE_CLIENT_SECRET",
+                "RMP_YOUTUBE_REFRESH_TOKEN"
+              ]
+            },
+            {
+              "platform": "pinterest",
+              "status": "blocked",
+              "missing": [
+                "RMP_PINTEREST_ACCESS_TOKEN",
+                "RMP_PINTEREST_BOARD_ID"
+              ]
+            }
+          ]
         }
       ]
     },
@@ -270055,6 +270108,59 @@
         },
         {
           "at": "2026-10-01T23:31:35+00:00",
+          "dry_run": false,
+          "results": [
+            {
+              "platform": "facebook",
+              "status": "blocked",
+              "missing": [
+                "RMP_FACEBOOK_PAGE_ACCESS_TOKEN"
+              ]
+            },
+            {
+              "platform": "instagram",
+              "status": "blocked",
+              "missing": [
+                "RMP_INSTAGRAM_ACCESS_TOKEN",
+                "RMP_INSTAGRAM_USER_ID"
+              ]
+            },
+            {
+              "platform": "tiktok",
+              "status": "blocked",
+              "missing": [
+                "RMP_TIKTOK_ACCESS_TOKEN"
+              ]
+            },
+            {
+              "platform": "linkedin",
+              "status": "blocked",
+              "missing": [
+                "RMP_LINKEDIN_ACCESS_TOKEN",
+                "RMP_LINKEDIN_AUTHOR_URN"
+              ]
+            },
+            {
+              "platform": "youtube",
+              "status": "blocked",
+              "missing": [
+                "RMP_YOUTUBE_CLIENT_ID",
+                "RMP_YOUTUBE_CLIENT_SECRET",
+                "RMP_YOUTUBE_REFRESH_TOKEN"
+              ]
+            },
+            {
+              "platform": "pinterest",
+              "status": "blocked",
+              "missing": [
+                "RMP_PINTEREST_ACCESS_TOKEN",
+                "RMP_PINTEREST_BOARD_ID"
+              ]
+            }
+          ]
+        },
+        {
+          "at": "2026-10-02T02:27:54+00:00",
           "dry_run": false,
           "results": [
             {
@@ -270360,6 +270466,59 @@
               ]
             }
           ]
+        },
+        {
+          "at": "2026-10-02T02:27:54+00:00",
+          "dry_run": false,
+          "results": [
+            {
+              "platform": "facebook",
+              "status": "blocked",
+              "missing": [
+                "RMP_FACEBOOK_PAGE_ACCESS_TOKEN"
+              ]
+            },
+            {
+              "platform": "instagram",
+              "status": "blocked",
+              "missing": [
+                "RMP_INSTAGRAM_ACCESS_TOKEN",
+                "RMP_INSTAGRAM_USER_ID"
+              ]
+            },
+            {
+              "platform": "tiktok",
+              "status": "blocked",
+              "missing": [
+                "RMP_TIKTOK_ACCESS_TOKEN"
+              ]
+            },
+            {
+              "platform": "linkedin",
+              "status": "blocked",
+              "missing": [
+                "RMP_LINKEDIN_ACCESS_TOKEN",
+                "RMP_LINKEDIN_AUTHOR_URN"
+              ]
+            },
+            {
+              "platform": "youtube",
+              "status": "blocked",
+              "missing": [
+                "RMP_YOUTUBE_CLIENT_ID",
+                "RMP_YOUTUBE_CLIENT_SECRET",
+                "RMP_YOUTUBE_REFRESH_TOKEN"
+              ]
+            },
+            {
+              "platform": "pinterest",
+              "status": "blocked",
+              "missing": [
+                "RMP_PINTEREST_ACCESS_TOKEN",
+                "RMP_PINTEREST_BOARD_ID"
+              ]
+            }
+          ]
         }
       ]
     },
@@ -270562,6 +270721,59 @@
               ]
             }
           ]
+        },
+        {
+          "at": "2026-10-02T02:27:54+00:00",
+          "dry_run": false,
+          "results": [
+            {
+              "platform": "facebook",
+              "status": "blocked",
+              "missing": [
+                "RMP_FACEBOOK_PAGE_ACCESS_TOKEN"
+              ]
+            },
+            {
+              "platform": "instagram",
+              "status": "blocked",
+              "missing": [
+                "RMP_INSTAGRAM_ACCESS_TOKEN",
+                "RMP_INSTAGRAM_USER_ID"
+              ]
+            },
+            {
+              "platform": "tiktok",
+              "status": "blocked",
+              "missing": [
+                "RMP_TIKTOK_ACCESS_TOKEN"
+              ]
+            },
+            {
+              "platform": "linkedin",
+              "status": "blocked",
+              "missing": [
+                "RMP_LINKEDIN_ACCESS_TOKEN",
+                "RMP_LINKEDIN_AUTHOR_URN"
+              ]
+            },
+            {
+              "platform": "youtube",
+              "status": "blocked",
+              "missing": [
+                "RMP_YOUTUBE_CLIENT_ID",
+                "RMP_YOUTUBE_CLIENT_SECRET",
+                "RMP_YOUTUBE_REFRESH_TOKEN"
+              ]
+            },
+            {
+              "platform": "pinterest",
+              "status": "blocked",
+              "missing": [
+                "RMP_PINTEREST_ACCESS_TOKEN",
+                "RMP_PINTEREST_BOARD_ID"
+              ]
+            }
+          ]
         }
       ]
     },
@@ -270714,6 +270926,59 @@
         },
         {
           "at": "2026-10-01T23:31:35+00:00",
+          "dry_run": false,
+          "results": [
+            {
+              "platform": "facebook",
+              "status": "blocked",
+              "missing": [
+                "RMP_FACEBOOK_PAGE_ACCESS_TOKEN"
+              ]
+            },
+            {
+              "platform": "instagram",
+              "status": "blocked",
+              "missing": [
+                "RMP_INSTAGRAM_ACCESS_TOKEN",
+                "RMP_INSTAGRAM_USER_ID"
+              ]
+            },
+            {
+              "platform": "tiktok",
+              "status": "blocked",
+              "missing": [
+                "RMP_TIKTOK_ACCESS_TOKEN"
+              ]
+            },
+            {
+              "platform": "linkedin",
+              "status": "blocked",
+              "missing": [
+                "RMP_LINKEDIN_ACCESS_TOKEN",
+                "RMP_LINKEDIN_AUTHOR_URN"
+              ]
+            },
+            {
+              "platform": "youtube",
+              "status": "blocked",
+              "missing": [
+                "RMP_YOUTUBE_CLIENT_ID",
+                "RMP_YOUTUBE_CLIENT_SECRET",
+                "RMP_YOUTUBE_REFRESH_TOKEN"
+              ]
+            },
+            {
+              "platform": "pinterest",
+              "status": "blocked",
+              "missing": [
+                "RMP_PINTEREST_ACCESS_TOKEN",
+                "RMP_PINTEREST_BOARD_ID"
+              ]
+            }
+          ]
+        },
+        {
+          "at": "2026-10-02T02:27:54+00:00",
           "dry_run": false,
           "results": [
             {
@@ -271006,7 +271271,7 @@
       "client_id": "real-media-pro",
       "client_name": "Real Media Pro",
       "title": "Meta Ads: il problema spesso è la creatività",
-      "caption": "Su Meta la creatività è una variabile decisiva: hook, dimostrazione, prova e CTA devono essere progettati per il feed e testati in più varianti. Richiedi un'analisi strategica gratuita.",
+      "caption": "Meta Ads: il problema spesso è la creatività\n\nSu Meta la creatività è una variabile decisiva: hook, dimostrazione, prova e CTA devono essere progettati per il feed e testati in più varianti. Richiedi un'analisi strategica gratuita.",
       "format": "post",
       "media": [],
       "scheduled_at": "2026-09-28T17:15:00+00:00",
@@ -271355,7 +271620,7 @@
       "client_id": "real-media-pro",
       "client_name": "Real Media Pro",
       "title": "Google Ads intercetta domanda già attiva",
-      "caption": "Google Ads funziona quando keyword, feed, annuncio e pagina di destinazione rispondono allo stesso intento. Richiedi un'analisi strategica gratuita.",
+      "caption": "Google Ads intercetta domanda già attiva\n\nGoogle Ads funziona quando keyword, feed, annuncio e pagina di destinazione rispondono allo stesso intento. Richiedi un'analisi strategica gratuita.",
       "format": "post",
       "media": [],
       "scheduled_at": "2026-09-29T17:15:00+00:00",
@@ -276530,7 +276795,7 @@
       "blocked_reason": "ERRORE_MEDIA"
     }
   ],
-  "updated_at": "2026-10-01T23:31:56+00:00",
+  "updated_at": "2026-10-02T02:28:15+00:00",
   "updated_by": "Automatic renderer · F1 manual-only aware",
   "current_cycle": "2026-10-01T16:00",
   "history_days": 14,
