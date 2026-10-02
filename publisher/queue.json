@@ -271625,7 +271625,7 @@
       "client_id": "real-media-pro",
       "client_name": "Real Media Pro",
       "title": "Google Ads intercetta domanda già attiva",
-      "caption": "Google Ads funziona quando keyword, feed, annuncio e pagina di destinazione rispondono allo stesso intento. Richiedi un'analisi strategica gratuita.",
+      "caption": "Google Ads intercetta domanda già attiva\n\nGoogle Ads funziona quando keyword, feed, annuncio e pagina di destinazione rispondono allo stesso intento. Richiedi un'analisi strategica gratuita.",
       "format": "post",
       "media": [],
       "scheduled_at": "2026-09-29T17:15:00+00:00",
@@ -272672,7 +272672,7 @@
     {
       "id": "supabase-calendar-757eb418-2787-4d3a-ad21-5310c16efa31",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "buffer_review_required",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250427 141703",
@@ -272706,12 +272706,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Cloudinary HTTP 400: {\"error\":{\"message\":\"File size too large. Got 11366183. Maximum is 10485760.\"},\"message\":\"Your file exceeds the Free plan upload limit. Upgrade to upload larger assets.\",\"upgrade_url\":\"https://console.cloudinary.com/app/settings/billing/change_plan/programmable_media\"}"
+      "blocked_reason": "Scheduled time is more than 60 minutes in the past; manual review required"
     },
     {
       "id": "supabase-calendar-83835af8-0e3c-4bb5-8014-41b041056d7c",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "buffer_review_required",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250426 140917",
@@ -272745,7 +272745,7 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Cloudinary HTTP 400: {\"error\":{\"message\":\"File size too large. Got 13472069. Maximum is 10485760.\"},\"message\":\"Your file exceeds the Free plan upload limit. Upgrade to upload larger assets.\",\"upgrade_url\":\"https://console.cloudinary.com/app/settings/billing/change_plan/programmable_media\"}"
+      "blocked_reason": "Scheduled time is more than 60 minutes in the past; manual review required"
     },
     {
       "id": "supabase-calendar-a2c414ee-ad4d-4130-98d9-4b135c621472",
@@ -272786,8 +272786,8 @@
     },
     {
       "id": "supabase-calendar-757bf128-919d-470b-a8d6-00b8a52b3ed4",
-      "enabled": true,
-      "status": "buffer_scheduled",
+      "enabled": false,
+      "status": "published",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "PUNTO DI FORZA · APPARTAMENTO A GRUGLIASCO",
@@ -272826,11 +272826,11 @@
           "service": "facebook",
           "channel_id": "6ab2b713ea19ca0bdeb8103d",
           "post_id": "6abebd38ff1f8cde664274c9",
-          "buffer_status": "scheduled",
+          "buffer_status": "sent",
           "due_at": "2026-10-02T12:00:00.000Z",
           "created_at": "2026-10-01T20:06:16+00:00",
-          "sent_at": null,
-          "external_link": null
+          "sent_at": "2026-10-02T12:01:10.000Z",
+          "external_link": "https://www.facebook.com/122138682843201564/posts/122141916567201564"
         }
       ],
       "buffer_scheduled_platforms": [
@@ -272843,12 +272843,14 @@
           "resource_type": "image",
           "bytes": "2468982"
         }
-      ]
+      ],
+      "external_post_id": "6abebd38ff1f8cde664274c9",
+      "external_url": "https://www.facebook.com/122138682843201564/posts/122141916567201564"
     },
     {
       "id": "supabase-calendar-76a1f077-f136-4447-ab95-58433d1b1653",
-      "enabled": true,
-      "status": "buffer_scheduled",
+      "enabled": false,
+      "status": "published",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "PUNTO DI FORZA · APPARTAMENTO A GRUGLIASCO",
@@ -272887,11 +272889,11 @@
           "service": "instagram",
           "channel_id": "6ab2b6e7ea19ca0bdeb80e19",
           "post_id": "6abe71c9b00d1de1165e195d",
-          "buffer_status": "scheduled",
+          "buffer_status": "sent",
           "due_at": "2026-10-02T12:00:00.000Z",
           "created_at": "2026-10-01T14:44:26+00:00",
-          "sent_at": null,
-          "external_link": null
+          "sent_at": "2026-10-02T12:02:13.368Z",
+          "external_link": "https://www.instagram.com/p/Dd_b9DXnKD9/"
         }
       ],
       "buffer_scheduled_platforms": [
@@ -272904,7 +272906,9 @@
           "resource_type": "image",
           "bytes": "2468982"
         }
-      ]
+      ],
+      "external_post_id": "6abe71c9b00d1de1165e195d",
+      "external_url": "https://www.instagram.com/p/Dd_b9DXnKD9/"
     },
     {
       "id": "supabase-calendar-44751bc7-c56b-46b0-9adf-cb44d11d8453",
@@ -273004,14 +273008,6 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "cloudinary_assets": [
-        {
-          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790612443/f1-buffer/supabase-calendar-2a59ba06-c3e8-4ed5-8794-c9e21e6359b6/video.png",
-          "public_id": "f1-buffer/supabase-calendar-2a59ba06-c3e8-4ed5-8794-c9e21e6359b6/video",
-          "resource_type": "image",
-          "bytes": "2919495"
-        }
-      ],
       "buffer_posts": [
         {
           "service": "facebook",
@@ -273019,11 +273015,21 @@
           "post_id": "6abf6f66f781c1ecf15cc440",
           "buffer_status": "scheduled",
           "due_at": "2026-10-02T18:00:00.000Z",
-          "created_at": "2026-10-02T08:46:31+00:00"
+          "created_at": "2026-10-02T08:46:31+00:00",
+          "sent_at": null,
+          "external_link": null
         }
       ],
       "buffer_scheduled_platforms": [
         "facebook"
+      ],
+      "cloudinary_assets": [
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790612443/f1-buffer/supabase-calendar-2a59ba06-c3e8-4ed5-8794-c9e21e6359b6/video.png",
+          "public_id": "f1-buffer/supabase-calendar-2a59ba06-c3e8-4ed5-8794-c9e21e6359b6/video",
+          "resource_type": "image",
+          "bytes": "2919495"
+        }
       ]
     },
     {
@@ -273063,14 +273069,6 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "cloudinary_assets": [
-        {
-          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790612446/f1-buffer/supabase-calendar-2c3630eb-c203-436f-84f3-3a50cba2085c/video.jpg",
-          "public_id": "f1-buffer/supabase-calendar-2c3630eb-c203-436f-84f3-3a50cba2085c/video",
-          "resource_type": "image",
-          "bytes": "308805"
-        }
-      ],
       "buffer_posts": [
         {
           "service": "facebook",
@@ -273078,11 +273076,21 @@
           "post_id": "6abf6f6781e421bfcd72feb9",
           "buffer_status": "scheduled",
           "due_at": "2026-10-03T06:00:00.000Z",
-          "created_at": "2026-10-02T08:46:31+00:00"
+          "created_at": "2026-10-02T08:46:31+00:00",
+          "sent_at": null,
+          "external_link": null
         }
       ],
       "buffer_scheduled_platforms": [
         "facebook"
+      ],
+      "cloudinary_assets": [
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790612446/f1-buffer/supabase-calendar-2c3630eb-c203-436f-84f3-3a50cba2085c/video.jpg",
+          "public_id": "f1-buffer/supabase-calendar-2c3630eb-c203-436f-84f3-3a50cba2085c/video",
+          "resource_type": "image",
+          "bytes": "308805"
+        }
       ]
     },
     {
@@ -273296,7 +273304,7 @@
     {
       "id": "supabase-calendar-d99011a2-179f-4a50-acd6-55cd90409aaa",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "buffer_scheduled",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "PUNTO DI FORZA · APPARTAMENTO A BUTTIGLIERA ALTA",
@@ -273338,12 +273346,24 @@
           "bytes": "265605"
         }
       ],
-      "blocked_reason": "Buffer facebook: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
+      "buffer_posts": [
+        {
+          "service": "facebook",
+          "channel_id": "6ab2b713ea19ca0bdeb8103d",
+          "post_id": "6abfc7aae11203baed2c0acd",
+          "buffer_status": "scheduled",
+          "due_at": "2026-10-03T12:00:00.000Z",
+          "created_at": "2026-10-02T15:03:07+00:00"
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "facebook"
+      ]
     },
     {
       "id": "supabase-calendar-8111f0f1-25be-480b-827b-74f8ca683822",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "buffer_scheduled",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "PUNTO DI FORZA · ALLOGGIO DI DUE LOCALI COLLEGNO",
@@ -273385,7 +273405,19 @@
           "bytes": "2763758"
         }
       ],
-      "blocked_reason": "Buffer facebook: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
+      "buffer_posts": [
+        {
+          "service": "facebook",
+          "channel_id": "6ab2b713ea19ca0bdeb8103d",
+          "post_id": "6abfc7ab441850db6e73375a",
+          "buffer_status": "scheduled",
+          "due_at": "2026-10-03T18:00:00.000Z",
+          "created_at": "2026-10-02T15:03:08+00:00"
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "facebook"
+      ]
     },
     {
       "id": "supabase-calendar-ed030a5c-6259-498e-8aaa-98deb747b360",
@@ -273424,14 +273456,6 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "cloudinary_assets": [
-        {
-          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790612458/f1-buffer/supabase-calendar-ed030a5c-6259-498e-8aaa-98deb747b360/video.png",
-          "public_id": "f1-buffer/supabase-calendar-ed030a5c-6259-498e-8aaa-98deb747b360/video",
-          "resource_type": "image",
-          "bytes": "2763758"
-        }
-      ],
       "buffer_posts": [
         {
           "service": "instagram",
@@ -273439,11 +273463,21 @@
           "post_id": "6abf6f6af781c1ecf15cc516",
           "buffer_status": "scheduled",
           "due_at": "2026-10-03T18:00:00.000Z",
-          "created_at": "2026-10-02T08:46:35+00:00"
+          "created_at": "2026-10-02T08:46:35+00:00",
+          "sent_at": null,
+          "external_link": null
         }
       ],
       "buffer_scheduled_platforms": [
         "instagram"
+      ],
+      "cloudinary_assets": [
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790612458/f1-buffer/supabase-calendar-ed030a5c-6259-498e-8aaa-98deb747b360/video.png",
+          "public_id": "f1-buffer/supabase-calendar-ed030a5c-6259-498e-8aaa-98deb747b360/video",
+          "resource_type": "image",
+          "bytes": "2763758"
+        }
       ]
     },
     {
@@ -273530,14 +273564,6 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "cloudinary_assets": [
-        {
-          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790612462/f1-buffer/supabase-calendar-a6b5bade-b58f-42f2-b56f-4fa4aa0a7791/video.png",
-          "public_id": "f1-buffer/supabase-calendar-a6b5bade-b58f-42f2-b56f-4fa4aa0a7791/video",
-          "resource_type": "image",
-          "bytes": "1862334"
-        }
-      ],
       "buffer_posts": [
         {
           "service": "instagram",
@@ -273545,11 +273571,21 @@
           "post_id": "6abf6f6cb41a266eabf19097",
           "buffer_status": "scheduled",
           "due_at": "2026-10-04T06:00:00.000Z",
-          "created_at": "2026-10-02T08:46:36+00:00"
+          "created_at": "2026-10-02T08:46:36+00:00",
+          "sent_at": null,
+          "external_link": null
         }
       ],
       "buffer_scheduled_platforms": [
         "instagram"
+      ],
+      "cloudinary_assets": [
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790612462/f1-buffer/supabase-calendar-a6b5bade-b58f-42f2-b56f-4fa4aa0a7791/video.png",
+          "public_id": "f1-buffer/supabase-calendar-a6b5bade-b58f-42f2-b56f-4fa4aa0a7791/video",
+          "resource_type": "image",
+          "bytes": "1862334"
+        }
       ]
     },
     {
@@ -273680,7 +273716,7 @@
     {
       "id": "supabase-calendar-e4019c1a-7136-42e4-a47a-b87aa5237052",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "buffer_scheduled",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "PUNTO DI FORZA · CASA RISTRUTTURATA IN VENDITA CON CORTILE PRIVATO E ARREDO INCLUSO",
@@ -273722,7 +273758,19 @@
           "bytes": "346902"
         }
       ],
-      "blocked_reason": "Buffer instagram: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
+      "buffer_posts": [
+        {
+          "service": "instagram",
+          "channel_id": "6ab2b6e7ea19ca0bdeb80e19",
+          "post_id": "6abfc7b2e11203baed2c0c44",
+          "buffer_status": "scheduled",
+          "due_at": "2026-10-04T12:00:00.000Z",
+          "created_at": "2026-10-02T15:03:15+00:00"
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "instagram"
+      ]
     },
     {
       "id": "supabase-calendar-f517eb8d-6f89-48bd-b0f0-b25ea6e013ec",
@@ -273774,7 +273822,7 @@
     {
       "id": "supabase-calendar-34a4ad78-80db-4579-95a2-ca3fca1d706a",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "buffer_scheduled",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "PUNTO DI FORZA · BILOCALE IN VENDITA A SANT’AMBROGIO DISPONIBILE SUBITO",
@@ -273816,7 +273864,19 @@
           "bytes": "2250206"
         }
       ],
-      "blocked_reason": "Buffer instagram: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
+      "buffer_posts": [
+        {
+          "service": "instagram",
+          "channel_id": "6ab2b6e7ea19ca0bdeb80e19",
+          "post_id": "6abfc7b4441850db6e733942",
+          "buffer_status": "scheduled",
+          "due_at": "2026-10-04T18:00:00.000Z",
+          "created_at": "2026-10-02T15:03:16+00:00"
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "instagram"
+      ]
     },
     {
       "id": "supabase-calendar-787a590f-aedc-4649-a3c1-e61beff9922c",
@@ -276905,6 +276965,59 @@
               ]
             }
           ]
+        },
+        {
+          "at": "2026-10-02T15:04:35+00:00",
+          "dry_run": false,
+          "results": [
+            {
+              "platform": "facebook",
+              "status": "blocked",
+              "missing": [
+                "RMP_FACEBOOK_PAGE_ACCESS_TOKEN"
+              ]
+            },
+            {
+              "platform": "instagram",
+              "status": "blocked",
+              "missing": [
+                "RMP_INSTAGRAM_ACCESS_TOKEN",
+                "RMP_INSTAGRAM_USER_ID"
+              ]
+            },
+            {
+              "platform": "tiktok",
+              "status": "blocked",
+              "missing": [
+                "RMP_TIKTOK_ACCESS_TOKEN"
+              ]
+            },
+            {
+              "platform": "linkedin",
+              "status": "blocked",
+              "missing": [
+                "RMP_LINKEDIN_ACCESS_TOKEN",
+                "RMP_LINKEDIN_AUTHOR_URN"
+              ]
+            },
+            {
+              "platform": "youtube",
+              "status": "blocked",
+              "missing": [
+                "RMP_YOUTUBE_CLIENT_ID",
+                "RMP_YOUTUBE_CLIENT_SECRET",
+                "RMP_YOUTUBE_REFRESH_TOKEN"
+              ]
+            },
+            {
+              "platform": "pinterest",
+              "status": "blocked",
+              "missing": [
+                "RMP_PINTEREST_ACCESS_TOKEN",
+                "RMP_PINTEREST_BOARD_ID"
+              ]
+            }
+          ]
         }
       ]
     },
@@ -277004,6 +277117,59 @@
       "direct_api_results": [
         {
           "at": "2026-10-02T08:47:26+00:00",
+          "dry_run": false,
+          "results": [
+            {
+              "platform": "facebook",
+              "status": "blocked",
+              "missing": [
+                "RMP_FACEBOOK_PAGE_ACCESS_TOKEN"
+              ]
+            },
+            {
+              "platform": "instagram",
+              "status": "blocked",
+              "missing": [
+                "RMP_INSTAGRAM_ACCESS_TOKEN",
+                "RMP_INSTAGRAM_USER_ID"
+              ]
+            },
+            {
+              "platform": "tiktok",
+              "status": "blocked",
+              "missing": [
+                "RMP_TIKTOK_ACCESS_TOKEN"
+              ]
+            },
+            {
+              "platform": "linkedin",
+              "status": "blocked",
+              "missing": [
+                "RMP_LINKEDIN_ACCESS_TOKEN",
+                "RMP_LINKEDIN_AUTHOR_URN"
+              ]
+            },
+            {
+              "platform": "youtube",
+              "status": "blocked",
+              "missing": [
+                "RMP_YOUTUBE_CLIENT_ID",
+                "RMP_YOUTUBE_CLIENT_SECRET",
+                "RMP_YOUTUBE_REFRESH_TOKEN"
+              ]
+            },
+            {
+              "platform": "pinterest",
+              "status": "blocked",
+              "missing": [
+                "RMP_PINTEREST_ACCESS_TOKEN",
+                "RMP_PINTEREST_BOARD_ID"
+              ]
+            }
+          ]
+        },
+        {
+          "at": "2026-10-02T15:04:35+00:00",
           "dry_run": false,
           "results": [
             {
@@ -277203,6 +277369,59 @@
               ]
             }
           ]
+        },
+        {
+          "at": "2026-10-02T15:04:35+00:00",
+          "dry_run": false,
+          "results": [
+            {
+              "platform": "facebook",
+              "status": "blocked",
+              "missing": [
+                "RMP_FACEBOOK_PAGE_ACCESS_TOKEN"
+              ]
+            },
+            {
+              "platform": "instagram",
+              "status": "blocked",
+              "missing": [
+                "RMP_INSTAGRAM_ACCESS_TOKEN",
+                "RMP_INSTAGRAM_USER_ID"
+              ]
+            },
+            {
+              "platform": "tiktok",
+              "status": "blocked",
+              "missing": [
+                "RMP_TIKTOK_ACCESS_TOKEN"
+              ]
+            },
+            {
+              "platform": "linkedin",
+              "status": "blocked",
+              "missing": [
+                "RMP_LINKEDIN_ACCESS_TOKEN",
+                "RMP_LINKEDIN_AUTHOR_URN"
+              ]
+            },
+            {
+              "platform": "youtube",
+              "status": "blocked",
+              "missing": [
+                "RMP_YOUTUBE_CLIENT_ID",
+                "RMP_YOUTUBE_CLIENT_SECRET",
+                "RMP_YOUTUBE_REFRESH_TOKEN"
+              ]
+            },
+            {
+              "platform": "pinterest",
+              "status": "blocked",
+              "missing": [
+                "RMP_PINTEREST_ACCESS_TOKEN",
+                "RMP_PINTEREST_BOARD_ID"
+              ]
+            }
+          ]
         }
       ]
     },
@@ -277302,6 +277521,59 @@
       "direct_api_results": [
         {
           "at": "2026-10-02T08:47:26+00:00",
+          "dry_run": false,
+          "results": [
+            {
+              "platform": "facebook",
+              "status": "blocked",
+              "missing": [
+                "RMP_FACEBOOK_PAGE_ACCESS_TOKEN"
+              ]
+            },
+            {
+              "platform": "instagram",
+              "status": "blocked",
+              "missing": [
+                "RMP_INSTAGRAM_ACCESS_TOKEN",
+                "RMP_INSTAGRAM_USER_ID"
+              ]
+            },
+            {
+              "platform": "tiktok",
+              "status": "blocked",
+              "missing": [
+                "RMP_TIKTOK_ACCESS_TOKEN"
+              ]
+            },
+            {
+              "platform": "linkedin",
+              "status": "blocked",
+              "missing": [
+                "RMP_LINKEDIN_ACCESS_TOKEN",
+                "RMP_LINKEDIN_AUTHOR_URN"
+              ]
+            },
+            {
+              "platform": "youtube",
+              "status": "blocked",
+              "missing": [
+                "RMP_YOUTUBE_CLIENT_ID",
+                "RMP_YOUTUBE_CLIENT_SECRET",
+                "RMP_YOUTUBE_REFRESH_TOKEN"
+              ]
+            },
+            {
+              "platform": "pinterest",
+              "status": "blocked",
+              "missing": [
+                "RMP_PINTEREST_ACCESS_TOKEN",
+                "RMP_PINTEREST_BOARD_ID"
+              ]
+            }
+          ]
+        },
+        {
+          "at": "2026-10-02T15:04:35+00:00",
           "dry_run": false,
           "results": [
             {
@@ -277501,6 +277773,59 @@
               ]
             }
           ]
+        },
+        {
+          "at": "2026-10-02T15:04:35+00:00",
+          "dry_run": false,
+          "results": [
+            {
+              "platform": "facebook",
+              "status": "blocked",
+              "missing": [
+                "RMP_FACEBOOK_PAGE_ACCESS_TOKEN"
+              ]
+            },
+            {
+              "platform": "instagram",
+              "status": "blocked",
+              "missing": [
+                "RMP_INSTAGRAM_ACCESS_TOKEN",
+                "RMP_INSTAGRAM_USER_ID"
+              ]
+            },
+            {
+              "platform": "tiktok",
+              "status": "blocked",
+              "missing": [
+                "RMP_TIKTOK_ACCESS_TOKEN"
+              ]
+            },
+            {
+              "platform": "linkedin",
+              "status": "blocked",
+              "missing": [
+                "RMP_LINKEDIN_ACCESS_TOKEN",
+                "RMP_LINKEDIN_AUTHOR_URN"
+              ]
+            },
+            {
+              "platform": "youtube",
+              "status": "blocked",
+              "missing": [
+                "RMP_YOUTUBE_CLIENT_ID",
+                "RMP_YOUTUBE_CLIENT_SECRET",
+                "RMP_YOUTUBE_REFRESH_TOKEN"
+              ]
+            },
+            {
+              "platform": "pinterest",
+              "status": "blocked",
+              "missing": [
+                "RMP_PINTEREST_ACCESS_TOKEN",
+                "RMP_PINTEREST_BOARD_ID"
+              ]
+            }
+          ]
         }
       ]
     },
@@ -277597,7 +277922,7 @@
       ]
     }
   ],
-  "updated_at": "2026-10-02T14:37:19+00:00",
+  "updated_at": "2026-10-02T15:05:04+00:00",
   "updated_by": "Automatic renderer · F1 manual-only aware",
   "current_cycle": "2026-10-02T08:00",
   "history_days": 14,
