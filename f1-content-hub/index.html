@@ -394,6 +394,12 @@
       <div class="field"><label>Email</label><input id="clientEmail" class="input" type="email"></div>
       <div class="field"><label>Sito</label><input id="clientWebsite" class="input"></div>
       <div class="field"><label>Alias WhatsApp</label><input id="clientAliases" class="input" placeholder="LA SACRA, LASACRA"></div>
+      <div class="field span3"><label>Servizi attivi</label><div class="row" style="gap:14px;flex-wrap:wrap">
+        <label class="checkline"><input id="clientServiceSocial" type="checkbox" checked> <span>SOCIAL</span></label>
+        <label class="checkline"><input id="clientServiceEmail" type="checkbox"> <span>EMAIL</span></label>
+        <label class="checkline"><input id="clientServiceSite" type="checkbox"> <span>SITO</span></label>
+        <label class="checkline"><input id="clientServiceAdv" type="checkbox"> <span>ADV</span></label>
+      </div><div class="meta">EMAIL può essere attivata anche in seguito dal workspace del cliente.</div></div>
     </div>
     <div class="row" style="margin-top:12px"><button class="btn green" id="createClientBtn">CREA CLIENTE</button></div>
     <div id="clientMessage"></div>
@@ -2004,10 +2010,12 @@ el("createClientBtn").onclick=async function(){
   const name=el("clientName").value.trim();if(!name)return msg("clientMessage","Inserisci il nome.","error");
   const aliases=el("clientAliases").value.split(",").map(function(x){return x.trim()}).filter(Boolean);
   aliases.push(name);
-  const row={owner_id:user.id,name:name,slug:slugify(name),category:el("clientCategory").value.trim()||"Cliente",phone:el("clientPhone").value.trim(),email:el("clientEmail").value.trim(),website:el("clientWebsite").value.trim(),aliases:Array.from(new Set(aliases)),status:"ATTIVO"};
+  const services={social:!!el("clientServiceSocial").checked,email:!!el("clientServiceEmail").checked,site:!!el("clientServiceSite").checked,adv:!!el("clientServiceAdv").checked};
+  const row={owner_id:user.id,name:name,slug:slugify(name),category:el("clientCategory").value.trim()||"Cliente",phone:el("clientPhone").value.trim(),email:el("clientEmail").value.trim(),website:el("clientWebsite").value.trim(),aliases:Array.from(new Set(aliases)),status:"ATTIVO",email_service_enabled:services.email,profile_metadata:{services:services}};
   const r=await sb.from("f1_content_clients").upsert(row,{onConflict:"owner_id,slug"});
   if(r.error)return msg("clientMessage",r.error.message,"error");
   ["clientName","clientCategory","clientPhone","clientEmail","clientWebsite","clientAliases"].forEach(function(id){el(id).value=""});
+  el("clientServiceSocial").checked=true;el("clientServiceEmail").checked=false;el("clientServiceSite").checked=false;el("clientServiceAdv").checked=false;
   await loadAll();renderAll();msg("clientMessage","Cliente creato.","");setTimeout(function(){closeModal("clientModal")},600);
 };
 
