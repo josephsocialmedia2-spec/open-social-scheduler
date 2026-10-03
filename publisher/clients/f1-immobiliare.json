@@ -200,5 +200,16 @@
     "linkedin": {"id": "direct-api", "required": false},
     "youtube": {"id": "direct-api", "required": false},
     "pinterest": {"id": "direct-api", "required": false, "board": ""}
+  },
+  "email": {
+    "enabled": true,
+    "sender_email": "f1immobiliare@outlook.it",
+    "provider": "microsoft",
+    "microsoft_account_type": "personal",
+    "tenant": "consumers",
+    "graphics_mode": "weekly_versioned",
+    "test_required": true,
+    "approval_required": true,
+    "workspace_module": "f1-content-hub/email"
   }
 }

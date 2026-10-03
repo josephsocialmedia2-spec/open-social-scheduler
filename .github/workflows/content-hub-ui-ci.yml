@@ -40,7 +40,9 @@ jobs:
         with:
           node-version: '22'
       - name: Check workspace JavaScript syntax
-        run: node --check f1-content-hub/client-workspace.js
+        run: |
+          node --check f1-content-hub/client-workspace.js
+          node --check f1-content-hub/email-module.js
       - name: Check Content Hub wiring
         run: |
           node <<'NODE'
@@ -54,13 +56,18 @@ jobs:
             'id="contentRailSearch"',
             'client-workspace.css',
             'client-workspace.js',
+            'email-module.css',
+            'email-module.js',
+            'id="tab-email"',
+            'id="emailWorkspace"',
+            'email:"Email"',
             'f1RenderContentRail',
             'f1RenderClientPublisherWorkspace'
           ]){
             if(!html.includes(required)) throw new Error('Missing Content Hub wiring: '+required);
           }
-          if(!sw.includes('client-workspace.js')||!sw.includes('client-workspace.css')){
-            throw new Error('Service worker is not caching workspace assets');
+          if(!sw.includes('client-workspace.js')||!sw.includes('client-workspace.css')||!sw.includes('email-module.js')||!sw.includes('email-module.css')){
+            throw new Error('Service worker is not caching workspace/email assets');
           }
           console.log('CONTENT_HUB_WORKSPACE_WIRING_OK');
           NODE
@@ -144,9 +151,11 @@ jobs:
           }
           console.log('F1_GLOBAL_DESIGN_SYSTEM_OK');
           NODE
-      - name: Check cache version v16
+      - name: Check cache version with email module
         run: |
-          grep -q 'f1-content-hub-v16' f1-content-hub/sw.js
+          grep -q 'f1-content-hub-v17-email' f1-content-hub/sw.js
+          grep -q 'email-module.js' f1-content-hub/sw.js
+          grep -q 'email-module.css' f1-content-hub/sw.js
           grep -q 'f1-design-system.css' f1-content-hub/sw.js
           grep -q 'heic2any-0.0.4.min.js' f1-content-hub/sw.js
           grep -q 'heic2any-0.0.4.min.js' f1-content-hub/index.html

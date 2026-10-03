@@ -32,5 +32,16 @@
     "linkedin-page": {"id": "", "required": false},
     "youtube": {"id": "", "required": false},
     "pinterest": {"id": "", "required": false, "board": ""}
+  },
+  "email": {
+    "enabled": false,
+    "sender_email": "",
+    "provider": "",
+    "microsoft_account_type": null,
+    "tenant": null,
+    "graphics_mode": "weekly_versioned",
+    "test_required": true,
+    "approval_required": true,
+    "workspace_module": "f1-content-hub/email"
   }
 }

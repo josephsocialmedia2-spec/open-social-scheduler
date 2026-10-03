@@ -51,6 +51,7 @@
 .la-sacra-summary{grid-column:1/-1;background:#0a1827;border:1px solid #2d4a68;border-radius:16px;padding:16px;display:grid;grid-template-columns:minmax(240px,1.4fr) minmax(260px,1fr) auto;gap:14px;align-items:center}.la-sacra-summary h2{margin:2px 0 6px}.la-sacra-summary p{margin:0;color:var(--muted);max-width:760px}.la-sacra-summary small{color:#7ef0b0;font-weight:900;letter-spacing:.08em}.la-sacra-kpis{display:grid;grid-template-columns:1fr 1fr;gap:7px}.la-sacra-kpis span{background:#102238;border:1px solid var(--line);border-radius:10px;padding:9px;color:#b9c8da;font-size:11px}.la-sacra-kpis b{display:block;color:#fff;font-size:21px}.la-sacra-slots{display:grid;grid-template-columns:repeat(3,auto);gap:6px;align-items:center}.la-sacra-slots strong{grid-column:1/-1;color:#9eb0c7;font-size:10px;letter-spacing:.08em}.la-sacra-slots span{background:#163354;border:1px solid #335f8a;border-radius:999px;padding:7px 10px;font-weight:900}.property-card{background:#0b1a2a;border:1px solid var(--line);border-radius:14px;overflow:hidden;min-width:0}.property-cover{height:190px;background:#13283e;overflow:hidden}.property-cover img{width:100%;height:100%;object-fit:cover}.property-no-image{height:100%;display:grid;place-items:center;color:#f5dc9e;background:#2d2411;font-size:11px;font-weight:900}.property-body{padding:12px}.property-body h3{margin:3px 0 8px;font-size:15px;line-height:1.3}.property-price{font-weight:1000;font-size:20px}.property-next{padding:8px 0;color:#b9c8da;font-size:11px}.property-social-counts{display:flex;gap:8px;flex-wrap:wrap;color:#9eb0c7;font-size:11px;margin:6px 0 10px}.property-detail-lines{display:grid;gap:8px}.property-detail-lines>div{padding:9px;border:1px solid var(--line);border-radius:9px;background:#0a1827}.property-card .badge.amber{color:#f7d48a;border-color:#866521}@media(max-width:1000px){.la-sacra-summary{grid-template-columns:1fr}.la-sacra-slots{justify-content:start}}@media(max-width:620px){.la-sacra-kpis{grid-template-columns:1fr 1fr}.property-cover{height:180px}}
 </style>
   <link rel="stylesheet" href="./client-workspace.css?v=20261001b">
+  <link rel="stylesheet" href="./email-module.css?v=20261003">
   <link rel="stylesheet" href="./f1-design-system.css?v=20261001e">\n  <link rel="stylesheet" href="./later-personal.css?v=20261001">
 </head>
 <body class="f1-main-app">
@@ -250,6 +251,12 @@
         <div class="section-title"><div><h2>Connessioni social</h2><div class="muted">Account, autorizzazioni, scadenze e verifica per cliente.</div></div></div>
         <div class="notice warn">Un canale è considerato collegato solo se il relativo account risulta abilitato e verificato. Token e segreti non vengono mostrati nell'interfaccia.</div>
         <div id="socialConnectionsDedicated" class="calendar-list"></div>
+      </div>
+    </section>
+
+    <section id="tab-email" class="hidden">
+      <div class="panel">
+        <div id="emailWorkspace"><div class="empty">Seleziona un cliente per aprire il modulo EMAIL.</div></div>
       </div>
     </section>
 
@@ -613,11 +620,11 @@ function fillClientSelects(){
   if(selectedClientId)el("uploadClient").value=selectedClientId;
 }
 function setTab(tab,options){
-  const valid=["dashboard","clients","calendar","archive","publications","analytics","connections","automation","problems","reports","whatsapp"];
+  const valid=["dashboard","clients","calendar","archive","publications","analytics","connections","email","automation","problems","reports","whatsapp"];
   if(!valid.includes(tab))tab="dashboard";
   valid.forEach(function(t){el("tab-"+t).classList.toggle("hidden",t!==tab)});
   document.querySelectorAll("[data-tab]").forEach(function(b){b.classList.toggle("active",b.dataset.tab===tab)});
-  const titles={dashboard:"Dashboard",clients:"Clienti",calendar:"Calendario editoriale",archive:"Contenuti",publications:"Pubblicazioni",analytics:"Analisi",connections:"Connessioni",automation:"Automazioni",problems:"Problemi",reports:"Report",whatsapp:"WhatsApp"};
+  const titles={dashboard:"Dashboard",clients:"Clienti",calendar:"Calendario editoriale",archive:"Contenuti",publications:"Pubblicazioni",analytics:"Analisi",connections:"Connessioni",email:"Email",automation:"Automazioni",problems:"Problemi",reports:"Report",whatsapp:"WhatsApp"};
   el("pageTitle").textContent=titles[tab]||"F1 Content Hub";
   if(!(options&&options.skipUrl)){
     const url=new URL(location.href);
@@ -629,6 +636,7 @@ function setTab(tab,options){
   if(tab==="analytics")renderAnalytics();
   if(tab==="automation")renderAutomation();
   if(tab==="connections")renderSocialConnections();
+  if(tab==="email"&&window.f1RenderEmailWorkspace)window.f1RenderEmailWorkspace(false);
   if(tab==="publications")renderPublicationCenter();
   if(tab==="problems")renderProblems();
   if(tab==="reports")renderReports();
@@ -1268,6 +1276,7 @@ function renderClientContext(){
     '<button class="btn small ghost" onclick="setTab(\'publications\')">PUBBLICAZIONI</button>'+
     '<button class="btn small ghost" onclick="setTab(\'analytics\')">ANALISI</button>'+
     '<button class="btn small ghost" onclick="setTab(\'connections\')">SOCIAL</button>'+
+    '<button class="btn small green" onclick="setTab(\'email\')">EMAIL</button>'+
     '<button class="btn small ghost" onclick="setTab(\'automation\')">AUTOMAZIONI</button>'+
     '<button class="btn small ghost" onclick="setTab(\'reports\')">REPORT</button>'+
     '<button class="btn small ghost" onclick="setTab(\'problems\')">PROBLEMI</button>'+
@@ -2136,5 +2145,7 @@ authState();
 </script>
 <script src="./vendor/heic2any-0.0.4.min.js"></script>
 <script src="./client-workspace.js?v=20261001a"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="./email-module.js?v=20261003"></script>
 </body>
 </html>
