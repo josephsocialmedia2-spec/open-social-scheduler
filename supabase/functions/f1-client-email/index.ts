@@ -1100,7 +1100,8 @@ Deno.serve(async req => {
   const action=String(p.action||"STATUS").toUpperCase();
   try{
     let result;
-    if(action==="STATUS")result=await actionStatus(user,p);\n    else if(action==="CRM_COUNT")result=await actionCrmCount(user,p);
+    if(action==="STATUS")result=await actionStatus(user,p);
+    else if(action==="CRM_COUNT")result=await actionCrmCount(user,p);
     else if(action==="SET_SERVICE")result=await actionSetService(user,p);
     else if(action==="SAVE_ACCOUNT")result=await actionSaveAccount(user,p);
     else if(action==="MS_DEVICE_START")result=await actionMsDeviceStart(user,p);
