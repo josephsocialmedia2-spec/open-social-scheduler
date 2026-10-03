@@ -371,10 +371,13 @@ async function campaignContext(ownerId, campaignId) {
   } else {
     graphic = await activateScheduledGraphics(ownerId, campaign.client_id);
   }
+  const { data: attachments, error: attachmentsError } = await SERVICE.from("f1_client_email_attachments")
+    .select("*").eq("owner_id", ownerId).eq("client_id", campaign.client_id).eq("campaign_id", campaign.id).order("created_at");
+  if (attachmentsError) throw attachmentsError;
   const frozenBrand = campaign.approved_at && campaign.design_snapshot?.brand_kit
     ? campaign.design_snapshot.brand_kit
     : (brand || {});
-  return { campaign, client, account, brand: frozenBrand, graphic };
+  return { campaign, client, account, brand: frozenBrand, graphic, attachments: attachments || [] };
 }
 function emailShell(ctx, recipient, options = {}) {
   const vars = recipientVars(recipient);
@@ -417,11 +420,13 @@ async function previewHtml(ctx, recipient) {
   return emailShell(ctx, recipient, { graphicSrc: graphicUrl });
 }
 
-async function sendMicrosoft(account, to, subject, html, graphic) {
+async function sendMicrosoft(account, to, subject, html, graphic, files = []) {
   const access = await accessTokenFor(account);
   const attachments = [];
+  let totalBytes = 0;
   if (graphic) {
     const bytes = await storageBytes(graphic.storage_path);
+    totalBytes += bytes.byteLength;
     attachments.push({
       "@odata.type": "#microsoft.graph.fileAttachment",
       name: graphic.file_name,
@@ -431,6 +436,18 @@ async function sendMicrosoft(account, to, subject, html, graphic) {
       contentId: "f1-weekly-graphic"
     });
   }
+  for (const file of files || []) {
+    const bytes = await storageBytes(file.storage_path);
+    totalBytes += bytes.byteLength;
+    attachments.push({
+      "@odata.type": "#microsoft.graph.fileAttachment",
+      name: file.file_name,
+      contentType: file.mime_type || "application/octet-stream",
+      contentBytes: bytesToBase64(bytes),
+      isInline: false
+    });
+  }
+  if (totalBytes > 2500000) throw new Error("ALLEGATI_MICROSOFT_TROPPO_GRANDI_MAX_2_5_MB");
   const clientRequestId = crypto.randomUUID();
   const res = await fetch("https://graph.microsoft.com/v1.0/me/sendMail", {
     method: "POST",
@@ -460,50 +477,73 @@ async function sendMicrosoft(account, to, subject, html, graphic) {
   }
   return { provider: "microsoft", provider_message_id: clientRequestId, status_code: res.status };
 }
-function gmailMime(account, to, subject, html, graphic, graphicBytes) {
+function gmailMime(account, to, subject, html, graphic, graphicBytes, fileParts = []) {
   const senderName = account.sender_name || account.email_address;
   const encodedName = "=?UTF-8?B?" + utf8Base64(senderName) + "?=";
   const encodedSubject = "=?UTF-8?B?" + utf8Base64(subject) + "?=";
-  if (!graphic || !graphicBytes) {
-    return [
-      'From: '+encodedName+' <'+account.email_address+'>',
-      'To: '+to,
-      'Subject: '+encodedSubject,
-      'MIME-Version: 1.0',
-      'Content-Type: text/html; charset="UTF-8"',
-      'Content-Transfer-Encoding: base64',
-      '',
-      utf8Base64(html)
-    ].join("\r\n");
-  }
-  const boundary = "f1_related_" + crypto.randomUUID().replaceAll("-","");
-  return [
+  const baseHeaders = [
     'From: '+encodedName+' <'+account.email_address+'>',
     'To: '+to,
     'Subject: '+encodedSubject,
-    'MIME-Version: 1.0',
-    'Content-Type: multipart/related; boundary="'+boundary+'"',
-    '',
-    '--'+boundary,
+    'MIME-Version: 1.0'
+  ];
+  const htmlPart = [
     'Content-Type: text/html; charset="UTF-8"',
     'Content-Transfer-Encoding: base64',
     '',
-    utf8Base64(html),
-    '--'+boundary,
-    'Content-Type: '+graphic.mime_type+'; name="'+graphic.file_name.replaceAll('"','')+'"',
-    'Content-Transfer-Encoding: base64',
-    'Content-Disposition: inline; filename="'+graphic.file_name.replaceAll('"','')+'"',
-    'Content-ID: <f1-weekly-graphic>',
+    utf8Base64(html)
+  ];
+  if (!fileParts.length && !graphic) {
+    return [...baseHeaders, ...htmlPart].join("\r\n");
+  }
+  const related = "f1_related_" + crypto.randomUUID().replaceAll("-","");
+  const relatedParts = [
+    'Content-Type: multipart/related; boundary="'+related+'"',
     '',
-    bytesToBase64(graphicBytes),
-    '--'+boundary+'--',
-    ''
-  ].join("\r\n");
+    '--'+related,
+    ...htmlPart
+  ];
+  if (graphic && graphicBytes) {
+    relatedParts.push(
+      '--'+related,
+      'Content-Type: '+graphic.mime_type+'; name="'+graphic.file_name.replaceAll('"','')+'"',
+      'Content-Transfer-Encoding: base64',
+      'Content-Disposition: inline; filename="'+graphic.file_name.replaceAll('"','')+'"',
+      'Content-ID: <f1-weekly-graphic>',
+      '',
+      bytesToBase64(graphicBytes)
+    );
+  }
+  relatedParts.push('--'+related+'--','');
+  if (!fileParts.length) return [...baseHeaders, ...relatedParts].join("\r\n");
+  const mixed = "f1_mixed_" + crypto.randomUUID().replaceAll("-","");
+  const out = [...baseHeaders, 'Content-Type: multipart/mixed; boundary="'+mixed+'"', '', '--'+mixed, ...relatedParts];
+  for (const part of fileParts) {
+    const name=String(part.file.file_name||"allegato").replaceAll('"','');
+    out.push(
+      '--'+mixed,
+      'Content-Type: '+(part.file.mime_type||"application/octet-stream")+'; name="'+name+'"',
+      'Content-Transfer-Encoding: base64',
+      'Content-Disposition: attachment; filename="'+name+'"',
+      '',
+      bytesToBase64(part.bytes)
+    );
+  }
+  out.push('--'+mixed+'--','');
+  return out.join("\r\n");
 }
-async function sendGmail(account, to, subject, html, graphic) {
+async function sendGmail(account, to, subject, html, graphic, files = []) {
   const access = await accessTokenFor(account);
   const graphicBytes = graphic ? await storageBytes(graphic.storage_path) : null;
-  const raw = gmailMime(account, to, subject, html, graphic, graphicBytes);
+  const fileParts = [];
+  let totalBytes = graphicBytes ? graphicBytes.byteLength : 0;
+  for (const file of files || []) {
+    const bytes = await storageBytes(file.storage_path);
+    totalBytes += bytes.byteLength;
+    fileParts.push({file,bytes});
+  }
+  if (totalBytes > 18000000) throw new Error("ALLEGATI_GMAIL_TROPPO_GRANDI_MAX_18_MB");
+  const raw = gmailMime(account, to, subject, html, graphic, graphicBytes, fileParts);
   const res = await fetch("https://gmail.googleapis.com/gmail/v1/users/me/messages/send", {
     method: "POST",
     headers: { Authorization: "Bearer " + access, "Content-Type": "application/json" },
@@ -518,11 +558,11 @@ async function sendGmail(account, to, subject, html, graphic) {
   }
   return { provider: "gmail", provider_message_id: String(data.id), status_code: res.status };
 }
-async function sendProvider(account, to, subject, html, graphic) {
+async function sendProvider(account, to, subject, html, graphic, files = []) {
   if (account.connection_status !== "COLLEGATO") throw new Error("ACCOUNT_EMAIL_NON_COLLEGATO");
   return account.provider === "gmail"
-    ? sendGmail(account, to, subject, html, graphic)
-    : sendMicrosoft(account, to, subject, html, graphic);
+    ? sendGmail(account, to, subject, html, graphic, files)
+    : sendMicrosoft(account, to, subject, html, graphic, files);
 }
 
 async function logEvent(ownerId, clientId, campaignId, eventType, detail = {}, recipientId = null) {
@@ -558,15 +598,16 @@ function campaignKey(name) {
 async function actionStatus(user, p) {
   const client = await requireClient(user.id, p.client_id);
   await activateScheduledGraphics(user.id, client.id);
-  const [accountsR, brandR, graphicsR, templatesR, campaignsR, eventsR] = await Promise.all([
+  const [accountsR, brandR, graphicsR, templatesR, campaignsR, attachmentsR, eventsR] = await Promise.all([
     SERVICE.from("f1_client_email_accounts").select("id,client_id,sender_name,email_address,provider,microsoft_account_type,tenant_id,connection_status,connected_email,scope,expires_at,last_connected_at,last_test_at,metadata,created_at,updated_at").eq("owner_id",user.id).eq("client_id",client.id).order("created_at"),
     SERVICE.from("f1_client_email_brand_kits").select("*").eq("owner_id",user.id).eq("client_id",client.id).maybeSingle(),
     SERVICE.from("f1_client_email_graphics").select("*").eq("owner_id",user.id).eq("client_id",client.id).order("iso_year",{ascending:false}).order("iso_week",{ascending:false}).order("version",{ascending:false}).limit(80),
     SERVICE.from("f1_client_email_templates").select("*").eq("owner_id",user.id).eq("client_id",client.id).order("updated_at",{ascending:false}).limit(30),
     SERVICE.from("email_campaigns").select("id,campaign_key,name,subject,html_content,text_content,status,email_account_id,template_id,graphic_id,approval_state,test_sent_at,approved_at,paused_at,compliance_confirmed_at,total_recipients,sent_count,excluded_count,bounce_count,open_count,click_count,unsubscribe_count,reply_count,lead_count,metadata,created_at,updated_at,last_error,delay_seconds,delay_jitter_seconds").eq("owner_id",user.id).eq("client_id",client.id).order("created_at",{ascending:false}).limit(50),
+    SERVICE.from("f1_client_email_attachments").select("*").eq("owner_id",user.id).eq("client_id",client.id).order("created_at",{ascending:false}).limit(200),
     SERVICE.from("email_campaign_events").select("id,campaign_id,recipient_id,event_type,detail,created_at").eq("owner_id",user.id).eq("client_id",client.id).order("created_at",{ascending:false}).limit(80)
   ]);
-  for (const r of [accountsR,brandR,graphicsR,templatesR,campaignsR,eventsR]) if (r.error) throw r.error;
+  for (const r of [accountsR,brandR,graphicsR,templatesR,campaignsR,attachmentsR,eventsR]) if (r.error) throw r.error;
   return {
     ok: true,
     client,
@@ -576,6 +617,7 @@ async function actionStatus(user, p) {
     graphics: graphicsR.data || [],
     templates: templatesR.data || [],
     campaigns: campaignsR.data || [],
+    attachments: attachmentsR.data || [],
     events: eventsR.data || [],
     current_week: isoWeekParts()
   };
@@ -737,6 +779,34 @@ async function actionRegisterGraphic(user,p) {
   if(error)throw error;
   return {ok:true,graphic:data};
 }
+async function actionRegisterAttachment(user,p) {
+  const ctx=await campaignContext(user.id,p.campaign_id);
+  const path=cleanText(p.storage_path,2000);
+  if(!path.startsWith(user.id+"/"+ctx.client.id+"/email/attachments/"+ctx.campaign.id+"/")) throw new Error("PERCORSO_ALLEGATO_NON_VALIDO");
+  const size=Number(p.file_size||0);
+  if(size<=0||size>18000000)throw new Error("ALLEGATO_TROPPO_GRANDE_MAX_18_MB");
+  const {data,error}=await SERVICE.from("f1_client_email_attachments").insert({
+    owner_id:user.id,client_id:ctx.client.id,campaign_id:ctx.campaign.id,
+    storage_path:path,file_name:cleanText(p.file_name,300),
+    mime_type:cleanText(p.mime_type||"application/octet-stream",150),file_size:size
+  }).select("*").single();
+  if(error)throw error;
+  await SERVICE.from("email_campaigns").update({test_sent_at:null,approved_at:null,approval_state:"BOZZA",compliance_confirmed_at:null,compliance_confirmed_by:null,updated_at:nowIso()}).eq("id",ctx.campaign.id).eq("owner_id",user.id);
+  await logEvent(user.id,ctx.client.id,ctx.campaign.id,"ATTACHMENT_ADDED",{file_name:data.file_name,file_size:data.file_size});
+  return {ok:true,attachment:data};
+}
+async function actionDeleteAttachment(user,p) {
+  const {data:file,error}=await SERVICE.from("f1_client_email_attachments").select("*").eq("id",p.attachment_id).eq("owner_id",user.id).maybeSingle();
+  if(error)throw error;if(!file)throw new Error("ALLEGATO_NON_TROVATO");
+  await requireClient(user.id,file.client_id);
+  const {error:storageError}=await SERVICE.storage.from(EMAIL_BUCKET).remove([file.storage_path]);
+  if(storageError)throw storageError;
+  const {error:deleteError}=await SERVICE.from("f1_client_email_attachments").delete().eq("id",file.id).eq("owner_id",user.id);
+  if(deleteError)throw deleteError;
+  await SERVICE.from("email_campaigns").update({test_sent_at:null,approved_at:null,approval_state:"BOZZA",compliance_confirmed_at:null,compliance_confirmed_by:null,updated_at:nowIso()}).eq("id",file.campaign_id).eq("owner_id",user.id);
+  await logEvent(user.id,file.client_id,file.campaign_id,"ATTACHMENT_REMOVED",{file_name:file.file_name});
+  return {ok:true};
+}
 async function actionGraphicStatus(user,p) {
   const {data:g,error}=await SERVICE.from("f1_client_email_graphics").select("*").eq("id",p.graphic_id).eq("owner_id",user.id).maybeSingle();
   if(error)throw error;if(!g)throw new Error("GRAFICA_NON_TROVATA");
@@ -809,7 +879,7 @@ async function actionSendTest(user,p){
   const recipient={email:to,first_name:cleanText(p.first_name||"Test",100),last_name:"",source_row:{NOME:cleanText(p.first_name||"Test",100),AZIENDA:"TEST F1 SOCIAL",COMUNE:""}};
   const html=emailShell(ctx,recipient,{});
   const subject="[TEST] "+renderVars(ctx.campaign.subject,recipientVars(recipient));
-  const sent=await sendProvider(ctx.account,to,subject,html,ctx.graphic);
+  const sent=await sendProvider(ctx.account,to,subject,html,ctx.graphic,ctx.attachments);
   const stamp=nowIso();
   await SERVICE.from("email_campaigns").update({test_sent_at:stamp,approval_state:"TESTATO",updated_at:stamp,last_error:null}).eq("id",ctx.campaign.id).eq("owner_id",user.id);
   await patchAccount(ctx.account.id,{last_test_at:stamp});
@@ -910,7 +980,7 @@ async function actionStartStep(user,p){
       const unsub=SUPABASE_URL+"/functions/v1/f1-client-email-unsubscribe?t="+encodeURIComponent(String(rcp.unsubscribe_token));
       const html=emailShell(ctx,rcp,{unsubscribeUrl:unsub});
       const subject=renderVars(ctx.campaign.subject,recipientVars(rcp));
-      const result=await sendProvider(ctx.account,rcp.email,subject,html,ctx.graphic);
+      const result=await sendProvider(ctx.account,rcp.email,subject,html,ctx.graphic,ctx.attachments);
       const stamp=nowIso();
       await SERVICE.from("email_campaign_recipients").update({status:"sent",sent_at:stamp,provider_message_id:result.provider_message_id,error:null,updated_at:stamp}).eq("id",rcp.id);
       await logEvent(user.id,ctx.client.id,ctx.campaign.id,"SENT",{email:rcp.email,provider:result.provider,status_code:result.status_code},rcp.id);
@@ -963,6 +1033,8 @@ Deno.serve(async req => {
     else if(action==="DISCONNECT")result=await actionDisconnect(user,p);
     else if(action==="SAVE_BRAND")result=await actionSaveBrand(user,p);
     else if(action==="REGISTER_GRAPHIC")result=await actionRegisterGraphic(user,p);
+    else if(action==="REGISTER_ATTACHMENT")result=await actionRegisterAttachment(user,p);
+    else if(action==="DELETE_ATTACHMENT")result=await actionDeleteAttachment(user,p);
     else if(action==="GRAPHIC_STATUS")result=await actionGraphicStatus(user,p);
     else if(action==="SAVE_TEMPLATE")result=await actionSaveTemplate(user,p);
     else if(action==="SAVE_CAMPAIGN")result=await actionSaveCampaign(user,p);
