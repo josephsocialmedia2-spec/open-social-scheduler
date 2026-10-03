@@ -1002,6 +1002,22 @@ async function actionCampaignRecipients(user,p){
   if(error)throw error;
   return {ok:true,recipients:data||[],stats:await campaignStats(user.id,ctx.campaign.id)};
 }
+async function actionCrmCount(user,p){
+  const client=await requireClient(user.id,p.client_id);
+  const {data,error}=await SERVICE.from("email_campaign_recipients")
+    .select("email_normalized,email")
+    .eq("owner_id",user.id)
+    .eq("client_id",client.id)
+    .limit(10000);
+  if(error)throw error;
+  const unique=new Set();
+  for(const row of data||[]){
+    const email=normEmail(row.email_normalized||row.email||"");
+    if(email&&EMAIL_RE.test(email))unique.add(email);
+  }
+  return {ok:true,client_id:client.id,count:unique.size};
+}
+
 async function actionStop(user,p){
   const ctx=await campaignContext(user.id,p.campaign_id);
   const stamp=nowIso();
@@ -1107,6 +1123,7 @@ Deno.serve(async req => {
     else if(action==="APPROVE")result=await actionApprove(user,p);
     else if(action==="IMPORT_RECIPIENTS")result=await actionImportRecipients(user,p);
     else if(action==="RECIPIENTS")result=await actionCampaignRecipients(user,p);
+    else if(action==="CRM_COUNT")result=await actionCrmCount(user,p);
     else if(action==="STOP")result=await actionStop(user,p);
     else if(action==="START_STEP")result=await actionStartStep(user,p);
     else return reply(origin,{error:"AZIONE_NON_SUPPORTATA"},400);
