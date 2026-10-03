@@ -271083,7 +271083,7 @@
       "client_id": "real-media-pro",
       "client_name": "Real Media Pro",
       "title": "Un e-commerce bello non basta",
-      "caption": "Un e-commerce bello non basta\n\nUn e-commerce che performa collega prodotto, offerta, pagina, fiducia, checkout e traffico. Real Media Pro parte dal percorso di acquisto, non dal solo layout. Richiedi un'analisi strategica gratuita.",
+      "caption": "Un e-commerce che performa collega prodotto, offerta, pagina, fiducia, checkout e traffico. Real Media Pro parte dal percorso di acquisto, non dal solo layout. Richiedi un'analisi strategica gratuita.",
       "format": "post",
       "media": [],
       "scheduled_at": "2026-09-27T17:15:00+00:00",
@@ -272165,7 +272165,7 @@
       "client_id": "f1-social",
       "client_name": "F1 Social",
       "title": "761a2bc3 3401 46c4 a427 dd8c33347af5",
-      "caption": "COMPETENZA | TERRITORIO | RISULTATI Y +\n\nIMMOBILIARE __< %\nCASA E IMPRESE a\nLA TUA CASA, IL NOSTRO OBIETTIVO a de ta a | i\nRII\nMe (ta SÌ coral\nd ia i | |} ima ai\n= radi N (1 il), Atm è\nPIANO TERRA TAVERNETTA ' VICINO STAZIONE — = 4 ¥\nse. cd >\nPer nostra clientela referenziata siamo alla ricerca\ndi un alloggio con 1 camera, preferibilmente al piano terri\ncon tavernetta e in posizione comoda alla stazione. ; a\nP ZONE DI RICERCA ,\n9 CAPRIE * NOVARETTO * CONDOVE A ‘\nALMESE © SANT’ANTONINO DI SUSA\nHAI UN IMMOBILE di D\nDA PROPORCI? gie OVI\nScrivici su WhatsApp “a nl)\n© flimmobiliare.com 7",
+      "caption": "761a2bc3 3401 46c4 a427 dd8c33347af5",
       "format": "post",
       "media": [],
       "scheduled_at": "2026-10-01T12:28:05.817+00:00",
@@ -272276,7 +272276,7 @@
       "client_id": "f1-social",
       "client_name": "F1 Social",
       "title": "761a2bc3 3401 46c4 a427 dd8c33347af5",
-      "caption": "COMPETENZA | TERRITORIO | RISULTATI Y +\n\nIMMOBILIARE __< %\nCASA E IMPRESE a\nLA TUA CASA, IL NOSTRO OBIETTIVO a de ta a | i\nRII\nMe (ta SÌ coral\nd ia i | |} ima ai\n= radi N (1 il), Atm è\nPIANO TERRA TAVERNETTA ' VICINO STAZIONE — = 4 ¥\nse. cd >\nPer nostra clientela referenziata siamo alla ricerca\ndi un alloggio con 1 camera, preferibilmente al piano terri\ncon tavernetta e in posizione comoda alla stazione. ; a\nP ZONE DI RICERCA ,\n9 CAPRIE * NOVARETTO * CONDOVE A ‘\nALMESE © SANT’ANTONINO DI SUSA\nHAI UN IMMOBILE di D\nDA PROPORCI? gie OVI\nScrivici su WhatsApp “a nl)\n© flimmobiliare.com 7",
+      "caption": "761a2bc3 3401 46c4 a427 dd8c33347af5",
       "format": "post",
       "media": [],
       "scheduled_at": "2026-10-01T16:30:00+00:00",
@@ -275337,7 +275337,7 @@
           "bytes": "2667452"
         }
       ],
-      "blocked_reason": "Buffer HTTP 429: {\"errors\":[{\"message\":\"Too many requests from this client. Please try again later.\",\"extensions\":{\"code\":\"RATE_LIMIT_EXCEEDED\",\"window\":\"24h\"}}]}"
+      "blocked_reason": "Buffer instagram: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
     },
     {
       "id": "supabase-calendar-937fb4aa-d679-4f84-806a-5caad151aab9",
@@ -275384,7 +275384,7 @@
           "bytes": "2667452"
         }
       ],
-      "blocked_reason": "Buffer HTTP 429: {\"errors\":[{\"message\":\"Too many requests from this client. Please try again later.\",\"extensions\":{\"code\":\"RATE_LIMIT_EXCEEDED\",\"window\":\"24h\"}}]}"
+      "blocked_reason": "Buffer facebook: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
     },
     {
       "id": "supabase-calendar-681a780f-651f-4289-a209-e833502617ad",
@@ -278798,6 +278798,59 @@
               ]
             }
           ]
+        },
+        {
+          "at": "2026-10-03T02:04:16+00:00",
+          "dry_run": false,
+          "results": [
+            {
+              "platform": "facebook",
+              "status": "blocked",
+              "missing": [
+                "RMP_FACEBOOK_PAGE_ACCESS_TOKEN"
+              ]
+            },
+            {
+              "platform": "instagram",
+              "status": "blocked",
+              "missing": [
+                "RMP_INSTAGRAM_ACCESS_TOKEN",
+                "RMP_INSTAGRAM_USER_ID"
+              ]
+            },
+            {
+              "platform": "tiktok",
+              "status": "blocked",
+              "missing": [
+                "RMP_TIKTOK_ACCESS_TOKEN"
+              ]
+            },
+            {
+              "platform": "linkedin",
+              "status": "blocked",
+              "missing": [
+                "RMP_LINKEDIN_ACCESS_TOKEN",
+                "RMP_LINKEDIN_AUTHOR_URN"
+              ]
+            },
+            {
+              "platform": "youtube",
+              "status": "blocked",
+              "missing": [
+                "RMP_YOUTUBE_CLIENT_ID",
+                "RMP_YOUTUBE_CLIENT_SECRET",
+                "RMP_YOUTUBE_REFRESH_TOKEN"
+              ]
+            },
+            {
+              "platform": "pinterest",
+              "status": "blocked",
+              "missing": [
+                "RMP_PINTEREST_ACCESS_TOKEN",
+                "RMP_PINTEREST_BOARD_ID"
+              ]
+            }
+          ]
         }
       ]
     },
@@ -278897,6 +278950,59 @@
       "direct_api_results": [
         {
           "at": "2026-10-02T23:24:09+00:00",
+          "dry_run": false,
+          "results": [
+            {
+              "platform": "facebook",
+              "status": "blocked",
+              "missing": [
+                "RMP_FACEBOOK_PAGE_ACCESS_TOKEN"
+              ]
+            },
+            {
+              "platform": "instagram",
+              "status": "blocked",
+              "missing": [
+                "RMP_INSTAGRAM_ACCESS_TOKEN",
+                "RMP_INSTAGRAM_USER_ID"
+              ]
+            },
+            {
+              "platform": "tiktok",
+              "status": "blocked",
+              "missing": [
+                "RMP_TIKTOK_ACCESS_TOKEN"
+              ]
+            },
+            {
+              "platform": "linkedin",
+              "status": "blocked",
+              "missing": [
+                "RMP_LINKEDIN_ACCESS_TOKEN",
+                "RMP_LINKEDIN_AUTHOR_URN"
+              ]
+            },
+            {
+              "platform": "youtube",
+              "status": "blocked",
+              "missing": [
+                "RMP_YOUTUBE_CLIENT_ID",
+                "RMP_YOUTUBE_CLIENT_SECRET",
+                "RMP_YOUTUBE_REFRESH_TOKEN"
+              ]
+            },
+            {
+              "platform": "pinterest",
+              "status": "blocked",
+              "missing": [
+                "RMP_PINTEREST_ACCESS_TOKEN",
+                "RMP_PINTEREST_BOARD_ID"
+              ]
+            }
+          ]
+        },
+        {
+          "at": "2026-10-03T02:04:16+00:00",
           "dry_run": false,
           "results": [
             {
@@ -279096,6 +279202,59 @@
               ]
             }
           ]
+        },
+        {
+          "at": "2026-10-03T02:04:16+00:00",
+          "dry_run": false,
+          "results": [
+            {
+              "platform": "facebook",
+              "status": "blocked",
+              "missing": [
+                "RMP_FACEBOOK_PAGE_ACCESS_TOKEN"
+              ]
+            },
+            {
+              "platform": "instagram",
+              "status": "blocked",
+              "missing": [
+                "RMP_INSTAGRAM_ACCESS_TOKEN",
+                "RMP_INSTAGRAM_USER_ID"
+              ]
+            },
+            {
+              "platform": "tiktok",
+              "status": "blocked",
+              "missing": [
+                "RMP_TIKTOK_ACCESS_TOKEN"
+              ]
+            },
+            {
+              "platform": "linkedin",
+              "status": "blocked",
+              "missing": [
+                "RMP_LINKEDIN_ACCESS_TOKEN",
+                "RMP_LINKEDIN_AUTHOR_URN"
+              ]
+            },
+            {
+              "platform": "youtube",
+              "status": "blocked",
+              "missing": [
+                "RMP_YOUTUBE_CLIENT_ID",
+                "RMP_YOUTUBE_CLIENT_SECRET",
+                "RMP_YOUTUBE_REFRESH_TOKEN"
+              ]
+            },
+            {
+              "platform": "pinterest",
+              "status": "blocked",
+              "missing": [
+                "RMP_PINTEREST_ACCESS_TOKEN",
+                "RMP_PINTEREST_BOARD_ID"
+              ]
+            }
+          ]
         }
       ]
     },
@@ -279195,6 +279354,59 @@
       "direct_api_results": [
         {
           "at": "2026-10-02T23:24:09+00:00",
+          "dry_run": false,
+          "results": [
+            {
+              "platform": "facebook",
+              "status": "blocked",
+              "missing": [
+                "RMP_FACEBOOK_PAGE_ACCESS_TOKEN"
+              ]
+            },
+            {
+              "platform": "instagram",
+              "status": "blocked",
+              "missing": [
+                "RMP_INSTAGRAM_ACCESS_TOKEN",
+                "RMP_INSTAGRAM_USER_ID"
+              ]
+            },
+            {
+              "platform": "tiktok",
+              "status": "blocked",
+              "missing": [
+                "RMP_TIKTOK_ACCESS_TOKEN"
+              ]
+            },
+            {
+              "platform": "linkedin",
+              "status": "blocked",
+              "missing": [
+                "RMP_LINKEDIN_ACCESS_TOKEN",
+                "RMP_LINKEDIN_AUTHOR_URN"
+              ]
+            },
+            {
+              "platform": "youtube",
+              "status": "blocked",
+              "missing": [
+                "RMP_YOUTUBE_CLIENT_ID",
+                "RMP_YOUTUBE_CLIENT_SECRET",
+                "RMP_YOUTUBE_REFRESH_TOKEN"
+              ]
+            },
+            {
+              "platform": "pinterest",
+              "status": "blocked",
+              "missing": [
+                "RMP_PINTEREST_ACCESS_TOKEN",
+                "RMP_PINTEREST_BOARD_ID"
+              ]
+            }
+          ]
+        },
+        {
+          "at": "2026-10-03T02:04:16+00:00",
           "dry_run": false,
           "results": [
             {
@@ -279394,11 +279606,64 @@
               ]
             }
           ]
+        },
+        {
+          "at": "2026-10-03T02:04:16+00:00",
+          "dry_run": false,
+          "results": [
+            {
+              "platform": "facebook",
+              "status": "blocked",
+              "missing": [
+                "RMP_FACEBOOK_PAGE_ACCESS_TOKEN"
+              ]
+            },
+            {
+              "platform": "instagram",
+              "status": "blocked",
+              "missing": [
+                "RMP_INSTAGRAM_ACCESS_TOKEN",
+                "RMP_INSTAGRAM_USER_ID"
+              ]
+            },
+            {
+              "platform": "tiktok",
+              "status": "blocked",
+              "missing": [
+                "RMP_TIKTOK_ACCESS_TOKEN"
+              ]
+            },
+            {
+              "platform": "linkedin",
+              "status": "blocked",
+              "missing": [
+                "RMP_LINKEDIN_ACCESS_TOKEN",
+                "RMP_LINKEDIN_AUTHOR_URN"
+              ]
+            },
+            {
+              "platform": "youtube",
+              "status": "blocked",
+              "missing": [
+                "RMP_YOUTUBE_CLIENT_ID",
+                "RMP_YOUTUBE_CLIENT_SECRET",
+                "RMP_YOUTUBE_REFRESH_TOKEN"
+              ]
+            },
+            {
+              "platform": "pinterest",
+              "status": "blocked",
+              "missing": [
+                "RMP_PINTEREST_ACCESS_TOKEN",
+                "RMP_PINTEREST_BOARD_ID"
+              ]
+            }
+          ]
         }
       ]
     }
   ],
-  "updated_at": "2026-10-02T23:24:35+00:00",
+  "updated_at": "2026-10-03T02:04:37+00:00",
   "updated_by": "Automatic renderer · F1 manual-only aware",
   "current_cycle": "2026-10-03T00:00",
   "history_days": 14,
