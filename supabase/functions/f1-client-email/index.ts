@@ -657,6 +657,13 @@ async function actionStatus(user, p) {
     current_week: isoWeekParts()
   };
 }
+async function actionSetService(user,p) {
+  const client=await requireClient(user.id,p.client_id);
+  const enabled=p.enabled===true;
+  const {data,error}=await SERVICE.from("f1_content_clients").update({email_service_enabled:enabled,updated_at:nowIso()}).eq("id",client.id).eq("owner_id",user.id).select("id,email_service_enabled").single();
+  if(error)throw error;
+  return {ok:true,email_service_enabled:data.email_service_enabled};
+}
 async function actionSaveAccount(user, p) {
   const client = await requireClient(user.id, p.client_id);
   const provider = String(p.provider || "").toLowerCase();
@@ -920,6 +927,7 @@ async function actionPreview(user,p){
 }
 async function actionSendTest(user,p){
   const ctx=await campaignContext(user.id,p.campaign_id);
+  if(!ctx.client.email_service_enabled)throw new Error("SERVIZIO_EMAIL_NON_ATTIVO");
   if(!ctx.account)throw new Error("ACCOUNT_MITTENTE_MANCANTE");
   const to=normEmail(p.email);
   if(!EMAIL_RE.test(to))throw new Error("EMAIL_TEST_NON_VALIDA");
@@ -935,6 +943,7 @@ async function actionSendTest(user,p){
 }
 async function actionApprove(user,p){
   const ctx=await campaignContext(user.id,p.campaign_id);
+  if(!ctx.client.email_service_enabled)throw new Error("SERVIZIO_EMAIL_NON_ATTIVO");
   if(!ctx.campaign.test_sent_at)throw new Error("ESEGUI_PRIMA_UN_TEST");
   if(p.confirm_compliance!==true)throw new Error("CONFERMA_BASE_GIURIDICA_RICHIESTA");
   const stamp=nowIso();
@@ -1002,6 +1011,7 @@ async function actionStop(user,p){
 }
 async function actionStartStep(user,p){
   const ctx=await campaignContext(user.id,p.campaign_id);
+  if(!ctx.client.email_service_enabled)throw new Error("SERVIZIO_EMAIL_NON_ATTIVO");
   if(!ctx.account)throw new Error("ACCOUNT_MITTENTE_MANCANTE");
   if(ctx.account.connection_status!=="COLLEGATO")throw new Error("ACCOUNT_EMAIL_NON_COLLEGATO");
   if(!ctx.campaign.test_sent_at)throw new Error("TEST_EMAIL_OBBLIGATORIO");
@@ -1079,6 +1089,7 @@ Deno.serve(async req => {
   try{
     let result;
     if(action==="STATUS")result=await actionStatus(user,p);
+    else if(action==="SET_SERVICE")result=await actionSetService(user,p);
     else if(action==="SAVE_ACCOUNT")result=await actionSaveAccount(user,p);
     else if(action==="MS_DEVICE_START")result=await actionMsDeviceStart(user,p);
     else if(action==="MS_DEVICE_POLL")result=await actionMsDevicePoll(user,p);
