@@ -595,7 +595,7 @@ window.f1V7CsvSelected=function(file){
       var rows=v7ValidateCsv(v7ParseCsv(reader.result),c);
       V7.pendingCsv={fileName:file.name,rows:rows,clientId:c.id};
       var host=el("v7EmailCsvPreview"),status=el("v7EmailCsvStatus");
-      if(status){status.className="v7-email-statusline ok";status.innerHTML='<b>'+rows.length+' email valide</b> · '+v7Safe(file.name)+' · pronte per l\\'importazione.'}
+      if(status){status.className="v7-email-statusline ok";status.innerHTML='<b>'+rows.length+' email valide</b> · '+v7Safe(file.name)+' · pronte per l\'importazione.'}
       if(host){
         host.innerHTML='<table><thead><tr><th>DATA</th><th>OGGETTO</th><th>TEMA</th><th>CTA</th><th>STATO CSV</th></tr></thead><tbody>'+
           rows.slice(0,12).map(function(r){return '<tr><td>'+v7Safe(r.data_invio)+' '+v7Safe(r.ora_invio)+'</td><td>'+v7Safe(r.oggetto_email)+'</td><td>'+v7Safe(r.tema)+'</td><td>'+v7Safe(r.cta_testo)+'</td><td>'+v7Safe(r.stato)+'</td></tr>'}).join("")+
@@ -685,7 +685,7 @@ function v7EmailAIHtml(c){
     '<button class="v7-email-ai-head" onclick="window.f1V7ToggleEmailAI()"><div><b>✨ IA · CREA PIANO EMAIL · 12 MESI</b><small>Genera il piano in ChatGPT e importalo con un CSV</small></div><span>⌄</span></button>'+
     '<div class="v7-email-ai-body"><textarea id="v7EmailPrompt" class="input" readonly>'+v7Safe(v7EmailPrompt(c))+'</textarea>'+
     '<div class="v7-email-actions"><button class="btn primary" onclick="window.f1V7OpenChatGPT()">✨ APRI CHATGPT</button><button class="btn ghost" onclick="window.f1V7CopyEmailPrompt()">COPIA PROMPT</button>'+
-    '<button class="btn ghost" onclick="window.f1V7DownloadCsvTemplate()">SCARICA MODELLO CSV</button><button class="btn green" onclick="document.getElementById(\\'v7EmailCsvInput\\').click()">CARICA CSV</button></div>'+
+    '<button class="btn ghost" onclick="window.f1V7DownloadCsvTemplate()">SCARICA MODELLO CSV</button><button class="btn green" onclick="document.getElementById(\'v7EmailCsvInput\').click()">CARICA CSV</button></div>'+
     '<input id="v7EmailCsvInput" type="file" accept=".csv,text/csv" hidden onchange="window.f1V7CsvSelected(this.files&&this.files[0])">'+
     '<div id="v7EmailCsvStatus" class="v7-email-statusline">Nessun CSV in attesa di importazione.</div><div id="v7EmailCsvPreview" class="v7-email-preview"></div></div></div>';
 }
