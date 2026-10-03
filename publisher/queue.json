@@ -274486,14 +274486,6 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "cloudinary_assets": [
-        {
-          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790612486/f1-buffer/supabase-calendar-2638e413-0405-473f-8c06-296fd8a4dd05/video.png",
-          "public_id": "f1-buffer/supabase-calendar-2638e413-0405-473f-8c06-296fd8a4dd05/video",
-          "resource_type": "image",
-          "bytes": "2919495"
-        }
-      ],
       "buffer_posts": [
         {
           "service": "facebook",
@@ -274501,11 +274493,21 @@
           "post_id": "6ac1580f814d657011d3439a",
           "buffer_status": "scheduled",
           "due_at": "2026-10-06T06:00:00.000Z",
-          "created_at": "2026-10-03T19:31:27+00:00"
+          "created_at": "2026-10-03T19:31:27+00:00",
+          "sent_at": null,
+          "external_link": null
         }
       ],
       "buffer_scheduled_platforms": [
         "facebook"
+      ],
+      "cloudinary_assets": [
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790612486/f1-buffer/supabase-calendar-2638e413-0405-473f-8c06-296fd8a4dd05/video.png",
+          "public_id": "f1-buffer/supabase-calendar-2638e413-0405-473f-8c06-296fd8a4dd05/video",
+          "resource_type": "image",
+          "bytes": "2919495"
+        }
       ]
     },
     {
@@ -274623,14 +274625,6 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "cloudinary_assets": [
-        {
-          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790612493/f1-buffer/supabase-calendar-2c18bd54-c2fb-43f5-b9cb-812992b73612/video.jpg",
-          "public_id": "f1-buffer/supabase-calendar-2c18bd54-c2fb-43f5-b9cb-812992b73612/video",
-          "resource_type": "image",
-          "bytes": "308805"
-        }
-      ],
       "buffer_posts": [
         {
           "service": "facebook",
@@ -274638,11 +274632,21 @@
           "post_id": "6ac15812fec5913394844041",
           "buffer_status": "scheduled",
           "due_at": "2026-10-06T12:00:00.000Z",
-          "created_at": "2026-10-03T19:31:30+00:00"
+          "created_at": "2026-10-03T19:31:30+00:00",
+          "sent_at": null,
+          "external_link": null
         }
       ],
       "buffer_scheduled_platforms": [
         "facebook"
+      ],
+      "cloudinary_assets": [
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790612493/f1-buffer/supabase-calendar-2c18bd54-c2fb-43f5-b9cb-812992b73612/video.jpg",
+          "public_id": "f1-buffer/supabase-calendar-2c18bd54-c2fb-43f5-b9cb-812992b73612/video",
+          "resource_type": "image",
+          "bytes": "308805"
+        }
       ]
     },
     {
@@ -274851,14 +274855,6 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "cloudinary_assets": [
-        {
-          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790612501/f1-buffer/supabase-calendar-302ecde4-29ad-42bd-aa67-3835f22db9e9/video.png",
-          "public_id": "f1-buffer/supabase-calendar-302ecde4-29ad-42bd-aa67-3835f22db9e9/video",
-          "resource_type": "image",
-          "bytes": "2763758"
-        }
-      ],
       "buffer_posts": [
         {
           "service": "instagram",
@@ -274866,11 +274862,21 @@
           "post_id": "6ac15814814d657011d3447f",
           "buffer_status": "scheduled",
           "due_at": "2026-10-07T06:00:00.000Z",
-          "created_at": "2026-10-03T19:31:32+00:00"
+          "created_at": "2026-10-03T19:31:32+00:00",
+          "sent_at": null,
+          "external_link": null
         }
       ],
       "buffer_scheduled_platforms": [
         "instagram"
+      ],
+      "cloudinary_assets": [
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790612501/f1-buffer/supabase-calendar-302ecde4-29ad-42bd-aa67-3835f22db9e9/video.png",
+          "public_id": "f1-buffer/supabase-calendar-302ecde4-29ad-42bd-aa67-3835f22db9e9/video",
+          "resource_type": "image",
+          "bytes": "2763758"
+        }
       ]
     },
     {
@@ -279182,6 +279188,18 @@
               "error_code": "PUBLISH_JOB_MEDIA_OR_PREFLIGHT_ERROR"
             }
           ]
+        },
+        {
+          "at": "2026-10-03T22:20:42+00:00",
+          "dry_run": false,
+          "results": [
+            {
+              "platform": "system",
+              "status": "blocked",
+              "error": "real-media-pro-2026-10-03-c00-01-01-google-ads-intento: missing media: /home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/real-media-pro/2026-10-03/cycle-00/01-10-03-c00-01-01-google-ads-intento.jpg",
+              "error_code": "PUBLISH_JOB_MEDIA_OR_PREFLIGHT_ERROR"
+            }
+          ]
         }
       ]
     },
@@ -279546,6 +279564,18 @@
         },
         {
           "at": "2026-10-03T19:32:34+00:00",
+          "dry_run": false,
+          "results": [
+            {
+              "platform": "system",
+              "status": "blocked",
+              "error": "real-media-pro-2026-10-03-c00-02-02-shopify-product-page: missing media: /home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/real-media-pro/2026-10-03/cycle-00/02-10-03-c00-02-02-shopify-product-page.jpg",
+              "error_code": "PUBLISH_JOB_MEDIA_OR_PREFLIGHT_ERROR"
+            }
+          ]
+        },
+        {
+          "at": "2026-10-03T22:20:42+00:00",
           "dry_run": false,
           "results": [
             {
@@ -279928,6 +279958,18 @@
               "error_code": "PUBLISH_JOB_MEDIA_OR_PREFLIGHT_ERROR"
             }
           ]
+        },
+        {
+          "at": "2026-10-03T22:20:42+00:00",
+          "dry_run": false,
+          "results": [
+            {
+              "platform": "system",
+              "status": "blocked",
+              "error": "real-media-pro-2026-10-03-c00-03-03-advertising-sistema: missing media: /home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/real-media-pro/2026-10-03/cycle-00/03-10-03-c00-03-03-advertising-sistema.jpg",
+              "error_code": "PUBLISH_JOB_MEDIA_OR_PREFLIGHT_ERROR"
+            }
+          ]
         }
       ]
     },
@@ -280292,6 +280334,18 @@
         },
         {
           "at": "2026-10-03T19:32:34+00:00",
+          "dry_run": false,
+          "results": [
+            {
+              "platform": "system",
+              "status": "blocked",
+              "error": "real-media-pro-2026-10-03-c00-04-04-shopify-che-converte: missing media: /home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/real-media-pro/2026-10-03/cycle-00/04-10-03-c00-04-04-shopify-che-converte.jpg",
+              "error_code": "PUBLISH_JOB_MEDIA_OR_PREFLIGHT_ERROR"
+            }
+          ]
+        },
+        {
+          "at": "2026-10-03T22:20:42+00:00",
           "dry_run": false,
           "results": [
             {
@@ -280674,6 +280728,18 @@
               "error_code": "PUBLISH_JOB_MEDIA_OR_PREFLIGHT_ERROR"
             }
           ]
+        },
+        {
+          "at": "2026-10-03T22:20:42+00:00",
+          "dry_run": false,
+          "results": [
+            {
+              "platform": "system",
+              "status": "blocked",
+              "error": "real-media-pro-2026-10-03-c00-05-05-audit-digitale: missing media: /home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/real-media-pro/2026-10-03/cycle-00/05-10-03-c00-05-05-audit-digitale.jpg",
+              "error_code": "PUBLISH_JOB_MEDIA_OR_PREFLIGHT_ERROR"
+            }
+          ]
         }
       ]
     },
@@ -280770,7 +280836,7 @@
       ]
     }
   ],
-  "updated_at": "2026-10-03T19:33:06+00:00",
+  "updated_at": "2026-10-03T22:21:08+00:00",
   "updated_by": "Automatic renderer · F1 manual-only aware",
   "current_cycle": "2026-10-03T00:00",
   "history_days": 14,
