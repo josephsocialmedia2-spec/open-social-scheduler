@@ -108,7 +108,7 @@ function renderFrame(){
     '</div>'+
     '<div class="email-nav">'+
       navButton("overview","PANORAMICA")+navButton("account","ACCOUNT")+navButton("campaigns","CAMPAGNE")+navButton("database","DATABASE")+
-      navButton("graphics","GRAFICHE")+navButton("templates","TEMPLATE")+navButton("send","INVII")+navButton("stats","STATISTICHE")+navButton("logs","LOG")+
+      navButton("graphics","GRAFICHE")+navButton("templates","TEMPLATE")+navButton("attachments","ALLEGATI")+navButton("send","INVII")+navButton("stats","STATISTICHE")+navButton("logs","LOG")+
     '</div>'+
     '<div id="emailView"></div>'+
   '</div>';
@@ -116,7 +116,7 @@ function renderFrame(){
 }
 function renderView(){
   const host=document.getElementById("emailView");if(!host||!E.data)return;
-  const map={overview:renderOverview,account:renderAccount,campaigns:renderCampaigns,database:renderDatabase,graphics:renderGraphics,templates:renderTemplates,send:renderSend,stats:renderStats,logs:renderLogs};
+  const map={overview:renderOverview,account:renderAccount,campaigns:renderCampaigns,database:renderDatabase,graphics:renderGraphics,templates:renderTemplates,attachments:renderAttachments,send:renderSend,stats:renderStats,logs:renderLogs};
   (map[E.view]||renderOverview)(host);
 }
 function renderOverview(host){
@@ -243,6 +243,21 @@ function renderTemplates(host){
       '<div class="email-field wide"><label>Corpo HTML</label><textarea id="emailTemplateBody">'+eh(selected?.body_html||"")+'</textarea></div>'+
       '<div class="email-field wide"><label>Footer HTML</label><textarea id="emailTemplateFooter">'+eh(selected?.footer_html||"")+'</textarea></div>'+
     '</div><div class="email-actions"><button class="btn primary" onclick="window.f1EmailSaveTemplate()">SALVA TEMPLATE</button></div></div></div>';
+}
+function renderAttachments(host){
+  const cid=selectedCampaignId();
+  const files=(E.data.attachments||[]).filter(x=>x.campaign_id===cid);
+  host.innerHTML='<div class="email-layout">'+
+    '<div class="email-card"><h3>Allegati campagna</h3>'+
+      '<div class="email-field"><label>Campagna</label><select id="emailAttachmentCampaign" onchange="window.f1EmailAttachmentCampaignChanged(this.value)"><option value="">Seleziona campagna</option>'+campaignOptions(cid)+'</select></div>'+
+      '<div class="email-drop" style="margin-top:12px"><b>AGGIUNGI ALLEGATO</b><div class="email-help">PDF, documenti o immagini. Microsoft: totale allegati + grafica fino a circa 2,5 MB nel flusso diretto; Gmail fino a 18 MB.</div><input id="emailAttachmentFile" type="file" style="margin-top:10px"></div>'+
+      '<div class="email-actions"><button class="btn green" '+(!cid?"disabled":"")+' onclick="window.f1EmailUploadAttachment()">CARICA ALLEGATO</button></div>'+
+      '<div class="email-inline-note warn">Aggiungere o rimuovere un allegato invalida automaticamente TEST e APPROVAZIONE: la campagna va ricontrollata prima dell’invio.</div>'+
+    '</div>'+
+    '<div class="email-card"><h3>File associati</h3>'+
+      (files.length?'<div class="email-template-list">'+files.map(x=>'<div class="email-template-item"><div><b>'+eh(x.file_name)+'</b><div class="email-help">'+eh(x.mime_type)+' · '+Math.max(1,Math.round(Number(x.file_size||0)/1024))+' KB · '+efmt(x.created_at)+'</div></div><button class="btn small danger" onclick="window.f1EmailDeleteAttachment(\''+x.id+'\')">RIMUOVI</button></div>').join("")+'</div>':'<div class="email-empty">Nessun allegato per questa campagna.</div>')+
+    '</div>'+
+  '</div>';
 }
 function renderSend(host){
   const c=currentCampaign();
@@ -437,6 +452,27 @@ window.f1EmailDbCampaignChanged=function(id){E.selectedCampaignId=id;E.recipient
 window.f1EmailImportDatabase=async function(){const id=selectedCampaignId();if(!id)return notice("Seleziona una campagna.","warn");if(!E.parsedRows.length)return notice("Carica prima un file.","warn");try{let imported=0,invalid=0,duplicates=0,suppressed=0;for(let i=0;i<E.parsedRows.length;i+=500){const d=await eapi("IMPORT_RECIPIENTS",{campaign_id:id,recipients:E.parsedRows.slice(i,i+500)});imported+=Number(d.imported||0);invalid+=Number(d.invalid||0);duplicates+=Number(d.duplicates||0);suppressed+=Number(d.suppressed||0)}E.data=null;await window.f1RenderEmailWorkspace(true);E.view="database";await window.f1EmailLoadRecipients();notice("Import completato: "+imported+" validi · "+invalid+" non validi · "+duplicates+" duplicati · "+suppressed+" soppressi.","")}catch(e){notice(e.message||String(e),"bad")}};
 window.f1EmailLoadRecipients=async function(){const id=selectedCampaignId();if(!id)return;try{E.recipients=await eapi("RECIPIENTS",{campaign_id:id});renderFrame()}catch(e){notice(e.message||String(e),"bad")}};
 
+window.f1EmailAttachmentCampaignChanged=function(id){E.selectedCampaignId=id;renderFrame()};
+window.f1EmailUploadAttachment=async function(){
+  const cid=selectedCampaignId(),file=document.getElementById("emailAttachmentFile")?.files?.[0];
+  if(!cid)return notice("Seleziona una campagna.","warn");
+  if(!file)return notice("Seleziona un file da allegare.","warn");
+  if(file.size>18000000)return notice("Allegato troppo grande: massimo 18 MB.","bad");
+  try{
+    const path=user.id+"/"+E.clientId+"/email/attachments/"+cid+"/"+crypto.randomUUID()+"-"+safeName(file.name);
+    const up=await sb.storage.from(EMAIL_BUCKET).upload(path,file,{contentType:file.type||"application/octet-stream",upsert:false});
+    if(up.error)throw up.error;
+    try{
+      await eapi("REGISTER_ATTACHMENT",{campaign_id:cid,storage_path:path,file_name:file.name,mime_type:file.type||"application/octet-stream",file_size:file.size});
+    }catch(e){await sb.storage.from(EMAIL_BUCKET).remove([path]);throw e}
+    E.data=null;await window.f1RenderEmailWorkspace(true);E.view="attachments";renderFrame();notice("Allegato aggiunto. Ripeti TEST e APPROVAZIONE prima dell'invio.","warn");
+  }catch(e){notice(e.message||String(e),"bad")}
+};
+window.f1EmailDeleteAttachment=async function(id){
+  if(!confirm("Rimuovere questo allegato dalla campagna?"))return;
+  try{await eapi("DELETE_ATTACHMENT",{attachment_id:id});E.data=null;await window.f1RenderEmailWorkspace(true);E.view="attachments";renderFrame();notice("Allegato rimosso. TEST e APPROVAZIONE sono stati invalidati.","warn")}
+  catch(e){notice(e.message||String(e),"bad")}
+};
 window.f1EmailSendCampaignChanged=function(id){E.selectedCampaignId=id;E.recipients=null;renderFrame();window.f1EmailLoadRecipients()};
 window.f1EmailStartSend=async function(){
   const c=currentCampaign();if(!c)return;
