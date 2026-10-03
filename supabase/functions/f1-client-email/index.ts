@@ -784,7 +784,7 @@ async function actionSaveCampaign(user,p){
   };
   let data,error;
   if(p.campaign_id){
-    const {data:old}=await SERVICE.from("email_campaigns").select("id,status").eq("id",p.campaign_id).eq("owner_id",user.id).eq("client_id",client.id).maybeSingle();
+    const {data:old}=await SERVICE.from("email_campaigns").select("id,status,campaign_key").eq("id",p.campaign_id).eq("owner_id",user.id).eq("client_id",client.id).maybeSingle();
     if(!old)throw new Error("CAMPAGNA_NON_TROVATA");
     if(["sending","completed"].includes(old.status))throw new Error("CAMPAGNA_NON_MODIFICABILE");
     payload.campaign_key = old.campaign_key;
