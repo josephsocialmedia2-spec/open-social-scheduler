@@ -52,7 +52,7 @@
 </style>
   <link rel="stylesheet" href="./client-workspace.css?v=20261001b">
   <link rel="stylesheet" href="./email-module.css?v=20261003b">
-  <link rel="stylesheet" href="./f1-design-system.css?v=20261003f">\n  <link rel="stylesheet" href="./later-personal.css?v=20261001">
+  <link rel="stylesheet" href="./f1-design-system.css?v=20261003f">\n  <link rel="stylesheet" href="./later-personal.css?v=20261001">\n  <link rel="stylesheet" href="./f1-v7.css?v=20261003a">
 </head>
 <body class="f1-main-app">
 <div id="authView" class="auth">
@@ -133,32 +133,38 @@
         <select id="globalClientSelect" class="input global-client-select" aria-label="Cliente attivo">
           <option value="">Tutti i clienti</option>
         </select>
-        <button class="btn ghost content-rail-toggle" id="contentRailToggleBtn" onclick="window.f1ToggleContentRail()">CONTENUTI</button>
-        <button class="btn ghost" id="problemQuickBtn">PROBLEMI <span id="problemQuickCount" class="badge">0</span></button>
         <button class="btn ghost" id="refreshBtn">AGGIORNA</button>
+        <button class="btn primary" id="openClientBtn">+ NUOVO CLIENTE</button>
         <button class="btn green" id="openUploadBtn">+ CARICA CONTENUTI</button>
       </div>
     </div>
     <div id="clientContext" class="client-context"></div>
-    <div id="clientPublisherWorkspace" class="client-publisher-workspace hidden"></div>
+
 
     <section id="tab-dashboard">
-      <div class="metrics" id="metrics"></div>
+      <div class="metrics v7-metrics-one-line" id="metrics"></div>
       <div class="panel">
-        <div class="section-title"><h2>Clienti</h2><button class="btn small primary" id="openClientBtn">+ NUOVO CLIENTE</button></div>
-        <div class="clients" id="clientCards"></div>
+        <div class="v7-client-list" id="clientCards"></div>
       </div>
-      <div class="panel">
-        <div class="section-title"><h2>Ultimi contenuti</h2><span class="muted">Ricevuti e caricati di recente</span></div>
-        <div class="content-grid" id="latestGrid"></div>
-      </div>
+      <div id="latestGrid" class="hidden"></div>
     </section>
 
     <section id="tab-archive" class="hidden">
       <div class="panel">
+        <div class="v7-archive-head">
+          <div><h2>Contenuti · <span id="archiveClientNameV7">Seleziona un cliente</span></h2><div id="archiveClientSubV7" class="muted">Archivio esclusivo del cliente selezionato</div></div>
+          <span class="badge green">ARCHIVIO CLIENTE</span>
+        </div>
+        <div class="v7-archive-actions">
+          <button class="v7-source-btn" onclick="renderArchiveCurrent()"><b>GIÀ INSERITI</b><small>Contenuti del cliente</small></button>
+          <button class="v7-source-btn" onclick="window.f1V7ImportLocalFiles()"><b>DA FILE</b><small>Salva nella cartella locale</small></button>
+          <button class="v7-source-btn" onclick="window.f1V7FromWhatsApp()"><b>DA WHATSAPP</b><small>Contenuti ricevuti dal cliente</small></button>
+          <button class="v7-source-btn" onclick="window.f1V7OpenClientFolder()"><b>APRI CARTELLA CLIENTE</b><small>Archivio locale sul PC</small></button>
+        </div>
+        <div id="v7LocalArchive" class="v7-local-archive"></div>
         <div class="toolbar content-toolbar">
-          <input id="searchInput" class="input" placeholder="Cerca cliente, titolo, campagna, località, tag...">
-          <select id="clientFilter"></select>
+          <input id="searchInput" class="input" placeholder="Cerca titolo, campagna, località, tag...">
+          <select id="clientFilter" class="v7-client-filter-hidden" aria-hidden="true" tabindex="-1"></select>
           <select id="statusFilter">
             <option value="">Tutti gli stati</option>
             <option>BOZZA</option><option>PRONTO</option><option>IN PUBBLICAZIONE</option><option>PUBBLICATO</option><option>PARZIALMENTE PUBBLICATO</option><option>ERRORE</option>
@@ -241,7 +247,23 @@
 
     <section id="tab-publications" class="hidden">
       <div class="panel">
-        <div class="section-title"><div><h2>Centro pubblicazioni</h2><div class="muted">Stato reale dei job, conferme piattaforma e collegamenti ai post.</div></div></div>
+        <div class="section-title"><div><h2>Calendario editoriale</h2><div id="publicationCalendarClientV7" class="muted">Programmazioni future · cliente selezionato</div></div></div>
+        <div class="week-toolbar">
+          <div class="row">
+            <button class="btn small ghost" onclick="window.f1V7PublicationMove(-1)">←</button>
+            <button class="btn small ghost" onclick="window.f1V7PublicationToday()">OGGI</button>
+            <button class="btn small ghost" onclick="window.f1V7PublicationMove(1)">→</button>
+          </div>
+          <div id="publicationPeriodV7" class="week-title"></div>
+          <div class="row calendar-modes">
+            <button id="publicationModeMonthV7" class="btn small ghost" onclick="window.f1V7PublicationMode('month')">MESE</button>
+            <button id="publicationModeWeekV7" class="btn small primary" onclick="window.f1V7PublicationMode('week')">SETTIMANA</button>
+            <button id="publicationModeDayV7" class="btn small ghost" onclick="window.f1V7PublicationMode('day')">GIORNO</button>
+          </div>
+        </div>
+        <div id="publicationCalendarV7" class="v7-calendar-shell v7-pub-calendar"></div>
+        <div class="v7-publication-title"><h3>Pubblicazioni sui canali social</h3><div class="muted">Caption, orari e stato reale dei canali del cliente selezionato.</div></div>
+        <div id="clientPublisherWorkspace" class="client-publisher-workspace hidden"></div>
         <div id="publicationMetrics" class="analytics-grid"></div>
         <div id="publicationList" class="calendar-list"></div>
       </div>
@@ -2156,5 +2178,6 @@ authState();
 <script src="./client-workspace.js?v=20261001a"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script src="./email-module.js?v=20261003b"></script>
+<script src="./f1-v7.js?v=20261003a"></script>
 </body>
 </html>
