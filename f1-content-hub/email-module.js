@@ -95,10 +95,11 @@ function renderFrame(){
   if(E.loading&&!E.data){root.innerHTML='<div class="panel"><div class="email-empty"><span class="email-spin"></span> Caricamento modulo EMAIL…</div></div>';return}
   if(!E.data){root.innerHTML='<div class="panel"><div class="email-inline-note bad">Il modulo EMAIL non è disponibile.</div></div>';return}
   const a=currentAccount(),g=activeGraphic(),campaigns=E.data.campaigns||[];
+  const serviceEnabled=E.data.client?.email_service_enabled!==false;
   const sent=campaigns.reduce((n,x)=>n+Number(x.sent_count||0),0);
   root.innerHTML='<div class="email-shell">'+
     '<div class="email-head"><div><div class="brand"><small>F1 SOCIAL · CLIENTE</small>EMAIL</div><h2>'+eh(c.name)+'</h2><div class="email-subtitle">Account, grafiche settimanali, campagne e invii dello stesso cliente.</div></div>'+
-      '<div class="email-actions"><button class="btn small ghost" onclick="window.f1EmailRefresh()">AGGIORNA</button><button class="btn small danger" onclick="setTab(\'dashboard\')">CHIUDI EMAIL</button></div></div>'+
+      '<div class="email-actions"><span class="email-status '+(serviceEnabled?"ok":"warn")+'">EMAIL '+(serviceEnabled?"ATTIVA":"NON ATTIVA")+'</span><button class="btn small '+(serviceEnabled?"danger":"green")+'" onclick="window.f1EmailToggleService('+(serviceEnabled?"false":"true")+')">'+(serviceEnabled?"DISATTIVA EMAIL":"ATTIVA EMAIL")+'</button><button class="btn small ghost" onclick="window.f1EmailRefresh()">AGGIORNA</button><button class="btn small danger" onclick="setTab(\'dashboard\')">CHIUDI EMAIL</button></div></div>'+
     '<div id="emailNotice"></div>'+
     '<div class="email-metrics">'+
       metric("ACCOUNT",a?enumv(a.connection_status):"NON CONFIGURATO",a?.email_address||"")+
@@ -194,7 +195,7 @@ function renderCampaigns(host){
         '<div class="email-help">Test: '+efmt(c.test_sent_at)+' · Approvata: '+efmt(c.approved_at)+'</div></div>':'')+
     '</div>'+
   '</div>'+
-  '<div id="emailPreviewPanel" class="email-card hidden" style="margin-top:12px"><div class="email-head"><h3>Anteprima reale</h3><button class="btn small ghost" onclick="document.getElementById(\'emailPreviewPanel\').classList.add(\'hidden\')">CHIUDI</button></div><div class="email-preview"><iframe id="emailPreviewFrame" sandbox=""></iframe></div></div>';
+  '<div id="emailPreviewPanel" class="email-card hidden" style="margin-top:12px"><div class="email-head"><h3>Anteprima reale</h3><div class="email-actions" style="margin-top:0"><button id="emailPreviewDesktopBtn" class="btn small primary" onclick="window.f1EmailSetPreviewDevice(\'desktop\')">DESKTOP</button><button id="emailPreviewMobileBtn" class="btn small ghost" onclick="window.f1EmailSetPreviewDevice(\'mobile\')">MOBILE</button><button class="btn small ghost" onclick="document.getElementById(\'emailPreviewPanel\').classList.add(\'hidden\')">CHIUDI</button></div></div><div id="emailPreviewBox" class="email-preview desktop"><iframe id="emailPreviewFrame" sandbox=""></iframe></div></div>';
 }
 function renderDatabase(host){
   const cid=selectedCampaignId();
@@ -221,17 +222,23 @@ function renderGraphics(host){
     '<div class="email-graphics" style="margin-top:14px">'+(graphics.map(g=>'<div class="email-graphic '+(g.status==="ATTIVA"?"email-week-current":"")+'"><div class="email-graphic-preview" data-email-path="'+eh(g.storage_path)+'">CARICAMENTO…</div><div class="email-graphic-body"><h4>'+eh(g.file_name)+'</h4><div class="email-help">'+g.iso_year+' · W'+String(g.iso_week).padStart(2,"0")+' · versione '+g.version+'</div><div style="margin-top:7px"><span class="email-status '+statusClass(g.status)+'">'+eh(enumv(g.status))+'</span></div><div class="email-actions"><button class="btn small ghost" onclick="window.f1EmailGraphicStatus(\''+g.id+'\',\'APPROVATA\')">APPROVA</button><button class="btn small ghost" onclick="window.f1EmailGraphicStatus(\''+g.id+'\',\'PROGRAMMATA\')">PROGRAMMA</button><button class="btn small green" onclick="window.f1EmailGraphicStatus(\''+g.id+'\',\'ATTIVA\')">ATTIVA</button><button class="btn small danger" onclick="window.f1EmailGraphicStatus(\''+g.id+'\',\'ARCHIVIATA\')">ARCHIVIA</button></div></div></div>').join("")||'<div class="email-empty">Nessuna grafica caricata.</div>')+'</div>'+
   '</div>'+
   '<div class="email-card"><h3>Brand kit email</h3><div class="email-form">'+
+    '<div class="email-field wide"><label>Logo email · PNG</label><div class="email-brand-logo" data-email-brand-logo="'+eh(brand.logo_storage_path||"")+'">'+(brand.logo_storage_path?"CARICAMENTO LOGO…":"NESSUN LOGO")+'</div><input id="emailBrandLogoFile" type="file" accept="image/png"></div>'+
     '<div class="email-field"><label>Colore primario</label><input id="emailBrandPrimary" type="color" value="'+eh(brand.primary_color||"#07111F")+'"></div>'+
     '<div class="email-field"><label>Colore CTA</label><input id="emailBrandSecondary" type="color" value="'+eh(brand.secondary_color||"#2D7FF9")+'"></div>'+
     '<div class="email-field"><label>Colore testo</label><input id="emailBrandText" type="color" value="'+eh(brand.text_color||"#142033")+'"></div>'+
     '<div class="email-field"><label>Font / fallback</label><input id="emailBrandFont" value="'+eh(brand.font_family||"Arial, Helvetica, sans-serif")+'"></div>'+
     '<div class="email-field"><label>Telefono</label><input id="emailBrandPhone" value="'+eh(brand.phone||"")+'"></div>'+
     '<div class="email-field"><label>Sito</label><input id="emailBrandWebsite" value="'+eh(brand.website||"")+'"></div>'+
+    '<div class="email-field"><label>Facebook</label><input id="emailBrandFacebook" value="'+eh(brand.social_links?.facebook||"")+'" placeholder="https://..."></div>'+
+    '<div class="email-field"><label>Instagram</label><input id="emailBrandInstagram" value="'+eh(brand.social_links?.instagram||"")+'" placeholder="https://..."></div>'+
+    '<div class="email-field"><label>LinkedIn</label><input id="emailBrandLinkedin" value="'+eh(brand.social_links?.linkedin||"")+'" placeholder="https://..."></div>'+
+    '<div class="email-field"><label>YouTube</label><input id="emailBrandYoutube" value="'+eh(brand.social_links?.youtube||"")+'" placeholder="https://..."></div>'+
+    '<div class="email-field"><label>TikTok</label><input id="emailBrandTiktok" value="'+eh(brand.social_links?.tiktok||"")+'" placeholder="https://..."></div>'+
     '<div class="email-field"><label>CTA predefinita</label><input id="emailBrandCta" value="'+eh(brand.cta_text||"")+'"></div>'+
     '<div class="email-field"><label>Link CTA</label><input id="emailBrandCtaUrl" value="'+eh(brand.cta_url||"")+'"></div>'+
     '<div class="email-field wide"><label>Firma HTML</label><textarea id="emailBrandSignature">'+eh(brand.signature_html||"")+'</textarea></div>'+
   '</div><div class="email-actions"><button class="btn primary" onclick="window.f1EmailSaveBrand()">SALVA BRAND KIT</button></div></div>';
-  hydrateGraphicPreviews();
+  hydrateGraphicPreviews();hydrateBrandLogoPreview();
 }
 function renderTemplates(host){
   const selected=(E.data.templates||[]).find(t=>t.id===E.selectedTemplateId)||null;
@@ -306,6 +313,15 @@ window.f1RenderEmailWorkspace=async function(force){
   finally{E.loading=false;renderFrame()}
 };
 window.f1EmailRefresh=async function(){E.data=null;await window.f1RenderEmailWorkspace(true);notice("Dati EMAIL aggiornati.","")};
+window.f1EmailToggleService=async function(enabled){
+  if(!confirm((enabled?"Attivare":"Disattivare")+" il servizio EMAIL per "+(eclient()?.name||"questo cliente")+"?"))return;
+  try{
+    await eapi("SET_SERVICE",{client_id:E.clientId,enabled:enabled===true});
+    const c=eclient();if(c)c.email_service_enabled=enabled===true;
+    E.data=null;await window.f1RenderEmailWorkspace(true);
+    notice("Servizio EMAIL "+(enabled?"attivato.":"disattivato. Gli invii restano bloccati finché non viene riattivato."),enabled?"":"warn");
+  }catch(e){notice(e.message||String(e),"bad")}
+};
 window.f1EmailSetView=function(v){E.view=v;renderFrame()};
 window.f1EmailProviderChanged=function(){
   const p=document.getElementById("emailProvider")?.value||"microsoft",t=document.getElementById("emailMicrosoftType")?.value||"personal";
@@ -349,10 +365,32 @@ window.f1EmailPollMicrosoft=async function(){
 window.f1EmailDisconnect=async function(){const a=currentAccount();if(!a)return;if(!confirm("Scollegare questo account email?"))return;try{await eapi("DISCONNECT",{account_id:a.id});E.data=null;await window.f1RenderEmailWorkspace(true);notice("Account scollegato.","warn")}catch(e){notice(e.message||String(e),"bad")}};
 
 window.f1EmailSaveBrand=async function(){
+  let uploadedLogoPath="";
   try{
-    await eapi("SAVE_BRAND",{client_id:E.clientId,primary_color:document.getElementById("emailBrandPrimary").value,secondary_color:document.getElementById("emailBrandSecondary").value,text_color:document.getElementById("emailBrandText").value,font_family:document.getElementById("emailBrandFont").value,phone:document.getElementById("emailBrandPhone").value,website:document.getElementById("emailBrandWebsite").value,cta_text:document.getElementById("emailBrandCta").value,cta_url:document.getElementById("emailBrandCtaUrl").value,signature_html:document.getElementById("emailBrandSignature").value});
-    E.data=null;await window.f1RenderEmailWorkspace(true);notice("Brand kit email salvato.","");
-  }catch(e){notice(e.message||String(e),"bad")}
+    const current=E.data?.brand_kit||{};
+    let logoPath=current.logo_storage_path||null;
+    const logoFile=document.getElementById("emailBrandLogoFile")?.files?.[0]||null;
+    if(logoFile){
+      if(logoFile.type!=="image/png"&&!/\.png$/i.test(logoFile.name))throw new Error("Il logo email deve essere PNG.");
+      if(logoFile.size>1000000)throw new Error("Logo troppo grande: massimo 1 MB.");
+      uploadedLogoPath=user.id+"/"+E.clientId+"/email/brand/"+crypto.randomUUID()+"-logo.png";
+      const up=await sb.storage.from(EMAIL_BUCKET).upload(uploadedLogoPath,logoFile,{contentType:"image/png",upsert:false});
+      if(up.error)throw up.error;
+      logoPath=uploadedLogoPath;
+    }
+    const social_links={
+      facebook:document.getElementById("emailBrandFacebook").value.trim(),
+      instagram:document.getElementById("emailBrandInstagram").value.trim(),
+      linkedin:document.getElementById("emailBrandLinkedin").value.trim(),
+      youtube:document.getElementById("emailBrandYoutube").value.trim(),
+      tiktok:document.getElementById("emailBrandTiktok").value.trim()
+    };
+    await eapi("SAVE_BRAND",{client_id:E.clientId,logo_storage_path:logoPath,primary_color:document.getElementById("emailBrandPrimary").value,secondary_color:document.getElementById("emailBrandSecondary").value,text_color:document.getElementById("emailBrandText").value,font_family:document.getElementById("emailBrandFont").value,phone:document.getElementById("emailBrandPhone").value,website:document.getElementById("emailBrandWebsite").value,social_links,cta_text:document.getElementById("emailBrandCta").value,cta_url:document.getElementById("emailBrandCtaUrl").value,signature_html:document.getElementById("emailBrandSignature").value});
+    E.data=null;await window.f1RenderEmailWorkspace(true);E.view="graphics";renderFrame();notice("Brand kit email salvato.","");
+  }catch(e){
+    if(uploadedLogoPath)await sb.storage.from(EMAIL_BUCKET).remove([uploadedLogoPath]);
+    notice(e.message||String(e),"bad")
+  }
 };
 function safeName(name){return String(name||"grafica").normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^A-Za-z0-9._-]+/g,"-").replace(/^-+|-+$/g,"").slice(0,160)||"grafica"}
 window.f1EmailUploadGraphic=async function(){
@@ -377,6 +415,13 @@ async function hydrateGraphicPreviews(){
     box.innerHTML='<img loading="lazy" src="'+eh(r.data.signedUrl)+'" alt="">';
   }
 }
+async function hydrateBrandLogoPreview(){
+  const box=document.querySelector("[data-email-brand-logo]");if(!box)return;
+  const path=box.dataset.emailBrandLogo;if(!path){box.textContent="NESSUN LOGO";return}
+  const r=await sb.storage.from(EMAIL_BUCKET).createSignedUrl(path,1800);
+  if(r.error||!r.data?.signedUrl){box.textContent="ANTEPRIMA LOGO NON DISPONIBILE";return}
+  box.innerHTML='<img loading="lazy" src="'+eh(r.data.signedUrl)+'" alt="Logo">';
+}
 
 function bodyToHtml(raw){
   const s=String(raw||"").trim();if(!s)return"";
@@ -394,7 +439,15 @@ window.f1EmailSaveCampaign=async function(){
   }catch(e){notice(e.message||String(e),"bad");throw e}
 };
 async function ensureCampaign(){if(E.selectedCampaignId)return E.selectedCampaignId;const c=await window.f1EmailSaveCampaign();return c.id}
-window.f1EmailPreview=async function(){try{const id=await ensureCampaign();const d=await eapi("PREVIEW",{campaign_id:id});const panel=document.getElementById("emailPreviewPanel"),frame=document.getElementById("emailPreviewFrame");if(panel&&frame){frame.srcdoc=d.html;panel.classList.remove("hidden");panel.scrollIntoView({behavior:"smooth",block:"start"})}}catch(e){notice(e.message||String(e),"bad")}};
+window.f1EmailSetPreviewDevice=function(mode){
+  const box=document.getElementById("emailPreviewBox"),desktop=document.getElementById("emailPreviewDesktopBtn"),mobile=document.getElementById("emailPreviewMobileBtn");
+  if(!box)return;
+  const isMobile=mode==="mobile";
+  box.classList.toggle("mobile",isMobile);box.classList.toggle("desktop",!isMobile);
+  if(desktop)desktop.className="btn small "+(!isMobile?"primary":"ghost");
+  if(mobile)mobile.className="btn small "+(isMobile?"primary":"ghost");
+};
+window.f1EmailPreview=async function(){try{const id=await ensureCampaign();const d=await eapi("PREVIEW",{campaign_id:id});const panel=document.getElementById("emailPreviewPanel"),frame=document.getElementById("emailPreviewFrame");if(panel&&frame){frame.srcdoc=d.html;panel.classList.remove("hidden");window.f1EmailSetPreviewDevice("desktop");panel.scrollIntoView({behavior:"smooth",block:"start"})}}catch(e){notice(e.message||String(e),"bad")}};
 window.f1EmailSendTest=async function(){try{const id=await ensureCampaign(),email=document.getElementById("emailTestAddress")?.value||user.email,name=document.getElementById("emailTestName")?.value||"Test";if(!confirm("Inviare UNA email di test a "+email+"?"))return;const d=await eapi("SEND_TEST",{campaign_id:id,email,first_name:name});E.data=null;await window.f1RenderEmailWorkspace(true);E.view="campaigns";renderFrame();notice("TEST inviato tramite "+d.provider+". Verifica la casella prima di approvare.","")}catch(e){notice(e.message||String(e),"bad")}};
 window.f1EmailApproveCampaign=async function(){try{const id=await ensureCampaign();if(!document.getElementById("emailComplianceConfirm")?.checked)throw new Error("Spunta la conferma sulla base giuridica/consenso.");if(!confirm("Approvare questa campagna per l'invio reale?"))return;await eapi("APPROVE",{campaign_id:id,confirm_compliance:true});E.data=null;await window.f1RenderEmailWorkspace(true);E.view="campaigns";renderFrame();notice("Campagna approvata. Ora può essere avviata dalla sezione INVII.","")}catch(e){notice(e.message||String(e),"bad")}};
 window.f1EmailApplyTemplate=function(id){const t=(E.data.templates||[]).find(x=>x.id===id);if(!t)return;document.getElementById("emailCampaignSubject").value=t.default_subject||"";document.getElementById("emailCampaignBody").value=[t.header_html,t.body_html,t.footer_html].filter(Boolean).join("\n")};

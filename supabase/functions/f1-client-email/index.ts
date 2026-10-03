@@ -391,9 +391,18 @@ function emailShell(ctx, recipient, options = {}) {
   const ctaText = cleanText(meta.cta_text || brand.cta_text || "", 160);
   const ctaUrl = cleanText(meta.cta_url || brand.cta_url || "", 2000);
   const graphicSrc = options.graphicSrc || (ctx.graphic ? "cid:f1-weekly-graphic" : "");
+  const logoSrc = options.logoSrc || (brand.logo_storage_path ? "cid:f1-brand-logo" : "");
   const graphicHtml = ctx.graphic && graphicSrc
     ? '<div style="margin:0 0 24px"><img src="'+escHtml(graphicSrc)+'" alt="" style="display:block;width:100%;max-width:680px;height:auto;border:0;border-radius:12px"></div>'
     : "";
+  const logoHtml = brand.logo_storage_path && logoSrc
+    ? '<img src="'+escHtml(logoSrc)+'" alt="'+escHtml(ctx.client.name)+'" style="display:block;max-width:180px;max-height:64px;width:auto;height:auto;border:0;margin:0 0 10px">'
+    : "";
+  const socialLinks = brand.social_links && typeof brand.social_links === "object" ? brand.social_links : {};
+  const socialHtml = Object.entries(socialLinks)
+    .filter(([,url]) => /^https?:\/\//i.test(String(url || "")))
+    .map(([name,url]) => '<a href="'+escHtml(url)+'" style="color:'+escHtml(secondary)+';text-decoration:none;margin-right:12px">'+escHtml(String(name).toUpperCase())+'</a>')
+    .join("");
   const ctaHtml = ctaText && ctaUrl
     ? '<p style="margin:24px 0"><a href="'+escHtml(ctaUrl)+'" style="display:inline-block;background:'+escHtml(secondary)+';color:#fff;text-decoration:none;padding:13px 20px;border-radius:9px;font-weight:700">'+escHtml(ctaText)+'</a></p>'
     : "";
@@ -405,11 +414,12 @@ function emailShell(ctx, recipient, options = {}) {
   return '<!doctype html><html><body style="margin:0;padding:0;background:#f4f6f8">'+
     '<div style="max-width:720px;margin:0 auto;padding:24px">'+
       '<div style="background:#fff;border:1px solid #e4e8ee;border-radius:16px;overflow:hidden;font-family:'+escHtml(font)+';color:'+escHtml(textColor)+'">'+
-        '<div style="padding:20px 26px;background:'+escHtml(primary)+';color:#fff;font-size:18px;font-weight:800">'+escHtml(ctx.account?.sender_name || ctx.client.name)+'</div>'+
+        '<div style="padding:20px 26px;background:'+escHtml(primary)+';color:#fff;font-size:18px;font-weight:800">'+logoHtml+escHtml(ctx.account?.sender_name || ctx.client.name)+'</div>'+
         '<div style="padding:26px">'+graphicHtml+
           '<div style="font-size:15px;line-height:1.65">'+body+'</div>'+ctaHtml+
           (signature?'<div style="border-top:1px solid #e5e7eb;margin-top:28px;padding-top:18px;font-size:13px;line-height:1.5">'+signature+'</div>':'')+
           (contactBits?'<div style="font-size:12px;color:#667085;margin-top:8px">'+contactBits+'</div>':'')+
+          (socialHtml?'<div style="font-size:11px;margin-top:10px">'+socialHtml+'</div>':'')+
           unsub+
         '</div>'+
       '</div>'+
@@ -417,10 +427,11 @@ function emailShell(ctx, recipient, options = {}) {
 }
 async function previewHtml(ctx, recipient) {
   const graphicUrl = ctx.graphic ? await signedStorageUrl(ctx.graphic.storage_path, 3600) : "";
-  return emailShell(ctx, recipient, { graphicSrc: graphicUrl });
+  const logoUrl = ctx.brand?.logo_storage_path ? await signedStorageUrl(ctx.brand.logo_storage_path, 3600) : "";
+  return emailShell(ctx, recipient, { graphicSrc: graphicUrl, logoSrc: logoUrl });
 }
 
-async function sendMicrosoft(account, to, subject, html, graphic, files = []) {
+async function sendMicrosoft(account, to, subject, html, graphic, brand = {}, files = []) {
   const access = await accessTokenFor(account);
   const attachments = [];
   let totalBytes = 0;
@@ -434,6 +445,18 @@ async function sendMicrosoft(account, to, subject, html, graphic, files = []) {
       contentBytes: bytesToBase64(bytes),
       isInline: true,
       contentId: "f1-weekly-graphic"
+    });
+  }
+  if (brand?.logo_storage_path) {
+    const bytes = await storageBytes(brand.logo_storage_path);
+    totalBytes += bytes.byteLength;
+    attachments.push({
+      "@odata.type": "#microsoft.graph.fileAttachment",
+      name: "brand-logo.png",
+      contentType: "image/png",
+      contentBytes: bytesToBase64(bytes),
+      isInline: true,
+      contentId: "f1-brand-logo"
     });
   }
   for (const file of files || []) {
@@ -477,7 +500,7 @@ async function sendMicrosoft(account, to, subject, html, graphic, files = []) {
   }
   return { provider: "microsoft", provider_message_id: clientRequestId, status_code: res.status };
 }
-function gmailMime(account, to, subject, html, graphic, graphicBytes, fileParts = []) {
+function gmailMime(account, to, subject, html, graphic, graphicBytes, brand, logoBytes, fileParts = []) {
   const senderName = account.sender_name || account.email_address;
   const encodedName = "=?UTF-8?B?" + utf8Base64(senderName) + "?=";
   const encodedSubject = "=?UTF-8?B?" + utf8Base64(subject) + "?=";
@@ -493,7 +516,7 @@ function gmailMime(account, to, subject, html, graphic, graphicBytes, fileParts 
     '',
     utf8Base64(html)
   ];
-  if (!fileParts.length && !graphic) {
+  if (!fileParts.length && !graphic && !logoBytes) {
     return [...baseHeaders, ...htmlPart].join("\r\n");
   }
   const related = "f1_related_" + crypto.randomUUID().replaceAll("-","");
@@ -514,6 +537,17 @@ function gmailMime(account, to, subject, html, graphic, graphicBytes, fileParts 
       bytesToBase64(graphicBytes)
     );
   }
+  if (brand?.logo_storage_path && logoBytes) {
+    relatedParts.push(
+      '--'+related,
+      'Content-Type: image/png; name="brand-logo.png"',
+      'Content-Transfer-Encoding: base64',
+      'Content-Disposition: inline; filename="brand-logo.png"',
+      'Content-ID: <f1-brand-logo>',
+      '',
+      bytesToBase64(logoBytes)
+    );
+  }
   relatedParts.push('--'+related+'--','');
   if (!fileParts.length) return [...baseHeaders, ...relatedParts].join("\r\n");
   const mixed = "f1_mixed_" + crypto.randomUUID().replaceAll("-","");
@@ -532,18 +566,19 @@ function gmailMime(account, to, subject, html, graphic, graphicBytes, fileParts 
   out.push('--'+mixed+'--','');
   return out.join("\r\n");
 }
-async function sendGmail(account, to, subject, html, graphic, files = []) {
+async function sendGmail(account, to, subject, html, graphic, brand = {}, files = []) {
   const access = await accessTokenFor(account);
   const graphicBytes = graphic ? await storageBytes(graphic.storage_path) : null;
+  const logoBytes = brand?.logo_storage_path ? await storageBytes(brand.logo_storage_path) : null;
   const fileParts = [];
-  let totalBytes = graphicBytes ? graphicBytes.byteLength : 0;
+  let totalBytes = (graphicBytes ? graphicBytes.byteLength : 0) + (logoBytes ? logoBytes.byteLength : 0);
   for (const file of files || []) {
     const bytes = await storageBytes(file.storage_path);
     totalBytes += bytes.byteLength;
     fileParts.push({file,bytes});
   }
   if (totalBytes > 18000000) throw new Error("ALLEGATI_GMAIL_TROPPO_GRANDI_MAX_18_MB");
-  const raw = gmailMime(account, to, subject, html, graphic, graphicBytes, fileParts);
+  const raw = gmailMime(account, to, subject, html, graphic, graphicBytes, brand, logoBytes, fileParts);
   const res = await fetch("https://gmail.googleapis.com/gmail/v1/users/me/messages/send", {
     method: "POST",
     headers: { Authorization: "Bearer " + access, "Content-Type": "application/json" },
@@ -558,11 +593,11 @@ async function sendGmail(account, to, subject, html, graphic, files = []) {
   }
   return { provider: "gmail", provider_message_id: String(data.id), status_code: res.status };
 }
-async function sendProvider(account, to, subject, html, graphic, files = []) {
+async function sendProvider(account, to, subject, html, graphic, brand = {}, files = []) {
   if (account.connection_status !== "COLLEGATO") throw new Error("ACCOUNT_EMAIL_NON_COLLEGATO");
   return account.provider === "gmail"
-    ? sendGmail(account, to, subject, html, graphic, files)
-    : sendMicrosoft(account, to, subject, html, graphic, files);
+    ? sendGmail(account, to, subject, html, graphic, brand, files)
+    : sendMicrosoft(account, to, subject, html, graphic, brand, files);
 }
 
 async function logEvent(ownerId, clientId, campaignId, eventType, detail = {}, recipientId = null) {
@@ -621,6 +656,13 @@ async function actionStatus(user, p) {
     events: eventsR.data || [],
     current_week: isoWeekParts()
   };
+}
+async function actionSetService(user,p) {
+  const client=await requireClient(user.id,p.client_id);
+  const enabled=p.enabled===true;
+  const {data,error}=await SERVICE.from("f1_content_clients").update({email_service_enabled:enabled,updated_at:nowIso()}).eq("id",client.id).eq("owner_id",user.id).select("id,email_service_enabled").single();
+  if(error)throw error;
+  return {ok:true,email_service_enabled:data.email_service_enabled};
 }
 async function actionSaveAccount(user, p) {
   const client = await requireClient(user.id, p.client_id);
@@ -743,16 +785,25 @@ async function actionDisconnect(user,p) {
 }
 async function actionSaveBrand(user,p) {
   const client=await requireClient(user.id,p.client_id);
+  const logoPath=cleanText(p.logo_storage_path,1000);
+  if(logoPath && (!logoPath.startsWith(user.id+"/"+client.id+"/email/brand/") || !/\.png$/i.test(logoPath))) {
+    throw new Error("PERCORSO_LOGO_NON_VALIDO");
+  }
+  const allowedSocials={};
+  for(const [key,value] of Object.entries(p.social_links&&typeof p.social_links==="object"?p.social_links:{})){
+    const name=cleanText(key,40).toLowerCase(),url=cleanText(value,2000);
+    if(["facebook","instagram","linkedin","youtube","tiktok"].includes(name) && (!url || /^https?:\/\//i.test(url))) allowedSocials[name]=url;
+  }
   const payload={
     owner_id:user.id,client_id:client.id,
-    logo_storage_path:cleanText(p.logo_storage_path,1000)||null,
+    logo_storage_path:logoPath||null,
     primary_color:cleanText(p.primary_color||"#07111F",20),
     secondary_color:cleanText(p.secondary_color||"#2D7FF9",20),
     text_color:cleanText(p.text_color||"#142033",20),
     font_family:cleanText(p.font_family||"Arial, Helvetica, sans-serif",120),
     signature_html:String(p.signature_html||"").slice(0,20000),
     phone:cleanText(p.phone,100)||null,website:cleanText(p.website,1000)||null,
-    social_links:p.social_links&&typeof p.social_links==="object"?p.social_links:{},
+    social_links:allowedSocials,
     cta_text:cleanText(p.cta_text,180)||null,cta_url:cleanText(p.cta_url,2000)||null,
     updated_at:nowIso()
   };
@@ -781,6 +832,7 @@ async function actionRegisterGraphic(user,p) {
 }
 async function actionRegisterAttachment(user,p) {
   const ctx=await campaignContext(user.id,p.campaign_id);
+  if(["sending","completed"].includes(ctx.campaign.status)) throw new Error("CAMPAGNA_NON_MODIFICABILE");
   const path=cleanText(p.storage_path,2000);
   if(!path.startsWith(user.id+"/"+ctx.client.id+"/email/attachments/"+ctx.campaign.id+"/")) throw new Error("PERCORSO_ALLEGATO_NON_VALIDO");
   const size=Number(p.file_size||0);
@@ -799,6 +851,8 @@ async function actionDeleteAttachment(user,p) {
   const {data:file,error}=await SERVICE.from("f1_client_email_attachments").select("*").eq("id",p.attachment_id).eq("owner_id",user.id).maybeSingle();
   if(error)throw error;if(!file)throw new Error("ALLEGATO_NON_TROVATO");
   await requireClient(user.id,file.client_id);
+  const {data:campaign}=await SERVICE.from("email_campaigns").select("status").eq("id",file.campaign_id).eq("owner_id",user.id).maybeSingle();
+  if(campaign && ["sending","completed"].includes(campaign.status)) throw new Error("CAMPAGNA_NON_MODIFICABILE");
   const {error:storageError}=await SERVICE.storage.from(EMAIL_BUCKET).remove([file.storage_path]);
   if(storageError)throw storageError;
   const {error:deleteError}=await SERVICE.from("f1_client_email_attachments").delete().eq("id",file.id).eq("owner_id",user.id);
@@ -873,13 +927,14 @@ async function actionPreview(user,p){
 }
 async function actionSendTest(user,p){
   const ctx=await campaignContext(user.id,p.campaign_id);
+  if(!ctx.client.email_service_enabled)throw new Error("SERVIZIO_EMAIL_NON_ATTIVO");
   if(!ctx.account)throw new Error("ACCOUNT_MITTENTE_MANCANTE");
   const to=normEmail(p.email);
   if(!EMAIL_RE.test(to))throw new Error("EMAIL_TEST_NON_VALIDA");
   const recipient={email:to,first_name:cleanText(p.first_name||"Test",100),last_name:"",source_row:{NOME:cleanText(p.first_name||"Test",100),AZIENDA:"TEST F1 SOCIAL",COMUNE:""}};
   const html=emailShell(ctx,recipient,{});
   const subject="[TEST] "+renderVars(ctx.campaign.subject,recipientVars(recipient));
-  const sent=await sendProvider(ctx.account,to,subject,html,ctx.graphic,ctx.attachments);
+  const sent=await sendProvider(ctx.account,to,subject,html,ctx.graphic,ctx.brand,ctx.attachments);
   const stamp=nowIso();
   await SERVICE.from("email_campaigns").update({test_sent_at:stamp,approval_state:"TESTATO",updated_at:stamp,last_error:null}).eq("id",ctx.campaign.id).eq("owner_id",user.id);
   await patchAccount(ctx.account.id,{last_test_at:stamp});
@@ -888,11 +943,18 @@ async function actionSendTest(user,p){
 }
 async function actionApprove(user,p){
   const ctx=await campaignContext(user.id,p.campaign_id);
+  if(!ctx.client.email_service_enabled)throw new Error("SERVIZIO_EMAIL_NON_ATTIVO");
   if(!ctx.campaign.test_sent_at)throw new Error("ESEGUI_PRIMA_UN_TEST");
   if(p.confirm_compliance!==true)throw new Error("CONFERMA_BASE_GIURIDICA_RICHIESTA");
   const stamp=nowIso();
   const senderSnapshot={account_id:ctx.account?.id,email:ctx.account?.email_address,name:ctx.account?.sender_name,provider:ctx.account?.provider,tenant_id:ctx.account?.tenant_id};
-  const designSnapshot={graphic_id:ctx.graphic?.id||null,graphic_file:ctx.graphic?.file_name||null,graphic_week:ctx.graphic?ctx.graphic.iso_year+"-W"+ctx.graphic.iso_week:null,brand_kit:ctx.brand||{}};
+  const designSnapshot={
+    graphic_id:ctx.graphic?.id||null,
+    graphic_file:ctx.graphic?.file_name||null,
+    graphic_week:ctx.graphic?ctx.graphic.iso_year+"-W"+ctx.graphic.iso_week:null,
+    brand_kit:ctx.brand||{},
+    attachments:(ctx.attachments||[]).map(x=>({id:x.id,file_name:x.file_name,mime_type:x.mime_type,file_size:x.file_size,storage_path:x.storage_path}))
+  };
   const {data,error}=await SERVICE.from("email_campaigns").update({
     approval_state:"APPROVATA",approved_at:stamp,compliance_confirmed_at:stamp,compliance_confirmed_by:user.id,
     sender_snapshot:senderSnapshot,design_snapshot:designSnapshot,
@@ -949,6 +1011,7 @@ async function actionStop(user,p){
 }
 async function actionStartStep(user,p){
   const ctx=await campaignContext(user.id,p.campaign_id);
+  if(!ctx.client.email_service_enabled)throw new Error("SERVIZIO_EMAIL_NON_ATTIVO");
   if(!ctx.account)throw new Error("ACCOUNT_MITTENTE_MANCANTE");
   if(ctx.account.connection_status!=="COLLEGATO")throw new Error("ACCOUNT_EMAIL_NON_COLLEGATO");
   if(!ctx.campaign.test_sent_at)throw new Error("TEST_EMAIL_OBBLIGATORIO");
@@ -980,7 +1043,7 @@ async function actionStartStep(user,p){
       const unsub=SUPABASE_URL+"/functions/v1/f1-client-email-unsubscribe?t="+encodeURIComponent(String(rcp.unsubscribe_token));
       const html=emailShell(ctx,rcp,{unsubscribeUrl:unsub});
       const subject=renderVars(ctx.campaign.subject,recipientVars(rcp));
-      const result=await sendProvider(ctx.account,rcp.email,subject,html,ctx.graphic,ctx.attachments);
+      const result=await sendProvider(ctx.account,rcp.email,subject,html,ctx.graphic,ctx.brand,ctx.attachments);
       const stamp=nowIso();
       await SERVICE.from("email_campaign_recipients").update({status:"sent",sent_at:stamp,provider_message_id:result.provider_message_id,error:null,updated_at:stamp}).eq("id",rcp.id);
       await logEvent(user.id,ctx.client.id,ctx.campaign.id,"SENT",{email:rcp.email,provider:result.provider,status_code:result.status_code},rcp.id);
@@ -1026,6 +1089,7 @@ Deno.serve(async req => {
   try{
     let result;
     if(action==="STATUS")result=await actionStatus(user,p);
+    else if(action==="SET_SERVICE")result=await actionSetService(user,p);
     else if(action==="SAVE_ACCOUNT")result=await actionSaveAccount(user,p);
     else if(action==="MS_DEVICE_START")result=await actionMsDeviceStart(user,p);
     else if(action==="MS_DEVICE_POLL")result=await actionMsDevicePoll(user,p);
