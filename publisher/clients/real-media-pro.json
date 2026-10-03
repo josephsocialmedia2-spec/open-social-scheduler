@@ -264,7 +264,7 @@
   },
   "email": {
     "enabled": true,
-    "sender_email": "realmediapro@outlook.it",
+    "sender_email": "realmediapro.social@outlook.it",
     "provider": "microsoft",
     "microsoft_account_type": "personal",
     "tenant": "consumers",
