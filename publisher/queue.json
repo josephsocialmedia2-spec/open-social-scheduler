@@ -273376,8 +273376,8 @@
     },
     {
       "id": "supabase-calendar-8111f0f1-25be-480b-827b-74f8ca683822",
-      "enabled": true,
-      "status": "buffer_scheduled",
+      "enabled": false,
+      "status": "published",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "PUNTO DI FORZA · ALLOGGIO DI DUE LOCALI COLLEGNO",
@@ -273416,11 +273416,11 @@
           "service": "facebook",
           "channel_id": "6ab2b713ea19ca0bdeb8103d",
           "post_id": "6abfc7ab441850db6e73375a",
-          "buffer_status": "scheduled",
+          "buffer_status": "sent",
           "due_at": "2026-10-03T18:00:00.000Z",
           "created_at": "2026-10-02T15:03:08+00:00",
-          "sent_at": null,
-          "external_link": null
+          "sent_at": "2026-10-03T18:01:02.403Z",
+          "external_link": "https://www.facebook.com/122138682843201564/posts/122142163791201564"
         }
       ],
       "buffer_scheduled_platforms": [
@@ -273433,12 +273433,14 @@
           "resource_type": "image",
           "bytes": "2763758"
         }
-      ]
+      ],
+      "external_post_id": "6abfc7ab441850db6e73375a",
+      "external_url": "https://www.facebook.com/122138682843201564/posts/122142163791201564"
     },
     {
       "id": "supabase-calendar-ed030a5c-6259-498e-8aaa-98deb747b360",
-      "enabled": true,
-      "status": "buffer_scheduled",
+      "enabled": false,
+      "status": "published",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "PUNTO DI FORZA · ALLOGGIO DI DUE LOCALI COLLEGNO",
@@ -273477,11 +273479,11 @@
           "service": "instagram",
           "channel_id": "6ab2b6e7ea19ca0bdeb80e19",
           "post_id": "6abf6f6af781c1ecf15cc516",
-          "buffer_status": "scheduled",
+          "buffer_status": "sent",
           "due_at": "2026-10-03T18:00:00.000Z",
           "created_at": "2026-10-02T08:46:35+00:00",
-          "sent_at": null,
-          "external_link": null
+          "sent_at": "2026-10-03T18:02:08.804Z",
+          "external_link": "https://www.instagram.com/p/DeCp4kmllv_/"
         }
       ],
       "buffer_scheduled_platforms": [
@@ -273494,7 +273496,9 @@
           "resource_type": "image",
           "bytes": "2763758"
         }
-      ]
+      ],
+      "external_post_id": "6abf6f6af781c1ecf15cc516",
+      "external_url": "https://www.instagram.com/p/DeCp4kmllv_/"
     },
     {
       "id": "supabase-calendar-9a462b0f-09e6-4e21-be44-f22fd4a150de",
@@ -274448,7 +274452,7 @@
     {
       "id": "supabase-calendar-2638e413-0405-473f-8c06-296fd8a4dd05",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "buffer_scheduled",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "INVITO ALLA VISITA · AVIGLIANA ATTIVITA' BAR RISTORANTE TABACCHI LOTTO",
@@ -274490,7 +274494,19 @@
           "bytes": "2919495"
         }
       ],
-      "blocked_reason": "Buffer facebook: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
+      "buffer_posts": [
+        {
+          "service": "facebook",
+          "channel_id": "6ab2b713ea19ca0bdeb8103d",
+          "post_id": "6ac1580f814d657011d3439a",
+          "buffer_status": "scheduled",
+          "due_at": "2026-10-06T06:00:00.000Z",
+          "created_at": "2026-10-03T19:31:27+00:00"
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "facebook"
+      ]
     },
     {
       "id": "supabase-calendar-8e5eb029-9aa2-4357-aad1-d17c43bdb152",
@@ -274573,7 +274589,7 @@
     {
       "id": "supabase-calendar-2c18bd54-c2fb-43f5-b9cb-812992b73612",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "buffer_scheduled",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "INVITO ALLA VISITA · CHALET AD AVIGLIANA",
@@ -274615,7 +274631,19 @@
           "bytes": "308805"
         }
       ],
-      "blocked_reason": "Buffer facebook: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
+      "buffer_posts": [
+        {
+          "service": "facebook",
+          "channel_id": "6ab2b713ea19ca0bdeb8103d",
+          "post_id": "6ac15812fec5913394844041",
+          "buffer_status": "scheduled",
+          "due_at": "2026-10-06T12:00:00.000Z",
+          "created_at": "2026-10-03T19:31:30+00:00"
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "facebook"
+      ]
     },
     {
       "id": "supabase-calendar-934962f2-4e39-42a1-84bb-74cd9e421555",
@@ -274789,7 +274817,7 @@
     {
       "id": "supabase-calendar-302ecde4-29ad-42bd-aa67-3835f22db9e9",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "buffer_scheduled",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "INVITO ALLA VISITA · ALLOGGIO DI DUE LOCALI COLLEGNO",
@@ -274831,7 +274859,19 @@
           "bytes": "2763758"
         }
       ],
-      "blocked_reason": "Buffer instagram: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
+      "buffer_posts": [
+        {
+          "service": "instagram",
+          "channel_id": "6ab2b6e7ea19ca0bdeb80e19",
+          "post_id": "6ac15814814d657011d3447f",
+          "buffer_status": "scheduled",
+          "due_at": "2026-10-07T06:00:00.000Z",
+          "created_at": "2026-10-03T19:31:32+00:00"
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "instagram"
+      ]
     },
     {
       "id": "supabase-calendar-9477727e-b298-499f-8162-8a19b1ea3e7f",
@@ -279130,6 +279170,18 @@
               ]
             }
           ]
+        },
+        {
+          "at": "2026-10-03T19:32:34+00:00",
+          "dry_run": false,
+          "results": [
+            {
+              "platform": "system",
+              "status": "blocked",
+              "error": "real-media-pro-2026-10-03-c00-01-01-google-ads-intento: missing media: /home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/real-media-pro/2026-10-03/cycle-00/01-10-03-c00-01-01-google-ads-intento.jpg",
+              "error_code": "PUBLISH_JOB_MEDIA_OR_PREFLIGHT_ERROR"
+            }
+          ]
         }
       ]
     },
@@ -279489,6 +279541,18 @@
                 "RMP_PINTEREST_ACCESS_TOKEN",
                 "RMP_PINTEREST_BOARD_ID"
               ]
+            }
+          ]
+        },
+        {
+          "at": "2026-10-03T19:32:34+00:00",
+          "dry_run": false,
+          "results": [
+            {
+              "platform": "system",
+              "status": "blocked",
+              "error": "real-media-pro-2026-10-03-c00-02-02-shopify-product-page: missing media: /home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/real-media-pro/2026-10-03/cycle-00/02-10-03-c00-02-02-shopify-product-page.jpg",
+              "error_code": "PUBLISH_JOB_MEDIA_OR_PREFLIGHT_ERROR"
             }
           ]
         }
@@ -279852,6 +279916,18 @@
               ]
             }
           ]
+        },
+        {
+          "at": "2026-10-03T19:32:34+00:00",
+          "dry_run": false,
+          "results": [
+            {
+              "platform": "system",
+              "status": "blocked",
+              "error": "real-media-pro-2026-10-03-c00-03-03-advertising-sistema: missing media: /home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/real-media-pro/2026-10-03/cycle-00/03-10-03-c00-03-03-advertising-sistema.jpg",
+              "error_code": "PUBLISH_JOB_MEDIA_OR_PREFLIGHT_ERROR"
+            }
+          ]
         }
       ]
     },
@@ -280211,6 +280287,18 @@
                 "RMP_PINTEREST_ACCESS_TOKEN",
                 "RMP_PINTEREST_BOARD_ID"
               ]
+            }
+          ]
+        },
+        {
+          "at": "2026-10-03T19:32:34+00:00",
+          "dry_run": false,
+          "results": [
+            {
+              "platform": "system",
+              "status": "blocked",
+              "error": "real-media-pro-2026-10-03-c00-04-04-shopify-che-converte: missing media: /home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/real-media-pro/2026-10-03/cycle-00/04-10-03-c00-04-04-shopify-che-converte.jpg",
+              "error_code": "PUBLISH_JOB_MEDIA_OR_PREFLIGHT_ERROR"
             }
           ]
         }
@@ -280574,6 +280662,18 @@
               ]
             }
           ]
+        },
+        {
+          "at": "2026-10-03T19:32:34+00:00",
+          "dry_run": false,
+          "results": [
+            {
+              "platform": "system",
+              "status": "blocked",
+              "error": "real-media-pro-2026-10-03-c00-05-05-audit-digitale: missing media: /home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/real-media-pro/2026-10-03/cycle-00/05-10-03-c00-05-05-audit-digitale.jpg",
+              "error_code": "PUBLISH_JOB_MEDIA_OR_PREFLIGHT_ERROR"
+            }
+          ]
         }
       ]
     },
@@ -280670,7 +280770,7 @@
       ]
     }
   ],
-  "updated_at": "2026-10-03T19:08:15+00:00",
+  "updated_at": "2026-10-03T19:33:06+00:00",
   "updated_by": "Automatic renderer · F1 manual-only aware",
   "current_cycle": "2026-10-03T00:00",
   "history_days": 14,
