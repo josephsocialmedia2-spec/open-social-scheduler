@@ -42,7 +42,8 @@ jobs:
       - name: Check workspace JavaScript syntax
         run: |
           node --check f1-content-hub/client-workspace.js
-          node --check f1-content-hub/email-module.js\n          node --check f1-content-hub/f1-v7.js
+          node --check f1-content-hub/email-module.js
+          node --check f1-content-hub/f1-v7.js
       - name: Check Content Hub wiring
         run: |
           node <<'NODE'
@@ -57,7 +58,11 @@ jobs:
             'client-workspace.css',
             'client-workspace.js',
             'email-module.css',
-            'email-module.js',\n            'f1-v7.css',\n            'f1-v7.js',\n            'id="publicationCalendarV7"',\n            'id="v7LocalArchive"',
+            'email-module.js',
+            'f1-v7.css',
+            'f1-v7.js',
+            'id="publicationCalendarV7"',
+            'id="v7LocalArchive"',
             'id="tab-email"',
             'id="emailWorkspace"',
             'email:"Email"',
@@ -153,7 +158,9 @@ jobs:
           NODE
       - name: Check cache version with email module
         run: |
-          grep -q 'f1-content-hub-v20-v7-approved' f1-content-hub/sw.js\n          grep -q 'f1-v7.js' f1-content-hub/sw.js\n          grep -q 'f1-v7.css' f1-content-hub/sw.js
+          grep -q 'f1-content-hub-v20-v7-approved' f1-content-hub/sw.js
+          grep -q 'f1-v7.js' f1-content-hub/sw.js
+          grep -q 'f1-v7.css' f1-content-hub/sw.js
           grep -q 'email-module.js' f1-content-hub/sw.js
           grep -q 'email-module.css' f1-content-hub/sw.js
           grep -q 'f1-design-system.css' f1-content-hub/sw.js
