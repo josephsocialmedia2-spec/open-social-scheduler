@@ -95,10 +95,11 @@ function renderFrame(){
   if(E.loading&&!E.data){root.innerHTML='<div class="panel"><div class="email-empty"><span class="email-spin"></span> Caricamento modulo EMAIL…</div></div>';return}
   if(!E.data){root.innerHTML='<div class="panel"><div class="email-inline-note bad">Il modulo EMAIL non è disponibile.</div></div>';return}
   const a=currentAccount(),g=activeGraphic(),campaigns=E.data.campaigns||[];
+  const serviceEnabled=E.data.client?.email_service_enabled!==false;
   const sent=campaigns.reduce((n,x)=>n+Number(x.sent_count||0),0);
   root.innerHTML='<div class="email-shell">'+
     '<div class="email-head"><div><div class="brand"><small>F1 SOCIAL · CLIENTE</small>EMAIL</div><h2>'+eh(c.name)+'</h2><div class="email-subtitle">Account, grafiche settimanali, campagne e invii dello stesso cliente.</div></div>'+
-      '<div class="email-actions"><button class="btn small ghost" onclick="window.f1EmailRefresh()">AGGIORNA</button><button class="btn small danger" onclick="setTab(\'dashboard\')">CHIUDI EMAIL</button></div></div>'+
+      '<div class="email-actions"><span class="email-status '+(serviceEnabled?"ok":"warn")+'">EMAIL '+(serviceEnabled?"ATTIVA":"NON ATTIVA")+'</span><button class="btn small '+(serviceEnabled?"danger":"green")+'" onclick="window.f1EmailToggleService('+(serviceEnabled?"false":"true")+')">'+(serviceEnabled?"DISATTIVA EMAIL":"ATTIVA EMAIL")+'</button><button class="btn small ghost" onclick="window.f1EmailRefresh()">AGGIORNA</button><button class="btn small danger" onclick="setTab(\'dashboard\')">CHIUDI EMAIL</button></div></div>'+
     '<div id="emailNotice"></div>'+
     '<div class="email-metrics">'+
       metric("ACCOUNT",a?enumv(a.connection_status):"NON CONFIGURATO",a?.email_address||"")+
@@ -312,6 +313,15 @@ window.f1RenderEmailWorkspace=async function(force){
   finally{E.loading=false;renderFrame()}
 };
 window.f1EmailRefresh=async function(){E.data=null;await window.f1RenderEmailWorkspace(true);notice("Dati EMAIL aggiornati.","")};
+window.f1EmailToggleService=async function(enabled){
+  if(!confirm((enabled?"Attivare":"Disattivare")+" il servizio EMAIL per "+(eclient()?.name||"questo cliente")+"?"))return;
+  try{
+    await eapi("SET_SERVICE",{client_id:E.clientId,enabled:enabled===true});
+    const c=eclient();if(c)c.email_service_enabled=enabled===true;
+    E.data=null;await window.f1RenderEmailWorkspace(true);
+    notice("Servizio EMAIL "+(enabled?"attivato.":"disattivato. Gli invii restano bloccati finché non viene riattivato."),enabled?"":"warn");
+  }catch(e){notice(e.message||String(e),"bad")}
+};
 window.f1EmailSetView=function(v){E.view=v;renderFrame()};
 window.f1EmailProviderChanged=function(){
   const p=document.getElementById("emailProvider")?.value||"microsoft",t=document.getElementById("emailMicrosoftType")?.value||"personal";
