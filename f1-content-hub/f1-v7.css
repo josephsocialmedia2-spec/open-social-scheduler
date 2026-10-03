@@ -1,0 +1,115 @@
+/* F1 Social V7 — UX approved from demo, real-data integration */
+:root{--v7-cyan:#38d5ff;--v7-blue:#1679e8;--v7-panel:#061d34;--v7-panel2:#082944;--v7-line:#285f89;--v7-muted:#9fc5de;--v7-green:#64e5ad}
+
+.v7-hidden{display:none!important}
+#tab-dashboard .metrics.v7-metrics-one-line{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:#174f78;border:1px solid #174f78;border-radius:13px;overflow:hidden;margin-bottom:12px}
+#tab-dashboard .metrics.v7-metrics-one-line .metric{min-width:0;border:0;border-radius:0;display:flex;align-items:baseline;gap:8px;justify-content:center;padding:13px 10px;background:#051f39}
+#tab-dashboard .metrics.v7-metrics-one-line .metric b{font-size:25px;line-height:1}
+#tab-dashboard .metrics.v7-metrics-one-line .metric span{font-size:10px;white-space:nowrap}
+
+.v7-client-list{display:grid;gap:8px}
+.v7-client-row{display:grid;grid-template-columns:minmax(240px,1.5fr) minmax(250px,1fr) minmax(300px,1.1fr) auto;align-items:center;gap:12px;padding:13px 14px;border:1px solid var(--v7-line);border-radius:13px;background:linear-gradient(90deg,#06233f,#041b32);transition:.15s}
+.v7-client-row:hover{border-color:var(--v7-cyan);transform:translateY(-1px)}
+.v7-client-row.is-selected{box-shadow:inset 3px 0 0 var(--v7-cyan);border-color:#2e8abe}
+.v7-client-main small{display:block;color:#7ea8c6;font-size:9px;font-weight:900;letter-spacing:.08em}
+.v7-client-main h3{margin:3px 0 4px;font-size:16px}
+.v7-client-description{color:#9dbbd2;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.v7-client-services{display:flex;gap:5px;flex-wrap:wrap}
+.v7-client-kpis{display:grid;grid-template-columns:repeat(4,minmax(58px,1fr));gap:5px}
+.v7-client-kpi{padding:7px 5px;border:1px solid #224e72;border-radius:9px;background:#041a30;text-align:center}
+.v7-client-kpi b{display:block;font-size:15px}
+.v7-client-kpi span{display:block;color:#82a9c4;font-size:8px;font-weight:900;white-space:nowrap}
+.v7-client-row>.btn{white-space:nowrap}
+
+.v7-archive-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+.v7-archive-head h2{margin:0 0 3px}
+.v7-archive-actions{display:grid;grid-template-columns:repeat(4,minmax(145px,1fr));gap:8px;margin-bottom:12px}
+.v7-source-btn{display:flex;flex-direction:column;gap:3px;align-items:flex-start;min-height:62px;padding:10px 12px;border:1px solid #2b6994;border-radius:11px;background:#05233f;color:#fff;cursor:pointer}
+.v7-source-btn:hover{border-color:var(--v7-cyan);background:#073154}
+.v7-source-btn b{font-size:11px}.v7-source-btn small{color:#8eb6d1;font-size:9px}
+#clientFilter.v7-client-filter-hidden{position:absolute!important;width:1px!important;height:1px!important;opacity:0!important;pointer-events:none!important}
+.v7-local-archive{margin:0 0 12px;padding:12px;border:1px solid #255d85;border-radius:12px;background:#041b31}
+.v7-local-archive-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px}
+.v7-local-files{display:grid;gap:5px}
+.v7-local-file{display:grid;grid-template-columns:minmax(180px,1fr) auto auto;gap:8px;align-items:center;padding:7px 9px;border:1px solid #214b6d;border-radius:8px;background:#03172a;font-size:10px}
+.v7-local-file small{color:#84abc7}
+.v7-local-note{padding:9px 10px;border:1px dashed #326b92;border-radius:9px;color:#9fc3db;font-size:10px}
+
+.v7-calendar-shell{overflow:auto;border:1px solid #174f78;border-radius:12px;background:#02182d}
+.v7-calendar-month{min-width:820px;padding:6px}
+.v7-month-weekdays,.v7-month-grid{display:grid;grid-template-columns:repeat(7,minmax(110px,1fr));gap:1px}
+.v7-month-weekdays>div{padding:7px;text-align:center;font-size:9px;font-weight:900;color:#a4d2ee;background:#082b4b}
+.v7-month-grid{background:#174f78}
+.v7-month-day{min-height:122px;padding:7px;background:#031d36;cursor:pointer}
+.v7-month-day:hover{background:#072845}.v7-month-day.outside{opacity:.38}
+.v7-month-day.today{box-shadow:inset 0 0 0 2px var(--v7-cyan)}
+.v7-month-date{font-size:10px;font-weight:900;margin-bottom:5px}
+.v7-cal-event{margin:3px 0;padding:5px 6px;border:1px solid #2f7eaf;border-radius:7px;background:#0a3a60;font-size:9px;line-height:1.3}
+.v7-cal-event b{display:block}.v7-cal-event small{color:#a8cce3}
+.v7-calendar-day{min-width:690px}
+.v7-day-head{padding:10px 13px;border-bottom:1px solid #296487;background:#082d4d;font-weight:900;position:sticky;top:0;z-index:2}
+.v7-hour-row{display:grid;grid-template-columns:72px minmax(0,1fr);min-height:48px;border-bottom:1px solid rgba(48,106,149,.32)}
+.v7-hour-label{padding:7px 8px;border-right:1px solid rgba(48,106,149,.4);background:#031d36;color:#8ec4e6;font-size:10px;font-weight:900}
+.v7-hour-cell{padding:4px 6px;min-width:0}
+.v7-calendar-week{min-width:1060px}
+.v7-week-grid{display:grid;grid-template-columns:68px repeat(7,minmax(135px,1fr))}
+.v7-week-head,.v7-week-corner{position:sticky;top:0;z-index:2;padding:7px 5px;border-right:1px solid #285f89;border-bottom:1px solid #285f89;background:#082d4d;text-align:center;font-size:9px;font-weight:900}
+.v7-week-time{padding:6px;border-right:1px solid rgba(48,106,149,.4);border-bottom:1px solid rgba(48,106,149,.3);background:#031d36;color:#8ec4e6;font-size:9px;font-weight:900}
+.v7-week-cell{min-height:45px;padding:3px 4px;border-right:1px solid rgba(48,106,149,.28);border-bottom:1px solid rgba(48,106,149,.28)}
+.v7-pub-calendar{margin-bottom:14px}
+.v7-pub-calendar .week-toolbar{margin-bottom:10px}
+.v7-publication-title{margin:14px 0 8px}
+.v7-publication-title h3{margin:0}
+
+#clientPublisherWorkspace.v7-publisher-in-publications{margin:0 0 14px}
+#clientPublisherWorkspace.v7-publisher-in-publications .publisher-console{margin:0}
+.v7-channel-accordion{border-radius:9px;overflow:hidden}
+.v7-channel-accordion.v7-collapsed textarea,.v7-channel-accordion.v7-collapsed .row-actions{display:none!important}
+.v7-channel-accordion .v7-channel-toggle{display:flex;width:100%;align-items:center;justify-content:space-between;gap:8px;background:transparent;border:0;color:inherit;padding:0;text-align:left;cursor:pointer}
+.v7-channel-chevron{font-size:16px;transition:transform .15s}.v7-channel-accordion:not(.v7-collapsed) .v7-channel-chevron{transform:rotate(180deg)}
+
+.v7-connection-action{margin-left:6px}
+.v7-email-shell{display:grid;gap:12px}
+.v7-email-account-grid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(220px,.6fr);gap:10px}
+.v7-email-card{padding:14px;border:1px solid #294f70;border-radius:13px;background:#061d34}
+.v7-email-card h3{margin:0 0 4px}
+.v7-email-address{font-size:22px;font-weight:900;word-break:break-word;margin:8px 0 4px}
+.v7-email-crm-count{font-size:38px;font-weight:950;line-height:1;margin:8px 0}
+.v7-email-ai{border:1px solid #2a6590;border-radius:13px;overflow:hidden;background:#061d34}
+.v7-email-ai-head{width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 14px;border:0;background:linear-gradient(90deg,#093258,#06213c);color:#fff;text-align:left;cursor:pointer}
+.v7-email-ai-head b{display:block;font-size:15px}.v7-email-ai-head small{display:block;color:#9fc6df;margin-top:3px}
+.v7-email-ai-body{display:none;padding:13px}.v7-email-ai.open .v7-email-ai-body{display:block}
+.v7-email-ai textarea{min-height:280px;font:10px/1.45 ui-monospace,SFMono-Regular,Consolas,monospace}
+.v7-email-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}
+.v7-email-statusline{margin-top:9px;padding:9px 10px;border:1px solid #285d83;border-radius:9px;color:#a6c8de;font-size:10px}
+.v7-email-statusline.ok{border-color:#26865e;background:#082c23;color:#9ae9c2}
+.v7-email-preview{margin-top:10px;max-height:280px;overflow:auto;border:1px solid #2d668e;border-radius:10px}
+.v7-email-preview table{width:100%;border-collapse:collapse;font-size:9px}
+.v7-email-preview th,.v7-email-preview td{padding:6px;border-bottom:1px solid #214b6c;text-align:left;vertical-align:top}
+.v7-email-auto-summary{display:grid;grid-template-columns:1fr 1fr .7fr auto;gap:8px}
+.v7-email-auto-cell{padding:10px;border:1px solid #285a80;border-radius:10px;background:#041a30}
+.v7-email-auto-cell span{display:block;color:#88b7d4;font-size:8px;font-weight:900;letter-spacing:.07em;margin-bottom:4px}
+.v7-email-plan-head,.v7-email-plan-row{display:grid;grid-template-columns:115px minmax(210px,1.6fr) 85px minmax(135px,1fr) 105px 34px;gap:7px;align-items:center}
+.v7-email-plan-head{padding:0 9px 6px;color:#83b8d7;font-size:8px;font-weight:900}
+.v7-email-plan-list{display:grid;gap:5px}
+.v7-email-plan-row{padding:9px;border:1px solid #285c83;border-radius:10px;background:#05233e;cursor:pointer}
+.v7-email-plan-row.open{border-color:var(--v7-cyan)}
+.v7-email-plan-details{display:none;grid-column:1/-1;margin-top:4px;padding-top:7px;border-top:1px solid #244b69}.v7-email-plan-row.open .v7-email-plan-details{display:grid;gap:5px}
+.v7-email-item{display:grid;grid-template-columns:150px minmax(180px,1.3fr) minmax(130px,.8fr) 100px;gap:7px;padding:7px;border:1px solid #214866;border-radius:8px;background:#03192d;font-size:9px}
+.v7-email-item-body{grid-column:1/-1;color:#b7d3e5;white-space:pre-wrap;line-height:1.45}
+.v7-email-plan-chevron{display:grid;place-items:center;width:27px;height:27px;border:1px solid #2a668f;border-radius:8px}.v7-email-plan-row.open .v7-email-plan-chevron{transform:rotate(180deg)}
+
+@media(max-width:1100px){
+  .v7-client-row{grid-template-columns:1fr 1fr}.v7-client-kpis{grid-column:1/-1}.v7-client-row>.btn{justify-self:start}
+  .v7-archive-actions{grid-template-columns:1fr 1fr}
+  .v7-email-auto-summary{grid-template-columns:1fr 1fr}
+  .v7-email-plan-head{display:none}.v7-email-plan-row{grid-template-columns:110px 1fr 70px}.v7-email-plan-details{grid-column:1/-1}
+}
+@media(max-width:760px){
+  #tab-dashboard .metrics.v7-metrics-one-line{grid-template-columns:repeat(4,minmax(105px,1fr));overflow:auto}
+  .v7-client-row{grid-template-columns:1fr}.v7-client-kpis{grid-column:auto}
+  .v7-archive-actions{grid-template-columns:1fr}
+  .v7-email-account-grid,.v7-email-auto-summary{grid-template-columns:1fr}
+  .v7-email-plan-row{grid-template-columns:1fr auto}.v7-email-plan-row>*{grid-column:1}.v7-email-plan-row .v7-email-plan-chevron{grid-column:2;grid-row:1}
+  .v7-email-item{grid-template-columns:1fr}.v7-email-item-body{grid-column:1}
+}
