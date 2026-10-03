@@ -371,7 +371,10 @@ async function campaignContext(ownerId, campaignId) {
   } else {
     graphic = await activateScheduledGraphics(ownerId, campaign.client_id);
   }
-  return { campaign, client, account, brand: brand || {}, graphic };
+  const frozenBrand = campaign.approved_at && campaign.design_snapshot?.brand_kit
+    ? campaign.design_snapshot.brand_kit
+    : (brand || {});
+  return { campaign, client, account, brand: frozenBrand, graphic };
 }
 function emailShell(ctx, recipient, options = {}) {
   const vars = recipientVars(recipient);
@@ -784,6 +787,7 @@ async function actionSaveCampaign(user,p){
     const {data:old}=await SERVICE.from("email_campaigns").select("id,status").eq("id",p.campaign_id).eq("owner_id",user.id).eq("client_id",client.id).maybeSingle();
     if(!old)throw new Error("CAMPAGNA_NON_TROVATA");
     if(["sending","completed"].includes(old.status))throw new Error("CAMPAGNA_NON_MODIFICABILE");
+    payload.campaign_key = old.campaign_key;
     ({data,error}=await SERVICE.from("email_campaigns").update(payload).eq("id",old.id).select("*").single());
   }else{
     ({data,error}=await SERVICE.from("email_campaigns").insert(payload).select("*").single());
@@ -821,7 +825,9 @@ async function actionApprove(user,p){
   const designSnapshot={graphic_id:ctx.graphic?.id||null,graphic_file:ctx.graphic?.file_name||null,graphic_week:ctx.graphic?ctx.graphic.iso_year+"-W"+ctx.graphic.iso_week:null,brand_kit:ctx.brand||{}};
   const {data,error}=await SERVICE.from("email_campaigns").update({
     approval_state:"APPROVATA",approved_at:stamp,compliance_confirmed_at:stamp,compliance_confirmed_by:user.id,
-    sender_snapshot:senderSnapshot,design_snapshot:designSnapshot,updated_at:stamp
+    sender_snapshot:senderSnapshot,design_snapshot:designSnapshot,
+    graphic_id:ctx.campaign.graphic_id || ctx.graphic?.id || null,
+    updated_at:stamp
   }).eq("id",ctx.campaign.id).eq("owner_id",user.id).select("*").single();
   if(error)throw error;
   await logEvent(user.id,ctx.client.id,ctx.campaign.id,"CAMPAIGN_APPROVED",{by:user.email||user.id});
@@ -878,6 +884,10 @@ async function actionStartStep(user,p){
   if(!ctx.campaign.test_sent_at)throw new Error("TEST_EMAIL_OBBLIGATORIO");
   if(!ctx.campaign.approved_at||ctx.campaign.approval_state!=="APPROVATA")throw new Error("CAMPAGNA_NON_APPROVATA");
   if(!ctx.campaign.compliance_confirmed_at)throw new Error("CONFERMA_BASE_GIURIDICA_RICHIESTA");
+  const approvedSender = normEmail(ctx.campaign.sender_snapshot?.email || "");
+  if(approvedSender && approvedSender !== normEmail(ctx.account.email_address)) {
+    throw new Error("MITTENTE_MODIFICATO_RIPETI_TEST_E_APPROVAZIONE");
+  }
   await SERVICE.from("email_campaigns").update({status:"sending",paused_at:null,started_at:ctx.campaign.started_at||nowIso(),updated_at:nowIso(),last_error:null}).eq("id",ctx.campaign.id).eq("owner_id",user.id);
   const {data:batch,error}=await SERVICE.from("email_campaign_recipients")
     .select("*").eq("campaign_id",ctx.campaign.id).eq("owner_id",user.id)
