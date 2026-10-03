@@ -657,6 +657,18 @@ async function actionStatus(user, p) {
     current_week: isoWeekParts()
   };
 }
+async function actionCrmCount(user,p) {
+  const client=await requireClient(user.id,p.client_id);
+  const {data,error}=await SERVICE.from("email_campaign_recipients")
+    .select("email_normalized,email")
+    .eq("owner_id",user.id)
+    .eq("client_id",client.id)
+    .limit(10000);
+  if(error)throw error;
+  const unique=new Set((data||[]).map(row=>normEmail(row.email_normalized||row.email)).filter(Boolean));
+  return {ok:true,client_id:client.id,count:unique.size};
+}
+
 async function actionSetService(user,p) {
   const client=await requireClient(user.id,p.client_id);
   const enabled=p.enabled===true;
@@ -1089,6 +1101,7 @@ Deno.serve(async req => {
   try{
     let result;
     if(action==="STATUS")result=await actionStatus(user,p);
+    else if(action==="CRM_COUNT")result=await actionCrmCount(user,p);
     else if(action==="SET_SERVICE")result=await actionSetService(user,p);
     else if(action==="SAVE_ACCOUNT")result=await actionSaveAccount(user,p);
     else if(action==="MS_DEVICE_START")result=await actionMsDeviceStart(user,p);
