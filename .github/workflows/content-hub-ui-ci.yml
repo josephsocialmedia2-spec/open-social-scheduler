@@ -60,7 +60,7 @@ jobs:
             'email-module.js',
             'id="tab-email"',
             'id="emailWorkspace"',
-            "setTab('email')",
+            'email:"Email"',
             'f1RenderContentRail',
             'f1RenderClientPublisherWorkspace'
           ]){
