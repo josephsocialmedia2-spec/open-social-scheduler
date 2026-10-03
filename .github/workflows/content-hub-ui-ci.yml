@@ -42,7 +42,7 @@ jobs:
       - name: Check workspace JavaScript syntax
         run: |
           node --check f1-content-hub/client-workspace.js
-          node --check f1-content-hub/email-module.js
+          node --check f1-content-hub/email-module.js\n          node --check f1-content-hub/f1-v7.js
       - name: Check Content Hub wiring
         run: |
           node <<'NODE'
@@ -57,7 +57,7 @@ jobs:
             'client-workspace.css',
             'client-workspace.js',
             'email-module.css',
-            'email-module.js',
+            'email-module.js',\n            'f1-v7.css',\n            'f1-v7.js',\n            'id="publicationCalendarV7"',\n            'id="v7LocalArchive"',
             'id="tab-email"',
             'id="emailWorkspace"',
             'email:"Email"',
@@ -66,7 +66,7 @@ jobs:
           ]){
             if(!html.includes(required)) throw new Error('Missing Content Hub wiring: '+required);
           }
-          if(!sw.includes('client-workspace.js')||!sw.includes('client-workspace.css')||!sw.includes('email-module.js')||!sw.includes('email-module.css')){
+          if(!sw.includes('client-workspace.js')||!sw.includes('client-workspace.css')||!sw.includes('email-module.js')||!sw.includes('email-module.css')||!sw.includes('f1-v7.js')||!sw.includes('f1-v7.css')){
             throw new Error('Service worker is not caching workspace/email assets');
           }
           console.log('CONTENT_HUB_WORKSPACE_WIRING_OK');
@@ -153,7 +153,7 @@ jobs:
           NODE
       - name: Check cache version with email module
         run: |
-          grep -q 'f1-content-hub-v19-email-visible' f1-content-hub/sw.js
+          grep -q 'f1-content-hub-v20-v7-approved' f1-content-hub/sw.js\n          grep -q 'f1-v7.js' f1-content-hub/sw.js\n          grep -q 'f1-v7.css' f1-content-hub/sw.js
           grep -q 'email-module.js' f1-content-hub/sw.js
           grep -q 'email-module.css' f1-content-hub/sw.js
           grep -q 'f1-design-system.css' f1-content-hub/sw.js
