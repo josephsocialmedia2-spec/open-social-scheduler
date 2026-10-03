@@ -221,7 +221,7 @@ body::after{
   border-color:var(--f1-cyan)!important;
   box-shadow:0 0 0 2px rgba(32,199,255,.10),0 0 15px rgba(32,199,255,.15)!important;
 }
-.global-client-select{background:linear-gradient(180deg,rgba(1,29,58,.98),rgba(0,18,40,.94))!important;border-color:rgba(32,199,255,.55)!important}
+.global-client-select{background:linear-gradient(180deg,#f7fbff,#dceeff)!important;border-color:#55b8ff!important;color:#0b63ce!important;font-weight:900!important;box-shadow:0 0 0 1px rgba(11,99,206,.08) inset,0 0 14px rgba(32,199,255,.18)!important}\n.global-client-select option{background:#f7fbff!important;color:#0b63ce!important;font-weight:800!important}
 
 /* Buttons */
 .btn{
