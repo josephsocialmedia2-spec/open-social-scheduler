@@ -43,6 +43,9 @@ jobs:
         run: |
           node --check f1-content-hub/client-workspace.js
           node --check f1-content-hub/email-module.js
+          node --check f1-content-hub/demo-v7-core.js
+          node --check f1-content-hub/demo-v7-email-core.js
+          node --check f1-content-hub/demo-v7-email-csv.js
       - name: Check Content Hub wiring
         run: |
           node <<'NODE'
@@ -153,7 +156,7 @@ jobs:
           NODE
       - name: Check cache version with email module
         run: |
-          grep -q 'f1-content-hub-v19-email-visible' f1-content-hub/sw.js
+          grep -q 'f1-content-hub-v20-demo-v7-live' f1-content-hub/sw.js
           grep -q 'email-module.js' f1-content-hub/sw.js
           grep -q 'email-module.css' f1-content-hub/sw.js
           grep -q 'f1-design-system.css' f1-content-hub/sw.js
