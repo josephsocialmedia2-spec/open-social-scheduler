@@ -267,10 +267,14 @@ DIREZIONE DELLE CARD
 9. Cosa fare adesso.
 10. Chiusura F1 INFORMA + fonte ufficiale.
 
-OUTPUT
-Genera le 10 immagini separate, numerate 1/10 … 10/10.
-Devono essere pronte per essere scaricate e pubblicate come UN SOLO CAROSELLO.
-Se l'interfaccia limita il numero di immagini generabili in una singola risposta, mantieni lo stesso progetto e prosegui con le card successive senza cambiare stile.
+STRATEGIA DI GENERAZIONE AUTOMATICA
+NON generare mai una tavola unica, una griglia o un collage con più card.
+Il worker automatico richiederà UNA SOLA CARD ALLA VOLTA, in 10 richieste consecutive nella stessa chat.
+Ogni richiesta deve produrre UNA SOLA IMMAGINE verticale 4:5.
+Mantieni identici stile, palette, font, gerarchia, margini, footer e direzione artistica tra una card e la successiva.
+
+OUTPUT DEL PROGETTO
+10 FILE IMMAGINE DISTINTI, numerati 1/10 … 10/10, da pubblicare insieme come un unico carosello.
 """
 
 def _supabase_headers():
@@ -278,7 +282,7 @@ def _supabase_headers():
     if not key: return None
     return {"apikey":key,"Authorization":f"Bearer {key}","Content-Type":"application/json"}
 
-def enqueue_graphics(story,caption,gprompt,date):
+def enqueue_graphics(story,caption,gprompt,date,card_specs):
     headers=_supabase_headers()
     if not headers:
         return {"queued":False,"reason":"SUPABASE_SERVICE_ROLE_KEY non disponibile"}
@@ -317,6 +321,11 @@ def enqueue_graphics(story,caption,gprompt,date):
                     "title":story.get("title"),
                     "caption":caption,
                     "graphics_prompt":gprompt,
+                    "cards":[
+                        {"index":i+1,"title":h,"body":b}
+                        for i,(h,b) in enumerate(card_specs)
+                    ],
+                    "generation_strategy":"one_card_per_request",
                     "source_url":story.get("url"),
                     "source_updated":story.get("updated"),
                     "source_hash":story.get("hash"),
@@ -351,7 +360,7 @@ def write(story,pages):
     gprompt=graphics_prompt(story,cs,caption)
     (out/"caption.txt").write_text(caption,encoding="utf-8")
     (out/"prompt-chatgpt.txt").write_text(gprompt,encoding="utf-8")
-    queue=enqueue_graphics(story,caption,gprompt,date)
+    queue=enqueue_graphics(story,caption,gprompt,date,cs)
     status="GRAFICA_IN_CODA" if queue.get("queued") else "ERRORE_AUTOMAZIONE"
     meta={
         "generated_at":now.isoformat(),
