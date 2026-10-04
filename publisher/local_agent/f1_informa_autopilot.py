@@ -18,6 +18,7 @@ import json
 import mimetypes
 import os
 import re
+import subprocess
 import sys
 import tempfile
 import time
@@ -239,6 +240,95 @@ def chrome_executable() -> str | None:
     return None
 
 
+
+def chrome_process_running() -> bool:
+    if os.name != "nt":
+        return False
+    try:
+        r = subprocess.run(
+            [
+                "powershell.exe", "-NoProfile", "-Command",
+                "(Get-Process chrome -ErrorAction SilentlyContinue | Measure-Object).Count",
+            ],
+            capture_output=True,
+            text=True,
+            timeout=10,
+            check=False,
+        )
+        return int((r.stdout or "0").strip() or "0") > 0
+    except Exception:
+        return False
+
+
+def chrome_cdp_endpoint() -> str | None:
+    for port in (9222, 9223):
+        try:
+            r = requests.get(f"http://127.0.0.1:{port}/json/version", timeout=1.5)
+            data = r.json() if r.ok else {}
+            if data.get("webSocketDebuggerUrl"):
+                return f"http://127.0.0.1:{port}"
+        except Exception:
+            continue
+    return None
+
+
+def discover_existing_chrome_profile() -> tuple[Path, str] | None:
+    """Find the Chrome profile associated with EXPECTED_EMAIL using local metadata only."""
+    if os.name != "nt":
+        return None
+    root = Path(os.environ.get("LOCALAPPDATA", "")) / "Google/Chrome/User Data"
+    if not root.exists():
+        return None
+
+    wanted = EXPECTED_EMAIL.lower()
+    local_state = root / "Local State"
+    try:
+        state = json.loads(local_state.read_text(encoding="utf-8"))
+        info = ((state.get("profile") or {}).get("info_cache") or {})
+        for directory, meta in info.items():
+            if not isinstance(meta, dict):
+                continue
+            values = {
+                str(meta.get("user_name") or "").strip().lower(),
+                str(meta.get("gaia_name") or "").strip().lower(),
+            }
+            if wanted in values and (root / directory).exists():
+                return root, directory
+    except Exception:
+        pass
+
+    candidates = ["Default"]
+    try:
+        candidates += sorted(
+            [p.name for p in root.iterdir() if p.is_dir() and p.name.startswith("Profile ")]
+        )
+    except Exception:
+        pass
+
+    for directory in candidates:
+        prefs = root / directory / "Preferences"
+        if not prefs.exists():
+            continue
+        try:
+            data = json.loads(prefs.read_text(encoding="utf-8"))
+        except Exception:
+            continue
+        accounts = data.get("account_info") or []
+        if isinstance(accounts, list):
+            for account in accounts:
+                email = str((account or {}).get("email") or "").strip().lower()
+                if email == wanted:
+                    return root, directory
+        profile_data = data.get("profile") if isinstance(data.get("profile"), dict) else {}
+        values = {
+            str(profile_data.get("user_name") or "").strip().lower(),
+            str(profile_data.get("gaia_name") or "").strip().lower(),
+        }
+        if wanted in values:
+            return root, directory
+    return None
+
+
 def prompt_box(page):
     selectors = [
         "#prompt-textarea",
@@ -455,14 +545,84 @@ def collect_ten_graphics(page, initial_prompt: str, workdir: Path) -> list[Path]
     return output
 
 
+def _mark_browser_ready(profile: dict[str, Any], **extra: Any) -> None:
+    rest_patch(
+        "f1_client_browser_profiles",
+        str(profile["id"]),
+        {
+            "status": "READY",
+            "google_email": EXPECTED_EMAIL,
+            "last_started_at": now_iso(),
+            "last_verified_at": now_iso(),
+            "updated_at": now_iso(),
+            "metadata": {
+                **(profile.get("metadata") if isinstance(profile.get("metadata"), dict) else {}),
+                "chatgpt_autopilot": True,
+                "expected_google_email": EXPECTED_EMAIL,
+                "execution_mode": "local_windows_pc",
+                **extra,
+            },
+        },
+    )
+
+
 def launch_and_generate(profile: dict[str, Any], prompt: str, workdir: Path) -> list[Path]:
     from playwright.sync_api import sync_playwright
 
-    profile_path = resolve_profile_path(profile)
     exe = chrome_executable()
     if not exe:
         raise AutopilotError("Google Chrome non trovato sul PC locale")
+
     with sync_playwright() as p:
+        endpoint = chrome_cdp_endpoint()
+        if endpoint:
+            browser = p.chromium.connect_over_cdp(endpoint)
+            page = None
+            try:
+                context = browser.contexts[0] if browser.contexts else None
+                if context is None:
+                    raise AutopilotError("Chrome collegato via CDP senza contesto browser")
+                page = context.new_page()
+                ensure_chatgpt_session(page)
+                _mark_browser_ready(profile, browser_source="existing_cdp", cdp_endpoint=endpoint)
+                return collect_ten_graphics(page, prompt, workdir)
+            finally:
+                try:
+                    if page is not None:
+                        page.close()
+                except Exception:
+                    pass
+
+        discovered = discover_existing_chrome_profile()
+        if discovered and not chrome_process_running():
+            user_data_root, profile_directory = discovered
+            context = p.chromium.launch_persistent_context(
+                user_data_dir=str(user_data_root),
+                executable_path=exe,
+                headless=False,
+                accept_downloads=True,
+                args=[
+                    f"--profile-directory={profile_directory}",
+                    "--remote-debugging-port=9222",
+                    "--start-maximized",
+                    "--disable-blink-features=AutomationControlled",
+                ],
+                no_viewport=True,
+            )
+            try:
+                pages = context.pages
+                page = pages[0] if pages else context.new_page()
+                ensure_chatgpt_session(page)
+                _mark_browser_ready(
+                    profile,
+                    browser_source="existing_google_profile",
+                    chrome_profile_directory=profile_directory,
+                )
+                return collect_ten_graphics(page, prompt, workdir)
+            finally:
+                context.close()
+
+        profile_path = resolve_profile_path(profile)
         context = p.chromium.launch_persistent_context(
             user_data_dir=str(profile_path),
             executable_path=exe,
@@ -474,28 +634,21 @@ def launch_and_generate(profile: dict[str, Any], prompt: str, workdir: Path) -> 
         try:
             pages = context.pages
             page = pages[0] if pages else context.new_page()
-            ensure_chatgpt_session(page)
-            rest_patch(
-                "f1_client_browser_profiles",
-                str(profile["id"]),
-                {
-                    "status": "READY",
-                    "google_email": EXPECTED_EMAIL,
-                    "last_started_at": now_iso(),
-                    "last_verified_at": now_iso(),
-                    "updated_at": now_iso(),
-                    "metadata": {
-                        **(profile.get("metadata") if isinstance(profile.get("metadata"), dict) else {}),
-                        "chatgpt_autopilot": True,
-                        "expected_google_email": EXPECTED_EMAIL,
-                        "execution_mode": "local_windows_pc",
-                    },
-                },
-            )
+            try:
+                ensure_chatgpt_session(page)
+            except AuthRequired:
+                if discovered and chrome_process_running():
+                    raise AuthRequired(
+                        "La sessione ChatGPT è nel Chrome normale già aperto, ma quel Chrome non "
+                        "espone la porta di controllo remoto. Il worker non chiude il browser "
+                        "dell'utente; alla prossima apertura automatica userà il profilo "
+                        f"{discovered[1]} di {EXPECTED_EMAIL}."
+                    )
+                raise
+            _mark_browser_ready(profile, browser_source="f1_dedicated_profile")
             return collect_ten_graphics(page, prompt, workdir)
         finally:
             context.close()
-
 
 def create_content_and_schedule(job: dict[str, Any], cards: list[Path]) -> dict[str, Any]:
     payload = job.get("payload") if isinstance(job.get("payload"), dict) else {}
