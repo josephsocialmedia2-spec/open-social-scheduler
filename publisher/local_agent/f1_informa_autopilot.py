@@ -752,8 +752,110 @@ def _uia_download_image(win, index: int, dest: Path) -> None:
             pass
 
 
+
+def parse_card_specs_from_master(master_prompt: str) -> list[dict[str, Any]]:
+    pattern = re.compile(
+        r"CARD\s+(\d+)\s*[—-]\s*(.*?)\n(.*?)(?=\n\nCARD\s+\d+\s*[—-]|\n\nDIREZIONE|\n\nSTRATEGIA|\n\nOUTPUT|\Z)",
+        re.S | re.I,
+    )
+    cards: list[dict[str, Any]] = []
+    for m in pattern.finditer(master_prompt or ""):
+        try:
+            index = int(m.group(1))
+        except Exception:
+            continue
+        cards.append(
+            {
+                "index": index,
+                "title": re.sub(r"\s+", " ", m.group(2)).strip(),
+                "body": re.sub(r"\s+", " ", m.group(3)).strip(),
+            }
+        )
+    cards.sort(key=lambda x: int(x.get("index") or 0))
+    return cards
+
+
+def resolve_card_specs(payload: dict[str, Any]) -> list[dict[str, Any]]:
+    raw = payload.get("cards")
+    cards: list[dict[str, Any]] = []
+    if isinstance(raw, list):
+        for i, row in enumerate(raw, 1):
+            if not isinstance(row, dict):
+                continue
+            cards.append(
+                {
+                    "index": int(row.get("index") or i),
+                    "title": str(row.get("title") or "").strip(),
+                    "body": str(row.get("body") or "").strip(),
+                }
+            )
+    if len(cards) != EXPECTED_IMAGES:
+        cards = parse_card_specs_from_master(str(payload.get("graphics_prompt") or ""))
+    if len(cards) != EXPECTED_IMAGES:
+        raise AutopilotError(
+            f"F1 INFORMA: attese {EXPECTED_IMAGES} specifiche card, trovate {len(cards)}"
+        )
+    return cards
+
+
+def single_card_prompt(
+    caption: str,
+    card: dict[str, Any],
+    position: int,
+) -> str:
+    title = str(card.get("title") or f"Card {position}").strip()
+    body = str(card.get("body") or "").strip()
+    continuity = (
+        "Questa è la PRIMA card: definisci la direzione artistica che dovrà restare identica nelle prossime 9."
+        if position == 1
+        else
+        "Continua ESATTAMENTE la stessa direzione artistica delle card precedenti già create in questa chat."
+    )
+    return f"""CREA ORA UNA SOLA IMMAGINE PER IL CAROSELLO F1 INFORMA.
+
+REGOLA ASSOLUTA DI QUESTO TURNO
+Devi generare ESATTAMENTE 1 IMMAGINE, corrispondente soltanto alla CARD {position}/10.
+NON creare una tavola con più card.
+NON creare una griglia.
+NON creare un collage.
+NON mostrare miniature delle altre card dentro l'immagine.
+NON anticipare le card successive.
+L'output grafico di questo turno deve essere un singolo file verticale 4:5, 1080x1350.
+
+PROGETTO
+Brand: F1 IMMOBILIARE
+Rubrica: F1 INFORMA · Casa, fisco e mercato
+Palette: verde immobiliare profondo, bianco/panna, accenti oro.
+Stile: elegante, moderno, autorevole, immobiliare.
+Usa fotografia immobiliare/architettura, icone e grandi numeri solo quando utili.
+Testo visibile breve e leggibile: evita paragrafi lunghi.
+Footer discreto: F1 Immobiliare · Fonte: Agenzia delle Entrate.
+{continuity}
+
+CARD DA GENERARE ADESSO
+Numero: {position}/10
+Titolo: {title}
+Contenuto source-locked:
+{body}
+
+CAPTION F1 INFORMA DI RIFERIMENTO
+Usala solo per capire il contesto e verificare numeri/date. Non trasformarla tutta in testo sulla card.
+--- INIZIO CAPTION ---
+{caption}
+--- FINE CAPTION ---
+
+REGOLE CONTENUTO
+- Non inventare dati.
+- Mantieni esatti percentuali, date, importi e condizioni.
+- Sulla card usa solo le informazioni necessarie a questa singola card.
+- Non inserire 10 card nella stessa immagine.
+- Non scrivere una nuova caption.
+
+GENERA ADESSO SOLO L'IMMAGINE DELLA CARD {position}/10."""
+
 def collect_ten_graphics_uia(
-    initial_prompt: str,
+    caption: str,
+    card_specs: list[dict[str, Any]],
     workdir: Path,
     progress=None,
 ) -> list[Path]:
@@ -761,92 +863,78 @@ def collect_ten_graphics_uia(
     if progress:
         progress("CHATGPT_WINDOW_READY", window_title=_uia_title_value(win)[:180])
 
-    baseline = _uia_image_count(win)
-    if progress:
-        progress("PROMPT_READY", baseline_images=baseline)
-
+    # Image mode is helpful when exposed by the UI, but it is not required:
+    # an explicit "create one image" prompt can invoke image generation itself.
     image_mode = _uia_enable_image_mode(win)
-    if not image_mode:
-        if progress:
-            progress("IMAGE_MODE_NOT_FOUND", baseline_images=baseline)
-        raise AutopilotError(
-            "ChatGPT: comando Crea immagine / Create image non trovato nella sessione browser"
-        )
     if progress:
-        progress("IMAGE_MODE_READY", baseline_images=baseline)
-
-    _uia_send_prompt(win, initial_prompt)
-    if progress:
-        progress("PROMPT_SENT", baseline_images=baseline)
-
-    total = baseline
-    for turn in range(1, MAX_TURNS + 1):
-        total = _uia_wait_for_images(win, baseline, timeout_seconds=180)
-        produced = max(0, total - baseline)
-        if progress:
-            progress(
-                "GRAPHICS_GENERATING",
-                turn=turn,
-                images_found=produced,
-                expected_images=EXPECTED_IMAGES,
-            )
-        if produced >= EXPECTED_IMAGES:
-            break
-
-        if turn == 1 and produced == 0:
-            raise AutopilotError(
-                "ChatGPT image mode attivata ma 0 immagini generate nel primo ciclo"
-            )
-
-        missing = EXPECTED_IMAGES - produced
-        followup = (
-            f"Continua lo STESSO carosello F1 INFORMA. Mancano {missing} card grafiche. "
-            f"Genera ora le prossime {missing} immagini SEPARATE in formato verticale 4:5. "
-            "Mantieni IDENTICI stile, palette, font, gerarchia e numerazione. "
-            "Non creare una tavola unica e non ripetere le card già generate."
-        )
-        _uia_send_prompt(win, followup)
-        if progress:
-            progress(
-                "FOLLOWUP_SENT",
-                turn=turn,
-                images_found=produced,
-                missing=missing,
-            )
-
-    produced = max(0, total - baseline)
-    if produced < EXPECTED_IMAGES:
-        raise AutopilotError(
-            f"UIA ChatGPT ha prodotto {produced}/{EXPECTED_IMAGES} grafiche dopo {MAX_TURNS} turni"
-        )
-
-    if progress:
-        progress("GRAPHICS_READY", images_found=produced, expected_images=EXPECTED_IMAGES)
+        progress("IMAGE_MODE_READY" if image_mode else "IMAGE_MODE_OPTIONAL")
 
     output: list[Path] = []
     hashes: set[str] = set()
-    for card_index in range(EXPECTED_IMAGES):
+
+    for position, card in enumerate(card_specs, 1):
+        baseline = _uia_image_count(win)
+        prompt = single_card_prompt(caption, card, position)
         if progress:
             progress(
-                "DOWNLOADING_GRAPHICS",
-                downloaded=card_index,
+                "CARD_PROMPT_READY",
+                card=position,
+                baseline_images=baseline,
                 expected_images=EXPECTED_IMAGES,
             )
-        raw = workdir / f"uia-raw-{card_index + 1:02d}.img"
-        final = workdir / f"{card_index + 1:02d}.png"
-        _uia_download_image(win, baseline + card_index, raw)
+
+        _uia_send_prompt(win, prompt)
+        if progress:
+            progress("CARD_PROMPT_SENT", card=position, expected_images=EXPECTED_IMAGES)
+
+        total = _uia_wait_for_images(win, baseline, timeout_seconds=240)
+        produced = max(0, total - baseline)
+        if produced < 1:
+            raise AutopilotError(
+                f"ChatGPT non ha generato l'immagine della card {position}/10"
+            )
+
+        # One request equals one card. If the UI exposes more than one candidate,
+        # take only the newest generated image for this card.
+        image_index = total - 1
+        if progress:
+            progress(
+                "CARD_IMAGE_READY",
+                card=position,
+                new_images_detected=produced,
+                expected_images=EXPECTED_IMAGES,
+            )
+
+        raw = workdir / f"uia-raw-{position:02d}.img"
+        final = workdir / f"{position:02d}.png"
+        _uia_download_image(win, image_index, raw)
         normalize_card(raw, final)
+
         digest = hashlib.sha256(final.read_bytes()).hexdigest()
         if digest in hashes:
-            raise AutopilotError(f"UIA: grafica duplicata alla card {card_index + 1}")
+            raise AutopilotError(f"Grafica duplicata rilevata alla card {position}/10")
         hashes.add(digest)
         output.append(final)
+
         if progress:
             progress(
-                "DOWNLOADING_GRAPHICS",
-                downloaded=card_index + 1,
+                "CARD_DOWNLOADED",
+                card=position,
+                downloaded=len(output),
                 expected_images=EXPECTED_IMAGES,
             )
+
+    if len(output) != EXPECTED_IMAGES:
+        raise AutopilotError(
+            f"Carosello incompleto: {len(output)}/{EXPECTED_IMAGES} immagini separate"
+        )
+    if progress:
+        progress(
+            "GRAPHICS_READY",
+            images_found=len(output),
+            expected_images=EXPECTED_IMAGES,
+            strategy="one_card_per_request",
+        )
     return output
 
 
@@ -1021,48 +1109,52 @@ def normalize_card(src: Path, dest: Path) -> None:
         raise AutopilotError(f"Grafica non valida: {dest.name}")
 
 
-def collect_ten_graphics(page, initial_prompt: str, workdir: Path) -> list[Path]:
+def collect_ten_graphics(
+    page,
+    caption: str,
+    card_specs: list[dict[str, Any]],
+    workdir: Path,
+    progress=None,
+) -> list[Path]:
     known = {str(x.get("src") or "") for x in image_candidates(page)}
-    send_prompt(page, initial_prompt)
-    sources: list[str] = []
-    source_seen: set[str] = set()
-
-    for turn in range(1, MAX_TURNS + 1):
-        fresh = wait_for_new_images(page, known | source_seen, timeout_seconds=300)
-        for src in fresh:
-            if src not in source_seen:
-                source_seen.add(src)
-                sources.append(src)
-                if len(sources) >= EXPECTED_IMAGES:
-                    break
-        if len(sources) >= EXPECTED_IMAGES:
-            break
-        missing = EXPECTED_IMAGES - len(sources)
-        followup = (
-            f"Continua lo STESSO carosello F1 INFORMA. Mancano {missing} card grafiche. "
-            f"Genera ora le prossime {missing} immagini separate in formato verticale 4:5, "
-            "mantenendo IDENTICI stile, palette, font, gerarchia e numerazione. "
-            "Non creare una tavola unica e non ripetere le card già generate."
-        )
-        send_prompt(page, followup)
-
-    if len(sources) < EXPECTED_IMAGES:
-        raise AutopilotError(
-            f"ChatGPT ha prodotto {len(sources)}/{EXPECTED_IMAGES} grafiche dopo {MAX_TURNS} turni"
-        )
-
     output: list[Path] = []
     hashes: set[str] = set()
-    for idx, src in enumerate(sources[:EXPECTED_IMAGES], 1):
-        raw = workdir / f"raw-{idx:02d}.img"
-        final = workdir / f"{idx:02d}.png"
+
+    for position, card in enumerate(card_specs, 1):
+        prompt = single_card_prompt(caption, card, position)
+        if progress:
+            progress("CARD_PROMPT_READY", card=position, expected_images=EXPECTED_IMAGES)
+        send_prompt(page, prompt)
+        if progress:
+            progress("CARD_PROMPT_SENT", card=position, expected_images=EXPECTED_IMAGES)
+
+        fresh = wait_for_new_images(page, known, timeout_seconds=240)
+        if not fresh:
+            raise AutopilotError(
+                f"ChatGPT non ha generato l'immagine della card {position}/10"
+            )
+        src = fresh[-1]
+        known.update(fresh)
+
+        raw = workdir / f"raw-{position:02d}.img"
+        final = workdir / f"{position:02d}.png"
         download_image(page, src, raw)
         normalize_card(raw, final)
+
         digest = hashlib.sha256(final.read_bytes()).hexdigest()
         if digest in hashes:
-            raise AutopilotError(f"Grafica duplicata rilevata alla card {idx}")
+            raise AutopilotError(f"Grafica duplicata rilevata alla card {position}/10")
         hashes.add(digest)
         output.append(final)
+
+        if progress:
+            progress(
+                "CARD_DOWNLOADED",
+                card=position,
+                downloaded=len(output),
+                expected_images=EXPECTED_IMAGES,
+            )
+
     return output
 
 
@@ -1087,7 +1179,13 @@ def _mark_browser_ready(profile: dict[str, Any], **extra: Any) -> None:
     )
 
 
-def launch_and_generate(profile: dict[str, Any], prompt: str, workdir: Path, progress=None) -> list[Path]:
+def launch_and_generate(
+    profile: dict[str, Any],
+    caption: str,
+    card_specs: list[dict[str, Any]],
+    workdir: Path,
+    progress=None,
+) -> list[Path]:
     from playwright.sync_api import sync_playwright
 
     exe = chrome_executable()
@@ -1106,7 +1204,7 @@ def launch_and_generate(profile: dict[str, Any], prompt: str, workdir: Path, pro
                 page = context.new_page()
                 ensure_chatgpt_session(page)
                 _mark_browser_ready(profile, browser_source="existing_cdp", cdp_endpoint=endpoint)
-                return collect_ten_graphics(page, prompt, workdir)
+                return collect_ten_graphics(page, caption, card_specs, workdir, progress=progress)
             finally:
                 try:
                     if page is not None:
@@ -1121,7 +1219,7 @@ def launch_and_generate(profile: dict[str, Any], prompt: str, workdir: Path, pro
         # verified joseph.socialmedia2@gmail.com session directly and does not
         # require closing Chrome, copying cookies, or asking for a login.
         if discovered and chrome_process_running():
-            cards = collect_ten_graphics_uia(prompt, workdir, progress=progress)
+            cards = collect_ten_graphics_uia(caption, card_specs, workdir, progress=progress)
             _mark_browser_ready(
                 profile,
                 browser_source="existing_chrome_uia",
@@ -1153,7 +1251,7 @@ def launch_and_generate(profile: dict[str, Any], prompt: str, workdir: Path, pro
                     browser_source="existing_google_profile",
                     chrome_profile_directory=profile_directory,
                 )
-                return collect_ten_graphics(page, prompt, workdir)
+                return collect_ten_graphics(page, caption, card_specs, workdir, progress=progress)
             finally:
                 context.close()
 
@@ -1195,7 +1293,7 @@ def launch_and_generate(profile: dict[str, Any], prompt: str, workdir: Path, pro
                 browser_source=browser_source,
                 source_google_profile=(discovered[1] if discovered else None),
             )
-            return collect_ten_graphics(page, prompt, workdir)
+            return collect_ten_graphics(page, caption, card_specs, workdir, progress=progress)
         finally:
             context.close()
 
@@ -1353,8 +1451,12 @@ def create_content_and_schedule(job: dict[str, Any], cards: list[Path]) -> dict[
 def process_job(job: dict[str, Any]) -> None:
     payload = job.get("payload") if isinstance(job.get("payload"), dict) else {}
     prompt = str(payload.get("graphics_prompt") or "").strip()
+    caption = str(payload.get("caption") or "").strip()
     if not prompt:
         raise AutopilotError("Prompt grafico F1 INFORMA mancante")
+    if not caption:
+        raise AutopilotError("Caption F1 INFORMA mancante")
+    card_specs = resolve_card_specs(payload)
 
     job_id = str(job["id"])
 
@@ -1364,7 +1466,13 @@ def process_job(job: dict[str, Any]) -> None:
     progress("BROWSER_STARTING", expected_images=EXPECTED_IMAGES)
     profile = client_profile(str(job["client_id"]))
     with tempfile.TemporaryDirectory(prefix="f1-informa-chatgpt-") as td:
-        cards = launch_and_generate(profile, prompt, Path(td), progress=progress)
+        cards = launch_and_generate(
+            profile,
+            caption,
+            card_specs,
+            Path(td),
+            progress=progress,
+        )
         progress("GRAPHICS_VALIDATED", images_found=len(cards), expected_images=EXPECTED_IMAGES)
         result = create_content_and_schedule(job, cards)
         progress(
@@ -1436,6 +1544,15 @@ def self_test() -> None:
     assert max(1, int(3)) == 3
     assert _uia_count_from_title("F1IMGCOUNT:7 - Google Chrome") == 7
     assert _uia_count_from_title("ChatGPT - Google Chrome") is None
+    sample_master = "\n\n".join(
+        f"CARD {i} — Titolo {i}\nTesto card {i}" for i in range(1, 11)
+    ) + "\n\nDIREZIONE DELLE CARD"
+    sample_cards = parse_card_specs_from_master(sample_master)
+    assert len(sample_cards) == 10
+    one = single_card_prompt("Caption di prova 50% 2026", sample_cards[0], 1)
+    assert "ESATTAMENTE 1 IMMAGINE" in one
+    assert "NON creare una griglia" in one
+    assert "CARD 1/10" in one
     assert "Crea immagine" in "Crea immagine / Create image"
     payload = {
         "caption": "Bonus mobili: detrazione Irpef del 50%. Fonte ufficiale.",
