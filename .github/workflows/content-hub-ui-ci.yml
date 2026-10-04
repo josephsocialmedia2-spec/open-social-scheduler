@@ -118,7 +118,12 @@ jobs:
             'intelligenceTimePanel',
             'intel-folder-mini',
             'caption_manual=true',
-            'graphic_caption'
+            'graphic_caption',
+            'f1WorkspaceSaveWhatsAppAutomation',
+            'f1WorkspaceRunWhatsAppNow',
+            'daily_batch_time',
+            'caption_delay_minutes',
+            'auto_publish_after_caption'
           ]){
             if(!js.includes(required)) throw new Error('Missing Content Rail logic: '+required);
           }
@@ -156,7 +161,7 @@ jobs:
           NODE
       - name: Check cache version with email module
         run: |
-          grep -q 'f1-content-hub-v21-email-auto-complete' f1-content-hub/sw.js
+          grep -q 'f1-content-hub-v22-whatsapp-daily' f1-content-hub/sw.js
           grep -q 'email-module.js' f1-content-hub/sw.js
           grep -q 'email-module.css' f1-content-hub/sw.js
           grep -q 'f1-design-system.css' f1-content-hub/sw.js

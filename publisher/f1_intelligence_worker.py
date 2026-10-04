@@ -322,6 +322,27 @@ def job_is_available(job: dict[str, Any]) -> bool:
     return True
 
 
+def whatsapp_automation_config(item: dict[str, Any]) -> dict[str, Any]:
+    plan = item.get("distribution_plan") if isinstance(item.get("distribution_plan"), dict) else {}
+    config = plan.get("whatsapp_automation") if isinstance(plan.get("whatsapp_automation"), dict) else {}
+    return dict(config)
+
+
+def whatsapp_caption_delay_minutes(item: dict[str, Any]) -> int:
+    config = whatsapp_automation_config(item)
+    try:
+        return max(0, min(1440, int(config.get("caption_delay_minutes") or 0)))
+    except Exception:
+        return 0
+
+
+def whatsapp_auto_publish_enabled(item: dict[str, Any]) -> bool:
+    if str(item.get("source") or "").upper() != "WHATSAPP":
+        return False
+    config = whatsapp_automation_config(item)
+    return config.get("auto_publish_after_caption") is not False
+
+
 def update_job(job: dict[str, Any], status: str, stage: str, **extra: Any) -> None:
     payload: dict[str, Any] = {
         "status": status,
@@ -894,6 +915,9 @@ def caption_from_graphic(
                 headline = headline + " " + lines[1]
                 consumed = 2
             body = "\n".join(lines[consumed:]).strip()
+    elif source == "VIDEO_TRANSCRIPT" and graphic_text:
+        headline = title
+        body = clean_graphic_text(graphic_text)
     else:
         headline = title
         body = context
@@ -935,6 +959,15 @@ def regenerate_graphic_captions(
     client_id = str(item["client_id"])
     content_id = str(item["id"])
     graphic = extract_graphic_text(item, media_rows)
+    transcript = clean_graphic_text(str(processing.get("transcript") or ""))
+    if transcript:
+        graphic = {
+            **graphic,
+            "text": transcript,
+            "source": "VIDEO_TRANSCRIPT",
+            "ocr_used": False,
+            "transcript_used": True,
+        }
 
     plan = item.get("distribution_plan") if isinstance(item.get("distribution_plan"), dict) else {}
     plan = dict(plan)
@@ -1132,7 +1165,8 @@ def ensure_calendar_for_item(
         and str(ch.get("connection_status") or "").upper() == "COLLEGATO"
     ]
     created = 0
-    approval = is_real_estate(client)
+    whatsapp_auto_publish = whatsapp_auto_publish_enabled(item)
+    approval = is_real_estate(client) and not whatsapp_auto_publish
     for ch in verified:
         platform = str(ch.get("platform") or "")
         if (content_id, platform) in existing_pairs or not compatible(platform, preferred):
@@ -1157,6 +1191,8 @@ def ensure_calendar_for_item(
                     "selected_time": platform_time(client, platform),
                     "pipeline_version": "F1_INTELLIGENCE_V2_GRAPHIC_CAPTION",
                     "media_id": preferred.get("id"),
+                    "whatsapp_auto_publish": whatsapp_auto_publish,
+                    "source": str(item.get("source") or ""),
                 },
             },
         )
@@ -1250,33 +1286,74 @@ def process_content(
 
     processing: dict[str, Any] = {"status": "COMPLETED"}
     if any(is_video(m) for m in media_rows):
-        update_job(job, "RUNNING", "VIDEO_INTELLIGENCE")
-        try:
-            media_rows, processing = process_video(client, item, media_rows, job)
-        except Exception as exc:
+        prior_result = job.get("result") if isinstance(job.get("result"), dict) else {}
+        prior_processing = prior_result.get("video_processing") if isinstance(prior_result.get("video_processing"), dict) else {}
+        waiting_caption = str(job.get("stage") or "").upper() == "ATTESA_CAPTION"
+        if waiting_caption and str(prior_processing.get("transcript") or "").strip():
             processing = {
-                "status": "DEGRADED",
-                "speech_detected": False,
-                "caption_pipeline_continues": True,
-                "video_processing_error": str(exc)[:500],
+                **prior_processing,
+                "caption_delay_completed": True,
             }
-            emit_event(
-                owner_id, client_id, content_id, str(job["id"]),
-                "VIDEO_INTELLIGENCE", "WARNING",
-                "Trascrizione video non disponibile: la caption continua dal frame/testo grafico",
-                68,
-                {"error": str(exc)[:500]},
-            )
+        else:
+            update_job(job, "RUNNING", "VIDEO_INTELLIGENCE")
+            try:
+                media_rows, processing = process_video(client, item, media_rows, job)
+            except Exception as exc:
+                processing = {
+                    "status": "DEGRADED",
+                    "speech_detected": False,
+                    "caption_pipeline_continues": True,
+                    "video_processing_error": str(exc)[:500],
+                }
+                emit_event(
+                    owner_id, client_id, content_id, str(job["id"]),
+                    "VIDEO_INTELLIGENCE", "WARNING",
+                    "Trascrizione video non disponibile: la caption continua dal frame/testo grafico",
+                    68,
+                    {"error": str(exc)[:500]},
+                )
+
+            delay_minutes = whatsapp_caption_delay_minutes(item)
+            transcript = str(processing.get("transcript") or "").strip()
+            if transcript and delay_minutes > 0:
+                ready_at = datetime.now(timezone.utc) + timedelta(minutes=delay_minutes)
+                update_job(
+                    job,
+                    "WAITING",
+                    "ATTESA_CAPTION",
+                    run_after=ready_at.isoformat(),
+                    result={
+                        "video_processing": processing,
+                        "caption_ready_after": ready_at.isoformat(),
+                        "caption_delay_minutes": delay_minutes,
+                    },
+                    last_error=None,
+                )
+                emit_event(
+                    owner_id, client_id, content_id, str(job["id"]),
+                    "ATTESA_CAPTION", "WAITING",
+                    f"Trascrizione pronta: caption tra {delay_minutes} minuti",
+                    74,
+                    {"run_after": ready_at.isoformat(), "delay_minutes": delay_minutes},
+                )
+                return {"published": 0, "scheduled": 0, "blocked": 0}
 
     regenerate_graphic_captions(client, item, media_rows, calendars, job, processing)
 
     created = ensure_calendar_for_item(client, item, media_rows, channels, calendars, occupied, job)
+    whatsapp_auto_publish = whatsapp_auto_publish_enabled(item)
+    approval_required = is_real_estate(client) and not whatsapp_auto_publish
     update_job(
         job,
         "COMPLETED" if created or str(item.get("status") or "") in {"PROGRAMMATO", "DA APPROVARE"} else "WAITING",
-        "PRONTO_PER_APPROVAZIONE" if is_real_estate(client) else "PROGRAMMATO",
+        "PRONTO_PER_APPROVAZIONE" if approval_required else "PROGRAMMATO",
         completed_at=now_iso() if created else None,
-        result={"calendar_rows_created": created, "approval_required": is_real_estate(client)},
+        result={
+            "calendar_rows_created": created,
+            "approval_required": approval_required,
+            "whatsapp_auto_publish": whatsapp_auto_publish,
+            "video_processing": processing,
+        },
         last_error=None,
     )
     return {"published": 0, "scheduled": created, "blocked": 0 if created else 1}
