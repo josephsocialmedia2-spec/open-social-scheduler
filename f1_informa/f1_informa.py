@@ -49,12 +49,30 @@ def fetch(url):
     except Exception as e:
         return None,url,f"{err}; PLAYWRIGHT_ERROR: {e}"
 
+def page_title(soup,main,base):
+    generic={"menu principale","menu","agenzia delle entrate","home","cittadini","agevolazioni"}
+    candidates=[]
+    for selector in ("h1","h2","h3"):
+        for node in main.find_all(selector,limit=8):
+            value=norm(node.get_text(" ",strip=True))
+            if value: candidates.append(value)
+    if soup.title:
+        candidates.append(norm(soup.title.get_text(" ",strip=True)))
+    for value in candidates:
+        low=value.lower().strip(" -|")
+        if low in generic or low.startswith("menu principale"): continue
+        if 6 <= len(value) <= 160 and relevant(value,base):
+            return re.sub(r"\s*[-|]\s*Agenzia delle Entrate.*$","",value,flags=re.I).strip()
+    slug=urlparse(base).path.rstrip("/").split("/")[-1]
+    slug=re.sub(r"-(cittadini|infogen.*)$","",slug,flags=re.I)
+    value=norm(slug.replace("-"," "))
+    return value[:1].upper()+value[1:] if value else "Aggiornamento casa"
+
 def extract(html,base):
     soup=BeautifulSoup(html,"html.parser")
     for tag in soup(["script","style","noscript","svg","footer"]): tag.decompose()
     main=soup.find("main") or soup.find(attrs={"role":"main"}) or soup.body or soup
-    node=main.find("h1") or soup.find("h1") or soup.find("title")
-    title=norm(node.get_text(" ",strip=True) if node else "")
+    title=page_title(soup,main,base)
     text=norm(main.get_text("\n",strip=True))
     links=[]
     for a in main.find_all("a",href=True):
@@ -223,7 +241,11 @@ def should(force=False):
     return now.hour==17 and not state().get("last_run","").startswith(now.strftime("%Y-%m-%d"))
 def selftest():
     fake={"title":"Test F1 Informa","url":"https://www.agenziaentrate.gov.it/portale/aree-tematiche/casa","updated":"4 ottobre 2026","hash":"x","text":"Questa è una pagina di test. I contribuenti possono verificare i requisiti nella fonte ufficiale. La detrazione di esempio è indicata solo nel test. È necessario consultare la pagina aggiornata. Attenzione alle esclusioni e alle scadenze indicate dalla fonte."}
-    cs=cards(fake); assert len(cs)==10; tmp=ROOT/".self-test-card.png"; render(tmp,1,*cs[0]); assert tmp.stat().st_size>1000; tmp.unlink(); print("F1_INFORMA_SELF_TEST_OK")
+    cs=cards(fake); assert len(cs)==10
+    sample=BeautifulSoup("<html><head><title>Acquisto prima casa - Agenzia delle Entrate</title></head><body><main><h1>Menu principale</h1><h2>Acquisto prima casa</h2><p>Agevolazioni per la casa.</p></main></body></html>","html.parser")
+    sample_main=sample.find("main")
+    assert page_title(sample,sample_main,"https://www.agenziaentrate.gov.it/portale/schede/agevolazioni/scheda-acquisto-prima-casa/acquisto-prima-casa-a-chi-interessa-cittadini")=="Acquisto prima casa"
+    tmp=ROOT/".self-test-card.png"; render(tmp,1,*cs[0]); assert tmp.stat().st_size>1000; tmp.unlink(); print("F1_INFORMA_SELF_TEST_OK")
 
 def main():
     ap=argparse.ArgumentParser(); ap.add_argument("--force",action="store_true"); ap.add_argument("--self-test",action="store_true"); a=ap.parse_args()
