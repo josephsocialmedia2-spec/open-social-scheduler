@@ -18,6 +18,7 @@ import json
 import mimetypes
 import os
 import re
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -341,6 +342,81 @@ def discover_existing_chrome_profile() -> tuple[Path, str] | None:
     return None
 
 
+
+def _copy_profile_entry(src: Path, dst: Path) -> None:
+    if not src.exists():
+        return
+    dst.parent.mkdir(parents=True, exist_ok=True)
+    if src.is_dir():
+        shutil.copytree(
+            src,
+            dst,
+            dirs_exist_ok=True,
+            ignore=shutil.ignore_patterns(
+                "Cache", "Code Cache", "GPUCache", "DawnCache", "GrShaderCache",
+                "ShaderCache", "Crashpad", "BrowserMetrics", "*.tmp", "LOCK"
+            ),
+        )
+    else:
+        for attempt in range(1, 4):
+            try:
+                shutil.copy2(src, dst)
+                return
+            except (PermissionError, OSError):
+                if attempt >= 3:
+                    raise
+                time.sleep(attempt)
+
+
+def sync_authenticated_chrome_profile(
+    source_root: Path,
+    profile_directory: str,
+    destination_root: Path,
+) -> str:
+    """Clone the authenticated Chrome session into the dedicated F1 worker profile.
+
+    The regular Chrome process may stay open. Only session/profile data is copied;
+    caches and lock files are intentionally excluded. Passwords are never read.
+    """
+    source_profile = source_root / profile_directory
+    if not source_profile.exists():
+        raise AuthRequired(f"Profilo Chrome sorgente non trovato: {source_profile}")
+    destination_root.mkdir(parents=True, exist_ok=True)
+    destination_profile = destination_root / profile_directory
+    destination_profile.mkdir(parents=True, exist_ok=True)
+
+    # Chrome cookie encryption metadata is stored in Local State. The same
+    # Windows user on the same PC can reuse it inside the dedicated copy.
+    _copy_profile_entry(source_root / "Local State", destination_root / "Local State")
+
+    # Copy only the session-relevant profile data. This is intentionally much
+    # smaller and safer than cloning the entire live Chrome user-data tree.
+    for relative in (
+        "Preferences",
+        "Secure Preferences",
+        "Network",
+        "Local Storage",
+        "Session Storage",
+        "IndexedDB",
+        "Storage",
+        "WebStorage",
+    ):
+        try:
+            _copy_profile_entry(source_profile / relative, destination_profile / relative)
+        except (PermissionError, OSError) as exc:
+            # One busy cache/database must not block all session reuse; Cookies
+            # and Local State are the critical pieces and are retried above.
+            print(f"WARN Chrome profile sync skipped {relative}: {exc}")
+
+    # Never copy/process Chromium singleton locks into the worker profile.
+    for base in (destination_root, destination_profile):
+        for name in ("SingletonLock", "SingletonCookie", "SingletonSocket", "lockfile"):
+            try:
+                (base / name).unlink(missing_ok=True)
+            except Exception:
+                pass
+    return profile_directory
+
 def prompt_box(page):
     selectors = [
         "#prompt-textarea",
@@ -635,29 +711,43 @@ def launch_and_generate(profile: dict[str, Any], prompt: str, workdir: Path) -> 
                 context.close()
 
         profile_path = resolve_profile_path(profile)
+        profile_args = ["--start-maximized", "--disable-blink-features=AutomationControlled"]
+        browser_source = "f1_dedicated_profile"
+
+        # If the user's normal Chrome is already open with the authenticated
+        # Google/ChatGPT profile, keep it open and clone only the authenticated
+        # session into the isolated F1 worker profile. This avoids asking the
+        # operator to log in or close Chrome.
+        if discovered and chrome_process_running():
+            source_root, profile_directory = discovered
+            try:
+                synced_dir = sync_authenticated_chrome_profile(
+                    source_root,
+                    profile_directory,
+                    profile_path,
+                )
+                profile_args.insert(0, f"--profile-directory={synced_dir}")
+                browser_source = "synced_existing_google_profile"
+            except Exception as exc:
+                print(f"WARN authenticated Chrome profile sync failed: {exc}")
+
         context = p.chromium.launch_persistent_context(
             user_data_dir=str(profile_path),
             executable_path=exe,
             headless=False,
             accept_downloads=True,
-            args=["--start-maximized", "--disable-blink-features=AutomationControlled"],
+            args=profile_args,
             no_viewport=True,
         )
         try:
             pages = context.pages
             page = pages[0] if pages else context.new_page()
-            try:
-                ensure_chatgpt_session(page)
-            except AuthRequired:
-                if discovered and chrome_process_running():
-                    raise AuthRequired(
-                        "La sessione ChatGPT è nel Chrome normale già aperto, ma quel Chrome non "
-                        "espone la porta di controllo remoto. Il worker non chiude il browser "
-                        "dell'utente; alla prossima apertura automatica userà il profilo "
-                        f"{discovered[1]} di {EXPECTED_EMAIL}."
-                    )
-                raise
-            _mark_browser_ready(profile, browser_source="f1_dedicated_profile")
+            ensure_chatgpt_session(page)
+            _mark_browser_ready(
+                profile,
+                browser_source=browser_source,
+                source_google_profile=(discovered[1] if discovered else None),
+            )
             return collect_ten_graphics(page, prompt, workdir)
         finally:
             context.close()
@@ -888,6 +978,19 @@ def self_test() -> None:
     }
     assert "50%" in payload["caption"]
     from PIL import Image, ImageDraw
+    with tempfile.TemporaryDirectory() as profile_td:
+        root = Path(profile_td) / "ChromeUserData"
+        src_profile = root / "Default"
+        (src_profile / "Network").mkdir(parents=True)
+        (src_profile / "Preferences").write_text('{"account_info":[]}', encoding="utf-8")
+        (src_profile / "Network" / "Cookies").write_bytes(b"cookie-db-test")
+        (root / "Local State").write_text('{"os_crypt":{}}', encoding="utf-8")
+        dest = Path(profile_td) / "WorkerProfile"
+        synced = sync_authenticated_chrome_profile(root, "Default", dest)
+        assert synced == "Default"
+        assert (dest / "Local State").exists()
+        assert (dest / "Default" / "Network" / "Cookies").read_bytes() == b"cookie-db-test"
+
     with tempfile.TemporaryDirectory() as td:
         src = Path(td) / "src.png"
         out = Path(td) / "out.png"
