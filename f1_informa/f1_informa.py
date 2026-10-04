@@ -398,6 +398,8 @@ def should(force=False):
 def selftest():
     fake={"title":"Test F1 Informa","url":"https://www.agenziaentrate.gov.it/portale/aree-tematiche/casa","updated":"4 ottobre 2026","hash":"x","text":"Questa è una pagina di test. I contribuenti possono verificare i requisiti nella fonte ufficiale. La detrazione di esempio è indicata solo nel test. È necessario consultare la pagina aggiornata. Attenzione alle esclusioni e alle scadenze indicate dalla fonte."}
     cs=cards(fake); assert len(cs)==10
+    cap=build_caption(fake,cs); assert "F1 INFORMA" in cap
+    gp=graphics_prompt(fake,cs,cap); assert "10 GRAFICHE SEPARATE" in gp and cap in gp
     sample=BeautifulSoup("<html><head><title>Acquisto prima casa - Agenzia delle Entrate</title></head><body><main><h1>Menu principale</h1><h2>Menu della sezione Acquisto prima casa</h2><h2>Agevolazione acquisto prima casa - Che cos'è</h2><p>Facebook e navigazione</p><p>Ultimo aggiornamento: 29 maggio 2026</p><p>L'agevolazione consente di pagare imposte ridotte.</p><p>Imposta di registro al 2% in presenza delle condizioni previste.</p><p>Link correlati</p><p>Rumore successivo</p></main></body></html>","html.parser")
     sample_main=sample.find("main")
     assert page_title(sample,sample_main,"https://www.agenziaentrate.gov.it/portale/schede/agevolazioni/scheda-acquisto-prima-casa/infogen-agevolazioni-acquisto-prima-casa-cittadini")=="Agevolazione acquisto prima casa - Che cos'è"
@@ -412,5 +414,5 @@ def main():
     if not should(a.force): print("Fuori dalla finestra delle 17:00 Europe/Rome o già eseguito oggi."); return
     pages=crawl(); story=pick(pages,state())
     if not story: print("Nessun contenuto valido trovato."); return
-    out=write(story,pages); update(pages,story); prune(int(CONFIG.get("retention_days",45))); print(f"F1 INFORMA generato in DA_APPROVARE: {out}")
+    out=write(story,pages); update(pages,story); prune(int(CONFIG.get("retention_days",45))); print(f"F1 INFORMA generato e inviato all'autopilota grafico: {out}")
 if __name__=="__main__": main()
