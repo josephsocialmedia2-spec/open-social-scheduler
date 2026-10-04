@@ -1,5 +1,9 @@
 {
-  "ready": false,
+  "ready": true,
+  "date": "2026-10-04",
+  "path": "f1-informa-data/2026-10-04",
+  "title": "Menu principale",
   "status": "DA_APPROVARE",
-  "message": "In attesa della prima esecuzione di F1 INFORMA"
+  "source_url": "https://www.agenziaentrate.gov.it/portale/schede/agevolazioni/scheda-acquisto-prima-casa/acquisto-prima-casa-a-chi-interessa-cittadini",
+  "updated": "29 maggio 2026"
 }
