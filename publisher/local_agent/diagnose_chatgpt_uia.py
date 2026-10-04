@@ -107,9 +107,95 @@ def cleanup_duplicate_automation_windows() -> int:
         pass
     return closed
 
+
+def inspect_controls(win) -> int:
+    import json
+    import pyperclip
+
+    marker = "F1_CONTROLS_PENDING"
+    pyperclip.copy(marker)
+
+    script = r"""(()=>{
+      const norm=s=>(s||'').replace(/\s+/g,' ').trim();
+      const visible=e=>!!(e && (e.offsetWidth||e.offsetHeight||e.getClientRects().length));
+      const rows=()=>[...document.querySelectorAll(
+        'button,[role="button"],[role="menuitem"],[role="option"]'
+      )].filter(visible).map(e=>({
+        tag:e.tagName,
+        text:norm(e.textContent).slice(0,120),
+        aria:norm(e.getAttribute('aria-label')).slice(0,120),
+        title:norm(e.getAttribute('title')).slice(0,120),
+        testid:norm(e.getAttribute('data-testid')).slice(0,120)
+      })).filter(x=>x.text||x.aria||x.title||x.testid);
+
+      const before=rows();
+      const lab=e=>(
+        (e.getAttribute('aria-label')||'')+' '+
+        (e.getAttribute('title')||'')+' '+
+        (e.getAttribute('data-testid')||'')+' '+
+        (e.textContent||'')
+      ).toLowerCase();
+      const candidates=[...document.querySelectorAll('button,[role="button"]')].filter(visible);
+      const opener=candidates.find(e=>{
+        const s=lab(e);
+        return s.includes('tool')||s.includes('strument')||s.includes('plus')||
+               s.includes('add')||s.includes('allega')||s.includes('aggiungi');
+      });
+      if(opener) opener.click();
+
+      setTimeout(()=>{
+        const after=rows();
+        const payload=JSON.stringify({before,after});
+        const ta=document.createElement('textarea');
+        ta.value=payload;ta.style.position='fixed';ta.style.opacity='0';
+        document.body.appendChild(ta);ta.focus();ta.select();
+        const ok=document.execCommand('copy');ta.remove();
+        document.title='F1CONTROLPROBE:'+(ok?'OK':'FAIL');
+      },900);
+      void(0);
+    })()"""
+
+    run_javascript(win, script)
+    time.sleep(1.6)
+    raw = str(pyperclip.paste() or "")
+    if not raw or raw == marker:
+        print("F1_CONTROL_PROBE=NO_CLIPBOARD_DATA")
+        return 4
+    try:
+        data = json.loads(raw)
+    except Exception:
+        print("F1_CONTROL_PROBE=INVALID_JSON")
+        return 5
+
+    def compact(rows):
+        out=[]
+        for row in rows or []:
+            label=" | ".join(
+                x for x in [
+                    str(row.get("text") or "").strip(),
+                    str(row.get("aria") or "").strip(),
+                    str(row.get("title") or "").strip(),
+                    str(row.get("testid") or "").strip(),
+                ] if x
+            )
+            if not label:
+                continue
+            low=label.lower()
+            if any(k in low for k in (
+                "image","immagin","crea","create","generat","genera",
+                "tool","strument","plus","add","aggiung","allega","upload"
+            )):
+                out.append(label[:360])
+        return out[:80]
+
+    print("F1_CONTROL_PROBE_BEFORE=" + json.dumps(compact(data.get("before")), ensure_ascii=False))
+    print("F1_CONTROL_PROBE_AFTER=" + json.dumps(compact(data.get("after")), ensure_ascii=False))
+    return 0
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--cleanup-only", action="store_true")
+    ap.add_argument("--inspect-controls", action="store_true")
     args = ap.parse_args()
 
     cleanup_duplicate_automation_windows()
@@ -178,6 +264,8 @@ def main() -> int:
     print(f"JS_BRIDGE_RESULT_TITLE={title}")
     if "F1 AUTOPILOT chatgpt.com:1" in title:
         print("JS_BRIDGE_OK")
+        if args.inspect_controls:
+            return inspect_controls(win)
         return 0
 
     print("JS_BRIDGE_NOT_CONFIRMED")
