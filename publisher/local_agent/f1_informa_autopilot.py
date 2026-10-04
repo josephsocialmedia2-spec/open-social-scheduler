@@ -716,11 +716,22 @@ def self_test() -> None:
         "title": "Bonus mobili",
     }
     assert "50%" in payload["caption"]
-    from PIL import Image
+    from PIL import Image, ImageDraw
     with tempfile.TemporaryDirectory() as td:
         src = Path(td) / "src.png"
         out = Path(td) / "out.png"
-        Image.new("RGB", (1024, 1536), "white").save(src)
+        image = Image.new("RGB", (1024, 1536), "white")
+        draw = ImageDraw.Draw(image)
+        palette = ["#0E5A3B", "#F6F2E8", "#D9B45B", "#133126", "#FFFFFF"]
+        for y in range(0, 1536, 48):
+            for x in range(0, 1024, 48):
+                draw.rectangle(
+                    [x, y, x + 47, y + 47],
+                    fill=palette[((x // 48) + (y // 48)) % len(palette)],
+                )
+        draw.text((80, 90), "F1 INFORMA 1/10", fill="black")
+        draw.text((80, 180), "Bonus mobili 50% · test grafico", fill="black")
+        image.save(src)
         normalize_card(src, out)
         with Image.open(out) as check:
             assert check.size == (1080, 1350)
