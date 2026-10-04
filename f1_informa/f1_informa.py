@@ -49,12 +49,30 @@ def fetch(url):
     except Exception as e:
         return None,url,f"{err}; PLAYWRIGHT_ERROR: {e}"
 
+def page_title(soup,main,base):
+    generic={"menu principale","menu","agenzia delle entrate","home","cittadini","agevolazioni"}
+    candidates=[]
+    for selector in ("h1","h2","h3"):
+        for node in main.find_all(selector,limit=8):
+            value=norm(node.get_text(" ",strip=True))
+            if value: candidates.append(value)
+    if soup.title:
+        candidates.append(norm(soup.title.get_text(" ",strip=True)))
+    for value in candidates:
+        low=value.lower().strip(" -|")
+        if low in generic or low.startswith("menu principale"): continue
+        if 6 <= len(value) <= 160 and relevant(value,base):
+            return re.sub(r"\s*[-|]\s*Agenzia delle Entrate.*$","",value,flags=re.I).strip()
+    slug=urlparse(base).path.rstrip("/").split("/")[-1]
+    slug=re.sub(r"-(cittadini|infogen.*)$","",slug,flags=re.I)
+    value=norm(slug.replace("-"," "))
+    return value[:1].upper()+value[1:] if value else "Aggiornamento casa"
+
 def extract(html,base):
     soup=BeautifulSoup(html,"html.parser")
     for tag in soup(["script","style","noscript","svg","footer"]): tag.decompose()
     main=soup.find("main") or soup.find(attrs={"role":"main"}) or soup.body or soup
-    node=main.find("h1") or soup.find("h1") or soup.find("title")
-    title=norm(node.get_text(" ",strip=True) if node else "")
+    title=page_title(soup,main,base)
     text=norm(main.get_text("\n",strip=True))
     links=[]
     for a in main.find_all("a",href=True):
