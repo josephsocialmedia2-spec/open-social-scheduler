@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import tempfile
 import unittest
+import zipfile
 from pathlib import Path
 
 from publisher.local_agent import whatsapp_recovery_worker as wa
@@ -27,6 +28,18 @@ class WhatsAppRecoveryWorkerTests(unittest.TestCase):
         value = wa.media_date_from_filename("IMG-20260901-WA0001.jpg", "Europe/Rome")
         self.assertIsNotNone(value)
         self.assertEqual("2026-09-01", value.date().isoformat())
+
+    def test_zip_has_chat_text_rejects_unrelated_zip(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            invalid = root / "marta-assets.zip"
+            valid = root / "WhatsApp Chat - Marta.zip"
+            with zipfile.ZipFile(invalid, "w") as zf:
+                zf.writestr("README.md", "not a WhatsApp export")
+            with zipfile.ZipFile(valid, "w") as zf:
+                zf.writestr("_chat.txt", "[01/09/26, 09:15] Marta: ciao")
+            self.assertFalse(wa.zip_has_chat_text(invalid))
+            self.assertTrue(wa.zip_has_chat_text(valid))
 
     def test_referenced_media(self):
         with tempfile.TemporaryDirectory() as td:
