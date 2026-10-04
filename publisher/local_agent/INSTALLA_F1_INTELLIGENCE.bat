@@ -1,6 +1,6 @@
 @echo off
 setlocal
-title F1 Social Intelligence - Installazione
+title F1 Social Intelligence + F1 INFORMA Autopilot
 cd /d "%~dp0"
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0INSTALL_F1_INTELLIGENCE_AGENT.ps1"
 if errorlevel 1 (
@@ -10,5 +10,5 @@ if errorlevel 1 (
   exit /b 1
 )
 echo.
-echo F1 Social Intelligence e' attivo.
+echo F1 Social Intelligence e F1 INFORMA Autopilot sono attivi.
 timeout /t 4 >nul
