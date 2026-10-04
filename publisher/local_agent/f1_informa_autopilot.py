@@ -72,16 +72,28 @@ def require_env() -> None:
 
 
 def rest_get(table: str, params: dict[str, str]) -> list[dict[str, Any]]:
-    r = requests.get(
-        f"{SUPABASE_URL}/rest/v1/{table}",
-        headers=headers(),
-        params=params,
-        timeout=REQUEST_TIMEOUT,
-    )
-    if not r.ok:
-        raise AutopilotError(f"GET {table}: {r.status_code} {r.text[:500]}")
-    data = r.json()
-    return data if isinstance(data, list) else []
+    url = f"{SUPABASE_URL}/rest/v1/{table}"
+    last: Exception | None = None
+    for attempt in range(1, 5):
+        try:
+            r = requests.get(
+                url,
+                headers=headers(),
+                params=params,
+                timeout=REQUEST_TIMEOUT,
+            )
+            if not r.ok:
+                raise AutopilotError(f"GET {table}: {r.status_code} {r.text[:500]}")
+            data = r.json()
+            return data if isinstance(data, list) else []
+        except (requests.ConnectionError, requests.Timeout) as exc:
+            last = exc
+            if attempt >= 4:
+                break
+            wait = attempt * 3
+            print(f"WARN GET {table} rete temporaneamente non disponibile; retry {attempt}/4 tra {wait}s")
+            time.sleep(wait)
+    raise AutopilotError(f"GET {table}: connessione non disponibile dopo retry: {last}")
 
 
 def rest_post(table: str, payload: Any, return_rows: bool = False) -> list[dict[str, Any]]:
@@ -831,7 +843,13 @@ def process_job(job: dict[str, Any]) -> None:
 
 def run_once() -> int:
     require_env()
-    jobs = pending_jobs()
+    try:
+        jobs = pending_jobs()
+    except AutopilotError as exc:
+        # Il workflow gira ogni 5 minuti: un reset di rete non deve fermare
+        # l'autopilota né richiedere intervento dell'operatore.
+        print(f"F1 INFORMA queue temporarily unavailable: {exc}", file=sys.stderr)
+        return 0
     if not jobs:
         return 0
     processed = 0
