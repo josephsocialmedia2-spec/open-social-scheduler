@@ -1345,3 +1345,35 @@ window.f1WorkspaceImportWhatsApp=async function(logId){
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",function(){if(window.f1RenderClientPublisherWorkspace)window.f1RenderClientPublisherWorkspace()});
 else if(window.f1RenderClientPublisherWorkspace)window.f1RenderClientPublisherWorkspace();
 })();
+
+/* F1 INFORMA navigation entry */
+(function installF1InformaNavigation(){
+  function install(){
+    var nav=document.querySelector(".sidebar .nav");
+    if(!nav || nav.querySelector("[data-f1-informa-link]")) return;
+    var button=document.createElement("button");
+    button.type="button";
+    button.setAttribute("data-f1-informa-link","true");
+    button.textContent="F1 INFORMA";
+    button.title="Casa, fisco e mercato · fonti Agenzia delle Entrate";
+    button.style.color="#f7d48a";
+    button.style.border="1px solid rgba(217,180,91,.38)";
+    button.style.background="rgba(217,180,91,.06)";
+    button.addEventListener("click",function(){
+      window.location.href="./f1-informa.html";
+    });
+    var automation=nav.querySelector('[data-tab="automation"]');
+    if(automation && automation.nextSibling){
+      nav.insertBefore(button,automation.nextSibling);
+    }else if(automation){
+      nav.appendChild(button);
+    }else{
+      nav.appendChild(button);
+    }
+  }
+  if(document.readyState==="loading"){
+    document.addEventListener("DOMContentLoaded",install,{once:true});
+  }else{
+    install();
+  }
+})();
