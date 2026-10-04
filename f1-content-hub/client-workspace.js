@@ -1149,7 +1149,7 @@ window.f1WorkspaceOpenWhatsApp=async function(){
   const sender=(senderResult.data||[])[0]||null;
   const number=String(sender&&sender.wa_id||client.whatsapp||"").replace(/\D+/g,"");
   const batchTime=String(sender&&sender.daily_batch_time||"02:00").slice(0,5);
-  const delay=Math.max(0,Math.min(1440,Number(sender&&sender.caption_delay_minutes??60)||60));
+  const delay=Math.max(0,Math.min(1440,Number(sender ? (sender.caption_delay_minutes ?? 60) : 60)||60));
   const enabled=sender?sender.daily_batch_enabled!==false:true;
   const autoPublish=sender?sender.auto_publish_after_caption!==false:true;
   const lastBatch=sender&&sender.last_batch_started_at?new Date(sender.last_batch_started_at).toLocaleString("it-IT",{dateStyle:"short",timeStyle:"short"}):"mai";
