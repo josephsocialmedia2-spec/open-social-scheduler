@@ -1140,19 +1140,30 @@ window.f1WorkspaceOpenWhatsApp=async function(){
   const client=currentClient();if(!client)return;
   const modal=ensureWhatsAppModal(),list=document.getElementById("workspaceWaList");
   list.innerHTML='<div class="empty">Caricamento...</div>';modal.classList.add("open");
-  const [senderResult,logResult]=await Promise.all([
+  const [senderResult,logResult,recoveryResult]=await Promise.all([
     sb.from("f1_whatsapp_senders").select("*").eq("client_id",client.id).eq("active",true).order("updated_at",{ascending:false}).limit(1),
-    sb.from("f1_whatsapp_logs").select("id,message_id,message_type,message_text,media_count,result,error,created_at").eq("client_id",client.id).order("created_at",{ascending:false}).limit(30)
+    sb.from("f1_whatsapp_logs").select("id,message_id,message_type,message_text,media_count,result,error,created_at").eq("client_id",client.id).order("created_at",{ascending:false}).limit(30),
+    sb.from("f1_whatsapp_recovery_jobs").select("*").eq("client_id",client.id).order("created_at",{ascending:false}).limit(1)
   ]);
   if(senderResult.error){list.innerHTML='<div class="notice error">'+h(senderResult.error.message)+'</div>';return}
   if(logResult.error){list.innerHTML='<div class="notice error">'+h(logResult.error.message)+'</div>';return}
+  if(recoveryResult.error){list.innerHTML='<div class="notice error">'+h(recoveryResult.error.message)+'</div>';return}
+
   const sender=(senderResult.data||[])[0]||null;
+  const recovery=(recoveryResult.data||[])[0]||null;
   const number=String(sender&&sender.wa_id||client.whatsapp||"").replace(/\D+/g,"");
   const batchTime=String(sender&&sender.daily_batch_time||"02:00").slice(0,5);
   const delay=Math.max(0,Math.min(1440,Number(sender ? (sender.caption_delay_minutes ?? 60) : 60)||60));
   const enabled=sender?sender.daily_batch_enabled!==false:true;
   const autoPublish=sender?sender.auto_publish_after_caption!==false:true;
   const lastBatch=sender&&sender.last_batch_started_at?new Date(sender.last_batch_started_at).toLocaleString("it-IT",{dateStyle:"short",timeStyle:"short"}):"mai";
+
+  const defaultFrom=recovery&&recovery.date_from?new Date(recovery.date_from).toLocaleDateString("en-CA",{timeZone:client.timezone||"Europe/Rome"}):"2026-09-01";
+  const recoveryStatus=String(recovery&&recovery.status||"NON_AVVIATO");
+  const stats=recovery&&recovery.stats&&typeof recovery.stats==="object"?recovery.stats:{};
+  const recoveryBadge=/COMPLETED|COMPLETATO/.test(recoveryStatus)?"green":(/ERROR|ERRORE/.test(recoveryStatus)?"red":"amber");
+  const archivePath=String(recovery&&recovery.local_archive_path||("WHATSAPP_ARCHIVE/"+String(client.slug||client.name||"cliente").toLowerCase().replace(/[^a-z0-9]+/g,"-")+"/"+defaultFrom+"_oggi"));
+
   const config=
     '<div class="subpanel">'+
       '<div class="section-title"><div><h3 style="margin:0">AUTOMAZIONE WHATSAPP · '+h(client.name)+'</h3><div class="meta">Configura una volta: poi vale ogni giorno.</div></div><span class="badge '+(enabled?"green":"amber")+'">'+(enabled?"ATTIVA":"PAUSA")+'</span></div>'+
@@ -1164,13 +1175,38 @@ window.f1WorkspaceOpenWhatsApp=async function(){
         '<div class="field"><label>Pubblicazione</label><label class="checkline"><input id="workspaceWaAutoPublish" type="checkbox" '+(autoPublish?"checked":"")+'> <span>Pubblica automaticamente dopo caption e prossimo slot social</span></label></div>'+
         '<div class="field"><label>Ultimo batch</label><div class="input" style="opacity:.85">'+h(lastBatch)+'</div></div>'+
       '</div>'+
-      '<div class="notice" style="margin-top:10px"><b>Flusso:</b> i media vengono acquisiti dal webhook WhatsApp quando arrivano. Alle <b>'+h(batchTime)+'</b> il sistema importa i nuovi contenuti nel cliente. Se è un video, trascrive il parlato, attende <b>'+delay+' minuti</b>, genera le caption e poi usa i canali social collegati.</div>'+
+      '<div class="notice" style="margin-top:10px"><b>Flusso giornaliero:</b> i media ricevuti vengono archiviati; alle <b>'+h(batchTime)+'</b> vengono elaborati. I video passano alla trascrizione e la caption parte dopo <b>'+delay+' minuti</b>.</div>'+
       '<div class="row" style="margin-top:10px"><button class="btn green" onclick="window.f1WorkspaceSaveWhatsAppAutomation()">SALVA AUTOMAZIONE</button><button id="workspaceWaRunNowBtn" class="btn primary" onclick="window.f1WorkspaceRunWhatsAppNow()">ESEGUI ORA</button></div>'+
     '</div>';
+
+  const recoveryPanel=
+    '<div class="subpanel" style="margin-top:14px">'+
+      '<div class="section-title"><div><h3 style="margin:0">RECUPERO RETROATTIVO</h3><div class="meta">Funzione per qualunque cliente · archivio separato · checkpoint · manifest.</div></div><span class="badge '+recoveryBadge+'">'+h(recoveryStatus.replaceAll("_"," "))+'</span></div>'+
+      '<div class="forms">'+
+        '<div class="field"><label>Numero WhatsApp</label><div class="input" style="opacity:.9">'+h(number||"NON CONFIGURATO")+'</div></div>'+
+        '<div class="field"><label>Recupera dal</label><input id="workspaceWaRecoveryFrom" class="input" type="date" value="'+h(defaultFrom)+'"></div>'+
+        '<div class="field"><label>Recupera fino al</label><div class="input" style="opacity:.9">OGGI</div></div>'+
+        '<div class="field"><label>Cartella dedicata</label><div class="input" style="opacity:.9;overflow-wrap:anywhere">'+h(archivePath)+'</div></div>'+
+      '</div>'+
+      '<div class="analytics-grid" style="margin-top:10px">'+
+        '<div class="metric"><b>'+Number(stats.messages_scanned||0)+'</b><span>Messaggi analizzati</span></div>'+
+        '<div class="metric"><b>'+Number(stats.photos||0)+'</b><span>Foto</span></div>'+
+        '<div class="metric"><b>'+Number(stats.videos||0)+'</b><span>Video</span></div>'+
+        '<div class="metric"><b>'+Number(stats.audio||0)+'</b><span>Audio</span></div>'+
+        '<div class="metric"><b>'+Number(stats.documents||0)+'</b><span>Documenti</span></div>'+
+        '<div class="metric"><b>'+Number(stats.duplicates||0)+'</b><span>Duplicati</span></div>'+
+      '</div>'+
+      (recovery&&recovery.last_error?'<div class="notice error" style="margin-top:10px">'+h(recovery.last_error)+'</div>':'')+
+      '<div class="notice warn" style="margin-top:10px"><b>Stato reale:</b> il recupero storico viene eseguito dal programma locale sul PC usando esclusivamente la sessione WhatsApp già autenticata. Il Content Hub non dichiara il recupero completato finché il worker locale non restituisce manifest e conteggi reali.</div>'+
+      '<div class="row" style="margin-top:10px"><button id="workspaceWaRecoveryBtn" class="btn primary" onclick="window.f1WorkspaceQueueWhatsAppRecovery()">RECUPERA MEDIA RETROATTIVI</button>'+
+      ((/COMPLETED|COMPLETATO/.test(recoveryStatus))?'<button class="btn green" onclick="window.f1WorkspaceSelectRecoveredMedia()">SELEZIONA I FILE DA PREPARARE</button>':'')+
+      '</div>'+
+    '</div>';
+
   const logs=(logResult.data||[]).map(function(x){
     return '<div class="lineitem"><b>'+h(new Date(x.created_at).toLocaleString("it-IT",{dateStyle:"short",timeStyle:"short"}))+'</b><div><b>'+h(x.result||x.message_type||"Messaggio")+'</b><div class="meta">'+h(x.message_text||"")+(x.media_count?' · '+x.media_count+' media':"")+(x.error?' · '+h(x.error):"")+'</div></div><span class="badge">'+h(x.message_type||"WA")+'</span></div>';
   }).join("");
-  list.innerHTML=config+'<div class="section-title" style="margin-top:14px"><h3 style="margin:0">ULTIMI CONTENUTI WHATSAPP</h3><span class="muted">'+(logResult.data||[]).length+' eventi</span></div>'+(logs||'<div class="publisher-empty">Nessun contenuto WhatsApp associato a '+h(client.name)+'.</div>');
+  list.innerHTML=config+recoveryPanel+'<div class="section-title" style="margin-top:14px"><h3 style="margin:0">ULTIMI CONTENUTI WHATSAPP</h3><span class="muted">'+(logResult.data||[]).length+' eventi</span></div>'+(logs||'<div class="publisher-empty">Nessun contenuto WhatsApp associato a '+h(client.name)+'.</div>');
 };
 
 window.f1WorkspaceSaveWhatsAppAutomation=async function(silent){
@@ -1210,6 +1246,44 @@ window.f1WorkspaceSaveWhatsAppAutomation=async function(silent){
     await window.f1WorkspaceOpenWhatsApp();
   }
   return true;
+};
+
+window.f1WorkspaceQueueWhatsAppRecovery=async function(){
+  const client=currentClient();if(!client)return;
+  const wa=String((document.getElementById("workspaceWaNumber")||{}).value||client.whatsapp||"").replace(/\D+/g,"");
+  const from=String((document.getElementById("workspaceWaRecoveryFrom")||{}).value||"").trim();
+  if(wa.length<8||wa.length>15)return alert("Configura prima un numero WhatsApp valido.");
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(from))return alert("Seleziona la data iniziale.");
+  const slug=String(client.slug||client.name||"cliente").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+  const path="WHATSAPP_ARCHIVE/"+slug+"/"+from+"_oggi";
+  const existing=await sb.from("f1_whatsapp_recovery_jobs").select("id,status").eq("client_id",client.id).in("status",["QUEUED","WAITING_LOCAL_SESSION","RUNNING"]).order("created_at",{ascending:false}).limit(1);
+  if(existing.error)return alert(existing.error.message);
+  if((existing.data||[]).length){
+    alert("Esiste già un recupero aperto per questo cliente. Lo stato verrà aggiornato dal programma locale.");
+    return window.f1WorkspaceOpenWhatsApp();
+  }
+  const row={
+    owner_id:user.id,
+    client_id:client.id,
+    whatsapp_number:wa,
+    date_from:from+"T00:00:00+02:00",
+    date_to:null,
+    timezone:client.timezone||"Europe/Rome",
+    status:"WAITING_LOCAL_SESSION",
+    local_archive_path:path,
+    checkpoint:{phase:"WAITING_LOCAL_SESSION",resume_supported:true},
+    stats:{messages_scanned:0,photos:0,videos:0,audio:0,documents:0,duplicates:0,saved:0}
+  };
+  const r=await sb.from("f1_whatsapp_recovery_jobs").insert(row).select().single();
+  if(r.error)return alert(r.error.message);
+  alert("Recupero retroattivo accodato per "+client.name+". Il worker locale userà la sessione WhatsApp autenticata e aggiornerà qui l'avanzamento.");
+  await window.f1WorkspaceOpenWhatsApp();
+};
+
+window.f1WorkspaceSelectRecoveredMedia=function(){
+  const modal=document.getElementById("workspaceWaModal");if(modal)modal.classList.remove("open");
+  const archiveButton=document.querySelector('[data-tab="archive"]');
+  if(archiveButton)archiveButton.click();
 };
 
 window.f1WorkspaceRunWhatsAppNow=async function(){
