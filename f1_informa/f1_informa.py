@@ -241,7 +241,11 @@ def should(force=False):
     return now.hour==17 and not state().get("last_run","").startswith(now.strftime("%Y-%m-%d"))
 def selftest():
     fake={"title":"Test F1 Informa","url":"https://www.agenziaentrate.gov.it/portale/aree-tematiche/casa","updated":"4 ottobre 2026","hash":"x","text":"Questa è una pagina di test. I contribuenti possono verificare i requisiti nella fonte ufficiale. La detrazione di esempio è indicata solo nel test. È necessario consultare la pagina aggiornata. Attenzione alle esclusioni e alle scadenze indicate dalla fonte."}
-    cs=cards(fake); assert len(cs)==10; tmp=ROOT/".self-test-card.png"; render(tmp,1,*cs[0]); assert tmp.stat().st_size>1000; tmp.unlink(); print("F1_INFORMA_SELF_TEST_OK")
+    cs=cards(fake); assert len(cs)==10
+    sample=BeautifulSoup("<html><head><title>Acquisto prima casa - Agenzia delle Entrate</title></head><body><main><h1>Menu principale</h1><h2>Acquisto prima casa</h2><p>Agevolazioni per la casa.</p></main></body></html>","html.parser")
+    sample_main=sample.find("main")
+    assert page_title(sample,sample_main,"https://www.agenziaentrate.gov.it/portale/schede/agevolazioni/scheda-acquisto-prima-casa/acquisto-prima-casa-a-chi-interessa-cittadini")=="Acquisto prima casa"
+    tmp=ROOT/".self-test-card.png"; render(tmp,1,*cs[0]); assert tmp.stat().st_size>1000; tmp.unlink(); print("F1_INFORMA_SELF_TEST_OK")
 
 def main():
     ap=argparse.ArgumentParser(); ap.add_argument("--force",action="store_true"); ap.add_argument("--self-test",action="store_true"); a=ap.parse_args()
