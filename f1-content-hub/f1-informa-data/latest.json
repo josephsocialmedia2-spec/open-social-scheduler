@@ -2,8 +2,10 @@
   "ready": true,
   "date": "2026-10-04",
   "path": "f1-informa-data/2026-10-04",
-  "title": "Bonus mobili - Che cos'è",
-  "status": "DA_APPROVARE",
-  "source_url": "https://www.agenziaentrate.gov.it/portale/bonus-mobili/infogen-bonus-mobili-cittadini",
-  "updated": "14 gennaio 2026"
+  "title": "Riqualificazione energetica - Che cos'è",
+  "status": "GRAFICA_IN_CODA",
+  "source_url": "https://www.agenziaentrate.gov.it/portale/schede/agevolazioni/detrazione-riqualificazione-energetica-55-2016/cosa-riqualificazione-55-2016-cittadini",
+  "updated": "26 gennaio 2026",
+  "graphics_job_id": "3e02f421-7517-4872-90c4-1a3fb7f42641",
+  "graphics_queue_error": null
 }
