@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
+import argparse
 import os
 import subprocess
 import time
@@ -54,22 +55,84 @@ def run_javascript(win, code: str) -> None:
     paste_text(code)
     send_keys("{ENTER}")
 
-def main() -> int:
-    exe = chrome_executable()
-    before = {w.handle for w in chrome_windows()}
-    subprocess.Popen([exe, "--new-window", "about:blank"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+def automation_windows():
+    markers = (
+        "F1JSBRIDGE:", "F1SESSION:", "F1PROMPT:", "F1IMGCOUNT:",
+        "F1URL:", "F1DL:", "F1 AUTOPILOT"
+    )
+    out = []
+    for w in chrome_windows():
+        try:
+            title = (w.window_text() or "").strip()
+        except Exception:
+            continue
+        if any(marker in title for marker in markers):
+            out.append(w)
+    return out
 
-    deadline = time.time() + 15
+def cleanup_duplicate_automation_windows() -> int:
+    wins = automation_windows()
+    if len(wins) <= 1:
+        print(f"F1_CHATGPT_AUTOMATION_WINDOWS={len(wins)}")
+        return 0
+    keep = wins[-1]
+    closed = 0
+    for w in wins[:-1]:
+        try:
+            w.close()
+            closed += 1
+        except Exception:
+            pass
+    print(f"F1_CHATGPT_DUPLICATES_CLOSED={closed}")
+    try:
+        print(f"F1_CHATGPT_KEEP_HANDLE={keep.handle}")
+    except Exception:
+        pass
+    return closed
+
+def main() -> int:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--cleanup-only", action="store_true")
+    args = ap.parse_args()
+
+    cleanup_duplicate_automation_windows()
+    if args.cleanup_only:
+        return 0
+
+    exe = chrome_executable()
+    current = chrome_windows()
     win = None
-    while time.time() < deadline:
-        current = chrome_windows()
-        fresh = [w for w in current if w.handle not in before]
-        if fresh:
-            win = fresh[-1]
-            break
-        if current:
-            win = current[-1]
-        time.sleep(0.5)
+
+    # Reuse an existing automation/ChatGPT Chrome window first.
+    marked = automation_windows()
+    if marked:
+        win = marked[-1]
+    if win is None:
+        for candidate in current:
+            try:
+                title = (candidate.window_text() or "").strip()
+            except Exception:
+                continue
+            if "ChatGPT" in title:
+                win = candidate
+                break
+
+    # Create exactly one new window only when no reusable ChatGPT window exists.
+    if win is None:
+        before = {w.handle for w in current}
+        subprocess.Popen(
+            [exe, "--new-window", CHATGPT_URL],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
+        deadline = time.time() + 15
+        while time.time() < deadline:
+            now = chrome_windows()
+            fresh = [w for w in now if w.handle not in before]
+            if fresh:
+                win = fresh[-1]
+                break
+            time.sleep(0.5)
 
     if win is None:
         print("JS_BRIDGE_NO_CHROME_WINDOW")
@@ -77,19 +140,18 @@ def main() -> int:
 
     print(f"JS_BRIDGE_WINDOW_HANDLE={win.handle}")
     navigate(win, CHATGPT_URL)
-    time.sleep(8)
+    time.sleep(7)
     try:
         print(f"JS_BRIDGE_AFTER_NAV={win.window_text()}")
     except Exception:
         pass
 
     marker = (
-        "document.title='F1JSBRIDGE:'+location.host+':'"
-        "+document.querySelectorAll('#prompt-textarea,textarea,[contenteditable=true]').length;"
-        "void(0)"
+        "(()=>{const p=document.querySelector('#prompt-textarea,textarea,[contenteditable=true]');"
+        "document.title='F1 AUTOPILOT '+location.host+':'+(p?1:0);void(0)})()"
     )
     run_javascript(win, marker)
-    time.sleep(2)
+    time.sleep(1)
 
     title = ""
     try:
@@ -97,7 +159,7 @@ def main() -> int:
     except Exception:
         pass
     print(f"JS_BRIDGE_RESULT_TITLE={title}")
-    if "F1JSBRIDGE:chatgpt.com:" in title:
+    if "F1 AUTOPILOT chatgpt.com:1" in title:
         print("JS_BRIDGE_OK")
         return 0
 
