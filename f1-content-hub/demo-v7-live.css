@@ -54,3 +54,11 @@ body.f1-main-app .top-actions{align-items:center}
 .f1v7-source-status{margin-top:8px;font-size:11px;color:#9eb0c7}
 @media(max-width:950px){.f1v7-dashboard-row{grid-template-columns:1fr 1fr}.f1v7-dashboard-row .btn{justify-self:start}.f1v7-content-actions{grid-template-columns:1fr 1fr}.f1v7-email-grid{grid-template-columns:1fr}}
 @media(max-width:650px){.f1v7-dashboard-row{grid-template-columns:1fr}.f1v7-content-actions{grid-template-columns:1fr}#metrics.f1v7-metrics{grid-template-columns:repeat(4,minmax(90px,1fr))!important;overflow:auto}.f1v7-plan-head{grid-template-columns:1fr auto}.f1v7-plan-head>*:nth-child(2),.f1v7-plan-head>*:nth-child(3),.f1v7-plan-head>*:nth-child(4){grid-column:1}}
+
+.f1v7-email-auto-summary{display:grid;grid-template-columns:repeat(3,minmax(150px,1fr)) auto;gap:9px;align-items:stretch;margin-top:10px}
+.f1v7-email-auto-cell{background:#0b1f33;border:1px solid #29415e;border-radius:10px;padding:10px}
+.f1v7-email-auto-cell span{display:block;color:#9eb0c7;font-size:9px;font-weight:900;letter-spacing:.06em}
+.f1v7-email-auto-cell b{display:block;margin-top:4px;font-size:12px}
+.f1v7-email-auto-summary>.btn{align-self:stretch;min-width:130px}
+@media(max-width:950px){.f1v7-email-auto-summary{grid-template-columns:1fr 1fr}.f1v7-email-auto-summary>.btn{grid-column:1/-1}}
+@media(max-width:650px){.f1v7-email-auto-summary{grid-template-columns:1fr}}
