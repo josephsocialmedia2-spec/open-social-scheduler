@@ -19,63 +19,90 @@ def chrome_executable() -> str:
             return str(path)
     raise RuntimeError("Google Chrome non trovato")
 
-def main() -> int:
+def chrome_windows():
     from pywinauto import Desktop
-
-    exe = chrome_executable()
-    subprocess.Popen([exe, "--new-window", CHATGPT_URL], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    time.sleep(8)
-
-    desktop = Desktop(backend="uia")
-    windows = []
-    for w in desktop.windows():
+    out = []
+    for w in Desktop(backend="uia").windows():
         try:
             title = (w.window_text() or "").strip()
         except Exception:
             continue
         if "Chrome" in title or "ChatGPT" in title:
-            windows.append((title, w))
+            out.append(w)
+    return out
 
-    print(f"UIA_WINDOWS={len(windows)}")
-    if not windows:
-        print("UIA_NO_CHROME_WINDOW")
+def paste_text(text: str) -> None:
+    import pyperclip
+    from pywinauto.keyboard import send_keys
+    pyperclip.copy(text)
+    send_keys("^v")
+
+def navigate(win, url: str) -> None:
+    from pywinauto.keyboard import send_keys
+    win.set_focus()
+    send_keys("^l")
+    paste_text(url)
+    send_keys("{ENTER}")
+
+def run_javascript(win, code: str) -> None:
+    from pywinauto.keyboard import send_keys
+    win.set_focus()
+    send_keys("^l")
+    # Chrome blocks pasted javascript: URLs. Type the scheme and paste only
+    # the code body so this behaves like a real keyboard action.
+    send_keys("javascript:", with_spaces=True)
+    paste_text(code)
+    send_keys("{ENTER}")
+
+def main() -> int:
+    exe = chrome_executable()
+    before = {w.handle for w in chrome_windows()}
+    subprocess.Popen([exe, "--new-window", "about:blank"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+
+    deadline = time.time() + 15
+    win = None
+    while time.time() < deadline:
+        current = chrome_windows()
+        fresh = [w for w in current if w.handle not in before]
+        if fresh:
+            win = fresh[-1]
+            break
+        if current:
+            win = current[-1]
+        time.sleep(0.5)
+
+    if win is None:
+        print("JS_BRIDGE_NO_CHROME_WINDOW")
         return 2
 
-    title, win = windows[-1]
-    print(f"UIA_WINDOW={title}")
+    print(f"JS_BRIDGE_WINDOW_HANDLE={win.handle}")
+    navigate(win, CHATGPT_URL)
+    time.sleep(8)
     try:
-        win.set_focus()
-    except Exception as exc:
-        print(f"UIA_FOCUS_WARN={exc}")
+        print(f"JS_BRIDGE_AFTER_NAV={win.window_text()}")
+    except Exception:
+        pass
 
-    useful = []
-    for ctrl in win.descendants():
-        try:
-            info = ctrl.element_info
-            ctype = str(info.control_type or "")
-            name = str(info.name or "").strip()
-            auto_id = str(info.automation_id or "").strip()
-            if ctype not in {"Edit","Document","Button","Image","Text","Pane","Group","ToolBar","TabItem"}:
-                continue
-            if not name and not auto_id:
-                continue
-            low = (name + " " + auto_id).lower()
-            if any(k in low for k in (
-                "chatgpt","message","messaggio","ask","prompt","send","invia",
-                "image","immagine","download","scarica","create","crea","composer"
-            )) or ctype in {"Edit","Document"}:
-                useful.append((ctype, name[:180], auto_id[:120]))
-        except Exception:
-            continue
+    marker = (
+        "document.title='F1JSBRIDGE:'+location.host+':'"
+        "+document.querySelectorAll('#prompt-textarea,textarea,[contenteditable=true]').length;"
+        "void(0)"
+    )
+    run_javascript(win, marker)
+    time.sleep(2)
 
-    print(f"UIA_USEFUL_CONTROLS={len(useful)}")
-    for ctype, name, auto_id in useful[:250]:
-        print(f"UIA_CONTROL type={ctype} name={name!r} id={auto_id!r}")
+    title = ""
+    try:
+        title = (win.window_text() or "").strip()
+    except Exception:
+        pass
+    print(f"JS_BRIDGE_RESULT_TITLE={title}")
+    if "F1JSBRIDGE:chatgpt.com:" in title:
+        print("JS_BRIDGE_OK")
+        return 0
 
-    edits = [x for x in useful if x[0] == "Edit"]
-    docs = [x for x in useful if x[0] == "Document"]
-    print(f"UIA_EDITS={len(edits)} UIA_DOCUMENTS={len(docs)}")
-    return 0
+    print("JS_BRIDGE_NOT_CONFIRMED")
+    return 3
 
 if __name__ == "__main__":
     raise SystemExit(main())
