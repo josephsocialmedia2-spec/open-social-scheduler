@@ -270,11 +270,12 @@ def facebook_publish(job: dict[str, Any], client: dict[str, Any], paths: list[Pa
         finish = request("POST", f"{meta_graph_base()}/me/video_reels", params={"access_token": token, "video_id": video_id, "upload_phase": "finish", "video_state": "PUBLISHED", "description": str(job.get("caption") or "")[:5000], "title": str(job.get("title") or "")[:255]}).json()
         return {"video_id": video_id, "finish": finish}
 
-    caption = str(job.get("caption") or "")[:5000]
-    image_paths = paths[:10]
-    if len(image_paths) > 1:
-        photo_ids: list[str] = []
-        for path in image_paths:
+    # Facebook multi-photo post: upload every carousel card as unpublished media,
+    # then publish one feed post with attached_media. This preserves all 10
+    # F1 INFORMA cards instead of silently publishing only the cover.
+    if len(paths) > 1:
+        media_ids: list[str] = []
+        for path in paths[:10]:
             with path.open("rb") as fh:
                 media_type = mimetypes.guess_type(path.name)[0] or "image/jpeg"
                 uploaded = request(
@@ -284,18 +285,18 @@ def facebook_publish(job: dict[str, Any], client: dict[str, Any], paths: list[Pa
                     files={"source": (path.name, fh, media_type)},
                     timeout=180,
                 ).json()
-            photo_id = str(uploaded.get("id") or "").strip()
-            if not photo_id:
-                raise PublishError(f"Facebook carousel photo upload did not return an id for {path.name}")
-            photo_ids.append(photo_id)
+            media_id = str(uploaded.get("id") or "").strip()
+            if not media_id:
+                raise PublishError(f"Facebook unpublished photo upload did not return id for {path.name}")
+            media_ids.append(media_id)
 
-        attached = json.dumps([{"media_fbid": photo_id} for photo_id in photo_ids])
+        attached = json.dumps([{"media_fbid": media_id} for media_id in media_ids])
         response = request(
             "POST",
             f"{meta_graph_base()}/me/feed",
             params={
                 "access_token": token,
-                "message": caption,
+                "message": str(job.get("caption") or "")[:5000],
                 "attached_media": attached,
             },
             timeout=180,
@@ -314,21 +315,15 @@ def facebook_publish(job: dict[str, Any], client: dict[str, Any], paths: list[Pa
                 permalink = ""
         return {
             "post_id": post_id,
-            "photo_ids": photo_ids,
-            "mode": "carousel",
-            "slides": len(photo_ids),
+            "photo_ids": media_ids,
+            "mode": "multi_photo",
+            "count": len(media_ids),
             "url": permalink or None,
         }
 
-    with image_paths[0].open("rb") as fh:
-        media_type = mimetypes.guess_type(image_paths[0].name)[0] or "image/jpeg"
-        response = request(
-            "POST",
-            f"{meta_graph_base()}/me/photos",
-            params={"access_token": token, "message": caption},
-            files={"source": (image_paths[0].name, fh, media_type)},
-            timeout=180,
-        ).json()
+    with paths[0].open("rb") as fh:
+        media_type = mimetypes.guess_type(paths[0].name)[0] or "image/jpeg"
+        response = request("POST", f"{meta_graph_base()}/me/photos", params={"access_token": token, "message": str(job.get("caption") or "")[:5000]}, files={"source": (paths[0].name, fh, media_type)}, timeout=180).json()
     post_id = response.get("post_id") or response.get("id")
     permalink = ""
     if post_id:
