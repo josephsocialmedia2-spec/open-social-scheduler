@@ -60,7 +60,7 @@ def page_title(soup,main,base):
         candidates.append(norm(soup.title.get_text(" ",strip=True)))
     for value in candidates:
         low=value.lower().strip(" -|")
-        if low in generic or low.startswith("menu principale"): continue
+        if low in generic or low.startswith("menu principale") or low.startswith("menu della sezione"): continue
         if 6 <= len(value) <= 160 and relevant(value,base):
             return re.sub(r"\s*[-|]\s*Agenzia delle Entrate.*$","",value,flags=re.I).strip()
     slug=urlparse(base).path.rstrip("/").split("/")[-1]
@@ -68,17 +68,36 @@ def page_title(soup,main,base):
     value=norm(slug.replace("-"," "))
     return value[:1].upper()+value[1:] if value else "Aggiornamento casa"
 
+def article_text(main):
+    lines=[norm(x) for x in main.get_text("\n",strip=True).splitlines() if norm(x)]
+    marker=None
+    for i,line in enumerate(lines):
+        if re.search(r"^Ultimo aggiornamento\s*:",line,re.I):
+            marker=i
+            break
+    if marker is None:
+        return norm(" ".join(lines))
+    body=lines[marker+1:]
+    stop_prefixes=("Link correlati","La dichiarazione precompilata","Chiudi Modalità di accesso","Seguici sul nostro canale")
+    clean=[]
+    for line in body:
+        if any(line.lower().startswith(x.lower()) for x in stop_prefixes):
+            break
+        clean.append(line)
+    return norm(" ".join(clean)) or norm(" ".join(body))
+
 def extract(html,base):
     soup=BeautifulSoup(html,"html.parser")
     for tag in soup(["script","style","noscript","svg","footer"]): tag.decompose()
     main=soup.find("main") or soup.find(attrs={"role":"main"}) or soup.body or soup
     title=page_title(soup,main,base)
-    text=norm(main.get_text("\n",strip=True))
+    raw_text=norm(main.get_text("\n",strip=True))
+    text=article_text(main)
     links=[]
     for a in main.find_all("a",href=True):
         href=canon(urljoin(base,a.get("href"))); label=norm(a.get_text(" ",strip=True))
         if href and allowed(href): links.append((href,label))
-    m=re.search(r"Ultimo aggiornamento\s*:?\s*([0-9]{1,2}\s+[A-Za-zàèéìòù]+\s+[0-9]{4}|[0-9]{1,2}/[0-9]{1,2}/[0-9]{2,4})",text,re.I)
+    m=re.search(r"Ultimo aggiornamento\s*:?\s*([0-9]{1,2}\s+[A-Za-zàèéìòù]+\s+[0-9]{4}|[0-9]{1,2}/[0-9]{1,2}/[0-9]{2,4})",raw_text,re.I)
     return {"title":title,"text":text,"links":links,"updated":m.group(1) if m else ""}
 
 def crawl():
