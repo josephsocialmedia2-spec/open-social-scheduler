@@ -174,7 +174,7 @@ def claim(job: dict[str, Any]) -> dict[str, Any]:
 
 def retry_or_fail(job: dict[str, Any], exc: Exception) -> None:
     attempts = int(job.get("attempts") or 0)
-    maximum = int(job.get("max_attempts") or 3)
+    maximum = max(int(job.get("max_attempts") or 3), 8)
     message = str(exc)[:1800]
     if attempts < maximum:
         rest_patch(

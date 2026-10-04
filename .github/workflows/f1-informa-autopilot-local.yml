@@ -82,6 +82,12 @@ jobs:
           & 'C:\F1Social\venv\Scripts\python.exe' publisher\local_agent\f1_informa_autopilot.py --self-test
           if ($LASTEXITCODE -ne 0) { throw 'F1 INFORMA local self-test failed.' }
 
+      - name: Diagnose existing ChatGPT Chrome window
+        shell: powershell
+        run: |
+          & 'C:\\F1Social\\venv\\Scripts\\python.exe' publisher\\local_agent\\diagnose_chatgpt_uia.py
+          if ($LASTEXITCODE -ne 0) { Write-Warning 'ChatGPT UIA diagnostic did not find an accessible Chrome window.' }
+
       - name: Process pending F1 INFORMA graphics jobs
         shell: powershell
         run: |
