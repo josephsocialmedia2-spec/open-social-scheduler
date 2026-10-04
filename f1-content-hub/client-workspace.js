@@ -766,7 +766,7 @@ window.f1RenderClientPublisherWorkspace=async function(){
     '<div class="publisher-head"><div><h2>F1 Social Intelligence · '+h(client.name)+'</h2><div class="muted">Il caricamento legge il testo della grafica e rigenera automaticamente le caption per ogni social.</div></div><div class="publisher-actions"><span class="badge green">INTELLIGENCE ATTIVA</span><span class="badge '+(client.approval_required?"amber":"green")+'">'+h(intelligenceApprovalLabel(client))+'</span>'+(rec?'<span class="badge rec-consent">● REC CONSENSO ATTIVO</span>':'')+(heicCount?'<button class="btn small amber" onclick="window.f1ConvertExistingHeicForClient()">CONVERTI HEIC IN CLOUD ('+heicCount+')</button>':'')+'<button class="btn small green" onclick="window.f1WorkspaceProgramAll()">PROGRAMMA TUTTO</button></div></div>'+
     '<div class="intelligence-command"><button type="button" class="intel-folder-mini" title="'+h(folderPath)+'" aria-label="Cartella automatica '+h(folderPath)+'" onclick="document.getElementById(\'workspaceFolderInput\').click()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5.5h6l2 2H21a1 1 0 0 1 1 1v9.5a1.5 1.5 0 0 1-1.5 1.5h-17A1.5 1.5 0 0 1 2 18V7a1.5 1.5 0 0 1 1-1.5Zm0 4V18a.5.5 0 0 0 .5.5h17a.5.5 0 0 0 .5-.5V9.5H3Z"/></svg></button><div class="intel-command-actions"><button class="btn small ghost" onclick="window.f1KeepCurrentTimes()">MANTIENI ORARI ATTUALI</button><button class="btn small ghost" onclick="window.f1ToggleIntelligenceTimes(true)">MODIFICA ORARI</button><button class="btn small green" onclick="window.f1ProceedIntelligence()">PROCEDI</button></div></div>'+
     '<div class="ingest-grid">'+
-      '<button class="ingest-action" onclick="window.f1WorkspaceOpenWhatsApp()"><b>DA WHATSAPP</b><span>Importa messaggi e media ricevuti per questo cliente.</span></button>'+
+      '<button class="ingest-action" onclick="window.f1WorkspaceOpenWhatsApp()"><b>WHATSAPP AUTOMATICO</b><span>Numero chat · batch 02:00 · video → trascrizione → caption → social.</span></button>'+
       '<button class="ingest-action" onclick="document.getElementById(\'workspaceFolderInput\').click()"><b>DA CARTELLA</b><span>Seleziona una cartella con immagini e video.</span></button>'+
       '<button class="ingest-action" onclick="document.getElementById(\'workspaceFileInput\').click()"><b>DA FILE</b><span>Seleziona più contenuti dal computer.</span></button>'+
       '<div id="workspaceDropZone" class="client-dropzone" onclick="document.getElementById(\'workspaceFileInput\').click()" ondragover="window.f1WorkspaceDrag(event,true)" ondragleave="window.f1WorkspaceDrag(event,false)" ondrop="window.f1WorkspaceDrop(event)"><b>TRASCINA QUI I CONTENUTI</b><div class="meta">Foto, video e documenti. Ogni file diventa un contenuto distribuibile.</div></div>'+
@@ -1138,12 +1138,97 @@ function ensureWhatsAppModal(){
 }
 window.f1WorkspaceOpenWhatsApp=async function(){
   const client=currentClient();if(!client)return;
-  const modal=ensureWhatsAppModal(),list=document.getElementById("workspaceWaList");list.innerHTML='<div class="empty">Caricamento...</div>';modal.classList.add("open");
-  const r=await sb.from("f1_whatsapp_logs").select("id,message_id,message_type,message_text,media_count,result,created_at").eq("client_id",client.id).order("created_at",{ascending:false}).limit(30);
-  if(r.error){list.innerHTML='<div class="notice error">'+h(r.error.message)+'</div>';return}
-  list.innerHTML=(r.data||[]).map(function(x){
-    return '<div class="lineitem"><b>'+h(new Date(x.created_at).toLocaleString("it-IT",{dateStyle:"short",timeStyle:"short"}))+'</b><div><b>'+h(x.message_type||"Messaggio")+'</b><div class="meta">'+h(x.message_text||"")+(x.media_count?' · '+x.media_count+' media':"")+'</div></div><button class="btn small primary" onclick="window.f1WorkspaceImportWhatsApp('+Number(x.id)+')">IMPORTA</button></div>';
-  }).join("")||'<div class="publisher-empty">Nessun contenuto WhatsApp associato a '+h(client.name)+'. Quando arriveranno messaggi/media del cliente compariranno qui automaticamente.</div>';
+  const modal=ensureWhatsAppModal(),list=document.getElementById("workspaceWaList");
+  list.innerHTML='<div class="empty">Caricamento...</div>';modal.classList.add("open");
+  const [senderResult,logResult]=await Promise.all([
+    sb.from("f1_whatsapp_senders").select("*").eq("client_id",client.id).eq("active",true).order("updated_at",{ascending:false}).limit(1),
+    sb.from("f1_whatsapp_logs").select("id,message_id,message_type,message_text,media_count,result,error,created_at").eq("client_id",client.id).order("created_at",{ascending:false}).limit(30)
+  ]);
+  if(senderResult.error){list.innerHTML='<div class="notice error">'+h(senderResult.error.message)+'</div>';return}
+  if(logResult.error){list.innerHTML='<div class="notice error">'+h(logResult.error.message)+'</div>';return}
+  const sender=(senderResult.data||[])[0]||null;
+  const number=String(sender&&sender.wa_id||client.whatsapp||"").replace(/\D+/g,"");
+  const batchTime=String(sender&&sender.daily_batch_time||"02:00").slice(0,5);
+  const delay=Math.max(0,Math.min(1440,Number(sender&&sender.caption_delay_minutes??60)||60));
+  const enabled=sender?sender.daily_batch_enabled!==false:true;
+  const autoPublish=sender?sender.auto_publish_after_caption!==false:true;
+  const lastBatch=sender&&sender.last_batch_started_at?new Date(sender.last_batch_started_at).toLocaleString("it-IT",{dateStyle:"short",timeStyle:"short"}):"mai";
+  const config=
+    '<div class="subpanel">'+
+      '<div class="section-title"><div><h3 style="margin:0">AUTOMAZIONE WHATSAPP · '+h(client.name)+'</h3><div class="meta">Configura una volta: poi vale ogni giorno.</div></div><span class="badge '+(enabled?"green":"amber")+'">'+(enabled?"ATTIVA":"PAUSA")+'</span></div>'+
+      '<div class="forms">'+
+        '<div class="field"><label>Numero della chat</label><input id="workspaceWaNumber" class="input" inputmode="tel" value="'+h(number)+'" placeholder="39348..."></div>'+
+        '<div class="field"><label>Elaborazione giornaliera</label><input id="workspaceWaTime" class="input" type="time" value="'+h(batchTime)+'"></div>'+
+        '<div class="field"><label>Attesa dopo trascrizione video</label><input id="workspaceWaDelay" class="input" type="number" min="0" max="1440" value="'+delay+'"><div class="meta">minuti · predefinito 60</div></div>'+
+        '<div class="field"><label>Automazione</label><label class="checkline"><input id="workspaceWaEnabled" type="checkbox" '+(enabled?"checked":"")+'> <span>Ogni giorno importa i nuovi contenuti</span></label></div>'+
+        '<div class="field"><label>Pubblicazione</label><label class="checkline"><input id="workspaceWaAutoPublish" type="checkbox" '+(autoPublish?"checked":"")+'> <span>Pubblica automaticamente dopo caption e prossimo slot social</span></label></div>'+
+        '<div class="field"><label>Ultimo batch</label><div class="input" style="opacity:.85">'+h(lastBatch)+'</div></div>'+
+      '</div>'+
+      '<div class="notice" style="margin-top:10px"><b>Flusso:</b> i media vengono acquisiti dal webhook WhatsApp quando arrivano. Alle <b>'+h(batchTime)+'</b> il sistema importa i nuovi contenuti nel cliente. Se è un video, trascrive il parlato, attende <b>'+delay+' minuti</b>, genera le caption e poi usa i canali social collegati.</div>'+
+      '<div class="row" style="margin-top:10px"><button class="btn green" onclick="window.f1WorkspaceSaveWhatsAppAutomation()">SALVA AUTOMAZIONE</button><button id="workspaceWaRunNowBtn" class="btn primary" onclick="window.f1WorkspaceRunWhatsAppNow()">ESEGUI ORA</button></div>'+
+    '</div>';
+  const logs=(logResult.data||[]).map(function(x){
+    return '<div class="lineitem"><b>'+h(new Date(x.created_at).toLocaleString("it-IT",{dateStyle:"short",timeStyle:"short"}))+'</b><div><b>'+h(x.result||x.message_type||"Messaggio")+'</b><div class="meta">'+h(x.message_text||"")+(x.media_count?' · '+x.media_count+' media':"")+(x.error?' · '+h(x.error):"")+'</div></div><span class="badge">'+h(x.message_type||"WA")+'</span></div>';
+  }).join("");
+  list.innerHTML=config+'<div class="section-title" style="margin-top:14px"><h3 style="margin:0">ULTIMI CONTENUTI WHATSAPP</h3><span class="muted">'+(logResult.data||[]).length+' eventi</span></div>'+(logs||'<div class="publisher-empty">Nessun contenuto WhatsApp associato a '+h(client.name)+'.</div>');
+};
+
+window.f1WorkspaceSaveWhatsAppAutomation=async function(silent){
+  const client=currentClient();if(!client)return false;
+  const numberInput=document.getElementById("workspaceWaNumber");
+  const timeInput=document.getElementById("workspaceWaTime");
+  const delayInput=document.getElementById("workspaceWaDelay");
+  const wa=String(numberInput&&numberInput.value||"").replace(/\D+/g,"");
+  if(wa.length<8||wa.length>15){if(!silent)alert("Inserisci un numero WhatsApp valido in formato internazionale.");return false}
+  const minutes=Math.max(0,Math.min(1440,Number(delayInput&&delayInput.value||60)));
+  const batch=String(timeInput&&timeInput.value||"02:00");
+  const enabled=!!(document.getElementById("workspaceWaEnabled")&&document.getElementById("workspaceWaEnabled").checked);
+  const autoPublish=!!(document.getElementById("workspaceWaAutoPublish")&&document.getElementById("workspaceWaAutoPublish").checked);
+
+  const clientUpdate=await sb.from("f1_content_clients").update({whatsapp:wa}).eq("id",client.id).eq("owner_id",user.id);
+  if(clientUpdate.error){if(!silent)alert(clientUpdate.error.message);return false}
+
+  const row={
+    owner_id:user.id,
+    wa_id:wa,
+    label:client.name,
+    client_id:client.id,
+    active:true,
+    auto_process:true,
+    suppress_operational_notifications:true,
+    managed_from_client:true,
+    daily_batch_enabled:enabled,
+    daily_batch_time:batch,
+    caption_delay_minutes:minutes,
+    auto_publish_after_caption:autoPublish
+  };
+  const saved=await sb.from("f1_whatsapp_senders").upsert(row,{onConflict:"wa_id"});
+  if(saved.error){if(!silent)alert(saved.error.message);return false}
+  await loadAll();
+  if(!silent){
+    alert("Automazione WhatsApp salvata per "+client.name+".");
+    await window.f1WorkspaceOpenWhatsApp();
+  }
+  return true;
+};
+
+window.f1WorkspaceRunWhatsAppNow=async function(){
+  const client=currentClient();if(!client)return;
+  const saved=await window.f1WorkspaceSaveWhatsAppAutomation(true);if(!saved)return;
+  const btn=document.getElementById("workspaceWaRunNowBtn");
+  if(btn){btn.disabled=true;btn.textContent="AVVIO..."}
+  try{
+    const result=await sb.functions.invoke("f1-content-autopilot",{body:{force:true,client_id:client.id}});
+    if(result.error)throw result.error;
+    const data=result.data||{};
+    alert("Batch WhatsApp avviato. Importati: "+Number(data.imported||0)+". I video passano ora alla trascrizione; la caption verrà creata dopo il ritardo configurato.");
+    await loadAll();
+    await window.f1WorkspaceOpenWhatsApp();
+  }catch(e){
+    alert("Avvio non riuscito: "+(e.message||String(e)));
+  }finally{
+    if(btn){btn.disabled=false;btn.textContent="ESEGUI ORA"}
+  }
 };
 window.f1HeicDiagnostics={
   isHeicFile:isHeicFile,
