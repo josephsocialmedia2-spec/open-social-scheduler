@@ -21,7 +21,10 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 from urllib.parse import quote
-from zoneinfo import ZoneInfo
+try:
+    from zoneinfo import ZoneInfo
+except ImportError:  # Python 3.8 on the existing F1 Windows runner
+    ZoneInfo = None
 
 import requests
 
@@ -127,13 +130,29 @@ def safe_name(value: str) -> str:
     return cleaned or f"file-{uuid.uuid4().hex[:8]}"
 
 
+def timezone_for(tz_name: str):
+    """Return the requested IANA timezone when available.
+
+    The existing Windows runner can use Python 3.8, which has no stdlib
+    zoneinfo. In that case use the PC local timezone. This is correct for the
+    operator's Italy-local WhatsApp exports and keeps the worker executable
+    without adding a native dependency.
+    """
+    if ZoneInfo is not None:
+        try:
+            return timezone_for(tz_name)
+        except Exception:
+            pass
+    return datetime.now().astimezone().tzinfo or timezone.utc
+
+
 def parse_job_date(value: str | None, tz_name: str) -> datetime | None:
     if not value:
         return None
     dt = datetime.fromisoformat(str(value).replace("Z", "+00:00"))
     if dt.tzinfo is None:
-        dt = dt.replace(tzinfo=ZoneInfo(tz_name))
-    return dt.astimezone(ZoneInfo(tz_name))
+        dt = dt.replace(tzinfo=timezone_for(tz_name))
+    return dt.astimezone(timezone_for(tz_name))
 
 
 def parse_chat_datetime(date_value: str, time_value: str, tz_name: str) -> datetime:
@@ -156,7 +175,7 @@ def parse_chat_datetime(date_value: str, time_value: str, tz_name: str) -> datet
     raw = f"{date_value} {clean_time}"
     for fmt in candidates:
         try:
-            return datetime.strptime(raw, fmt).replace(tzinfo=ZoneInfo(tz_name))
+            return datetime.strptime(raw, fmt).replace(tzinfo=timezone_for(tz_name))
         except ValueError:
             continue
     raise RecoveryError(f"Formato data WhatsApp non riconosciuto: {raw}")
@@ -210,7 +229,7 @@ def media_date_from_filename(name: str, tz_name: str) -> datetime | None:
             int(match.group("day")),
             12,
             0,
-            tzinfo=ZoneInfo(tz_name),
+            tzinfo=timezone_for(tz_name),
         )
     except ValueError:
         return None
@@ -363,7 +382,7 @@ def claim_job(job: dict[str, Any]) -> None:
 def process_export(job: dict[str, Any], client: dict[str, Any], export_zip: Path) -> dict[str, Any]:
     tz_name = str(job.get("timezone") or client.get("timezone") or "Europe/Rome")
     date_from = parse_job_date(job.get("date_from"), tz_name)
-    date_to = parse_job_date(job.get("date_to"), tz_name) or datetime.now(ZoneInfo(tz_name))
+    date_to = parse_job_date(job.get("date_to"), tz_name) or datetime.now(timezone_for(tz_name))
     if not date_from:
         raise RecoveryError("date_from mancante")
 
