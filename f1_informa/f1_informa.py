@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import argparse, hashlib, json, re, shutil, textwrap, time
+import argparse, hashlib, json, os, re, shutil, textwrap, time
 from collections import deque
 from datetime import datetime
 from html import unescape
@@ -195,50 +195,187 @@ def render(path,idx,heading,body):
     d.rectangle([0,1220,W,H],fill=GREEN); d.text((70,1250),"F1 Immobiliare · Fonte: Agenzia delle Entrate",font=font(25),fill=WHITE); d.text((70,1292),"Contenuto informativo, non consulenza fiscale o legale.",font=font(21),fill=WHITE)
     img.save(path,"PNG",optimize=True,compress_level=9)
 
-def prompt(story,cs):
-    head=f"""SEI L'EDITOR DI F1 INFORMA — CASA, FISCO E MERCATO.
+def build_caption(story,cs):
+    title=story.get("title") or "Aggiornamento casa"
+    useful=[]
+    for heading,body in cs[1:9]:
+        body=norm(body)
+        if not body or body.lower().startswith(("consulta la fonte","la pagina ufficiale descrive","verifica requisiti","controlla sempre")):
+            continue
+        useful.append((heading,trim(body,330)))
+    lines=[f"🏠 F1 INFORMA | {title}",""]
+    for heading,body in useful[:5]:
+        lines.append(f"• {heading}: {body}")
+    lines.extend([
+        "",
+        f"Fonte ufficiale: {story['url']}",
+        f"Aggiornamento indicato dalla fonte: {story.get('updated') or 'non specificato'}",
+        "",
+        "Contenuto informativo, non consulenza fiscale o legale.",
+        "#F1Informa #F1Immobiliare #Casa #Immobiliare #AgenziaDelleEntrate",
+    ])
+    caption="\n".join(lines)
+    return caption[:2100].rstrip()
 
-FONTE UFFICIALE UNICA:
+def graphics_prompt(story,cs,caption):
+    outline="\n\n".join(f"CARD {i+1} — {h}\n{b}" for i,(h,b) in enumerate(cs))
+    return f"""CREA LA GRAFICA COMPLETA DEL CAROSELLO SOCIAL F1 INFORMA PER F1 IMMOBILIARE.
+
+OBIETTIVO
+Genera un unico progetto grafico coerente composto da 10 GRAFICHE SEPARATE, una per ogni card del carosello.
+Le 10 immagini devono appartenere alla stessa realizzazione: stessa palette, stessi font, stessa gerarchia, stessa direzione artistica.
+Formato di OGNI immagine: verticale 4:5, pensato per Instagram e Facebook.
+Non creare una sola tavola con 10 riquadri: servono 10 immagini separate.
+
+BRAND
+F1 IMMOBILIARE
+Rubrica: F1 INFORMA · Casa, fisco e mercato
+Palette: verde immobiliare profondo, bianco/panna, accenti oro.
+Stile: elegante, professionale, moderno, autorevole, immobiliare.
+Usa fotografia immobiliare, ambienti casa, elementi architettonici, icone e grandi numeri quando utili.
+Evita card composte quasi esclusivamente da lunghi paragrafi.
+Il testo deve essere breve, leggibile e visivamente gerarchizzato.
+
+REGOLA FONDAMENTALE
+Usa ESCLUSIVAMENTE i dati contenuti nella caption e nella bozza source-locked sotto.
+NON inventare percentuali, importi, scadenze, requisiti, leggi o interpretazioni.
+Mantieni esatti numeri, date e condizioni.
+Inserisci discretamente "Fonte: Agenzia delle Entrate".
+Contenuto informativo, non consulenza fiscale o legale.
+
+CAPTION GENERATA AUTOMATICAMENTE DA F1 INFORMA:
+--- INIZIO CAPTION ---
+{caption}
+--- FINE CAPTION ---
+
+FONTE UFFICIALE:
 {story['url']}
-Titolo: {story.get('title','')}
 Ultimo aggiornamento rilevato: {story.get('updated') or 'non indicato'}
 
-TESTO ESTRATTO DALLA FONTE:
-{story['text'][:18000]}
+STRUTTURA SOURCE-LOCKED DELLE 10 CARD:
+{outline}
 
-COMPITO:
-- Verifica che ogni dato sia contenuto nel testo sopra.
-- Non aggiungere leggi, percentuali, scadenze o interpretazioni non presenti.
-- Riscrivi in italiano semplice e professionale per chi compra, vende, affitta o possiede casa.
-- Mantieni 10 card, massimo 420 caratteri per card.
-- Card 10: fonte, data e invito a consultare l'Agenzia delle Entrate.
-- Crea anche caption social e disclaimer: “Contenuto informativo, non consulenza fiscale o legale.”
-- Se la fonte è archiviata/scaduta o riguarda anni precedenti, dichiaralo chiaramente e NON presentarla come novità.
+DIREZIONE DELLE CARD
+1. Copertina forte e molto visiva.
+2. Sintesi immediata.
+3. A chi interessa.
+4. Vantaggio principale.
+5. Numeri importanti con forte gerarchia grafica.
+6. Requisiti con icone/check visivi.
+7. Date/scadenze con elemento calendario.
+8. Attenzione/limiti.
+9. Cosa fare adesso.
+10. Chiusura F1 INFORMA + fonte ufficiale.
 
-BOZZA SOURCE-LOCKED:
+OUTPUT
+Genera le 10 immagini separate, numerate 1/10 … 10/10.
+Devono essere pronte per essere scaricate e pubblicate come UN SOLO CAROSELLO.
+Se l'interfaccia limita il numero di immagini generabili in una singola risposta, mantieni lo stesso progetto e prosegui con le card successive senza cambiare stile.
 """
-    return head+"\n\n".join(f"CARD {i+1} — {h}\n{b}" for i,(h,b) in enumerate(cs))
+
+def _supabase_headers():
+    key=os.getenv("SUPABASE_SERVICE_ROLE_KEY","").strip()
+    if not key: return None
+    return {"apikey":key,"Authorization":f"Bearer {key}","Content-Type":"application/json"}
+
+def enqueue_graphics(story,caption,gprompt,date):
+    headers=_supabase_headers()
+    if not headers:
+        return {"queued":False,"reason":"SUPABASE_SERVICE_ROLE_KEY non disponibile"}
+    base=os.getenv("SUPABASE_URL","https://nqnmlsmeiynxbdojeyjt.supabase.co").rstrip("/")
+    for attempt in range(1,4):
+        try:
+            rc=requests.get(
+                f"{base}/rest/v1/f1_content_clients",
+                headers=headers,
+                params={"select":"id,owner_id","slug":"eq.f1-immobiliare","limit":"1"},
+                timeout=30,
+            )
+            rc.raise_for_status(); clients=rc.json()
+            if not clients: raise RuntimeError("Cliente f1-immobiliare non trovato")
+            client=clients[0]
+            unique=f"f1-informa-graphics:{date}:{story.get('hash','')[:16]}"
+            recheck=requests.get(
+                f"{base}/rest/v1/f1_intelligence_jobs",
+                headers=headers,
+                params={"select":"id,status","owner_id":f"eq.{client['owner_id']}","unique_key":f"eq.{unique}","limit":"1"},
+                timeout=30,
+            )
+            recheck.raise_for_status(); existing=recheck.json()
+            if existing:
+                return {"queued":True,"job_id":existing[0]["id"],"status":existing[0].get("status"),"reused":True}
+            payload={
+                "owner_id":client["owner_id"],
+                "client_id":client["id"],
+                "job_type":"F1_INFORMA_CHATGPT_GRAPHICS",
+                "status":"QUEUED",
+                "stage":"GRAFICA_IN_CODA",
+                "unique_key":unique,
+                "max_attempts":3,
+                "payload":{
+                    "date":date,
+                    "title":story.get("title"),
+                    "caption":caption,
+                    "graphics_prompt":gprompt,
+                    "source_url":story.get("url"),
+                    "source_updated":story.get("updated"),
+                    "source_hash":story.get("hash"),
+                    "expected_images":10,
+                    "target_platforms":["facebook","instagram"],
+                    "auto_publish":True,
+                    "image_made_with_ai":True,
+                    "brand":"F1 Immobiliare",
+                    "rubric":"F1 INFORMA",
+                },
+            }
+            rp=requests.post(
+                f"{base}/rest/v1/f1_intelligence_jobs",
+                headers={**headers,"Prefer":"return=representation"},
+                json=payload,
+                timeout=30,
+            )
+            rp.raise_for_status(); rows=rp.json()
+            if not rows: raise RuntimeError("Job F1 INFORMA non creato")
+            return {"queued":True,"job_id":rows[0]["id"],"status":"QUEUED","reused":False}
+        except Exception as e:
+            if attempt==3:
+                return {"queued":False,"reason":str(e)[:500]}
+            time.sleep(attempt*2)
 
 def write(story,pages):
     now=datetime.now(ROME); date=now.strftime("%Y-%m-%d"); out=PUBLIC/date; out.mkdir(parents=True,exist_ok=True); cs=cards(story)
+    # Le card Pillow restano una bozza source-locked di sicurezza. La grafica
+    # finale destinata alla pubblicazione viene prodotta dal worker ChatGPT.
     for i,(h,b) in enumerate(cs,1): render(out/f"{i:02d}.png",i,h,b)
-    caption=f"""🏠 F1 INFORMA | {story.get('title','Aggiornamento casa')}
-
-Abbiamo consultato una fonte ufficiale dell’Agenzia delle Entrate e riassunto i punti principali in 10 card.
-
-Fonte: {story['url']}
-Aggiornamento indicato dalla fonte: {story.get('updated') or 'non specificato'}
-
-Salva il post e consulta sempre la pagina ufficiale per il testo completo e aggiornato.
-
-Contenuto informativo, non consulenza fiscale o legale.
-#F1Informa #F1Immobiliare #Casa #Immobiliare #AgenziaDelleEntrate"""
-    (out/"caption.txt").write_text(caption,encoding="utf-8"); (out/"prompt-chatgpt.txt").write_text(prompt(story,cs),encoding="utf-8")
-    meta={"generated_at":now.isoformat(),"status":"DA_APPROVARE","story":{k:story.get(k) for k in ["title","url","updated","hash"]},"pages_checked":len([p for p in pages if not p.get("error")]),"errors":[p for p in pages if p.get("error")][:15]}
+    caption=build_caption(story,cs)
+    gprompt=graphics_prompt(story,cs,caption)
+    (out/"caption.txt").write_text(caption,encoding="utf-8")
+    (out/"prompt-chatgpt.txt").write_text(gprompt,encoding="utf-8")
+    queue=enqueue_graphics(story,caption,gprompt,date)
+    status="GRAFICA_IN_CODA" if queue.get("queued") else "ERRORE_AUTOMAZIONE"
+    meta={
+        "generated_at":now.isoformat(),
+        "status":status,
+        "story":{k:story.get(k) for k in ["title","url","updated","hash"]},
+        "pages_checked":len([p for p in pages if not p.get("error")]),
+        "graphics_job":queue,
+        "errors":[p for p in pages if p.get("error")][:15],
+    }
     (out/"sources.json").write_text(json.dumps(meta,ensure_ascii=False,indent=2),encoding="utf-8")
     shutil.make_archive(str(out),"zip",root_dir=out)
-    latest={"ready":True,"date":date,"path":f"f1-informa-data/{date}","title":story.get("title"),"status":"DA_APPROVARE","source_url":story.get("url"),"updated":story.get("updated") or ""}
-    PUBLIC.mkdir(parents=True,exist_ok=True); (PUBLIC/"latest.json").write_text(json.dumps(latest,ensure_ascii=False,indent=2),encoding="utf-8")
+    latest={
+        "ready":True,
+        "date":date,
+        "path":f"f1-informa-data/{date}",
+        "title":story.get("title"),
+        "status":status,
+        "source_url":story.get("url"),
+        "updated":story.get("updated") or "",
+        "graphics_job_id":queue.get("job_id"),
+        "graphics_queue_error":queue.get("reason"),
+    }
+    PUBLIC.mkdir(parents=True,exist_ok=True)
+    (PUBLIC/"latest.json").write_text(json.dumps(latest,ensure_ascii=False,indent=2),encoding="utf-8")
     return out
 
 def prune(days=45):
