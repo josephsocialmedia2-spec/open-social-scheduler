@@ -1,0 +1,63 @@
+name: F1 WhatsApp Retro Recovery Local
+
+on:
+  pull_request:
+    paths:
+      - 'publisher/local_agent/whatsapp_recovery_worker.py'
+      - 'publisher/local_agent/test_whatsapp_recovery_worker.py'
+      - '.github/workflows/f1-whatsapp-retro-local.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'publisher/local_agent/whatsapp_recovery_worker.py'
+      - 'publisher/local_agent/test_whatsapp_recovery_worker.py'
+      - '.github/workflows/f1-whatsapp-retro-local.yml'
+  schedule:
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: f1-whatsapp-retro-local
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install requests==2.32.5
+      - name: Compile recovery worker
+        run: python -m py_compile publisher/local_agent/whatsapp_recovery_worker.py
+      - name: Run recovery worker tests
+        run: python -m unittest publisher.local_agent.test_whatsapp_recovery_worker -v
+
+  local-recovery:
+    if: github.event_name != 'pull_request'
+    needs: validate
+    runs-on: [self-hosted, Windows, X64, f1-social-local-pc]
+    timeout-minutes: 15
+    env:
+      SUPABASE_URL: ${{ vars.SUPABASE_URL || 'https://nqnmlsmeiynxbdojeyjt.supabase.co' }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+      F1_WHATSAPP_ARCHIVE_ROOT: 'C:\F1Social\WhatsAppArchive'
+      F1_WHATSAPP_RECOVERY_INBOX: 'C:\F1Social\WhatsAppRecoveryInbox'
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify local Python
+        shell: powershell
+        run: |
+          if (-not (Test-Path 'C:\F1Social\venv\Scripts\python.exe')) {
+            throw 'F1 Social Python environment missing.'
+          }
+          & 'C:\F1Social\venv\Scripts\python.exe' -c "import requests; print('LOCAL_RECOVERY_DEPENDENCIES_OK')"
+      - name: Process pending WhatsApp recovery jobs
+        shell: powershell
+        run: |
+          & 'C:\F1Social\venv\Scripts\python.exe' publisher\local_agent\whatsapp_recovery_worker.py --once --open-chat
