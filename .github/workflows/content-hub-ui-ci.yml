@@ -265,7 +265,7 @@ jobs:
           grep -q 'CONVERSIONE_HEIC_REQUIRED' publisher/direct_api_publish.py
       - name: Check Intelligence worker and publisher syntax
         run: |
-          python -m py_compile             publisher/f1_intelligence_worker.py             publisher/local_agent/f1_pc_agent.py             publisher/supabase_queue_bridge.py             publisher/direct_api_publish.py
+          python -m py_compile             f1_informa/f1_informa.py             publisher/f1_intelligence_worker.py             publisher/local_agent/f1_pc_agent.py             publisher/local_agent/f1_informa_autopilot.py             publisher/supabase_queue_bridge.py             publisher/direct_api_publish.py
       - name: Check autonomous Intelligence workflow
         run: |
           grep -Fq "cron: '*/5 * * * *'" .github/workflows/f1-social-intelligence.yml
