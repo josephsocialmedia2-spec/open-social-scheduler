@@ -438,7 +438,7 @@ def _uia_title_value(win) -> str:
 
 
 def _uia_count_from_title(title: str) -> int | None:
-    m = re.search(r"F1IMGCOUNT:(\\d+)", title or "")
+    m = re.search(r"F1IMGCOUNT:(\d+)", title or "")
     return int(m.group(1)) if m else None
 
 
