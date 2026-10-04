@@ -8,6 +8,9 @@ on:
         required: false
         default: 'true'
         type: boolean
+  push:
+    paths:
+      - '.f1-informa-trigger'
   schedule:
     # GitHub cron usa UTC. 15:00 copre le 17:00 CEST; 16:00 copre le 17:00 CET.
     - cron: '0 15,16 * * *'
@@ -33,7 +36,8 @@ jobs:
           from datetime import datetime
           from zoneinfo import ZoneInfo
           now = datetime.now(ZoneInfo('Europe/Rome'))
-          manual = os.environ.get('GITHUB_EVENT_NAME') == 'workflow_dispatch'
+          event = os.environ.get('GITHUB_EVENT_NAME')
+          manual = event in {'workflow_dispatch','push'}
           print(f"run={'true' if manual or now.hour == 17 else 'false'}")
           print(f"local_time={now.isoformat()}")
           PY
@@ -68,10 +72,10 @@ jobs:
       - name: Generate source-locked carousel
         if: steps.gate.outputs.run == 'true'
         run: |
-          if [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ]; then
-            python f1_informa/f1_informa.py --force
-          else
+          if [ "$GITHUB_EVENT_NAME" = "schedule" ]; then
             python f1_informa/f1_informa.py
+          else
+            python f1_informa/f1_informa.py --force
           fi
 
       - name: Verify F1 manual-publish boundary
