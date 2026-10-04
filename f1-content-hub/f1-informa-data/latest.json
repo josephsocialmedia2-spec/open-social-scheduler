@@ -1,5 +1,9 @@
 {
-  "ready": false,
+  "ready": true,
+  "date": "2026-10-04",
+  "path": "f1-informa-data/2026-10-04",
+  "title": "Bonus mobili - Che cos'è",
   "status": "DA_APPROVARE",
-  "message": "In attesa della prima esecuzione di F1 INFORMA"
+  "source_url": "https://www.agenziaentrate.gov.it/portale/bonus-mobili/infogen-bonus-mobili-cittadini",
+  "updated": "14 gennaio 2026"
 }
