@@ -187,7 +187,7 @@ def claim(job: dict[str, Any]) -> dict[str, Any]:
 
 def retry_or_fail(job: dict[str, Any], exc: Exception) -> None:
     attempts = int(job.get("attempts") or 0)
-    maximum = max(int(job.get("max_attempts") or 3), 8)
+    maximum = max(1, int(job.get("max_attempts") or 3))
     message = str(exc)[:1800]
     if attempts < maximum:
         rest_patch(
@@ -213,6 +213,25 @@ def retry_or_fail(job: dict[str, Any], exc: Exception) -> None:
                 "updated_at": now_iso(),
             },
         )
+
+
+def job_progress(job_id: str, stage: str, **data: Any) -> None:
+    stamp = now_iso()
+    rest_patch(
+        "f1_intelligence_jobs",
+        job_id,
+        {
+            "stage": stage,
+            "result": {
+                "progress": {
+                    "stage": stage,
+                    "at": stamp,
+                    **data,
+                }
+            },
+            "updated_at": stamp,
+        },
+    )
 
 
 def client_profile(client_id: str) -> dict[str, Any]:
@@ -669,17 +688,37 @@ def _uia_download_image(win, index: int, dest: Path) -> None:
             pass
 
 
-def collect_ten_graphics_uia(initial_prompt: str, workdir: Path) -> list[Path]:
+def collect_ten_graphics_uia(
+    initial_prompt: str,
+    workdir: Path,
+    progress=None,
+) -> list[Path]:
     win = _uia_chatgpt_window()
+    if progress:
+        progress("CHATGPT_WINDOW_READY", window_title=_uia_title_value(win)[:180])
+
     baseline = _uia_image_count(win)
+    if progress:
+        progress("PROMPT_READY", baseline_images=baseline)
+
     _uia_send_prompt(win, initial_prompt)
+    if progress:
+        progress("PROMPT_SENT", baseline_images=baseline)
 
     total = baseline
-    for _turn in range(1, MAX_TURNS + 1):
+    for turn in range(1, MAX_TURNS + 1):
         total = _uia_wait_for_images(win, baseline, timeout_seconds=180)
         produced = max(0, total - baseline)
+        if progress:
+            progress(
+                "GRAPHICS_GENERATING",
+                turn=turn,
+                images_found=produced,
+                expected_images=EXPECTED_IMAGES,
+            )
         if produced >= EXPECTED_IMAGES:
             break
+
         missing = EXPECTED_IMAGES - produced
         followup = (
             f"Continua lo STESSO carosello F1 INFORMA. Mancano {missing} card grafiche. "
@@ -688,6 +727,13 @@ def collect_ten_graphics_uia(initial_prompt: str, workdir: Path) -> list[Path]:
             "Non creare una tavola unica e non ripetere le card già generate."
         )
         _uia_send_prompt(win, followup)
+        if progress:
+            progress(
+                "FOLLOWUP_SENT",
+                turn=turn,
+                images_found=produced,
+                missing=missing,
+            )
 
     produced = max(0, total - baseline)
     if produced < EXPECTED_IMAGES:
@@ -695,9 +741,18 @@ def collect_ten_graphics_uia(initial_prompt: str, workdir: Path) -> list[Path]:
             f"UIA ChatGPT ha prodotto {produced}/{EXPECTED_IMAGES} grafiche dopo {MAX_TURNS} turni"
         )
 
+    if progress:
+        progress("GRAPHICS_READY", images_found=produced, expected_images=EXPECTED_IMAGES)
+
     output: list[Path] = []
     hashes: set[str] = set()
     for card_index in range(EXPECTED_IMAGES):
+        if progress:
+            progress(
+                "DOWNLOADING_GRAPHICS",
+                downloaded=card_index,
+                expected_images=EXPECTED_IMAGES,
+            )
         raw = workdir / f"uia-raw-{card_index + 1:02d}.img"
         final = workdir / f"{card_index + 1:02d}.png"
         _uia_download_image(win, baseline + card_index, raw)
@@ -707,7 +762,14 @@ def collect_ten_graphics_uia(initial_prompt: str, workdir: Path) -> list[Path]:
             raise AutopilotError(f"UIA: grafica duplicata alla card {card_index + 1}")
         hashes.add(digest)
         output.append(final)
+        if progress:
+            progress(
+                "DOWNLOADING_GRAPHICS",
+                downloaded=card_index + 1,
+                expected_images=EXPECTED_IMAGES,
+            )
     return output
+
 
 def prompt_box(page):
     selectors = [
@@ -946,7 +1008,7 @@ def _mark_browser_ready(profile: dict[str, Any], **extra: Any) -> None:
     )
 
 
-def launch_and_generate(profile: dict[str, Any], prompt: str, workdir: Path) -> list[Path]:
+def launch_and_generate(profile: dict[str, Any], prompt: str, workdir: Path, progress=None) -> list[Path]:
     from playwright.sync_api import sync_playwright
 
     exe = chrome_executable()
@@ -980,7 +1042,7 @@ def launch_and_generate(profile: dict[str, Any], prompt: str, workdir: Path) -> 
         # verified joseph.socialmedia2@gmail.com session directly and does not
         # require closing Chrome, copying cookies, or asking for a login.
         if discovered and chrome_process_running():
-            cards = collect_ten_graphics_uia(prompt, workdir)
+            cards = collect_ten_graphics_uia(prompt, workdir, progress=progress)
             _mark_browser_ready(
                 profile,
                 browser_source="existing_chrome_uia",
@@ -1214,13 +1276,27 @@ def process_job(job: dict[str, Any]) -> None:
     prompt = str(payload.get("graphics_prompt") or "").strip()
     if not prompt:
         raise AutopilotError("Prompt grafico F1 INFORMA mancante")
+
+    job_id = str(job["id"])
+
+    def progress(stage: str, **data: Any) -> None:
+        job_progress(job_id, stage, **data)
+
+    progress("BROWSER_STARTING", expected_images=EXPECTED_IMAGES)
     profile = client_profile(str(job["client_id"]))
     with tempfile.TemporaryDirectory(prefix="f1-informa-chatgpt-") as td:
-        cards = launch_and_generate(profile, prompt, Path(td))
+        cards = launch_and_generate(profile, prompt, Path(td), progress=progress)
+        progress("GRAPHICS_VALIDATED", images_found=len(cards), expected_images=EXPECTED_IMAGES)
         result = create_content_and_schedule(job, cards)
+        progress(
+            "SOCIAL_QUEUE_READY",
+            media_count=result.get("media_count"),
+            platforms=result.get("platforms"),
+        )
+
     rest_patch(
         "f1_intelligence_jobs",
-        str(job["id"]),
+        job_id,
         {
             "status": "COMPLETED",
             "stage": "PROGRAMMATO",
@@ -1278,6 +1354,7 @@ def run_once() -> int:
 def self_test() -> None:
     assert JOB_TYPE == "F1_INFORMA_CHATGPT_GRAPHICS"
     assert EXPECTED_IMAGES == 10
+    assert max(1, int(3)) == 3
     assert _uia_count_from_title("F1IMGCOUNT:7 - Google Chrome") == 7
     assert _uia_count_from_title("ChatGPT - Google Chrome") is None
     payload = {
