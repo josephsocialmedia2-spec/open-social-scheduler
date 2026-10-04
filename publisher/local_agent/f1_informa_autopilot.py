@@ -448,62 +448,106 @@ def _uia_chatgpt_window():
     from diagnose_chatgpt_uia import chrome_windows, navigate, run_javascript
 
     windows = chrome_windows()
-    win = next((w for w in windows if "ChatGPT" in _uia_title_value(w)), None)
-    if win is None and windows:
-        win = windows[-1]
+    # Prefer the single window reserved by our automation, then an already
+    # visible ChatGPT window. Never open a second window while Chrome is running.
+    win = next((w for w in windows if "F1 AUTOPILOT" in _uia_title_value(w)), None)
     if win is None:
-        exe = chrome_executable()
-        if not exe:
-            raise AutopilotError("Google Chrome non trovato")
-        subprocess.Popen(
-            [exe, "--new-window", CHATGPT_URL],
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL,
-        )
-        deadline = time.time() + 20
-        while time.time() < deadline:
-            windows = chrome_windows()
-            if windows:
-                win = windows[-1]
-                break
-            time.sleep(0.5)
+        win = next((w for w in windows if "ChatGPT" in _uia_title_value(w)), None)
+
+    if win is None:
+        if windows:
+            # Chrome is open but no ChatGPT window exists: reuse one existing
+            # Chrome window rather than spawning another top-level window.
+            win = windows[-1]
+        else:
+            exe = chrome_executable()
+            if not exe:
+                raise AutopilotError("Google Chrome non trovato")
+            subprocess.Popen(
+                [exe, "--new-window", CHATGPT_URL],
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+            )
+            deadline = time.time() + 20
+            while time.time() < deadline:
+                windows = chrome_windows()
+                if windows:
+                    win = windows[-1]
+                    break
+                time.sleep(0.5)
+
     if win is None:
         raise AutopilotError("Nessuna finestra Chrome accessibile tramite UIA")
 
+    try:
+        win.restore()
+    except Exception:
+        pass
     navigate(win, CHATGPT_URL)
     time.sleep(7)
-    selector = _uia_image_selector_js()
     run_javascript(
         win,
         "(()=>{const p=document.querySelector('#prompt-textarea,textarea,[contenteditable=true]');"
-        "document.title='F1SESSION:'+(p?1:0)+':'+location.host;void(0)})()",
+        "document.title='F1 AUTOPILOT '+location.host+':'+(p?1:0);void(0)})()",
     )
     time.sleep(1)
     title = _uia_title_value(win)
-    if "F1SESSION:1:chatgpt.com" not in title:
+    if "F1 AUTOPILOT chatgpt.com:1" not in title:
         raise AuthRequired(
-            f"Sessione ChatGPT non autenticata nella finestra Chrome prevista per {EXPECTED_EMAIL}"
+            f"Sessione ChatGPT non pronta nella finestra Chrome prevista per {EXPECTED_EMAIL}"
         )
     return win
 
 
 def _uia_send_prompt(win, text: str) -> None:
-    from diagnose_chatgpt_uia import paste_text, run_javascript
+    from diagnose_chatgpt_uia import run_javascript
     from pywinauto.keyboard import send_keys
 
-    run_javascript(
-        win,
-        "(()=>{const p=document.querySelector('#prompt-textarea,textarea,[contenteditable=true]');"
-        "if(!p){document.title='F1PROMPT:0';return;}"
-        "p.focus();document.title='F1PROMPT:1';void(0)})()",
-    )
-    time.sleep(0.6)
-    if "F1PROMPT:1" not in _uia_title_value(win):
-        raise AutopilotError("UIA: casella prompt ChatGPT non trovata")
-    paste_text(text)
-    time.sleep(0.4)
-    send_keys("{ENTER}")
-    time.sleep(1)
+    payload = json.dumps(text, ensure_ascii=False)
+    script = f"""(()=>{{
+      const p=document.querySelector('#prompt-textarea,textarea,[contenteditable=true]');
+      if(!p){{document.title='F1PROMPT:0';return;}}
+      const value={payload};
+      p.focus();
+      if(p instanceof HTMLTextAreaElement){{
+        const setter=Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype,'value').set;
+        setter.call(p,value);
+        p.dispatchEvent(new Event('input',{{bubbles:true}}));
+      }} else {{
+        try{{
+          document.execCommand('selectAll',false,null);
+          document.execCommand('insertText',false,value);
+        }}catch(e){{
+          p.textContent=value;
+        }}
+        p.dispatchEvent(new InputEvent('input',{{bubbles:true,inputType:'insertText',data:value}}));
+      }}
+      document.title='F1PROMPT:SET';
+      setTimeout(()=>{{
+        const b=document.querySelector(
+          'button[data-testid="send-button"],button[aria-label*="Send" i],button[aria-label*="Invia" i]'
+        );
+        if(b && !b.disabled){{b.click();document.title='F1PROMPT:SENT';}}
+        else{{p.focus();document.title='F1PROMPT:READY';}}
+      }},900);
+      void(0);
+    }})()"""
+    run_javascript(win, script)
+    time.sleep(1.4)
+    title = _uia_title_value(win)
+    if "F1PROMPT:SENT" in title:
+        time.sleep(1)
+        return
+    if "F1PROMPT:READY" in title or "F1PROMPT:SET" in title:
+        # Fallback: prompt is already in the editor; keyboard Enter sends it.
+        try:
+            win.set_focus()
+        except Exception:
+            pass
+        send_keys("{ENTER}")
+        time.sleep(1)
+        return
+    raise AutopilotError(f"UIA: prompt non inviato; stato finestra={title[:180]}")
 
 
 def _uia_image_count(win) -> int:
@@ -632,7 +676,7 @@ def collect_ten_graphics_uia(initial_prompt: str, workdir: Path) -> list[Path]:
 
     total = baseline
     for _turn in range(1, MAX_TURNS + 1):
-        total = _uia_wait_for_images(win, baseline, timeout_seconds=300)
+        total = _uia_wait_for_images(win, baseline, timeout_seconds=180)
         produced = max(0, total - baseline)
         if produced >= EXPECTED_IMAGES:
             break
@@ -936,16 +980,13 @@ def launch_and_generate(profile: dict[str, Any], prompt: str, workdir: Path) -> 
         # verified joseph.socialmedia2@gmail.com session directly and does not
         # require closing Chrome, copying cookies, or asking for a login.
         if discovered and chrome_process_running():
-            try:
-                cards = collect_ten_graphics_uia(prompt, workdir)
-                _mark_browser_ready(
-                    profile,
-                    browser_source="existing_chrome_uia",
-                    source_google_profile=discovered[1],
-                )
-                return cards
-            except Exception as exc:
-                print(f"WARN existing Chrome UIA path failed; trying isolated profile: {exc}")
+            cards = collect_ten_graphics_uia(prompt, workdir)
+            _mark_browser_ready(
+                profile,
+                browser_source="existing_chrome_uia",
+                source_google_profile=discovered[1],
+            )
+            return cards
 
         if discovered and not chrome_process_running():
             user_data_root, profile_directory = discovered
