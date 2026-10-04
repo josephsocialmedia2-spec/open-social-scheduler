@@ -417,6 +417,254 @@ def sync_authenticated_chrome_profile(
                 pass
     return profile_directory
 
+
+def _uia_image_selector_js() -> str:
+    return (
+        "Array.from(document.querySelectorAll("
+        "'[data-message-author-role=\\\"assistant\\\"] img, article img'"
+        ")).filter(img=>{"
+        "const alt=(img.alt||'').toLowerCase();"
+        "return (img.currentSrc||img.src)&&img.naturalWidth>=512&&img.naturalHeight>=512"
+        "&&!alt.includes('avatar')&&!alt.includes('profile')&&!alt.includes('logo');"
+        "})"
+    )
+
+
+def _uia_title_value(win) -> str:
+    try:
+        return (win.window_text() or "").strip()
+    except Exception:
+        return ""
+
+
+def _uia_count_from_title(title: str) -> int | None:
+    m = re.search(r"F1IMGCOUNT:(\\d+)", title or "")
+    return int(m.group(1)) if m else None
+
+
+def _uia_chatgpt_window():
+    if os.name != "nt":
+        raise AutopilotError("UIA ChatGPT richiede Windows")
+    from diagnose_chatgpt_uia import chrome_windows, navigate, run_javascript
+
+    windows = chrome_windows()
+    win = next((w for w in windows if "ChatGPT" in _uia_title_value(w)), None)
+    if win is None and windows:
+        win = windows[-1]
+    if win is None:
+        exe = chrome_executable()
+        if not exe:
+            raise AutopilotError("Google Chrome non trovato")
+        subprocess.Popen(
+            [exe, "--new-window", CHATGPT_URL],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
+        deadline = time.time() + 20
+        while time.time() < deadline:
+            windows = chrome_windows()
+            if windows:
+                win = windows[-1]
+                break
+            time.sleep(0.5)
+    if win is None:
+        raise AutopilotError("Nessuna finestra Chrome accessibile tramite UIA")
+
+    navigate(win, CHATGPT_URL)
+    time.sleep(7)
+    selector = _uia_image_selector_js()
+    run_javascript(
+        win,
+        "(()=>{const p=document.querySelector('#prompt-textarea,textarea,[contenteditable=true]');"
+        "document.title='F1SESSION:'+(p?1:0)+':'+location.host;void(0)})()",
+    )
+    time.sleep(1)
+    title = _uia_title_value(win)
+    if "F1SESSION:1:chatgpt.com" not in title:
+        raise AuthRequired(
+            f"Sessione ChatGPT non autenticata nella finestra Chrome prevista per {EXPECTED_EMAIL}"
+        )
+    return win
+
+
+def _uia_send_prompt(win, text: str) -> None:
+    from diagnose_chatgpt_uia import paste_text, run_javascript
+    from pywinauto.keyboard import send_keys
+
+    run_javascript(
+        win,
+        "(()=>{const p=document.querySelector('#prompt-textarea,textarea,[contenteditable=true]');"
+        "if(!p){document.title='F1PROMPT:0';return;}"
+        "p.focus();document.title='F1PROMPT:1';void(0)})()",
+    )
+    time.sleep(0.6)
+    if "F1PROMPT:1" not in _uia_title_value(win):
+        raise AutopilotError("UIA: casella prompt ChatGPT non trovata")
+    paste_text(text)
+    time.sleep(0.4)
+    send_keys("{ENTER}")
+    time.sleep(1)
+
+
+def _uia_image_count(win) -> int:
+    from diagnose_chatgpt_uia import run_javascript
+
+    selector = _uia_image_selector_js()
+    run_javascript(
+        win,
+        f"(()=>{{const xs={selector};document.title='F1IMGCOUNT:'+xs.length;void(0)}})()",
+    )
+    time.sleep(0.7)
+    count = _uia_count_from_title(_uia_title_value(win))
+    if count is None:
+        raise AutopilotError("UIA: impossibile leggere il numero di immagini ChatGPT")
+    return count
+
+
+def _uia_wait_for_images(win, baseline: int, timeout_seconds: int = 300) -> int:
+    deadline = time.time() + timeout_seconds
+    last = baseline
+    last_change = time.time()
+    while time.time() < deadline:
+        count = _uia_image_count(win)
+        if count != last:
+            last = count
+            last_change = time.time()
+        if count > baseline and time.time() - last_change >= 18:
+            return count
+        time.sleep(4)
+    return last
+
+
+def _uia_copy_image_url(win, index: int) -> str:
+    import pyperclip
+    from diagnose_chatgpt_uia import run_javascript
+
+    marker = f"F1_URL_WAIT_{index}_{uuid.uuid4().hex[:8]}"
+    pyperclip.copy(marker)
+    selector = _uia_image_selector_js()
+    run_javascript(
+        win,
+        f"""(()=>{{
+          const xs={selector};
+          const img=xs[{index}];
+          if(!img){{document.title='F1URL:MISS:{index}';return;}}
+          const value=img.currentSrc||img.src||'';
+          const ta=document.createElement('textarea');
+          ta.value=value;ta.style.position='fixed';ta.style.opacity='0';
+          document.body.appendChild(ta);ta.focus();ta.select();
+          const ok=document.execCommand('copy');ta.remove();
+          document.title='F1URL:'+(ok?'OK':'FAIL')+':{index}';
+          void(0);
+        }})()""",
+    )
+    time.sleep(0.8)
+    value = str(pyperclip.paste() or "").strip()
+    if not value or value == marker:
+        raise AutopilotError(f"UIA: URL immagine {index + 1} non copiato")
+    return value
+
+
+def _uia_browser_download(win, index: int, filename: str) -> Path:
+    from diagnose_chatgpt_uia import run_javascript
+
+    selector = _uia_image_selector_js()
+    safe_name = re.sub(r"[^A-Za-z0-9._-]+", "_", filename)
+    run_javascript(
+        win,
+        f"""(()=>{{
+          const xs={selector};const img=xs[{index}];
+          if(!img){{document.title='F1DL:MISS:{index}';return;}}
+          fetch(img.currentSrc||img.src).then(r=>{{if(!r.ok)throw new Error('http '+r.status);return r.blob();}})
+          .then(b=>{{const u=URL.createObjectURL(b);const a=document.createElement('a');
+            a.href=u;a.download={json.dumps(safe_name)};document.body.appendChild(a);a.click();a.remove();
+            setTimeout(()=>URL.revokeObjectURL(u),5000);document.title='F1DL:OK:{index}';}})
+          .catch(()=>{{document.title='F1DL:ERR:{index}';}});
+          void(0);
+        }})()""",
+    )
+    downloads = Path.home() / "Downloads"
+    target = downloads / safe_name
+    deadline = time.time() + 90
+    partial = downloads / (safe_name + ".crdownload")
+    while time.time() < deadline:
+        if target.exists() and target.stat().st_size > 0 and not partial.exists():
+            return target
+        time.sleep(1)
+    raise AutopilotError(f"UIA: download browser non trovato per card {index + 1}")
+
+
+def _uia_download_image(win, index: int, dest: Path) -> None:
+    src = _uia_copy_image_url(win, index)
+    if src.startswith("data:image/"):
+        dest.write_bytes(base64.b64decode(src.split(",", 1)[1]))
+        return
+    if src.startswith(("http://", "https://")):
+        try:
+            r = requests.get(
+                src,
+                headers={"User-Agent": "Mozilla/5.0"},
+                timeout=120,
+            )
+            if r.ok and len(r.content) > 10_000:
+                dest.write_bytes(r.content)
+                return
+        except Exception:
+            pass
+
+    # blob: URLs and protected signed URLs are downloaded inside the already
+    # authenticated Chrome page, then moved into the worker workspace.
+    filename = f"f1-informa-{uuid.uuid4().hex[:12]}-{index + 1:02d}.png"
+    downloaded = _uia_browser_download(win, index, filename)
+    try:
+        shutil.move(str(downloaded), str(dest))
+    finally:
+        try:
+            downloaded.unlink(missing_ok=True)
+        except Exception:
+            pass
+
+
+def collect_ten_graphics_uia(initial_prompt: str, workdir: Path) -> list[Path]:
+    win = _uia_chatgpt_window()
+    baseline = _uia_image_count(win)
+    _uia_send_prompt(win, initial_prompt)
+
+    total = baseline
+    for _turn in range(1, MAX_TURNS + 1):
+        total = _uia_wait_for_images(win, baseline, timeout_seconds=300)
+        produced = max(0, total - baseline)
+        if produced >= EXPECTED_IMAGES:
+            break
+        missing = EXPECTED_IMAGES - produced
+        followup = (
+            f"Continua lo STESSO carosello F1 INFORMA. Mancano {missing} card grafiche. "
+            f"Genera ora le prossime {missing} immagini SEPARATE in formato verticale 4:5. "
+            "Mantieni IDENTICI stile, palette, font, gerarchia e numerazione. "
+            "Non creare una tavola unica e non ripetere le card già generate."
+        )
+        _uia_send_prompt(win, followup)
+
+    produced = max(0, total - baseline)
+    if produced < EXPECTED_IMAGES:
+        raise AutopilotError(
+            f"UIA ChatGPT ha prodotto {produced}/{EXPECTED_IMAGES} grafiche dopo {MAX_TURNS} turni"
+        )
+
+    output: list[Path] = []
+    hashes: set[str] = set()
+    for card_index in range(EXPECTED_IMAGES):
+        raw = workdir / f"uia-raw-{card_index + 1:02d}.img"
+        final = workdir / f"{card_index + 1:02d}.png"
+        _uia_download_image(win, baseline + card_index, raw)
+        normalize_card(raw, final)
+        digest = hashlib.sha256(final.read_bytes()).hexdigest()
+        if digest in hashes:
+            raise AutopilotError(f"UIA: grafica duplicata alla card {card_index + 1}")
+        hashes.add(digest)
+        output.append(final)
+    return output
+
 def prompt_box(page):
     selectors = [
         "#prompt-textarea",
@@ -682,6 +930,23 @@ def launch_and_generate(profile: dict[str, Any], prompt: str, workdir: Path) -> 
                     pass
 
         discovered = discover_existing_chrome_profile()
+
+        # Preferred path when the user's authenticated Chrome is already open:
+        # drive that exact window through Windows UI Automation. This uses the
+        # verified joseph.socialmedia2@gmail.com session directly and does not
+        # require closing Chrome, copying cookies, or asking for a login.
+        if discovered and chrome_process_running():
+            try:
+                cards = collect_ten_graphics_uia(prompt, workdir)
+                _mark_browser_ready(
+                    profile,
+                    browser_source="existing_chrome_uia",
+                    source_google_profile=discovered[1],
+                )
+                return cards
+            except Exception as exc:
+                print(f"WARN existing Chrome UIA path failed; trying isolated profile: {exc}")
+
         if discovered and not chrome_process_running():
             user_data_root, profile_directory = discovered
             context = p.chromium.launch_persistent_context(
@@ -972,6 +1237,8 @@ def run_once() -> int:
 def self_test() -> None:
     assert JOB_TYPE == "F1_INFORMA_CHATGPT_GRAPHICS"
     assert EXPECTED_IMAGES == 10
+    assert _uia_count_from_title("F1IMGCOUNT:7 - Google Chrome") == 7
+    assert _uia_count_from_title("ChatGPT - Google Chrome") is None
     payload = {
         "caption": "Bonus mobili: detrazione Irpef del 50%. Fonte ufficiale.",
         "title": "Bonus mobili",
