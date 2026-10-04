@@ -26,6 +26,9 @@ jobs:
   generate:
     runs-on: ubuntu-latest
     timeout-minutes: 25
+    env:
+      SUPABASE_URL: ${{ vars.SUPABASE_URL || 'https://nqnmlsmeiynxbdojeyjt.supabase.co' }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
     steps:
       - name: Gate 17 Europe/Rome
         id: gate
@@ -67,7 +70,9 @@ jobs:
 
       - name: Self-test
         if: steps.gate.outputs.run == 'true'
-        run: python f1_informa/f1_informa.py --self-test
+        run: |
+          python f1_informa/f1_informa.py --self-test
+          python publisher/local_agent/f1_informa_autopilot.py --self-test
 
       - name: Generate source-locked carousel
         if: steps.gate.outputs.run == 'true'
@@ -78,7 +83,7 @@ jobs:
             python f1_informa/f1_informa.py --force
           fi
 
-      - name: Verify F1 manual-publish boundary
+      - name: Verify isolated F1 INFORMA autopilot boundary
         if: steps.gate.outputs.run == 'true'
         shell: bash
         run: |
@@ -86,14 +91,17 @@ jobs:
           import json
           from pathlib import Path
           cfg=json.loads(Path('publisher/clients/f1-immobiliare.json').read_text(encoding='utf-8'))
+          # I contenuti F1 ordinari restano protetti dalle regole esistenti.
           assert cfg.get('graphics_source') == 'manual_only'
           assert cfg.get('publish_only') is True
           assert cfg.get('automatic_rendering') is False
           latest=Path('f1-content-hub/f1-informa-data/latest.json')
           if latest.exists():
               data=json.loads(latest.read_text(encoding='utf-8'))
-              assert data.get('status') == 'DA_APPROVARE'
-          print('F1_INFORMA_STAGED_ONLY_OK')
+              assert data.get('status') in {'GRAFICA_IN_CODA','ERRORE_AUTOMAZIONE'}
+              if data.get('status') == 'GRAFICA_IN_CODA':
+                  assert data.get('graphics_job_id')
+          print('F1_INFORMA_ISOLATED_AUTOPILOT_OK')
           PY
 
       - name: Commit staged F1 INFORMA package
