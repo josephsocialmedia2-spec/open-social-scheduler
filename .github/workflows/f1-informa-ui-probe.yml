@@ -1,0 +1,32 @@
+name: F1 INFORMA ChatGPT UI Probe
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.f1-informa-ui-probe-trigger'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: f1-informa-chatgpt-ui-probe
+  cancel-in-progress: true
+
+jobs:
+  inspect:
+    runs-on: [self-hosted, Windows, X64, f1-social-local-pc]
+    timeout-minutes: 10
+    env:
+      F1_CHATGPT_URL: 'https://chatgpt.com/'
+    steps:
+      - uses: actions/checkout@v4
+      - name: Inspect visible ChatGPT composer controls
+        shell: powershell
+        run: |
+          if (-not (Test-Path 'C:\F1Social\venv\Scripts\python.exe')) {
+            throw 'F1 Social Python environment missing on local PC.'
+          }
+          & 'C:\F1Social\venv\Scripts\python.exe' publisher\local_agent\diagnose_chatgpt_uia.py --inspect-controls
+          if ($LASTEXITCODE -ne 0) { throw 'ChatGPT control probe failed.' }
