@@ -361,8 +361,9 @@ def build_or_update_jobs(queue: dict[str, Any]) -> dict[str, int]:
         channel_ok = bool(channel and channel.get("enabled") and channel.get("verified"))
         platform_metadata = row.get("platform_metadata") if isinstance(row.get("platform_metadata"), dict) else {}
         manual_publish_now = bool(platform_metadata.get("publish_now"))
-        auto_publish = bool(client.get("auto_publish")) or manual_publish_now
-        approval_required = bool(client.get("approval_required", True))
+        whatsapp_auto_publish = bool(platform_metadata.get("whatsapp_auto_publish"))
+        auto_publish = bool(client.get("auto_publish")) or manual_publish_now or whatsapp_auto_publish
+        approval_required = bool(client.get("approval_required", True)) and not whatsapp_auto_publish
         item_status = str(item.get("status") or "")
         approval_ok = (not approval_required) or item_status in {"APPROVATO", "IN PUBBLICAZIONE", "PUBBLICATO"}
 
