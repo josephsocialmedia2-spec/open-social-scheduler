@@ -518,6 +518,70 @@ def _uia_chatgpt_window():
     return win
 
 
+
+def _uia_enable_image_mode(win) -> bool:
+    """Select ChatGPT's explicit Create image mode in the existing session.
+
+    We search visible composer controls in both Italian and English. If the
+    image option is hidden under Tools/Strumenti/plus, open that menu and try
+    again. No new Chrome window is created.
+    """
+    from diagnose_chatgpt_uia import run_javascript
+
+    direct = r"""(()=>{
+      const norm=s=>(s||'').replace(/\s+/g,' ').trim().toLowerCase();
+      const visible=e=>!!(e && (e.offsetWidth||e.offsetHeight||e.getClientRects().length));
+      const label=e=>norm(
+        e.getAttribute('aria-label')||e.getAttribute('title')||
+        e.getAttribute('data-testid')||e.textContent||''
+      );
+      const nodes=[...document.querySelectorAll('button,[role="button"],[role="menuitem"]')].filter(visible);
+      const imageWords=['create image','create images','generate image','genera immagine','crea immagine','crea immagini'];
+      let hit=nodes.find(e=>imageWords.some(w=>label(e).includes(w)));
+      if(hit){hit.click();document.title='F1IMGMODE:CLICKED:'+label(hit).slice(0,80);return;}
+      const toolWords=['tools','strumenti','tool','azioni'];
+      let tools=nodes.find(e=>toolWords.some(w=>label(e)===w||label(e).includes(w)));
+      if(!tools){
+        tools=document.querySelector(
+          'button[data-testid*="plus"],button[aria-label*="tool" i],button[aria-label*="strument" i],button[aria-label*="add" i]'
+        );
+      }
+      if(tools && visible(tools)){tools.click();document.title='F1IMGMODE:MENU';return;}
+      document.title='F1IMGMODE:NOTFOUND';
+      void(0);
+    })()"""
+    run_javascript(win, direct)
+    time.sleep(1.0)
+    title = _uia_title_value(win)
+    if "F1IMGMODE:CLICKED:" in title:
+        return True
+
+    if "F1IMGMODE:MENU" in title:
+        second = r"""(()=>{
+          const norm=s=>(s||'').replace(/\s+/g,' ').trim().toLowerCase();
+          const visible=e=>!!(e && (e.offsetWidth||e.offsetHeight||e.getClientRects().length));
+          const label=e=>norm(
+            e.getAttribute('aria-label')||e.getAttribute('title')||
+            e.getAttribute('data-testid')||e.textContent||''
+          );
+          const nodes=[...document.querySelectorAll(
+            'button,[role="button"],[role="menuitem"],[role="option"],li'
+          )].filter(visible);
+          const imageWords=['create image','create images','generate image','genera immagine','crea immagine','crea immagini'];
+          const hit=nodes.find(e=>imageWords.some(w=>label(e).includes(w)));
+          if(hit){hit.click();document.title='F1IMGMODE:CLICKED:'+label(hit).slice(0,80);return;}
+          document.title='F1IMGMODE:NOTFOUND';
+          void(0);
+        })()"""
+        run_javascript(win, second)
+        time.sleep(1.0)
+        title = _uia_title_value(win)
+        if "F1IMGMODE:CLICKED:" in title:
+            return True
+
+    return False
+
+
 def _uia_send_prompt(win, text: str) -> None:
     from diagnose_chatgpt_uia import run_javascript
     from pywinauto.keyboard import send_keys
@@ -701,6 +765,16 @@ def collect_ten_graphics_uia(
     if progress:
         progress("PROMPT_READY", baseline_images=baseline)
 
+    image_mode = _uia_enable_image_mode(win)
+    if not image_mode:
+        if progress:
+            progress("IMAGE_MODE_NOT_FOUND", baseline_images=baseline)
+        raise AutopilotError(
+            "ChatGPT: comando Crea immagine / Create image non trovato nella sessione browser"
+        )
+    if progress:
+        progress("IMAGE_MODE_READY", baseline_images=baseline)
+
     _uia_send_prompt(win, initial_prompt)
     if progress:
         progress("PROMPT_SENT", baseline_images=baseline)
@@ -718,6 +792,11 @@ def collect_ten_graphics_uia(
             )
         if produced >= EXPECTED_IMAGES:
             break
+
+        if turn == 1 and produced == 0:
+            raise AutopilotError(
+                "ChatGPT image mode attivata ma 0 immagini generate nel primo ciclo"
+            )
 
         missing = EXPECTED_IMAGES - produced
         followup = (
@@ -1357,6 +1436,7 @@ def self_test() -> None:
     assert max(1, int(3)) == 3
     assert _uia_count_from_title("F1IMGCOUNT:7 - Google Chrome") == 7
     assert _uia_count_from_title("ChatGPT - Google Chrome") is None
+    assert "Crea immagine" in "Crea immagine / Create image"
     payload = {
         "caption": "Bonus mobili: detrazione Irpef del 50%. Fonte ufficiale.",
         "title": "Bonus mobili",
