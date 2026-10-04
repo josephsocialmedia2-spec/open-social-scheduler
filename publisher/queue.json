@@ -271083,7 +271083,7 @@
       "client_id": "real-media-pro",
       "client_name": "Real Media Pro",
       "title": "Un e-commerce bello non basta",
-      "caption": "Un e-commerce bello non basta\n\nUn e-commerce che performa collega prodotto, offerta, pagina, fiducia, checkout e traffico. Real Media Pro parte dal percorso di acquisto, non dal solo layout. Richiedi un'analisi strategica gratuita.",
+      "caption": "Un e-commerce che performa collega prodotto, offerta, pagina, fiducia, checkout e traffico. Real Media Pro parte dal percorso di acquisto, non dal solo layout. Richiedi un'analisi strategica gratuita.",
       "format": "post",
       "media": [],
       "scheduled_at": "2026-09-27T17:15:00+00:00",
@@ -271276,7 +271276,7 @@
       "client_id": "real-media-pro",
       "client_name": "Real Media Pro",
       "title": "Meta Ads: il problema spesso è la creatività",
-      "caption": "Meta Ads: il problema spesso è la creatività\n\nSu Meta la creatività è una variabile decisiva: hook, dimostrazione, prova e CTA devono essere progettati per il feed e testati in più varianti. Richiedi un'analisi strategica gratuita.",
+      "caption": "Su Meta la creatività è una variabile decisiva: hook, dimostrazione, prova e CTA devono essere progettati per il feed e testati in più varianti. Richiedi un'analisi strategica gratuita.",
       "format": "post",
       "media": [],
       "scheduled_at": "2026-09-28T17:15:00+00:00",
@@ -271625,7 +271625,7 @@
       "client_id": "real-media-pro",
       "client_name": "Real Media Pro",
       "title": "Google Ads intercetta domanda già attiva",
-      "caption": "Google Ads intercetta domanda già attiva\n\nGoogle Ads funziona quando keyword, feed, annuncio e pagina di destinazione rispondono allo stesso intento. Richiedi un'analisi strategica gratuita.",
+      "caption": "Google Ads funziona quando keyword, feed, annuncio e pagina di destinazione rispondono allo stesso intento. Richiedi un'analisi strategica gratuita.",
       "format": "post",
       "media": [],
       "scheduled_at": "2026-09-29T17:15:00+00:00",
@@ -273629,7 +273629,7 @@
     {
       "id": "supabase-calendar-4e0043f5-daff-42eb-94f6-740505cb01f2",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "buffer_review_required",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250426 141304",
@@ -273663,12 +273663,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Cloudinary HTTP 400: {\"error\":{\"message\":\"File size too large. Got 14405830. Maximum is 10485760.\"},\"message\":\"Your file exceeds the Free plan upload limit. Upgrade to upload larger assets.\",\"upgrade_url\":\"https://console.cloudinary.com/app/settings/billing/change_plan/programmable_media\"}"
+      "blocked_reason": "Scheduled time is more than 60 minutes in the past; manual review required"
     },
     {
       "id": "supabase-calendar-f8880e6c-5f25-4e92-a105-d2e036421e54",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "buffer_review_required",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250427 141822",
@@ -273702,12 +273702,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Cloudinary HTTP 400: {\"error\":{\"message\":\"File size too large. Got 12748455. Maximum is 10485760.\"},\"message\":\"Your file exceeds the Free plan upload limit. Upgrade to upload larger assets.\",\"upgrade_url\":\"https://console.cloudinary.com/app/settings/billing/change_plan/programmable_media\"}"
+      "blocked_reason": "Scheduled time is more than 60 minutes in the past; manual review required"
     },
     {
       "id": "supabase-calendar-b22d6cbf-330c-4a66-845c-1f76122b3fc2",
-      "enabled": true,
-      "status": "buffer_scheduled",
+      "enabled": false,
+      "status": "published",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "PUNTO DI FORZA · CASA RISTRUTTURATA IN VENDITA CON CORTILE PRIVATO E ARREDO INCLUSO",
@@ -273746,11 +273746,11 @@
           "service": "facebook",
           "channel_id": "6ab2b713ea19ca0bdeb8103d",
           "post_id": "6ac00aa29c546d86ef1722bf",
-          "buffer_status": "scheduled",
+          "buffer_status": "sent",
           "due_at": "2026-10-04T12:00:00.000Z",
           "created_at": "2026-10-02T19:48:50+00:00",
-          "sent_at": null,
-          "external_link": null
+          "sent_at": "2026-10-04T12:00:59.509Z",
+          "external_link": "https://www.facebook.com/122138682843201564/posts/122142261021201564"
         }
       ],
       "buffer_scheduled_platforms": [
@@ -273763,12 +273763,14 @@
           "resource_type": "image",
           "bytes": "346902"
         }
-      ]
+      ],
+      "external_post_id": "6ac00aa29c546d86ef1722bf",
+      "external_url": "https://www.facebook.com/122138682843201564/posts/122142261021201564"
     },
     {
       "id": "supabase-calendar-e4019c1a-7136-42e4-a47a-b87aa5237052",
-      "enabled": true,
-      "status": "buffer_scheduled",
+      "enabled": false,
+      "status": "published",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "PUNTO DI FORZA · CASA RISTRUTTURATA IN VENDITA CON CORTILE PRIVATO E ARREDO INCLUSO",
@@ -273807,11 +273809,11 @@
           "service": "instagram",
           "channel_id": "6ab2b6e7ea19ca0bdeb80e19",
           "post_id": "6abfc7b2e11203baed2c0c44",
-          "buffer_status": "scheduled",
+          "buffer_status": "sent",
           "due_at": "2026-10-04T12:00:00.000Z",
           "created_at": "2026-10-02T15:03:15+00:00",
-          "sent_at": null,
-          "external_link": null
+          "sent_at": "2026-10-04T12:01:08.813Z",
+          "external_link": "https://www.instagram.com/p/DeElewYoOsB/"
         }
       ],
       "buffer_scheduled_platforms": [
@@ -273824,7 +273826,9 @@
           "resource_type": "image",
           "bytes": "346902"
         }
-      ]
+      ],
+      "external_post_id": "6abfc7b2e11203baed2c0c44",
+      "external_url": "https://www.instagram.com/p/DeElewYoOsB/"
     },
     {
       "id": "supabase-calendar-f517eb8d-6f89-48bd-b0f0-b25ea6e013ec",
@@ -274751,14 +274755,6 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "cloudinary_assets": [
-        {
-          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790612496/f1-buffer/supabase-calendar-45a14b9d-faa4-4d14-8392-c901d164e652/video.jpg",
-          "public_id": "f1-buffer/supabase-calendar-45a14b9d-faa4-4d14-8392-c901d164e652/video",
-          "resource_type": "image",
-          "bytes": "265605"
-        }
-      ],
       "buffer_posts": [
         {
           "service": "facebook",
@@ -274766,11 +274762,21 @@
           "post_id": "6ac1f21eaa79e514b90f559d",
           "buffer_status": "scheduled",
           "due_at": "2026-10-06T18:00:00.000Z",
-          "created_at": "2026-10-04T06:28:46+00:00"
+          "created_at": "2026-10-04T06:28:46+00:00",
+          "sent_at": null,
+          "external_link": null
         }
       ],
       "buffer_scheduled_platforms": [
         "facebook"
+      ],
+      "cloudinary_assets": [
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790612496/f1-buffer/supabase-calendar-45a14b9d-faa4-4d14-8392-c901d164e652/video.jpg",
+          "public_id": "f1-buffer/supabase-calendar-45a14b9d-faa4-4d14-8392-c901d164e652/video",
+          "resource_type": "image",
+          "bytes": "265605"
+        }
       ]
     },
     {
@@ -274932,14 +274938,6 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "cloudinary_assets": [
-        {
-          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790612499/f1-buffer/supabase-calendar-9477727e-b298-499f-8162-8a19b1ea3e7f/video.png",
-          "public_id": "f1-buffer/supabase-calendar-9477727e-b298-499f-8162-8a19b1ea3e7f/video",
-          "resource_type": "image",
-          "bytes": "2763758"
-        }
-      ],
       "buffer_posts": [
         {
           "service": "facebook",
@@ -274947,11 +274945,21 @@
           "post_id": "6ac1f21f8dc991c73c6d48b6",
           "buffer_status": "scheduled",
           "due_at": "2026-10-07T06:00:00.000Z",
-          "created_at": "2026-10-04T06:28:47+00:00"
+          "created_at": "2026-10-04T06:28:47+00:00",
+          "sent_at": null,
+          "external_link": null
         }
       ],
       "buffer_scheduled_platforms": [
         "facebook"
+      ],
+      "cloudinary_assets": [
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790612499/f1-buffer/supabase-calendar-9477727e-b298-499f-8162-8a19b1ea3e7f/video.png",
+          "public_id": "f1-buffer/supabase-calendar-9477727e-b298-499f-8162-8a19b1ea3e7f/video",
+          "resource_type": "image",
+          "bytes": "2763758"
+        }
       ]
     },
     {
@@ -275069,14 +275077,6 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "cloudinary_assets": [
-        {
-          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790612514/f1-buffer/supabase-calendar-b9ebe17b-1a89-4ff7-8c8d-9a5c621acc76/video.png",
-          "public_id": "f1-buffer/supabase-calendar-b9ebe17b-1a89-4ff7-8c8d-9a5c621acc76/video",
-          "resource_type": "image",
-          "bytes": "1862334"
-        }
-      ],
       "buffer_posts": [
         {
           "service": "instagram",
@@ -275084,17 +275084,27 @@
           "post_id": "6ac1f222814d657011e62108",
           "buffer_status": "scheduled",
           "due_at": "2026-10-07T12:00:00.000Z",
-          "created_at": "2026-10-04T06:28:51+00:00"
+          "created_at": "2026-10-04T06:28:51+00:00",
+          "sent_at": null,
+          "external_link": null
         }
       ],
       "buffer_scheduled_platforms": [
         "instagram"
+      ],
+      "cloudinary_assets": [
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790612514/f1-buffer/supabase-calendar-b9ebe17b-1a89-4ff7-8c8d-9a5c621acc76/video.png",
+          "public_id": "f1-buffer/supabase-calendar-b9ebe17b-1a89-4ff7-8c8d-9a5c621acc76/video",
+          "resource_type": "image",
+          "bytes": "1862334"
+        }
       ]
     },
     {
       "id": "supabase-calendar-6b3b2adb-0211-4684-a85c-7aa8c3518111",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "buffer_scheduled",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "INVITO ALLA VISITA · DUE LOCALI IN CENTRO PAESE CON POSIZIONE STRATEGICA",
@@ -275136,12 +275146,24 @@
           "bytes": "1862334"
         }
       ],
-      "blocked_reason": "Buffer facebook: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
+      "buffer_posts": [
+        {
+          "service": "facebook",
+          "channel_id": "6ab2b713ea19ca0bdeb8103d",
+          "post_id": "6ac24833365aeab50be1a220",
+          "buffer_status": "scheduled",
+          "due_at": "2026-10-07T12:00:00.000Z",
+          "created_at": "2026-10-04T12:36:03+00:00"
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "facebook"
+      ]
     },
     {
       "id": "supabase-calendar-55d6ff71-5eab-4362-9de7-b915ea90e724",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "buffer_scheduled",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "INVITO ALLA VISITA · CASA RISTRUTTURATA IN VENDITA CON CORTILE PRIVATO E ARREDO INCLUSO",
@@ -275183,12 +275205,24 @@
           "bytes": "346902"
         }
       ],
-      "blocked_reason": "Buffer facebook: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
+      "buffer_posts": [
+        {
+          "service": "facebook",
+          "channel_id": "6ab2b713ea19ca0bdeb8103d",
+          "post_id": "6ac2483411a7340ba026fa5c",
+          "buffer_status": "scheduled",
+          "due_at": "2026-10-07T18:00:00.000Z",
+          "created_at": "2026-10-04T12:36:04+00:00"
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "facebook"
+      ]
     },
     {
       "id": "supabase-calendar-9a9492dc-bdd4-4f24-863c-b412b992d689",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "buffer_scheduled",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "INVITO ALLA VISITA · CASA RISTRUTTURATA IN VENDITA CON CORTILE PRIVATO E ARREDO INCLUSO",
@@ -275230,7 +275264,19 @@
           "bytes": "346902"
         }
       ],
-      "blocked_reason": "Buffer instagram: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
+      "buffer_posts": [
+        {
+          "service": "instagram",
+          "channel_id": "6ab2b6e7ea19ca0bdeb80e19",
+          "post_id": "6ac248356f5f5d018da149d0",
+          "buffer_status": "scheduled",
+          "due_at": "2026-10-07T18:00:00.000Z",
+          "created_at": "2026-10-04T12:36:05+00:00"
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "instagram"
+      ]
     },
     {
       "id": "supabase-calendar-e89a721b-980b-49d2-8884-b82788869ce3",
@@ -281684,6 +281730,59 @@
               ]
             }
           ]
+        },
+        {
+          "at": "2026-10-04T12:36:38+00:00",
+          "dry_run": false,
+          "results": [
+            {
+              "platform": "facebook",
+              "status": "blocked",
+              "missing": [
+                "RMP_FACEBOOK_PAGE_ACCESS_TOKEN"
+              ]
+            },
+            {
+              "platform": "instagram",
+              "status": "blocked",
+              "missing": [
+                "RMP_INSTAGRAM_ACCESS_TOKEN",
+                "RMP_INSTAGRAM_USER_ID"
+              ]
+            },
+            {
+              "platform": "tiktok",
+              "status": "blocked",
+              "missing": [
+                "RMP_TIKTOK_ACCESS_TOKEN"
+              ]
+            },
+            {
+              "platform": "linkedin",
+              "status": "blocked",
+              "missing": [
+                "RMP_LINKEDIN_ACCESS_TOKEN",
+                "RMP_LINKEDIN_AUTHOR_URN"
+              ]
+            },
+            {
+              "platform": "youtube",
+              "status": "blocked",
+              "missing": [
+                "RMP_YOUTUBE_CLIENT_ID",
+                "RMP_YOUTUBE_CLIENT_SECRET",
+                "RMP_YOUTUBE_REFRESH_TOKEN"
+              ]
+            },
+            {
+              "platform": "pinterest",
+              "status": "blocked",
+              "missing": [
+                "RMP_PINTEREST_ACCESS_TOKEN",
+                "RMP_PINTEREST_BOARD_ID"
+              ]
+            }
+          ]
         }
       ]
     },
@@ -281783,6 +281882,59 @@
       "direct_api_results": [
         {
           "at": "2026-10-04T06:29:39+00:00",
+          "dry_run": false,
+          "results": [
+            {
+              "platform": "facebook",
+              "status": "blocked",
+              "missing": [
+                "RMP_FACEBOOK_PAGE_ACCESS_TOKEN"
+              ]
+            },
+            {
+              "platform": "instagram",
+              "status": "blocked",
+              "missing": [
+                "RMP_INSTAGRAM_ACCESS_TOKEN",
+                "RMP_INSTAGRAM_USER_ID"
+              ]
+            },
+            {
+              "platform": "tiktok",
+              "status": "blocked",
+              "missing": [
+                "RMP_TIKTOK_ACCESS_TOKEN"
+              ]
+            },
+            {
+              "platform": "linkedin",
+              "status": "blocked",
+              "missing": [
+                "RMP_LINKEDIN_ACCESS_TOKEN",
+                "RMP_LINKEDIN_AUTHOR_URN"
+              ]
+            },
+            {
+              "platform": "youtube",
+              "status": "blocked",
+              "missing": [
+                "RMP_YOUTUBE_CLIENT_ID",
+                "RMP_YOUTUBE_CLIENT_SECRET",
+                "RMP_YOUTUBE_REFRESH_TOKEN"
+              ]
+            },
+            {
+              "platform": "pinterest",
+              "status": "blocked",
+              "missing": [
+                "RMP_PINTEREST_ACCESS_TOKEN",
+                "RMP_PINTEREST_BOARD_ID"
+              ]
+            }
+          ]
+        },
+        {
+          "at": "2026-10-04T12:36:38+00:00",
           "dry_run": false,
           "results": [
             {
@@ -281982,6 +282134,59 @@
               ]
             }
           ]
+        },
+        {
+          "at": "2026-10-04T12:36:38+00:00",
+          "dry_run": false,
+          "results": [
+            {
+              "platform": "facebook",
+              "status": "blocked",
+              "missing": [
+                "RMP_FACEBOOK_PAGE_ACCESS_TOKEN"
+              ]
+            },
+            {
+              "platform": "instagram",
+              "status": "blocked",
+              "missing": [
+                "RMP_INSTAGRAM_ACCESS_TOKEN",
+                "RMP_INSTAGRAM_USER_ID"
+              ]
+            },
+            {
+              "platform": "tiktok",
+              "status": "blocked",
+              "missing": [
+                "RMP_TIKTOK_ACCESS_TOKEN"
+              ]
+            },
+            {
+              "platform": "linkedin",
+              "status": "blocked",
+              "missing": [
+                "RMP_LINKEDIN_ACCESS_TOKEN",
+                "RMP_LINKEDIN_AUTHOR_URN"
+              ]
+            },
+            {
+              "platform": "youtube",
+              "status": "blocked",
+              "missing": [
+                "RMP_YOUTUBE_CLIENT_ID",
+                "RMP_YOUTUBE_CLIENT_SECRET",
+                "RMP_YOUTUBE_REFRESH_TOKEN"
+              ]
+            },
+            {
+              "platform": "pinterest",
+              "status": "blocked",
+              "missing": [
+                "RMP_PINTEREST_ACCESS_TOKEN",
+                "RMP_PINTEREST_BOARD_ID"
+              ]
+            }
+          ]
         }
       ]
     },
@@ -282081,6 +282286,59 @@
       "direct_api_results": [
         {
           "at": "2026-10-04T06:29:39+00:00",
+          "dry_run": false,
+          "results": [
+            {
+              "platform": "facebook",
+              "status": "blocked",
+              "missing": [
+                "RMP_FACEBOOK_PAGE_ACCESS_TOKEN"
+              ]
+            },
+            {
+              "platform": "instagram",
+              "status": "blocked",
+              "missing": [
+                "RMP_INSTAGRAM_ACCESS_TOKEN",
+                "RMP_INSTAGRAM_USER_ID"
+              ]
+            },
+            {
+              "platform": "tiktok",
+              "status": "blocked",
+              "missing": [
+                "RMP_TIKTOK_ACCESS_TOKEN"
+              ]
+            },
+            {
+              "platform": "linkedin",
+              "status": "blocked",
+              "missing": [
+                "RMP_LINKEDIN_ACCESS_TOKEN",
+                "RMP_LINKEDIN_AUTHOR_URN"
+              ]
+            },
+            {
+              "platform": "youtube",
+              "status": "blocked",
+              "missing": [
+                "RMP_YOUTUBE_CLIENT_ID",
+                "RMP_YOUTUBE_CLIENT_SECRET",
+                "RMP_YOUTUBE_REFRESH_TOKEN"
+              ]
+            },
+            {
+              "platform": "pinterest",
+              "status": "blocked",
+              "missing": [
+                "RMP_PINTEREST_ACCESS_TOKEN",
+                "RMP_PINTEREST_BOARD_ID"
+              ]
+            }
+          ]
+        },
+        {
+          "at": "2026-10-04T12:36:38+00:00",
           "dry_run": false,
           "results": [
             {
@@ -282280,11 +282538,64 @@
               ]
             }
           ]
+        },
+        {
+          "at": "2026-10-04T12:36:38+00:00",
+          "dry_run": false,
+          "results": [
+            {
+              "platform": "facebook",
+              "status": "blocked",
+              "missing": [
+                "RMP_FACEBOOK_PAGE_ACCESS_TOKEN"
+              ]
+            },
+            {
+              "platform": "instagram",
+              "status": "blocked",
+              "missing": [
+                "RMP_INSTAGRAM_ACCESS_TOKEN",
+                "RMP_INSTAGRAM_USER_ID"
+              ]
+            },
+            {
+              "platform": "tiktok",
+              "status": "blocked",
+              "missing": [
+                "RMP_TIKTOK_ACCESS_TOKEN"
+              ]
+            },
+            {
+              "platform": "linkedin",
+              "status": "blocked",
+              "missing": [
+                "RMP_LINKEDIN_ACCESS_TOKEN",
+                "RMP_LINKEDIN_AUTHOR_URN"
+              ]
+            },
+            {
+              "platform": "youtube",
+              "status": "blocked",
+              "missing": [
+                "RMP_YOUTUBE_CLIENT_ID",
+                "RMP_YOUTUBE_CLIENT_SECRET",
+                "RMP_YOUTUBE_REFRESH_TOKEN"
+              ]
+            },
+            {
+              "platform": "pinterest",
+              "status": "blocked",
+              "missing": [
+                "RMP_PINTEREST_ACCESS_TOKEN",
+                "RMP_PINTEREST_BOARD_ID"
+              ]
+            }
+          ]
         }
       ]
     }
   ],
-  "updated_at": "2026-10-04T06:30:18+00:00",
+  "updated_at": "2026-10-04T12:37:12+00:00",
   "updated_by": "Automatic renderer · F1 manual-only aware",
   "current_cycle": "2026-10-04T04:00",
   "history_days": 14,
