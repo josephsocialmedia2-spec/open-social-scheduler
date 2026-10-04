@@ -1,0 +1,89 @@
+name: F1 INFORMA ChatGPT Local Autopilot
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.f1-informa-local-trigger'
+      - 'publisher/local_agent/f1_informa_autopilot.py'
+      - 'publisher/local_agent/requirements.txt'
+      - '.github/workflows/f1-informa-autopilot-local.yml'
+  schedule:
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: f1-informa-chatgpt-local-autopilot
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install focused dependencies
+        run: pip install requests==2.32.5 Pillow==11.0.0 playwright==1.48.0
+      - name: Compile and self-test F1 INFORMA worker
+        run: |
+          python -m py_compile publisher/local_agent/f1_informa_autopilot.py
+          python publisher/local_agent/f1_informa_autopilot.py --self-test
+
+  local-autopilot:
+    if: github.event_name != 'pull_request'
+    needs: validate
+    runs-on: [self-hosted, Windows, X64, f1-social-local-pc]
+    timeout-minutes: 45
+    env:
+      SUPABASE_URL: ${{ vars.SUPABASE_URL || 'https://nqnmlsmeiynxbdojeyjt.supabase.co' }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+      F1_BROWSER_ROOT: 'C:\F1Social\BrowserProfiles'
+      F1_CHATGPT_GOOGLE_EMAIL: 'joseph.socialmedia2@gmail.com'
+      F1_CHATGPT_URL: 'https://chatgpt.com/'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify local Windows runtime
+        shell: powershell
+        run: |
+          if (-not (Test-Path 'C:\F1Social\venv\Scripts\python.exe')) {
+            throw 'F1 Social Python environment missing on local PC.'
+          }
+          if (-not (Test-Path 'C:\F1Social\BrowserProfiles')) {
+            New-Item -ItemType Directory -Force -Path 'C:\F1Social\BrowserProfiles' | Out-Null
+          }
+          $chromeCandidates = @(
+            "$env:ProgramFiles\Google\Chrome\Application\chrome.exe",
+            "${env:ProgramFiles(x86)}\Google\Chrome\Application\chrome.exe",
+            "$env:LOCALAPPDATA\Google\Chrome\Application\chrome.exe"
+          )
+          $chrome = $chromeCandidates | Where-Object { $_ -and (Test-Path $_) } | Select-Object -First 1
+          if (-not $chrome) { throw 'Google Chrome not found on F1 local PC.' }
+          Write-Host "RUNNER=$env:RUNNER_NAME"
+          Write-Host "MACHINE=$env:COMPUTERNAME"
+          Write-Host "CHROME=$chrome"
+          Write-Host "BROWSER_ROOT=$env:F1_BROWSER_ROOT"
+
+      - name: Ensure F1 INFORMA Python dependencies
+        shell: powershell
+        run: |
+          & 'C:\F1Social\venv\Scripts\python.exe' -m pip install --disable-pip-version-check --retries 4 --timeout 30 -r publisher\local_agent\requirements.txt
+          if ($LASTEXITCODE -ne 0) { throw 'F1 INFORMA dependency installation failed.' }
+
+      - name: Self-test on local PC
+        shell: powershell
+        run: |
+          & 'C:\F1Social\venv\Scripts\python.exe' publisher\local_agent\f1_informa_autopilot.py --self-test
+          if ($LASTEXITCODE -ne 0) { throw 'F1 INFORMA local self-test failed.' }
+
+      - name: Process pending F1 INFORMA graphics jobs
+        shell: powershell
+        run: |
+          & 'C:\F1Social\venv\Scripts\python.exe' publisher\local_agent\f1_informa_autopilot.py --once
+          if ($LASTEXITCODE -ne 0) { throw 'F1 INFORMA local autopilot run failed.' }
