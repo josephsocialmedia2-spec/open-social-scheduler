@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>F1 INFORMA · Casa, fisco e mercato</title>
+<style>
+:root{--green:#0e5a3b;--panel:#102238;--line:#29415d;--text:#f7f9fb;--muted:#9eb0c7;--gold:#d9b45b}*{box-sizing:border-box}body{margin:0;background:#071522;color:var(--text);font-family:Inter,Arial,sans-serif}.top{background:linear-gradient(135deg,#0e5a3b,#123d2e);border-bottom:1px solid #2f6e56;padding:28px 22px}.wrap{max-width:1180px;margin:auto}.eyebrow{font-size:12px;font-weight:900;letter-spacing:.16em;color:#d6e8df}.top h1{margin:6px 0 4px;font-size:40px}.top p{margin:0;color:#dce8e2}.toolbar{display:flex;gap:9px;flex-wrap:wrap;margin:18px 0}.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 14px;border-radius:10px;border:1px solid var(--line);font-weight:900;text-decoration:none;color:#fff;background:#172a41;cursor:pointer}.btn.primary{background:var(--green);border-color:#2c7657}.btn.gold{background:var(--gold);color:#173124;border-color:var(--gold)}.btn.ghost{background:transparent}.main{padding:22px}.panel{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:14px}.status{display:inline-flex;border:1px solid #866521;color:#f7d48a;border-radius:999px;padding:5px 9px;font-size:11px;font-weight:900}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:13px}.cardimg{background:#0b1a2a;border:1px solid var(--line);border-radius:14px;overflow:hidden}.cardimg img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover}.cardimg a{display:block;padding:9px 11px;color:#b8d8c8;text-decoration:none;font-size:12px}.meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:9px;margin-top:12px}.meta>div{background:#0b1a2a;border:1px solid var(--line);border-radius:12px;padding:11px}.meta b{display:block;font-size:11px;color:var(--muted);text-transform:uppercase;margin-bottom:5px}.muted{color:var(--muted)}.empty{padding:36px 10px;text-align:center;color:var(--muted)}.source{word-break:break-word}.note{font-size:12px;color:var(--muted);line-height:1.55}@media(max-width:600px){.top h1{font-size:31px}.main{padding:14px}.top{padding:22px 16px}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap"><div class="eyebrow">F1 IMMOBILIARE</div><h1>F1 INFORMA</h1><p>Casa, fisco e mercato · contenuti da fonti ufficiali</p></div></header>
+<main class="main"><div class="wrap">
+  <div class="toolbar">
+    <a class="btn ghost" href="./index.html">← F1 Content Hub</a>
+    <button class="btn primary" id="chatBtn" disabled>Apri ChatGPT + copia prompt</button>
+    <button class="btn" id="captionBtn" disabled>Copia caption</button>
+    <a class="btn gold" id="zipBtn" href="#" aria-disabled="true">Scarica pacchetto ZIP</a>
+    <a class="btn ghost" id="sourceBtn" href="#" target="_blank" rel="noopener" aria-disabled="true">Apri fonte ufficiale</a>
+  </div>
+  <section class="panel">
+    <div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap">
+      <div><span class="status" id="status">DA APPROVARE</span><h2 id="title">Ultimo carosello</h2><div class="muted" id="sub">Caricamento…</div></div>
+    </div>
+    <div class="meta" id="meta" hidden>
+      <div><b>Generato</b><span id="date"></span></div>
+      <div><b>Aggiornamento fonte</b><span id="updated"></span></div>
+      <div><b>Stato</b><span>DA APPROVARE · nessuna pubblicazione automatica</span></div>
+    </div>
+  </section>
+  <section class="panel"><div class="grid" id="gallery"><div class="empty">Nessun carosello generato ancora.</div></div></section>
+  <section class="panel note"><strong>Regola editoriale:</strong> F1 INFORMA usa pagine pubbliche dell’Agenzia delle Entrate, conserva il link della fonte e genera il pacchetto in stato <b>DA APPROVARE</b>. Non modifica la regola F1 “manual publish only”. Le informazioni non sostituiscono consulenza fiscale o legale.</section>
+</div></main>
+<script>
+const $=id=>document.getElementById(id);
+async function textFile(url){const r=await fetch(url,{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);return r.text()}
+(async()=>{
+  try{
+    const r=await fetch('./f1-informa-data/latest.json',{cache:'no-store'});
+    if(!r.ok) throw new Error('no latest');
+    const x=await r.json();
+    if(!x.ready) throw new Error('not ready');
+    const base='./'+x.path;
+    $('title').textContent=x.title||'F1 INFORMA';
+    $('sub').innerHTML='Fonte verificabile: <span class="source">'+(x.source_url||'Agenzia delle Entrate')+'</span>';
+    $('date').textContent=x.date||'—'; $('updated').textContent=x.updated||'non indicato'; $('meta').hidden=false;
+    $('status').textContent=(x.status||'DA_APPROVARE').replaceAll('_',' ');
+    const g=$('gallery');g.innerHTML='';
+    for(let i=1;i<=10;i++){
+      const n=String(i).padStart(2,'0'); const box=document.createElement('div');box.className='cardimg';
+      box.innerHTML='<img loading="lazy" src="'+base+'/'+n+'.png" alt="F1 INFORMA card '+i+'"><a href="'+base+'/'+n+'.png" download>Scarica card '+i+'</a>';
+      g.appendChild(box);
+    }
+    $('zipBtn').href=base+'.zip';$('zipBtn').removeAttribute('aria-disabled');
+    $('sourceBtn').href=x.source_url||'#';$('sourceBtn').removeAttribute('aria-disabled');
+    $('captionBtn').disabled=false;$('captionBtn').onclick=async()=>{await navigator.clipboard.writeText(await textFile(base+'/caption.txt'));alert('Caption copiata.');};
+    $('chatBtn').disabled=false;$('chatBtn').onclick=async()=>{await navigator.clipboard.writeText(await textFile(base+'/prompt-chatgpt.txt'));window.open('https://chatgpt.com/','_blank','noopener');alert('Prompt copiato. Incollalo in ChatGPT con Ctrl+V.');};
+  }catch(e){$('sub').textContent='Il modulo è installato. Il primo pacchetto comparirà dopo l’esecuzione del workflow F1 INFORMA.';}
+})();
+</script>
+</body>
+</html>
