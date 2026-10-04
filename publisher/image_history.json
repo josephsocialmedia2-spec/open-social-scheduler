@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-10-04T18:54:45Z",
+  "updated_at": "2026-10-04T22:08:20Z",
   "brands": {
     "f1-immobiliare": {
       "recent": [
@@ -6229,40 +6229,40 @@
         {
           "key": "https://themes.shopify.com/themes/shapes/presets/shapes?locale=it",
           "url": "https://themes.shopify.com/themes/shapes/presets/shapes?locale=it",
-          "used_at": "2026-10-04T18:54:45Z",
-          "job_id": "real-media-pro-2026-10-04-c20-01-06-advertising-sistema",
+          "used_at": "2026-10-04T22:08:20Z",
+          "job_id": "real-media-pro-2026-10-05-c00-01-01-sito-che-perde-lead",
           "output_type": "static-photo",
           "source_type": "shopify-theme-store-description-only"
         },
         {
           "key": "https://themes.shopify.com/themes/broadcast/presets/broadcast?locale=it",
           "url": "https://themes.shopify.com/themes/broadcast/presets/broadcast?locale=it",
-          "used_at": "2026-10-04T18:54:45Z",
-          "job_id": "real-media-pro-2026-10-04-c20-02-07-sito-che-perde-lead",
+          "used_at": "2026-10-04T22:08:20Z",
+          "job_id": "real-media-pro-2026-10-05-c00-02-02-crm-followup",
           "output_type": "static-photo",
           "source_type": "shopify-theme-store-description-only"
         },
         {
           "key": "https://themes.shopify.com/themes/prestige/presets/prestige?locale=it",
           "url": "https://themes.shopify.com/themes/prestige/presets/prestige?locale=it",
-          "used_at": "2026-10-04T18:54:45Z",
-          "job_id": "real-media-pro-2026-10-04-c20-03-08-audit-digitale",
+          "used_at": "2026-10-04T22:08:20Z",
+          "job_id": "real-media-pro-2026-10-05-c00-03-03-analisi-gratuita",
           "output_type": "static-photo",
           "source_type": "shopify-theme-store-description-only"
         },
         {
           "key": "https://themes.shopify.com/themes/allure/presets/allure?locale=it",
           "url": "https://themes.shopify.com/themes/allure/presets/allure?locale=it",
-          "used_at": "2026-10-04T18:54:45Z",
-          "job_id": "real-media-pro-2026-10-04-c20-04-09-shopify-servizio",
+          "used_at": "2026-10-04T22:08:20Z",
+          "job_id": "real-media-pro-2026-10-05-c00-04-04-google-ads-intento",
           "output_type": "static-photo",
           "source_type": "shopify-theme-store-description-only"
         },
         {
           "key": "https://themes.shopify.com/themes/vivid/presets/vivid?locale=it",
           "url": "https://themes.shopify.com/themes/vivid/presets/vivid?locale=it",
-          "used_at": "2026-10-04T18:54:45Z",
-          "job_id": "real-media-pro-2026-10-04-c20-05-10-google-ads-intento",
+          "used_at": "2026-10-04T22:08:20Z",
+          "job_id": "real-media-pro-2026-10-05-c00-05-05-creative-testing",
           "output_type": "static-photo",
           "source_type": "shopify-theme-store-description-only"
         }
