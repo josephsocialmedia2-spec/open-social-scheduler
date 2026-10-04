@@ -260,6 +260,7 @@ def facebook_publish(job: dict[str, Any], client: dict[str, Any], paths: list[Pa
         token = str(broker["access_token"])
     else:
         token = secret(client, "FACEBOOK_PAGE_ACCESS_TOKEN")
+
     if str(job.get("format") or "reel") == "reel":
         start = request("POST", f"{meta_graph_base()}/me/video_reels", params={"access_token": token, "upload_phase": "start"}).json()
         video_id = str(start["video_id"])
@@ -268,9 +269,66 @@ def facebook_publish(job: dict[str, Any], client: dict[str, Any], paths: list[Pa
         request("POST", upload_url, headers={"Authorization": f"OAuth {token}", "offset": "0", "file_size": str(len(data)), "Content-Type": "application/octet-stream"}, data=data, timeout=300)
         finish = request("POST", f"{meta_graph_base()}/me/video_reels", params={"access_token": token, "video_id": video_id, "upload_phase": "finish", "video_state": "PUBLISHED", "description": str(job.get("caption") or "")[:5000], "title": str(job.get("title") or "")[:255]}).json()
         return {"video_id": video_id, "finish": finish}
-    with paths[0].open("rb") as fh:
-        media_type = mimetypes.guess_type(paths[0].name)[0] or "image/jpeg"
-        response = request("POST", f"{meta_graph_base()}/me/photos", params={"access_token": token, "message": str(job.get("caption") or "")[:5000]}, files={"source": (paths[0].name, fh, media_type)}, timeout=180).json()
+
+    caption = str(job.get("caption") or "")[:5000]
+    image_paths = paths[:10]
+    if len(image_paths) > 1:
+        photo_ids: list[str] = []
+        for path in image_paths:
+            with path.open("rb") as fh:
+                media_type = mimetypes.guess_type(path.name)[0] or "image/jpeg"
+                uploaded = request(
+                    "POST",
+                    f"{meta_graph_base()}/me/photos",
+                    params={"access_token": token, "published": "false"},
+                    files={"source": (path.name, fh, media_type)},
+                    timeout=180,
+                ).json()
+            photo_id = str(uploaded.get("id") or "").strip()
+            if not photo_id:
+                raise PublishError(f"Facebook carousel photo upload did not return an id for {path.name}")
+            photo_ids.append(photo_id)
+
+        attached = json.dumps([{"media_fbid": photo_id} for photo_id in photo_ids])
+        response = request(
+            "POST",
+            f"{meta_graph_base()}/me/feed",
+            params={
+                "access_token": token,
+                "message": caption,
+                "attached_media": attached,
+            },
+            timeout=180,
+        ).json()
+        post_id = response.get("id")
+        permalink = ""
+        if post_id:
+            try:
+                meta = request(
+                    "GET",
+                    f"{meta_graph_base()}/{post_id}",
+                    params={"fields": "permalink_url", "access_token": token},
+                ).json()
+                permalink = str(meta.get("permalink_url") or "")
+            except Exception:
+                permalink = ""
+        return {
+            "post_id": post_id,
+            "photo_ids": photo_ids,
+            "mode": "carousel",
+            "slides": len(photo_ids),
+            "url": permalink or None,
+        }
+
+    with image_paths[0].open("rb") as fh:
+        media_type = mimetypes.guess_type(image_paths[0].name)[0] or "image/jpeg"
+        response = request(
+            "POST",
+            f"{meta_graph_base()}/me/photos",
+            params={"access_token": token, "message": caption},
+            files={"source": (image_paths[0].name, fh, media_type)},
+            timeout=180,
+        ).json()
     post_id = response.get("post_id") or response.get("id")
     permalink = ""
     if post_id:
@@ -279,8 +337,7 @@ def facebook_publish(job: dict[str, Any], client: dict[str, Any], paths: list[Pa
             permalink = str(meta.get("permalink_url") or "")
         except Exception:
             permalink = ""
-    return {"photo_id": response.get("id"), "post_id": response.get("post_id"), "mode": "first_slide", "url": permalink or None}
-
+    return {"photo_id": response.get("id"), "post_id": response.get("post_id"), "mode": "single_image", "url": permalink or None}
 
 def ig_wait_container(container_id: str, token: str, timeout_seconds: int = 300) -> None:
     deadline = time.time() + timeout_seconds
