@@ -235,6 +235,18 @@ def media_date_from_filename(name: str, tz_name: str) -> datetime | None:
         return None
 
 
+def zip_has_chat_text(path: Path) -> bool:
+    try:
+        with zipfile.ZipFile(path, "r") as zf:
+            for name in zf.namelist():
+                base = Path(name).name.lower()
+                if base.endswith(".txt") and ("chat" in base or base.startswith("_chat")):
+                    return True
+    except Exception:
+        return False
+    return False
+
+
 def candidate_export_zips(client: dict[str, Any], inbox: Path) -> list[Path]:
     candidates: list[Path] = []
     if inbox.exists():
@@ -254,7 +266,8 @@ def candidate_export_zips(client: dict[str, Any], inbox: Path) -> list[Path]:
             unique[str(p.resolve()).lower()] = p
         except Exception:
             unique[str(p).lower()] = p
-    return sorted(unique.values(), key=lambda p: p.stat().st_mtime, reverse=True)
+    valid = [p for p in unique.values() if zip_has_chat_text(p)]
+    return sorted(valid, key=lambda p: p.stat().st_mtime, reverse=True)
 
 
 def choose_chat_text(root: Path) -> Path | None:
