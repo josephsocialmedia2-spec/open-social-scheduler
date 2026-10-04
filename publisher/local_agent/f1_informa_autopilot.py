@@ -634,18 +634,49 @@ def _uia_send_prompt(win, text: str) -> None:
 
 
 def _uia_image_count(win) -> int:
+    import pyperclip
     from diagnose_chatgpt_uia import run_javascript
 
     selector = _uia_image_selector_js()
-    run_javascript(
-        win,
-        f"(()=>{{const xs={selector};document.title='F1IMGCOUNT:'+xs.length;void(0)}})()",
+    last_error = ""
+    for attempt in range(1, 4):
+        marker = f"F1_COUNT_WAIT_{uuid.uuid4().hex[:8]}"
+        pyperclip.copy(marker)
+        run_javascript(
+            win,
+            f"""(()=>{{
+              const xs={selector};
+              const value=String(xs.length);
+              const ta=document.createElement('textarea');
+              ta.value=value;
+              ta.style.position='fixed';
+              ta.style.opacity='0';
+              document.body.appendChild(ta);
+              ta.focus();
+              ta.select();
+              const ok=document.execCommand('copy');
+              ta.remove();
+              document.title='F1IMGCOUNT:'+value;
+              void(0);
+            }})()""",
+        )
+        time.sleep(0.45)
+        value = str(pyperclip.paste() or "").strip()
+        if value.isdigit():
+            return int(value)
+
+        # Secondary fallback: read the title marker if ChatGPT did not overwrite
+        # it before Windows UI Automation saw it.
+        count = _uia_count_from_title(_uia_title_value(win))
+        if count is not None:
+            return count
+
+        last_error = value
+        time.sleep(0.6 * attempt)
+
+    raise AutopilotError(
+        f"UIA: impossibile leggere il numero di immagini ChatGPT (clipboard={last_error!r})"
     )
-    time.sleep(0.7)
-    count = _uia_count_from_title(_uia_title_value(win))
-    if count is None:
-        raise AutopilotError("UIA: impossibile leggere il numero di immagini ChatGPT")
-    return count
 
 
 def _uia_wait_for_images(win, baseline: int, timeout_seconds: int = 300) -> int:
@@ -1543,6 +1574,7 @@ def self_test() -> None:
     assert EXPECTED_IMAGES == 10
     assert max(1, int(3)) == 3
     assert _uia_count_from_title("F1IMGCOUNT:7 - Google Chrome") == 7
+    # clipboard image count is exercised on the local Windows runner.
     assert _uia_count_from_title("ChatGPT - Google Chrome") is None
     sample_master = "\n\n".join(
         f"CARD {i} — Titolo {i}\nTesto card {i}" for i in range(1, 11)
