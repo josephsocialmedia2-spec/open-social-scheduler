@@ -6,6 +6,7 @@ on:
     paths:
       - '.f1-informa-local-trigger'
       - 'publisher/local_agent/f1_informa_autopilot.py'
+      - 'publisher/local_agent/diagnose_chatgpt_uia.py'
       - 'publisher/local_agent/requirements.txt'
       - '.github/workflows/f1-informa-autopilot-local.yml'
   schedule:

@@ -71,10 +71,27 @@ def automation_windows():
     return out
 
 def cleanup_duplicate_automation_windows() -> int:
+    # Old diagnostic runs may have left ordinary "ChatGPT - Google Chrome"
+    # windows after page reloads reset our F1 title marker. Treat those as part
+    # of the same automation pool and keep only one ChatGPT top-level window.
     wins = automation_windows()
+    known = {getattr(w, "handle", None) for w in wins}
+    for w in chrome_windows():
+        try:
+            title = (w.window_text() or "").strip()
+        except Exception:
+            continue
+        handle = getattr(w, "handle", None)
+        if handle in known:
+            continue
+        if "ChatGPT" in title:
+            wins.append(w)
+            known.add(handle)
+
     if len(wins) <= 1:
         print(f"F1_CHATGPT_AUTOMATION_WINDOWS={len(wins)}")
         return 0
+
     keep = wins[-1]
     closed = 0
     for w in wins[:-1]:
