@@ -161,7 +161,7 @@ jobs:
           NODE
       - name: Check cache version with email module
         run: |
-          grep -q 'f1-content-hub-v21-email-auto-complete' f1-content-hub/sw.js
+          grep -q 'f1-content-hub-v22-whatsapp-daily' f1-content-hub/sw.js
           grep -q 'email-module.js' f1-content-hub/sw.js
           grep -q 'email-module.css' f1-content-hub/sw.js
           grep -q 'f1-design-system.css' f1-content-hub/sw.js
