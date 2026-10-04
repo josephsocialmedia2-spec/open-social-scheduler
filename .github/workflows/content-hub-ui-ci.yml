@@ -156,7 +156,7 @@ jobs:
           NODE
       - name: Check cache version with email module
         run: |
-          grep -q 'f1-content-hub-v20-demo-v7-live' f1-content-hub/sw.js
+          grep -q 'f1-content-hub-v21-email-auto-complete' f1-content-hub/sw.js
           grep -q 'email-module.js' f1-content-hub/sw.js
           grep -q 'email-module.css' f1-content-hub/sw.js
           grep -q 'f1-design-system.css' f1-content-hub/sw.js
@@ -165,6 +165,14 @@ jobs:
           test -s f1-content-hub/f1-design-system.css
           test -s f1-content-hub/vendor/heic2any-0.0.4.min.js
           test -s f1-content-hub/vendor/heic2any-LICENSE.md
+      - name: Check approved email automation markers
+        run: |
+          grep -q 'CONFIGURA AUTO' f1-content-hub/demo-v7-email-core.js
+          grep -q 'PROGRAMMATA IN AUTOMATICO 1 VOLTA ALLA SETTIMANA' f1-content-hub/demo-v7-email-core.js
+          grep -q 'APRI CHATGPT' f1-content-hub/demo-v7-email-core.js
+          grep -q 'CARICA CSV' f1-content-hub/demo-v7-email-core.js
+          grep -q 'Contenuto + email' f1-content-hub/demo-v7-email-core.js
+
       - name: Real HEIC to PNG browser conversion test
         run: |
           set -euo pipefail
