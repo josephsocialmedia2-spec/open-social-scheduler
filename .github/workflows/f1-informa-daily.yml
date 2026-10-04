@@ -1,0 +1,109 @@
+name: F1 INFORMA - daily verified carousel
+
+on:
+  workflow_dispatch:
+    inputs:
+      force:
+        description: 'Genera subito per test'
+        required: false
+        default: 'true'
+        type: boolean
+  schedule:
+    # GitHub cron usa UTC. 15:00 copre le 17:00 CEST; 16:00 copre le 17:00 CET.
+    - cron: '0 15,16 * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: f1-informa-daily
+  cancel-in-progress: false
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Gate 17 Europe/Rome
+        id: gate
+        shell: bash
+        run: |
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import os
+          from datetime import datetime
+          from zoneinfo import ZoneInfo
+          now = datetime.now(ZoneInfo('Europe/Rome'))
+          manual = os.environ.get('GITHUB_EVENT_NAME') == 'workflow_dispatch'
+          print(f"run={'true' if manual or now.hour == 17 else 'false'}")
+          print(f"local_time={now.isoformat()}")
+          PY
+
+      - name: Checkout
+        if: steps.gate.outputs.run == 'true'
+        uses: actions/checkout@v5
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Python 3.12
+        if: steps.gate.outputs.run == 'true'
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: f1_informa/requirements.txt
+
+      - name: Install dependencies
+        if: steps.gate.outputs.run == 'true'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y fonts-dejavu-core
+          python -m pip install --disable-pip-version-check -r f1_informa/requirements.txt
+          python -m playwright install --with-deps chromium
+
+      - name: Self-test
+        if: steps.gate.outputs.run == 'true'
+        run: python f1_informa/f1_informa.py --self-test
+
+      - name: Generate source-locked carousel
+        if: steps.gate.outputs.run == 'true'
+        run: |
+          if [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ]; then
+            python f1_informa/f1_informa.py --force
+          else
+            python f1_informa/f1_informa.py
+          fi
+
+      - name: Verify F1 manual-publish boundary
+        if: steps.gate.outputs.run == 'true'
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          cfg=json.loads(Path('publisher/clients/f1-immobiliare.json').read_text(encoding='utf-8'))
+          assert cfg.get('graphics_source') == 'manual_only'
+          assert cfg.get('publish_only') is True
+          assert cfg.get('automatic_rendering') is False
+          latest=Path('f1-content-hub/f1-informa-data/latest.json')
+          if latest.exists():
+              data=json.loads(latest.read_text(encoding='utf-8'))
+              assert data.get('status') == 'DA_APPROVARE'
+          print('F1_INFORMA_STAGED_ONLY_OK')
+          PY
+
+      - name: Commit staged F1 INFORMA package
+        if: steps.gate.outputs.run == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'f1-informa-bot'
+          git config user.email 'f1-informa-bot@users.noreply.github.com'
+          git add f1_informa/state.json f1-content-hub/f1-informa-data
+          if git diff --cached --quiet; then
+            echo 'No generated changes.'
+            exit 0
+          fi
+          git commit -m 'F1 INFORMA: stage daily verified carousel'
+          git pull --rebase origin main
+          git push origin HEAD:main

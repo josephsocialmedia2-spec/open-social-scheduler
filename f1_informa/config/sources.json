@@ -1,0 +1,30 @@
+{
+  "brand": {
+    "name": "F1 INFORMA",
+    "subtitle": "Casa, fisco e mercato",
+    "publisher": "F1 Immobiliare",
+    "disclaimer": "Contenuto informativo, non consulenza fiscale o legale. Fonte ufficiale: Agenzia delle Entrate."
+  },
+  "seeds": [
+    "https://www.agenziaentrate.gov.it/portale/cittadini/agevolazioni",
+    "https://www.agenziaentrate.gov.it/portale/aree-tematiche/casa",
+    "https://www.agenziaentrate.gov.it/portale/web/guest/home"
+  ],
+  "allowed_hosts": [
+    "www.agenziaentrate.gov.it",
+    "agenziaentrate.gov.it",
+    "www1.agenziaentrate.gov.it",
+    "infoprecompilata.agenziaentrate.gov.it"
+  ],
+  "keywords": [
+    "casa", "abitazione", "immobile", "immobili", "prima casa", "acquisto", "vendita",
+    "compravendita", "ristrutturazione", "ristrutturazioni", "bonus mobili", "riqualificazione energetica",
+    "ecobonus", "superbonus", "barriere architettoniche", "locazione", "affitto", "catasto", "catastale",
+    "ipotecaria", "successione", "mutuo", "condominio", "sismabonus", "omi", "mercato immobiliare"
+  ],
+  "max_depth": 2,
+  "max_pages": 50,
+  "request_delay_seconds": 0.4,
+  "retention_days": 45,
+  "allow_archived": false
+}
