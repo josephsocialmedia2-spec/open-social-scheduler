@@ -60,7 +60,7 @@ def page_title(soup,main,base):
         candidates.append(norm(soup.title.get_text(" ",strip=True)))
     for value in candidates:
         low=value.lower().strip(" -|")
-        if low in generic or low.startswith("menu principale"): continue
+        if low in generic or low.startswith("menu principale") or low.startswith("menu della sezione"): continue
         if 6 <= len(value) <= 160 and relevant(value,base):
             return re.sub(r"\s*[-|]\s*Agenzia delle Entrate.*$","",value,flags=re.I).strip()
     slug=urlparse(base).path.rstrip("/").split("/")[-1]
@@ -68,17 +68,36 @@ def page_title(soup,main,base):
     value=norm(slug.replace("-"," "))
     return value[:1].upper()+value[1:] if value else "Aggiornamento casa"
 
+def article_text(main):
+    lines=[norm(x) for x in main.get_text("\n",strip=True).splitlines() if norm(x)]
+    marker=None
+    for i,line in enumerate(lines):
+        if re.search(r"^Ultimo aggiornamento\s*:",line,re.I):
+            marker=i
+            break
+    if marker is None:
+        return norm(" ".join(lines))
+    body=lines[marker+1:]
+    stop_prefixes=("Link correlati","La dichiarazione precompilata","Chiudi Modalità di accesso","Seguici sul nostro canale")
+    clean=[]
+    for line in body:
+        if any(line.lower().startswith(x.lower()) for x in stop_prefixes):
+            break
+        clean.append(line)
+    return norm(" ".join(clean)) or norm(" ".join(body))
+
 def extract(html,base):
     soup=BeautifulSoup(html,"html.parser")
     for tag in soup(["script","style","noscript","svg","footer"]): tag.decompose()
     main=soup.find("main") or soup.find(attrs={"role":"main"}) or soup.body or soup
     title=page_title(soup,main,base)
-    text=norm(main.get_text("\n",strip=True))
+    raw_text=norm(main.get_text("\n",strip=True))
+    text=article_text(main)
     links=[]
     for a in main.find_all("a",href=True):
         href=canon(urljoin(base,a.get("href"))); label=norm(a.get_text(" ",strip=True))
         if href and allowed(href): links.append((href,label))
-    m=re.search(r"Ultimo aggiornamento\s*:?\s*([0-9]{1,2}\s+[A-Za-zàèéìòù]+\s+[0-9]{4}|[0-9]{1,2}/[0-9]{1,2}/[0-9]{2,4})",text,re.I)
+    m=re.search(r"Ultimo aggiornamento\s*:?\s*([0-9]{1,2}\s+[A-Za-zàèéìòù]+\s+[0-9]{4}|[0-9]{1,2}/[0-9]{1,2}/[0-9]{2,4})",raw_text,re.I)
     return {"title":title,"text":text,"links":links,"updated":m.group(1) if m else ""}
 
 def crawl():
@@ -242,9 +261,12 @@ def should(force=False):
 def selftest():
     fake={"title":"Test F1 Informa","url":"https://www.agenziaentrate.gov.it/portale/aree-tematiche/casa","updated":"4 ottobre 2026","hash":"x","text":"Questa è una pagina di test. I contribuenti possono verificare i requisiti nella fonte ufficiale. La detrazione di esempio è indicata solo nel test. È necessario consultare la pagina aggiornata. Attenzione alle esclusioni e alle scadenze indicate dalla fonte."}
     cs=cards(fake); assert len(cs)==10
-    sample=BeautifulSoup("<html><head><title>Acquisto prima casa - Agenzia delle Entrate</title></head><body><main><h1>Menu principale</h1><h2>Acquisto prima casa</h2><p>Agevolazioni per la casa.</p></main></body></html>","html.parser")
+    sample=BeautifulSoup("<html><head><title>Acquisto prima casa - Agenzia delle Entrate</title></head><body><main><h1>Menu principale</h1><h2>Menu della sezione Acquisto prima casa</h2><h2>Agevolazione acquisto prima casa - Che cos'è</h2><p>Facebook e navigazione</p><p>Ultimo aggiornamento: 29 maggio 2026</p><p>L'agevolazione consente di pagare imposte ridotte.</p><p>Imposta di registro al 2% in presenza delle condizioni previste.</p><p>Link correlati</p><p>Rumore successivo</p></main></body></html>","html.parser")
     sample_main=sample.find("main")
-    assert page_title(sample,sample_main,"https://www.agenziaentrate.gov.it/portale/schede/agevolazioni/scheda-acquisto-prima-casa/acquisto-prima-casa-a-chi-interessa-cittadini")=="Acquisto prima casa"
+    assert page_title(sample,sample_main,"https://www.agenziaentrate.gov.it/portale/schede/agevolazioni/scheda-acquisto-prima-casa/infogen-agevolazioni-acquisto-prima-casa-cittadini")=="Agevolazione acquisto prima casa - Che cos'è"
+    cleaned=article_text(sample_main)
+    assert cleaned.startswith("L'agevolazione consente")
+    assert "Facebook" not in cleaned and "Rumore successivo" not in cleaned
     tmp=ROOT/".self-test-card.png"; render(tmp,1,*cs[0]); assert tmp.stat().st_size>1000; tmp.unlink(); print("F1_INFORMA_SELF_TEST_OK")
 
 def main():
