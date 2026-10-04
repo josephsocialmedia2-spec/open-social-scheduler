@@ -9,8 +9,8 @@ on:
         default: 'true'
         type: boolean
   schedule:
-    # GitHub cron usa UTC. 15:05 copre le 17:05 CEST; 16:05 copre le 17:05 CET.
-    - cron: '5 15,16 * * *'
+    # GitHub cron usa UTC. 15:00 copre le 17:00 CEST; 16:00 copre le 17:00 CET.
+    - cron: '0 15,16 * * *'
 
 permissions:
   contents: write
