@@ -638,6 +638,8 @@ window.f1QuickProgramFromRail=async function(contentId){
   const item=(items||[]).find(function(x){return x.id===contentId});
   if(!item)return;
   if(selectedClientId&&item.client_id!==selectedClientId)return alert("Il contenuto non appartiene al cliente selezionato.");
+  const matchPlan=item.distribution_plan&&typeof item.distribution_plan==="object"?item.distribution_plan:{};
+  if(item.campaign==="MARTA_IMPORT"&&matchPlan.caption_match_status!=="CAPTION_ABBINATA")return alert("CAPTION_DA_IDENTIFICARE — il contenuto non può essere programmato finché la caption non è identificata con certezza.");
   if(isImmutableItem(item))return alert("Il contenuto è già pubblicato o archiviato e non viene modificato.");
   if(!(item.f1_content_media||[]).length)return alert("MEDIA_MISSING — aggiungi prima un file multimediale.");
   selectedRailContentId=item.id;
@@ -745,6 +747,7 @@ window.f1RenderClientPublisherWorkspace=async function(){
   const cards=rows.map(function(item){
     const plan=itemPlan(item,client),media=(item.f1_content_media||[])[0],mime=media&&media.mime_type||"";
     const locked=isImmutableItem(item);
+    const captionBlocked=item.campaign==="MARTA_IMPORT"&&plan.caption_match_status!=="CAPTION_ABBINATA";
     const pRows=WS_PLATFORMS.map(function(p){
       const data=plan.platforms[p.id]||{},state=planState(client.id,p.id,mime,item);
       const shown=data.scheduled_at?"PROGRAMMATO":(data.status||state);
@@ -756,7 +759,7 @@ window.f1RenderClientPublisherWorkspace=async function(){
       '</div>';
     }).join("");
     return '<article class="distribution-card '+(selectedRailContentId===item.id?'rail-focused':'')+'" data-distribution-item="'+item.id+'">'+
-      '<div class="distribution-main"><div class="distribution-preview" data-ws-preview="'+item.id+'">ANTEPRIMA</div><div class="distribution-title"><div class="publisher-source">'+h(sourceLabel(item.source))+'</div><h3>'+h(item.title||"Contenuto")+'</h3><div class="meta">'+h(plan.category||item.campaign||"CONTENUTO")+' · '+h(item.status||"")+(locked?' · SOLA LETTURA':'')+'</div><div class="row">'+(locked?'':'<button class="btn small green" onclick="window.f1WorkspaceScheduleItem(\''+item.id+'\')">PROGRAMMA SU TUTTI I SOCIAL</button>')+'<button class="btn small danger-bright" onclick="window.f1ConfirmDeleteContent(\''+item.id+'\')">ELIMINA</button></div></div></div>'+
+      '<div class="distribution-main"><div class="distribution-preview" data-ws-preview="'+item.id+'">ANTEPRIMA</div><div class="distribution-title"><div class="publisher-source">'+h(sourceLabel(item.source))+'</div><h3>'+h(item.title||"Contenuto")+'</h3><div class="meta">'+h(plan.category||item.campaign||"CONTENUTO")+' · '+h(item.status||"")+(item.campaign==="MARTA_IMPORT"?' · CODICE '+h(plan.caption_code||"—")+' · '+h(plan.caption_match_status||"CAPTION_DA_IDENTIFICARE"):'')+(locked?' · SOLA LETTURA':'')+'</div><div class="row">'+(locked||captionBlocked?'':'<button class="btn small green" onclick="window.f1WorkspaceScheduleItem(\''+item.id+'\')">PROGRAMMA SU TUTTI I SOCIAL</button>')+'<button class="btn small danger-bright" onclick="window.f1ConfirmDeleteContent(\''+item.id+'\')">ELIMINA</button></div></div></div>'+
       intelligenceTimelineHtml(item)+
       '<div class="distribution-channels">'+pRows+'</div></article>';
   }).join("");
@@ -1062,6 +1065,8 @@ window.f1DeleteContent=async function(contentId,publishedConfirmed){
 
 async function scheduleOne(item,dayOffset){
   const client=(clients||[]).find(function(x){return x.id===item.client_id});if(!client)return 0;
+  const prePlan=item&&item.distribution_plan&&typeof item.distribution_plan==="object"?item.distribution_plan:{};
+  if(item.campaign==="MARTA_IMPORT"&&prePlan.caption_match_status!=="CAPTION_ABBINATA")return 0;
   const plan=itemPlan(item,client),mime=itemMime(item);let scheduled=0;
   for(const p of WS_PLATFORMS){
     const data=plan.platforms[p.id]||{},ch=channelFor(client.id,p.id),state=planState(client.id,p.id,mime,item);
@@ -1095,6 +1100,8 @@ async function scheduleOne(item,dayOffset){
 }
 window.f1WorkspaceScheduleItem=async function(itemId){
   let item=(items||[]).find(function(x){return x.id===itemId});if(!item)return;
+  const matchPlan=item.distribution_plan&&typeof item.distribution_plan==="object"?item.distribution_plan:{};
+  if(item.campaign==="MARTA_IMPORT"&&matchPlan.caption_match_status!=="CAPTION_ABBINATA")return alert("CAPTION_DA_IDENTIFICARE — il contenuto non può essere programmato finché la caption non è identificata con certezza.");
   if(isImmutableItem(item))return alert("Il contenuto è già pubblicato o archiviato e non viene riprogrammato.");
   let client=(clients||[]).find(function(x){return x.id===item.client_id});
   try{
@@ -1113,12 +1120,22 @@ window.f1WorkspaceScheduleItem=async function(itemId){
 };
 window.f1WorkspaceProgramAll=async function(){
   const client=currentClient();if(!client)return;
-  let list=planItemsForClient(client).filter(function(x){return !/PUBBLICAT|PUBLISHED/i.test(String(x.status||""))});
+  let list=planItemsForClient(client).filter(function(x){
+    if(/PUBBLICAT|PUBLISHED/i.test(String(x.status||"")))return false;
+    const matchPlan=x.distribution_plan&&typeof x.distribution_plan==="object"?x.distribution_plan:{};
+    if(x.campaign==="MARTA_IMPORT"&&matchPlan.caption_match_status!=="CAPTION_ABBINATA")return false;
+    return true;
+  });
   if(!list.length)return alert("Non ci sono nuovi contenuti da programmare.");
   try{
     if(list.some(function(x){return (x.f1_content_media||[]).some(isHeicMedia)})){
       await window.f1ConvertExistingHeicForClient();
-      list=planItemsForClient(client).filter(function(x){return !/PUBBLICAT|PUBLISHED/i.test(String(x.status||""))});
+      list=planItemsForClient(client).filter(function(x){
+        if(/PUBBLICAT|PUBLISHED/i.test(String(x.status||"")))return false;
+        const matchPlan=x.distribution_plan&&typeof x.distribution_plan==="object"?x.distribution_plan:{};
+        if(x.campaign==="MARTA_IMPORT"&&matchPlan.caption_match_status!=="CAPTION_ABBINATA")return false;
+        return true;
+      });
     }
     const u=await sb.from("f1_content_clients").update({auto_publish:true,automation_status:"AUTOMAZIONE ATTIVA"}).eq("id",client.id);if(u.error)throw u.error;
     client.auto_publish=true;
