@@ -30,6 +30,7 @@ jobs:
         run: |
           node <<'NODE'
           const { createClient } = require('@supabase/supabase-js');
+          (async()=>{
 
           const URL=process.env.SUPABASE_URL;
           const KEY=process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -177,4 +178,5 @@ jobs:
             normalized_content_items:31,
             model:'1 video = 1 content'
           },null,2));
+          })().catch(err=>{console.error(err);process.exit(1)});
           NODE
