@@ -18,7 +18,7 @@ permissions:
 
 concurrency:
   group: f1-informa-chatgpt-local-autopilot
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   validate:
@@ -40,13 +40,15 @@ jobs:
     if: github.event_name != 'pull_request'
     needs: validate
     runs-on: [self-hosted, Windows, X64, f1-social-local-pc]
-    timeout-minutes: 45
+    timeout-minutes: 150
     env:
       SUPABASE_URL: ${{ vars.SUPABASE_URL || 'https://nqnmlsmeiynxbdojeyjt.supabase.co' }}
       SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
       F1_BROWSER_ROOT: 'C:\F1Social\BrowserProfiles'
       F1_CHATGPT_GOOGLE_EMAIL: 'joseph.socialmedia2@gmail.com'
       F1_CHATGPT_URL: 'https://chatgpt.com/'
+      F1_CHATGPT_IMAGES_URL: 'https://chatgpt.com/images'
+      F1_INFORMA_WORK_ROOT: 'C:\F1Social\F1InformaJobs'
     steps:
       - uses: actions/checkout@v4
 
