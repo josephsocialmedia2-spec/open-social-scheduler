@@ -1752,8 +1752,9 @@ def self_test() -> None:
     sample_cards = parse_card_specs_from_master(sample_master)
     assert len(sample_cards) == 10
     one = single_card_prompt("Caption di prova 50% 2026", sample_cards[0], 1)
-    assert "ESATTAMENTE 1 IMMAGINE" in one
-    assert "NON creare una griglia" in one
+    assert "GENERA UN'IMMAGINE ORA" in one
+    assert "ESATTAMENTE UNA card social" in one
+    assert "Vietati collage, griglie" in one
     assert "CARD 1/10" in one
     assert "Crea immagine" in "Crea immagine / Create image"
     payload = {
