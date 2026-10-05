@@ -776,7 +776,11 @@ window.f1RenderClientPublisherWorkspace=async function(){
       '<div class="meta"><b>MEDIA_ID:</b> '+h(media&&media.id||"—")+'</div>'+
       captionDestinationRows+
     '</div>';
-    const pRows=WS_PLATFORMS.map(function(p){
+    const visiblePlatforms=isMartaImport?WS_PLATFORMS.filter(function(p){
+      const d=plan.platforms&&plan.platforms[p.id];
+      return !!d&&(p.id==="facebook"||p.id==="instagram"||String(d.caption||"").trim()!=="");
+    }):WS_PLATFORMS;
+    const pRows=visiblePlatforms.map(function(p){
       const data=plan.platforms[p.id]||{},state=planState(client.id,p.id,mime,item);
       const shown=data.scheduled_at?"PROGRAMMATO":(data.status||state);
       return '<div class="distribution-row">'+
@@ -1101,7 +1105,9 @@ async function scheduleOne(item,dayOffset){
   if(item.campaign==="MARTA_IMPORT"&&prePlan.caption_match_status!=="CAPTION_ABBINATA")return 0;
   const plan=itemPlan(item,client),mime=itemMime(item);let scheduled=0;
   for(const p of WS_PLATFORMS){
-    const data=plan.platforms[p.id]||{},ch=channelFor(client.id,p.id),state=planState(client.id,p.id,mime,item);
+    const data=plan.platforms[p.id]||{};
+    if(item.campaign==="MARTA_IMPORT"&&(!plan.platforms[p.id]||String(data.caption||"").trim()===""))continue;
+    const ch=channelFor(client.id,p.id),state=planState(client.id,p.id,mime,item);
     const target=nextAt(data.time||prefFor(client,p.id).time,dayOffset||0);
     if(state==="MEDIA_MISSING"||state==="CONVERSIONE_HEIC"||state==="FORMATO_NON_SUPPORTATO"||state==="TIKTOK_PHOTO_URL_REQUIRED"||state==="TIKTOK_REVIEW_REQUIRED"){
       data.status=state;data.scheduled_at=null;plan.platforms[p.id]=data;continue;
