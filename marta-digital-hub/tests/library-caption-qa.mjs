@@ -37,7 +37,7 @@ assert.ok(ui.includes('Visite sito UTM'));
 assert.ok(ui.includes("btn.textContent='Log'"));
 assert.ok(events.includes("library-caption-dashboard.js?v=19"));
 assert.ok(app.includes("./events.js?v=19"));
-assert.ok(index.includes("app.html?v=18"));
+assert.ok(index.includes("app.html?v=19"));
 assert.ok(migration.includes('duration_seconds'));
 assert.ok(migration.includes('duplicate_of'));
 assert.ok(migration.includes('marta_tracking_links_url_check'));
