@@ -442,7 +442,7 @@ def sync_authenticated_chrome_profile(
 def _uia_image_selector_js() -> str:
     return (
         "Array.from(document.querySelectorAll("
-        "'[data-message-author-role=\\"assistant\\"] img, article img, main img'"
+        "'[data-message-author-role=\"assistant\"] img, article img, main img'"
         ")).filter(img=>{"
         "const alt=(img.alt||'').toLowerCase();"
         "const src=(img.currentSrc||img.src||'');"
