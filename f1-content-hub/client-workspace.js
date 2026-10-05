@@ -747,26 +747,58 @@ window.f1RenderClientPublisherWorkspace=async function(){
   const cards=rows.map(function(item){
     const plan=itemPlan(item,client),media=(item.f1_content_media||[])[0],mime=media&&media.mime_type||"";
     const locked=isImmutableItem(item);
-    const captionBlocked=item.campaign==="MARTA_IMPORT"&&plan.caption_match_status!=="CAPTION_ABBINATA";
+    const isMartaImport=item.campaign==="MARTA_IMPORT";
+    const captionBlocked=isMartaImport&&plan.caption_match_status!=="CAPTION_ABBINATA";
+    const captionLocked=isMartaImport;
+    const captionPanelId="captionDestinations-"+item.id;
+    const captionPlatforms=["facebook","instagram","tiktok","youtube"].filter(function(pid){
+      const d=plan.platforms&&plan.platforms[pid];
+      return pid==="facebook"||pid==="instagram"||!!(d&&String(d.caption||"").trim());
+    });
+    const captionDestinationRows=captionPlatforms.map(function(pid){
+      const d=plan.platforms&&plan.platforms[pid]||{};
+      const label=pid==="facebook"?"FACEBOOK":pid==="instagram"?"INSTAGRAM":pid==="tiktok"?"TIKTOK":"YOUTUBE";
+      const scheduled=d.scheduled_at?new Date(d.scheduled_at):null;
+      const dateText=scheduled?scheduled.toLocaleDateString("it-IT"):"NON PROGRAMMATO";
+      const timeText=scheduled?scheduled.toLocaleTimeString("it-IT",{hour:"2-digit",minute:"2-digit"}):(d.time||"—");
+      const state=isMartaImport?(plan.caption_match_status||"CAPTION_DA_IDENTIFICARE"):(d.status||"—");
+      return '<div class="subpanel" style="margin-top:8px">'+
+        '<div class="row" style="justify-content:space-between;align-items:center"><b>'+label+'</b><span class="badge '+(state==="CAPTION_ABBINATA"?"green":"amber")+'">'+h(state)+'</span></div>'+
+        '<div class="meta" style="margin:6px 0"><b>DESTINAZIONE:</b> '+label+' · <b>DATA PUBBLICAZIONE:</b> '+h(dateText)+' · <b>ORA:</b> '+h(timeText)+'</div>'+
+        '<textarea readonly title="Caption recuperata: sola lettura">'+h(d.caption||"")+'</textarea>'+
+      '</div>';
+    }).join("");
+    const captionDestinationPanel='<div id="'+captionPanelId+'" class="subpanel hidden" style="margin-top:10px">'+
+      '<div class="section-title"><h3 style="margin:0">CAPTION / DESTINAZIONI</h3><span class="badge '+(plan.caption_match_status==="CAPTION_ABBINATA"?"green":"amber")+'">'+h(plan.caption_match_status||"CAPTION_DA_IDENTIFICARE")+'</span></div>'+
+      '<div class="meta"><b>VIDEO:</b> '+h(media&&media.file_name||item.title||"—")+'</div>'+
+      '<div class="meta"><b>CODICE:</b> '+h(plan.caption_code||"—")+'</div>'+
+      '<div class="meta"><b>CONTENT_ID:</b> '+h(item.id)+'</div>'+
+      '<div class="meta"><b>MEDIA_ID:</b> '+h(media&&media.id||"—")+'</div>'+
+      captionDestinationRows+
+    '</div>';
     const pRows=WS_PLATFORMS.map(function(p){
       const data=plan.platforms[p.id]||{},state=planState(client.id,p.id,mime,item);
       const shown=data.scheduled_at?"PROGRAMMATO":(data.status||state);
       return '<div class="distribution-row">'+
         '<div><b>'+h(p.label)+'</b><div class="meta">'+h(data.time||prefFor(client,p.id).time)+'</div></div>'+
         '<div><span class="badge '+(shown==="PROGRAMMATO"||shown==="PRONTO"?"green":shown==="COLLEGATO"?"green":"")+'">'+h(shown)+'</span>'+(data.scheduled_at?'<div class="meta">'+h(new Date(data.scheduled_at).toLocaleString("it-IT",{dateStyle:"short",timeStyle:"short"}))+'</div>':"")+'</div>'+
-        '<textarea '+(locked?'readonly title="Contenuto pubblicato/archiviato: sola lettura"':'onchange="window.f1WorkspaceSaveCaption(\''+item.id+'\',\''+p.id+'\',this.value)"')+'>'+h(data.caption||"")+'</textarea>'+
-        '<div class="row-actions">'+(locked?'':'<button class="btn tiny ghost" onclick="window.f1WorkspaceRegenerate(\''+item.id+'\',\''+p.id+'\')">RIGENERA</button><button class="btn tiny ghost" onclick="window.f1WorkspaceResetCaption(\''+item.id+'\',\''+p.id+'\')">RIPRISTINA</button>')+'<button class="btn tiny ghost" onclick="window.f1WorkspaceCopyCaption(\''+item.id+'\',\''+p.id+'\')">COPIA</button></div>'+
+        '<textarea '+((locked||captionLocked)?'readonly title="'+(captionLocked?'Caption MARTA_IMPORT recuperata: sola lettura':'Contenuto pubblicato/archiviato: sola lettura')+'"':'onchange="window.f1WorkspaceSaveCaption(\''+item.id+'\',\''+p.id+'\',this.value)"')+'>'+h(data.caption||"")+'</textarea>'+
+        '<div class="row-actions">'+((locked||captionLocked)?'':'<button class="btn tiny ghost" onclick="window.f1WorkspaceRegenerate(\''+item.id+'\',\''+p.id+'\')">RIGENERA</button><button class="btn tiny ghost" onclick="window.f1WorkspaceResetCaption(\''+item.id+'\',\''+p.id+'\')">RIPRISTINA</button>')+'<button class="btn tiny ghost" onclick="window.f1WorkspaceCopyCaption(\''+item.id+'\',\''+p.id+'\')">COPIA</button></div>'+
       '</div>';
     }).join("");
     return '<article class="distribution-card '+(selectedRailContentId===item.id?'rail-focused':'')+'" data-distribution-item="'+item.id+'">'+
-      '<div class="distribution-main"><div class="distribution-preview" data-ws-preview="'+item.id+'">ANTEPRIMA</div><div class="distribution-title"><div class="publisher-source">'+h(sourceLabel(item.source))+'</div><h3>'+h(item.title||"Contenuto")+'</h3><div class="meta">'+h(plan.category||item.campaign||"CONTENUTO")+' · '+h(item.status||"")+(item.campaign==="MARTA_IMPORT"?' · CODICE '+h(plan.caption_code||"—")+' · '+h(plan.caption_match_status||"CAPTION_DA_IDENTIFICARE"):'')+(locked?' · SOLA LETTURA':'')+'</div><div class="row">'+(locked||captionBlocked?'':'<button class="btn small green" onclick="window.f1WorkspaceScheduleItem(\''+item.id+'\')">PROGRAMMA SU TUTTI I SOCIAL</button>')+'<button class="btn small danger-bright" onclick="window.f1ConfirmDeleteContent(\''+item.id+'\')">ELIMINA</button></div></div></div>'+
+      '<div class="distribution-main"><div class="distribution-preview" data-ws-preview="'+item.id+'">ANTEPRIMA</div><div class="distribution-title"><div class="publisher-source">'+h(sourceLabel(item.source))+'</div><h3>'+h(item.title||"Contenuto")+'</h3><div class="meta">'+h(plan.category||item.campaign||"CONTENUTO")+' · '+h(item.status||"")+(item.campaign==="MARTA_IMPORT"?' · CODICE '+h(plan.caption_code||"—")+' · '+h(plan.caption_match_status||"CAPTION_DA_IDENTIFICARE"):'')+(locked?' · SOLA LETTURA':'')+'</div><div class="row">'+
+        (isMartaImport?'<button class="btn small ghost" onclick="document.getElementById(\''+captionPanelId+'\').classList.toggle(\'hidden\')">CAPTION / DESTINAZIONI</button>':'')+
+        (locked||captionBlocked?'':'<button class="btn small green" onclick="window.f1WorkspaceScheduleItem(\''+item.id+'\')">PROGRAMMA SU TUTTI I SOCIAL</button>')+
+        '<button class="btn small danger-bright" onclick="window.f1ConfirmDeleteContent(\''+item.id+'\')">ELIMINA</button></div></div></div>'+
+      (isMartaImport?captionDestinationPanel:"")+
       intelligenceTimelineHtml(item)+
       '<div class="distribution-channels">'+pRows+'</div></article>';
   }).join("");
   const folderPath=client.profile_metadata&&client.profile_metadata.fixed_folder_path||("C:\\F1Social\\Clients\\"+String(client.slug||"cliente")+"\\INBOX");
   const rec=(typeof operatorPreferences!=="undefined"&&operatorPreferences[0]&&operatorPreferences[0].screen_recording_enabled&&operatorPreferences[0].screen_recording_consented_at);
   root.innerHTML='<section class="publisher-console">'+
-    '<div class="publisher-head"><div><h2>F1 Social Intelligence · '+h(client.name)+'</h2><div class="muted">Il caricamento legge il testo della grafica e rigenera automaticamente le caption per ogni social.</div></div><div class="publisher-actions"><span class="badge green">INTELLIGENCE ATTIVA</span><span class="badge '+(client.approval_required?"amber":"green")+'">'+h(intelligenceApprovalLabel(client))+'</span>'+(rec?'<span class="badge rec-consent">● REC CONSENSO ATTIVO</span>':'')+(heicCount?'<button class="btn small amber" onclick="window.f1ConvertExistingHeicForClient()">CONVERTI HEIC IN CLOUD ('+heicCount+')</button>':'')+'<button class="btn small green" onclick="window.f1WorkspaceProgramAll()">PROGRAMMA TUTTO</button></div></div>'+
+    '<div class="publisher-head"><div><h2>F1 Social Intelligence · '+h(client.name)+'</h2><div class="muted">'+(String(client.name||"").toLowerCase()==="marta ruffino"?'MARTA_IMPORT: caption recuperate e abbinate per codice data/ora. Nessuna rigenerazione automatica.':'Il caricamento legge il testo della grafica e rigenera automaticamente le caption per ogni social.')+'</div></div><div class="publisher-actions"><span class="badge green">INTELLIGENCE ATTIVA</span><span class="badge '+(client.approval_required?"amber":"green")+'">'+h(intelligenceApprovalLabel(client))+'</span>'+(rec?'<span class="badge rec-consent">● REC CONSENSO ATTIVO</span>':'')+(heicCount?'<button class="btn small amber" onclick="window.f1ConvertExistingHeicForClient()">CONVERTI HEIC IN CLOUD ('+heicCount+')</button>':'')+'<button class="btn small green" onclick="window.f1WorkspaceProgramAll()">PROGRAMMA TUTTO</button></div></div>'+
     '<div class="intelligence-command"><button type="button" class="intel-folder-mini" title="'+h(folderPath)+'" aria-label="Cartella automatica '+h(folderPath)+'" onclick="document.getElementById(\'workspaceFolderInput\').click()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5.5h6l2 2H21a1 1 0 0 1 1 1v9.5a1.5 1.5 0 0 1-1.5 1.5h-17A1.5 1.5 0 0 1 2 18V7a1.5 1.5 0 0 1 1-1.5Zm0 4V18a.5.5 0 0 0 .5.5h17a.5.5 0 0 0 .5-.5V9.5H3Z"/></svg></button><div class="intel-command-actions"><button class="btn small ghost" onclick="window.f1KeepCurrentTimes()">MANTIENI ORARI ATTUALI</button><button class="btn small ghost" onclick="window.f1ToggleIntelligenceTimes(true)">MODIFICA ORARI</button><button class="btn small green" onclick="window.f1ProceedIntelligence()">PROCEDI</button></div></div>'+
     '<div class="ingest-grid">'+
       '<button class="ingest-action" onclick="window.f1WorkspaceOpenWhatsApp()"><b>WHATSAPP AUTOMATICO</b><span>Numero chat · batch 02:00 · video → trascrizione → caption → social.</span></button>'+
