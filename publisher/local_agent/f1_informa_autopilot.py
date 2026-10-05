@@ -36,6 +36,8 @@ SERVICE_KEY = os.getenv("SUPABASE_SERVICE_ROLE_KEY", "").strip()
 BROWSER_ROOT = Path(os.getenv("F1_BROWSER_ROOT", r"C:\F1Social\BrowserProfiles"))
 POLL_SECONDS = max(10, int(os.getenv("F1_INFORMA_AUTOPILOT_POLL_SECONDS", "20")))
 CHATGPT_URL = os.getenv("F1_CHATGPT_URL", "https://chatgpt.com/").strip()
+CHATGPT_IMAGES_URL = os.getenv("F1_CHATGPT_IMAGES_URL", "https://chatgpt.com/images").strip()
+WORK_ROOT = Path(os.getenv("F1_INFORMA_WORK_ROOT", r"C:\F1Social\F1InformaJobs"))
 EXPECTED_EMAIL = os.getenv("F1_CHATGPT_GOOGLE_EMAIL", "joseph.socialmedia2@gmail.com").strip().lower()
 JOB_TYPE = "F1_INFORMA_CHATGPT_GRAPHICS"
 MEDIA_BUCKET = "f1-content-media"
@@ -440,11 +442,13 @@ def sync_authenticated_chrome_profile(
 def _uia_image_selector_js() -> str:
     return (
         "Array.from(document.querySelectorAll("
-        "'[data-message-author-role=\\\"assistant\\\"] img, article img'"
+        "'[data-message-author-role=\\"assistant\\"] img, article img, main img'"
         ")).filter(img=>{"
         "const alt=(img.alt||'').toLowerCase();"
-        "return (img.currentSrc||img.src)&&img.naturalWidth>=512&&img.naturalHeight>=512"
-        "&&!alt.includes('avatar')&&!alt.includes('profile')&&!alt.includes('logo');"
+        "const src=(img.currentSrc||img.src||'');"
+        "return src&&img.naturalWidth>=512&&img.naturalHeight>=512"
+        "&&!alt.includes('avatar')&&!alt.includes('profile')&&!alt.includes('logo')"
+        "&&!src.includes('avatar')&&!src.includes('profile');"
         "})"
     )
 
@@ -461,7 +465,7 @@ def _uia_count_from_title(title: str) -> int | None:
     return int(m.group(1)) if m else None
 
 
-def _uia_chatgpt_window():
+def _uia_chatgpt_window(target_url: str | None = None):
     if os.name != "nt":
         raise AutopilotError("UIA ChatGPT richiede Windows")
     from diagnose_chatgpt_uia import chrome_windows, navigate, run_javascript
@@ -483,7 +487,7 @@ def _uia_chatgpt_window():
             if not exe:
                 raise AutopilotError("Google Chrome non trovato")
             subprocess.Popen(
-                [exe, "--new-window", CHATGPT_URL],
+                [exe, "--new-window", target_url or CHATGPT_IMAGES_URL],
                 stdout=subprocess.DEVNULL,
                 stderr=subprocess.DEVNULL,
             )
@@ -502,8 +506,8 @@ def _uia_chatgpt_window():
         win.restore()
     except Exception:
         pass
-    navigate(win, CHATGPT_URL)
-    time.sleep(7)
+    navigate(win, target_url or CHATGPT_IMAGES_URL)
+    time.sleep(8)
     run_javascript(
         win,
         "(()=>{const p=document.querySelector('#prompt-textarea,textarea,[contenteditable=true]');"
@@ -631,6 +635,146 @@ def _uia_send_prompt(win, text: str) -> None:
         time.sleep(1)
         return
     raise AutopilotError(f"UIA: prompt non inviato; stato finestra={title[:180]}")
+
+
+def _uia_clipboard_json(win, expression: str, marker_prefix: str) -> Any:
+    import pyperclip
+    from diagnose_chatgpt_uia import run_javascript
+
+    last = ""
+    for attempt in range(1, 4):
+        marker = f"{marker_prefix}_{uuid.uuid4().hex[:8]}"
+        pyperclip.copy(marker)
+        run_javascript(
+            win,
+            f"""(()=>{{
+              try {{
+                const value=JSON.stringify({expression});
+                const ta=document.createElement('textarea');
+                ta.value=value;ta.style.position='fixed';ta.style.opacity='0';
+                document.body.appendChild(ta);ta.focus();ta.select();
+                document.execCommand('copy');ta.remove();
+              }} catch(e) {{}}
+              void(0);
+            }})()""",
+        )
+        time.sleep(0.55)
+        last = str(pyperclip.paste() or "").strip()
+        if last and last != marker:
+            try:
+                return json.loads(last)
+            except Exception:
+                pass
+        time.sleep(attempt * 0.5)
+    raise AutopilotError(f"UIA clipboard JSON non disponibile ({marker_prefix}, value={last[:120]!r})")
+
+
+def _uia_image_sources(win) -> list[str]:
+    selector = _uia_image_selector_js()
+    rows = _uia_clipboard_json(
+        win,
+        f"Array.from(new Set(({selector}).map(img=>img.currentSrc||img.src).filter(Boolean)))",
+        "F1_IMAGES",
+    )
+    return [str(x) for x in (rows or []) if str(x).strip()]
+
+
+def _uia_current_url(win) -> str:
+    try:
+        value = _uia_clipboard_json(win, "location.href", "F1_URL")
+        return str(value or "").strip()
+    except Exception:
+        return ""
+
+
+def _uia_wait_for_new_image_sources(
+    win,
+    known: set[str],
+    timeout_seconds: int = 720,
+    progress=None,
+    card: int | None = None,
+) -> list[str]:
+    deadline = time.time() + timeout_seconds
+    last_fresh: list[str] = []
+    last_change = time.time()
+    last_progress = 0.0
+
+    while time.time() < deadline:
+        current = _uia_image_sources(win)
+        fresh = [src for src in current if src not in known]
+        if fresh != last_fresh:
+            last_fresh = fresh
+            last_change = time.time()
+
+        if fresh and time.time() - last_change >= 12:
+            return fresh
+
+        if progress and time.time() - last_progress >= 30:
+            remaining = max(0, int(deadline - time.time()))
+            progress(
+                "CARD_IMAGE_WAIT",
+                card=card,
+                new_images_detected=len(fresh),
+                seconds_remaining=remaining,
+                expected_images=EXPECTED_IMAGES,
+            )
+            last_progress = time.time()
+        time.sleep(5)
+
+    return last_fresh
+
+
+def _uia_browser_download_src(win, src: str, filename: str) -> Path:
+    from diagnose_chatgpt_uia import run_javascript
+
+    safe_name = re.sub(r"[^A-Za-z0-9._-]+", "_", filename)
+    src_json = json.dumps(src)
+    run_javascript(
+        win,
+        f"""(()=>{{
+          const src={src_json};
+          fetch(src).then(r=>{{if(!r.ok)throw new Error('http '+r.status);return r.blob();}})
+          .then(b=>{{const u=URL.createObjectURL(b);const a=document.createElement('a');
+            a.href=u;a.download={json.dumps(safe_name)};document.body.appendChild(a);a.click();a.remove();
+            setTimeout(()=>URL.revokeObjectURL(u),5000);}})
+          .catch(()=>{{}});
+          void(0);
+        }})()""",
+    )
+    downloads = Path.home() / "Downloads"
+    target = downloads / safe_name
+    partial = downloads / (safe_name + ".crdownload")
+    deadline = time.time() + 120
+    while time.time() < deadline:
+        if target.exists() and target.stat().st_size > 0 and not partial.exists():
+            return target
+        time.sleep(1)
+    raise AutopilotError(f"UIA: download browser non trovato: {safe_name}")
+
+
+def _uia_download_image_src(win, src: str, dest: Path) -> None:
+    if src.startswith("data:image/"):
+        dest.write_bytes(base64.b64decode(src.split(",", 1)[1]))
+        return
+
+    if src.startswith(("http://", "https://")):
+        try:
+            r = requests.get(src, headers={"User-Agent": "Mozilla/5.0"}, timeout=120)
+            if r.ok and len(r.content) > 10_000:
+                dest.write_bytes(r.content)
+                return
+        except Exception:
+            pass
+
+    filename = f"f1-informa-{uuid.uuid4().hex[:12]}-{dest.stem}.png"
+    downloaded = _uia_browser_download_src(win, src, filename)
+    try:
+        shutil.move(str(downloaded), str(dest))
+    finally:
+        try:
+            downloaded.unlink(missing_ok=True)
+        except Exception:
+            pass
 
 
 def _uia_image_count(win) -> int:
@@ -837,52 +981,36 @@ def single_card_prompt(
     title = str(card.get("title") or f"Card {position}").strip()
     body = str(card.get("body") or "").strip()
     continuity = (
-        "Questa è la PRIMA card: definisci la direzione artistica che dovrà restare identica nelle prossime 9."
+        "Definisci qui la direzione visiva del carosello e mantienila nelle card successive."
         if position == 1
         else
-        "Continua ESATTAMENTE la stessa direzione artistica delle card precedenti già create in questa chat."
+        "Mantieni IDENTICA la direzione visiva, tipografica e fotografica delle card precedenti di questa stessa conversazione."
     )
-    return f"""CREA ORA UNA SOLA IMMAGINE PER IL CAROSELLO F1 INFORMA.
+    return f"""GENERA UN'IMMAGINE ORA. Non rispondere con una descrizione testuale.
 
-REGOLA ASSOLUTA DI QUESTO TURNO
-Devi generare ESATTAMENTE 1 IMMAGINE, corrispondente soltanto alla CARD {position}/10.
-NON creare una tavola con più card.
-NON creare una griglia.
-NON creare un collage.
-NON mostrare miniature delle altre card dentro l'immagine.
-NON anticipare le card successive.
-L'output grafico di questo turno deve essere un singolo file verticale 4:5, 1080x1350.
+Crea ESATTAMENTE UNA card social verticale 4:5 (1080×1350), CARD {position}/10 del carosello F1 INFORMA di F1 Immobiliare. Vietati collage, griglie, tavole multiple, miniature o anteprime di altre card. {continuity}
 
-PROGETTO
-Brand: F1 IMMOBILIARE
-Rubrica: F1 INFORMA · Casa, fisco e mercato
-Palette: verde immobiliare profondo, bianco/panna, accenti oro.
-Stile: elegante, moderno, autorevole, immobiliare.
-Usa fotografia immobiliare/architettura, icone e grandi numeri solo quando utili.
-Testo visibile breve e leggibile: evita paragrafi lunghi.
-Footer discreto: F1 Immobiliare · Fonte: Agenzia delle Entrate.
-{continuity}
+STILE: immobiliare elegante e moderno; verde F1 profondo, bianco/panna, piccoli accenti oro; fotografia immobiliare/architettura realistica; testo breve e molto leggibile; numero {position}/10; footer discreto “F1 Immobiliare · Fonte: Agenzia delle Entrate”.
 
-CARD DA GENERARE ADESSO
-Numero: {position}/10
+CONTENUTO DI QUESTA SOLA CARD
 Titolo: {title}
-Contenuto source-locked:
-{body}
+Informazioni source-locked: {body}
 
-CAPTION F1 INFORMA DI RIFERIMENTO
-Usala solo per capire il contesto e verificare numeri/date. Non trasformarla tutta in testo sulla card.
---- INIZIO CAPTION ---
+CONTESTO DALLA CAPTION F1 INFORMA (solo per verificare dati, non renderla tutta nella grafica):
 {caption}
---- FINE CAPTION ---
 
-REGOLE CONTENUTO
-- Non inventare dati.
-- Mantieni esatti percentuali, date, importi e condizioni.
-- Sulla card usa solo le informazioni necessarie a questa singola card.
-- Non inserire 10 card nella stessa immagine.
-- Non scrivere una nuova caption.
+Non inventare dati. Mantieni esatti percentuali, date, importi e condizioni. Genera ADESSO una sola immagine, non testo."""
 
-GENERA ADESSO SOLO L'IMMAGINE DELLA CARD {position}/10."""
+def _valid_final_card(path: Path) -> bool:
+    if not path.exists() or path.stat().st_size < 15_000:
+        return False
+    try:
+        from PIL import Image
+        with Image.open(path) as img:
+            return img.size == (1080, 1350)
+    except Exception:
+        return False
+
 
 def collect_ten_graphics_uia(
     caption: str,
@@ -890,27 +1018,53 @@ def collect_ten_graphics_uia(
     workdir: Path,
     progress=None,
 ) -> list[Path]:
-    win = _uia_chatgpt_window()
-    if progress:
-        progress("CHATGPT_WINDOW_READY", window_title=_uia_title_value(win)[:180])
+    workdir.mkdir(parents=True, exist_ok=True)
+    chat_file = workdir / "chat-url.txt"
+    target_url = CHATGPT_IMAGES_URL
+    if chat_file.exists():
+        saved = chat_file.read_text(encoding="utf-8").strip()
+        if saved.startswith("https://chatgpt.com/"):
+            target_url = saved
 
-    # Image mode is helpful when exposed by the UI, but it is not required:
-    # an explicit "create one image" prompt can invoke image generation itself.
-    image_mode = _uia_enable_image_mode(win)
+    win = _uia_chatgpt_window(target_url)
     if progress:
-        progress("IMAGE_MODE_READY" if image_mode else "IMAGE_MODE_OPTIONAL")
+        progress(
+            "CHATGPT_IMAGES_READY",
+            window_title=_uia_title_value(win)[:180],
+            target_url=target_url,
+        )
 
     output: list[Path] = []
     hashes: set[str] = set()
 
-    for position, card in enumerate(card_specs, 1):
-        baseline = _uia_image_count(win)
+    # Reuse cards already completed by an earlier attempt.
+    for position in range(1, EXPECTED_IMAGES + 1):
+        final = workdir / f"{position:02d}.png"
+        if not _valid_final_card(final):
+            break
+        digest = hashlib.sha256(final.read_bytes()).hexdigest()
+        if digest in hashes:
+            raise AutopilotError(f"Grafica duplicata già presente alla card {position}/10")
+        hashes.add(digest)
+        output.append(final)
+
+    if progress and output:
+        progress(
+            "RESUME_EXISTING_CARDS",
+            downloaded=len(output),
+            expected_images=EXPECTED_IMAGES,
+        )
+
+    for position in range(len(output) + 1, EXPECTED_IMAGES + 1):
+        card = card_specs[position - 1]
+        known = set(_uia_image_sources(win))
         prompt = single_card_prompt(caption, card, position)
+
         if progress:
             progress(
                 "CARD_PROMPT_READY",
                 card=position,
-                baseline_images=baseline,
+                baseline_images=len(known),
                 expected_images=EXPECTED_IMAGES,
             )
 
@@ -918,28 +1072,35 @@ def collect_ten_graphics_uia(
         if progress:
             progress("CARD_PROMPT_SENT", card=position, expected_images=EXPECTED_IMAGES)
 
-        total = _uia_wait_for_images(win, baseline, timeout_seconds=240)
-        produced = max(0, total - baseline)
-        if produced < 1:
+        fresh = _uia_wait_for_new_image_sources(
+            win,
+            known,
+            timeout_seconds=720,
+            progress=progress,
+            card=position,
+        )
+        if not fresh:
             raise AutopilotError(
-                f"ChatGPT non ha generato l'immagine della card {position}/10"
+                f"ChatGPT Images non ha generato l'immagine della card {position}/10 entro 12 minuti"
             )
 
-        # One request equals one card. If the UI exposes more than one candidate,
-        # take only the newest generated image for this card.
-        image_index = total - 1
+        src = fresh[-1]
         if progress:
             progress(
                 "CARD_IMAGE_READY",
                 card=position,
-                new_images_detected=produced,
+                new_images_detected=len(fresh),
                 expected_images=EXPECTED_IMAGES,
             )
 
         raw = workdir / f"uia-raw-{position:02d}.img"
         final = workdir / f"{position:02d}.png"
-        _uia_download_image(win, image_index, raw)
+        _uia_download_image_src(win, src, raw)
         normalize_card(raw, final)
+        try:
+            raw.unlink(missing_ok=True)
+        except Exception:
+            pass
 
         digest = hashlib.sha256(final.read_bytes()).hexdigest()
         if digest in hashes:
@@ -947,24 +1108,30 @@ def collect_ten_graphics_uia(
         hashes.add(digest)
         output.append(final)
 
+        current_url = _uia_current_url(win)
+        if current_url.startswith("https://chatgpt.com/"):
+            chat_file.write_text(current_url, encoding="utf-8")
+
         if progress:
             progress(
                 "CARD_DOWNLOADED",
                 card=position,
                 downloaded=len(output),
                 expected_images=EXPECTED_IMAGES,
+                chat_url=current_url[:300],
             )
 
     if len(output) != EXPECTED_IMAGES:
         raise AutopilotError(
             f"Carosello incompleto: {len(output)}/{EXPECTED_IMAGES} immagini separate"
         )
+
     if progress:
         progress(
             "GRAPHICS_READY",
             images_found=len(output),
             expected_images=EXPECTED_IMAGES,
-            strategy="one_card_per_request",
+            strategy="one_card_per_request_resumable",
         )
     return output
 
@@ -1496,21 +1663,23 @@ def process_job(job: dict[str, Any]) -> None:
 
     progress("BROWSER_STARTING", expected_images=EXPECTED_IMAGES)
     profile = client_profile(str(job["client_id"]))
-    with tempfile.TemporaryDirectory(prefix="f1-informa-chatgpt-") as td:
-        cards = launch_and_generate(
-            profile,
-            caption,
-            card_specs,
-            Path(td),
-            progress=progress,
-        )
-        progress("GRAPHICS_VALIDATED", images_found=len(cards), expected_images=EXPECTED_IMAGES)
-        result = create_content_and_schedule(job, cards)
-        progress(
-            "SOCIAL_QUEUE_READY",
-            media_count=result.get("media_count"),
-            platforms=result.get("platforms"),
-        )
+    workdir = WORK_ROOT / job_id
+    workdir.mkdir(parents=True, exist_ok=True)
+
+    cards = launch_and_generate(
+        profile,
+        caption,
+        card_specs,
+        workdir,
+        progress=progress,
+    )
+    progress("GRAPHICS_VALIDATED", images_found=len(cards), expected_images=EXPECTED_IMAGES)
+    result = create_content_and_schedule(job, cards)
+    progress(
+        "SOCIAL_QUEUE_READY",
+        media_count=result.get("media_count"),
+        platforms=result.get("platforms"),
+    )
 
     rest_patch(
         "f1_intelligence_jobs",
@@ -1572,6 +1741,7 @@ def run_once() -> int:
 def self_test() -> None:
     assert JOB_TYPE == "F1_INFORMA_CHATGPT_GRAPHICS"
     assert EXPECTED_IMAGES == 10
+    assert CHATGPT_IMAGES_URL.endswith("/images")
     assert max(1, int(3)) == 3
     assert _uia_count_from_title("F1IMGCOUNT:7 - Google Chrome") == 7
     # clipboard image count is exercised on the local Windows runner.
