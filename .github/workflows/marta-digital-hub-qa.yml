@@ -7,6 +7,7 @@ on:
       - '.github/workflows/marta-digital-hub-qa.yml'
   push:
     branches:
+      - 'main'
       - 'qa-upload-storage-hardening'
       - 'qa-content-approval-hardening'
       - 'qa-calendar-leads-hardening'
@@ -64,13 +65,19 @@ jobs:
       - name: Public frontend safety checks
         shell: bash
         run: |
+          grep -q './core.js?v=19' marta-digital-hub/app.html
           grep -q './upload.js?v=15' marta-digital-hub/app.html
+          grep -q './content.js?v=19' marta-digital-hub/app.html
           ! grep -n -E 'service_role|sb_secret_' marta-digital-hub/*.js marta-digital-hub/*.mjs marta-digital-hub/*.html
           grep -q 'marta-content-originals' marta-digital-hub/upload.js
           grep -q 'MARTA_MAX_VIDEO_BYTES' marta-digital-hub/upload.js
           grep -q 'content-hardening.js?v=13' marta-digital-hub/events.js
           grep -q 'calendar-leads-hardening.js?v=14' marta-digital-hub/events.js
           grep -q 'backup.js?v=15' marta-digital-hub/events.js
-          grep -q 'library-caption-dashboard.js?v=18' marta-digital-hub/events.js
-          grep -q './events.js?v=18' marta-digital-hub/app.html
+          grep -q 'library-caption-dashboard.js?v=19' marta-digital-hub/events.js
+          grep -q './events.js?v=19' marta-digital-hub/app.html
+          grep -q "publish_now:'marta_publish_now'" marta-digital-hub/core.js
+          grep -q 'id=publishNow' marta-digital-hub/content.js
+          grep -q 'id=vSkip' marta-digital-hub/content.js
+          grep -q "status:'NON_PUBBLICARE'" marta-digital-hub/content.js
           ! grep -n 'marta_claim_owner' marta-digital-hub/*.js marta-digital-hub/*.mjs marta-digital-hub/*.html
