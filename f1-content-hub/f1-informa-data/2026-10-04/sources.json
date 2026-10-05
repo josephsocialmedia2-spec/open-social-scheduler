@@ -1,12 +1,18 @@
 {
-  "generated_at": "2026-10-04T15:49:02.222612+02:00",
-  "status": "DA_APPROVARE",
+  "generated_at": "2026-10-04T18:14:45.263577+02:00",
+  "status": "GRAFICA_IN_CODA",
   "story": {
-    "title": "Bonus mobili - Che cos'è",
-    "url": "https://www.agenziaentrate.gov.it/portale/bonus-mobili/infogen-bonus-mobili-cittadini",
-    "updated": "14 gennaio 2026",
-    "hash": "172388928b43c808eaca49a754e02528c92d0e01d009ed371ac03f783ed85604"
+    "title": "Riqualificazione energetica - Che cos'è",
+    "url": "https://www.agenziaentrate.gov.it/portale/schede/agevolazioni/detrazione-riqualificazione-energetica-55-2016/cosa-riqualificazione-55-2016-cittadini",
+    "updated": "26 gennaio 2026",
+    "hash": "da97fa22f338f9431fde9932e72619449ebf446504affc9b7f2159f55d8b780d"
   },
   "pages_checked": 50,
+  "graphics_job": {
+    "queued": true,
+    "job_id": "3e02f421-7517-4872-90c4-1a3fb7f42641",
+    "status": "QUEUED",
+    "reused": false
+  },
   "errors": []
 }

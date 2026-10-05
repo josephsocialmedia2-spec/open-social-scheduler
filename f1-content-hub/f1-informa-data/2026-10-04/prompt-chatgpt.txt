@@ -1,50 +1,93 @@
-SEI L'EDITOR DI F1 INFORMA — CASA, FISCO E MERCATO.
+CREA LA GRAFICA COMPLETA DEL CAROSELLO SOCIAL F1 INFORMA PER F1 IMMOBILIARE.
 
-FONTE UFFICIALE UNICA:
-https://www.agenziaentrate.gov.it/portale/bonus-mobili/infogen-bonus-mobili-cittadini
-Titolo: Bonus mobili - Che cos'è
-Ultimo aggiornamento rilevato: 14 gennaio 2026
+OBIETTIVO
+Genera un unico progetto grafico coerente composto da 10 GRAFICHE SEPARATE, una per ogni card del carosello.
+Le 10 immagini devono appartenere alla stessa realizzazione: stessa palette, stessi font, stessa gerarchia, stessa direzione artistica.
+Formato di OGNI immagine: verticale 4:5, pensato per Instagram e Facebook.
+Non creare una sola tavola con 10 riquadri: servono 10 immagini separate.
 
-TESTO ESTRATTO DALLA FONTE:
-Si può usufruire di una detrazione Irpef del 50% per l'acquisto di mobili e di grandi elettrodomestici di classe non inferiore classe A per i forni, alla classe E per le lavatrici, le lavasciugatrici e le lavastoviglie, alla classe F per i frigoriferi e i congelatori destinati ad arredare un immobile oggetto di ristrutturazione. L'agevolazione spetta per gli acquisti effettuati entro il 31 dicembre 2026 e può essere richiesta solo da chi realizza un intervento di ristrutturazione edilizia iniziato a partire dal 1° gennaio dell’anno precedente a quello dell’acquisto dei beni. La detrazione va ripartita tra gli aventi diritto in 10 quote annuali di pari importo ed è calcolata su un ammontare complessivo non superiore a 10.000 euro per l'anno 2022, a 8.000 euro per l'anno 2023 e a 5.000 euro per gli anni 2024, 2025 e 2026. Per usufruire dell’agevolazione è necessario che la data di inizio lavori sia anteriore a quella in cui sono sostenute le spese per l’acquisto di mobili e di grandi elettrodomestici. La data di avvio potrà essere provata dalle eventuali abilitazioni amministrative o comunicazioni richieste dalle norme edilizie, dalla comunicazione preventiva all’Asl (indicante la data di inizio dei lavori), se obbligatoria, oppure, per lavori per i quali non siano necessarie comunicazioni o titoli abitativi, da una dichiarazione sostitutiva di atto di notorietà (articolo 47 del Dpr 445/2000), come prescritto dal provvedimento del direttore dell’Agenzia delle Entrate del 2 novembre 2011. Il contribuente che esegue lavori di ristrutturazione su più unità immobiliari avrà diritto al beneficio più volte. L’importo massimo di spesa va, infatti, riferito a ciascuna unità abitativa oggetto di ristrutturazione. Per quali acquisti La detrazione spetta per l’acquisto di mobili nuovi grandi elettrodomestici nuovi di classe energetica non inferiore classe A per i forni, alla classe E per le lavatrici, le lavasciugatrici e le lavastoviglie, alla classe F per i frigoriferi e i congelatori, per le apparecchiature per le quali sia prevista l’etichetta energetica. A titolo esemplificativo, rientrano tra i mobili agevolabili letti, armadi, cassettiere, librerie, scrivanie, tavoli, sedie, comodini, divani, poltrone, credenze, nonché i materassi e gli apparecchi di illuminazione che costituiscono un necessario completamento dell’arredo dell’immobile oggetto di ristrutturazione. Non sono agevolabili, invece, gli acquisti di porte, di pavimentazioni (per esempio, il parquet), di tende e tendaggi, nonché di altri complementi di arredo. Per quel che riguarda i grandi elettrodomestici, la norma limita il beneficio all’acquisto delle tipologie dotate di etichetta energetica di classe , non inferiore alla classe A per i forni, alla classe E per le lavatrici, le lavasciugatrici e le lavastoviglie, alla classe F per i frigoriferi e i congelatori, se per quelle tipologie è obbligatoria l’etichetta energetica. L’acquisto di grandi elettrodomestici sprovvisti di etichetta energetica è agevolabile solo se per quella tipologia non sia ancora previsto l’obbligo di etichetta energetica. Rientrano, per esempio, fra i grandi elettrodomestici: frigoriferi, congelatori, lavatrici, lavasciuga, asciugatrici, lavastoviglie, apparecchi di cottura, stufe elettriche, piastre riscaldanti elettriche, forni a microonde, apparecchi elettrici di riscaldamento, radiatori elettrici, ventilatori elettrici, apparecchi per il condizionamento. Nell’importo delle spese sostenute per l’acquisto di mobili e grandi elettrodomestici possono essere considerate anche le spese di trasporto e di montaggio dei beni acquistati, purché le spese stesse siano state sostenute con le modalità di pagamento richieste per fruire della detrazione (bonifico, carte di credito o di debito). La realizzazione di lavori di ristrutturazione sulle parti comuni condominiali consente ai singoli condòmini (che usufruiscono pro quota della relativa detrazione) di detrarre le spese sostenute per acquistare gli arredi delle parti comuni, come guardiole oppure l’appartamento del portiere, ma non consente loro di detrarre le spese per l’acquisto di mobili e grandi elettrodomestici per la propria unità immobiliare. L’acquisto di mobili o di grandi elettrodomestici è agevolabile anche se i beni sono destinati ad arredare un ambiente diverso dello stesso immobile oggetto di intervento edilizio. Adempimenti Per avere la detrazione occorre effettuare i pagamenti con bonifico o carta di debito o credito. Non è consentito, invece, pagare con assegni bancari, contanti o altri mezzi di pagamento. Se il pagamento è disposto con bonifico bancario o postale, non è necessario utilizzare quello (soggetto a ritenuta) appositamente predisposto da banche e Poste S.p.a. per le spese di ristrutturazione edilizia. La detrazione è ammessa anche se i beni sono stati acquistati con un finanziamento a rate, a condizione che la società che eroga il finanziamento paghi il corrispettivo con le stesse modalità prima indicate e il contribuente abbia una copia della ricevuta del pagamento. I documenti da conservare sono: l’attestazione del pagamento (ricevuta del bonifico, ricevuta di avvenuta transazione, per i pagamenti con carta di credito o di debito, documentazione di addebito sul conto corrente) le fatture di acquisto dei beni, riportanti la natura, la qualità e la quantità dei beni e dei servizi acquisiti. Lo scontrino che riporta il codice fiscale dell’acquirente, insieme all’indicazione della natura, della qualità e della quantità dei beni acquistati, è equivalente alla fattura. Rispettando tutte queste prescrizioni, la detrazione può essere fruita anche nel caso di mobili e grandi elettrodomestici acquistati all’estero. Gli acquisti di alcuni elettrodomestici, per i quali si può usufruire del bonus (forni, frigoriferi, lavastoviglie, piani cottura elettrici, lavasciuga, lavatrici, asciugatrici),vanno comunicati all’Enea. Tutte le informazioni sull’invio della comunicazione sono disponibili sul sito dell’Enea, alla pagina dedicata al Bonus casa . La mancata o tardiva trasmissione non implica, tuttavia, la perdita del diritto alle detrazioni (risoluzione n. 46/E del 18 aprile 2019).
+BRAND
+F1 IMMOBILIARE
+Rubrica: F1 INFORMA · Casa, fisco e mercato
+Palette: verde immobiliare profondo, bianco/panna, accenti oro.
+Stile: elegante, professionale, moderno, autorevole, immobiliare.
+Usa fotografia immobiliare, ambienti casa, elementi architettonici, icone e grandi numeri quando utili.
+Evita card composte quasi esclusivamente da lunghi paragrafi.
+Il testo deve essere breve, leggibile e visivamente gerarchizzato.
 
-COMPITO:
-- Verifica che ogni dato sia contenuto nel testo sopra.
-- Non aggiungere leggi, percentuali, scadenze o interpretazioni non presenti.
-- Riscrivi in italiano semplice e professionale per chi compra, vende, affitta o possiede casa.
-- Mantieni 10 card, massimo 420 caratteri per card.
-- Card 10: fonte, data e invito a consultare l'Agenzia delle Entrate.
-- Crea anche caption social e disclaimer: “Contenuto informativo, non consulenza fiscale o legale.”
-- Se la fonte è archiviata/scaduta o riguarda anni precedenti, dichiaralo chiaramente e NON presentarla come novità.
+REGOLA FONDAMENTALE
+Usa ESCLUSIVAMENTE i dati contenuti nella caption e nella bozza source-locked sotto.
+NON inventare percentuali, importi, scadenze, requisiti, leggi o interpretazioni.
+Mantieni esatti numeri, date e condizioni.
+Inserisci discretamente "Fonte: Agenzia delle Entrate".
+Contenuto informativo, non consulenza fiscale o legale.
 
-BOZZA SOURCE-LOCKED:
-CARD 1 — Bonus mobili - Che cos'è
+CAPTION GENERATA AUTOMATICAMENTE DA F1 INFORMA:
+--- INIZIO CAPTION ---
+🏠 F1 INFORMA | Riqualificazione energetica - Che cos'è
+
+• In breve: Attenzione: l’agevolazione spetta anche per le spese sostenute negli anni 2025, 2026 e 2027, escluse quelle per sostituire impianti di climatizzazione invernale con caldaie uniche alimentate a combustibili fossili. Per le spese sostenute negli anni 2025 e 2026, la detrazione spetta nella misura del 36%, elevata al 50% in caso…
+• A chi interessa: Il beneficio consiste in una detrazione dall’IRPEF o dall’IRES, da ripartire in 10 rate annuali di pari importo, la cui entità varia a seconda che l’intervento riguardi la singola unità immobiliare o gli edifici condominiali e dell’anno in cui lo stesso è stato effettuato. Interventi condominiali Per gli interventi effettuati…
+• Qual è il vantaggio: Attenzione: l’agevolazione spetta anche per le spese sostenute negli anni 2025, 2026 e 2027, escluse quelle per sostituire impianti di climatizzazione invernale con caldaie uniche alimentate a combustibili fossili. Per le spese sostenute negli anni 2025 e 2026, la detrazione spetta nella misura del 36%, elevata al 50% in caso…
+• Numeri da ricordare: Attenzione: l’agevolazione spetta anche per le spese sostenute negli anni 2025, 2026 e 2027, escluse quelle per sostituire impianti di climatizzazione invernale con caldaie uniche alimentate a combustibili fossili. Per le spese sostenute negli anni 2025 e 2026, la detrazione spetta nella misura del 36%, elevata al 50% in caso…
+• Requisiti: Attenzione: l’agevolazione spetta anche per le spese sostenute negli anni 2025, 2026 e 2027, escluse quelle per sostituire impianti di climatizzazione invernale con caldaie uniche alimentate a combustibili fossili. Per le spese sostenute negli anni 2025 e 2026, la detrazione spetta nella misura del 36%, elevata al 50% in caso…
+
+Fonte ufficiale: https://www.agenziaentrate.gov.it/portale/schede/agevolazioni/detrazione-riqualificazione-energetica-55-2016/cosa-riqualificazione-55-2016-cittadini
+Aggiornamento indicato dalla fonte: 26 gennaio 2026
+
+Contenuto informativo, non consulenza fiscale o legale.
+#F1Informa #F1Immobiliare #Casa #
+--- FINE CAPTION ---
+
+FONTE UFFICIALE:
+https://www.agenziaentrate.gov.it/portale/schede/agevolazioni/detrazione-riqualificazione-energetica-55-2016/cosa-riqualificazione-55-2016-cittadini
+Ultimo aggiornamento rilevato: 26 gennaio 2026
+
+STRUTTURA SOURCE-LOCKED DELLE 10 CARD:
+CARD 1 — Riqualificazione energetica - Che cos'è
 F1 INFORMA
 Casa, fisco e mercato
 
 CARD 2 — In breve
-Si può usufruire di una detrazione Irpef del 50% per l'acquisto di mobili e di grandi elettrodomestici di classe non inferiore classe A per i forni, alla classe E per le lavatrici, le lavasciugatrici e le lavastoviglie, alla classe F per i frigoriferi e i congelatori destinati ad arredare un immobile oggetto di ristrutturazione. L'agevolazione spetta per gli acquisti effettuati entro il 31 dicembre 2026 e può essere richiesta solo da chi realizza un intervento di ristrutturazione edilizia…
+Attenzione: l’agevolazione spetta anche per le spese sostenute negli anni 2025, 2026 e 2027, escluse quelle per sostituire impianti di climatizzazione invernale con caldaie uniche alimentate a combustibili fossili. Per le spese sostenute negli anni 2025 e 2026, la detrazione spetta nella misura del 36%, elevata al 50% in caso di abitazione principale; invece, per le spese del 2027, la detrazione è del 30% ovvero, in caso di abitazione principale, del 36% (articolo 1, comma 22, lettera a), legge…
 
 CARD 3 — A chi interessa
-L'agevolazione spetta per gli acquisti effettuati entro il 31 dicembre 2026 e può essere richiesta solo da chi realizza un intervento di ristrutturazione edilizia iniziato a partire dal 1° gennaio dell’anno precedente a quello dell’acquisto dei beni. Il contribuente che esegue lavori di ristrutturazione su più unità immobiliari avrà diritto al beneficio più volte. La realizzazione di lavori di ristrutturazione sulle parti comuni condominiali consente ai singoli condòmini…
+Il beneficio consiste in una detrazione dall’IRPEF o dall’IRES, da ripartire in 10 rate annuali di pari importo, la cui entità varia a seconda che l’intervento riguardi la singola unità immobiliare o gli edifici condominiali e dell’anno in cui lo stesso è stato effettuato. Interventi condominiali Per gli interventi effettuati sulle parti comuni degli edifici condominiali o che interessano tutte le unità immobiliari di cui si compone il singolo condominio, sono previste…
 
 CARD 4 — Qual è il vantaggio
-Si può usufruire di una detrazione Irpef del 50% per l'acquisto di mobili e di grandi elettrodomestici di classe non inferiore classe A per i forni, alla classe E per le lavatrici, le lavasciugatrici e le lavastoviglie, alla classe F per i frigoriferi e i congelatori destinati ad arredare un immobile oggetto di ristrutturazione. L'agevolazione spetta per gli acquisti effettuati entro il 31 dicembre 2026 e può essere richiesta solo da chi realizza un intervento di…
+Attenzione: l’agevolazione spetta anche per le spese sostenute negli anni 2025, 2026 e 2027, escluse quelle per sostituire impianti di climatizzazione invernale con caldaie uniche alimentate a combustibili fossili. Per le spese sostenute negli anni 2025 e 2026, la detrazione spetta nella misura del 36%, elevata al 50% in caso di abitazione principale; invece, per le spese del 2027, la detrazione è del 30% ovvero, in caso di abitazione principale, del 36% (articolo 1, comma…
 
 CARD 5 — Numeri da ricordare
-Si può usufruire di una detrazione Irpef del 50% per l'acquisto di mobili e di grandi elettrodomestici di classe non inferiore classe A per i forni, alla classe E per le lavatrici, le lavasciugatrici e le lavastoviglie, alla classe F per i frigoriferi e i congelatori destinati ad arredare un immobile oggetto di ristrutturazione. La detrazione va ripartita tra gli aventi diritto in 10 quote annuali di pari importo ed è calcolata su un ammontare complessivo non superiore a…
+Attenzione: l’agevolazione spetta anche per le spese sostenute negli anni 2025, 2026 e 2027, escluse quelle per sostituire impianti di climatizzazione invernale con caldaie uniche alimentate a combustibili fossili. Per le spese sostenute negli anni 2025 e 2026, la detrazione spetta nella misura del 36%, elevata al 50% in caso di abitazione principale; invece, per le spese del 2027, la detrazione è del 30% ovvero, in caso di abitazione principale, del 36% (articolo 1, comma…
 
 CARD 6 — Requisiti
-L'agevolazione spetta per gli acquisti effettuati entro il 31 dicembre 2026 e può essere richiesta solo da chi realizza un intervento di ristrutturazione edilizia iniziato a partire dal 1° gennaio dell’anno precedente a quello dell’acquisto dei beni. Per usufruire dell’agevolazione è necessario che la data di inizio lavori sia anteriore a quella in cui sono sostenute le spese per l’acquisto di mobili e di grandi elettrodomestici. La data di avvio potrà essere provata dalle…
+Attenzione: l’agevolazione spetta anche per le spese sostenute negli anni 2025, 2026 e 2027, escluse quelle per sostituire impianti di climatizzazione invernale con caldaie uniche alimentate a combustibili fossili. Per le spese sostenute negli anni 2025 e 2026, la detrazione spetta nella misura del 36%, elevata al 50% in caso di abitazione principale; invece, per le spese del 2027, la detrazione è del 30% ovvero, in caso di abitazione principale, del 36% (articolo 1, comma…
 
 CARD 7 — Date e scadenze
-L'agevolazione spetta per gli acquisti effettuati entro il 31 dicembre 2026 e può essere richiesta solo da chi realizza un intervento di ristrutturazione edilizia iniziato a partire dal 1° gennaio dell’anno precedente a quello dell’acquisto dei beni. La detrazione va ripartita tra gli aventi diritto in 10 quote annuali di pari importo ed è calcolata su un ammontare complessivo non superiore a 10.000 euro per l'anno 2022, a 8.000 euro per l'anno 2023 e a 5.000 euro per gli…
+Attenzione: l’agevolazione spetta anche per le spese sostenute negli anni 2025, 2026 e 2027, escluse quelle per sostituire impianti di climatizzazione invernale con caldaie uniche alimentate a combustibili fossili. Per le spese sostenute negli anni 2025 e 2026, la detrazione spetta nella misura del 36%, elevata al 50% in caso di abitazione principale; invece, per le spese del 2027, la detrazione è del 30% ovvero, in caso di abitazione principale, del 36% (articolo 1, comma…
 
 CARD 8 — Attenzione
-Non sono agevolabili, invece, gli acquisti di porte, di pavimentazioni (per esempio, il parquet), di tende e tendaggi, nonché di altri complementi di arredo.
+Attenzione: l’agevolazione spetta anche per le spese sostenute negli anni 2025, 2026 e 2027, escluse quelle per sostituire impianti di climatizzazione invernale con caldaie uniche alimentate a combustibili fossili. Sono possibili tre ulteriori cessioni del credito, esclusivamente però se effettuate a favore di: banche e intermediari finanziari iscritti all’albo società appartenenti a un gruppo bancario iscritto all’albo imprese di assicurazione autorizzate a operare in…
 
 CARD 9 — Cosa fare adesso
-La data di avvio potrà essere provata dalle eventuali abilitazioni amministrative o comunicazioni richieste dalle norme edilizie, dalla comunicazione preventiva all’Asl (indicante la data di inizio dei lavori), se obbligatoria, oppure, per lavori per i quali non siano necessarie comunicazioni o titoli abitativi, da una dichiarazione sostitutiva di atto di notorietà (articolo 47 del Dpr 445/2000), come prescritto dal provvedimento del direttore dell’Agenzia delle Entrate del…
+Apri la fonte, verifica i requisiti e conserva la documentazione prevista.
 
 CARD 10 — Fonte ufficiale
-Agenzia delle Entrate · 14 gennaio 2026 https://www.agenziaentrate.gov.it/portale/bonus-mobili/infogen-bonus-mobili-cittadini
+Agenzia delle Entrate · 26 gennaio 2026 https://www.agenziaentrate.gov.it/portale/schede/agevolazioni/detrazione-riqualificazione-energetica-55-2016/cosa-riqualificazione-55-2016-cittadini
+
+DIREZIONE DELLE CARD
+1. Copertina forte e molto visiva.
+2. Sintesi immediata.
+3. A chi interessa.
+4. Vantaggio principale.
+5. Numeri importanti con forte gerarchia grafica.
+6. Requisiti con icone/check visivi.
+7. Date/scadenze con elemento calendario.
+8. Attenzione/limiti.
+9. Cosa fare adesso.
+10. Chiusura F1 INFORMA + fonte ufficiale.
+
+OUTPUT
+Genera le 10 immagini separate, numerate 1/10 … 10/10.
+Devono essere pronte per essere scaricate e pubblicate come UN SOLO CAROSELLO.
+Se l'interfaccia limita il numero di immagini generabili in una singola risposta, mantieni lo stesso progetto e prosegui con le card successive senza cambiare stile.

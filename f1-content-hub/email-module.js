@@ -204,7 +204,8 @@ function renderDatabase(host){
       '<div class="email-field"><label>Campagna</label><select id="emailDbCampaign" onchange="window.f1EmailDbCampaignChanged(this.value)"><option value="">Seleziona campagna</option>'+campaignOptions(cid)+'</select></div>'+
       '<div class="email-drop" style="margin-top:12px"><b>CARICA EXCEL O CSV</b><div class="email-help">Il file resta associato alla campagna selezionata. Email duplicate e non valide vengono escluse.</div><input id="emailDatabaseFile" type="file" accept=".xlsx,.xls,.csv,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" style="margin-top:10px" onchange="window.f1EmailParseDatabase(this.files[0])"></div>'+
       '<div id="emailDbPreview" style="margin-top:12px">'+renderParsedPreview()+'</div>'+
-      '<div class="email-actions"><button class="btn primary" '+(!E.parsedRows.length||!cid?"disabled":"")+' onclick="window.f1EmailImportDatabase()">IMPORTA NELLA CAMPAGNA</button><button class="btn ghost" '+(!cid?"disabled":"")+' onclick="window.f1EmailLoadRecipients()">AGGIORNA ELENCO</button></div>'+
+      '<div class="email-inline-note" style="margin-top:12px"><b>F1 EMAIL RADAR</b><div class="email-help">Importa automaticamente soltanto i prospect già in stato READY, con email verificata, consenso/base di contatto idonea e nessun blocco DNC. I record grezzi non vengono importati.</div></div>'+
+      '<div class="email-actions"><button class="btn green" '+(!cid?"disabled":"")+' onclick="window.f1EmailImportRadarReady()">IMPORTA READY DAL RADAR</button><button class="btn primary" '+(!E.parsedRows.length||!cid?"disabled":"")+' onclick="window.f1EmailImportDatabase()">IMPORTA CSV / EXCEL</button><button class="btn ghost" '+(!cid?"disabled":"")+' onclick="window.f1EmailLoadRecipients()">AGGIORNA ELENCO</button></div>'+
     '</div>'+
     '<div class="email-card"><h3>Destinatari campagna</h3><div id="emailRecipients">'+renderRecipients()+'</div></div>'+
   '</div>';
@@ -502,6 +503,18 @@ window.f1EmailParseDatabase=async function(file){
   }catch(e){E.parsedRows=[];E.parsedFileName="";notice(e.message||String(e),"bad");const box=document.getElementById("emailDbPreview");if(box)box.innerHTML=renderParsedPreview()}
 };
 window.f1EmailDbCampaignChanged=function(id){E.selectedCampaignId=id;E.recipients=null;renderFrame()};
+window.f1EmailImportRadarReady=async function(){
+  const id=selectedCampaignId();
+  if(!id)return notice("Seleziona una campagna.","warn");
+  try{
+    const d=await eapi("IMPORT_ACQUISITION_READY",{campaign_id:id});
+    E.data=null;
+    await window.f1RenderEmailWorkspace(true);
+    E.view="database";
+    await window.f1EmailLoadRecipients();
+    notice("F1 Email Radar: "+Number(d.imported||0)+" READY importati · "+Number(d.suppressed||0)+" soppressi. I prospect non idonei restano esclusi.","");
+  }catch(e){notice(e.message||String(e),"bad")}
+};
 window.f1EmailImportDatabase=async function(){const id=selectedCampaignId();if(!id)return notice("Seleziona una campagna.","warn");if(!E.parsedRows.length)return notice("Carica prima un file.","warn");try{let imported=0,invalid=0,duplicates=0,suppressed=0;for(let i=0;i<E.parsedRows.length;i+=500){const d=await eapi("IMPORT_RECIPIENTS",{campaign_id:id,recipients:E.parsedRows.slice(i,i+500)});imported+=Number(d.imported||0);invalid+=Number(d.invalid||0);duplicates+=Number(d.duplicates||0);suppressed+=Number(d.suppressed||0)}E.data=null;await window.f1RenderEmailWorkspace(true);E.view="database";await window.f1EmailLoadRecipients();notice("Import completato: "+imported+" validi · "+invalid+" non validi · "+duplicates+" duplicati · "+suppressed+" soppressi.","")}catch(e){notice(e.message||String(e),"bad")}};
 window.f1EmailLoadRecipients=async function(){const id=selectedCampaignId();if(!id)return;try{E.recipients=await eapi("RECIPIENTS",{campaign_id:id});renderFrame()}catch(e){notice(e.message||String(e),"bad")}};
 
