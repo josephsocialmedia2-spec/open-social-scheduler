@@ -8,6 +8,8 @@ import time
 from pathlib import Path
 
 CHATGPT_URL = os.getenv("F1_CHATGPT_URL", "https://chatgpt.com/")
+CHATGPT_IMAGES_URL = os.getenv("F1_CHATGPT_IMAGES_URL", "https://chatgpt.com/images")
+SCREENSHOT_ROOT = Path(os.getenv("F1_BROWSER_SCREENSHOT_ROOT", r"C:\F1Social\BrowserScreenshots"))
 
 def chrome_executable() -> str:
     candidates = [
@@ -19,6 +21,58 @@ def chrome_executable() -> str:
         if path.exists():
             return str(path)
     raise RuntimeError("Google Chrome non trovato")
+
+def capture_screenshot(win, label: str) -> Path | None:
+    """Mandatory visual evidence after browser actions."""
+    try:
+        SCREENSHOT_ROOT.mkdir(parents=True, exist_ok=True)
+        safe = "".join(ch if ch.isalnum() or ch in "-_" else "_" for ch in label)[:80]
+        stamp = time.strftime("%Y%m%d-%H%M%S")
+        path = SCREENSHOT_ROOT / f"{stamp}-{safe}.png"
+        image = win.capture_as_image()
+        image.save(path)
+        print(f"F1_SCREENSHOT={path}")
+        return path
+    except Exception as exc:
+        print(f"F1_SCREENSHOT_ERROR={label}:{exc}")
+        return None
+
+
+def uia_snapshot(win, label: str) -> None:
+    """Print a compact UIA inventory and always capture a screenshot."""
+    capture_screenshot(win, label)
+    rows = []
+    try:
+        controls = win.descendants()
+    except Exception as exc:
+        print(f"F1_UIA_DESCENDANTS_ERROR={exc}")
+        return
+    keywords = (
+        "message", "messaggio", "prompt", "send", "invia", "create", "crea",
+        "image", "immagin", "download", "scarica", "chatgpt", "tools", "strumenti",
+    )
+    for ctrl in controls:
+        try:
+            info = ctrl.element_info
+            name = (ctrl.window_text() or "").strip()
+            control_type = str(getattr(info, "control_type", "") or "")
+            auto_id = str(getattr(info, "automation_id", "") or "")
+            cls = str(getattr(info, "class_name", "") or "")
+            blob = f"{name} {control_type} {auto_id} {cls}".lower()
+            if control_type in {"Edit","Button","Document"} or any(k in blob for k in keywords):
+                rect = ctrl.rectangle()
+                rows.append({
+                    "name": name[:180],
+                    "type": control_type,
+                    "auto_id": auto_id[:140],
+                    "class": cls[:120],
+                    "rect": [rect.left, rect.top, rect.right, rect.bottom],
+                })
+        except Exception:
+            continue
+    import json
+    print("F1_UIA_CONTROLS=" + json.dumps(rows[:160], ensure_ascii=False))
+
 
 def chrome_windows():
     from pywinauto import Desktop
@@ -44,6 +98,8 @@ def navigate(win, url: str) -> None:
     send_keys("^l")
     paste_text(url)
     send_keys("{ENTER}")
+    time.sleep(2)
+    capture_screenshot(win, "after_navigation")
 
 def run_javascript(win, code: str) -> None:
     from pywinauto.keyboard import send_keys
@@ -196,6 +252,7 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--cleanup-only", action="store_true")
     ap.add_argument("--inspect-controls", action="store_true")
+    ap.add_argument("--inspect-uia", action="store_true")
     args = ap.parse_args()
 
     cleanup_duplicate_automation_windows()
@@ -242,8 +299,12 @@ def main() -> int:
         return 2
 
     print(f"JS_BRIDGE_WINDOW_HANDLE={win.handle}")
-    navigate(win, CHATGPT_URL)
+    navigate(win, CHATGPT_IMAGES_URL if args.inspect_uia else CHATGPT_URL)
     time.sleep(7)
+    capture_screenshot(win, "page_loaded")
+    if args.inspect_uia:
+        uia_snapshot(win, "uia_inspect")
+        return 0
     try:
         print(f"JS_BRIDGE_AFTER_NAV={win.window_text()}")
     except Exception:
