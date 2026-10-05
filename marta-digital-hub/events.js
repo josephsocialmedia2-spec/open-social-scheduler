@@ -19,4 +19,4 @@ import('./calendar-leads-hardening.js?v=14').catch(e=>console.error('calendar/le
 
 import('./backup.js?v=15').catch(e=>console.error('backup',e));
 
-import('./library-caption-dashboard.js?v=18').catch(e=>console.error('library/caption/dashboard',e));
+import('./library-caption-dashboard.js?v=19').catch(e=>console.error('library/caption/dashboard',e));
