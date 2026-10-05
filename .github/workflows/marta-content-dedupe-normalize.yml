@@ -1,0 +1,180 @@
+name: Marta Content Dedupe Normalize
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.marta-content-dedupe-trigger'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  dedupe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      SUPABASE_URL: ${{ vars.SUPABASE_URL || 'https://nqnmlsmeiynxbdojeyjt.supabase.co' }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+    steps:
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install Supabase client
+        run: npm install --no-save @supabase/supabase-js@2
+
+      - name: Keep one copy and normalize one video per content
+        shell: bash
+        run: |
+          node <<'NODE'
+          const { createClient } = require('@supabase/supabase-js');
+
+          const URL=process.env.SUPABASE_URL;
+          const KEY=process.env.SUPABASE_SERVICE_ROLE_KEY;
+          if(!URL||!KEY) throw new Error('Missing Supabase server credentials');
+
+          const sb=createClient(URL,KEY,{auth:{persistSession:false,autoRefreshToken:false}});
+          const OWNER='f7eeeb4c-e48d-4693-8dd3-b8862f97fac0';
+          const CLIENT='69f5293a-75f2-489b-9afd-14b279013d00';
+          const KEEP='ba1ba19e-1fd6-4b0d-85c5-5b9f11245f17';
+          const DROP='9f16f71b-8ab7-4f2e-b318-5f9cbed998fd';
+          const BUCKET='f1-content-media';
+
+          const fail=(m)=>{throw new Error(m)};
+          const cleanTitle=(name)=>String(name||'Contenuto')
+            .replace(/\.[a-z0-9]{2,5}$/i,'')
+            .replace(/[_-]+/g,' ')
+            .replace(/\s+/g,' ')
+            .trim() || 'Contenuto';
+
+          async function mediaFor(contentId){
+            const {data,error}=await sb.from('f1_content_media')
+              .select('id,owner_id,client_id,content_id,file_name,mime_type,storage_path,file_size,source,created_at')
+              .eq('owner_id',OWNER).eq('client_id',CLIENT).eq('content_id',contentId)
+              .order('created_at',{ascending:true});
+            if(error) fail('media query '+contentId+': '+error.message);
+            return data||[];
+          }
+
+          async function countRefs(contentId){
+            const out={};
+            for(const table of ['f1_content_calendar','f1_intelligence_jobs']){
+              const {count,error}=await sb.from(table).select('id',{count:'exact',head:true}).eq('content_id',contentId);
+              if(error) fail('ref query '+table+': '+error.message);
+              out[table]=count||0;
+            }
+            return out;
+          }
+
+          let keep=await mediaFor(KEEP);
+          let drop=await mediaFor(DROP);
+
+          // If the duplicate batch is still present, verify it is byte-for-byte equivalent
+          // at the metadata level (same file name + size) before deleting.
+          if(drop.length){
+            if(keep.length!==drop.length) fail('Refusing dedupe: batch counts differ');
+            const key=x=>x.file_name+'::'+String(x.file_size||0);
+            const a=[...keep].map(key).sort();
+            const b=[...drop].map(key).sort();
+            if(JSON.stringify(a)!==JSON.stringify(b)) fail('Refusing dedupe: file names/sizes differ');
+
+            const refs=await countRefs(DROP);
+            if(refs.f1_content_calendar||refs.f1_intelligence_jobs) {
+              fail('Refusing dedupe: duplicate batch has downstream references '+JSON.stringify(refs));
+            }
+
+            const paths=drop.map(x=>x.storage_path).filter(Boolean);
+            if(paths.length){
+              const {data,error}=await sb.storage.from(BUCKET).remove(paths);
+              if(error) fail('Storage remove failed: '+error.message);
+              if(!Array.isArray(data)||data.length!==paths.length){
+                fail('Storage remove count mismatch: expected '+paths.length+' got '+(Array.isArray(data)?data.length:0));
+              }
+            }
+            {
+              const {error}=await sb.from('f1_content_media').delete().eq('owner_id',OWNER).eq('client_id',CLIENT).eq('content_id',DROP);
+              if(error) fail('Delete duplicate media rows: '+error.message);
+            }
+            {
+              const {error}=await sb.from('f1_content_items').delete().eq('owner_id',OWNER).eq('client_id',CLIENT).eq('id',DROP);
+              if(error) fail('Delete duplicate content row: '+error.message);
+            }
+          }
+
+          // Normalize the retained batch: one media -> one content record.
+          keep=await mediaFor(KEEP);
+          for(const m of keep){
+            const marker='NORMALIZED_MEDIA_ID:'+m.id;
+            const {data:existing,error:existingErr}=await sb.from('f1_content_items')
+              .select('id').eq('owner_id',OWNER).eq('client_id',CLIENT).eq('notes',marker).limit(1);
+            if(existingErr) fail('Idempotency lookup failed: '+existingErr.message);
+
+            let contentId=existing&&existing[0]&&existing[0].id;
+            if(!contentId){
+              const title=cleanTitle(m.file_name);
+              const type=String(m.mime_type||'').startsWith('video/')?'VIDEO':
+                         String(m.mime_type||'').startsWith('image/')?'FOTO':'DOCUMENTO';
+              const {data:newItem,error:newErr}=await sb.from('f1_content_items').insert({
+                owner_id:OWNER,
+                client_id:CLIENT,
+                title,
+                description:'',
+                content_type:type,
+                source:'WEB',
+                status:'DA LAVORARE',
+                priority:'NORMALE',
+                campaign:'MARTA_IMPORT',
+                tags:['Marta','Importazione'],
+                notes:marker,
+                source_text:'',
+                reused_from:KEEP,
+                distribution_plan:null
+              }).select('id').single();
+              if(newErr) fail('Create normalized item '+m.file_name+': '+newErr.message);
+              contentId=newItem.id;
+            }
+
+            if(m.content_id!==contentId){
+              const {error:moveErr}=await sb.from('f1_content_media')
+                .update({content_id:contentId})
+                .eq('id',m.id).eq('owner_id',OWNER).eq('client_id',CLIENT);
+              if(moveErr) fail('Move media '+m.id+': '+moveErr.message);
+            }
+          }
+
+          // Remove now-empty retained batch shell.
+          const remaining=await mediaFor(KEEP);
+          if(remaining.length===0){
+            const {error}=await sb.from('f1_content_items').delete().eq('owner_id',OWNER).eq('client_id',CLIENT).eq('id',KEEP);
+            if(error) fail('Delete empty retained batch shell: '+error.message);
+          }
+
+          // Final verification.
+          const {data:media,error:mediaErr}=await sb.from('f1_content_media')
+            .select('id,content_id,file_name,file_size,storage_path')
+            .eq('owner_id',OWNER).eq('client_id',CLIENT);
+          if(mediaErr) fail('Final media query: '+mediaErr.message);
+          const imports=(media||[]).filter(x=>x.storage_path&&x.storage_path.includes('/'+CLIENT+'/'));
+          const keys=imports.map(x=>x.file_name+'::'+String(x.file_size||0));
+          const unique=new Set(keys);
+          if(imports.length!==31||unique.size!==31) {
+            fail('Final verification failed: media='+imports.length+' unique='+unique.size);
+          }
+
+          const {data:normalized,error:normErr}=await sb.from('f1_content_items')
+            .select('id,title,status,notes')
+            .eq('owner_id',OWNER).eq('client_id',CLIENT).like('notes','NORMALIZED_MEDIA_ID:%');
+          if(normErr) fail('Final normalized query: '+normErr.message);
+          if((normalized||[]).length!==31) fail('Expected 31 normalized content items, found '+(normalized||[]).length);
+
+          console.log(JSON.stringify({
+            ok:true,
+            client:'marta-ruffino',
+            duplicate_removed:true,
+            unique_media:31,
+            normalized_content_items:31,
+            model:'1 video = 1 content'
+          },null,2));
+          NODE
