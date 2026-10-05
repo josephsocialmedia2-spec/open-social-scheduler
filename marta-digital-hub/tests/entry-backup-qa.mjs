@@ -18,7 +18,7 @@ const fs=await import('node:fs');
 const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
 const attiva=fs.readFileSync(new URL('../attiva.html',import.meta.url),'utf8');
 const backup=fs.readFileSync(new URL('../backup.js',import.meta.url),'utf8');
-assert.ok(index.includes("app.html?v=18"));
+assert.ok(index.includes("app.html?v=19"));
 assert.ok(index.includes("accesso.html?v=18"));
 assert.ok(!index.includes('marta_claim_owner'));
 assert.ok(!attiva.includes('marta_claim_owner'));
