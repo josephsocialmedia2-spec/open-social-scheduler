@@ -723,7 +723,7 @@ async function cardHtml(item){
   const isF1Test=isF1Social&&item.campaign==="F1_SOCIAL_OFFICIAL_TEST_20260926";
   const attachBtn=isF1Test&&!media?'<button class="btn small ghost" onclick="window.f1AttachTestMedia(\''+item.id+'\',\''+item.client_id+'\')">ALLEGA MEDIA TEST</button>':'';
   const publishNowBtn=isF1Social?'<button class="btn small green" onclick="window.f1PublishNow(\''+item.id+'\',\''+item.client_id+'\')">🚀 PUBBLICA ORA</button>':'';
-  return '<article class="content-card">'+thumb+'<div class="card-body"><div class="meta">'+esc(c?c.name:"Cliente")+' · '+esc(fmt(item.created_at))+'</div><h3 title="'+esc(item.title)+'">'+esc(item.title||"Senza titolo")+'</h3><div class="badges"><span class="badge">'+esc(item.content_type)+'</span><span class="badge '+(item.status==="PUBBLICATO"?"green":item.status==="PROGRAMMATO"||item.status==="IN PUBBLICAZIONE"?"amber":"")+'">'+esc(item.status)+'</span></div><div class="card-actions"><select class="input" style="padding:6px 7px" onchange="window.f1SetStatus(\''+item.id+'\',this.value)">'+options+'</select><button class="btn small" onclick="window.f1Reuse(\''+item.id+'\')">RIUTILIZZA</button>'+attachBtn+tiktokBtn+publishNowBtn+'<button class="btn small primary" onclick="window.f1Schedule(\''+item.id+'\',\''+item.client_id+'\')">PROGRAMMA</button></div></div></article>';
+  return '<article class="content-card">'+thumb+'<div class="card-body"><div class="meta">'+esc(c?c.name:"Cliente")+' · '+esc(fmt(item.created_at))+'</div><h3 title="'+esc(item.title)+'">'+esc(item.title||"Senza titolo")+'</h3><div class="badges"><span class="badge">'+esc(item.content_type)+'</span><span class="badge '+(item.status==="PUBBLICATO"?"green":item.status==="PROGRAMMATO"||item.status==="IN PUBBLICAZIONE"?"amber":"")+'">'+esc(item.status)+'</span></div><div class="card-actions"><select class="input" style="padding:6px 7px" onchange="window.f1SetStatus(\''+item.id+'\',this.value)">'+options+'</select><button class="btn small" onclick="window.f1Reuse(\''+item.id+'\')">RIUTILIZZA</button>'+attachBtn+tiktokBtn+publishNowBtn+'<button class="btn small ghost" onclick="window.f1SelectRailContent&&window.f1SelectRailContent(\''+item.id+'\')">CAPTION / DESTINAZIONI</button><button class="btn small primary" onclick="window.f1Schedule(\''+item.id+'\',\''+item.client_id+'\')">PROGRAMMA</button></div></div></article>';
 }
 async function renderGrid(target,list){
   if(!list.length){el(target).innerHTML='<div class="empty">Nessun contenuto.</div>';return}
@@ -2167,7 +2167,7 @@ setInterval(async function(){
 authState();
 </script>
 <script src="./vendor/heic2any-0.0.4.min.js"></script>
-<script src="./client-workspace.js?v=20261004c"></script>
+<script src="./client-workspace.js?v=20261005d"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script src="./email-module.js?v=20261005-radar1"></script>\n<script src="./demo-v7-core.js?v=20261004a"></script>\n<script src="./demo-v7-email-core.js?v=20261004a"></script>\n<script src="./demo-v7-email-csv.js?v=20261004a"></script>
 </body>
