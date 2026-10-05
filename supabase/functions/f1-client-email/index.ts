@@ -1008,6 +1008,66 @@ async function actionImportRecipients(user,p){
   await logEvent(user.id,ctx.client.id,ctx.campaign.id,"RECIPIENTS_IMPORTED",{by:user.email||user.id,received:input.length,valid:valid.length,invalid,duplicates,suppressed:suppressed.size});
   return {ok:true,imported:valid.length,invalid,duplicates,suppressed:suppressed.size,stats};
 }
+async function actionImportAcquisitionReady(user,p){
+  const ctx=await campaignContext(user.id,p.campaign_id);
+  const {data:leads,error}=await SERVICE.from("f1_email_acquisition_leads")
+    .select("acquisition_id,entity_id,company_name,email,email_status,state,qualification_status,compliance_status,compliance_basis,do_not_contact,metadata")
+    .eq("campaign_id",ctx.campaign.id)
+    .eq("state","READY")
+    .eq("compliance_status","ELIGIBLE_CONSENT")
+    .eq("do_not_contact",false)
+    .eq("email_status","VERIFICATA")
+    .limit(1000);
+  if(error)throw error;
+  const valid=(leads||[]).map(x=>({
+    email:normEmail(x.email),
+    source:x
+  })).filter(x=>EMAIL_RE.test(x.email));
+  const emails=valid.map(x=>x.email);
+  const suppressed=new Set();
+  if(emails.length){
+    const {data:sup,error:supErr}=await SERVICE.from("f1_client_email_suppressions")
+      .select("email_normalized")
+      .eq("owner_id",user.id)
+      .eq("client_id",ctx.client.id)
+      .in("email_normalized",emails);
+    if(supErr)throw supErr;
+    for(const r of sup||[])suppressed.add(normEmail(r.email_normalized));
+  }
+  const rows=valid.map(v=>({
+    campaign_id:ctx.campaign.id,
+    owner_id:user.id,
+    client_id:ctx.client.id,
+    email:v.email,
+    first_name:null,
+    last_name:null,
+    status:suppressed.has(v.email)?"suppressed":"pending",
+    eligibility_reason:suppressed.has(v.email)?"SUPPRESSION_LIST":"RADAR_READY_CONSENT",
+    source_row:{
+      source:"F1_EMAIL_RADAR_READY",
+      acquisition_id:v.source.acquisition_id,
+      entity_id:v.source.entity_id,
+      AZIENDA:v.source.company_name||"",
+      COMUNE:v.source.metadata?.comune||"",
+      compliance_basis:v.source.compliance_basis||"",
+      qualification_status:v.source.qualification_status||""
+    },
+    updated_at:nowIso()
+  }));
+  if(rows.length){
+    const {error:upErr}=await SERVICE.from("email_campaign_recipients").upsert(rows,{onConflict:"campaign_id,email_normalized"});
+    if(upErr)throw upErr;
+  }
+  const stats=await campaignStats(user.id,ctx.campaign.id);
+  await logEvent(user.id,ctx.client.id,ctx.campaign.id,"RADAR_READY_IMPORTED",{
+    by:user.email||user.id,
+    eligible:valid.length,
+    imported:rows.length,
+    suppressed:suppressed.size
+  });
+  return {ok:true,eligible:valid.length,imported:rows.length,suppressed:suppressed.size,stats};
+}
+
 async function actionCampaignRecipients(user,p){
   const ctx=await campaignContext(user.id,p.campaign_id);
   const {data,error}=await SERVICE.from("email_campaign_recipients").select("id,email,first_name,last_name,status,eligibility_reason,sent_at,error,retry_count,imported_at,updated_at").eq("campaign_id",ctx.campaign.id).eq("owner_id",user.id).order("imported_at",{ascending:true}).limit(2000);
@@ -1119,6 +1179,7 @@ Deno.serve(async req => {
     else if(action==="SEND_TEST")result=await actionSendTest(user,p);
     else if(action==="APPROVE")result=await actionApprove(user,p);
     else if(action==="IMPORT_RECIPIENTS")result=await actionImportRecipients(user,p);
+    else if(action==="IMPORT_ACQUISITION_READY")result=await actionImportAcquisitionReady(user,p);
     else if(action==="RECIPIENTS")result=await actionCampaignRecipients(user,p);
     else if(action==="STOP")result=await actionStop(user,p);
     else if(action==="START_STEP")result=await actionStartStep(user,p);
