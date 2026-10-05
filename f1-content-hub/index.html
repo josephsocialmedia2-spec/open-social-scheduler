@@ -534,6 +534,20 @@ async function enterApp(){
   renderAll();
   const requestedView=params.get("view");
   if(requestedView)setTab(requestedView,{skipUrl:true});
+  const emailConnect=params.get("connect_email");
+  if(emailConnect==="microsoft"&&requestedView==="email"&&selectedClientId){
+    setTimeout(async function(){
+      try{
+        if(window.f1RenderEmailWorkspace)await window.f1RenderEmailWorkspace(true);
+        if(window.f1EmailSetView)window.f1EmailSetView("account");
+        const onceKey="f1-auto-email-connect-"+selectedClientId;
+        if(!sessionStorage.getItem(onceKey)&&window.f1EmailConnectAccount){
+          sessionStorage.setItem(onceKey,"1");
+          await window.f1EmailConnectAccount();
+        }
+      }catch(e){console.error("F1 auto email connect",e)}
+    },350);
+  }
   const oauthState=params.get("oauth");
   if(oauthState){
     if(window.f1ResumePendingPublishNow)await window.f1ResumePendingPublishNow();
