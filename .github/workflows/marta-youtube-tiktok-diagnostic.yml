@@ -1,0 +1,91 @@
+name: Marta YouTube TikTok Diagnostic
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.marta-youtube-tiktok-diagnostic-trigger'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      MARTA_TIKTOK_ACCESS_TOKEN: ${{ secrets.MARTA_TIKTOK_ACCESS_TOKEN }}
+      MARTA_YOUTUBE_CLIENT_ID: ${{ secrets.MARTA_YOUTUBE_CLIENT_ID }}
+      MARTA_YOUTUBE_CLIENT_SECRET: ${{ secrets.MARTA_YOUTUBE_CLIENT_SECRET }}
+      MARTA_YOUTUBE_REFRESH_TOKEN: ${{ secrets.MARTA_YOUTUBE_REFRESH_TOKEN }}
+    steps:
+      - name: Check existing Marta YouTube and TikTok authorization
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json, os, urllib.parse, urllib.request
+
+          out={
+            "mode":"READ_ONLY_NO_PUBLISH",
+            "tiktok":{"credentials_present":False,"verified":False},
+            "youtube":{"credentials_present":False,"verified":False},
+          }
+
+          tt=(os.environ.get("MARTA_TIKTOK_ACCESS_TOKEN") or "").strip()
+          out["tiktok"]["credentials_present"]=bool(tt)
+          if tt:
+            try:
+              req=urllib.request.Request(
+                "https://open.tiktokapis.com/v2/post/publish/creator_info/query/",
+                data=b"{}",
+                method="POST",
+                headers={"Authorization":"Bearer "+tt,"Content-Type":"application/json; charset=UTF-8"},
+              )
+              with urllib.request.urlopen(req,timeout=30) as r:
+                data=json.loads(r.read().decode())
+              err=(data.get("error") or {}).get("code")
+              info=data.get("data") or {}
+              out["tiktok"]["verified"]=err in (None,"","ok") and bool(info.get("privacy_level_options"))
+              out["tiktok"]["status"]="CONNECTED" if out["tiktok"]["verified"] else "AUTH_REQUIRED"
+            except Exception as e:
+              out["tiktok"]["status"]="AUTH_REQUIRED"
+              out["tiktok"]["error_type"]=type(e).__name__
+          else:
+            out["tiktok"]["status"]="AUTH_REQUIRED"
+
+          cid=(os.environ.get("MARTA_YOUTUBE_CLIENT_ID") or "").strip()
+          sec=(os.environ.get("MARTA_YOUTUBE_CLIENT_SECRET") or "").strip()
+          ref=(os.environ.get("MARTA_YOUTUBE_REFRESH_TOKEN") or "").strip()
+          out["youtube"]["credentials_present"]=bool(cid and sec and ref)
+          if cid and sec and ref:
+            try:
+              body=urllib.parse.urlencode({
+                "client_id":cid,"client_secret":sec,"refresh_token":ref,"grant_type":"refresh_token"
+              }).encode()
+              req=urllib.request.Request("https://oauth2.googleapis.com/token",data=body,method="POST",
+                headers={"Content-Type":"application/x-www-form-urlencoded"})
+              with urllib.request.urlopen(req,timeout=30) as r:
+                tok=json.loads(r.read().decode()).get("access_token","")
+              if tok:
+                req=urllib.request.Request(
+                  "https://www.googleapis.com/youtube/v3/channels?part=id,snippet&mine=true",
+                  headers={"Authorization":"Bearer "+tok})
+                with urllib.request.urlopen(req,timeout=30) as r:
+                  data=json.loads(r.read().decode())
+                items=data.get("items") or []
+                out["youtube"]["verified"]=bool(items)
+                if items:
+                  out["youtube"]["channel_id"]=items[0].get("id")
+                  out["youtube"]["channel_title"]=(items[0].get("snippet") or {}).get("title")
+                out["youtube"]["status"]="CONNECTED" if items else "AUTH_REQUIRED"
+              else:
+                out["youtube"]["status"]="AUTH_REQUIRED"
+            except Exception as e:
+              out["youtube"]["status"]="AUTH_REQUIRED"
+              out["youtube"]["error_type"]=type(e).__name__
+          else:
+            out["youtube"]["status"]="AUTH_REQUIRED"
+
+          print(json.dumps(out,ensure_ascii=False,indent=2))
+          PY
