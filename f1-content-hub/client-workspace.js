@@ -775,7 +775,7 @@ window.f1RenderClientPublisherWorkspace=async function(){
     '</div>'+
     '<div id="workspaceUploadProgress" class="upload-progress hidden"></div>'+
     '<div id="intelligenceTimePanel" class="intelligence-time-panel hidden"><div class="section-title" style="margin-top:12px"><h3 style="margin:0">Modifica orari di distribuzione</h3><button class="btn small ghost" onclick="window.f1ToggleIntelligenceTimes(false)">CHIUDI</button></div><div class="publish-times">'+prefs+'</div></div>'+
-    '<div class="section-title" style="margin-top:14px"><h3 style="margin:0">Come verranno distribuiti</h3><span class="muted">Le caption restano modificabili fino alla pubblicazione</span></div>'+
+    '<div class="section-title" style="margin-top:14px"><h3 style="margin:0">Dove vanno i contenuti e le caption</h3><span class="muted">Per ogni video vedi social, caption, stato e orario/data. Le caption restano modificabili fino alla pubblicazione.</span></div>'+
     '<div class="distribution-list">'+(cards||'<div class="publisher-empty">Nessun contenuto con piano di distribuzione. Carica un file da WhatsApp, cartella o trascinamento.</div>')+'</div>'+
   '</section>';
   renderUploadProgress();
