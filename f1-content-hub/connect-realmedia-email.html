@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#063c32">
+<title>Collega Real Media Pro a Microsoft</title>
+<style>
+:root{--g:#063c32;--b:#1d7ea6;--bg:#f4f7f5;--ink:#17251f;--mut:#65736c;--ok:#147a42;--warn:#9a6b00;--bad:#a52a2a}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(145deg,#eff5f2,#f7fbfd);color:var(--ink);font:16px/1.5 Arial,Helvetica,sans-serif}
+.wrap{width:min(720px,calc(100% - 28px));margin:50px auto}.card{background:white;border:1px solid #dce7e1;border-radius:24px;padding:28px;box-shadow:0 18px 50px #063c3215}
+.brand{font-size:12px;font-weight:900;letter-spacing:.1em;color:var(--b)}h1{font-size:34px;line-height:1.08;margin:8px 0 12px;color:var(--g)}p{color:var(--mut)}
+.status{padding:13px 14px;border-radius:12px;margin:18px 0;background:#f0f4f2;border:1px solid #dce7e1}.status.ok{background:#eaf7ef;border-color:#b5dec4;color:#0b6333}.status.warn{background:#fff7df;border-color:#ead899;color:#795800}.status.bad{background:#fff0f0;border-color:#e8bcbc;color:#8e2424}
+.code{font-size:40px;letter-spacing:.16em;font-weight:950;color:var(--g);text-align:center;padding:20px;background:#edf5f2;border-radius:16px;margin:18px 0}
+.row{display:flex;gap:10px;flex-wrap:wrap}.btn{border:0;border-radius:999px;padding:13px 18px;font-weight:900;text-decoration:none;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;background:var(--g);color:white}.btn.alt{background:var(--b)}.btn.ghost{background:white;color:var(--g);border:1px solid var(--g)}
+.field{margin:10px 0}.field label{display:block;font-size:12px;font-weight:900;margin-bottom:5px}.field input{width:100%;padding:12px;border:1px solid #bdccc5;border-radius:10px;font:inherit}
+.small{font-size:13px;color:var(--mut)}.hidden{display:none!important}
+</style>
+</head>
+<body>
+<div class="wrap"><div class="card">
+<div class="brand">F1 SOCIAL · REAL MEDIA PRO</div>
+<h1>Collega l’email a Microsoft</h1>
+<p>Account previsto: <strong>realmediapro.social@outlook.it</strong>. Questa pagina serve soltanto a completare l’autorizzazione Microsoft.</p>
+
+<div id="state" class="status">Controllo sessione F1 Social…</div>
+
+<div id="loginBox" class="hidden">
+  <p>La sessione F1 Social non è attiva. Accedi qui con le credenziali di F1 Social; subito dopo verrà avviato il collegamento Microsoft.</p>
+  <div class="field"><label>Email F1 Social</label><input id="loginEmail" type="email" autocomplete="email"></div>
+  <div class="field"><label>Password F1 Social</label><input id="loginPassword" type="password" autocomplete="current-password"></div>
+  <button class="btn" id="loginBtn">ACCEDI A F1 SOCIAL</button>
+</div>
+
+<div id="connectBox" class="hidden">
+  <div class="small">Codice Microsoft</div>
+  <div id="userCode" class="code">—</div>
+  <div id="message" class="small"></div>
+  <div class="row" style="margin-top:18px">
+    <a id="microsoftBtn" class="btn alt" target="_blank" rel="noopener">APRI MICROSOFT E AUTORIZZA</a>
+    <button id="restartBtn" class="btn ghost">GENERA NUOVO CODICE</button>
+  </div>
+  <p class="small">Accedi su Microsoft esclusivamente con <strong>realmediapro.social@outlook.it</strong>. F1 Social controllerà automaticamente che l’account autorizzato sia quello corretto.</p>
+</div>
+
+<div id="doneBox" class="hidden">
+  <div class="status ok"><strong>COLLEGAMENTO COMPLETATO.</strong><br>Real Media Pro è collegato a Microsoft e F1 Social può usare l’account secondo i controlli previsti.</div>
+  <a class="btn" href="./?client=real-media-pro&view=email">TORNA A REAL MEDIA PRO → EMAIL</a>
+</div>
+</div></div>
+
+<script src="./vendor/supabase.min.js"></script>
+<script>
+const {createClient}=window.F1Supabase;
+const SUPABASE_URL="https://nqnmlsmeiynxbdojeyjt.supabase.co";
+const SUPABASE_KEY="sb_publishable_Clz5qPTkTtvwV0rqWTcfMQ_sCDSRgnu";
+const EMAIL_FUNCTION_URL=SUPABASE_URL+"/functions/v1/f1-client-email";
+const ACCOUNT_ID="b41b7e5a-9ac5-4b10-ae5f-407f680b8a3e";
+const EXPECTED_EMAIL="realmediapro.social@outlook.it";
+const sb=createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{persistSession:true,autoRefreshToken:true}});
+let pollTimer=null,device=null;
+
+function qs(id){return document.getElementById(id)}
+function show(id,on=true){qs(id).classList.toggle("hidden",!on)}
+function state(text,type=""){const x=qs("state");x.className="status "+type;x.innerHTML=text}
+
+async function api(action,payload={}){
+  const s=await sb.auth.getSession();
+  const token=s?.data?.session?.access_token;
+  if(!token)throw new Error("SESSIONE_F1_NON_ATTIVA");
+  const r=await fetch(EMAIL_FUNCTION_URL,{method:"POST",headers:{apikey:SUPABASE_KEY,Authorization:"Bearer "+token,"Content-Type":"application/json"},body:JSON.stringify({action,...payload})});
+  const d=await r.json().catch(()=>({}));
+  if(!r.ok||d?.ok===false)throw new Error(d?.error||d?.message||("Errore "+r.status));
+  return d;
+}
+
+async function startMicrosoft(){
+  clearInterval(pollTimer);pollTimer=null;
+  show("connectBox",false);show("doneBox",false);
+  state("Genero il codice Microsoft…","warn");
+  try{
+    device=await api("MS_DEVICE_START",{account_id:ACCOUNT_ID});
+    qs("userCode").textContent=device.user_code||"—";
+    qs("message").textContent=device.message||"Apri Microsoft e inserisci il codice.";
+    qs("microsoftBtn").href=device.verification_uri||"https://microsoft.com/devicelogin";
+    show("connectBox",true);
+    state("Codice pronto. Apri Microsoft e autorizza "+EXPECTED_EMAIL+".","warn");
+    pollTimer=setInterval(pollMicrosoft,Math.max(3,Number(device.interval||5))*1000);
+  }catch(e){
+    state("Non riesco ad avviare il collegamento: "+String(e.message||e),"bad");
+  }
+}
+
+async function pollMicrosoft(){
+  if(!device)return;
+  try{
+    const d=await api("MS_DEVICE_POLL",{account_id:ACCOUNT_ID});
+    if(d.pending)return;
+    clearInterval(pollTimer);pollTimer=null;
+    if(d.mismatch){
+      state("Account errato autorizzato: "+d.connected+". Serve "+d.expected+".","bad");
+      return;
+    }
+    if(d.connected){
+      show("connectBox",false);show("doneBox",true);
+      state("Microsoft collegato correttamente.","ok");
+    }
+  }catch(e){
+    const m=String(e.message||e);
+    if(/pending|in corso/i.test(m))return;
+    clearInterval(pollTimer);pollTimer=null;
+    state("Collegamento non completato: "+m,"bad");
+  }
+}
+
+async function init(){
+  const s=await sb.auth.getSession();
+  if(!s.data?.session){
+    state("Per iniziare serve la sessione F1 Social.","warn");
+    show("loginBox",true);return;
+  }
+  show("loginBox",false);
+  await startMicrosoft();
+}
+qs("restartBtn").onclick=startMicrosoft;
+qs("loginBtn").onclick=async()=>{
+  const email=qs("loginEmail").value.trim(),password=qs("loginPassword").value;
+  state("Accesso a F1 Social…","warn");
+  const r=await sb.auth.signInWithPassword({email,password});
+  if(r.error){state("Accesso F1 Social non riuscito: "+r.error.message,"bad");return}
+  show("loginBox",false);await startMicrosoft();
+};
+init();
+</script>
+</body></html>
