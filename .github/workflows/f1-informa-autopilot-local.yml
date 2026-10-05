@@ -49,6 +49,7 @@ jobs:
       F1_CHATGPT_URL: 'https://chatgpt.com/'
       F1_CHATGPT_IMAGES_URL: 'https://chatgpt.com/images'
       F1_INFORMA_WORK_ROOT: 'C:\F1Social\F1InformaJobs'
+      F1_BROWSER_SCREENSHOT_ROOT: 'C:\F1Social\BrowserScreenshots'
     steps:
       - uses: actions/checkout@v4
 
@@ -90,6 +91,12 @@ jobs:
         run: |
           & 'C:\\F1Social\\venv\\Scripts\\python.exe' publisher\\local_agent\\diagnose_chatgpt_uia.py --cleanup-only
           if ($LASTEXITCODE -ne 0) { Write-Warning 'F1 ChatGPT duplicate-window cleanup failed.' }
+
+      - name: Capture ChatGPT Images UI screenshot and controls
+        shell: powershell
+        run: |
+          & 'C:\F1Social\venv\Scripts\python.exe' publisher\local_agent\diagnose_chatgpt_uia.py --inspect-uia
+          if ($LASTEXITCODE -ne 0) { throw 'ChatGPT Images UIA inspection failed.' }
 
       - name: Process pending F1 INFORMA graphics jobs
         shell: powershell
