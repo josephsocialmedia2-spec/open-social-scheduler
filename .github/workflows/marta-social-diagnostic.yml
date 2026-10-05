@@ -1,0 +1,97 @@
+name: Marta Social Diagnostic
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.marta-social-diagnostic-trigger'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: marta-social-diagnostic
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      MARTA_BUFFER_API_KEY: ${{ secrets.MARTA_BUFFER_API_KEY }}
+      CLOUDINARY_URL: ${{ secrets.CLOUDINARY_URL }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install publisher dependencies
+        run: python -m pip install --disable-pip-version-check -r publisher/requirements.txt
+
+      - name: Verify Marta channels without publishing
+        shell: bash
+        run: |
+          set +e
+          python publisher/buffer_queue_publish.py --verify-client marta-ruffino > /tmp/marta-buffer.json 2>&1
+          RC=$?
+          set -e
+          export VERIFY_RC="$RC"
+          python - <<'PY'
+          import json, os
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          raw=Path('/tmp/marta-buffer.json').read_text(encoding='utf-8',errors='replace').strip()
+          rc=int(os.environ.get('VERIFY_RC','1'))
+          secret=bool(os.environ.get('MARTA_BUFFER_API_KEY','').strip())
+          cloudinary=bool(os.environ.get('CLOUDINARY_URL','').strip())
+          safe={
+            'checked_at': datetime.now(timezone.utc).isoformat(timespec='seconds'),
+            'test_mode': 'READ_ONLY_NO_PUBLISH',
+            'buffer_secret_present': secret,
+            'cloudinary_secret_present': cloudinary,
+            'verify_rc': rc,
+            'verified': False,
+            'channels': {},
+            'status': 'UNKNOWN',
+          }
+          try:
+            data=json.loads(raw)
+            if rc==0 and data.get('ok') is True:
+              safe['verified']=True
+              safe['status']='CONNECTED'
+              for service,row in (data.get('channels') or {}).items():
+                safe['channels'][service]={
+                  'channel_id': row.get('channel_id'),
+                  'found': bool(row.get('found')),
+                  'service_matches': bool(row.get('service_matches')),
+                  'name': row.get('name'),
+                }
+            else:
+              err=str(data.get('error') or '')
+              safe['status']='AUTH_REQUIRED' if ('secret' in err.lower() or 'missing' in err.lower()) else 'VERIFY_FAILED'
+          except Exception:
+            safe['status']='VERIFY_FAILED'
+          Path('marta-digital-hub/social-status.json').write_text(json.dumps(safe,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          print(json.dumps(safe,ensure_ascii=False,indent=2))
+          PY
+
+      - name: Persist sanitized status
+        shell: bash
+        run: |
+          if git diff --quiet -- marta-digital-hub/social-status.json; then exit 0; fi
+          git config user.name 'marta-social-diagnostic'
+          git config user.email 'marta-social-diagnostic@users.noreply.github.com'
+          git add marta-digital-hub/social-status.json
+          git commit -m 'Update Marta social connection status'
+          git fetch origin main
+          git rebase origin/main
+          git push origin HEAD:main
