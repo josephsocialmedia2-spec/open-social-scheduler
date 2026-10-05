@@ -777,6 +777,115 @@ def _uia_download_image_src(win, src: str, dest: Path) -> None:
             pass
 
 
+def _uia_prepare_image_baseline(win) -> int:
+    from diagnose_chatgpt_uia import run_javascript
+
+    selector = _uia_image_selector_js()
+    run_javascript(
+        win,
+        f"""(()=>{{
+          const xs={selector};
+          const known=Array.from(new Set(xs.map(img=>img.currentSrc||img.src).filter(Boolean)));
+          sessionStorage.setItem('f1KnownImages', JSON.stringify(known));
+          document.title='F1BASE:'+known.length;
+          void(0);
+        }})()""",
+    )
+    time.sleep(0.8)
+    m=re.search(r"F1BASE:(\d+)", _uia_title_value(win))
+    if not m:
+        raise AutopilotError("UIA: baseline immagini ChatGPT non leggibile")
+    return int(m.group(1))
+
+
+def _uia_new_image_count(win) -> int:
+    from diagnose_chatgpt_uia import run_javascript
+
+    selector = _uia_image_selector_js()
+    run_javascript(
+        win,
+        f"""(()=>{{
+          let known=[];
+          try{{known=JSON.parse(sessionStorage.getItem('f1KnownImages')||'[]')}}catch(e){{known=[]}}
+          const xs={selector};
+          const current=Array.from(new Set(xs.map(img=>img.currentSrc||img.src).filter(Boolean)));
+          const fresh=current.filter(src=>!known.includes(src));
+          sessionStorage.setItem('f1FreshImages', JSON.stringify(fresh));
+          document.title='F1NEWIMG:'+fresh.length;
+          void(0);
+        }})()""",
+    )
+    time.sleep(0.7)
+    m=re.search(r"F1NEWIMG:(\d+)", _uia_title_value(win))
+    if not m:
+        raise AutopilotError("UIA: conteggio nuove immagini ChatGPT non leggibile")
+    return int(m.group(1))
+
+
+def _uia_wait_for_new_dom_image(
+    win,
+    timeout_seconds: int = 720,
+    progress=None,
+    card: int | None = None,
+) -> int:
+    deadline=time.time()+timeout_seconds
+    last=-1
+    last_change=time.time()
+    last_progress=0.0
+    while time.time()<deadline:
+        count=_uia_new_image_count(win)
+        if count!=last:
+            last=count
+            last_change=time.time()
+        if count>0 and time.time()-last_change>=12:
+            return count
+        if progress and time.time()-last_progress>=30:
+            progress(
+                "CARD_IMAGE_WAIT",
+                card=card,
+                new_images_detected=max(0,count),
+                seconds_remaining=max(0,int(deadline-time.time())),
+                expected_images=EXPECTED_IMAGES,
+            )
+            last_progress=time.time()
+        time.sleep(5)
+    return max(0,last)
+
+
+def _uia_download_latest_fresh_image(win, filename: str) -> Path:
+    from diagnose_chatgpt_uia import run_javascript
+
+    safe_name=re.sub(r"[^A-Za-z0-9._-]+","_",filename)
+    run_javascript(
+        win,
+        f"""(()=>{{
+          let fresh=[];
+          try{{fresh=JSON.parse(sessionStorage.getItem('f1FreshImages')||'[]')}}catch(e){{fresh=[]}}
+          const src=fresh[fresh.length-1]||'';
+          if(!src){{document.title='F1DL:NOIMAGE';return;}}
+          const trigger=(url)=>{{
+            const a=document.createElement('a');
+            a.href=url;a.download={json.dumps(safe_name)};
+            document.body.appendChild(a);a.click();a.remove();
+          }};
+          fetch(src).then(r=>{{if(!r.ok)throw new Error('http '+r.status);return r.blob();}})
+          .then(b=>{{const u=URL.createObjectURL(b);trigger(u);setTimeout(()=>URL.revokeObjectURL(u),8000);document.title='F1DL:START';}})
+          .catch(()=>{{try{{trigger(src);document.title='F1DL:FALLBACK';}}catch(e){{document.title='F1DL:ERR';}}}});
+          void(0);
+        }})()""",
+    )
+
+    downloads=Path.home()/"Downloads"
+    target=downloads/safe_name
+    partial=downloads/(safe_name+".crdownload")
+    deadline=time.time()+150
+    while time.time()<deadline:
+        if target.exists() and target.stat().st_size>0 and not partial.exists():
+            return target
+        time.sleep(1)
+    raise AutopilotError(f"UIA: download immagine generata non trovato: {safe_name}")
+
+
 def _uia_image_count(win) -> int:
     import pyperclip
     from diagnose_chatgpt_uia import run_javascript
@@ -1012,6 +1121,22 @@ def _valid_final_card(path: Path) -> bool:
         return False
 
 
+
+
+def job_safe_name(value: str) -> str:
+    return re.sub(r"[^A-Za-z0-9._-]+","_",str(value or ""))[:80] or "job"
+
+def _valid_final_card(path: Path) -> bool:
+    if not path.exists() or path.stat().st_size < 15_000:
+        return False
+    try:
+        from PIL import Image
+        with Image.open(path) as img:
+            return img.size == (1080, 1350)
+    except Exception:
+        return False
+
+
 def collect_ten_graphics_uia(
     caption: str,
     card_specs: list[dict[str, Any]],
@@ -1019,25 +1144,19 @@ def collect_ten_graphics_uia(
     progress=None,
 ) -> list[Path]:
     workdir.mkdir(parents=True, exist_ok=True)
-    chat_file = workdir / "chat-url.txt"
-    target_url = CHATGPT_IMAGES_URL
-    if chat_file.exists():
-        saved = chat_file.read_text(encoding="utf-8").strip()
-        if saved.startswith("https://chatgpt.com/"):
-            target_url = saved
+    win = _uia_chatgpt_window(CHATGPT_IMAGES_URL)
 
-    win = _uia_chatgpt_window(target_url)
     if progress:
         progress(
             "CHATGPT_IMAGES_READY",
             window_title=_uia_title_value(win)[:180],
-            target_url=target_url,
+            target_url=CHATGPT_IMAGES_URL,
         )
 
     output: list[Path] = []
     hashes: set[str] = set()
 
-    # Reuse cards already completed by an earlier attempt.
+    # Resume from cards already downloaded and normalized on disk.
     for position in range(1, EXPECTED_IMAGES + 1):
         final = workdir / f"{position:02d}.png"
         if not _valid_final_card(final):
@@ -1055,16 +1174,17 @@ def collect_ten_graphics_uia(
             expected_images=EXPECTED_IMAGES,
         )
 
+    # Each request asks ChatGPT Images for one image only.
     for position in range(len(output) + 1, EXPECTED_IMAGES + 1):
         card = card_specs[position - 1]
-        known = set(_uia_image_sources(win))
+        baseline = _uia_prepare_image_baseline(win)
         prompt = single_card_prompt(caption, card, position)
 
         if progress:
             progress(
                 "CARD_PROMPT_READY",
                 card=position,
-                baseline_images=len(known),
+                baseline_images=baseline,
                 expected_images=EXPECTED_IMAGES,
             )
 
@@ -1072,30 +1192,37 @@ def collect_ten_graphics_uia(
         if progress:
             progress("CARD_PROMPT_SENT", card=position, expected_images=EXPECTED_IMAGES)
 
-        fresh = _uia_wait_for_new_image_sources(
+        fresh_count = _uia_wait_for_new_dom_image(
             win,
-            known,
             timeout_seconds=720,
             progress=progress,
             card=position,
         )
-        if not fresh:
+        if fresh_count < 1:
             raise AutopilotError(
                 f"ChatGPT Images non ha generato l'immagine della card {position}/10 entro 12 minuti"
             )
 
-        src = fresh[-1]
         if progress:
             progress(
                 "CARD_IMAGE_READY",
                 card=position,
-                new_images_detected=len(fresh),
+                new_images_detected=fresh_count,
                 expected_images=EXPECTED_IMAGES,
             )
 
         raw = workdir / f"uia-raw-{position:02d}.img"
         final = workdir / f"{position:02d}.png"
-        _uia_download_image_src(win, src, raw)
+        temp_name=f"f1-informa-{job_safe_name(workdir.name)}-{position:02d}.png"
+        downloaded=_uia_download_latest_fresh_image(win,temp_name)
+        try:
+            shutil.move(str(downloaded), str(raw))
+        finally:
+            try:
+                downloaded.unlink(missing_ok=True)
+            except Exception:
+                pass
+
         normalize_card(raw, final)
         try:
             raw.unlink(missing_ok=True)
@@ -1108,17 +1235,12 @@ def collect_ten_graphics_uia(
         hashes.add(digest)
         output.append(final)
 
-        current_url = _uia_current_url(win)
-        if current_url.startswith("https://chatgpt.com/"):
-            chat_file.write_text(current_url, encoding="utf-8")
-
         if progress:
             progress(
                 "CARD_DOWNLOADED",
                 card=position,
                 downloaded=len(output),
                 expected_images=EXPECTED_IMAGES,
-                chat_url=current_url[:300],
             )
 
     if len(output) != EXPECTED_IMAGES:
