@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-10-04T11:18:30+00:00",
+  "updated_at": "2026-10-05T12:30:59+00:00",
   "signals": [
     {
       "id": "FBS-64D8E3A2C4",
@@ -409,6 +409,42 @@
       "source_query": "site:facebook.com/groups \"Rubiana\" \"sei di\"",
       "status": "NEW",
       "discovered_at": "2026-09-30T11:17:31+00:00"
+    },
+    {
+      "id": "FBS-5B8389B29F",
+      "brand": "f1-immobiliare",
+      "territory": "Rubiana",
+      "group_url": "https://www.facebook.com/groups/363225840487171/",
+      "source_url": "https://www.facebook.com/groups/363225840487171/permalink/4009527435856975/",
+      "title": "Sei di Rubiana se... | Salve a tutti mi presento mi chiamo ...",
+      "snippet": "Buongiorno, affitto per brevi periodi, preferibilmente ad insegnanti fuori sede, un bilocale nella piazza principale di RUBIANA, paese nella bassa valle di Susa, a 30 km da Torino, comodo con auto e bus.",
+      "source_query": "site:facebook.com/groups \"Rubiana\" \"sei di\"",
+      "status": "NEW",
+      "discovered_at": "2026-10-05T12:22:44+00:00"
+    },
+    {
+      "id": "FBS-449446665A",
+      "brand": "f1-immobiliare",
+      "territory": "Coazze",
+      "group_url": "https://www.facebook.com/groups/708354689185489/",
+      "source_url": "https://www.facebook.com/groups/708354689185489/permalink/28639383322322584/",
+      "title": "Cerchiamo in acquisto casa indipendente / semi ... - Facebook",
+      "snippet": "Mi auguro che il Comune di Coazze e le autorità competenti intervengano con urgenza, adottando i necessari controlli e provvedimenti per garantire il rispetto delle regole e la sicurezza stradale.",
+      "source_query": "site:facebook.com/groups \"Coazze\" \"vendesi casa\"",
+      "status": "NEW",
+      "discovered_at": "2026-10-05T12:25:32+00:00"
+    },
+    {
+      "id": "FBS-3AC92C2C4B",
+      "brand": "f1-immobiliare",
+      "territory": "Coazze",
+      "group_url": "https://www.facebook.com/groups/708354689185489/",
+      "source_url": "https://www.facebook.com/groups/708354689185489/permalink/28534950076099243/",
+      "title": "SEI DI COAZZE SE.... | Buonasera, sono alla ricerca di una ...",
+      "snippet": "Buonasera, sono alla ricerca di una casa indipendente a Coazze, sarei orientata alle borgate Freinetto o Ruadavalle, sono posti tranquilli? Ho fatto una passeggiata per vedere l'ambiente circostante e mi sono parsi molto tranquilli, potreste darmi dei suggerimenti?",
+      "source_query": "site:facebook.com/groups \"Coazze\" \"vendesi casa\"",
+      "status": "NEW",
+      "discovered_at": "2026-10-05T12:25:32+00:00"
     }
   ]
 }
