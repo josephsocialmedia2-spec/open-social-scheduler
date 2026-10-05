@@ -274085,7 +274085,7 @@
     {
       "id": "supabase-calendar-05a5ed74-c08c-4b59-88b5-87d3af1016d6",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "buffer_review_required",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250427 141831",
@@ -274119,12 +274119,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Cloudinary HTTP 400: {\"error\":{\"message\":\"File size too large. Got 12525625. Maximum is 10485760.\"},\"message\":\"Your file exceeds the Free plan upload limit. Upgrade to upload larger assets.\",\"upgrade_url\":\"https://console.cloudinary.com/app/settings/billing/change_plan/programmable_media\"}"
+      "blocked_reason": "Scheduled time is more than 60 minutes in the past; manual review required"
     },
     {
       "id": "supabase-calendar-bbe51bd4-969c-418f-ae58-3d45d17e5382",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "buffer_review_required",
       "client_id": "antica-cappella",
       "client_name": "Antica Cappella",
       "title": "20250426 141315",
@@ -274158,12 +274158,12 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "blocked_reason": "Cloudinary HTTP 400: {\"error\":{\"message\":\"File size too large. Got 14250395. Maximum is 10485760.\"},\"message\":\"Your file exceeds the Free plan upload limit. Upgrade to upload larger assets.\",\"upgrade_url\":\"https://console.cloudinary.com/app/settings/billing/change_plan/programmable_media\"}"
+      "blocked_reason": "Scheduled time is more than 60 minutes in the past; manual review required"
     },
     {
       "id": "supabase-calendar-c42f0fcc-c00a-472e-a948-efe7474b9112",
-      "enabled": true,
-      "status": "buffer_scheduled",
+      "enabled": false,
+      "status": "published",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "PUNTO DI FORZA · DUE ALLOGGI IN IN QUADRIFAMILARE VILLAR DORA",
@@ -274202,11 +274202,11 @@
           "service": "facebook",
           "channel_id": "6ab2b713ea19ca0bdeb8103d",
           "post_id": "6ac0fae37d53b827e0dc92fe",
-          "buffer_status": "scheduled",
+          "buffer_status": "sent",
           "due_at": "2026-10-05T12:00:00.000Z",
           "created_at": "2026-10-03T12:53:55+00:00",
-          "sent_at": null,
-          "external_link": null
+          "sent_at": "2026-10-05T12:01:52.706Z",
+          "external_link": "https://www.facebook.com/122138682843201564/posts/122142381903201564"
         }
       ],
       "buffer_scheduled_platforms": [
@@ -274219,12 +274219,14 @@
           "resource_type": "image",
           "bytes": "2667452"
         }
-      ]
+      ],
+      "external_post_id": "6ac0fae37d53b827e0dc92fe",
+      "external_url": "https://www.facebook.com/122138682843201564/posts/122142381903201564"
     },
     {
       "id": "supabase-calendar-00dd59ae-0f65-452a-b17e-e8924d9357b5",
-      "enabled": true,
-      "status": "buffer_scheduled",
+      "enabled": false,
+      "status": "published",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "PUNTO DI FORZA · DUE ALLOGGI IN IN QUADRIFAMILARE VILLAR DORA",
@@ -274263,11 +274265,11 @@
           "service": "instagram",
           "channel_id": "6ab2b6e7ea19ca0bdeb80e19",
           "post_id": "6ac00aa9e25183641e55706c",
-          "buffer_status": "scheduled",
+          "buffer_status": "sent",
           "due_at": "2026-10-05T12:00:00.000Z",
           "created_at": "2026-10-02T19:48:57+00:00",
-          "sent_at": null,
-          "external_link": null
+          "sent_at": "2026-10-05T12:04:38.153Z",
+          "external_link": "https://www.instagram.com/p/DeHKivLFKVn/"
         }
       ],
       "buffer_scheduled_platforms": [
@@ -274280,7 +274282,9 @@
           "resource_type": "image",
           "bytes": "2667452"
         }
-      ]
+      ],
+      "external_post_id": "6ac00aa9e25183641e55706c",
+      "external_url": "https://www.instagram.com/p/DeHKivLFKVn/"
     },
     {
       "id": "supabase-calendar-ac1c98f8-a2b5-4c8d-b9b6-28400fcb54e2",
@@ -275529,14 +275533,6 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "cloudinary_assets": [
-        {
-          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790612528/f1-buffer/supabase-calendar-990e3c06-05af-42ae-b439-bf849d3f2c8d/video.png",
-          "public_id": "f1-buffer/supabase-calendar-990e3c06-05af-42ae-b439-bf849d3f2c8d/video",
-          "resource_type": "image",
-          "bytes": "2643887"
-        }
-      ],
       "buffer_posts": [
         {
           "service": "instagram",
@@ -275544,11 +275540,21 @@
           "post_id": "6ac34b8663761da98b706fd0",
           "buffer_status": "scheduled",
           "due_at": "2026-10-08T12:00:00.000Z",
-          "created_at": "2026-10-05T07:02:30+00:00"
+          "created_at": "2026-10-05T07:02:30+00:00",
+          "sent_at": null,
+          "external_link": null
         }
       ],
       "buffer_scheduled_platforms": [
         "instagram"
+      ],
+      "cloudinary_assets": [
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790612528/f1-buffer/supabase-calendar-990e3c06-05af-42ae-b439-bf849d3f2c8d/video.png",
+          "public_id": "f1-buffer/supabase-calendar-990e3c06-05af-42ae-b439-bf849d3f2c8d/video",
+          "resource_type": "image",
+          "bytes": "2643887"
+        }
       ]
     },
     {
@@ -275588,14 +275594,6 @@
       "expected_media_sha256": null,
       "public_media_urls": [],
       "tiktok_photo_urls": [],
-      "cloudinary_assets": [
-        {
-          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790612526/f1-buffer/supabase-calendar-57efcf32-a7bf-48b6-8c5b-497a0af06408/video.png",
-          "public_id": "f1-buffer/supabase-calendar-57efcf32-a7bf-48b6-8c5b-497a0af06408/video",
-          "resource_type": "image",
-          "bytes": "2643887"
-        }
-      ],
       "buffer_posts": [
         {
           "service": "facebook",
@@ -275603,17 +275601,27 @@
           "post_id": "6ac34b87fe1389e413555928",
           "buffer_status": "scheduled",
           "due_at": "2026-10-08T12:00:00.000Z",
-          "created_at": "2026-10-05T07:02:31+00:00"
+          "created_at": "2026-10-05T07:02:31+00:00",
+          "sent_at": null,
+          "external_link": null
         }
       ],
       "buffer_scheduled_platforms": [
         "facebook"
+      ],
+      "cloudinary_assets": [
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/image/upload/v1790612526/f1-buffer/supabase-calendar-57efcf32-a7bf-48b6-8c5b-497a0af06408/video.png",
+          "public_id": "f1-buffer/supabase-calendar-57efcf32-a7bf-48b6-8c5b-497a0af06408/video",
+          "resource_type": "image",
+          "bytes": "2643887"
+        }
       ]
     },
     {
       "id": "supabase-calendar-1e3c5c67-55bc-4dd7-bda4-00f38d712cd5",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "buffer_scheduled",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "INVITO ALLA VISITA · DUE ALLOGGI IN IN QUADRIFAMILARE VILLAR DORA",
@@ -275655,12 +275663,24 @@
           "bytes": "2667452"
         }
       ],
-      "blocked_reason": "Buffer instagram: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
+      "buffer_posts": [
+        {
+          "service": "instagram",
+          "channel_id": "6ab2b6e7ea19ca0bdeb80e19",
+          "post_id": "6ac3c5b6f26d903122349b4d",
+          "buffer_status": "scheduled",
+          "due_at": "2026-10-08T18:00:00.000Z",
+          "created_at": "2026-10-05T15:43:50+00:00"
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "instagram"
+      ]
     },
     {
       "id": "supabase-calendar-937fb4aa-d679-4f84-806a-5caad151aab9",
       "enabled": true,
-      "status": "buffer_retry_required",
+      "status": "buffer_scheduled",
       "client_id": "immobiliare-la-sacra",
       "client_name": "Immobiliare La Sacra",
       "title": "INVITO ALLA VISITA · DUE ALLOGGI IN IN QUADRIFAMILARE VILLAR DORA",
@@ -275702,7 +275722,19 @@
           "bytes": "2667452"
         }
       ],
-      "blocked_reason": "Buffer facebook: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
+      "buffer_posts": [
+        {
+          "service": "facebook",
+          "channel_id": "6ab2b713ea19ca0bdeb8103d",
+          "post_id": "6ac3c5b6cca7ff4420ce7206",
+          "buffer_status": "scheduled",
+          "due_at": "2026-10-08T18:00:00.000Z",
+          "created_at": "2026-10-05T15:43:50+00:00"
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "facebook"
+      ]
     },
     {
       "id": "supabase-calendar-681a780f-651f-4289-a209-e833502617ad",
@@ -283932,6 +283964,18 @@
               ]
             }
           ]
+        },
+        {
+          "at": "2026-10-05T15:44:33+00:00",
+          "dry_run": false,
+          "results": [
+            {
+              "platform": "system",
+              "status": "blocked",
+              "error": "real-media-pro-2026-10-05-c00-01-01-sito-che-perde-lead: missing media: /home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/real-media-pro/2026-10-05/cycle-00/01-10-05-c00-01-01-sito-che-perde-lead.jpg",
+              "error_code": "PUBLISH_JOB_MEDIA_OR_PREFLIGHT_ERROR"
+            }
+          ]
         }
       ]
     },
@@ -284187,6 +284231,18 @@
               ]
             }
           ]
+        },
+        {
+          "at": "2026-10-05T15:44:33+00:00",
+          "dry_run": false,
+          "results": [
+            {
+              "platform": "system",
+              "status": "blocked",
+              "error": "real-media-pro-2026-10-05-c00-02-02-crm-followup: missing media: /home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/real-media-pro/2026-10-05/cycle-00/02-10-05-c00-02-02-crm-followup.jpg",
+              "error_code": "PUBLISH_JOB_MEDIA_OR_PREFLIGHT_ERROR"
+            }
+          ]
         }
       ]
     },
@@ -284387,6 +284443,18 @@
                 "RMP_PINTEREST_ACCESS_TOKEN",
                 "RMP_PINTEREST_BOARD_ID"
               ]
+            }
+          ]
+        },
+        {
+          "at": "2026-10-05T15:44:33+00:00",
+          "dry_run": false,
+          "results": [
+            {
+              "platform": "system",
+              "status": "blocked",
+              "error": "real-media-pro-2026-10-05-c00-03-03-analisi-gratuita: missing media: /home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/real-media-pro/2026-10-05/cycle-00/03-10-05-c00-03-03-analisi-gratuita.jpg",
+              "error_code": "PUBLISH_JOB_MEDIA_OR_PREFLIGHT_ERROR"
             }
           ]
         }
@@ -284591,6 +284659,18 @@
               ]
             }
           ]
+        },
+        {
+          "at": "2026-10-05T15:44:33+00:00",
+          "dry_run": false,
+          "results": [
+            {
+              "platform": "system",
+              "status": "blocked",
+              "error": "real-media-pro-2026-10-05-c00-04-04-google-ads-intento: missing media: /home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/real-media-pro/2026-10-05/cycle-00/04-10-05-c00-04-04-google-ads-intento.jpg",
+              "error_code": "PUBLISH_JOB_MEDIA_OR_PREFLIGHT_ERROR"
+            }
+          ]
         }
       ]
     },
@@ -284793,11 +284873,393 @@
               ]
             }
           ]
+        },
+        {
+          "at": "2026-10-05T15:44:33+00:00",
+          "dry_run": false,
+          "results": [
+            {
+              "platform": "system",
+              "status": "blocked",
+              "error": "real-media-pro-2026-10-05-c00-05-05-creative-testing: missing media: /home/runner/work/open-social-scheduler/open-social-scheduler/publisher/media/generated/real-media-pro/2026-10-05/cycle-00/05-10-05-c00-05-05-creative-testing.jpg",
+              "error_code": "PUBLISH_JOB_MEDIA_OR_PREFLIGHT_ERROR"
+            }
+          ]
         }
+      ]
+    },
+    {
+      "id": "supabase-calendar-3d424ac8-2b8a-43d6-9557-4adb48a195a7",
+      "enabled": true,
+      "status": "buffer_scheduled",
+      "client_id": "marta-ruffino",
+      "client_name": "Marta Ruffino",
+      "title": "WhatsApp Video 2026 10 02 at 13.46.57",
+      "caption": "**QUANDO SOLLEVI UN PESO, COME RESPIRI?**\n\n🕒 **13:46**\n\n**Parliamo insieme.**  \nContattami tramite WhatsApp:  \nhttps://wa.me/393489617214\n\nHai mai notato che quando devi sollevare qualcosa di pesante tendi automaticamente a **trattenere il respiro**?\n\nDurante uno sforzo, diaframma, parete addominale e pavimento pelvico partecipano insieme alla gestione delle pressioni interne.\n\nProva a fare una piccola esperienza.\n\nSolleva qualcosa trattenendo completamente il respiro.\n\nPoi riprova accompagnando lo sforzo con una **espirazione**.\n\nSenti la differenza?\n\nNon significa che dobbiamo pensare al respiro ogni secondo della giornata.\n\nSignifica capire che **anche il modo in cui respiriamo durante uno sforzo può modificare la gestione della pressione**.\n\nEd è una delle cose che osservo quando una donna presenta, per esempio:\n\nperdite durante gli sforzi,  \nsensazione di peso,  \nsintomi associati a un prolasso.\n\nPerché il pavimento pelvico non lavora soltanto quando fai gli esercizi.\n\nLavora mentre vivi.\n\nQuando tossisci.  \nQuando ti alzi.  \nQuando sollevi tuo figlio.  \nE anche quando porti le borse della spesa.\n\n**Il pavimento pelvico va osservato nella vita reale, non soltanto sul lettino.**\n\n**Mi trovi qui:**  \n📍 Torino — Via Giovanni Fattori 124  \n📍 Bruzolo — Via dei Mille 63  \n📍 Collaborazione — Poliambulatori San Luigi  \n📲 348 961 7214\n\n🌐 **Scopri di più sul mio sito:**  \nhttps://martaruffino.com/\n\n#torino #bruzolo #avigliana #rivoli",
+      "format": "reel",
+      "media": [
+        "publisher/media/supabase/3d424ac8-2b8a-43d6-9557-4adb48a195a7/WhatsApp_Video_2026-10-02_at_13.46.57.mp4",
+        "publisher/media/supabase/3d424ac8-2b8a-43d6-9557-4adb48a195a7/WhatsApp_Video_2026-10-02_at_13.46.57-sottotitolato.mp4"
+      ],
+      "scheduled_at": "2026-10-05T17:30:00+00:00",
+      "platforms": [
+        "instagram"
+      ],
+      "published_platforms": [],
+      "source": "SUPABASE_CONTENT_HUB",
+      "supabase_calendar_id": "3d424ac8-2b8a-43d6-9557-4adb48a195a7",
+      "supabase_content_id": "70733546-14fd-43aa-8952-791c42da736d",
+      "supabase_client_id": "69f5293a-75f2-489b-9afd-14b279013d00",
+      "campaign": "MARTA_IMPORT",
+      "property_id": null,
+      "provider": "buffer",
+      "provider_channel_id": "6ab5d64dea19ca0bdedefe49",
+      "expected_account": "https://www.instagram.com/pelvicamente.marta/",
+      "detected_account_id": "6ab5d64dea19ca0bdedefe49",
+      "detected_account_name": null,
+      "provider_secret_prefix": "MARTA",
+      "tiktok_settings": {},
+      "retry_count": 0,
+      "created_by": "supabase-queue-bridge",
+      "autonomous_publish": true,
+      "manual_publish_now": false,
+      "expected_media_sha256": null,
+      "public_media_urls": [],
+      "tiktok_photo_urls": [],
+      "cloudinary_assets": [
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/video/upload/v1791215051/f1-buffer/supabase-calendar-3d424ac8-2b8a-43d6-9557-4adb48a195a7/slide-01.mp4",
+          "public_id": "f1-buffer/supabase-calendar-3d424ac8-2b8a-43d6-9557-4adb48a195a7/slide-01",
+          "resource_type": "video",
+          "bytes": "10104400"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/video/upload/v1791215053/f1-buffer/supabase-calendar-3d424ac8-2b8a-43d6-9557-4adb48a195a7/slide-02.mp4",
+          "public_id": "f1-buffer/supabase-calendar-3d424ac8-2b8a-43d6-9557-4adb48a195a7/slide-02",
+          "resource_type": "video",
+          "bytes": "14412747"
+        }
+      ],
+      "buffer_posts": [
+        {
+          "service": "instagram",
+          "channel_id": "6ab5d64dea19ca0bdedefe49",
+          "post_id": "6ac3c5cf0c314c339e039428",
+          "buffer_status": "scheduled",
+          "due_at": "2026-10-05T17:30:00.000Z",
+          "created_at": "2026-10-05T15:44:15+00:00"
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "id": "supabase-calendar-bbac11ee-d33f-46ef-9604-f53f95336a13",
+      "enabled": true,
+      "status": "buffer_retry_required",
+      "client_id": "marta-ruffino",
+      "client_name": "Marta Ruffino",
+      "title": "WhatsApp Video 2026 10 02 at 13.46.57",
+      "caption": "**QUANDO SOLLEVI UN PESO, COME RESPIRI?**\n\n🕒 **13:46**\n\n**Parliamo insieme.**  \nContattami tramite WhatsApp:  \nhttps://wa.me/393489617214\n\nHai mai notato che quando devi sollevare qualcosa di pesante tendi automaticamente a **trattenere il respiro**?\n\nDurante uno sforzo, diaframma, parete addominale e pavimento pelvico partecipano insieme alla gestione delle pressioni interne.\n\nProva a fare una piccola esperienza.\n\nSolleva qualcosa trattenendo completamente il respiro.\n\nPoi riprova accompagnando lo sforzo con una **espirazione**.\n\nSenti la differenza?\n\nNon significa che dobbiamo pensare al respiro ogni secondo della giornata.\n\nSignifica capire che **anche il modo in cui respiriamo durante uno sforzo può modificare la gestione della pressione**.\n\nEd è una delle cose che osservo quando una donna presenta, per esempio:\n\nperdite durante gli sforzi,  \nsensazione di peso,  \nsintomi associati a un prolasso.\n\nPerché il pavimento pelvico non lavora soltanto quando fai gli esercizi.\n\nLavora mentre vivi.\n\nQuando tossisci.  \nQuando ti alzi.  \nQuando sollevi tuo figlio.  \nE anche quando porti le borse della spesa.\n\n**Il pavimento pelvico va osservato nella vita reale, non soltanto sul lettino.**\n\n**Mi trovi qui:**  \n📍 Torino — Via Giovanni Fattori 124  \n📍 Bruzolo — Via dei Mille 63  \n📍 Collaborazione — Poliambulatori San Luigi  \n📲 348 961 7214\n\n🌐 **Scopri di più sul mio sito:**  \nhttps://martaruffino.com/\n\n#torino #bruzolo #avigliana #rivoli",
+      "format": "reel",
+      "media": [
+        "publisher/media/supabase/bbac11ee-d33f-46ef-9604-f53f95336a13/WhatsApp_Video_2026-10-02_at_13.46.57.mp4",
+        "publisher/media/supabase/bbac11ee-d33f-46ef-9604-f53f95336a13/WhatsApp_Video_2026-10-02_at_13.46.57-sottotitolato.mp4"
+      ],
+      "scheduled_at": "2026-10-06T10:30:00+00:00",
+      "platforms": [
+        "facebook"
+      ],
+      "published_platforms": [],
+      "source": "SUPABASE_CONTENT_HUB",
+      "supabase_calendar_id": "bbac11ee-d33f-46ef-9604-f53f95336a13",
+      "supabase_content_id": "70733546-14fd-43aa-8952-791c42da736d",
+      "supabase_client_id": "69f5293a-75f2-489b-9afd-14b279013d00",
+      "campaign": "MARTA_IMPORT",
+      "property_id": null,
+      "provider": "buffer",
+      "provider_channel_id": "6ab5d62bea19ca0bdedefc11",
+      "expected_account": "https://www.facebook.com/martaruffinoriflessologa/reels/",
+      "detected_account_id": "6ab5d62bea19ca0bdedefc11",
+      "detected_account_name": null,
+      "provider_secret_prefix": "MARTA",
+      "tiktok_settings": {},
+      "retry_count": 0,
+      "created_by": "supabase-queue-bridge",
+      "autonomous_publish": true,
+      "manual_publish_now": false,
+      "expected_media_sha256": null,
+      "public_media_urls": [],
+      "tiktok_photo_urls": [],
+      "cloudinary_assets": [
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/video/upload/v1791215056/f1-buffer/supabase-calendar-bbac11ee-d33f-46ef-9604-f53f95336a13/slide-01.mp4",
+          "public_id": "f1-buffer/supabase-calendar-bbac11ee-d33f-46ef-9604-f53f95336a13/slide-01",
+          "resource_type": "video",
+          "bytes": "10104400"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/video/upload/v1791215057/f1-buffer/supabase-calendar-bbac11ee-d33f-46ef-9604-f53f95336a13/slide-02.mp4",
+          "public_id": "f1-buffer/supabase-calendar-bbac11ee-d33f-46ef-9604-f53f95336a13/slide-02",
+          "resource_type": "video",
+          "bytes": "14412747"
+        }
+      ],
+      "blocked_reason": "Buffer facebook: Invalid post: Video must be no longer than 1m 30s for Facebook Reels."
+    },
+    {
+      "id": "supabase-calendar-6947e17a-9cee-47ea-839d-7dc0134f830e",
+      "enabled": true,
+      "status": "buffer_scheduled",
+      "client_id": "marta-ruffino",
+      "client_name": "Marta Ruffino",
+      "title": "WhatsApp Video 2026 09 25 at 12.28.36",
+      "caption": "WhatsApp Video 2026 09 25 at 12.28.36\n\nnon sempre perché vedi qualcosa uscire potresti sentire semplicemente del peso vaginare una sensazione di incontro come se ci fosse qualcosa proprio lì potresti accorgerte maggiormente dopo molte ore in piedi durante alcuni sforzi oppure verso sera in altre donne può cambiare anche il modo di farla pipì o di andare di corpo e alcune donne invece hanno un prolazzo e pochissimi sintomi per questo non possiamo capire tutto soltanto la quello che senti. Il sintomo ci da un indizio la valutazione ci dice molto di più\n\nMarta Ruffino",
+      "format": "reel",
+      "media": [
+        "publisher/media/supabase/6947e17a-9cee-47ea-839d-7dc0134f830e/WhatsApp_Video_2026-09-25_at_12.28.36.mp4",
+        "publisher/media/supabase/6947e17a-9cee-47ea-839d-7dc0134f830e/WhatsApp_Video_2026-09-25_at_12.28.36-sottotitolato.mp4"
+      ],
+      "scheduled_at": "2026-10-06T17:30:00+00:00",
+      "platforms": [
+        "instagram"
+      ],
+      "published_platforms": [],
+      "source": "SUPABASE_CONTENT_HUB",
+      "supabase_calendar_id": "6947e17a-9cee-47ea-839d-7dc0134f830e",
+      "supabase_content_id": "ed10aeec-151c-4f32-af92-bf98df2eec04",
+      "supabase_client_id": "69f5293a-75f2-489b-9afd-14b279013d00",
+      "campaign": "MARTA_IMPORT",
+      "property_id": null,
+      "provider": "buffer",
+      "provider_channel_id": "6ab5d64dea19ca0bdedefe49",
+      "expected_account": "https://www.instagram.com/pelvicamente.marta/",
+      "detected_account_id": "6ab5d64dea19ca0bdedefe49",
+      "detected_account_name": null,
+      "provider_secret_prefix": "MARTA",
+      "tiktok_settings": {},
+      "retry_count": 0,
+      "created_by": "supabase-queue-bridge",
+      "autonomous_publish": true,
+      "manual_publish_now": false,
+      "expected_media_sha256": null,
+      "public_media_urls": [],
+      "tiktok_photo_urls": [],
+      "cloudinary_assets": [
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/video/upload/v1791215060/f1-buffer/supabase-calendar-6947e17a-9cee-47ea-839d-7dc0134f830e/slide-01.mp4",
+          "public_id": "f1-buffer/supabase-calendar-6947e17a-9cee-47ea-839d-7dc0134f830e/slide-01",
+          "resource_type": "video",
+          "bytes": "6011022"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/video/upload/v1791215061/f1-buffer/supabase-calendar-6947e17a-9cee-47ea-839d-7dc0134f830e/slide-02.mp4",
+          "public_id": "f1-buffer/supabase-calendar-6947e17a-9cee-47ea-839d-7dc0134f830e/slide-02",
+          "resource_type": "video",
+          "bytes": "7615327"
+        }
+      ],
+      "buffer_posts": [
+        {
+          "service": "instagram",
+          "channel_id": "6ab5d64dea19ca0bdedefe49",
+          "post_id": "6ac3c5d72070802b96a7cde8",
+          "buffer_status": "scheduled",
+          "due_at": "2026-10-06T17:30:00.000Z",
+          "created_at": "2026-10-05T15:44:23+00:00"
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "id": "supabase-calendar-c5a291a4-3761-416d-a537-6fb28cd373e4",
+      "enabled": true,
+      "status": "buffer_scheduled",
+      "client_id": "marta-ruffino",
+      "client_name": "Marta Ruffino",
+      "title": "WhatsApp Video 2026 09 25 at 12.28.36",
+      "caption": "WhatsApp Video 2026 09 25 at 12.28.36\n\nnon sempre perché vedi qualcosa uscire potresti sentire semplicemente del peso vaginare una sensazione di incontro come se ci fosse qualcosa proprio lì potresti accorgerte maggiormente dopo molte ore in piedi durante alcuni sforzi oppure verso sera in altre donne può cambiare anche il modo di farla pipì o di andare di corpo e alcune donne invece hanno un prolazzo e pochissimi sintomi per questo non possiamo capire tutto soltanto la quello che senti. Il sintomo ci da un indizio la valutazione ci dice molto di più",
+      "format": "reel",
+      "media": [
+        "publisher/media/supabase/c5a291a4-3761-416d-a537-6fb28cd373e4/WhatsApp_Video_2026-09-25_at_12.28.36.mp4",
+        "publisher/media/supabase/c5a291a4-3761-416d-a537-6fb28cd373e4/WhatsApp_Video_2026-09-25_at_12.28.36-sottotitolato.mp4"
+      ],
+      "scheduled_at": "2026-10-07T10:30:00+00:00",
+      "platforms": [
+        "facebook"
+      ],
+      "published_platforms": [],
+      "source": "SUPABASE_CONTENT_HUB",
+      "supabase_calendar_id": "c5a291a4-3761-416d-a537-6fb28cd373e4",
+      "supabase_content_id": "ed10aeec-151c-4f32-af92-bf98df2eec04",
+      "supabase_client_id": "69f5293a-75f2-489b-9afd-14b279013d00",
+      "campaign": "MARTA_IMPORT",
+      "property_id": null,
+      "provider": "buffer",
+      "provider_channel_id": "6ab5d62bea19ca0bdedefc11",
+      "expected_account": "https://www.facebook.com/martaruffinoriflessologa/reels/",
+      "detected_account_id": "6ab5d62bea19ca0bdedefc11",
+      "detected_account_name": null,
+      "provider_secret_prefix": "MARTA",
+      "tiktok_settings": {},
+      "retry_count": 0,
+      "created_by": "supabase-queue-bridge",
+      "autonomous_publish": true,
+      "manual_publish_now": false,
+      "expected_media_sha256": null,
+      "public_media_urls": [],
+      "tiktok_photo_urls": [],
+      "cloudinary_assets": [
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/video/upload/v1791215063/f1-buffer/supabase-calendar-c5a291a4-3761-416d-a537-6fb28cd373e4/slide-01.mp4",
+          "public_id": "f1-buffer/supabase-calendar-c5a291a4-3761-416d-a537-6fb28cd373e4/slide-01",
+          "resource_type": "video",
+          "bytes": "6011022"
+        },
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/video/upload/v1791215064/f1-buffer/supabase-calendar-c5a291a4-3761-416d-a537-6fb28cd373e4/slide-02.mp4",
+          "public_id": "f1-buffer/supabase-calendar-c5a291a4-3761-416d-a537-6fb28cd373e4/slide-02",
+          "resource_type": "video",
+          "bytes": "7615327"
+        }
+      ],
+      "buffer_posts": [
+        {
+          "service": "facebook",
+          "channel_id": "6ab5d62bea19ca0bdedefc11",
+          "post_id": "6ac3c5da0c314c339e0394b9",
+          "buffer_status": "scheduled",
+          "due_at": "2026-10-07T10:30:00.000Z",
+          "created_at": "2026-10-05T15:44:26+00:00"
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "facebook"
+      ]
+    },
+    {
+      "id": "supabase-calendar-1d7d5c25-0714-4e64-97f6-32ba9962bcad",
+      "enabled": true,
+      "status": "buffer_scheduled",
+      "client_id": "marta-ruffino",
+      "client_name": "Marta Ruffino",
+      "title": "WhatsApp Video 2026 09 28 at 12.54.52",
+      "caption": "VERO O FALSO? VEDIAMO\n\nNE INDOVINI.\nTa ue e\ngh\n(ho\nrw Le\n“Ty\n\nMarta Ruffino",
+      "format": "reel",
+      "media": [
+        "publisher/media/supabase/1d7d5c25-0714-4e64-97f6-32ba9962bcad/WhatsApp_Video_2026-09-28_at_12.54.52.mp4"
+      ],
+      "scheduled_at": "2026-10-07T17:30:00+00:00",
+      "platforms": [
+        "instagram"
+      ],
+      "published_platforms": [],
+      "source": "SUPABASE_CONTENT_HUB",
+      "supabase_calendar_id": "1d7d5c25-0714-4e64-97f6-32ba9962bcad",
+      "supabase_content_id": "9d29f58b-ec8b-41ba-a621-2ed21ca6b560",
+      "supabase_client_id": "69f5293a-75f2-489b-9afd-14b279013d00",
+      "campaign": "MARTA_IMPORT",
+      "property_id": null,
+      "provider": "buffer",
+      "provider_channel_id": "6ab5d64dea19ca0bdedefe49",
+      "expected_account": "https://www.instagram.com/pelvicamente.marta/",
+      "detected_account_id": "6ab5d64dea19ca0bdedefe49",
+      "detected_account_name": null,
+      "provider_secret_prefix": "MARTA",
+      "tiktok_settings": {},
+      "retry_count": 0,
+      "created_by": "supabase-queue-bridge",
+      "autonomous_publish": true,
+      "manual_publish_now": false,
+      "expected_media_sha256": null,
+      "public_media_urls": [],
+      "tiktok_photo_urls": [],
+      "cloudinary_assets": [
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/video/upload/v1791215066/f1-buffer/supabase-calendar-1d7d5c25-0714-4e64-97f6-32ba9962bcad/video.mp4",
+          "public_id": "f1-buffer/supabase-calendar-1d7d5c25-0714-4e64-97f6-32ba9962bcad/video",
+          "resource_type": "video",
+          "bytes": "7457453"
+        }
+      ],
+      "buffer_posts": [
+        {
+          "service": "instagram",
+          "channel_id": "6ab5d64dea19ca0bdedefe49",
+          "post_id": "6ac3c5dc9fef3d36d7536f20",
+          "buffer_status": "scheduled",
+          "due_at": "2026-10-07T17:30:00.000Z",
+          "created_at": "2026-10-05T15:44:28+00:00"
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "id": "supabase-calendar-335af46a-db81-445c-aaa5-b91a10be8a8b",
+      "enabled": true,
+      "status": "buffer_scheduled",
+      "client_id": "marta-ruffino",
+      "client_name": "Marta Ruffino",
+      "title": "WhatsApp Video 2026 09 28 at 12.54.52",
+      "caption": "VERO O FALSO? VEDIAMO\n\nNE INDOVINI.\nTa ue e\ngh\n(ho\nrw Le\n“Ty",
+      "format": "reel",
+      "media": [
+        "publisher/media/supabase/335af46a-db81-445c-aaa5-b91a10be8a8b/WhatsApp_Video_2026-09-28_at_12.54.52.mp4"
+      ],
+      "scheduled_at": "2026-10-08T10:30:00+00:00",
+      "platforms": [
+        "facebook"
+      ],
+      "published_platforms": [],
+      "source": "SUPABASE_CONTENT_HUB",
+      "supabase_calendar_id": "335af46a-db81-445c-aaa5-b91a10be8a8b",
+      "supabase_content_id": "9d29f58b-ec8b-41ba-a621-2ed21ca6b560",
+      "supabase_client_id": "69f5293a-75f2-489b-9afd-14b279013d00",
+      "campaign": "MARTA_IMPORT",
+      "property_id": null,
+      "provider": "buffer",
+      "provider_channel_id": "6ab5d62bea19ca0bdedefc11",
+      "expected_account": "https://www.facebook.com/martaruffinoriflessologa/reels/",
+      "detected_account_id": "6ab5d62bea19ca0bdedefc11",
+      "detected_account_name": null,
+      "provider_secret_prefix": "MARTA",
+      "tiktok_settings": {},
+      "retry_count": 0,
+      "created_by": "supabase-queue-bridge",
+      "autonomous_publish": true,
+      "manual_publish_now": false,
+      "expected_media_sha256": null,
+      "public_media_urls": [],
+      "tiktok_photo_urls": [],
+      "cloudinary_assets": [
+        {
+          "url": "https://res.cloudinary.com/xqrptpae/video/upload/v1791215069/f1-buffer/supabase-calendar-335af46a-db81-445c-aaa5-b91a10be8a8b/video.mp4",
+          "public_id": "f1-buffer/supabase-calendar-335af46a-db81-445c-aaa5-b91a10be8a8b/video",
+          "resource_type": "video",
+          "bytes": "7457453"
+        }
+      ],
+      "buffer_posts": [
+        {
+          "service": "facebook",
+          "channel_id": "6ab5d62bea19ca0bdedefc11",
+          "post_id": "6ac3c5e0f26d90312234a518",
+          "buffer_status": "scheduled",
+          "due_at": "2026-10-08T10:30:00.000Z",
+          "created_at": "2026-10-05T15:44:32+00:00"
+        }
+      ],
+      "buffer_scheduled_platforms": [
+        "facebook"
       ]
     }
   ],
-  "updated_at": "2026-10-05T07:03:32+00:00",
+  "updated_at": "2026-10-05T15:45:07+00:00",
   "updated_by": "Automatic renderer · F1 manual-only aware",
   "current_cycle": "2026-10-05T00:00",
   "history_days": 14,
