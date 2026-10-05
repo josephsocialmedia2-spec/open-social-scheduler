@@ -777,6 +777,207 @@ def _uia_download_image_src(win, src: str, dest: Path) -> None:
             pass
 
 
+def _uia_prepare_image_baseline(win) -> int:
+    from diagnose_chatgpt_uia import run_javascript
+
+    selector=_uia_image_selector_js()
+    run_javascript(
+        win,
+        f"""(()=>{{
+          const xs={selector};
+          const known=Array.from(new Set(xs.map(img=>img.currentSrc||img.src).filter(Boolean)));
+          sessionStorage.setItem('f1KnownImages',JSON.stringify(known));
+          sessionStorage.setItem('f1FreshImages','[]');
+          document.title='F1BASE:'+known.length;
+          void(0);
+        }})()""",
+    )
+    time.sleep(0.8)
+    m=re.search(r"F1BASE:(\d+)",_uia_title_value(win))
+    if not m:
+        raise AutopilotError("UIA: baseline immagini ChatGPT non leggibile")
+    return int(m.group(1))
+
+
+def _uia_new_image_count(win) -> int:
+    from diagnose_chatgpt_uia import run_javascript
+
+    selector=_uia_image_selector_js()
+    run_javascript(
+        win,
+        f"""(()=>{{
+          let known=[];
+          try{{known=JSON.parse(sessionStorage.getItem('f1KnownImages')||'[]')}}catch(e){{known=[]}}
+          const xs={selector};
+          const current=Array.from(new Set(xs.map(img=>img.currentSrc||img.src).filter(Boolean)));
+          const fresh=current.filter(src=>!known.includes(src));
+          sessionStorage.setItem('f1FreshImages',JSON.stringify(fresh));
+          document.title='F1NEWIMG:'+fresh.length;
+          void(0);
+        }})()""",
+    )
+    time.sleep(0.7)
+    m=re.search(r"F1NEWIMG:(\d+)",_uia_title_value(win))
+    if not m:
+        raise AutopilotError("UIA: conteggio nuove immagini ChatGPT non leggibile")
+    return int(m.group(1))
+
+
+def _uia_wait_for_new_dom_image(
+    win,
+    timeout_seconds:int=720,
+    progress=None,
+    card:int|None=None,
+) -> int:
+    deadline=time.time()+timeout_seconds
+    last=-1
+    last_change=time.time()
+    last_progress=0.0
+    while time.time()<deadline:
+        count=_uia_new_image_count(win)
+        if count!=last:
+            last=count
+            last_change=time.time()
+        if count>0 and time.time()-last_change>=12:
+            return count
+        if progress and time.time()-last_progress>=30:
+            progress(
+                "CARD_IMAGE_WAIT",
+                card=card,
+                new_images_detected=max(0,count),
+                seconds_remaining=max(0,int(deadline-time.time())),
+                expected_images=EXPECTED_IMAGES,
+            )
+            last_progress=time.time()
+        time.sleep(5)
+    return max(0,last)
+
+
+def _uia_open_latest_fresh_image(win) -> None:
+    from diagnose_chatgpt_uia import run_javascript
+
+    selector=_uia_image_selector_js()
+    run_javascript(
+        win,
+        f"""(()=>{{
+          let fresh=[];
+          try{{fresh=JSON.parse(sessionStorage.getItem('f1FreshImages')||'[]')}}catch(e){{fresh=[]}}
+          const src=fresh[fresh.length-1]||'';
+          const xs={selector};
+          const img=xs.find(el=>(el.currentSrc||el.src)===src);
+          if(!img){{document.title='F1VIEW:NOIMAGE';return;}}
+          img.scrollIntoView({{block:'center',inline:'center'}});
+          const target=img.closest('button')||img.closest('[role="button"]')||img;
+          target.click();
+          document.title='F1VIEW:OPEN';
+          void(0);
+        }})()""",
+    )
+    time.sleep(2.5)
+    title=_uia_title_value(win)
+    if "F1VIEW:NOIMAGE" in title:
+        raise AutopilotError("UIA: immagine appena generata non trovata nel DOM")
+
+
+def _uia_web_download_buttons(win):
+    out=[]
+    try:
+        controls=win.descendants()
+    except Exception:
+        return out
+    for ctrl in controls:
+        try:
+            info=ctrl.element_info
+            if str(getattr(info,"control_type","") or "")!="Button":
+                continue
+            name=(ctrl.window_text() or "").strip()
+            low=name.lower()
+            if not any(word in low for word in ("download","scarica")):
+                continue
+            rect=ctrl.rectangle()
+            # Ignore Chrome toolbar's own Download button.
+            cls=str(getattr(info,"class_name","") or "")
+            if rect.top<110 or "PinnedActionToolbarButton" in cls:
+                continue
+            out.append(ctrl)
+        except Exception:
+            continue
+    return out
+
+
+def _uia_click_viewer_download(win, dest:Path, timeout_seconds:int=180) -> None:
+    from pywinauto.keyboard import send_keys
+
+    downloads=Path.home()/"Downloads"
+    downloads.mkdir(parents=True,exist_ok=True)
+    before={}
+    for p in downloads.iterdir():
+        try:
+            before[p.name]=(p.stat().st_mtime_ns,p.stat().st_size)
+        except Exception:
+            pass
+    started=time.time()
+
+    deadline=time.time()+20
+    clicked=False
+    while time.time()<deadline and not clicked:
+        buttons=_uia_web_download_buttons(win)
+        if buttons:
+            # Prefer the lowest/rightmost visible web download control, which
+            # is normally the image viewer's action rather than an unrelated UI.
+            buttons.sort(key=lambda b:(b.rectangle().top,b.rectangle().left),reverse=True)
+            for btn in buttons:
+                try:
+                    btn.click_input()
+                    clicked=True
+                    break
+                except Exception:
+                    try:
+                        btn.invoke()
+                        clicked=True
+                        break
+                    except Exception:
+                        continue
+        if not clicked:
+            time.sleep(1)
+
+    if not clicked:
+        raise AutopilotError("UIA: pulsante Scarica/Download del viewer ChatGPT non trovato")
+
+    deadline=time.time()+timeout_seconds
+    candidate=None
+    while time.time()<deadline:
+        newest=None
+        for p in downloads.iterdir():
+            if p.name.endswith(".crdownload"):
+                continue
+            try:
+                st=p.stat()
+            except Exception:
+                continue
+            old=before.get(p.name)
+            changed=(old is None) or old!=(st.st_mtime_ns,st.st_size)
+            if changed and st.st_mtime>=started-2 and st.st_size>10_000:
+                if newest is None or st.st_mtime_ns>newest.stat().st_mtime_ns:
+                    newest=p
+        if newest is not None:
+            candidate=newest
+            break
+        time.sleep(1)
+
+    try:
+        win.set_focus()
+        send_keys("{ESC}")
+    except Exception:
+        pass
+    time.sleep(0.8)
+
+    if candidate is None:
+        raise AutopilotError("UIA: il click Download non ha prodotto alcun file immagine")
+
+    shutil.move(str(candidate),str(dest))
+
+
 def _uia_image_count(win) -> int:
     import pyperclip
     from diagnose_chatgpt_uia import run_javascript
@@ -1013,104 +1214,92 @@ def _valid_final_card(path: Path) -> bool:
 
 
 def collect_ten_graphics_uia(
-    caption: str,
-    card_specs: list[dict[str, Any]],
-    workdir: Path,
+    caption:str,
+    card_specs:list[dict[str,Any]],
+    workdir:Path,
     progress=None,
 ) -> list[Path]:
-    workdir.mkdir(parents=True, exist_ok=True)
-    chat_file = workdir / "chat-url.txt"
-    target_url = CHATGPT_IMAGES_URL
-    if chat_file.exists():
-        saved = chat_file.read_text(encoding="utf-8").strip()
-        if saved.startswith("https://chatgpt.com/"):
-            target_url = saved
-
-    win = _uia_chatgpt_window(target_url)
+    workdir.mkdir(parents=True,exist_ok=True)
+    win=_uia_chatgpt_window(CHATGPT_IMAGES_URL)
     if progress:
         progress(
             "CHATGPT_IMAGES_READY",
             window_title=_uia_title_value(win)[:180],
-            target_url=target_url,
+            target_url=CHATGPT_IMAGES_URL,
         )
 
-    output: list[Path] = []
-    hashes: set[str] = set()
+    output=[]
+    hashes=set()
 
-    # Reuse cards already completed by an earlier attempt.
-    for position in range(1, EXPECTED_IMAGES + 1):
-        final = workdir / f"{position:02d}.png"
+    # Persisted cards survive retries and machine/workflow restarts.
+    for position in range(1,EXPECTED_IMAGES+1):
+        final=workdir/f"{position:02d}.png"
         if not _valid_final_card(final):
             break
-        digest = hashlib.sha256(final.read_bytes()).hexdigest()
+        digest=hashlib.sha256(final.read_bytes()).hexdigest()
         if digest in hashes:
             raise AutopilotError(f"Grafica duplicata già presente alla card {position}/10")
         hashes.add(digest)
         output.append(final)
 
     if progress and output:
-        progress(
-            "RESUME_EXISTING_CARDS",
-            downloaded=len(output),
-            expected_images=EXPECTED_IMAGES,
-        )
+        progress("RESUME_EXISTING_CARDS",downloaded=len(output),expected_images=EXPECTED_IMAGES)
 
-    for position in range(len(output) + 1, EXPECTED_IMAGES + 1):
-        card = card_specs[position - 1]
-        known = set(_uia_image_sources(win))
-        prompt = single_card_prompt(caption, card, position)
+    for position in range(len(output)+1,EXPECTED_IMAGES+1):
+        card=card_specs[position-1]
+        baseline=_uia_prepare_image_baseline(win)
+        prompt=single_card_prompt(caption,card,position)
 
         if progress:
             progress(
                 "CARD_PROMPT_READY",
                 card=position,
-                baseline_images=len(known),
+                baseline_images=baseline,
                 expected_images=EXPECTED_IMAGES,
             )
 
-        _uia_send_prompt(win, prompt)
+        _uia_send_prompt(win,prompt)
         if progress:
-            progress("CARD_PROMPT_SENT", card=position, expected_images=EXPECTED_IMAGES)
+            progress("CARD_PROMPT_SENT",card=position,expected_images=EXPECTED_IMAGES)
 
-        fresh = _uia_wait_for_new_image_sources(
+        fresh_count=_uia_wait_for_new_dom_image(
             win,
-            known,
             timeout_seconds=720,
             progress=progress,
             card=position,
         )
-        if not fresh:
+        if fresh_count<1:
             raise AutopilotError(
                 f"ChatGPT Images non ha generato l'immagine della card {position}/10 entro 12 minuti"
             )
 
-        src = fresh[-1]
         if progress:
             progress(
                 "CARD_IMAGE_READY",
                 card=position,
-                new_images_detected=len(fresh),
+                new_images_detected=fresh_count,
                 expected_images=EXPECTED_IMAGES,
             )
 
-        raw = workdir / f"uia-raw-{position:02d}.img"
-        final = workdir / f"{position:02d}.png"
-        _uia_download_image_src(win, src, raw)
-        normalize_card(raw, final)
+        _uia_open_latest_fresh_image(win)
+        raw=workdir/f"uia-raw-{position:02d}.img"
+        final=workdir/f"{position:02d}.png"
+        _uia_click_viewer_download(win,raw,timeout_seconds=180)
+
+        if progress:
+            progress("CARD_FILE_RECEIVED",card=position,expected_images=EXPECTED_IMAGES)
+
+        normalize_card(raw,final)
         try:
             raw.unlink(missing_ok=True)
         except Exception:
             pass
 
-        digest = hashlib.sha256(final.read_bytes()).hexdigest()
+        digest=hashlib.sha256(final.read_bytes()).hexdigest()
         if digest in hashes:
             raise AutopilotError(f"Grafica duplicata rilevata alla card {position}/10")
         hashes.add(digest)
         output.append(final)
-
-        current_url = _uia_current_url(win)
-        if current_url.startswith("https://chatgpt.com/"):
-            chat_file.write_text(current_url, encoding="utf-8")
 
         if progress:
             progress(
@@ -1118,10 +1307,9 @@ def collect_ten_graphics_uia(
                 card=position,
                 downloaded=len(output),
                 expected_images=EXPECTED_IMAGES,
-                chat_url=current_url[:300],
             )
 
-    if len(output) != EXPECTED_IMAGES:
+    if len(output)!=EXPECTED_IMAGES:
         raise AutopilotError(
             f"Carosello incompleto: {len(output)}/{EXPECTED_IMAGES} immagini separate"
         )
@@ -1131,7 +1319,7 @@ def collect_ten_graphics_uia(
             "GRAPHICS_READY",
             images_found=len(output),
             expected_images=EXPECTED_IMAGES,
-            strategy="one_card_per_request_resumable",
+            strategy="one_card_per_request_uia_viewer_download",
         )
     return output
 
