@@ -230,3 +230,39 @@ P0 frontend considerato verificato solo per:
 - CI anti-regressione verde.
 
 OAuth/publishing live restano **NON CERTIFICATI** finché Supabase restituisce HTTP 402.
+
+
+## Storage e quota — verifica reale
+
+Query eseguita sul progetto Supabase:
+- bucket `f1-content-media`: **155 oggetti**, circa **1.410 GB / 1444.04 MB**;
+- oggetti orfani: **0**;
+- tutti i 155 oggetti risultano collegati a `f1_content_media`;
+- rilevate **3 coppie di file con ETag e dimensione identici**, circa **19 MB** di duplicazione evitabile.
+
+Il problema di quota non deriva quindi da file orfani, ma dal volume reale dei media, con numerosi PNG da 14–19 MB e video da 15–25 MB.
+
+### Deduplicazione nuovi upload
+Aggiunto controllo SHA-256 prima del caricamento:
+- calcola hash del file effettivamente destinato allo Storage;
+- cerca lo stesso hash per lo stesso cliente;
+- se esiste già, non crea un secondo contenuto e non ricarica il file;
+- il controllo è non bloccante: se la verifica hash/query non è disponibile, l'upload normale può proseguire;
+- i nuovi piani memorizzano `media_sha256` e `media_hash_algorithm=SHA-256`.
+
+### HEIC
+Rimossa la conversione HEIC automatica a 350 ms dal rendering del workspace.
+La conversione resta disponibile manualmente tramite il pulsante dedicato.
+Questo evita download + riconversione + re-upload pesanti provocati dalla sola apertura della pagina.
+
+## Ulteriore riduzione refresh workspace
+
+Nel file `client-workspace.js` erano rimaste 9 chiamate `loadAll()` dopo conversione HEIC, upload, eliminazione, programmazione e automazioni WhatsApp.
+
+Sono state rimosse.
+Il workspace ora usa refresh critici o query specifiche e contiene **0 chiamate `loadAll()`**.
+
+## Cache asset versionata
+
+Il service worker statico ora usa la richiesta completa come chiave cache.
+I parametri `?v=...` degli asset JavaScript/CSS vengono quindi rispettati realmente: un deploy con nuova versione non resta bloccato dietro una vecchia cache del workspace.
