@@ -275,6 +275,26 @@ def should_archive(content_id: str, calendar_rows: dict[str, list[dict[str, Any]
     return (nearest - now).total_seconds() > HOT_WINDOW_MINUTES * 60
 
 
+def hot_path_can_delete(
+    path: str,
+    current_media_id: str,
+    media_rows: list[dict[str, Any]],
+) -> bool:
+    if not path:
+        return False
+    for other in media_rows:
+        if str(other.get("storage_path") or "") != path:
+            continue
+        if str(other.get("id") or "") == current_media_id:
+            continue
+        other_state = str(other.get("storage_state") or "HOT").upper()
+        if other_state not in {"COLD", "DELETE_PENDING", "DELETED"}:
+            return False
+        if other_state == "COLD" and not other.get("archive_url"):
+            return False
+    return True
+
+
 def process_delete_pending(media_rows: list[dict[str, Any]], items: dict[str, dict[str, Any]], dry_run: bool) -> int:
     processed = 0
     by_content: dict[str, list[dict[str, Any]]] = defaultdict(list)
@@ -368,13 +388,16 @@ def main() -> int:
             if args.dry_run:
                 print(f"MEDIA_ARCHIVE_DRY_RUN hot_cleanup media={row.get('id')}")
                 continue
-            storage_delete(str(row["storage_path"]))
-            rest_patch(
-                "f1_content_media",
-                str(row["id"]),
-                {"hot_deleted_at": datetime.now(timezone.utc).isoformat(timespec="seconds")},
-            )
-            hot_deleted += 1
+            path_value = str(row["storage_path"])
+            if hot_path_can_delete(path_value, str(row["id"]), media_rows):
+                storage_delete(path_value)
+                rest_patch(
+                    "f1_content_media",
+                    str(row["id"]),
+                    {"hot_deleted_at": datetime.now(timezone.utc).isoformat(timespec="seconds")},
+                )
+                row["hot_deleted_at"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
+                hot_deleted += 1
             continue
 
         if state != "HOT" or row.get("archive_url"):
@@ -418,14 +441,23 @@ def main() -> int:
                     print(f"WARN Cloudinary rollback failed: {cleanup_exc}")
                 raise
 
-            storage_delete(str(row.get("storage_path") or ""))
-            rest_patch(
-                "f1_content_media",
-                str(row["id"]),
-                {"hot_deleted_at": datetime.now(timezone.utc).isoformat(timespec="seconds")},
-            )
+            row["archive_provider"] = "cloudinary"
+            row["archive_public_id"] = public_id
+            row["archive_resource_type"] = resource_type
+            row["archive_url"] = result.get("secure_url")
+            row["storage_state"] = "COLD"
+            path_value = str(row.get("storage_path") or "")
+            if hot_path_can_delete(path_value, str(row["id"]), media_rows):
+                storage_delete(path_value)
+                deleted_at = datetime.now(timezone.utc).isoformat(timespec="seconds")
+                rest_patch(
+                    "f1_content_media",
+                    str(row["id"]),
+                    {"hot_deleted_at": deleted_at},
+                )
+                row["hot_deleted_at"] = deleted_at
+                hot_deleted += 1
             archived += 1
-            hot_deleted += 1
             print(
                 f"MEDIA_ARCHIVED content={content_id} media={row.get('id')} "
                 f"bytes={local.stat().st_size} provider=cloudinary"
