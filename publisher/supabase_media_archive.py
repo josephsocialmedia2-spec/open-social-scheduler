@@ -19,6 +19,7 @@ from typing import Any
 from urllib.parse import quote
 
 import cloudinary
+import cloudinary.api
 import cloudinary.uploader
 import requests
 
@@ -28,6 +29,7 @@ CLOUDINARY_URL = os.getenv("CLOUDINARY_URL", "").strip()
 REQUEST_TIMEOUT = 60
 HOT_WINDOW_MINUTES = max(0, int(os.getenv("F1_MEDIA_HOT_WINDOW_MINUTES", "120") or "120"))
 BATCH_SIZE = max(1, int(os.getenv("F1_MEDIA_ARCHIVE_BATCH_SIZE", "12") or "12"))
+CLOUDINARY_GUARD_PERCENT = max(1.0, min(99.0, float(os.getenv("F1_CLOUDINARY_GUARD_PERCENT", "80") or "80")))
 PUBLISHED = {"PUBBLICATO", "PUBLISHED", "COMPLETED", "SUCCESS"}
 ARCHIVE_READY_ITEM_STATES = {"PRONTO", "DA APPROVARE", "APPROVATO", "PROGRAMMATO"}
 
@@ -163,6 +165,42 @@ def configure_cloudinary() -> None:
     cloudinary.config(secure=True)
 
 
+def cloudinary_usage_allowed() -> bool:
+    try:
+        usage = cloudinary.api.usage() or {}
+    except Exception as exc:
+        print(f"MEDIA_ARCHIVE_SKIPPED cloudinary_usage_unavailable error={exc}")
+        return False
+    credits = usage.get("credits") if isinstance(usage.get("credits"), dict) else {}
+    used_percent = credits.get("used_percent")
+    if used_percent is None:
+        used = credits.get("usage")
+        limit = credits.get("limit")
+        if used is not None and limit:
+            used_percent = (float(used) / float(limit)) * 100
+    if used_percent is not None and float(used_percent) >= CLOUDINARY_GUARD_PERCENT:
+        print(
+            "MEDIA_ARCHIVE_SKIPPED cloudinary_credit_guard "
+            f"used_percent={float(used_percent):.2f} threshold={CLOUDINARY_GUARD_PERCENT:.2f}"
+        )
+        return False
+    storage = usage.get("storage") if isinstance(usage.get("storage"), dict) else {}
+    storage_percent = storage.get("used_percent")
+    if storage_percent is not None and float(storage_percent) >= CLOUDINARY_GUARD_PERCENT:
+        print(
+            "MEDIA_ARCHIVE_SKIPPED cloudinary_storage_guard "
+            f"used_percent={float(storage_percent):.2f} threshold={CLOUDINARY_GUARD_PERCENT:.2f}"
+        )
+        return False
+    print(
+        "MEDIA_ARCHIVE_CLOUDINARY_USAGE_OK "
+        f"plan={usage.get('plan') or 'unknown'} "
+        f"credits_percent={used_percent if used_percent is not None else 'unknown'} "
+        f"storage_percent={storage_percent if storage_percent is not None else 'unknown'}"
+    )
+    return True
+
+
 def cloudinary_upload(path: Path, content_id: str, media_id: str) -> dict[str, Any]:
     folder = f"f1-social-cold/{content_id}"
     options = {
@@ -283,6 +321,8 @@ def main() -> int:
         print("MEDIA_ARCHIVE_SKIPPED cloudinary_not_configured")
         return 0
     configure_cloudinary()
+    if not cloudinary_usage_allowed():
+        return 0
 
     calendar_rows, fully_published = calendar_state()
     items_list = rest_get(
