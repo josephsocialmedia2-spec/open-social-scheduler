@@ -18,14 +18,14 @@ from pathlib import Path
 from typing import Any
 from urllib.parse import quote
 
-import cloudinary
-import cloudinary.api
-import cloudinary.uploader
 import requests
 
 SUPABASE_URL = os.getenv("SUPABASE_URL", "").rstrip("/")
 SERVICE_KEY = os.getenv("SUPABASE_SERVICE_ROLE_KEY", "").strip()
 CLOUDINARY_URL = os.getenv("CLOUDINARY_URL", "").strip()
+CLOUDINARY_CLOUD_NAME = os.getenv("CLOUDINARY_CLOUD_NAME", "").strip()
+CLOUDINARY_API_KEY = os.getenv("CLOUDINARY_API_KEY", "").strip()
+CLOUDINARY_API_SECRET = os.getenv("CLOUDINARY_API_SECRET", "").strip()
 REQUEST_TIMEOUT = 60
 HOT_WINDOW_MINUTES = max(0, int(os.getenv("F1_MEDIA_HOT_WINDOW_MINUTES", "120") or "120"))
 BATCH_SIZE = max(1, int(os.getenv("F1_MEDIA_ARCHIVE_BATCH_SIZE", "12") or "12"))
@@ -155,19 +155,34 @@ def storage_delete(path: str) -> None:
 
 
 def cloudinary_ready() -> bool:
-    return bool(CLOUDINARY_URL and CLOUDINARY_URL.startswith("cloudinary://"))
+    valid_url = bool(CLOUDINARY_URL and CLOUDINARY_URL.startswith("cloudinary://"))
+    separate = bool(CLOUDINARY_CLOUD_NAME and CLOUDINARY_API_KEY and CLOUDINARY_API_SECRET)
+    return valid_url or separate
 
 
-def configure_cloudinary() -> None:
-    if not cloudinary_ready():
-        return
-    # The SDK reads CLOUDINARY_URL from the environment; secure=True only controls returned URLs.
-    cloudinary.config(secure=True)
+def configure_cloudinary():
+    raw = os.environ.get("CLOUDINARY_URL", "").strip()
+    if raw and not raw.startswith("cloudinary://"):
+        os.environ.pop("CLOUDINARY_URL", None)
+    import cloudinary
+    import cloudinary.api
+    import cloudinary.uploader
+    if CLOUDINARY_CLOUD_NAME and CLOUDINARY_API_KEY and CLOUDINARY_API_SECRET:
+        cloudinary.config(
+            cloud_name=CLOUDINARY_CLOUD_NAME,
+            api_key=CLOUDINARY_API_KEY,
+            api_secret=CLOUDINARY_API_SECRET,
+            secure=True,
+        )
+    else:
+        cloudinary.config(secure=True)
+    return cloudinary, cloudinary.api, cloudinary.uploader
 
 
 def cloudinary_usage_allowed() -> bool:
     try:
-        usage = cloudinary.api.usage() or {}
+        _, cloudinary_api, _ = configure_cloudinary()
+        usage = cloudinary_api.usage() or {}
     except Exception as exc:
         print(f"MEDIA_ARCHIVE_SKIPPED cloudinary_usage_unavailable error={exc}")
         return False
@@ -202,6 +217,7 @@ def cloudinary_usage_allowed() -> bool:
 
 
 def cloudinary_upload(path: Path, content_id: str, media_id: str) -> dict[str, Any]:
+    _, _, cloudinary_uploader = configure_cloudinary()
     folder = f"f1-social-cold/{content_id}"
     options = {
         "resource_type": "auto",
@@ -213,13 +229,13 @@ def cloudinary_upload(path: Path, content_id: str, media_id: str) -> dict[str, A
         "tags": ["f1-social-cold", f"content-{content_id}", f"media-{media_id}"],
     }
     if path.stat().st_size >= 80 * 1024 * 1024:
-        result = cloudinary.uploader.upload_large(
+        result = cloudinary_uploader.upload_large(
             str(path),
             chunk_size=20 * 1024 * 1024,
             **options,
         )
     else:
-        result = cloudinary.uploader.upload(str(path), **options)
+        result = cloudinary_uploader.upload(str(path), **options)
     if not isinstance(result, dict) or not result.get("public_id") or not result.get("secure_url"):
         raise ArchiveError("Cloudinary upload incompleto")
     return result
@@ -228,7 +244,8 @@ def cloudinary_upload(path: Path, content_id: str, media_id: str) -> dict[str, A
 def cloudinary_destroy(public_id: str, resource_type: str) -> None:
     if not public_id:
         return
-    result = cloudinary.uploader.destroy(
+    _, _, cloudinary_uploader = configure_cloudinary()
+    result = cloudinary_uploader.destroy(
         public_id,
         resource_type=(resource_type or "image"),
         invalidate=True,
@@ -341,7 +358,6 @@ def main() -> int:
     if not cloudinary_ready():
         print("MEDIA_ARCHIVE_SKIPPED cloudinary_not_configured")
         return 0
-    configure_cloudinary()
     if not cloudinary_usage_allowed():
         return 0
 
