@@ -30,7 +30,8 @@ MEDIA_ROOT = ROOT / "publisher" / "media" / "supabase"
 SUPABASE_URL = os.getenv("SUPABASE_URL", "").rstrip("/")
 SERVICE_KEY = os.getenv("SUPABASE_SERVICE_ROLE_KEY", "").strip()
 REQUEST_TIMEOUT = 45
-MEDIA_MATERIALIZE_WINDOW_MINUTES = max(0, int(os.getenv("F1_MEDIA_MATERIALIZE_WINDOW_MINUTES", "10") or "10"))
+MEDIA_MATERIALIZE_WINDOW_MINUTES = max(0, int(os.getenv("F1_MEDIA_MATERIALIZE_WINDOW_MINUTES", "0") or "0"))
+BUFFER_MATERIALIZE_WINDOW_MINUTES = max(0, int(os.getenv("F1_BUFFER_MATERIALIZE_WINDOW_MINUTES", "120") or "120"))
 
 PLATFORM_MAP = {
     "facebook": "facebook",
@@ -67,14 +68,19 @@ def parse_iso(value: Any) -> datetime | None:
     return parsed.astimezone(timezone.utc)
 
 
-def media_should_materialize(row: dict[str, Any], platform_metadata: dict[str, Any]) -> bool:
+def media_should_materialize(
+    row: dict[str, Any],
+    platform_metadata: dict[str, Any],
+    provider: str,
+) -> bool:
     if bool(platform_metadata.get("publish_now")):
         return True
     publication_at = parse_iso(row.get("publication_at"))
     if publication_at is None:
         return True
+    window = BUFFER_MATERIALIZE_WINDOW_MINUTES if str(provider or "").lower() == "buffer" else MEDIA_MATERIALIZE_WINDOW_MINUTES
     delta_seconds = (publication_at - datetime.now(timezone.utc)).total_seconds()
-    return delta_seconds <= (MEDIA_MATERIALIZE_WINDOW_MINUTES * 60)
+    return delta_seconds <= (window * 60)
 
 
 def load_queue() -> dict[str, Any]:
@@ -206,13 +212,20 @@ def materialize_media(calendar_id: str, item: dict[str, Any], properties: dict[s
         if media_row_is_heic(media):
             raise BridgeError("CONVERSIONE_HEIC: HEIC/HEIF non può essere materializzato per la pubblicazione; convertire prima in PNG.")
         storage_path = str(media.get("storage_path") or "").lstrip("/")
-        if not storage_path:
-            continue
+        archive_url = str(media.get("archive_url") or "").strip()
+        storage_state = str(media.get("storage_state") or "HOT").upper()
         file_name = safe_name(str(media.get("file_name") or f"media-{index}.bin"))
         dest = MEDIA_ROOT / calendar_id / file_name
-        encoded = "/".join(quote(part, safe="") for part in storage_path.split("/"))
-        url = f"{SUPABASE_URL}/storage/v1/object/f1-content-media/{encoded}"
-        paths.append(download_url(url, dest, auth=True))
+        if storage_state == "COLD" and archive_url:
+            paths.append(download_url(archive_url, dest, auth=False))
+        elif storage_path:
+            encoded = "/".join(quote(part, safe="") for part in storage_path.split("/"))
+            url = f"{SUPABASE_URL}/storage/v1/object/f1-content-media/{encoded}"
+            paths.append(download_url(url, dest, auth=True))
+        elif archive_url:
+            paths.append(download_url(archive_url, dest, auth=False))
+        else:
+            continue
         if not detected_type:
             detected_type = str(media.get("mime_type") or mimetypes.guess_type(file_name)[0] or "")
 
@@ -272,7 +285,11 @@ def load_source_rows() -> tuple[list[dict[str, Any]], dict[str, dict[str, Any]],
     media = rest_get(
         "f1_content_media",
         {
-            "select": "id,content_id,file_name,mime_type,storage_path,file_size",
+            "select": (
+                "id,content_id,file_name,mime_type,storage_path,file_size,"
+                "archive_provider,archive_public_id,archive_resource_type,archive_url,"
+                "archived_at,storage_state,hot_deleted_at"
+            ),
             "limit": "2000",
         },
     )
@@ -429,7 +446,8 @@ def build_or_update_jobs(queue: dict[str, Any]) -> dict[str, int]:
 
         media_paths: list[str] = []
         mime = ""
-        materialize_now = (not reason) and media_should_materialize(row, platform_metadata)
+        channel_provider = str((channel or {}).get("provider") or "direct").lower()
+        materialize_now = (not reason) and media_should_materialize(row, platform_metadata, channel_provider)
         if materialize_now:
             try:
                 media_paths, mime = materialize_media(str(row["id"]), item, properties)
@@ -444,6 +462,13 @@ def build_or_update_jobs(queue: dict[str, Any]) -> dict[str, int]:
             mime = str((source_media[0] or {}).get("mime_type") or "")
         fmt = "reel" if (mime.startswith("video/") or any(Path(p).suffix.lower() in {".mp4", ".mov", ".m4v"} for p in media_paths)) else "post"
         caption = str(platform_metadata.get("caption") or item.get("description") or item.get("source_text") or "").strip()
+        archive_public_urls = [
+            str(media.get("archive_url") or "").strip()
+            for media in source_media
+            if str(media.get("archive_url") or "").strip()
+        ]
+        if len(archive_public_urls) != len(source_media):
+            archive_public_urls = []
         job = by_id.get(job_id)
         new_job = {
             "id": job_id,
@@ -464,7 +489,7 @@ def build_or_update_jobs(queue: dict[str, Any]) -> dict[str, int]:
             "supabase_client_id": row.get("client_id"),
             "campaign": item.get("campaign"),
             "property_id": item.get("property_id"),
-            "provider": (channel or {}).get("provider") or "direct",
+            "provider": channel_provider,
             "provider_channel_id": (channel or {}).get("external_channel_id"),
             "expected_account": (channel or {}).get("profile_url"),
             "detected_account_id": (channel or {}).get("external_channel_id"),
@@ -476,7 +501,7 @@ def build_or_update_jobs(queue: dict[str, Any]) -> dict[str, int]:
             "autonomous_publish": not manual_publish_now,
             "manual_publish_now": manual_publish_now,
             "expected_media_sha256": platform_metadata.get("expected_media_sha256"),
-            "public_media_urls": platform_metadata.get("public_media_urls") or [],
+            "public_media_urls": platform_metadata.get("public_media_urls") or archive_public_urls,
             "tiktok_photo_urls": platform_metadata.get("tiktok_photo_urls") or [],
             "media_materialize_window_minutes": MEDIA_MATERIALIZE_WINDOW_MINUTES,
             "media_materialized": bool(materialize_now and media_paths),
@@ -546,7 +571,7 @@ def build_or_update_jobs(queue: dict[str, Any]) -> dict[str, int]:
         target_status = "PROGRAMMATO" if not reason else reason
         patch = {
             "queue_job_id": job_id,
-            "provider": (channel or {}).get("provider") or "direct",
+            "provider": channel_provider,
             "last_checked_at": now_iso(),
             "error": row.get("error") if reason.startswith("ERRORE") else None,
         }
