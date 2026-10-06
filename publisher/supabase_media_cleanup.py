@@ -16,13 +16,14 @@ from datetime import datetime, timedelta, timezone
 from typing import Any
 from urllib.parse import quote
 
-import cloudinary
-import cloudinary.uploader
 import requests
 
 SUPABASE_URL = os.getenv("SUPABASE_URL", "").rstrip("/")
 SERVICE_KEY = os.getenv("SUPABASE_SERVICE_ROLE_KEY", "").strip()
 CLOUDINARY_URL = os.getenv("CLOUDINARY_URL", "").strip()
+CLOUDINARY_CLOUD_NAME = os.getenv("CLOUDINARY_CLOUD_NAME", "").strip()
+CLOUDINARY_API_KEY = os.getenv("CLOUDINARY_API_KEY", "").strip()
+CLOUDINARY_API_SECRET = os.getenv("CLOUDINARY_API_SECRET", "").strip()
 REQUEST_TIMEOUT = 45
 GRACE_MINUTES = max(0, int(os.getenv("F1_MEDIA_CLEANUP_GRACE_MINUTES", "360") or "360"))
 BATCH_CONTENTS = max(1, int(os.getenv("F1_MEDIA_CLEANUP_BATCH_CONTENTS", "25") or "25"))
@@ -93,9 +94,24 @@ def rest_delete(table: str, row_id: str) -> None:
 
 
 def cloudinary_destroy(public_id: str, resource_type: str) -> None:
-    if not public_id or not CLOUDINARY_URL.startswith("cloudinary://"):
+    valid_url = bool(CLOUDINARY_URL and CLOUDINARY_URL.startswith("cloudinary://"))
+    separate = bool(CLOUDINARY_CLOUD_NAME and CLOUDINARY_API_KEY and CLOUDINARY_API_SECRET)
+    if not public_id or not (valid_url or separate):
         return
-    cloudinary.config(secure=True)
+    raw = os.environ.get("CLOUDINARY_URL", "").strip()
+    if raw and not raw.startswith("cloudinary://"):
+        os.environ.pop("CLOUDINARY_URL", None)
+    import cloudinary
+    import cloudinary.uploader
+    if separate:
+        cloudinary.config(
+            cloud_name=CLOUDINARY_CLOUD_NAME,
+            api_key=CLOUDINARY_API_KEY,
+            api_secret=CLOUDINARY_API_SECRET,
+            secure=True,
+        )
+    else:
+        cloudinary.config(secure=True)
     result = cloudinary.uploader.destroy(
         public_id,
         resource_type=(resource_type or "image"),
