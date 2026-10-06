@@ -1118,7 +1118,7 @@ window.f1DeleteContent=async function(contentId,publishedConfirmed){
       const qm=await sb.from("f1_content_media").update({storage_state:"DELETE_PENDING"}).eq("content_id",contentId).eq("owner_id",user.id).eq("client_id",item.client_id);
       if(qm.error)throw qm.error;
       modal.classList.remove("deleting","open");
-      await loadAll();await renderAll();
+      await loadCritical({clients:false});await renderAll();
       if(window.f1RenderContentRail)await window.f1RenderContentRail();
       alert("ELIMINAZIONE IN CODA — il backend rimuoverà in sicurezza archivio freddo, eventuale copia cloud e record collegati.");
       return;
