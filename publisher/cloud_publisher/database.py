@@ -93,7 +93,7 @@ class Database:
                     "id,owner_id,content_id,client_id,platform,publication_at,status,external_post_id,"
                     "external_url,error,platform_metadata,"
                     "f1_content_items(id,title,description,source_text,status,content_type,"
-                    "f1_content_media(id,file_name,mime_type,storage_path,file_size)),"
+                    "f1_content_media(id,file_name,mime_type,storage_path,file_size,archive_url,storage_state,hot_deleted_at)),"
                     "f1_content_clients(id,name,slug,timezone)"
                 ),
                 "order": "publication_at.asc",
