@@ -201,7 +201,32 @@ def storage_download(storage_path: str, dest: Path) -> None:
         raise IntelligenceError("Storage download vuoto")
 
 
+def storage_quota_guard(incoming_bytes: int) -> dict[str, Any]:
+    r = requests.post(
+        f"{SUPABASE_URL}/rest/v1/rpc/f1_check_service_storage_quota",
+        headers=headers(),
+        json={"p_incoming_value": max(0, int(incoming_bytes or 0))},
+        timeout=REQUEST_TIMEOUT,
+    )
+    if not r.ok:
+        raise IntelligenceError(f"Storage quota guard: {r.status_code} {r.text[:500]}")
+    try:
+        state = r.json() or {}
+    except ValueError as exc:
+        raise IntelligenceError("Storage quota guard: risposta non valida") from exc
+    if state.get("allowed") is not True:
+        used = int(float(state.get("used_value") or 0))
+        limit = int(float(state.get("hard_limit") or 0))
+        pct = state.get("projected_percent")
+        raise IntelligenceError(
+            f"Storage quota guard: upload bloccato"
+            f" ({pct}% previsto; {used}/{limit} byte)."
+        )
+    return state
+
+
 def storage_upload(storage_path: str, src: Path, content_type: str) -> None:
+    storage_quota_guard(src.stat().st_size)
     encoded = "/".join(quote(part, safe="") for part in storage_path.lstrip("/").split("/"))
     with src.open("rb") as fh:
         r = requests.post(
@@ -419,13 +444,13 @@ def convert_heic_media(
         emit_event(
             owner_id, client_id, content_id, str(job["id"]),
             "CONVERSIONE_HEIC", "RUNNING",
-            f"Conversione automatica {media.get('file_name') or 'HEIC'} → PNG", 34,
+            f"Conversione automatica {media.get('file_name') or 'HEIC'} → JPEG", 34,
         )
         stem = Path(str(media.get("file_name") or "immagine.heic")).stem
         existing = next(
             (
                 x for x in out_rows
-                if str(x.get("source") or "").upper() == "F1_INTELLIGENCE_HEIC_PNG"
+                if str(x.get("source") or "").upper() in {"F1_INTELLIGENCE_HEIC_JPEG", "F1_INTELLIGENCE_HEIC_PNG"}
                 and Path(str(x.get("file_name") or "")).stem.lower() == stem.lower()
             ),
             None,
@@ -436,35 +461,37 @@ def convert_heic_media(
                 rest_delete("f1_content_media", {"id": str(media["id"]), "owner_id": owner_id, "client_id": client_id})
                 out_rows = [x for x in out_rows if str(x.get("id")) != str(media.get("id"))]
             except Exception as exc:
-                print(f"WARN HEIC cleanup after reusable PNG: {exc}")
+                print(f"WARN HEIC cleanup after reusable JPEG: {exc}")
             continue
 
         with tempfile.TemporaryDirectory(prefix="f1-heic-") as td:
             td_path = Path(td)
             src = td_path / (str(media.get("file_name") or "input.heic"))
-            png = td_path / (re.sub(r"[^A-Za-z0-9._-]+", "_", stem).strip("._") or "immagine")
-            png = png.with_suffix(".png")
-            verify = td_path / "verify.png"
+            jpeg = td_path / (re.sub(r"[^A-Za-z0-9._-]+", "_", stem).strip("._") or "immagine")
+            jpeg = jpeg.with_suffix(".jpg")
+            verify = td_path / "verify.jpg"
 
             storage_download(str(media["storage_path"]), src)
             with Image.open(src) as image:
                 image = ImageOps.exif_transpose(image)
-                if image.mode not in {"RGB", "RGBA"}:
-                    image = image.convert("RGBA" if "A" in image.getbands() else "RGB")
-                image.save(png, format="PNG", optimize=True)
+                if max(image.size) > 2400:
+                    image.thumbnail((2400, 2400), Image.Resampling.LANCZOS)
+                if image.mode != "RGB":
+                    image = image.convert("RGB")
+                image.save(jpeg, format="JPEG", quality=85, optimize=True, progressive=True)
 
-            if not png.exists() or png.stat().st_size <= 0:
-                raise IntelligenceError("Conversione HEIC → PNG ha prodotto un file vuoto")
-            with Image.open(png) as check:
+            if not jpeg.exists() or jpeg.stat().st_size <= 0:
+                raise IntelligenceError("Conversione HEIC → JPEG ha prodotto un file vuoto")
+            with Image.open(jpeg) as check:
                 check.verify()
-            with Image.open(png) as check:
+            with Image.open(jpeg) as check:
                 width, height = check.size
                 if width <= 0 or height <= 0:
-                    raise IntelligenceError("PNG convertito senza dimensioni valide")
+                    raise IntelligenceError("JPEG convertito senza dimensioni valide")
 
-            filename = png.name
+            filename = jpeg.name
             storage_path = f"{owner_id}/{client_id}/{content_id}/intelligence-{uuid.uuid4().hex[:12]}-{filename}"
-            storage_upload(storage_path, png, "image/png")
+            storage_upload(storage_path, jpeg, "image/jpeg")
             storage_download(storage_path, verify)
             with Image.open(verify) as check:
                 check.verify()
@@ -476,10 +503,10 @@ def convert_heic_media(
                     "content_id": content_id,
                     "client_id": client_id,
                     "file_name": filename,
-                    "mime_type": "image/png",
+                    "mime_type": "image/jpeg",
                     "storage_path": storage_path,
-                    "file_size": png.stat().st_size,
-                    "source": "F1_INTELLIGENCE_HEIC_PNG",
+                    "file_size": jpeg.stat().st_size,
+                    "source": "F1_INTELLIGENCE_HEIC_JPEG",
                     "whatsapp_message_id": media.get("whatsapp_message_id"),
                 },
                 return_rows=True,
@@ -488,7 +515,7 @@ def convert_heic_media(
                 try:
                     storage_delete([storage_path])
                 finally:
-                    raise IntelligenceError("Record PNG convertito non creato")
+                    raise IntelligenceError("Record JPEG convertito non creato")
 
             try:
                 storage_delete([str(media["storage_path"])])
@@ -497,7 +524,7 @@ def convert_heic_media(
                     {"id": str(media["id"]), "owner_id": owner_id, "client_id": client_id},
                 )
             except Exception:
-                # Keep both references rather than losing a successfully verified PNG.
+                # Keep both references rather than losing a successfully verified JPEG.
                 raise
 
             out_rows = [
@@ -507,7 +534,7 @@ def convert_heic_media(
             emit_event(
                 owner_id, client_id, content_id, str(job["id"]),
                 "CONVERSIONE_HEIC", "COMPLETED",
-                f"PNG verificato ({width}×{height}); HEIC originale eliminato dal cloud", 44,
+                f"JPEG verificato ({width}×{height}); HEIC originale eliminato dal cloud", 44,
                 {"media_id": created[0].get("id"), "width": width, "height": height},
             )
     remaining = [m for m in out_rows if is_heic(m)]
@@ -582,8 +609,8 @@ def burn_subtitles(src: Path, srt: Path, dest: Path) -> None:
     r = subprocess.run(
         [
             "ffmpeg", "-y", "-i", str(src), "-vf", vf,
-            "-c:v", "libx264", "-preset", "medium", "-crf", "21",
-            "-c:a", "aac", "-b:a", "160k", "-movflags", "+faststart", str(dest),
+            "-c:v", "libx264", "-preset", "fast", "-crf", "24",
+            "-c:a", "aac", "-b:a", "128k", "-movflags", "+faststart", str(dest),
         ],
         stdout=subprocess.DEVNULL,
         stderr=subprocess.PIPE,
