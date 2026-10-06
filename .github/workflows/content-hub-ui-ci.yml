@@ -105,13 +105,13 @@ jobs:
             'f1ConfirmDeleteContent',
             'MEDIA_MISSING',
             'isHeicFile',
-            'convertHeicToPng',
+            'convertHeicToJpeg',
             'processMediaBeforeUpload',
-            'verifyPngBlob',
+            'verifyJpegBlob',
             'cleanupOriginalHeic',
             'convertExistingHeicMedia',
             'CONVERTING_HEIC',
-            'image/png',
+            'image/jpeg',
             'intelligenceTimelineHtml',
             'F1 Social Intelligence',
             'APPROVAZIONE_RICHIESTA',
@@ -182,7 +182,7 @@ jobs:
           grep -q 'CARICA CSV' f1-content-hub/demo-v7-email-core.js
           grep -q 'Contenuto + email' f1-content-hub/demo-v7-email-core.js
 
-      - name: Real HEIC to PNG browser conversion test
+      - name: Real HEIC to JPEG browser conversion test
         run: |
           set -euo pipefail
           npm install --no-save puppeteer-core@24.24.1
@@ -210,13 +210,13 @@ jobs:
               if(!diag.isHeicFile(file))throw new Error("HEIC detection failed");
               const prepared=await diag.processMediaBeforeUpload(file);
               if(!prepared.converted)throw new Error("conversion flag false");
-              if(prepared.file.name!=="foto.png")throw new Error("wrong PNG name: "+prepared.file.name);
-              if(prepared.file.type!=="image/png"||prepared.file.size<=0)throw new Error("invalid PNG");
-              const verified=await diag.verifyPngBlob(prepared.file);
+              if(prepared.file.name!=="foto.jpg")throw new Error("wrong JPEG name: "+prepared.file.name);
+              if(prepared.file.type!=="image/jpeg"||prepared.file.size<=0)throw new Error("invalid JPEG");
+              const verified=await diag.verifyJpegBlob(prepared.file);
               if(!(verified.width>0&&verified.height>0))throw new Error("invalid dimensions");
               let corruptRejected=false;
               try{
-                await diag.convertHeicToPng(new File([new Uint8Array([1,2,3,4,5])],"corrotto.heic",{type:"image/heic"}));
+                await diag.convertHeicToJpeg(new File([new Uint8Array([1,2,3,4,5])],"corrotto.heic",{type:"image/heic"}));
               }catch(_){corruptRejected=true}
               if(!corruptRejected)throw new Error("corrupt HEIC was not rejected");
               el.dataset.result="OK";
