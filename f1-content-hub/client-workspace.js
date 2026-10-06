@@ -18,7 +18,7 @@ const heicAutoMigrationAttempted=new Set();
 let uploadBatchState={
   totalFiles:0,completedFiles:0,failedFiles:0,totalBytes:0,uploadedBytes:0,
   currentFileName:"",currentFileNumber:0,currentStage:"",startedAt:0,bytesPerSecond:0,
-  estimatedSecondsRemaining:null,status:"IDLE",samples:[],failed:[],convertedHeic:0
+  estimatedSecondsRemaining:null,status:"IDLE",samples:[],failed:[],convertedHeic:0,duplicatesSkipped:0
 };
 
 function h(value){return String(value==null?"":value).replace(/[&<>"']/g,function(m){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]})}
@@ -69,7 +69,7 @@ function renderUploadProgress(){
   const klass=s.status==="COMPLETED"?" completed":(s.status==="PARTIAL_ERROR"?" partial":(s.status==="ERROR"?" error":""));
   let final="";
   if(s.status==="COMPLETED"){
-    final='<div class="upload-cloud"><b>☁ CONTENUTI IN CLOUD</b><span>'+s.completedFiles+' contenuti caricati correttamente'+(s.convertedHeic?' · '+s.convertedHeic+' HEIC convertiti automaticamente in JPEG':'')+' · completato in '+formatDuration(elapsed)+'</span></div>';
+    final='<div class="upload-cloud"><b>☁ CONTENUTI IN CLOUD</b><span>'+s.completedFiles+' contenuti elaborati correttamente'+(s.convertedHeic?' · '+s.convertedHeic+' HEIC convertiti automaticamente in JPEG':'')+(s.duplicatesSkipped?' · '+s.duplicatesSkipped+' duplicati già presenti, upload evitato':'')+' · completato in '+formatDuration(elapsed)+'</span></div>';
   }else if(s.status==="PARTIAL_ERROR"||s.status==="ERROR"){
     final='<div class="upload-cloud"><b>⚠ CARICAMENTO PARZIALE</b><span>'+s.completedFiles+' / '+s.totalFiles+' contenuti caricati · '+s.failedFiles+' errori</span>'+(s.failedFiles?'<button class="btn small danger-bright upload-retry" onclick="window.f1RetryFailedUploads()">RIPROVA '+s.failedFiles+' FILE</button>':'')+'</div>';
   }
@@ -87,7 +87,7 @@ function resetUploadBatch(files){
     totalBytes:list.reduce(function(sum,f){return sum+(Number(f.size)||0)},0),
     uploadedBytes:0,currentFileName:"",currentFileNumber:0,currentStage:"",
     startedAt:performance.now(),bytesPerSecond:0,estimatedSecondsRemaining:null,
-    status:"PREPARING",samples:[],failed:[],convertedHeic:0,quotaWarning:""
+    status:"PREPARING",samples:[],failed:[],convertedHeic:0,duplicatesSkipped:0,quotaWarning:""
   };
   uploadRetryFiles=[];
   renderUploadProgress();
@@ -111,6 +111,34 @@ async function checkFreeMediaQuota(incomingBytes){
   }
   return state;
 }
+async function f1MediaSha256(file){
+  if(!file||typeof file.arrayBuffer!=="function")return "";
+  try{
+    const buffer=await file.arrayBuffer();
+    const digest=await crypto.subtle.digest("SHA-256",buffer);
+    return Array.from(new Uint8Array(digest)).map(function(b){return b.toString(16).padStart(2,"0")}).join("");
+  }catch(e){
+    console.warn("F1 media hash unavailable",e);
+    return "";
+  }
+}
+async function f1FindDuplicateContent(clientId,hash){
+  if(!hash||!clientId)return null;
+  try{
+    const r=await sb.from("f1_content_items")
+      .select("id,title,status,distribution_plan,f1_content_media(id,storage_path,file_name,mime_type,file_size)")
+      .eq("owner_id",user.id)
+      .eq("client_id",clientId)
+      .eq("distribution_plan->>media_sha256",hash)
+      .limit(1);
+    if(r.error){console.warn("F1 duplicate lookup",r.error);return null}
+    return (r.data||[])[0]||null;
+  }catch(e){
+    console.warn("F1 duplicate lookup",e);
+    return null;
+  }
+}
+window.f1MediaSha256=f1MediaSha256;
 async function storageUploadWithProgress(file,path,mime,onProgress){
   await checkFreeMediaQuota(file&&file.size);
   const auth=await sb.auth.getSession();
@@ -883,8 +911,26 @@ async function quickUploadFiles(files,source){
       prepared=await processMediaBeforeUpload(originalFile);
       uploadFile=prepared.file;
       mime=uploadFile.type||"application/octet-stream";
+      uploadBatchState.currentStage="CONTROLLO DUPLICATI";
+      renderUploadProgress();
+      const mediaHash=await f1MediaSha256(uploadFile);
+      const duplicate=await f1FindDuplicateContent(client.id,mediaHash);
+      if(duplicate){
+        successfulBytes+=Number(uploadFile.size)||0;
+        uploadBatchState.completedFiles++;
+        uploadBatchState.duplicatesSkipped=(Number(uploadBatchState.duplicatesSkipped)||0)+1;
+        uploadBatchState.uploadedBytes=successfulBytes;
+        uploadBatchState.currentStage="✓ DUPLICATO GIÀ PRESENTE · UPLOAD EVITATO";
+        renderUploadProgress();
+        continue;
+      }
       const title=cleanTitle(originalFile.name),category=classify(originalFile.name),base=baseCaption(client,title,category,"");
       const plan=buildPlan(client,title,category,base,mime,source,null);
+      if(mediaHash){
+        plan.media_sha256=mediaHash;
+        plan.media_hash_algorithm="SHA-256";
+        plan.media_hash_created_at=new Date().toISOString();
+      }
       if(prepared.converted){
         plan.media_conversion={
           converted_from:"HEIC",original_file_name:originalFile.name,
@@ -930,7 +976,7 @@ async function quickUploadFiles(files,source){
       await sb.from("f1_intelligence_events").insert({
         owner_id:user.id,client_id:client.id,content_id:insertedId,stage:"CARICATO",status:"COMPLETED",
         message:"Contenuto caricato nel cloud. F1 Social Intelligence prosegue automaticamente.",progress:15,
-        details:{source:source||"WEB",file_name:safe}
+        details:{source:source||"WEB",file_name:safe,media_sha256:mediaHash||null,deduplicated:false}
       });
       successfulBytes+=Number(uploadFile.size)||0;
       uploadBatchState.completedFiles++;
@@ -1370,6 +1416,7 @@ window.f1WorkspaceRunWhatsAppNow=async function(){
     if(btn){btn.disabled=false;btn.textContent="ESEGUI ORA"}
   }
 };
+window.f1MediaDedupDiagnostics={hash:f1MediaSha256,findDuplicate:f1FindDuplicateContent};
 window.f1HeicDiagnostics={
   isHeicFile:isHeicFile,
   isHeicMedia:isHeicMedia,
