@@ -321,7 +321,7 @@ window.f1ConvertExistingHeicForClient=async function(options){
     }
     renderUploadProgress();
   }
-  await loadAll();await renderAll();
+  await loadCritical({clients:false});await renderAll();
   uploadBatchState.currentFileName="";uploadBatchState.currentStage="";
   uploadBatchState.failed=failed;
   uploadBatchState.status=failed.length?(ok?"PARTIAL_ERROR":"ERROR"):"COMPLETED";
@@ -352,7 +352,7 @@ window.f1ConvertHeicForItem=async function(itemId){
     catch(e){failed.push({file:{name:heics[i].file_name||"HEIC"},error:e&&e.message?e.message:String(e)});uploadBatchState.failedFiles=failed.length}
     renderUploadProgress();
   }
-  await loadAll();await renderAll();
+  await loadCritical({clients:false});await renderAll();
   uploadBatchState.currentFileName="";uploadBatchState.currentStage="";
   uploadBatchState.failed=failed;uploadBatchState.completedFiles=ok;uploadBatchState.failedFiles=failed.length;uploadBatchState.convertedHeic=ok;
   uploadBatchState.status=failed.length?(ok?"PARTIAL_ERROR":"ERROR"):"COMPLETED";
@@ -957,7 +957,7 @@ async function quickUploadFiles(files,source){
   uploadBatchState.status="PROCESSING";
   uploadBatchState.uploadedBytes=successfulBytes;
   renderUploadProgress();
-  await loadAll();
+  await loadCritical({clients:false});
   await renderAll();
   uploadRetryFiles=failed.map(function(x){return x.file});
   uploadBatchState.failedFiles=failed.length;
@@ -1100,7 +1100,7 @@ window.f1DeleteContent=async function(contentId,publishedConfirmed){
     calendar=(calendar||[]).filter(function(x){return x.content_id!==contentId});
     if(selectedRailContentId===contentId)selectedRailContentId="";
     modal.classList.remove("deleting","open");
-    await loadAll();await renderAll();
+    await loadCritical({clients:false});await renderAll();
     if(window.f1RenderContentRail)await window.f1RenderContentRail();
     alert("CONTENUTO ELIMINATO");
   }catch(e){
@@ -1163,7 +1163,7 @@ window.f1WorkspaceScheduleItem=async function(itemId){
       const u=await sb.from("f1_content_clients").update({auto_publish:true,automation_status:"AUTOMAZIONE ATTIVA"}).eq("id",client.id);if(u.error)throw u.error;
       client.auto_publish=true;
     }
-    const count=await scheduleOne(item,0);await loadAll();await renderAll();
+    const count=await scheduleOne(item,0);await loadCritical({clients:false});await renderAll();
     alert(client&&client.approval_required?("Piano creato. "+count+" pubblicazioni immobiliari sono pronte e attendono la tua approvazione finale."):("Piano creato. "+count+" canali già collegati proseguiranno automaticamente; gli altri restano in attesa del collegamento."));
   }catch(e){alert(e.message||String(e))}
 };
@@ -1191,7 +1191,7 @@ window.f1WorkspaceProgramAll=async function(){
     let ready=0;
     const ordered=list.slice().reverse();
     for(let i=0;i<ordered.length;i++)ready+=await scheduleOne(ordered[i],i);
-    await loadAll();await renderAll();
+    await loadCritical({clients:false});await renderAll();
     alert(client.approval_required?("Preparazione completata per "+ordered.length+" contenuti. "+ready+" pubblicazioni immobiliari attendono approvazione finale."):("Programmazione automatica completata per "+ordered.length+" contenuti. "+ready+" pubblicazioni sono pronte sui canali collegati."));
   }catch(e){alert("Programmazione non completata: "+(e.message||String(e)))}
 };
@@ -1306,7 +1306,7 @@ window.f1WorkspaceSaveWhatsAppAutomation=async function(silent){
   };
   const saved=await sb.from("f1_whatsapp_senders").upsert(row,{onConflict:"wa_id"});
   if(saved.error){if(!silent)alert(saved.error.message);return false}
-  await loadAll();
+  client.whatsapp=wa;
   if(!silent){
     alert("Automazione WhatsApp salvata per "+client.name+".");
     await window.f1WorkspaceOpenWhatsApp();
@@ -1362,7 +1362,7 @@ window.f1WorkspaceRunWhatsAppNow=async function(){
     if(result.error)throw result.error;
     const data=result.data||{};
     alert("Batch WhatsApp avviato. Importati: "+Number(data.imported||0)+". I video passano ora alla trascrizione; la caption verrà creata dopo il ritardo configurato.");
-    await loadAll();
+    await loadCritical({clients:false});
     await window.f1WorkspaceOpenWhatsApp();
   }catch(e){
     alert("Avvio non riuscito: "+(e.message||String(e)));
@@ -1407,7 +1407,7 @@ window.f1WorkspaceImportWhatsApp=async function(logId){
       const cp=await sb.from("f1_content_media").insert({owner_id:user.id,content_id:ins.data.id,client_id:client.id,file_name:m.file_name,mime_type:m.mime_type,storage_path:m.storage_path,file_size:m.file_size,source:"WHATSAPP",whatsapp_message_id:m.whatsapp_message_id});
       if(cp.error)throw cp.error;
     }
-    document.getElementById("workspaceWaModal").classList.remove("open");await loadAll();await renderAll();
+    document.getElementById("workspaceWaModal").classList.remove("open");await loadCritical({clients:false});await renderAll();
     alert("Contenuto WhatsApp importato e piano social generato.");
   }catch(e){alert(e.message||String(e))}
 };
