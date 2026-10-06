@@ -1021,7 +1021,7 @@ window.f1SetStatus=async function(id,status){
 window.f1Reuse=async function(id){
   const src=items.find(function(i){return i.id===id});if(!src)return;
   const r=await sb.from("f1_content_items").insert({owner_id:user.id,client_id:src.client_id,title:"RIUTILIZZO · "+src.title,description:src.description,content_type:src.content_type,source:"RIUTILIZZO",status:"DA LAVORARE",priority:src.priority,campaign:src.campaign,tags:src.tags,notes:src.notes,location:src.location,reused_from:src.id}).select().single();
-  if(r.error)return alert(r.error.message);await loadAll();renderAll();alert("Nuova lavorazione creata senza duplicare il file originale.");
+  if(r.error)return alert(r.error.message);await loadCritical({clients:false});await renderAll();alert("Nuova lavorazione creata senza duplicare il file originale.");
 };
 const F1_SOCIAL_TEST_SHA256="4a9f0300c91b6b6f2140d926c58e725f3a56ebb4226aae17c6ab4eff120d92d0";
 async function sha256Hex(buffer){
@@ -1053,7 +1053,7 @@ window.f1AttachTestMedia=function(itemId,clientId){
       if(mr.error)throw mr.error;
       const ur=await sb.from("f1_content_items").update({content_type:"IMMAGINE",source:"CHATGPT_LIBRARY",status:"BOZZA"}).eq("id",itemId);
       if(ur.error)throw ur.error;
-      await loadAll();renderAll();
+      await loadCritical({clients:false});await renderAll();
       if(window.f1ResumePendingPublishNow)await window.f1ResumePendingPublishNow();
       alert("Media test verificato e allegato. SHA-256 corretto.");
     }catch(e){alert(e.message||String(e))}
@@ -1156,7 +1156,7 @@ window.f1PublishNow=async function(itemId,clientId,options){
   if(ready.length){
     await sb.from("f1_content_items").update({status:"IN PUBBLICAZIONE"}).eq("id",itemId);
   }
-  await loadAll();renderAll();
+  await loadCritical({clients:false});await renderAll();
   const lines=ready.map(function(x){return "✅ "+x.label+" — IN PUBBLICAZIONE"}).concat(blocked.map(function(x){return "⚠️ "+x.label+" — "+x.status}));
   if(!opts.silent)alert("F1 SOCIAL — preflight PUBBLICA ORA\n\n"+lines.join("\n"));
 };
@@ -1180,7 +1180,7 @@ window.f1Schedule=async function(id,clientId){
   const r=await sb.from("f1_content_calendar").insert({owner_id:user.id,content_id:id,client_id:clientId,platform:platform,publication_at:parsed.toISOString(),status:"PROGRAMMATO"});
   if(r.error)return alert(r.error.message);
   await sb.from("f1_content_items").update({status:"PROGRAMMATO"}).eq("id",id);
-  await loadAll();renderAll();setTab("calendar");
+  await loadCritical({clients:false});await renderAll();setTab("calendar");
 };
 
 function tiktokUtf16Units(value){return new Blob([String(value||"")]).size===0?0:Array.from(String(value||"")).reduce(function(n,ch){return n+(ch.codePointAt(0)>0xFFFF?2:1)},0)}
@@ -1323,7 +1323,7 @@ el("tiktokConfirmBtn").onclick=async function(){
       cal=await sb.from("f1_content_calendar").insert({owner_id:user.id,content_id:item.id,client_id:tiktokContext.clientId,platform:"tiktok",publication_at:publicationAt.toISOString(),status:"PROGRAMMATO",platform_metadata:{review_flow:"TIKTOK_REVIEW_SANDBOX_READY"}});
     }
     if(cal.error)throw cal.error;
-    await loadAll();renderAll();closeModal("tiktokModal");setTab("calendar");
+    await loadCritical({clients:false});await renderAll();closeModal("tiktokModal");setTab("calendar");
   }catch(e){
     tiktokMsg(e.message||String(e),"error");
     tiktokUpdateUi();
@@ -1451,7 +1451,7 @@ window.f1MoveCalendarEvent=async function(ev,dateKey){
   target.setHours(old.getHours(),old.getMinutes(),old.getSeconds(),0);
   const u=await sb.from("f1_content_calendar").update({publication_at:target.toISOString()}).eq("id",row.id).eq("client_id",row.client_id);
   if(u.error)return alert(u.error.message);
-  await loadAll();renderCalendar();renderMetrics();renderClients();
+  await loadCritical({clients:false});renderCalendar();renderMetrics();renderClients();
 };
 function renderPlanner(){
   const base=new Date();base.setHours(0,0,0,0);
@@ -1760,7 +1760,7 @@ window.f1SelectLinkedInAccount=async function(clientId){
   const idx=Number(raw)-1;if(!Number.isInteger(idx)||idx<0||idx>=candidates.length)return;
   try{
     await brokerPost("/linkedin/select",{client_id:clientId,account_id:candidates[idx].account_id});
-    await loadAll();renderAll();
+    await loadCritical({clients:false});await renderAll();
     alert("Pagina LinkedIn collegata e verificata.");
   }catch(e){alert("LinkedIn: "+(e.message||String(e)))}
 };
@@ -1822,7 +1822,7 @@ window.f1ContinueConnectAllSocials=async function(manualStart){
   let plan=null;
   try{plan=JSON.parse(localStorage.getItem("f1-antica-connect-all")||"null")}catch(_){}
   if(!plan||!plan.clientId)return;
-  await loadAll();
+  await loadCritical({clients:false});
   const client=clients.find(function(x){return x.id===plan.clientId});
   if(!client||client.slug!=="antica-cappella"){localStorage.removeItem("f1-antica-connect-all");return}
   const statusEl=el("connect-all-status-"+plan.clientId);
@@ -1881,7 +1881,7 @@ window.f1ContinueRmpOAuth=async function(manualStart){
   let plan=null;
   try{plan=JSON.parse(localStorage.getItem("f1-rmp-connect-all")||"null")}catch(_){}
   if(!plan||!plan.clientId)return;
-  await loadAll();
+  await loadCritical({clients:false});
   const client=clients.find(function(x){return x.id===plan.clientId});
   if(!client||client.slug!=="real-media-pro"){localStorage.removeItem("f1-rmp-connect-all");return}
   selectedClientId=client.id;
@@ -1924,9 +1924,9 @@ window.f1ContinueRmpOAuth=async function(manualStart){
 window.f1VerifySocial=async function(clientId,platform){
   try{
     await brokerPost("/verify",{client_id:clientId,platform:oauthPlatform(platform)});
-    await loadAll();renderAutomation();
+    await loadCritical({clients:false});renderAutomation();renderSocialConnections();
   }catch(e){
-    await loadAll();renderAutomation();
+    await loadCritical({clients:false});renderAutomation();renderSocialConnections();
     alert("Verifica "+platformLabel(platform)+": "+(e.message||String(e)));
   }
 };
@@ -1936,13 +1936,13 @@ window.f1SaveSocialUrl=async function(clientId,platform){
   if(!value)return alert("Inserisci l'URL del profilo.");
   try{
     await brokerPost("/profile-url",{client_id:clientId,platform:oauthPlatform(platform),profile_url:value});
-    await loadAll();renderAutomation();
+    await loadCritical({clients:false});renderAutomation();renderSocialConnections();
   }catch(e){alert(e.message||String(e))}
 };
 window.f1DiscoverSocials=async function(clientId){
   try{
     const data=await brokerPost("/discover-socials",{client_id:clientId});
-    await loadAll();renderAutomation();
+    await loadCritical({clients:false});renderAutomation();renderSocialConnections();
     const n=Object.keys(data.saved||{}).length;
     alert(n?("Trovati e salvati "+n+" collegamenti social."):"Nessun nuovo collegamento social trovato sul sito.");
   }catch(e){alert(e.message||String(e))}
@@ -1960,7 +1960,7 @@ window.f1SelectMetaAccount=async function(clientId,platform){
   if(!Number.isInteger(idx)||idx<0||idx>=candidates.length)return;
   try{
     await brokerPost("/meta/select",{client_id:clientId,platform:oauthPlatform(platform),account_id:candidates[idx].account_id});
-    await loadAll();renderAutomation();
+    await loadCritical({clients:false});renderAutomation();renderSocialConnections();
   }catch(e){alert(e.message||String(e))}
 };
 window.f1DisconnectSocial=async function(clientId,platform){
@@ -1969,7 +1969,7 @@ window.f1DisconnectSocial=async function(clientId,platform){
   if(!confirm("Disconnettere "+platformLabel(platform)+" per questo cliente? Il link del profilo resterà salvato."))return;
   try{
     await brokerPost("/disconnect",{client_id:clientId,platform:oauthPlatform(platform)});
-    await loadAll();renderAutomation();
+    await loadCritical({clients:false});renderAutomation();renderSocialConnections();
   }catch(e){alert(e.message||String(e))}
 };
 function reportScopedEvents(days){
@@ -2133,7 +2133,7 @@ async function doUpload(){
       if(mr.error)throw mr.error;
     }
     el("uploadTitle").value="";el("uploadCampaign").value="";el("uploadLocation").value="";el("uploadTags").value="";el("uploadCaption").value="";el("uploadNotes").value="";el("uploadStatus").value="DA LAVORARE";el("fileInput").value="";droppedFiles=[];updateFileSummary();
-    await loadAll();renderAll();msg("uploadMessage","Contenuto salvato correttamente.","");setTimeout(function(){closeModal("uploadModal")},700);
+    await loadCritical({clients:false});await renderAll();msg("uploadMessage","Contenuto salvato correttamente.","");setTimeout(function(){closeModal("uploadModal")},700);
   }catch(e){msg("uploadMessage",e.message||String(e),"error")}finally{el("doUploadBtn").disabled=false}
 }
 el("doUploadBtn").onclick=doUpload;
@@ -2149,7 +2149,7 @@ el("createClientBtn").onclick=async function(){
   if(r.error)return msg("clientMessage",r.error.message,"error");
   ["clientName","clientCategory","clientPhone","clientEmail","clientWebsite","clientAliases"].forEach(function(id){el(id).value=""});
   el("clientServiceSocial").checked=true;el("clientServiceEmail").checked=false;el("clientServiceSite").checked=false;el("clientServiceAdv").checked=false;
-  await loadAll();renderAll();msg("clientMessage","Cliente creato.","");setTimeout(function(){closeModal("clientModal")},600);
+  await loadCritical({clients:true});await renderAll();msg("clientMessage","Cliente creato.","");setTimeout(function(){closeModal("clientModal")},600);
 };
 
 async function loadWhatsApp(){
@@ -2204,7 +2204,6 @@ el("saveWaSenderBtn").onclick=async function(){
   if(r.error)return alert(r.error.message);
   el("waIdInput").value="";
   el("waReportRecipient").checked=false;
-  await loadAll();
   await loadWhatsApp();
 };
 
@@ -2221,7 +2220,7 @@ async function importLegacy(){
       const r=await sb.from("f1_content_clients").upsert(row,{onConflict:"owner_id,slug"}).select().single();
       if(!r.error)oldToNew[oldId]=r.data.id;
     }
-    await loadAll();
+    await loadCritical({clients:true});
     for(const k of keys.filter(function(x){return x.startsWith("rmpcc:week:")})){
       const parts=k.split(":");const oldId=parts[2],weekStart=parts[3],clientId=oldToNew[oldId]||(clients.find(function(c){return c.slug===slugify(oldId)})||{}).id;
       if(!clientId)continue;
@@ -2237,7 +2236,7 @@ async function importLegacy(){
       }
     }
     await sb.from("f1_content_import_log").insert({owner_id:user.id,source:"rmpcc_localstorage_v1",details:{keys:keys.length,imported_at:new Date().toISOString()}});
-    await loadAll();renderAll();msg("legacyResult","Importazione completata. Ho letto "+keys.length+" chiavi del programma precedente.","");
+    await loadCritical({clients:true});await renderAll();msg("legacyResult","Importazione completata. Ho letto "+keys.length+" chiavi del programma precedente.","");
   }catch(e){msg("legacyResult",e.message||String(e),"error")}
 }
 el("legacyImportBtn").onclick=importLegacy;
@@ -2249,7 +2248,7 @@ if(el("reportRange"))el("reportRange").onchange=renderReports;
 if(el("exportReportBtn"))el("exportReportBtn").onclick=window.f1ExportReport;
 el("refreshBtn").onclick=async function(){await loadAll();renderAll();if(!el("tab-whatsapp").classList.contains("hidden"))await loadWhatsApp()};
 
-if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("./sw.js").catch(function(){})})}
+if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("./sw.js",{updateViaCache:"none"}).catch(function(){})})}
 const oauthParams=new URLSearchParams(location.search);
 if(oauthParams.get("oauth")){
   const state=oauthParams.get("oauth"), platform=oauthParams.get("platform")||"social";
