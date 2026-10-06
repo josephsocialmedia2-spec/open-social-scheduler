@@ -359,7 +359,15 @@ def instagram_publish(job: dict[str, Any], client: dict[str, Any], paths: list[P
     else:
         token = secret(client, "INSTAGRAM_ACCESS_TOKEN")
         ig_user_id = secret(client, "INSTAGRAM_USER_ID")
-    urls = [cache.upload(path, str(job["id"]), idx) for idx, path in enumerate(paths, 1)]
+    provided_urls = [
+        str(url).strip()
+        for url in (job.get("public_media_urls") or [])
+        if str(url or "").strip()
+    ]
+    if len(provided_urls) >= len(paths) and paths:
+        urls = provided_urls[:len(paths)]
+    else:
+        urls = [cache.upload(path, str(job["id"]), idx) for idx, path in enumerate(paths, 1)]
     if str(job.get("format") or "reel") == "reel":
         created = request("POST", f"{meta_graph_base()}/{ig_user_id}/media", params={"media_type": "REELS", "video_url": urls[0], "caption": str(job.get("caption") or "")[:2200], "share_to_feed": "true", "access_token": token}).json()
         container_id = str(created["id"])
