@@ -985,11 +985,12 @@ window.f1WorkspaceSaveCaption=async function(itemId,platform,value){
   try{
     await updatePlan(item,plan);
     const rows=(calendar||[]).filter(function(x){return x.content_id===itemId&&x.platform===platform&&!/PUBBLICAT|PUBLISHED/i.test(String(x.status||""))});
-    for(const row of rows){
+    await Promise.all(rows.map(async function(row){
       const meta=Object.assign({},row.platform_metadata||{},{caption:String(value||""),generated_caption:plan.platforms[platform].generated_caption||""});
-      await sb.from("f1_content_calendar").update({platform_metadata:meta}).eq("id",row.id);
+      const u=await sb.from("f1_content_calendar").update({platform_metadata:meta}).eq("id",row.id);
+      if(u.error)throw u.error;
       row.platform_metadata=meta;
-    }
+    }));
   }catch(e){alert(e.message||String(e))}
 };
 window.f1WorkspaceRegenerate=async function(itemId,platform){
@@ -1005,11 +1006,12 @@ window.f1WorkspaceRegenerate=async function(itemId,platform){
   plan.platforms[platform].caption_source=graphic?"GRAPHIC_TEXT":"CONTENT_TEXT";
   await updatePlan(item,plan);
   const rows=(calendar||[]).filter(function(x){return x.content_id===itemId&&x.platform===platform&&!/PUBBLICAT|PUBLISHED/i.test(String(x.status||""))});
-  for(const row of rows){
+  await Promise.all(rows.map(async function(row){
     const meta=Object.assign({},row.platform_metadata||{},{caption:generated,generated_caption:generated,caption_source:plan.platforms[platform].caption_source});
-    await sb.from("f1_content_calendar").update({platform_metadata:meta}).eq("id",row.id);
+    const u=await sb.from("f1_content_calendar").update({platform_metadata:meta}).eq("id",row.id);
+    if(u.error)throw u.error;
     row.platform_metadata=meta;
-  }
+  }));
   await window.f1RenderClientPublisherWorkspace();
 };
 window.f1WorkspaceResetCaption=async function(itemId,platform){
