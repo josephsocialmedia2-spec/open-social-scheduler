@@ -492,6 +492,33 @@ let connectionDoctorResults = {};
 let calendarWeekOffset = 0;
 let calendarViewMode = "week";
 let intelligenceAutoRefreshBusy = false;
+let f1BackendRestrictedUntil = 0;
+const signedUrlCache = new Map();
+const SIGNED_URL_CACHE_TTL_MS = 50 * 60 * 1000;
+
+function f1IsRestrictionError(value){
+  const text=String(value&&value.message?value.message:value||"").toLowerCase();
+  return text.includes("service for this project is restricted") ||
+    text.includes("exceed_cached_egress_quota") ||
+    text.includes("exceed_egress_quota") ||
+    text.includes("exceed_storage_size_quota") ||
+    text.includes("status 402") ||
+    text.includes(" 402 ");
+}
+function f1StateFingerprint(){
+  const compact=function(rows,fields){
+    return (rows||[]).map(function(row){
+      return fields.map(function(key){return row&&row[key]!=null?row[key]:""}).join("|");
+    }).join(";");
+  };
+  return [
+    compact(items,["id","status","updated_at","created_at"]),
+    compact(calendar,["id","status","publication_at","updated_at"]),
+    compact(socialChannels,["id","status","updated_at"]),
+    compact(cloudPublicationQueue,["id","status","scheduled_at","updated_at"]),
+    compact(intelligenceEvents,["id","event_type","created_at"])
+  ].join("||");
+}
 
 const el = (id) => document.getElementById(id);
 const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, function(m){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]});
@@ -586,6 +613,11 @@ async function f1QueryWithRetry(factory,label,attempts){
   let last=null;
   for(let attempt=1;attempt<=(attempts||2);attempt++){
     try{last=await factory();if(last&&!last.error)return last}catch(e){last={error:e}}
+    const restriction=!!(last&&((last.status===402)||f1IsRestrictionError(last.error)));
+    if(restriction){
+      f1BackendRestrictedUntil=Date.now()+(5*60*1000);
+      break;
+    }
     if(attempt<(attempts||2))await f1Sleep(400*attempt);
   }
   const message=last&&last.error?(last.error.message||String(last.error)):"Errore di connessione";
@@ -701,8 +733,31 @@ function filteredItems(limit){
 }
 async function signedUrl(media){
   if(!media||!media.storage_path)return "";
-  const r=await sb.storage.from("f1-content-media").createSignedUrl(media.storage_path,3600);
-  return r.data?r.data.signedUrl:"";
+  const key=String(media.storage_path);
+  const now=Date.now();
+  const cached=signedUrlCache.get(key);
+  if(cached&&cached.url&&cached.expiresAt>now)return cached.url;
+  if(cached&&cached.promise)return cached.promise;
+
+  const promise=(async function(){
+    const r=await sb.storage.from("f1-content-media").createSignedUrl(key,3600);
+    if(r.error){
+      if(f1IsRestrictionError(r.error))f1BackendRestrictedUntil=Date.now()+(5*60*1000);
+      throw r.error;
+    }
+    return r.data?r.data.signedUrl:"";
+  })();
+
+  signedUrlCache.set(key,{url:"",expiresAt:0,promise:promise});
+  try{
+    const url=await promise;
+    if(url)signedUrlCache.set(key,{url:url,expiresAt:Date.now()+SIGNED_URL_CACHE_TTL_MS,promise:null});
+    else signedUrlCache.delete(key);
+    return url;
+  }catch(e){
+    signedUrlCache.delete(key);
+    throw e;
+  }
 }
 async function cardHtml(item){
   const c=clients.find(function(x){return x.id===item.client_id});
@@ -711,7 +766,7 @@ async function cardHtml(item){
   if(media){
     const url=await signedUrl(media);
     if(media.mime_type&&media.mime_type.startsWith("image/"))thumb='<div class="thumb"><img loading="lazy" src="'+esc(url)+'"></div>';
-    else if(media.mime_type&&media.mime_type.startsWith("video/"))thumb='<div class="thumb"><video src="'+esc(url)+'" muted controls></video></div>';
+    else if(media.mime_type&&media.mime_type.startsWith("video/"))thumb='<div class="thumb"><video src="'+esc(url)+'" muted controls playsinline preload="none"></video></div>';
     else thumb='<div class="thumb">'+esc((media.mime_type||"FILE").toUpperCase())+'</div>';
   }
   const manualStates=["BOZZA","IN ARRIVO","DA CLASSIFICARE","DA LAVORARE","IN LAVORAZIONE","PRONTO","DA APPROVARE","APPROVATO","PROGRAMMATO","IN PUBBLICAZIONE","PARZIALMENTE PUBBLICATO","ERRORE","TIKTOK_REVIEW_REQUIRED","BOZZA_TIKTOK_INVIATA","ARCHIVIATO"];
@@ -2150,19 +2205,24 @@ sb.auth.onAuthStateChange(function(event,session){
   if(event==="SIGNED_OUT"){user=null;showAuth()}
 });
 
-// F1_INTELLIGENCE_AUTO_REFRESH: la dashboard osserva il backend, non lo comanda.
+// F1_INTELLIGENCE_AUTO_REFRESH: refresh conservativo per ridurre query, firme Storage e reload media.
 setInterval(async function(){
   if(!user || document.hidden || intelligenceAutoRefreshBusy)return;
+  if(Date.now()<f1BackendRestrictedUntil)return;
   intelligenceAutoRefreshBusy=true;
   try{
+    const before=f1StateFingerprint();
     await loadAll();
-    await renderAll();
+    if(Date.now()<f1BackendRestrictedUntil)return;
+    const after=f1StateFingerprint();
+    if(before!==after)await renderAll();
   }catch(e){
+    if(f1IsRestrictionError(e))f1BackendRestrictedUntil=Date.now()+(5*60*1000);
     console.warn("F1 Intelligence refresh",e);
   }finally{
     intelligenceAutoRefreshBusy=false;
   }
-},10000);
+},60000);
 
 authState();
 </script>
