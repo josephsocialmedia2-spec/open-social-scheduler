@@ -209,6 +209,7 @@ def cloudinary_upload(path: Path, content_id: str, media_id: str) -> dict[str, A
         "use_filename": True,
         "unique_filename": True,
         "overwrite": False,
+        "backup": False,
         "tags": ["f1-social-cold", f"content-{content_id}", f"media-{media_id}"],
     }
     if path.stat().st_size >= 80 * 1024 * 1024:
