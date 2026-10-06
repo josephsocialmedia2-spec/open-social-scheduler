@@ -116,10 +116,15 @@ jobs:
           const railBlock=ws.slice(railStart,railEnd);
           if(/<video[^>]+src=/.test(railBlock))throw new Error('Rail video auto-source regression');
 
-          if(!sw.includes('f1-content-hub-v26-static-only'))throw new Error('Static-only service worker cache missing');
+          if(!sw.includes('f1-content-hub-v27-static-versioned'))throw new Error('Static-only service worker cache missing');
           if(!sw.includes('if(u.origin!==self.location.origin)return'))throw new Error('Service worker origin guard missing');
-          if(sw.includes('c.put(e.request,copy)'))throw new Error('Catch-all service worker cache regression');
+          if(!sw.includes('c.put(e.request,copy)'))throw new Error('Versioned request cache key missing');
+          if(!sw.includes('caches.match(e.request)'))throw new Error('Versioned request cache lookup missing');
 
+          if(/\bloadAll\(\)/.test(ws))throw new Error('Workspace full reload regression detected');
+          for(const required of ['f1MediaSha256','f1FindDuplicateContent','media_sha256','duplicatesSkipped']){
+            if(!ws.includes(required))throw new Error('Media dedup guard missing: '+required);
+          }
           console.log('F1_PERFORMANCE_GUARDRAILS_OK');
           NODE
       - name: Check Content Rail logic markers
@@ -205,7 +210,7 @@ jobs:
           NODE
       - name: Check cache version with email module
         run: |
-          grep -q 'f1-content-hub-v26-static-only' f1-content-hub/sw.js
+          grep -q 'f1-content-hub-v27-static-versioned' f1-content-hub/sw.js
           grep -q 'email-module.js' f1-content-hub/sw.js
           grep -q 'email-module.css' f1-content-hub/sw.js
           grep -q 'f1-design-system.css' f1-content-hub/sw.js
