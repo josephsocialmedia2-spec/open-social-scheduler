@@ -643,7 +643,7 @@ async function loadCritical(options){
     fillClientSelects();
   }
   const results=await Promise.all([
-    f1QueryWithRetry(function(){return sb.from("f1_content_items").select("*, f1_content_media(id,owner_id,client_id,file_name,mime_type,storage_path,file_size,source,whatsapp_message_id,created_at), f1_content_calendar(id,platform,publication_at,status,platform_metadata)").order("created_at",{ascending:false}).limit(120)},"Contenuti",2),
+    f1QueryWithRetry(function(){return sb.from("f1_content_items").select("*, f1_content_media(id,owner_id,client_id,file_name,mime_type,storage_path,file_size,source,whatsapp_message_id,created_at,archive_provider,archive_public_id,archive_resource_type,archive_url,archived_at,storage_state,hot_deleted_at), f1_content_calendar(id,platform,publication_at,status,platform_metadata)").order("created_at",{ascending:false}).limit(120)},"Contenuti",2),
     f1QueryWithRetry(function(){return sb.from("f1_content_calendar").select("*, f1_content_items(title), f1_content_clients(name)").order("publication_at",{ascending:true}).limit(160)},"Calendario",2),
     f1QueryWithRetry(function(){return sb.from("f1_client_social_channels").select("id,owner_id,client_id,platform,provider,external_channel_id,enabled,verified,connection_status,last_verified_at,updated_at,account_name,scopes,token_expires_at,refresh_token_expires_at,last_refresh_at,reauthorization_required,oauth_metadata,profile_url").order("platform")},"Canali social",2),
     f1QueryWithRetry(function(){return sb.from("f1_publication_queue").select("*").order("scheduled_at",{ascending:true}).limit(120)},"Coda cloud",2)
@@ -770,7 +770,10 @@ function filteredItems(limit){
   return limit?list.slice(0,limit):list;
 }
 async function signedUrl(media){
-  if(!media||!media.storage_path)return "";
+  if(!media)return "";
+  if(String(media.storage_state||"").toUpperCase()==="COLD" && media.archive_url)return String(media.archive_url);
+  if(!media.storage_path && media.archive_url)return String(media.archive_url);
+  if(!media.storage_path)return "";
   const key=String(media.storage_path);
   const now=Date.now();
   const cached=signedUrlCache.get(key);
