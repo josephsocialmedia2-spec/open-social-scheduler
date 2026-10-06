@@ -29,6 +29,7 @@ REQUEST_TIMEOUT = 60
 HOT_WINDOW_MINUTES = max(0, int(os.getenv("F1_MEDIA_HOT_WINDOW_MINUTES", "120") or "120"))
 BATCH_SIZE = max(1, int(os.getenv("F1_MEDIA_ARCHIVE_BATCH_SIZE", "12") or "12"))
 PUBLISHED = {"PUBBLICATO", "PUBLISHED", "COMPLETED", "SUCCESS"}
+ARCHIVE_READY_ITEM_STATES = {"PRONTO", "DA APPROVARE", "APPROVATO", "PROGRAMMATO"}
 
 
 class ArchiveError(RuntimeError):
@@ -316,6 +317,9 @@ def main() -> int:
             continue
         content_id = str(row.get("content_id") or "")
         if not content_id or content_id in fully_published:
+            continue
+        item = items.get(content_id) or {}
+        if str(item.get("status") or "").upper() not in ARCHIVE_READY_ITEM_STATES:
             continue
 
         # Finish removal of the hot copy after a previously successful archive.
