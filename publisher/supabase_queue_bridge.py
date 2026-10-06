@@ -30,6 +30,7 @@ MEDIA_ROOT = ROOT / "publisher" / "media" / "supabase"
 SUPABASE_URL = os.getenv("SUPABASE_URL", "").rstrip("/")
 SERVICE_KEY = os.getenv("SUPABASE_SERVICE_ROLE_KEY", "").strip()
 REQUEST_TIMEOUT = 45
+MEDIA_MATERIALIZE_WINDOW_MINUTES = max(0, int(os.getenv("F1_MEDIA_MATERIALIZE_WINDOW_MINUTES", "10") or "10"))
 
 PLATFORM_MAP = {
     "facebook": "facebook",
@@ -51,6 +52,29 @@ class BridgeError(RuntimeError):
 
 def now_iso() -> str:
     return datetime.now(timezone.utc).isoformat(timespec="seconds")
+
+
+def parse_iso(value: Any) -> datetime | None:
+    raw = str(value or "").strip()
+    if not raw:
+        return None
+    try:
+        parsed = datetime.fromisoformat(raw.replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=timezone.utc)
+    return parsed.astimezone(timezone.utc)
+
+
+def media_should_materialize(row: dict[str, Any], platform_metadata: dict[str, Any]) -> bool:
+    if bool(platform_metadata.get("publish_now")):
+        return True
+    publication_at = parse_iso(row.get("publication_at"))
+    if publication_at is None:
+        return True
+    delta_seconds = (publication_at - datetime.now(timezone.utc)).total_seconds()
+    return delta_seconds <= (MEDIA_MATERIALIZE_WINDOW_MINUTES * 60)
 
 
 def load_queue() -> dict[str, Any]:
@@ -405,7 +429,8 @@ def build_or_update_jobs(queue: dict[str, Any]) -> dict[str, int]:
 
         media_paths: list[str] = []
         mime = ""
-        if not reason:
+        materialize_now = (not reason) and media_should_materialize(row, platform_metadata)
+        if materialize_now:
             try:
                 media_paths, mime = materialize_media(str(row["id"]), item, properties)
             except Exception as exc:
@@ -415,13 +440,15 @@ def build_or_update_jobs(queue: dict[str, Any]) -> dict[str, int]:
                 reason = "ERRORE_MEDIA"
                 row["error"] = "Nessun media disponibile nel Content Hub o nella scheda immobile"
 
+        if not mime and source_media:
+            mime = str((source_media[0] or {}).get("mime_type") or "")
         fmt = "reel" if (mime.startswith("video/") or any(Path(p).suffix.lower() in {".mp4", ".mov", ".m4v"} for p in media_paths)) else "post"
         caption = str(platform_metadata.get("caption") or item.get("description") or item.get("source_text") or "").strip()
         job = by_id.get(job_id)
         new_job = {
             "id": job_id,
-            "enabled": not bool(reason),
-            "status": "ready" if not reason else "blocked",
+            "enabled": (not bool(reason)) and materialize_now,
+            "status": ("ready" if materialize_now else "waiting_media") if not reason else "blocked",
             "client_id": slug,
             "client_name": str(client.get("name") or slug),
             "title": str(item.get("title") or "Contenuto"),
@@ -451,6 +478,8 @@ def build_or_update_jobs(queue: dict[str, Any]) -> dict[str, int]:
             "expected_media_sha256": platform_metadata.get("expected_media_sha256"),
             "public_media_urls": platform_metadata.get("public_media_urls") or [],
             "tiktok_photo_urls": platform_metadata.get("tiktok_photo_urls") or [],
+            "media_materialize_window_minutes": MEDIA_MATERIALIZE_WINDOW_MINUTES,
+            "media_materialized": bool(materialize_now and media_paths),
         }
         if reason:
             new_job["blocked_reason"] = reason
@@ -528,8 +557,10 @@ def build_or_update_jobs(queue: dict[str, Any]) -> dict[str, int]:
 
         if reason:
             stats["blocked"] += 1
-        else:
+        elif materialize_now:
             stats["ready"] += 1
+        else:
+            stats["skipped"] += 1
 
     save_queue(queue)
     return stats
