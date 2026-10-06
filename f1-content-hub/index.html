@@ -493,6 +493,10 @@ let calendarWeekOffset = 0;
 let calendarViewMode = "week";
 let intelligenceAutoRefreshBusy = false;
 let f1BackendRestrictedUntil = 0;
+let f1SecondaryLoaded = false;
+let f1SecondaryLoading = null;
+let f1LastCriticalRefreshAt = 0;
+const CLIENT_SEED_VERSION = "20261006-perf1";
 const signedUrlCache = new Map();
 const SIGNED_URL_CACHE_TTL_MS = 50 * 60 * 1000;
 
@@ -547,7 +551,7 @@ async function enterApp(){
   el("userEmail").textContent=user.email||"";
   try{
     await seedClients();
-    await loadAll();
+    await loadCritical({clients:true});
   }catch(e){
     console.error("F1 Content Hub bootstrap error",e);
     el("clientContext").innerHTML='<div class="notice error" style="margin:0;width:100%"><b>Accesso riconosciuto, ma alcuni dati non sono stati caricati.</b><br>'+esc(e.message||String(e))+'<br><button class="btn small primary" style="margin-top:8px" onclick="location.reload()">RIPROVA</button></div>';
@@ -558,7 +562,8 @@ async function enterApp(){
     const match=clients.find(function(c){return c.slug===requestedClient||c.id===requestedClient});
     if(match)selectedClientId=match.id;
   }
-  renderAll();
+  await renderAll();
+  f1ScheduleSecondaryLoad();
   const requestedView=params.get("view");
   if(requestedView)setTab(requestedView,{skipUrl:true});
   const emailConnect=params.get("connect_email");
@@ -604,9 +609,12 @@ el("logoutBtn").onclick=async function(){await sb.auth.signOut();user=null;showA
 
 async function seedClients(){
   if(!user)return;
+  const seedKey="f1-content-seed:"+user.id;
+  if(localStorage.getItem(seedKey)===CLIENT_SEED_VERSION)return;
   const rows=SEED_CLIENTS.map(function(c){return Object.assign({},c,{owner_id:user.id,status:"ATTIVO"})});
   const r=await sb.from("f1_content_clients").upsert(rows,{onConflict:"owner_id,slug"});
-  if(r.error) console.error(r.error);
+  if(r.error){console.error(r.error);return}
+  localStorage.setItem(seedKey,CLIENT_SEED_VERSION);
 }
 async function f1Sleep(ms){return new Promise(function(resolve){setTimeout(resolve,ms)})}
 async function f1QueryWithRetry(factory,label,attempts){
@@ -624,45 +632,72 @@ async function f1QueryWithRetry(factory,label,attempts){
   loadWarnings.push(label+": "+message);
   return last||{data:null,error:new Error(message)};
 }
-async function loadAll(){
+async function loadCritical(options){
   if(!user)return;
+  const opts=options||{};
   loadWarnings=[];
-  const rc=await f1QueryWithRetry(function(){return sb.from("f1_content_clients").select("*").order("name")},"Clienti",3);
-  if(rc&&!rc.error)clients=rc.data||[];
-  if(selectedClientId&&!clients.find(function(c){return c.id===selectedClientId}))selectedClientId="";
-  fillClientSelects();
-
+  if(opts.clients!==false){
+    const rc=await f1QueryWithRetry(function(){return sb.from("f1_content_clients").select("*").order("name")},"Clienti",2);
+    if(rc&&!rc.error)clients=rc.data||[];
+    if(selectedClientId&&!clients.find(function(c){return c.id===selectedClientId}))selectedClientId="";
+    fillClientSelects();
+  }
   const results=await Promise.all([
-    f1QueryWithRetry(function(){return sb.from("f1_content_items").select("*, f1_content_media(id,owner_id,client_id,file_name,mime_type,storage_path,file_size,source,whatsapp_message_id,created_at), f1_content_calendar(id,platform,publication_at,status,platform_metadata)").order("created_at",{ascending:false}).limit(300)},"Contenuti",2),
-    f1QueryWithRetry(function(){return sb.from("f1_content_calendar").select("*, f1_content_items(title), f1_content_clients(name)").order("publication_at",{ascending:true}).limit(300)},"Calendario",2),
-    f1QueryWithRetry(function(){return sb.from("f1_client_social_channels").select("*").order("platform")},"Canali social",2),
-    f1QueryWithRetry(function(){return sb.from("f1_client_web_sources").select("id,client_id,url,canonical_url,page_type,title,last_checked_at,active").eq("active",true).order("last_checked_at",{ascending:false}).limit(300)},"Fonti web",2),
-    f1QueryWithRetry(function(){return sb.from("f1_client_store_cycles").select("*").order("clone_review_due_at")},"Cicli negozi",2),
-    f1QueryWithRetry(function(){return sb.from("f1_publication_events").select("*, f1_content_clients(name)").order("created_at",{ascending:false}).limit(100)},"Eventi pubblicazione",2),
-    f1QueryWithRetry(function(){return sb.from("f1_whatsapp_senders").select("*").eq("active",true)},"WhatsApp",2),
-    f1QueryWithRetry(function(){return sb.from("f1_social_analytics_snapshots").select("*, f1_content_clients(name)").order("captured_at",{ascending:false}).limit(500)},"Analytics provider",2),
-    f1QueryWithRetry(function(){return sb.from("f1_intelligence_events").select("*").order("created_at",{ascending:false}).limit(1000)},"F1 Intelligence",2),
-    f1QueryWithRetry(function(){return sb.from("f1_operator_preferences").select("*").limit(5)},"Preferenze operatore",2),
-    f1QueryWithRetry(function(){return sb.from("f1_client_browser_profiles").select("*").order("updated_at",{ascending:false})},"Browser cloud",2),
-    f1QueryWithRetry(function(){return sb.from("f1_client_browser_social_sessions").select("*").order("updated_at",{ascending:false})},"Sessioni browser",2),
-    f1QueryWithRetry(function(){return sb.from("f1_publication_queue").select("*").order("scheduled_at",{ascending:true}).limit(500)},"Coda cloud",2),
-    f1QueryWithRetry(function(){return sb.from("f1_content_properties").select("*").order("updated_at",{ascending:false}).limit(500)},"Immobili",2)
+    f1QueryWithRetry(function(){return sb.from("f1_content_items").select("*, f1_content_media(id,owner_id,client_id,file_name,mime_type,storage_path,file_size,source,whatsapp_message_id,created_at), f1_content_calendar(id,platform,publication_at,status,platform_metadata)").order("created_at",{ascending:false}).limit(120)},"Contenuti",2),
+    f1QueryWithRetry(function(){return sb.from("f1_content_calendar").select("*, f1_content_items(title), f1_content_clients(name)").order("publication_at",{ascending:true}).limit(160)},"Calendario",2),
+    f1QueryWithRetry(function(){return sb.from("f1_client_social_channels").select("id,owner_id,client_id,platform,provider,external_channel_id,enabled,verified,connection_status,last_verified_at,updated_at,account_name,scopes,token_expires_at,refresh_token_expires_at,last_refresh_at,reauthorization_required,oauth_metadata,profile_url").order("platform")},"Canali social",2),
+    f1QueryWithRetry(function(){return sb.from("f1_publication_queue").select("*").order("scheduled_at",{ascending:true}).limit(120)},"Coda cloud",2)
   ]);
-  const ri=results[0],rcal=results[1],rch=results[2],rws=results[3],rsc=results[4],rpe=results[5],rwas=results[6],ras=results[7],rie=results[8],rop=results[9],rbp=results[10],rbs=results[11],rcq=results[12],rprop=results[13];
+  const ri=results[0],rcal=results[1],rch=results[2],rcq=results[3];
   if(ri&&!ri.error)items=ri.data||[];
   if(rcal&&!rcal.error)calendar=rcal.data||[];
   if(rch&&!rch.error)socialChannels=rch.data||[];
-  if(rws&&!rws.error)webSources=rws.data||[];
-  if(rsc&&!rsc.error)storeCycles=rsc.data||[];
-  if(rpe&&!rpe.error)publicationEvents=rpe.data||[];
-  if(rwas&&!rwas.error)whatsappSenders=rwas.data||[];
-  if(ras&&!ras.error)analyticsSnapshots=ras.data||[];
-  if(rie&&!rie.error)intelligenceEvents=rie.data||[];
-  if(rop&&!rop.error)operatorPreferences=rop.data||[];
-  if(rbp&&!rbp.error)browserProfiles=rbp.data||[];
-  if(rbs&&!rbs.error)browserSessions=rbs.data||[];
   if(rcq&&!rcq.error)cloudPublicationQueue=rcq.data||[];
-  if(rprop&&!rprop.error)properties=rprop.data||[];
+  f1LastCriticalRefreshAt=Date.now();
+}
+async function loadSecondaryData(force){
+  if(!user)return;
+  if(f1SecondaryLoaded&&!force)return;
+  if(f1SecondaryLoading&&!force)return f1SecondaryLoading;
+  f1SecondaryLoading=(async function(){
+    const results=await Promise.all([
+      f1QueryWithRetry(function(){return sb.from("f1_client_web_sources").select("id,client_id,url,canonical_url,page_type,title,last_checked_at,active").eq("active",true).order("last_checked_at",{ascending:false}).limit(120)},"Fonti web",1),
+      f1QueryWithRetry(function(){return sb.from("f1_client_store_cycles").select("*").order("clone_review_due_at")},"Cicli negozi",1),
+      f1QueryWithRetry(function(){return sb.from("f1_publication_events").select("*, f1_content_clients(name)").order("created_at",{ascending:false}).limit(60)},"Eventi pubblicazione",1),
+      f1QueryWithRetry(function(){return sb.from("f1_whatsapp_senders").select("*").eq("active",true)},"WhatsApp",1),
+      f1QueryWithRetry(function(){return sb.from("f1_social_analytics_snapshots").select("*, f1_content_clients(name)").order("captured_at",{ascending:false}).limit(120)},"Analytics provider",1),
+      f1QueryWithRetry(function(){return sb.from("f1_intelligence_events").select("*").order("created_at",{ascending:false}).limit(240)},"F1 Intelligence",1),
+      f1QueryWithRetry(function(){return sb.from("f1_operator_preferences").select("*").limit(5)},"Preferenze operatore",1),
+      f1QueryWithRetry(function(){return sb.from("f1_client_browser_profiles").select("*").order("updated_at",{ascending:false}).limit(80)},"Browser cloud",1),
+      f1QueryWithRetry(function(){return sb.from("f1_client_browser_social_sessions").select("*").order("updated_at",{ascending:false}).limit(120)},"Sessioni browser",1),
+      f1QueryWithRetry(function(){return sb.from("f1_content_properties").select("*").order("updated_at",{ascending:false}).limit(120)},"Immobili",1)
+    ]);
+    const rws=results[0],rsc=results[1],rpe=results[2],rwas=results[3],ras=results[4],rie=results[5],rop=results[6],rbp=results[7],rbs=results[8],rprop=results[9];
+    if(rws&&!rws.error)webSources=rws.data||[];
+    if(rsc&&!rsc.error)storeCycles=rsc.data||[];
+    if(rpe&&!rpe.error)publicationEvents=rpe.data||[];
+    if(rwas&&!rwas.error)whatsappSenders=rwas.data||[];
+    if(ras&&!ras.error)analyticsSnapshots=ras.data||[];
+    if(rie&&!rie.error)intelligenceEvents=rie.data||[];
+    if(rop&&!rop.error)operatorPreferences=rop.data||[];
+    if(rbp&&!rbp.error)browserProfiles=rbp.data||[];
+    if(rbs&&!rbs.error)browserSessions=rbs.data||[];
+    if(rprop&&!rprop.error)properties=rprop.data||[];
+    f1SecondaryLoaded=true;
+  })();
+  try{return await f1SecondaryLoading}finally{f1SecondaryLoading=null}
+}
+async function loadAll(){
+  await loadCritical({clients:true});
+  await loadSecondaryData(true);
+}
+function f1RenderSecondaryOnly(){
+  renderAnalytics();renderAutomation();renderPublicationCenter();renderProblems();renderReports();
+}
+function f1ScheduleSecondaryLoad(){
+  const run=function(){loadSecondaryData(false).then(f1RenderSecondaryOnly).catch(function(e){console.warn("F1 secondary load",e)})};
+  if("requestIdleCallback" in window)requestIdleCallback(run,{timeout:1800});
+  else setTimeout(run,120);
 }
 function fillClientSelects(){
   const options='<option value="">Tutti i clienti</option>'+clients.map(function(c){return '<option value="'+c.id+'">'+esc(c.name)+'</option>'}).join("");
@@ -689,6 +724,9 @@ function setTab(tab,options){
   if(tab==="analytics")renderAnalytics();
   if(tab==="automation")renderAutomation();
   if(tab==="connections")renderSocialConnections();
+  if(["analytics","automation","publications","problems","reports"].includes(tab)&&!f1SecondaryLoaded){
+    loadSecondaryData(false).then(f1RenderSecondaryOnly).catch(function(e){console.warn("F1 on-demand load",e)});
+  }
   if(tab==="email"&&window.f1RenderEmailWorkspace)window.f1RenderEmailWorkspace(false);
   if(tab==="publications")renderPublicationCenter();
   if(tab==="problems")renderProblems();
@@ -759,15 +797,35 @@ async function signedUrl(media){
     throw e;
   }
 }
+window.f1LoadVideoPreview=async function(button,itemId){
+  const item=items.find(function(x){return x.id===itemId});
+  const media=item&&(item.f1_content_media||[]).find(function(m){return String(m.mime_type||"").startsWith("video/")});
+  if(!media)return;
+  const host=button&&button.closest?button.closest("[data-f1-video-lazy]"):null;
+  if(!host)return;
+  const old=button.textContent;button.disabled=true;button.textContent="CARICAMENTO…";
+  try{
+    const url=await signedUrl(media);
+    if(!url)throw new Error("VIDEO_NON_DISPONIBILE");
+    host.innerHTML='<video src="'+esc(url)+'" controls muted playsinline preload="metadata"></video>';
+  }catch(e){
+    button.disabled=false;button.textContent=old||"APRI VIDEO";
+    console.warn("F1 video preview",e);
+  }
+};
+function f1LazyVideoHtml(item){
+  return '<div class="thumb" data-f1-video-lazy="1"><button class="btn small ghost" type="button" onclick="window.f1LoadVideoPreview(this,\''+item.id+'\')">▶ APRI VIDEO</button></div>';
+}
 async function cardHtml(item){
   const c=clients.find(function(x){return x.id===item.client_id});
   const media=(item.f1_content_media||[])[0];
   let thumb='<div class="thumb">NESSUNA ANTEPRIMA</div>';
   if(media){
-    const url=await signedUrl(media);
-    if(media.mime_type&&media.mime_type.startsWith("image/"))thumb='<div class="thumb"><img loading="lazy" src="'+esc(url)+'"></div>';
-    else if(media.mime_type&&media.mime_type.startsWith("video/"))thumb='<div class="thumb"><video src="'+esc(url)+'" muted controls playsinline preload="none"></video></div>';
-    else thumb='<div class="thumb">'+esc((media.mime_type||"FILE").toUpperCase())+'</div>';
+    if(media.mime_type&&media.mime_type.startsWith("video/"))thumb=f1LazyVideoHtml(item);
+    else if(media.mime_type&&media.mime_type.startsWith("image/")){
+      const url=await signedUrl(media);
+      thumb='<div class="thumb"><img loading="lazy" src="'+esc(url)+'"></div>';
+    }else thumb='<div class="thumb">'+esc((media.mime_type||"FILE").toUpperCase())+'</div>';
   }
   const manualStates=["BOZZA","IN ARRIVO","DA CLASSIFICARE","DA LAVORARE","IN LAVORAZIONE","PRONTO","DA APPROVARE","APPROVATO","PROGRAMMATO","IN PUBBLICAZIONE","PARZIALMENTE PUBBLICATO","ERRORE","TIKTOK_REVIEW_REQUIRED","BOZZA_TIKTOK_INVIATA","ARCHIVIATO"];
   let options=manualStates.map(function(s){return '<option '+(s===item.status?"selected":"")+'>'+s+'</option>'}).join("");
@@ -1008,6 +1066,8 @@ function f1ScopeRequired(platform){
 function f1ConnectionPreflight(clientId,platform){
   const row=socialChannels.find(function(x){return x.client_id===clientId&&x.platform===platform});
   if(!row)return {ok:false,status:"CANALE_DA_COLLEGARE",row:null};
+  if(row.reauthorization_required)return {ok:false,status:"DA_RIAUTORIZZARE",row:row};
+  if(row.token_expires_at&&new Date(row.token_expires_at).getTime()<=Date.now())return {ok:false,status:"TOKEN_SCADUTO",row:row};
   if(!(row.enabled&&row.verified))return {ok:false,status:row.connection_status||"AUTH_REQUIRED",row:row};
   const collision=socialChannels.some(function(x){return x.client_id!==clientId&&x.platform===platform&&x.enabled&&x.verified&&x.external_channel_id&&row.external_channel_id&&x.external_channel_id===row.external_channel_id});
   if(collision)return {ok:false,status:"ACCOUNT_CONDIVISO",row:row};
@@ -1070,7 +1130,10 @@ window.f1PublishNow=async function(itemId,clientId,options){
     });
   }
   for(const r of ready){
-    const existing=await sb.from("f1_content_calendar").select("id,status").eq("content_id",itemId).eq("platform",r.platform).order("created_at",{ascending:false}).limit(1);
+    const existing=await sb.from("f1_content_calendar").select("id,status,platform_metadata").eq("content_id",itemId).eq("platform",r.platform).order("created_at",{ascending:false}).limit(1);
+    const current=existing.data&&existing.data[0];
+    const currentMeta=current&&current.platform_metadata&&typeof current.platform_metadata==="object"?current.platform_metadata:{};
+    if(current&&/^(IN PUBBLICAZIONE|PUBBLICATO|PUBLISHED|COMPLETED)$/i.test(String(current.status||""))&&currentMeta.expected_media_sha256===mediaHash)continue;
     const payload={
       owner_id:user.id,content_id:itemId,client_id:clientId,platform:r.platform,publication_at:now,status:"IN PUBBLICAZIONE",
       provider:r.row.provider||"oauth_broker",retry_count:0,error:null,
@@ -2205,29 +2268,29 @@ sb.auth.onAuthStateChange(function(event,session){
   if(event==="SIGNED_OUT"){user=null;showAuth()}
 });
 
-// F1_INTELLIGENCE_AUTO_REFRESH: refresh conservativo per ridurre query, firme Storage e reload media.
+// F1_CRITICAL_REFRESH: niente polling completo. Aggiorna solo dati operativi ogni 5 minuti.
 setInterval(async function(){
   if(!user || document.hidden || intelligenceAutoRefreshBusy)return;
   if(Date.now()<f1BackendRestrictedUntil)return;
   intelligenceAutoRefreshBusy=true;
   try{
     const before=f1StateFingerprint();
-    await loadAll();
+    await loadCritical({clients:false});
     if(Date.now()<f1BackendRestrictedUntil)return;
     const after=f1StateFingerprint();
     if(before!==after)await renderAll();
   }catch(e){
     if(f1IsRestrictionError(e))f1BackendRestrictedUntil=Date.now()+(5*60*1000);
-    console.warn("F1 Intelligence refresh",e);
+    console.warn("F1 critical refresh",e);
   }finally{
     intelligenceAutoRefreshBusy=false;
   }
-},60000);
+},300000);
 
 authState();
 </script>
 <script src="./vendor/heic2any-0.0.4.min.js"></script>
-<script src="./client-workspace.js?v=20261006-storage1"></script>
+<script src="./client-workspace.js?v=20261006-perf1"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script src="./email-module.js?v=20261005-radar1"></script>\n<script src="./demo-v7-core.js?v=20261004a"></script>\n<script src="./demo-v7-email-core.js?v=20261004a"></script>\n<script src="./demo-v7-email-csv.js?v=20261004a"></script>
 </body>

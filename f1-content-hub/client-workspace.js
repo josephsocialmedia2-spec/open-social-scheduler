@@ -519,9 +519,13 @@ async function previewMedia(){
     const media=(item.f1_content_media||[])[0];if(!media)continue;
     if(isHeicMedia(media)){host.textContent="HEIC · CONVERSIONE NECESSARIA";continue}
     try{
+      const mime=String(media.mime_type||"");
+      if(mime.startsWith("video/")){
+        host.innerHTML='<div data-f1-video-lazy="1"><button class="btn small ghost" type="button" onclick="window.f1LoadVideoPreview(this,\''+item.id+'\')">▶ APRI VIDEO</button></div>';
+        continue;
+      }
       const url=await signedUrl(media);if(!url)continue;
-      if(String(media.mime_type||"").startsWith("image/"))host.innerHTML='<img src="'+h(url)+'" alt="">';
-      else if(String(media.mime_type||"").startsWith("video/"))host.innerHTML='<video src="'+h(url)+'" muted controls playsinline preload="none"></video>';
+      if(mime.startsWith("image/"))host.innerHTML='<img loading="lazy" src="'+h(url)+'" alt="">';
       else host.textContent=media.file_name||"FILE";
     }catch(_){}
   }
@@ -653,13 +657,16 @@ window.f1HydrateRailThumbs=async function(rows){
     const media=(item.f1_content_media||[])[0];if(!media){box.textContent="MEDIA MANCANTE";continue}
     if(isHeicMedia(media)){box.textContent="HEIC · CONVERSIONE NECESSARIA";continue}
     try{
+      const mime=String(media.mime_type||"");
+      if(mime.startsWith("video/")){
+        box.innerHTML='<div data-f1-video-lazy="1"><button class="btn small ghost" type="button" onclick="event.stopPropagation();window.f1LoadVideoPreview(this,\''+item.id+'\')">▶ VIDEO</button></div>';
+        continue;
+      }
       const key=String(media.storage_path||media.id||item.id);
       let url=railThumbUrlCache.get(key);
       if(!url){url=await signedUrl(media);if(url)railThumbUrlCache.set(key,url)}
       if(!url){box.textContent="NESSUNA ANTEPRIMA";continue}
-      const mime=String(media.mime_type||"");
       if(mime.startsWith("image/"))box.innerHTML='<img loading="lazy" src="'+h(url)+'" alt="">';
-      else if(mime.startsWith("video/"))box.innerHTML='<video src="'+h(url)+'" muted playsinline preload="none"></video>';
       else box.textContent=media.file_name||"FILE";
     }catch(_){box.textContent="ANTEPRIMA NON DISPONIBILE"}
   }
