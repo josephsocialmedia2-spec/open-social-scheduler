@@ -1110,10 +1110,26 @@ window.f1DeleteContent=async function(contentId,publishedConfirmed){
     body.innerHTML='<div class="notice warn"><b>ELIMINAZIONE IN CORSO...</b><br>Verifica proprietà, Storage e record collegati.</div>';
     actions.innerHTML='<button class="btn danger-bright" disabled>ELIMINAZIONE...</button>';
 
-    const mr=await sb.from("f1_content_media").select("id,content_id,client_id,owner_id,storage_path").eq("content_id",contentId).eq("owner_id",user.id);
+    const mr=await sb.from("f1_content_media").select("id,content_id,client_id,owner_id,storage_path,storage_state,archive_provider,archive_public_id,archive_url,hot_deleted_at").eq("content_id",contentId).eq("owner_id",user.id);
     if(mr.error)throw mr.error;
     const mediaRows=mr.data||[];
     if(mediaRows.some(function(m){return String(m.client_id)!==String(item.client_id)}))throw new Error("ELIMINAZIONE BLOCCATA — media di un altro client_id rilevato.");
+
+    const hasColdMedia=mediaRows.some(function(m){
+      return String(m.storage_state||"").toUpperCase()==="COLD" || !!m.archive_public_id || !!m.archive_url;
+    });
+    if(hasColdMedia){
+      const requestedAt=new Date().toISOString();
+      const qi=await sb.from("f1_content_items").update({status:"ARCHIVIATO",deletion_requested_at:requestedAt}).eq("id",contentId).eq("owner_id",user.id).eq("client_id",item.client_id);
+      if(qi.error)throw qi.error;
+      const qm=await sb.from("f1_content_media").update({storage_state:"DELETE_PENDING"}).eq("content_id",contentId).eq("owner_id",user.id).eq("client_id",item.client_id);
+      if(qm.error)throw qm.error;
+      modal.classList.remove("deleting","open");
+      await loadAll();await renderAll();
+      if(window.f1RenderContentRail)await window.f1RenderContentRail();
+      alert("ELIMINAZIONE IN CODA — il backend rimuoverà in sicurezza archivio freddo, eventuale copia cloud e record collegati.");
+      return;
+    }
 
     const paths=Array.from(new Set(mediaRows.map(function(m){return m.storage_path}).filter(Boolean)));
     const ownerPrefix=String(user.id)+"/";
