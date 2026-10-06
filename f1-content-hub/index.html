@@ -492,7 +492,13 @@ let connectionDoctorResults = {};
 let calendarWeekOffset = 0;
 let calendarViewMode = "week";
 let intelligenceAutoRefreshBusy = false;
-let f1BackendRestrictedUntil = 0;
+const F1_BACKEND_RESTRICTION_KEY="f1-backend-restriction-v1";
+let f1BackendRestrictedUntil = (function(){
+  try{
+    const s=JSON.parse(localStorage.getItem(F1_BACKEND_RESTRICTION_KEY)||"null");
+    return s&&Number(s.retryAfter)>Date.now()?Number(s.retryAfter):0;
+  }catch(_){return 0}
+})();
 let f1SecondaryLoaded = false;
 let f1SecondaryLoading = null;
 let f1LastCriticalRefreshAt = 0;
@@ -508,6 +514,23 @@ function f1IsRestrictionError(value){
     text.includes("exceed_storage_size_quota") ||
     text.includes("status 402") ||
     text.includes(" 402 ");
+}
+function f1SetBackendRestricted(reason,minutes){
+  const retryAfter=Date.now()+Math.max(5,Number(minutes)||30)*60*1000;
+  f1BackendRestrictedUntil=retryAfter;
+  try{
+    localStorage.setItem(F1_BACKEND_RESTRICTION_KEY,JSON.stringify({
+      state:"BACKEND_RESTRICTED",
+      restrictionReason:String(reason&&reason.message?reason.message:reason||"HTTP_402"),
+      detectedAt:new Date().toISOString(),
+      retryAfter:retryAfter,
+      lastTestAt:new Date().toISOString()
+    }));
+  }catch(_){}
+}
+function f1ClearBackendRestriction(){
+  f1BackendRestrictedUntil=0;
+  try{localStorage.removeItem(F1_BACKEND_RESTRICTION_KEY)}catch(_){}
 }
 function f1StateFingerprint(){
   const compact=function(rows,fields){
@@ -623,7 +646,7 @@ async function f1QueryWithRetry(factory,label,attempts){
     try{last=await factory();if(last&&!last.error)return last}catch(e){last={error:e}}
     const restriction=!!(last&&((last.status===402)||f1IsRestrictionError(last.error)));
     if(restriction){
-      f1BackendRestrictedUntil=Date.now()+(5*60*1000);
+      f1SetBackendRestricted(last.error||"HTTP_402",30);
       break;
     }
     if(attempt<(attempts||2))await f1Sleep(400*attempt);
@@ -653,10 +676,13 @@ async function loadCritical(options){
   if(rcal&&!rcal.error)calendar=rcal.data||[];
   if(rch&&!rch.error)socialChannels=rch.data||[];
   if(rcq&&!rcq.error)cloudPublicationQueue=rcq.data||[];
+  const criticalOk=[ri,rcal,rch,rcq].every(function(x){return x&&!x.error});
+  if(criticalOk)f1ClearBackendRestriction();
   f1LastCriticalRefreshAt=Date.now();
 }
 async function loadSecondaryData(force){
   if(!user)return;
+  if(Date.now()<f1BackendRestrictedUntil)return;
   if(f1SecondaryLoaded&&!force)return;
   if(f1SecondaryLoading&&!force)return f1SecondaryLoading;
   f1SecondaryLoading=(async function(){
@@ -695,6 +721,7 @@ function f1RenderSecondaryOnly(){
   renderAnalytics();renderAutomation();renderPublicationCenter();renderProblems();renderReports();
 }
 function f1ScheduleSecondaryLoad(){
+  if(Date.now()<f1BackendRestrictedUntil)return;
   const run=function(){loadSecondaryData(false).then(f1RenderSecondaryOnly).catch(function(e){console.warn("F1 secondary load",e)})};
   if("requestIdleCallback" in window)requestIdleCallback(run,{timeout:1800});
   else setTimeout(run,120);
@@ -772,6 +799,7 @@ function filteredItems(limit){
 async function signedUrl(media){
   if(!media)return "";
   if(String(media.storage_state||"").toUpperCase()==="COLD" && media.archive_url)return String(media.archive_url);
+  if(Date.now()<f1BackendRestrictedUntil)throw new Error("BACKEND_RESTRICTED: anteprima cloud sospesa fino al prossimo controllo");
   if(!media.storage_path && media.archive_url)return String(media.archive_url);
   if(!media.storage_path)return "";
   const key=String(media.storage_path);
@@ -783,7 +811,7 @@ async function signedUrl(media){
   const promise=(async function(){
     const r=await sb.storage.from("f1-content-media").createSignedUrl(key,3600);
     if(r.error){
-      if(f1IsRestrictionError(r.error))f1BackendRestrictedUntil=Date.now()+(5*60*1000);
+      if(f1IsRestrictionError(r.error))f1SetBackendRestricted(r.error,30);
       throw r.error;
     }
     return r.data?r.data.signedUrl:"";
@@ -2282,7 +2310,7 @@ setInterval(async function(){
     const after=f1StateFingerprint();
     if(before!==after)await renderAll();
   }catch(e){
-    if(f1IsRestrictionError(e))f1BackendRestrictedUntil=Date.now()+(5*60*1000);
+    if(f1IsRestrictionError(e))f1SetBackendRestricted(e,30);
     console.warn("F1 critical refresh",e);
   }finally{
     intelligenceAutoRefreshBusy=false;
@@ -2292,7 +2320,7 @@ setInterval(async function(){
 authState();
 </script>
 <script src="./vendor/heic2any-0.0.4.min.js"></script>
-<script src="./client-workspace.js?v=20261006-perf6-cold"></script>
+<script src="./client-workspace.js?v=20261006-recovery1"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script src="./email-module.js?v=20261005-radar1"></script>\n<script src="./demo-v7-core.js?v=20261004a"></script>\n<script src="./demo-v7-email-core.js?v=20261004a"></script>\n<script src="./demo-v7-email-csv.js?v=20261004a"></script>
 </body>

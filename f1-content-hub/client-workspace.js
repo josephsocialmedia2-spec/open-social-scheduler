@@ -100,13 +100,15 @@ async function checkFreeMediaQuota(incomingBytes){
   if(quota.error)throw new Error("FREE QUOTA GUARD non disponibile: "+(quota.error.message||"verifica fallita"));
   const state=quota.data||{};
   const pct=Number(state.projected_percent||state.usage_percent||0);
+  const level=String(state.level||state.status||"").toUpperCase();
   if(state.allowed!==true){
-    throw new Error("FREE QUOTA GUARD: caricamento bloccato"+(pct?" al "+pct.toFixed(1)+"% della quota gratuita":"")+". Nessun passaggio automatico a pagamento.");
+    throw new Error("FREE QUOTA GUARD: caricamento bloccato"+(pct?" al "+pct.toFixed(1)+"% della quota gratuita":"")+". Soglia 95%. Nessun passaggio automatico a pagamento.");
   }
   if(uploadBatchState){
-    uploadBatchState.quotaWarning=pct>=85
-      ? "⚠ QUOTA GRATUITA: "+pct.toFixed(1)+"% previsto · soglia di blocco 95%"
-      : (pct>=70 ? "Quota gratuita: "+pct.toFixed(1)+"% previsto" : "");
+    uploadBatchState.quotaWarning=
+      level==="ARCHIVIAZIONE_PRIORITARIA" ? "⚠ ARCHIVIAZIONE PRIORITARIA: "+pct.toFixed(1)+"% previsto · riduci Storage prima di nuovi media pesanti" :
+      level==="ATTENZIONE" ? "⚠ QUOTA STORAGE: "+pct.toFixed(1)+"% previsto · attenzione" :
+      level==="INFORMAZIONE" ? "Quota Storage: "+pct.toFixed(1)+"% previsto" : "";
     if(uploadBatchState.quotaWarning)renderUploadProgress();
   }
   return state;
