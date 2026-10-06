@@ -1168,7 +1168,7 @@ def ensure_calendar_for_item(
     preferred = next(
         (m for m in reversed(media_rows) if str(m.get("source") or "").upper() == "F1_INTELLIGENCE_SUBTITLED"),
         next(
-            (m for m in reversed(media_rows) if str(m.get("source") or "").upper() == "F1_INTELLIGENCE_HEIC_PNG"),
+            (m for m in reversed(media_rows) if str(m.get("source") or "").upper() in {"F1_INTELLIGENCE_HEIC_JPEG", "F1_INTELLIGENCE_HEIC_PNG"}),
             media_rows[0] if media_rows else None,
         ),
     )
@@ -1176,7 +1176,7 @@ def ensure_calendar_for_item(
         emit_event(owner_id, client_id, content_id, str(job["id"]), "MEDIA", "BLOCKED", "Nessun media disponibile", 70)
         return 0
     if is_heic(preferred):
-        emit_event(owner_id, client_id, content_id, str(job["id"]), "CONVERSIONE_HEIC", "BLOCKED", "HEIC/HEIF in attesa di conversione PNG", 35)
+        emit_event(owner_id, client_id, content_id, str(job["id"]), "CONVERSIONE_HEIC", "BLOCKED", "HEIC/HEIF in attesa di conversione JPEG", 35)
         return 0
 
     existing_pairs = {
