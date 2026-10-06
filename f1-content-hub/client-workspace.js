@@ -519,7 +519,7 @@ async function previewMedia(){
     try{
       const url=await signedUrl(media);if(!url)continue;
       if(String(media.mime_type||"").startsWith("image/"))host.innerHTML='<img src="'+h(url)+'" alt="">';
-      else if(String(media.mime_type||"").startsWith("video/"))host.innerHTML='<video src="'+h(url)+'" muted controls playsinline></video>';
+      else if(String(media.mime_type||"").startsWith("video/"))host.innerHTML='<video src="'+h(url)+'" muted controls playsinline preload="none"></video>';
       else host.textContent=media.file_name||"FILE";
     }catch(_){}
   }
@@ -657,7 +657,7 @@ window.f1HydrateRailThumbs=async function(rows){
       if(!url){box.textContent="NESSUNA ANTEPRIMA";continue}
       const mime=String(media.mime_type||"");
       if(mime.startsWith("image/"))box.innerHTML='<img loading="lazy" src="'+h(url)+'" alt="">';
-      else if(mime.startsWith("video/"))box.innerHTML='<video src="'+h(url)+'" muted playsinline preload="metadata"></video>';
+      else if(mime.startsWith("video/"))box.innerHTML='<video src="'+h(url)+'" muted playsinline preload="none"></video>';
       else box.textContent=media.file_name||"FILE";
     }catch(_){box.textContent="ANTEPRIMA NON DISPONIBILE"}
   }
