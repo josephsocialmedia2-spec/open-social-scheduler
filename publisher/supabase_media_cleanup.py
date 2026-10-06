@@ -16,10 +16,13 @@ from datetime import datetime, timedelta, timezone
 from typing import Any
 from urllib.parse import quote
 
+import cloudinary
+import cloudinary.uploader
 import requests
 
 SUPABASE_URL = os.getenv("SUPABASE_URL", "").rstrip("/")
 SERVICE_KEY = os.getenv("SUPABASE_SERVICE_ROLE_KEY", "").strip()
+CLOUDINARY_URL = os.getenv("CLOUDINARY_URL", "").strip()
 REQUEST_TIMEOUT = 45
 GRACE_MINUTES = max(0, int(os.getenv("F1_MEDIA_CLEANUP_GRACE_MINUTES", "360") or "360"))
 BATCH_CONTENTS = max(1, int(os.getenv("F1_MEDIA_CLEANUP_BATCH_CONTENTS", "25") or "25"))
@@ -87,6 +90,20 @@ def rest_delete(table: str, row_id: str) -> None:
         raise SystemExit(0)
     if not response.ok:
         raise CleanupError(f"DELETE {table}: {response.status_code} {response.text[:600]}")
+
+
+def cloudinary_destroy(public_id: str, resource_type: str) -> None:
+    if not public_id or not CLOUDINARY_URL.startswith("cloudinary://"):
+        return
+    cloudinary.config(secure=True)
+    result = cloudinary.uploader.destroy(
+        public_id,
+        resource_type=(resource_type or "image"),
+        invalidate=True,
+    )
+    state = str((result or {}).get("result") or "").lower()
+    if state not in {"ok", "not found"}:
+        raise CleanupError(f"Cloudinary destroy failed: {result}")
 
 
 def storage_delete(path: str) -> None:
@@ -169,7 +186,10 @@ def main() -> int:
     media = rest_get(
         "f1_content_media",
         {
-            "select": "id,content_id,storage_path,file_size",
+            "select": (
+                "id,content_id,storage_path,file_size,storage_state,hot_deleted_at,"
+                "archive_provider,archive_public_id,archive_resource_type,archive_url"
+            ),
             "limit": "5000",
         },
     )
@@ -202,10 +222,13 @@ def main() -> int:
                 )
                 continue
 
-            if path and not shared:
+            if path and not shared and not row.get("hot_deleted_at"):
                 storage_delete(path)
                 deleted_objects += 1
                 released_bytes += max(0, size)
+            public_id = str(row.get("archive_public_id") or "")
+            if public_id:
+                cloudinary_destroy(public_id, str(row.get("archive_resource_type") or "image"))
             if media_id:
                 rest_delete("f1_content_media", media_id)
                 deleted_rows += 1
