@@ -856,16 +856,9 @@ window.f1RenderClientPublisherWorkspace=async function(){
   '</section>';
   renderUploadProgress();
   await previewMedia();
-  if(heicCount&&!heicAutoMigrationRunning&&!heicAutoMigrationAttempted.has(client.id)){
-    heicAutoMigrationAttempted.add(client.id);
-    setTimeout(async function(){
-      if(heicAutoMigrationRunning)return;
-      heicAutoMigrationRunning=true;
-      try{await window.f1ConvertExistingHeicForClient({automatic:true})}
-      catch(e){console.error("HEIC_AUTO_MIGRATION",e)}
-      finally{heicAutoMigrationRunning=false}
-    },350);
-  }
+  // HEIC conversion is intentionally on-demand.
+  // Do not download/re-upload heavy media just because the workspace rendered.
+  if(heicCount)heicAutoMigrationAttempted.add(client.id);
 };
 
 window.f1WorkspaceSaveTime=async function(clientId,platform,value){
