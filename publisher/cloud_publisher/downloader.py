@@ -38,10 +38,11 @@ def download_media(
             f"media-{index}.bin",
         )
         dest = target / name
-        direct = str(item.get("url") or item.get("public_url") or "").strip()
+        direct = str(item.get("url") or item.get("public_url") or item.get("archive_url") or "").strip()
         storage_path = str(item.get("storage_path") or "").lstrip("/")
+        storage_state = str(item.get("storage_state") or "HOT").upper()
         headers: dict[str, str] = {}
-        if direct:
+        if direct and (storage_state == "COLD" or item.get("archive_url") or item.get("url") or item.get("public_url")):
             url = direct
         elif storage_path:
             encoded = "/".join(quote(part, safe="") for part in storage_path.split("/"))
