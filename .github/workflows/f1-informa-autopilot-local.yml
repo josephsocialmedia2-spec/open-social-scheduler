@@ -10,7 +10,7 @@ on:
       - 'publisher/local_agent/requirements.txt'
       - '.github/workflows/f1-informa-autopilot-local.yml'
   schedule:
-    - cron: '*/5 * * * *'
+    - cron: '0 * * * *'
   workflow_dispatch:
 
 permissions:
@@ -18,7 +18,7 @@ permissions:
 
 concurrency:
   group: f1-informa-chatgpt-local-autopilot
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   validate:
