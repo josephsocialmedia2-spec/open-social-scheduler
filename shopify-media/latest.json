@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-08T11:27:45+00:00",
+  "generated_at": "2026-10-09T11:23:47+00:00",
   "client_id": "real-media-pro",
   "pages": [
     {
@@ -16,15 +16,11 @@
     },
     {
       "page_url": "https://f1immobiliare.com/pages/f1-immobiliare-real-media-pro",
-      "title": "F1 IMMOBILIARE - REAL MEDIA PRO – F1_IMMOBILIARE",
-      "images": [
-        "https://f1immobiliare.com/cdn/shop/files/ChatGPT_Image_17_lug_2026_12_07_30.png?height=36&v=1784282885",
-        "https://f1immobiliare.com/cdn/shop/files/Certificato_Valutazione_Professionale_Aurigemma_Francesca_1.png?v=1787591171&width=3840",
-        "https://f1immobiliare.com/cdn/shop/files/ChatGPTImage2ago2026_11_56_05_4.png?v=1785664626&width=500",
-        "https://f1immobiliare.com/cdn/shop/files/ChatGPTImage2ago2026_11_56_04_1.png?v=1785664626&width=500"
-      ],
+      "title": "https://f1immobiliare.com/pages/f1-immobiliare-real-media-pro",
+      "images": [],
       "videos": [],
-      "status": "ok"
+      "status": "error",
+      "error": "404 Client Error: Not Found for url: https://f1immobiliare.com/pages/f1-immobiliare-real-media-pro"
     },
     {
       "page_url": "https://f1immobiliare.com/pages/partner-pubblicitario-e-tecnologico",
